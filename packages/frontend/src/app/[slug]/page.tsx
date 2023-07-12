@@ -1,4 +1,6 @@
 /*
+// TODO: fetch data from api
+
 const apiURL = 'https://api.example.com/...'
 
 async function fetchArticle() {
@@ -9,6 +11,10 @@ async function fetchArticle() {
   return res.json()
 }
 */
+
+// TODO(Draft):
+// 1. import draft from draft-renderer
+// 2. prepare mockup for display
 
 export default async function Article({
   params,
