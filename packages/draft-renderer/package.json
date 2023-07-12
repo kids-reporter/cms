@@ -1,0 +1,44 @@
+{
+  "name": "@kids-reporter/draft-renderer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "make dev",
+    "build": "make build",
+    "clean": "make clean",
+    "build-lib": "make build-lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/@kids-reporter/cms.git",
+    "directory": "packages/draft-renderer"
+  },
+  "keywords": [
+    "react",
+    "kids-reporter",
+    "draft.js"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@readr-media/react-image": "1.6.0",
+    "body-scroll-lock": "3.1.5",
+    "draft-js": "^0.11.7",
+    "node-html-parser": "^6.1.5"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "5.3.5"
+  },
+  "files": [
+    "lib"
+  ],
+  "devDependencies": {
+    "@types/draft-js": "^0.11.10",
+    "@types/styled-components": "^5.1.26",
+    "babel-plugin-file-loader": "^2.0.0",
+    "babel-plugin-inline-react-svg": "^2.0.1"
+  }
+}
