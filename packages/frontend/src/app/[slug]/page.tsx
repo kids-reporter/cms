@@ -1,3 +1,4 @@
+/*
 const apiURL = 'https://api.example.com/...'
 
 async function fetchArticle() {
@@ -7,8 +8,13 @@ async function fetchArticle() {
   }
   return res.json()
 }
+*/
 
-export default async function Article({ params }: { params: { slug: string } }) {
+export default async function Article({
+  params,
+}: {
+  params: { slug: string }
+}) {
   // TODO: fetch data from graphQL of keystone
   // const data = await fetchArticle()
   return <h1>Article slug: {params.slug}</h1>
