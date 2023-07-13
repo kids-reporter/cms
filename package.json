@@ -1,7 +1,11 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/core",
+    "packages/draft-editor",
+    "packages/draft-renderer",
+    "packages/kids",
+    "packages/frontend"
   ],
   "scripts": {
     "prepare": "husky install"
