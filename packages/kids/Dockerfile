@@ -3,6 +3,7 @@ FROM node:16-slim
 ## Install system dependencies, `gcsfuse` in particular.
 RUN set -e; \
     apt-get update -y && apt-get install -y \
+    build-essential \
     curl \
     gnupg2 \
     tini \
