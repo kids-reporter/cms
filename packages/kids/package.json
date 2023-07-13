@@ -7,7 +7,7 @@
     "start": "keystone start",
     "db-migrate": "keystone prisma migrate deploy",
     "build": "keystone build",
-    "postinstall": "test -n \"$WINDOWS_ONLY\" || make build-deps && patch-package && keystone postinstall --fix"
+    "postinstall": "SKIP_BUILD_DEPS=\"$SKIP_BUILD_DEPS\" make build-deps"
   },
   "repository": {
     "type": "git",
