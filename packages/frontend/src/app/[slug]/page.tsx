@@ -25,5 +25,10 @@ export default async function Article({
 }) {
   // TODO: fetch data from graphQL of keystone
   // const data = await fetchArticle()
-  return <h1>Article slug: {params.slug}</h1>
+  return (
+    <>
+      <h1>Article slug: {params.slug}</h1>
+      {/* TODO: draftRenderer */}
+    </>
+  )
 }
