@@ -31,8 +31,7 @@ WORKDIR $APP_DIR
 COPY . $APP_DIR
 
 ## Install application dependencies
-RUN yarn install
-RUN yarn postinstall
+RUN SKIP_BUILD_DEPS=true yarn install
 
 ## Build application bundles
 RUN yarn build
