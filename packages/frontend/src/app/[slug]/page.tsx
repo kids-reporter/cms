@@ -18,7 +18,8 @@ async function fetchArticle() {
 // 1. import draft from draft-renderer
 // 2. prepare mockup for display
 
-import './post.css'
+import '../assets/css/post.css'
+import '../assets/css/dot-hr.css'
 
 export default async function Article({
   params,
@@ -125,6 +126,7 @@ export default async function Article({
           </p>
         }
       </div>
+      <hr className="dot-hr mt-18 mb-18" />
       {/* TODO: draftRenderer */}
     </div>
   )

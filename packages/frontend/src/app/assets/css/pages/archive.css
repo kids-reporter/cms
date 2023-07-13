@@ -1,0 +1,158 @@
+body.archive .entries {
+    grid-row-gap: 60px;
+}
+
+body.archive.category .category-archive-banner {
+    text-align: center;
+}
+
+body.archive.category .category-child-container {
+    margin: 36px auto -40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: fit-content;
+    max-width: 472px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+@media screen and (max-width: 767px) {
+    body.archive.category .category-child-container {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    body.archive.category .category-child-container {
+        margin: 70px auto 10px;
+    }
+}
+
+@media screen and (min-width: 475px) {
+    body.archive.category .category-child-container .rpjr-btn:nth-child(1):nth-last-child(5) {
+        margin-left: 60px;
+    }
+
+    body.archive.category .category-child-container .rpjr-btn:nth-child(3):nth-last-child(3) {
+        margin-right: 60px;
+    }
+
+    body.archive.category .category-child-container .rpjr-btn:nth-child(4):nth-last-child(2) {
+        margin-left: 60px;
+    }
+
+    body.archive.category .category-child-container .rpjr-btn:nth-child(5):nth-last-child(1) {
+        margin-right: 60px;
+    }
+}
+
+body.archive.category .page-title {
+    display: none;
+}
+
+body.tag.archive .page-title {
+    text-align: center;
+}
+
+body.tag.archive .page-title::before {
+    content: '#';
+}
+
+body.search.search-results .page-title {
+    text-align: center;
+}
+
+body.blog .blog-home-archive-banner {
+    text-align: center;
+}
+
+body.archive.tax-staff .page-title {
+    display: none;
+}
+
+body.archive.tax-staff .staff-banner {
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 40px 35px 0;
+    margin: 0 auto -15px;
+
+    background: #FFFFFF;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    gap: 8px;
+}
+body.archive.tax-staff .staff-banner h1,
+body.archive.tax-staff .staff-banner p {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+body.archive.tax-staff .staff-banner__image {
+    width: 180px;
+    height: 180px;
+    border-radius: 80px;
+    overflow: hidden;
+    margin: 0 auto 6px;
+    object-fit: cover;
+}
+
+body.archive.tax-staff .staff-banner__image img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+}
+
+body.archive.tax-staff .staff-banner__name {
+    text-align: center;
+    margin: 12px 0 35px;
+    font-size: 22px;
+    line-height: 160%;
+    letter-spacing: 0.08em;
+    color: #232323;
+    font-weight: 700;
+}
+body.archive.tax-staff .staff-banner__title {
+    margin-top: 8px !important;
+    margin-bottom: 9px !important;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 160%;
+
+    text-align: center;
+    letter-spacing: 0.08em;
+
+    color: #232323;
+}
+body.archive.tax-staff .staff-banner__email {
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.05em;
+    margin-bottom: 7px;
+}
+body.archive.tax-staff .staff-banner__description {
+    padding-top: 8px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.05em;
+    color: #232323;
+    line-height: 200%;
+    white-space: pre-wrap;
+}
