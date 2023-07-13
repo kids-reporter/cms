@@ -1,4 +1,6 @@
 /*
+import draftRenderer from '@kids-reporter/draft-renderer'
+
 // TODO: fetch data from api
 
 const apiURL = 'https://api.example.com/...'
