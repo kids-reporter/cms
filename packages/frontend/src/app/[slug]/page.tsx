@@ -20,6 +20,7 @@ async function fetchArticle() {
 
 import '../assets/css/post.css'
 import '../assets/css/dot-hr.css'
+import '../assets/css/icomoon/style.css'
 
 export default async function Article({
   params,
@@ -127,6 +128,41 @@ export default async function Article({
         }
       </div>
       <hr className="dot-hr mt-18 mb-18" />
+      <div className="rpjr-post-tags">
+        <h3 className="rpjr-post-tags__heading">
+          <i className="icon-rpjr-icon-tag">
+            <i className="path1 text-color-theme"></i>
+            <i className="path2"></i>
+          </i>
+          &nbsp;&nbsp;常用關鍵字
+        </h3>
+        <div className="rpjr-post-tags__box">
+          <a
+            href="https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/"
+            className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
+          >
+            #&nbsp;動物保護
+          </a>
+          <a
+            href="https://kids.twreporter.org/tag/%e5%a4%a7%e5%ad%b8%e5%a5%bd%e5%a5%bd%e7%8e%a9/"
+            className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
+          >
+            #&nbsp;大學好好玩
+          </a>
+          <a
+            href="https://kids.twreporter.org/tag/%e6%95%99%e8%82%b2/"
+            className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
+          >
+            #&nbsp;教育
+          </a>
+          <a
+            href="https://kids.twreporter.org/tag/%e7%94%9f%e5%91%bd/"
+            className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
+          >
+            #&nbsp;生命
+          </a>
+        </div>
+      </div>
       {/* TODO: draftRenderer */}
     </div>
   )
