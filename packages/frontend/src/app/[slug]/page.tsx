@@ -37,7 +37,7 @@ export default async function Article({
           <h1
             className="page-title"
             title="我在動物園上課的3個月，讓我立志想成為設計動物園展場的人"
-            itemprop="headline"
+            // itemprop="headline"
           >
             我在動物園上課的3個月，讓我立志想成為設計動物園展場的人
           </h1>
