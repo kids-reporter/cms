@@ -3,7 +3,7 @@ import draftRenderer from '@kids-reporter/draft-renderer'
 
 // TODO: fetch data from api
 
-const apiURL = 'https://dev-cms-ehh4zj53ca-de.a.run.app/api/graphql'
+const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
 async function fetchArticle() {
   const res = await fetch(apiURL)
