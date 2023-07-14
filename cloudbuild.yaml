@@ -72,6 +72,9 @@ steps:
 
 timeout: 2400s
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 substitutions:
   _TARGET_PACKAGE: '' # default value
   _IMAGE_NAME: '' # default value
