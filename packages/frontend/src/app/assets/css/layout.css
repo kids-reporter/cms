@@ -1,0 +1,144 @@
+.ct-pagination {
+    width: fit-content;
+    margin: 0 auto;
+    padding-bottom: 45px;
+}
+
+.ct-pagination .page-numbers:not(.prev):not(.next) {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 100% !important;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Roboto, serif;
+}
+.ct-pagination .page-numbers:not(.current) {
+    background-color: #F5F5F5;
+    color: #232323;
+}
+.ct-pagination .page-numbers.prev,
+.ct-pagination .page-numbers.next
+{
+    margin: 0 20px;
+    border: 0;
+    color: #232323;
+}
+.ct-pagination .page-numbers.prev,
+.ct-pagination .page-numbers.next {
+    width: 38px !important;
+    height: 38px !important;
+    padding: 0;
+    border-radius: 100% !important;
+    background-color: transparent;
+}
+
+/* Login Form */
+.ct-account-form > ul {
+    display: none !important;
+}
+
+.rpjr-login-form {
+
+}
+.rpjr-login-form h2 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 26px;
+    letter-spacing: 0.08em;
+    color: #232323;
+    text-align: center;
+}
+.rpjr-login-form p {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.08em;
+}
+
+.rpjr-login-form__remember-row {
+    display: flex;
+    margin: 10px 0;
+    gap: 8px;
+}
+.rpjr-login-form__submit-row {
+    display: flex;
+    margin: 20px 0 0;
+    gap: 8px;
+    justify-content: center;
+}
+.rpjr-login-form__submit-row input {
+    padding: 9px 60px 12px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+[data-header*="type-1"] #account-modal .ct-account-form {
+    border-radius: 30px;
+    padding: 20px 24px 50px;
+}
+
+#wpaloginform label
+{
+    display: none !important;
+}
+
+#wpaloginform #user_email_username {
+    margin: 20px 0 32px;
+}
+
+#wpaloginform #wpa-submit {
+    margin: 0 auto;
+    display: block;
+    padding: 9px 60px 12px;
+    line-height: 25.6px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.wpa-box.wpa-error {
+    color: var(--paletteColor5);
+}
+
+.wpa-box.wpa-success {
+    color: var(--paletteColor6);
+}
+
+/** New Font */
+@font-face {
+    font-family: SweiMarkerSansCJKtc-Regular;
+    src: url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Regular.woff2) format("woff2")
+    , url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Regular.woff) format("woff");
+    font-weight: normal;
+}
+@font-face {
+    font-family: SweiMarkerSansCJKtc-Regular;
+    src: url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Bold.woff2) format("woff2")
+    , url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Bold.woff) format("woff");
+    font-weight: bold;
+}
+
+#offcanvas .ct-panel-content div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ct-header-trigger .ct-icon {
+    padding: 6px 5px;
+}
+.ct-header-trigger .ct-icon rect {
+    height: 3px;
+}
+
+.ct-header-cta {
+    white-space: nowrap;
+}
+
+#offcanvas [data-header*="type-1"] .ct-header [data-id="search-input"] {
+    --max-width: 75% !important;
+}
+
+.blog-home-archive-banner {
+    padding-bottom: 60px;
+}
