@@ -1,9 +1,10 @@
+import cors from 'cors'
 import { config } from '@keystone-6/core'
 import { listDefinition as lists } from './lists'
 import appConfig from './config'
-import { createProxyMiddleware } from 'http-proxy-middleware'
+// import { createProxyMiddleware } from 'http-proxy-middleware'
 import envVar from './environment-variables'
-import express, { Request, Response, NextFunction } from 'express'
+// import express, { Request, Response, NextFunction } from 'express'
 import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
@@ -70,61 +71,93 @@ export default withAuth(
       },
     },
     server: {
-	  healthCheck: {
-	    path: '/health_check',
-	    data: { status: 'healthy' },
-	  },
-      //extendExpressApp: (app, commonContext) => {
-      //  // This middleware is available in Express v4.16.0 onwards
-      //  // Set to 50mb because DraftJS Editor playload could be really large
-      //  const jsonBodyParser = express.json({ limit: '50mb' })
-      //  app.use(jsonBodyParser)
+      healthCheck: {
+        path: '/health_check',
+        data: { status: 'healthy' },
+      },
+      extendExpressApp: (app /*commonContext*/) => {
+        const corsOpts = {
+          origin: envVar.cors.allowOrigins,
+        }
 
-      //  // Check if the request is sent by an authenticated user
-      //  const authenticationMw = async (
-      //    req: Request,
-      //    res: Response,
-      //    next: NextFunction
-      //  ) => {
-      //    const context = await commonContext.withRequest(req, res)
-      //    // User has been logged in
-      //    if (context?.session?.data?.role) {
-      //      return next()
-      //    }
+        app.options(
+          '/api/graphql',
+          (req, res, next) => {
+            console.log(
+              JSON.stringify({
+                severity: 'DEBUG',
+                message: 'Enable preflight on /api/graphql endpoint',
+              })
+            )
+            next()
+          },
+          cors(corsOpts)
+        )
 
-      //    // Otherwise, redirect them to login page
-      //    res.redirect('/signin')
-      //  }
+        app.post(
+          '/api/graphql',
+          (req, res, next) => {
+            console.log(
+              JSON.stringify({
+                severity: 'DEBUG',
+                message: 'Enable cors on /api/graphql endpoint',
+              })
+            )
+            next()
+          },
+          cors(corsOpts)
+        )
 
-      //  const previewProxyMiddleware = createProxyMiddleware({
-      //    target: envVar.previewServerOrigin,
-      //    changeOrigin: true,
-      //    onProxyRes: (proxyRes) => {
-      //      // The response from preview nuxt server might be with Cache-Control header.
-      //      // However, we don't want to get cached responses for `draft` posts.
-      //      // Therefore, we do not cache html response intentionlly by overwritting the Cache-Control header.
-      //      proxyRes.headers['cache-control'] = 'no-store'
-      //    },
-      //  })
+        //// This middleware is available in Express v4.16.0 onwards
+        //// Set to 50mb because DraftJS Editor playload could be really large
+        //const jsonBodyParser = express.json({ limit: '50mb' })
+        //app.use(jsonBodyParser)
 
-      //  // Proxy requests with `/story/id` url path to preview nuxt server
-      //  app.get('/story/:id', authenticationMw, previewProxyMiddleware)
+        //// Check if the request is sent by an authenticated user
+        //const authenticationMw = async (
+        //  req: Request,
+        //  res: Response,
+        //  next: NextFunction
+        //) => {
+        //  const context = await commonContext.withRequest(req, res)
+        //  // User has been logged in
+        //  if (context?.session?.data?.role) {
+        //    return next()
+        //  }
 
-      //  // Proxy requests with `/event/:slug` url path to preview nuxt server
-      //  app.get('/event/:slug', authenticationMw, previewProxyMiddleware)
+        //  // Otherwise, redirect them to login page
+        //  res.redirect('/signin')
+        //}
 
-      //  // Proxy requests with `/news/:id` url path to preview nuxt server
-      //  app.get('/news/:id', authenticationMw, previewProxyMiddleware)
+        //const previewProxyMiddleware = createProxyMiddleware({
+        //  target: envVar.previewServerOrigin,
+        //  changeOrigin: true,
+        //  onProxyRes: (proxyRes) => {
+        //    // The response from preview nuxt server might be with Cache-Control header.
+        //    // However, we don't want to get cached responses for `draft` posts.
+        //    // Therefore, we do not cache html response intentionlly by overwritting the Cache-Control header.
+        //    proxyRes.headers['cache-control'] = 'no-store'
+        //  },
+        //})
 
-      //  // Proxy requests with `/_nuxt/*` url path to preview nuxt server
-      //  app.use(
-      //    '/_nuxt/*',
-      //    createProxyMiddleware({
-      //      target: envVar.previewServerOrigin,
-      //      changeOrigin: true,
-      //    })
-      //  )
-      //},
+        //// Proxy requests with `/story/id` url path to preview nuxt server
+        //app.get('/story/:id', authenticationMw, previewProxyMiddleware)
+
+        //// Proxy requests with `/event/:slug` url path to preview nuxt server
+        //app.get('/event/:slug', authenticationMw, previewProxyMiddleware)
+
+        //// Proxy requests with `/news/:id` url path to preview nuxt server
+        //app.get('/news/:id', authenticationMw, previewProxyMiddleware)
+
+        //// Proxy requests with `/_nuxt/*` url path to preview nuxt server
+        //app.use(
+        //  '/_nuxt/*',
+        //  createProxyMiddleware({
+        //    target: envVar.previewServerOrigin,
+        //    changeOrigin: true,
+        //  })
+        //)
+      },
     },
   })
 )
