@@ -8,6 +8,7 @@ type Post = {
   slug: string
 }
 
+const siteURL = 'https://dev-kids.twreporter.org'
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
 export default function Home() {
@@ -36,9 +37,7 @@ export default function Home() {
       {posts.map((post, index) => {
         return (
           <div key={`article-${index}`}>
-            <a href={`https://dev-kids.twreporter.org/${post.slug}`}>
-              {post.name}
-            </a>
+            <a href={`${siteURL}/${post.slug}`}>{post.name}</a>
           </div>
         )
       })}
