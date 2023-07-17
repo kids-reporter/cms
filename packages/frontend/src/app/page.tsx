@@ -1,6 +1,4 @@
-'use client'
 // import styles from './page.module.css'
-import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 type Post = {
@@ -11,25 +9,18 @@ type Post = {
 const siteURL = 'https://dev-kids.twreporter.org'
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
-export default function Home() {
-  const [posts, setPosts] = useState<Post[]>([])
-
-  useEffect(() => {
-    axios
-      .post(apiURL, {
-        query: `
-        query {
-          posts {
-            name
-            slug
-          }
-        }
-      `,
-      })
-      .then((res) => {
-        setPosts(res?.data?.posts)
-      })
+export default async function Home() {
+  const response = await axios.post(apiURL, {
+    query: `
+    query {
+      posts {
+        name
+        slug
+      }
+    }
+  `,
   })
+  const posts: Post[] = response.data.data.posts
 
   return (
     <main>
