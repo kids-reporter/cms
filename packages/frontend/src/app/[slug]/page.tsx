@@ -1,3 +1,4 @@
+'use client'
 /*
 import draftRenderer from '@kids-reporter/draft-renderer'
 
@@ -17,18 +18,42 @@ async function fetchArticle() {
 // TODO(Draft):
 // 1. import draft from draft-renderer
 // 2. prepare mockup for display
+import axios from 'axios'
+import { useState, useEffect } from 'react'
 
 import '../assets/css/post.css'
 import '../assets/css/dot-hr.css'
 import '../assets/css/icomoon/style.css'
 
-export default async function Article({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  // TODO: fetch data from graphQL of keystone
-  // const data = await fetchArticle()
+const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+
+export default function Article({ params }: { params: { slug: string } }) {
+  const [post, setPost] = useState<any>(null)
+
+  useEffect(() => {
+    axios
+      .post(apiURL, {
+        query: `
+          query($where: PostWhereUniqueInput!) {
+            post(where: $where) {
+              name
+              brief
+              content
+            }
+          }
+        `,
+        variables: {
+          where: {
+            slug: params.slug,
+          },
+        },
+      })
+      .then((res) => {
+        setPost(res?.data?.post)
+        console.log(post)
+      })
+  })
+
   return (
     <div className="post">
       <h1>Article slug: {params.slug}</h1>
