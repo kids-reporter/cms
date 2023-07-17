@@ -6,7 +6,7 @@ type Post = {
   slug: string
 }
 
-const siteURL = 'http://localhost:3000' // 'https://dev-kids.twreporter.org'
+const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
 export default async function Home() {
