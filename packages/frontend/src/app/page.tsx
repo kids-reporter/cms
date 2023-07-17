@@ -21,6 +21,7 @@ export default async function Home() {
   `,
   })
   const posts: Post[] = response?.data?.data?.posts
+  // TODO: error handling
   console.log(response, posts)
 
   return (
