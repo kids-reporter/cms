@@ -31,6 +31,7 @@ export default async function Article({
     },
   })
   const post = response?.data?.data?.post
+  // TODO: error handling
   console.log(post)
 
   return (
