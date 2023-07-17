@@ -1,21 +1,22 @@
-// import draftRenderer from '@kids-reporter/draft-renderer'
-// TODO(Draft):
-// 1. import draft from draft-renderer
+'use client'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
+import draftRenderer from '@kids-reporter/draft-renderer'
 
 import '../assets/css/post.css'
 import '../assets/css/dot-hr.css'
 import '../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+// TODO:
+// fetch data via server, render via client
 
-export default async function Article({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const response = await axios.post(apiURL, {
-    query: `
+export default function Article({ params }: { params: { slug: string } }) {
+  const [post, setPost] = useState<any>()
+  useEffect(() => {
+    axios
+      .post(apiURL, {
+        query: `
           query($where: PostWhereUniqueInput!) {
             post(where: $where) {
               name
@@ -24,20 +25,29 @@ export default async function Article({
             }
           }
         `,
-    variables: {
-      where: {
-        slug: params.slug,
-      },
-    },
+        variables: {
+          where: {
+            slug: params.slug,
+          },
+        },
+      })
+      .then((res) => {
+        // TODO: error handling
+        setPost(res?.data?.data?.post)
+        console.log(res)
+      })
   })
-  const post = response?.data?.data?.post
-  // TODO: error handling
-  console.log(post)
 
   return (
     <div className="post">
       <h1>Article slug: {params.slug}</h1>
-      <h1>Article title: {post.name}</h1>
+      <h1>Article title: {post?.name}</h1>
+      {post?.brief && (
+        <draftRenderer.DraftRenderer rawContentBlock={post?.brief} />
+      )}
+      {post?.content && (
+        <draftRenderer.DraftRenderer rawContentBlock={post?.content} />
+      )}
       <div className="hero-section" data-type="type-1">
         <header className="entry-header">
           <h1
