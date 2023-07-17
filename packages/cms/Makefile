@@ -12,7 +12,7 @@ build-deps:
 	@if [ "$(SKIP_BUILD_DEPS)" = "true" ]; then \
 		echo "Build skipped."; \
 	else \
-		echo "$(P) build core, draft-editor and draft-renderer" \
+		echo "$(P) build core, draft-editor and draft-renderer"; \
 		cd ../core; make build; \
 		cd ../draft-editor; make build; \
 		cd ../draft-renderer; make build; \

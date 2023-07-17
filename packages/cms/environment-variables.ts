@@ -13,11 +13,22 @@ const {
   IMAGES_STORAGE_PATH,
   MEMORY_CACHE_TTL,
   MEMORY_CACHE_SIZE,
+  CORS_ALLOW_ORIGINS,
 } = process.env
 
 enum DatabaseProvider {
   Sqlite = 'sqlite',
   Postgres = 'postgresql',
+}
+
+const getAllowOrigins = (cors: string) => {
+  if (cors === '*') {
+    return '*'
+  } else if (typeof cors === 'string') {
+    return cors.split(',')
+  } else {
+    return ['https://kids.twreporter.org', 'https://next-kids.twreporter.org']
+  }
 }
 
 export default {
@@ -55,5 +66,8 @@ export default {
   images: {
     baseUrl: IMAGES_BASE_URL || '/images',
     storagePath: IMAGES_STORAGE_PATH || 'public/images',
+  },
+  cors: {
+    allowOrigins: getAllowOrigins(CORS_ALLOW_ORIGINS || ''),
   },
 }
