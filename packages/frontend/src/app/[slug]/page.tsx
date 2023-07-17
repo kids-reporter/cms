@@ -1,23 +1,7 @@
 'use client'
-/*
-import draftRenderer from '@kids-reporter/draft-renderer'
-
-// TODO: fetch data from api
-
-const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
-
-async function fetchArticle() {
-  const res = await fetch(apiURL)
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  return res.json()
-}
-*/
-
+// import draftRenderer from '@kids-reporter/draft-renderer'
 // TODO(Draft):
 // 1. import draft from draft-renderer
-// 2. prepare mockup for display
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
