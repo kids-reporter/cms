@@ -80,6 +80,8 @@ export default withAuth(
           origin: envVar.cors.allowOrigins,
         }
 
+        console.log('corsOpts:', corsOpts)
+
         app.options(
           '/api/graphql',
           (req, res, next) => {
@@ -105,7 +107,8 @@ export default withAuth(
             )
             next()
           },
-          cors(corsOpts)
+          cors(corsOpts),
+          (req, res) => res.send('ok')
         )
 
         //// This middleware is available in Express v4.16.0 onwards
