@@ -1,5 +1,5 @@
 import axios from 'axios'
-import PostRenderer from './postRenderer'
+import PostRenderer from './post-renderer'
 
 import '../assets/css/post.css'
 import '../assets/css/dot-hr.css'
