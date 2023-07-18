@@ -1,243 +1,676 @@
-import CustomImage from '@readr-media/react-image'
-import { DraftEntityInstance } from 'draft-js'
-import React, { useEffect, useRef, useState } from 'react'
+import Multimedia from './multimedia'
+import React, { useState, useEffect, useMemo } from 'react'
+// @ts-ignore pkg does not contain ts header file
+import mq from '@twreporter/core/lib/utils/media-query'
 import styled from 'styled-components'
 
-import defaultImage from '../assets/default-og-img.png'
-import arrowDown from '../assets/slideshow-arrow-down-dark.png'
-import SlideShowLightBox from '../components/slideshow-lightbox'
+const mockup = {
+  mobile: {
+    container: {
+      width: 375, // px
+    },
+    slide: {
+      width: 339, // px
+      height: 189, // px
+      paddingRight: 2, // px
+    },
+    offset: {
+      left: 18, // px
+    },
+  },
+  tablet: {
+    container: {
+      width: 768, // px
+    },
+    slide: {
+      width: 687, // px
+      height: 387, // px
+      paddingRight: 4, // px
+    },
+    offset: {
+      left: 41, // px
+    },
+  },
+  desktop: {
+    container: {
+      width: 752, // px
+    },
+    slide: {
+      width: 688, // px
+      height: 387, // px
+      paddingRight: 4, // px
+    },
+    offset: {
+      left: 32, // px
+    },
+  },
+  hd: {
+    container: {
+      width: 1034, // px
+    },
+    slide: {
+      width: 944, // px
+      height: 531, // px
+      paddingRight: 4, // px
+    },
+    offset: {
+      left: 45, // px
+    },
+  },
+}
 
-const SlideShowDesktopSize = 960
-const SpacingBetweenSlideImages = 12
+// Assuming there are three images [ A, B, C ] for slideshow.
+// If image B is rendered in the center,
+// users can see part of image A(left side) and image C(right side) with masks.
+// When users click right button to see image C, which means, C is in the center,
+// users still can see part of image B(left side) and image A(right side) with masks.
+//
+// Hence, there are four images rendered arround B at the beginning.
+// The image array should be [ C, A, B, C, A ].
+//
+// `slidesOffset` indicates how many slides rendered before/after image B, which is, 2 (A and C).
+//
+const slidesOffset = 2
 
-const SlideShowBlockWrapper = styled.div`
-  width: calc(100% + 40px);
-  transform: translateX(-20px);
+// duration of transition of transform(translateX(?px))
+const duration = 300
+
+// current index to indicate which image should be rendered in the center
+const defaultCurIndex = 0
+
+const SlidesSection = styled.div`
+  flex-shrink: 0;
+  flex-basis: 100%;
+  overflow: hidden;
   position: relative;
-  ${({ theme }) => theme.margin.default};
 
-  ${({ theme }) => theme.breakpoint.xl} {
-    width: ${SlideShowDesktopSize}px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    transform: translateX(-180px);
-    gap: ${SpacingBetweenSlideImages}px;
-    max-height: ${(props) => (props.expandSlideShow ? 'none' : '960px')};
-    overflow: ${(props) => (props.expandSlideShow ? 'visible' : 'hidden')};
-    margin-bottom: ${(props) => (props.expandSlideShow ? '32px' : '16px')};
-  }
+  ${mq.tabletAndBelow`
+    order: 2;
+  `}
 
-  .slideshow-image {
-    max-height: ${(props) =>
-      props.shouldLimitFigureHeight ? 'calc(960px - 324px)' : 'none'};
-  }
+  ${mq.mobileOnly`
+    padding-bottom: calc(${mockup.mobile.slide.height}/${mockup.mobile.container.width}*100%);
+  `}
+
+  ${mq.tabletOnly`
+    padding-bottom: calc(${mockup.tablet.slide.height}/${mockup.tablet.container.width}*100%);
+  `}
+
+  ${mq.desktopOnly`
+    padding-bottom: calc(${mockup.desktop.slide.height}/${mockup.desktop.container.width}*100%);
+  `}
+
+  ${mq.hdOnly`
+    padding-bottom: calc(${mockup.hd.slide.height}/${mockup.hd.container.width}*100%);
+  `}
 `
 
-const SlideShowImage = styled.figure`
-  width: 100%;
-  aspect-ratio: 1/1;
+const PrevNextSection = styled.div`
+  margin-top: 20px;
 
-  & + .slideshow-image {
-    margin-top: ${SpacingBetweenSlideImages}px;
+  ${mq.tabletAndBelow`
+    order: 3;
+  `}
+
+  ${mq.mobileOnly`
+    margin-left: 25px;
+  `}
+
+  ${mq.tabletOnly`
+    margin-left: 47px;
+  `}
+`
+
+const PrevButton = styled.div`
+  cursor: pointer;
+  width: 59px;
+  height: 59px;
+  display: inline-flex;
+  border: solid 1px;
+
+  > svg {
+    margin: auto;
+    width: 21px;
   }
 
-  ${({ theme }) => theme.breakpoint.xl} {
-    flex: 1 0 calc((100% - ${SpacingBetweenSlideImages * 2}px) / 3);
-    min-width: ${SlideShowDesktopSize / 3 - 8}px;
+  ${mq.hdOnly`
+    width: 83px;
+    height: 83px;
 
-    &:hover {
-      cursor: pointer;
-      filter: brightness(15%);
-      transition: 0.3s;
+    > svg {
+      width: 31px;
     }
+  `}
 
-    & + .slideshow-image {
-      margin-top: unset;
+  &:hover {
+    > svg {
+      transform: translateX(-5px);
+      transition: transform 0.3s ease;
     }
   }
 `
 
-const FigCaption = styled.figcaption`
-  font-weight: 400;
-  line-height: 23px;
-  color: #000928;
-  opacity: 0.5;
-  ${({ theme }) => theme.fontSize.xs};
-  padding: 8px 20px 20px 20px;
+const NextButton = styled(PrevButton)`
+  border-left: none;
 
-  ${({ theme }) => theme.breakpoint.md} {
-    ${({ theme }) => theme.fontSize.sm};
-  }
-
-  ${({ theme }) => theme.breakpoint.xl} {
-    display: none;
+  &:hover {
+    > svg {
+      transform: translateX(5px);
+    }
   }
 `
 
-const GradientMask = styled.div`
-  display: none;
+const ImageNumberCircle = styled.div`
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  vertical-align: top;
 
-  ${({ theme }) => theme.breakpoint.xl} {
-    cursor: pointer;
-    display: block;
+  position: relative;
+
+  &::after {
+    content: '';
     position: absolute;
-    width: 100%;
-    height: ${SlideShowDesktopSize}px;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0) 648px,
-      rgba(255, 255, 255, 1) 960px
-    );
+    width: 62px;
+    border-top: solid 1px;
+    transform: rotate(-45deg);
+    transform-origin: bottom left;
+    top: 67px;
+    left: 7px;
   }
-`
 
-const ExpandText = styled.div`
-  display: none;
+  ${mq.tabletAndBelow`
+    order: 1;
 
-  ${({ theme }) => theme.breakpoint.xl} {
-    display: block;
-    font-style: normal;
-    font-weight: 700;
-    ${({ theme }) => theme.fontSize.md};
-    line-height: 18px;
-    letter-spacing: 0.03em;
-    color: #000928;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    margin-bottom: 48px;
-    transition: all 0.2s ease;
+    /* align right */
+    margin-left: auto;
+    /* 10px is the border-right width of body */
+    margin-right: 10px;
+  `}
 
-    &:hover::after,
-    &:active::after {
-      bottom: -30px;
-      transition: all 0.2s;
-    }
+  ${mq.desktopAndAbove`
+    margin-top: 6px;
+
+    /* align right */
+    margin-left: auto;
+  `}
+
+  ${mq.hdOnly`
+    margin-right: -18px;
+    width: 110px;
+    height: 110px;
 
     &::after {
-      content: '';
-      position: absolute;
-      bottom: -26px;
-      left: 50%;
-      transform: translate(-50%, 0%);
-      width: 14px;
-      height: 13px;
-      background-image: url(${arrowDown});
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: 14px;
+      width: 89px;
+      top: 93px;
+      left: 10px;
     }
+  `}
+`
+
+const ImageNumber = styled.span`
+  position: absolute;
+  top: 25px;
+  left: 9px;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 0.79;
+
+  ${mq.hdOnly`
+    top: 35px;
+    left: 10px;
+  `}
+`
+
+const ImageTotal = styled(ImageNumber)`
+  top: 46px;
+  left: 36px;
+
+  ${mq.hdOnly`
+    top: 71px;
+    left: 50px;
+  `}
+`
+
+const Desc = styled(Multimedia.Caption)`
+  align-self: flex-start;
+  display: inline-block;
+
+  /* overwrite Multimedia.Caption styles */
+  margin-bottom: 0;
+
+  ${mq.tabletAndBelow`
+    order: 4;
+    padding-top: 15px;
+  `}
+
+  ${mq.mobileOnly`
+    width: calc(180/355*100%);
+  `}
+
+  ${mq.desktopAndAbove`
+    padding-top: 30px;
+
+    /* overwrite Multimedia.Caption styles */
+    float: none;
+  `}
+`
+
+const EmptyDesc = styled(Desc)`
+  &::after {
+    border-bottom: none;
   }
 `
 
-// support old version of slideshow without delay propertiy
-const Figure = styled.figure`
-  position: relative;
-  margin-block: unset;
-  margin-inline: unset;
-  margin: 0 10px;
-`
-
-const Image = styled.img`
+const SlidesFlexBox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: nowrap;
   width: 100%;
+  height: 100%;
+  ${(props: {
+    isSliding: boolean
+    duration: number
+    translateXUint: number
+  }) => {
+    if (props.isSliding) {
+      return `transition: transform ${props.duration}ms ease-in-out;`
+    }
+  }}
+
+  ${mq.mobileOnly`
+    transform: translateX(${(props: { translateXUint: number }) =>
+      (getTranslateX(mockup.mobile, props.translateXUint) /
+        getContainerWidth(mockup.mobile)) *
+      100}%);
+  `}
+
+  ${mq.tabletOnly`
+    transform: translateX(${(props: { translateXUint: number }) =>
+      (getTranslateX(mockup.tablet, props.translateXUint) /
+        getContainerWidth(mockup.tablet)) *
+      100}%);
+  `}
+
+  ${mq.desktopOnly`
+    transform: translateX(${(props: { translateXUint: number }) =>
+      getTranslateX(mockup.desktop, props.translateXUint)}px);
+  `}
+
+  ${mq.hdOnly`
+    transform: translateX(${(props: { translateXUint: number }) =>
+      getTranslateX(mockup.hd, props.translateXUint)}px);
+  `}
 `
 
-export function SlideshowBlock(entity: DraftEntityInstance) {
-  const images = entity.getData()
+const SlideFlexItem = styled.div`
+  height: 100%;
+  flex-shrink: 0;
+
+  ${mq.mobileOnly`
+    flex-basis: calc(${getSlideWidth(mockup.mobile)}/${getContainerWidth(
+    mockup.mobile
+  )}*100%);
+    padding-right: calc(${mockup.mobile.slide.paddingRight}/${getContainerWidth(
+    mockup.mobile
+  )}*100%);
+  `}
+
+  ${mq.tabletOnly`
+    flex-basis: calc(${getSlideWidth(mockup.tablet)}/${getContainerWidth(
+    mockup.tablet
+  )}*100%);
+    padding-right: calc(${mockup.tablet.slide.paddingRight}/${getContainerWidth(
+    mockup.tablet
+  )}*100%);
+  `}
+
+
+  ${mq.desktopOnly`
+    flex-basis: ${getSlideWidth(mockup.desktop)}px;
+    padding-right: ${mockup.desktop.slide.paddingRight}px;
+  `}
+
+  ${mq.hdOnly`
+    flex-basis: ${getSlideWidth(mockup.hd)}px;
+    padding-right: ${mockup.hd.slide.paddingRight}px;
+  `}
+`
+
+const SlideMask = styled.div`
+  position: absolute;
+  top: 0;
+  height: 100%;
+  opacity: 0.55;
+`
+
+const LeftSlideMask = styled(SlideMask)`
+  left: 0;
+
+  ${mq.mobileOnly`
+    width: ${(getLeftMaskWidth(mockup.mobile) /
+      getContainerWidth(mockup.mobile)) *
+      100}%;
+  `}
+
+  ${mq.tabletOnly`
+    width: ${(getLeftMaskWidth(mockup.tablet) /
+      getContainerWidth(mockup.tablet)) *
+      100}%;
+  `}
+
+  ${mq.desktopOnly`
+    width: ${getLeftMaskWidth(mockup.desktop)}px;
+  `}
+
+  ${mq.hdOnly`
+    width: ${getLeftMaskWidth(mockup.hd)}px;
+  `}
+`
+
+const RightSlideMask = styled(SlideMask)`
+  right: 0;
+
+  ${mq.mobileOnly`
+    width: ${(getRightMaskWidth(mockup.mobile) /
+      getContainerWidth(mockup.mobile)) *
+      100}%;
+  `}
+
+  ${mq.tabletOnly`
+    width: ${(getRightMaskWidth(mockup.tablet) /
+      getContainerWidth(mockup.tablet)) *
+      100}%;
+  `}
+
+  ${mq.desktopOnly`
+    width: ${getRightMaskWidth(mockup.desktop)}px;
+  `}
+
+  ${mq.hdOnly`
+    width: ${getRightMaskWidth(mockup.hd)}px;
+  `}
+`
+
+const SlideshowFlexBox = styled.div`
+  ${PrevButton} {
+    border-color: #d8d8d8;
+  }
+  ${ImageNumberCircle} {
+    background-color: #d0a67d;
+    &::after {
+      border-color: #fff;
+    }
+  }
+  ${ImageNumber} {
+    color: #fff;
+  }
+  ${SlideMask} {
+    background-color: #d0a67d;
+  }
+
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  ${mq.tabletAndBelow`
+    width: 100%;
+  `}
+
+  ${mq.desktopOnly`
+    width: ${mockup.desktop.container.width}px;
+  `}
+
+  ${mq.hdOnly`
+    width: ${mockup.hd.container.width}px;
+  `}
+`
+
+type DeviceMockup = {
+  slide: {
+    width: number
+    height: number
+    paddingRight: number
+  }
+  container: {
+    width: number
+  }
+  offset: {
+    left: number
+  }
+}
+
+function getTranslateX(deviceMockup: DeviceMockup, unit: number) {
+  const slideWidth = getSlideWidth(deviceMockup)
+
+  // total slides width including padding
+  let translateX = unit * slideWidth
+
+  // add left mask width and padding
+  translateX = translateX + deviceMockup.offset.left
+  return translateX // px
+}
+
+/**
+ * @param {DeviceMockup} deviceMockup
+ * @return {number}
+ */
+function getContainerWidth(deviceMockup: DeviceMockup) {
+  return deviceMockup.container.width
+}
+
+/**
+ * @param {DeviceMockup} deviceMockup
+ * @return {number}
+ */
+function getSlideWidth(deviceMockup: DeviceMockup) {
+  return deviceMockup.slide.width + deviceMockup.slide.paddingRight
+}
+
+/**
+ * @param {DeviceMockup} deviceMockup
+ * @return {number}
+ */
+function getLeftMaskWidth(deviceMockup: DeviceMockup) {
+  return deviceMockup.offset.left - deviceMockup.slide.paddingRight // px
+}
+
+/**
+ * @param {DeviceMockup} deviceMockup
+ * @return {number}
+ */
+function getRightMaskWidth(deviceMockup: DeviceMockup) {
   return (
-    <Figure>
-      <Image
-        src={images?.[0]?.resized?.original}
-        alt={images?.[0]?.name}
-        onError={(e) => (e.currentTarget.src = images?.[0]?.imageFile?.url)}
-      />
-    </Figure>
+    deviceMockup.container.width -
+    deviceMockup.offset.left -
+    getSlideWidth(deviceMockup)
+  ) // px
+}
+
+type ImageFile = {
+  width: number
+  height: number
+  url: string
+}
+
+type ImageEntity = {
+  id: string
+  desc: string // figure caption
+  imageFile: ImageFile
+  resized?: {
+    tiny: string
+    small: string
+    medium: string
+    large: string
+    original: string
+  }
+}
+
+type SlideshowBlockProps = {
+  className: string
+  data: {
+    delay?: number
+    alignment?: string
+    images: ImageEntity[]
+  }
+}
+
+export function SlideshowBlock({ className, data }: SlideshowBlockProps) {
+  const defaultTranslateXUnit = -slidesOffset
+
+  // value of curSlideIndex would be in [ 0 ~ props.data.content.length ] range,
+  // it indicates which image should be placed in the center
+  const [curSlideIndex, setCurSlideIndex] = useState(defaultCurIndex)
+  const [slideTo, setSlideTo] = useState('') // '', 'previous' or 'next'. '' means no sliding.
+  const [translateXUnit, setTranslateXUnit] = useState(defaultTranslateXUnit)
+  const images = (data?.images || []).filter((img) => img?.imageFile?.url)
+  const total = images?.length
+  const desc = images?.[curSlideIndex]?.desc
+  const appendedClassName = className + ' avoid-break'
+
+  const slides = useMemo(() => {
+    // add last `slidesOffset` elements into top of images array.
+    // add first `slidesOffset` elements into bottom of images array.
+    // EX:
+    // slidesOffset: 2
+    // input images: [ a, b, c, d ]
+    // output images: [c, d, a, b, c, d, a, b]
+    const _images = [
+      ...images.slice(-slidesOffset),
+      ...images,
+      ...images.slice(defaultCurIndex, slidesOffset),
+    ]
+
+    return _images?.map((img: ImageEntity, index: number) => {
+      const width = img.imageFile.width ?? 0
+      const height = img.imageFile.height ?? 0
+      const imgSrc = img.resized?.medium ?? img.imageFile.url
+      const imgSrcSetArr = []
+      if (img.resized?.medium) {
+        imgSrcSetArr.push(`${img.resized.medium} 900w`)
+      }
+
+      if (img.resized?.large) {
+        imgSrcSetArr.push(`${img.resized.large} 3000w`)
+      }
+
+      const objectFit = width > height ? 'cover' : 'contain'
+
+      return (
+        // since the items of _images would have the same id,
+        // hence, we append `index` on the key
+        <SlideFlexItem key={`slide_${img.id}_${index}`}>
+          <img
+            srcSet={imgSrcSetArr.join(',')}
+            src={imgSrc}
+            style={{ objectFit, width: '100%' }}
+            sizes="(max-width: 768px) 400px"
+          />
+        </SlideFlexItem>
+      )
+    })
+  }, [images])
+
+  const slideToPrev = () => {
+    setSlideTo('previous')
+    setTranslateXUnit(translateXUnit + 1)
+  }
+
+  const slideToNext = () => {
+    setSlideTo('next')
+    setTranslateXUnit(translateXUnit - 1)
+  }
+
+  useEffect(() => {
+    if (slideTo === '') {
+      return
+    }
+    let _curSlideIndex: number
+    if (slideTo === 'previous') {
+      _curSlideIndex = curSlideIndex - 1
+
+      if (_curSlideIndex < defaultCurIndex) {
+        _curSlideIndex = total + _curSlideIndex
+      }
+    } else if (slideTo === 'next') {
+      _curSlideIndex = curSlideIndex + 1
+
+      if (_curSlideIndex >= total) {
+        _curSlideIndex = _curSlideIndex % total
+      }
+    }
+    setTimeout(() => {
+      setSlideTo('')
+      setCurSlideIndex(_curSlideIndex)
+      setTranslateXUnit(defaultTranslateXUnit - _curSlideIndex)
+    }, duration * 2)
+  }, [slideTo, curSlideIndex, translateXUnit])
+
+  const isSliding = slideTo !== ''
+
+  return (
+    <SlideshowFlexBox className={appendedClassName}>
+      <SlidesSection>
+        <SlidesFlexBox
+          translateXUint={translateXUnit}
+          duration={duration}
+          isSliding={isSliding}
+        >
+          {slides}
+        </SlidesFlexBox>
+        <LeftSlideMask />
+        <RightSlideMask />
+      </SlidesSection>
+      <PrevNextSection>
+        <PrevButton onClick={isSliding ? undefined : slideToPrev}>
+          <PreArrowSvg />
+        </PrevButton>
+        <NextButton onClick={isSliding ? undefined : slideToNext}>
+          <NextArrowSvg />
+        </NextButton>
+      </PrevNextSection>
+      <ImageNumberCircle>
+        <ImageNumber>{curSlideIndex + 1}</ImageNumber>
+        <ImageTotal>{total}</ImageTotal>
+      </ImageNumberCircle>
+      {desc ? <Desc>{desc}</Desc> : <EmptyDesc />}
+    </SlideshowFlexBox>
   )
 }
 
-// 202206 latest version of slideshow, support delay property
-export function SlideshowBlockV2(entity: DraftEntityInstance) {
-  const { images } = entity.getData()
-  const [expandSlideShow, setExpandSlideShow] = useState(false)
-  const [showLightBox, setShowLightBox] = useState(false)
-  const [focusImageIndex, setFocusImageIndex] = useState(0)
-
-  const imagesRefs = useRef(Array(images.length).fill(null))
-
-  useEffect(() => {
-    const focusedImageRef = imagesRefs?.current[focusImageIndex]
-
-    if (focusedImageRef) {
-      focusedImageRef?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      })
-    }
-  }, [focusImageIndex])
-
-  const shouldMaskSlideShow = Boolean(images.length > 9 && !expandSlideShow)
-  const shouldLimitFigureHeight = Boolean(images.length > 1)
-
-  const slideShowImages = images.map((image, index) => {
-    const { id, resized, desc, name } = image
-    return (
-      <SlideShowImage
-        className="slideshow-image"
-        key={id}
-        onClick={() => {
-          setShowLightBox(!showLightBox)
-          setFocusImageIndex(index)
-        }}
-      >
-        <CustomImage
-          images={resized}
-          defaultImage={defaultImage}
-          alt={name}
-          rwd={{
-            mobile: '100vw',
-            tablet: '608px',
-            desktop: '960px',
-            default: '100%',
-          }}
-          priority={true}
-        />
-        {desc && <FigCaption>{desc}</FigCaption>}
-      </SlideShowImage>
-    )
-  })
-
+function NextArrowSvg() {
   return (
-    <>
-      <SlideShowBlockWrapper
-        onClick={() => setExpandSlideShow(!expandSlideShow)}
-        expandSlideShow={expandSlideShow}
-        shouldLimitFigureHeight={shouldLimitFigureHeight}
-      >
-        {slideShowImages}
-        {shouldMaskSlideShow && <GradientMask />}
-      </SlideShowBlockWrapper>
+    <svg
+      viewBox="0 0 31 17"
+      width="31"
+      height="17"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M29.33 7.854H0v1h29.256l-7.11 7.148.708.705 8-8.042-.001-.707-8-7.958-.706.709 7.183 7.145z"
+        fill="gray"
+        fillRule="nonzero"
+      />
+    </svg>
+  )
+}
 
-      {shouldMaskSlideShow && (
-        <ExpandText
-          className="slideshow-expand-text"
-          onClick={() => setExpandSlideShow(!expandSlideShow)}
-        >
-          展開所有圖片
-        </ExpandText>
-      )}
-      {showLightBox && (
-        <SlideShowLightBox
-          focusImageIndex={focusImageIndex}
-          images={images}
-          setShowLightBox={setShowLightBox}
-          setFocusImageIndex={setFocusImageIndex}
-          imagesRefs={imagesRefs}
-        />
-      )}
-    </>
+function PreArrowSvg() {
+  return (
+    <svg
+      viewBox="0 0 31 17"
+      width="31"
+      height="17"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.17 8.5H31.5v1H2.244l7.11 7.147-.708.706-8-8.042.001-.707 8-7.958.706.708L2.17 8.5z"
+        fill="gray"
+      />
+    </svg>
   )
 }
