@@ -6,6 +6,8 @@ import '../assets/css/dot-hr.css'
 import '../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+// TODO:
+// fetch data via server, render via client
 
 export default async function PostPage({
   params,
