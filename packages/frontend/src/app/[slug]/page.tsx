@@ -3,6 +3,7 @@ import PostRenderer from './post-renderer'
 import Title from './title'
 import PublishedDate from './published-date'
 import Category from './category'
+import Sidebar from './sidebar'
 import Brief from './brief'
 import Divider from './divider'
 import Tags from './tags'
@@ -120,7 +121,7 @@ export default async function PostPage({
           </header>
         </div>
         <Brief content={post.brief} editors={post.editors} />
-        <h1>TODO: sidebar</h1>
+        <Sidebar />
         <Divider />
 
         {post && <PostRenderer post={post} />}
