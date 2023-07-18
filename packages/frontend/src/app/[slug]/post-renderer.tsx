@@ -1,7 +1,7 @@
 'use client'
 import draftRenderer from '@kids-reporter/draft-renderer'
 
-export default function PostRenderer({ post }: { post: any }) {
+export const PostRenderer = ({ post }: { post: any }) => {
   console.log('render draftRenderer')
   return (
     <>
@@ -14,3 +14,5 @@ export default function PostRenderer({ post }: { post: any }) {
     </>
   )
 }
+
+export default PostRenderer

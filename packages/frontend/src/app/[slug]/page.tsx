@@ -1,5 +1,11 @@
 import axios from 'axios'
 import PostRenderer from './post-renderer'
+import Title from './title'
+import PublishedDate from './published-date'
+import Category from './category'
+import Brief from './brief'
+import Divider from './divider'
+import Tags from './tags'
 
 import '../assets/css/post.css'
 import '../assets/css/dot-hr.css'
@@ -80,101 +86,5 @@ export default async function PostPage({
         <h1>TODO: footer</h1>
       </div>
     )
-  )
-}
-
-type TitleProp = {
-  text: string
-}
-
-const Title = (props: TitleProp) => {
-  return <h1 className="page-title">{props.text}</h1>
-}
-
-type DateProp = {
-  date: string
-}
-
-const PublishedDate = (props: DateProp) => {
-  const getFormattedDate = (date: string): string => {
-    const dateObj = new Date(date)
-    const year = dateObj?.getFullYear()
-    const month = `${dateObj?.getMonth() + 1}`.padStart(2, '0')
-    const day = `${dateObj?.getDay() + 1}`.padStart(2, '0')
-    return [year, month, day].join('.')
-  }
-  return (
-    <div className="post_date">刊出日期 {getFormattedDate(props.date)}</div>
-  )
-}
-
-type CategoryProp = {
-  text: string
-  link: string
-}
-
-const Category = (props: CategoryProp) => {
-  return (
-    <div className="post_primary_category">
-      <a className="rpjr-btn rpjr-btn-theme" href={props.link}>
-        {props.text}
-      </a>
-    </div>
-  )
-}
-
-type BriefProp = {
-  content: any
-}
-
-const Brief = (props: BriefProp) => {
-  // TODO: brief author
-  return (
-    <div className="post-intro">
-      {props.content?.blocks?.map(
-        (block: any, index: number) =>
-          block?.text && <p key={`brief-paragraph-${index}`}>{block.text}</p>
-      )}
-    </div>
-  )
-}
-
-const Divider = () => {
-  return <hr className="dot-hr mt-18 mb-18" />
-}
-
-type Tag = {
-  text: string
-  link: string
-}
-
-type TagsProp = {
-  tags: Tag[]
-}
-
-const Tags = (props: TagsProp) => {
-  return (
-    <div className="rpjr-post-tags">
-      <h3 className="rpjr-post-tags__heading">
-        <i className="icon-rpjr-icon-tag">
-          <i className="path1 text-color-theme"></i>
-          <i className="path2"></i>
-        </i>
-        &nbsp;&nbsp;常用關鍵字
-      </h3>
-      <div className="rpjr-post-tags__box">
-        {props?.tags.map((tag, index) => {
-          return (
-            <a
-              key={`post-tag-${index}`}
-              className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
-              href={tag.link}
-            >
-              #&nbsp;{tag.text}
-            </a>
-          )
-        })}
-      </div>
-    </div>
   )
 }
