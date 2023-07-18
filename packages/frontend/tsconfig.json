@@ -21,11 +21,11 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@kids-reporter/draft-renderer": ["./src/localTypes/kids-reporter__draft-renderer"]
+      "@kids-reporter/draft-renderer": ["./src/local-types/kids-reporter__draft-renderer"]
     },
     "typeRoots": [
       "node_modules/@types",
-      "src/localTypes"
+      "src/local-types"
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
