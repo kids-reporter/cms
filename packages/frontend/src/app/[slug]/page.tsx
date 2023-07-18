@@ -68,7 +68,10 @@ export default async function PostPage({
         </div>
         <div className="post-intro">
           {post.brief?.blocks?.map(
-            (block: any) => block?.text && <p>{block.text}</p>
+            (block: any, index: number) =>
+              block?.text && (
+                <p key={`brief-paragraph-${index}`}>{block.text}</p>
+              )
           )}
         </div>
         <h1>TODO: brief author</h1>
