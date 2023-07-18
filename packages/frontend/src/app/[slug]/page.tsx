@@ -6,6 +6,7 @@ import Category from './category'
 import Brief from './brief'
 import Divider from './divider'
 import Tags from './tags'
+import AuthorCard from './author-card'
 
 import '../assets/css/post.css'
 import '../assets/css/dot-hr.css'
@@ -125,7 +126,7 @@ export default async function PostPage({
         {post && <PostRenderer post={post} />}
         <Tags tags={post.tags} />
 
-        <h1>TODO: 誰幫我們完成這篇文章</h1>
+        <AuthorCard />
         <h1>TODO: call to action</h1>
         <h1>TODO: 相關文章</h1>
         <h1>TODO: footer</h1>
