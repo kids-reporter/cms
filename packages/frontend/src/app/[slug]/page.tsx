@@ -30,14 +30,23 @@ export default async function PostPage({
     },
   })
   const post = response?.data?.data?.post
-  console.log(post?.name)
 
   return (
     <div className="post">
-      <h1>Slug: {params.slug}</h1>
-      <h1>Title: {post?.name}</h1>
+      <h1>TODO: header</h1>
+      <h1>TODO: 首圖</h1>
+      <h1>TODO: {post?.name}</h1>
+      <h1>TODO: brief</h1>
+      <h1>TODO: sidebar</h1>
+
       <hr className="dot-hr mt-18 mb-18" />
+
       {post && <PostRenderer post={post} />}
+      <h1>TODO: 關鍵字</h1>
+      <h1>TODO: 誰幫我們完成這篇文章</h1>
+      <h1>TODO: call to action</h1>
+      <h1>TODO: 相關文章</h1>
+      <h1>TODO: footer</h1>
     </div>
   )
 }
