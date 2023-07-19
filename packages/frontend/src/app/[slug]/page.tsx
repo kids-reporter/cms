@@ -9,6 +9,7 @@ import Divider from './divider'
 import Tags from './tags'
 import AuthorCard from './author-card'
 import RelatedPosts from './related-posts'
+import BackToTop from './back-to-top'
 import Footer from './footer'
 
 import '../assets/css/post.css'
@@ -142,6 +143,7 @@ export default async function PostPage({
         <h1>TODO: call to action</h1>
         <RelatedPosts posts={post.relatedPosts} />
         <Footer />
+        <BackToTop />
       </div>
     )
   )
