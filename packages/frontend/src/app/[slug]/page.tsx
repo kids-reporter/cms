@@ -8,6 +8,7 @@ import Brief from './brief'
 import Divider from './divider'
 import Tags from './tags'
 import AuthorCard from './author-card'
+import Footer from './footer'
 
 import '../assets/css/post.css'
 import '../assets/css/button.css'
@@ -133,7 +134,7 @@ export default async function PostPage({
         <AuthorCard />
         <h1>TODO: call to action</h1>
         <h1>TODO: 相關文章</h1>
-        <h1>TODO: footer</h1>
+        <Footer />
       </div>
     )
   )
