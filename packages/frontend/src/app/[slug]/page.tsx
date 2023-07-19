@@ -10,12 +10,17 @@ import Tags from './tags'
 import AuthorCard from './author-card'
 
 import '../assets/css/post.css'
+import '../assets/css/button.css'
 import '../assets/css/dot-hr.css'
 import '../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
 // mockups
+const categoryMockup = {
+  text: '大學好好玩',
+  link: '/category/university-exploratory-learning-teaching',
+}
 const editorsMockup = [
   {
     title: '文字',
@@ -100,6 +105,7 @@ export default async function PostPage({
     },
   })
   const post = response?.data?.data?.post
+  post.category = categoryMockup // TODO: find category source
   post.tags = tagsMockup // TODO: find tags source
   post.editors = editorsMockup // TODO: find editors source
 
@@ -113,10 +119,7 @@ export default async function PostPage({
             <Title text={post.name as string} />
             <div className="post_date_category">
               <PublishedDate date={post?.publishedDate} />
-              <Category
-                text={'TODO: category'}
-                link={'/category/university-exploratory-learning-teaching'}
-              />
+              <Category text={post.category.text} link={post.category.link} />
             </div>
           </header>
         </div>
