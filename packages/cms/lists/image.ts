@@ -1,6 +1,6 @@
 import config from '../config'
 import { list, graphql } from '@keystone-6/core'
-import { image, text, relationship, virtual, timestamp } from '@keystone-6/core/fields'
+import { image, text, virtual, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   db: {
@@ -55,7 +55,7 @@ const listConfigurations = list({
             })
           }
 
-          const rtn : Record<string, string> = {}
+          const rtn: Record<string, string> = {}
           const filename = item?.imageFile_id
 
           if (!filename) {
@@ -69,9 +69,10 @@ const listConfigurations = list({
           const resizedTargets = ['tiny', 'small', 'medium', 'large']
 
           resizedTargets.forEach((target) => {
-            rtn[
-              target
-            ] = `${config.googleCloudStorage.origin}/images/${filename}-${target}${extension}`
+            rtn[target] =
+              // TODO: adjust urls after resizing images function is ready
+              // `${config.googleCloudStorage.origin}/images/${filename}-${target}${extension}`
+              `${config.googleCloudStorage.origin}/images/${filename}${extension}`
           })
 
           rtn[

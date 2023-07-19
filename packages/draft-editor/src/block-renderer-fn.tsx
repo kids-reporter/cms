@@ -11,7 +11,6 @@ const {
   MediaBlock,
   ImageBlock,
   SlideshowBlock,
-  SlideshowBlockV2,
   DividerBlock,
   RelatedPostBlock,
   VideoBlock,
@@ -34,9 +33,6 @@ const AtomicBlock = (props) => {
     }
     case 'slideshow': {
       return SlideshowBlock(entity)
-    }
-    case 'slideshow-v2': {
-      return SlideshowBlockV2(entity)
     }
     case 'EMBEDDEDCODE': {
       return EmbeddedCodeBlock(entity)

@@ -8,7 +8,7 @@ import { InfoBoxBlock } from './info-box-block'
 import { MediaBlock } from './media-block'
 import { RelatedPostBlock } from './related-post-block'
 import { SideIndexBlock } from './side-index-block'
-import { SlideshowBlock, SlideshowBlockV2 } from './slideshow-block'
+import { SlideshowBlock } from './slideshow-block'
 import { TableBlock } from './table-block'
 import { VideoBlock } from './video-block'
 import { AudioBlock } from './audio-block'
@@ -25,7 +25,6 @@ export const blockRenderers = {
   RelatedPostBlock,
   SideIndexBlock,
   SlideshowBlock,
-  SlideshowBlockV2,
   TableBlock,
   VideoBlock,
   AudioBlock,
