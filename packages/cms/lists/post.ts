@@ -1,7 +1,10 @@
-import { customFields, utils } from '@kids-reporter/cms-core'
+import {
+  customFields,
+  utils,
+  richTextEditorButtonNames,
+} from '@kids-reporter/cms-core'
 import { list } from '@keystone-6/core'
 import {
-  checkbox,
   integer,
   relationship,
   timestamp,
@@ -9,7 +12,6 @@ import {
   select,
   json,
 } from '@keystone-6/core/fields'
-
 
 const listConfigurations = list({
   fields: {
@@ -131,11 +133,46 @@ const listConfigurations = list({
     }),
     brief: customFields.richTextEditor({
       label: '前言',
-      disabledButtons: [],
+      disabledButtons: [
+        richTextEditorButtonNames.annotation,
+        richTextEditorButtonNames.audio,
+        richTextEditorButtonNames.backgroundColor,
+        richTextEditorButtonNames.backgroundImage,
+        richTextEditorButtonNames.backgroundVideo,
+        richTextEditorButtonNames.blockquote,
+        richTextEditorButtonNames.code,
+        richTextEditorButtonNames.codeBlock,
+        richTextEditorButtonNames.colorBox,
+        richTextEditorButtonNames.divider,
+        richTextEditorButtonNames.embed,
+        richTextEditorButtonNames.h2,
+        richTextEditorButtonNames.h3,
+        richTextEditorButtonNames.h4,
+        richTextEditorButtonNames.image,
+        richTextEditorButtonNames.infoBox,
+        richTextEditorButtonNames.relatedPost,
+        richTextEditorButtonNames.sideIndex,
+        richTextEditorButtonNames.slideshow,
+        richTextEditorButtonNames.table,
+        richTextEditorButtonNames.video,
+      ],
     }),
     content: customFields.richTextEditor({
       label: '內文',
-      disabledButtons: [],
+      disabledButtons: [
+        richTextEditorButtonNames.audio,
+        richTextEditorButtonNames.backgroundColor,
+        richTextEditorButtonNames.backgroundImage,
+        richTextEditorButtonNames.backgroundVideo,
+        richTextEditorButtonNames.code,
+        richTextEditorButtonNames.codeBlock,
+        richTextEditorButtonNames.colorBox,
+        richTextEditorButtonNames.divider,
+        richTextEditorButtonNames.relatedPost,
+        richTextEditorButtonNames.sideIndex,
+        richTextEditorButtonNames.table,
+        richTextEditorButtonNames.video,
+      ],
     }),
     //projects: relationship({
     //  label: '專題',
@@ -180,7 +217,7 @@ const listConfigurations = list({
       db: {
         updatedAt: true,
       },
-    })
+    }),
   },
   ui: {
     labelField: 'slug',
@@ -198,8 +235,7 @@ const listConfigurations = list({
       delete: () => true,
     },
   },
-  hooks: {
-  },
+  hooks: {},
 })
 export default utils.addManualOrderRelationshipFields(
   [
@@ -246,5 +282,5 @@ export default utils.addManualOrderRelationshipFields(
       targetListLabelField: 'name',
     },
   ],
- listConfigurations
+  listConfigurations
 )

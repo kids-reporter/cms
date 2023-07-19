@@ -90,33 +90,11 @@ export default withAuth(
           })
         )
 
-        app.options(
-          '/api/graphql',
-          (req, res, next) => {
-            console.log(
-              JSON.stringify({
-                severity: 'DEBUG',
-                message: 'Enable preflight on /api/graphql endpoint',
-              })
-            )
-            next()
-          },
-          cors(corsOpts)
-        )
+        const corsMiddleware = cors(corsOpts)
 
-        app.post(
-          '/api/graphql',
-          (req, res, next) => {
-            console.log(
-              JSON.stringify({
-                severity: 'DEBUG',
-                message: 'Enable cors on /api/graphql endpoint',
-              })
-            )
-            next()
-          },
-          cors(corsOpts)
-        )
+        app.options('/api/graphql', corsMiddleware)
+
+        app.post('/api/graphql', corsMiddleware)
 
         //// This middleware is available in Express v4.16.0 onwards
         //// Set to 50mb because DraftJS Editor playload could be really large
