@@ -36,9 +36,8 @@ export function SlideshowButton(props: {
 
     const contentState = editorState.getCurrentContent()
 
-    // since 202206, only slideshow-v2 will be created
     const contentStateWithEntity = contentState.createEntity(
-      'slideshow-v2',
+      'slideshow',
       'IMMUTABLE',
       {
         alignment: align,
