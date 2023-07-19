@@ -83,6 +83,8 @@ export type ImageEntity = {
   name?: string
   imageFile: {
     url: string
+    width: number
+    height: number
   }
   resized: {
     original: string
@@ -135,9 +137,7 @@ function ImageGrid(props: {
       <ImageSelected>
         {isSelected ? <i className="fas fa-check-circle"></i> : null}
       </ImageSelected>
-      <Image
-        src={image?.imageFile?.url}
-      />
+      <Image src={image?.imageFile?.url} />
     </ImageGridWrapper>
   )
 }
@@ -177,9 +177,7 @@ function ImageMetaGrid(props: {
 
   return (
     <ImageMetaGridWrapper>
-      <Image
-        src={image?.imageFile?.url}
-      />
+      <Image src={image?.imageFile?.url} />
       {enableCaption && (
         <React.Fragment>
           <Label htmlFor="caption">Image Caption:</Label>
@@ -257,12 +255,14 @@ const imagesQuery = gql`
       name
       imageFile {
         url
+        width
+        height
       }
       resized {
         original
         tiny
         small
-        medium 
+        medium
         large
       }
     }
