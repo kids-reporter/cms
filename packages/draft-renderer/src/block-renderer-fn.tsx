@@ -5,7 +5,6 @@ const {
   ImageBlock,
   InfoBoxBlock,
   SlideshowBlock,
-  SlideshowBlockV2,
   DividerBlock,
   TableBlock,
   ColorBoxBlock,
@@ -33,9 +32,6 @@ const AtomicBlock = (props: any) => {
     }
     case 'slideshow': {
       return SlideshowBlock(entity)
-    }
-    case 'slideshow-v2': {
-      return SlideshowBlockV2(entity)
     }
     case 'EMBEDDEDCODE': {
       return EmbeddedCodeBlock(entity)

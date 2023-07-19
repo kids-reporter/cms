@@ -4,7 +4,7 @@
     "packages/core",
     "packages/draft-editor",
     "packages/draft-renderer",
-    "packages/kids",
+    "packages/cms",
     "packages/frontend"
   ],
   "scripts": {
