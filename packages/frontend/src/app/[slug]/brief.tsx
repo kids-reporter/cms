@@ -1,5 +1,8 @@
+import Editors, { EditorGroup } from './editors'
+
 type BriefProp = {
   content: any
+  editors: EditorGroup[]
 }
 
 export const Brief = (props: BriefProp) => {
@@ -10,6 +13,7 @@ export const Brief = (props: BriefProp) => {
         (block: any, index: number) =>
           block?.text && <p key={`brief-paragraph-${index}`}>{block.text}</p>
       )}
+      <Editors editorGroups={props.editors} />
     </div>
   )
 }
