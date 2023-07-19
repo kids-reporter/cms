@@ -8,6 +8,7 @@ import Brief from './brief'
 import Divider from './divider'
 import Tags from './tags'
 import AuthorCard from './author-card'
+import RelatedPosts from './related-posts'
 import Footer from './footer'
 
 import '../assets/css/post.css'
@@ -96,6 +97,12 @@ export default async function PostPage({
               editors {
                 name
               }
+              relatedPosts {
+                name
+                slug
+                publishedDate
+                brief
+              }
             }
           }
         `,
@@ -133,7 +140,7 @@ export default async function PostPage({
 
         <AuthorCard />
         <h1>TODO: call to action</h1>
-        <h1>TODO: 相關文章</h1>
+        <RelatedPosts posts={post.relatedPosts} />
         <Footer />
       </div>
     )
