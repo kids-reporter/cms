@@ -15,7 +15,7 @@ import RelatedPosts from './related-posts'
 import BackToTop from './back-to-top'
 import Footer from './footer'
 
-import '../assets/css/post.scss'
+import './post.scss'
 import '../assets/css/button.css'
 import '../assets/css/icomoon/style.css'
 
