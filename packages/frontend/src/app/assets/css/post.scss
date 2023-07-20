@@ -148,6 +148,10 @@ body.single-post {
         line-height: 200%;
         padding: 20px 30px;
     }
+
+    p {
+        margin-bottom: var(--content-spacing);
+      }
 }
 
 .post .rpjr-post-tags {
