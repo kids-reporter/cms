@@ -140,11 +140,11 @@ export default async function PostPage({
         </div>
         <Brief content={post.brief} editors={post.editors} />
         <Sidebar />
+
         <Divider />
 
-        {post && <PostRenderer post={post} />}
+        <PostRenderer post={post} />
         <Tags tags={post.tags} />
-
         <AuthorCard />
         <CallToAction />
         <RelatedPosts posts={post.relatedPosts} />
