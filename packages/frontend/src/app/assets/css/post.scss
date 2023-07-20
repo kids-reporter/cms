@@ -22,6 +22,7 @@ body.single-post {
     max-width: 800px !important;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom: var(--margin-bottom, 40px);
 }
 .post .ct-featured-image {
     @media screen and (max-width: 689px) {
