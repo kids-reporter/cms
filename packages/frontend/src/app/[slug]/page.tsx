@@ -2,6 +2,7 @@ import axios from 'axios'
 import PostRenderer from './post-renderer'
 import Header from './header'
 import Title from './title'
+import OGImage from './og-image'
 import PublishedDate from './published-date'
 import Category from './category'
 import Sidebar from './sidebar'
@@ -100,6 +101,9 @@ export default async function PostPage({
               editors {
                 name
               }
+              ogImage {
+                name
+              }
               relatedPosts {
                 name
                 slug
@@ -124,7 +128,7 @@ export default async function PostPage({
     post && (
       <div className="post">
         <Header />
-        <h1>TODO: 首圖</h1>
+        <OGImage image={post.ogImage} />
         <div className="hero-section" data-type="type-1">
           <header className="entry-header">
             <Title text={post.name as string} />
