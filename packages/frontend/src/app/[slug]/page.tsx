@@ -8,6 +8,7 @@ import Brief from './brief'
 import Divider from './divider'
 import Tags from './tags'
 import AuthorCard from './author-card'
+import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import BackToTop from './back-to-top'
 import Footer from './footer'
@@ -140,7 +141,7 @@ export default async function PostPage({
         <Tags tags={post.tags} />
 
         <AuthorCard />
-        <h1>TODO: call to action</h1>
+        <CallToAction />
         <RelatedPosts posts={post.relatedPosts} />
         <Footer />
         <BackToTop />
