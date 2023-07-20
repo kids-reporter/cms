@@ -41,7 +41,7 @@ export const Header = () => {
                   訂閱
                 </a>
                 <img
-                  src="/wp-content/uploads/2022/10/header-left-slogan.svg"
+                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/header-left-slogan.svg"
                   className="header-left__slogan"
                 />
               </div>{' '}
