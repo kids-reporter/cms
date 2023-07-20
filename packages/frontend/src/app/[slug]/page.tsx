@@ -1,5 +1,6 @@
 import axios from 'axios'
 import PostRenderer from './post-renderer'
+import Header from './header'
 import Title from './title'
 import PublishedDate from './published-date'
 import Category from './category'
@@ -122,7 +123,7 @@ export default async function PostPage({
   return (
     post && (
       <div className="post">
-        <h1>TODO: header</h1>
+        <Header />
         <h1>TODO: 首圖</h1>
         <div className="hero-section" data-type="type-1">
           <header className="entry-header">
