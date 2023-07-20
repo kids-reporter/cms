@@ -122,12 +122,13 @@ export default async function PostPage({
   post.category = categoryMockup // TODO: find category source
   post.tags = tagsMockup // TODO: find tags source
   post.editors = editorsMockup // TODO: find editors source
+  post.theme = 'yellow'
 
   return (
     post && (
       <>
         <Header />
-        <div className="post">
+        <div className={`post theme-${post.theme}`}>
           <OGImage image={post.ogImage} />
           <div className="hero-section" data-type="type-1">
             <header className="entry-header">
