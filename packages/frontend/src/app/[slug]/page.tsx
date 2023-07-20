@@ -1,6 +1,8 @@
 import axios from 'axios'
 import PostRenderer from './post-renderer'
+import Header from './header'
 import Title from './title'
+import OGImage from './og-image'
 import PublishedDate from './published-date'
 import Category from './category'
 import Sidebar from './sidebar'
@@ -8,14 +10,23 @@ import Brief from './brief'
 import Divider from './divider'
 import Tags from './tags'
 import AuthorCard from './author-card'
+import CallToAction from './call-to-action'
+import RelatedPosts from './related-posts'
+import BackToTop from './back-to-top'
+import Footer from './footer'
 
 import '../assets/css/post.css'
+import '../assets/css/button.css'
 import '../assets/css/dot-hr.css'
 import '../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
 // mockups
+const categoryMockup = {
+  text: '大學好好玩',
+  link: '/category/university-exploratory-learning-teaching',
+}
 const editorsMockup = [
   {
     title: '文字',
@@ -90,6 +101,15 @@ export default async function PostPage({
               editors {
                 name
               }
+              ogImage {
+                name
+              }
+              relatedPosts {
+                name
+                slug
+                publishedDate
+                brief
+              }
             }
           }
         `,
@@ -100,23 +120,21 @@ export default async function PostPage({
     },
   })
   const post = response?.data?.data?.post
+  post.category = categoryMockup // TODO: find category source
   post.tags = tagsMockup // TODO: find tags source
   post.editors = editorsMockup // TODO: find editors source
 
   return (
     post && (
       <div className="post">
-        <h1>TODO: header</h1>
-        <h1>TODO: 首圖</h1>
+        <Header />
+        <OGImage image={post.ogImage} />
         <div className="hero-section" data-type="type-1">
           <header className="entry-header">
             <Title text={post.name as string} />
             <div className="post_date_category">
               <PublishedDate date={post?.publishedDate} />
-              <Category
-                text={'TODO: category'}
-                link={'/category/university-exploratory-learning-teaching'}
-              />
+              <Category text={post.category.text} link={post.category.link} />
             </div>
           </header>
         </div>
@@ -128,9 +146,10 @@ export default async function PostPage({
         <Tags tags={post.tags} />
 
         <AuthorCard />
-        <h1>TODO: call to action</h1>
-        <h1>TODO: 相關文章</h1>
-        <h1>TODO: footer</h1>
+        <CallToAction />
+        <RelatedPosts posts={post.relatedPosts} />
+        <Footer />
+        <BackToTop />
       </div>
     )
   )

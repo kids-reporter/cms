@@ -17,6 +17,7 @@ body.single-post .entry-content {
 }
 
 .post {
+  --theme-color: #F8C341; /* TODO: fix dynamic theme */
   font-size: var(--rpjr-text-scale);
 }
 
