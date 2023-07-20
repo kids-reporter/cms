@@ -125,31 +125,33 @@ export default async function PostPage({
 
   return (
     post && (
-      <div className="post">
+      <>
         <Header />
-        <OGImage image={post.ogImage} />
-        <div className="hero-section" data-type="type-1">
-          <header className="entry-header">
-            <Title text={post.name as string} />
-            <div className="post_date_category">
-              <PublishedDate date={post?.publishedDate} />
-              <Category text={post.category.text} link={post.category.link} />
-            </div>
-          </header>
+        <div className="post">
+          <OGImage image={post.ogImage} />
+          <div className="hero-section" data-type="type-1">
+            <header className="entry-header">
+              <Title text={post.name as string} />
+              <div className="post_date_category">
+                <PublishedDate date={post?.publishedDate} />
+                <Category text={post.category.text} link={post.category.link} />
+              </div>
+            </header>
+          </div>
+          <Brief content={post.brief} editors={post.editors} />
+          <Sidebar />
+
+          <Divider />
+
+          <PostRenderer post={post} />
+          <Tags tags={post.tags} />
+          <AuthorCard />
         </div>
-        <Brief content={post.brief} editors={post.editors} />
-        <Sidebar />
-
-        <Divider />
-
-        <PostRenderer post={post} />
-        <Tags tags={post.tags} />
-        <AuthorCard />
         <CallToAction />
         <RelatedPosts posts={post.relatedPosts} />
         <Footer />
         <BackToTop />
-      </div>
+      </>
     )
   )
 }
