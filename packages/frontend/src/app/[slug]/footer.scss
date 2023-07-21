@@ -21,6 +21,11 @@
   grid-row-gap: var(--columns-gap, 50px);
   padding-top: var(--container-spacing);
   padding-bottom: var(--container-spacing);
+
+  --fontWeight: 400;
+  --fontSize: 15px;
+  --lineHeight: 1.3;
+  --color: var(--paletteColor4);
 }
 
 .footer-top {

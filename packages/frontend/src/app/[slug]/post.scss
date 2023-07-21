@@ -14,6 +14,16 @@ body.single-post {
     font-size: var(--rpjr-text-scale);
 }
 
+.icon-rpjr-icon-tag .path1:before {
+    content: "\e907";
+    color: var(--theme-color) !important;
+  }
+  .icon-rpjr-icon-tag .path2:before {
+    content: "\e908";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+
 /*.post .entry-content,*/
 .post topic-breadcrumb,
 .post .hero-section
