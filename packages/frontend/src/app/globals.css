@@ -97,6 +97,7 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
   --content-spacing: 1.5em;
+  --container-spacing: 25px;
   --stk-block-background-padding: 20px;
 }
 

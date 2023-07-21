@@ -5,6 +5,17 @@
   justify-content: center !important;
   padding: var(--stk-block-background-padding);
 }
+
+.footer-copyright {
+  background-color: var(--paletteColor6);
+  display: grid;
+  grid-template-columns: var(--grid-template-columns);
+  grid-column-gap: var(--columns-gap, 50px);
+  grid-row-gap: var(--columns-gap, 50px);
+  padding-top: var(--container-spacing);
+  padding-bottom: var(--container-spacing);
+}
+
 .footer-top {
   width: 100%;
   display: flex;
