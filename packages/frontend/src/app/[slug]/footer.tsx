@@ -189,7 +189,7 @@ const socialIcons = [
 export const Footer = () => {
   return (
     <>
-      <div className="entry-content">
+      <div className="footer">
         <div
           className="wp-block-stackable-columns alignfull stk-block-columns stk-block stk-0dc58f0 stk-block-background"
           data-block-id="0dc58f0"

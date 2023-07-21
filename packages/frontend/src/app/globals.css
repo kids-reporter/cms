@@ -39,6 +39,16 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  --paletteColor1: #27B5F7;
+  --paletteColor2: #1559ed;
+  --paletteColor3: #3A4F66;
+  --paletteColor4: #232323;
+  --paletteColor5: #F76977;
+  --paletteColor6: #F8C341;
+  --paletteColor7: #EAEAEA;
+  --paletteColor8: #ffffff;
+  --color: var(--paletteColor3);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -89,6 +99,7 @@ body {
 body {
   color: rgb(var(--foreground-rgb));
   --content-spacing: 1.5em;
+  --stk-block-background-padding: 20px;
 }
 
 a {
