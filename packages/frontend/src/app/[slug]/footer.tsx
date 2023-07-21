@@ -292,33 +292,31 @@ export const Footer = () => {
       </div>
 
       <div id="footer" className="footer-copyright" data-id="type-1">
-        <div data-row="bottom" className="ct-hidden-sm ct-hidden-md">
-          <div className="footer-copyright-container">
-            <div data-column="text">
-              <div className="ct-header-text " data-id="text">
-                <div className="entry-content">
-                  公益勸募許可字號｜衛部救字第 1101363853 號{' '}
-                  <a
-                    href="https://www.twreporter.org/a/privacy-footer"
-                    target="_blank"
-                    className="footer-link"
-                  >
-                    <strong>隱私政策</strong>
-                  </a>{' '}
-                  <a
-                    href="https://www.twreporter.org/a/license-footer"
-                    target="_blank"
-                    className="footer-link"
-                  >
-                    <strong>許可協議</strong>
-                  </a>{' '}
-                </div>
+        <div className="footer-copyright-container">
+          <div data-column="text">
+            <div className="ct-header-text " data-id="text">
+              <div className="entry-content">
+                公益勸募許可字號｜衛部救字第 1101363853 號{' '}
+                <a
+                  href="https://www.twreporter.org/a/privacy-footer"
+                  target="_blank"
+                  className="footer-link"
+                >
+                  <strong>隱私政策</strong>
+                </a>{' '}
+                <a
+                  href="https://www.twreporter.org/a/license-footer"
+                  target="_blank"
+                  className="footer-link"
+                >
+                  <strong>許可協議</strong>
+                </a>{' '}
               </div>
             </div>
-            <div data-column="copyright">
-              <div className="ct-footer-copyright" data-id="copyright">
-                <p>Copyright © 2023 The Reporter</p>
-              </div>
+          </div>
+          <div data-column="copyright">
+            <div className="ct-footer-copyright" data-id="copyright">
+              <p>Copyright © 2023 The Reporter</p>
             </div>
           </div>
         </div>

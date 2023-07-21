@@ -10,11 +10,11 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  background-color: var(--paletteColor6);
 }
 
 .footer-copyright-container {
   width: var(--container-width);
-  background-color: var(--paletteColor6);
   display: grid;
   grid-template-columns: var(--grid-template-columns);
   grid-column-gap: var(--columns-gap, 50px);
