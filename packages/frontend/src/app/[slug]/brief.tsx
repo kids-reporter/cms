@@ -1,12 +1,13 @@
 import Editors, { EditorGroup } from './editors'
 
+import './brief.scss'
+
 type BriefProp = {
   content: any
   editors: EditorGroup[]
 }
 
 export const Brief = (props: BriefProp) => {
-  // TODO: brief author
   return (
     <div className="post-intro">
       {props.content?.blocks?.map(

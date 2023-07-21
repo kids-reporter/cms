@@ -15,9 +15,8 @@ import RelatedPosts from './related-posts'
 import BackToTop from './back-to-top'
 import Footer from './footer'
 
-import '../assets/css/post.css'
+import './post.scss'
 import '../assets/css/button.css'
-import '../assets/css/dot-hr.css'
 import '../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
@@ -123,34 +122,37 @@ export default async function PostPage({
   post.category = categoryMockup // TODO: find category source
   post.tags = tagsMockup // TODO: find tags source
   post.editors = editorsMockup // TODO: find editors source
+  post.theme = 'yellow'
 
   return (
     post && (
-      <div className="post">
+      <>
         <Header />
-        <OGImage image={post.ogImage} />
-        <div className="hero-section" data-type="type-1">
-          <header className="entry-header">
-            <Title text={post.name as string} />
-            <div className="post_date_category">
-              <PublishedDate date={post?.publishedDate} />
-              <Category text={post.category.text} link={post.category.link} />
-            </div>
-          </header>
+        <div className={`post theme-${post.theme}`}>
+          <OGImage image={post.ogImage} />
+          <div className="hero-section" data-type="type-1">
+            <header className="entry-header">
+              <Title text={post.name as string} />
+              <div className="post_date_category">
+                <PublishedDate date={post?.publishedDate} />
+                <Category text={post.category.text} link={post.category.link} />
+              </div>
+            </header>
+          </div>
+          <Brief content={post.brief} editors={post.editors} />
+          <Sidebar />
+
+          <Divider />
+
+          <PostRenderer post={post} />
+          <Tags tags={post.tags} />
+          <AuthorCard />
         </div>
-        <Brief content={post.brief} editors={post.editors} />
-        <Sidebar />
-        <Divider />
-
-        {post && <PostRenderer post={post} />}
-        <Tags tags={post.tags} />
-
-        <AuthorCard />
         <CallToAction />
         <RelatedPosts posts={post.relatedPosts} />
         <Footer />
         <BackToTop />
-      </div>
+      </>
     )
   )
 }
