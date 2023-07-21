@@ -100,6 +100,7 @@ body {
   --container-spacing: 25px;
   --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
   --container-width: min(100%, var(--container-width-base));
+  --grid-template-columns: 2fr 1fr;
   --stk-block-background-padding: 20px;
 }
 
