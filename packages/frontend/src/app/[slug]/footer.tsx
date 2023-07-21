@@ -190,114 +190,105 @@ export const Footer = () => {
   return (
     <>
       <div className="footer">
-        <div
-          className="wp-block-stackable-columns alignfull stk-block-columns stk-block stk-0dc58f0 stk-block-background"
-          data-block-id="0dc58f0"
-          style={{
-            backgroundColor: '#fafafa !important',
-            justifyContent: 'center !important',
-          }}
-        >
-          <div className="footer-top">
-            <div className="footer-top__left">
-              <picture className="footer-top__left-logo">
-                {/*<source media="(min-width: 768px)" srcset="https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/footer-logo.svg"/>*/}
-                {/*<source media="(max-width: 767px)" srcset="https://kids.twreporter.org/wp-content/uploads/2022/10/LOGO.svg"/>*/}
-                <img
-                  src="https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/footer-logo.svg"
-                  alt=""
-                />
-              </picture>
-              <p className="footer-top__left-p">
-                《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。
-              </p>
-              <div className="footer-top__left-social">
-                <div className="footer-top__social-icon-group">
-                  {socialIcons.map((icon, index) => {
-                    return (
-                      <a
-                        key={`social-icon-${index}`}
-                        href={icon.link}
-                        className="footer-top__social-icon-item"
-                        target="_blank"
-                      >
-                        {icon.svg}
-                      </a>
-                    )
-                  })}
-                </div>{' '}
-              </div>
-            </div>
-            <div className="footer-top__middle">
-              <div className="footer-top__team-box">
-                <a href="/about" className="footer-top__team-box-item">
-                  <img
-                    src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic1.svg"
-                    alt="我們是誰"
-                  />
-                  我們是誰
-                </a>
-                <a
-                  href="/about#team"
-                  className="footer-top__team-box-item __mPS2id"
-                >
-                  <img
-                    src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic2.svg"
-                    alt="我們是誰"
-                  />
-                  核心團隊
-                </a>
-                <a
-                  href="/about#consultor"
-                  className="footer-top__team-box-item __mPS2id"
-                >
-                  <img
-                    src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic3.svg"
-                    alt="我們是誰"
-                  />
-                  顧問群
-                </a>
-                <a
-                  href="/about#mail"
-                  className="footer-top__team-box-item __mPS2id"
-                >
-                  <img
-                    src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic4.svg"
-                    alt="我們是誰"
-                  />
-                  聯絡我們
-                </a>
-              </div>
-              <div className="footer-top__button-group">
-                <a
-                  href="https://support.twreporter.org/"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-big"
-                  target="_blank"
-                >
-                  贊助我們
-                </a>
-                <a
-                  href="http://eepurl.com/idk8VH"
-                  target="_blank"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-orange rpjr-btn-big"
-                >
-                  訂閱我們
-                </a>
-                <a
-                  href="https://www.twreporter.org/"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-red rpjr-btn-big"
-                  target="_blank"
-                >
-                  前往報導者
-                </a>
-              </div>
-            </div>
-            <div className="footer-top__right">
+        <div className="footer-top">
+          <div className="footer-top__left">
+            <picture className="footer-top__left-logo">
+              {/*<source media="(min-width: 768px)" srcset="https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/footer-logo.svg"/>*/}
+              {/*<source media="(max-width: 767px)" srcset="https://kids.twreporter.org/wp-content/uploads/2022/10/LOGO.svg"/>*/}
               <img
-                src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic5.svg"
-                className="footer-top__fig"
+                src="https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/footer-logo.svg"
+                alt=""
               />
+            </picture>
+            <p className="footer-top__left-p">
+              《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。
+            </p>
+            <div className="footer-top__left-social">
+              <div className="footer-top__social-icon-group">
+                {socialIcons.map((icon, index) => {
+                  return (
+                    <a
+                      key={`social-icon-${index}`}
+                      href={icon.link}
+                      className="footer-top__social-icon-item"
+                      target="_blank"
+                    >
+                      {icon.svg}
+                    </a>
+                  )
+                })}
+              </div>{' '}
             </div>
+          </div>
+          <div className="footer-top__middle">
+            <div className="footer-top__team-box">
+              <a href="/about" className="footer-top__team-box-item">
+                <img
+                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic1.svg"
+                  alt="我們是誰"
+                />
+                我們是誰
+              </a>
+              <a
+                href="/about#team"
+                className="footer-top__team-box-item __mPS2id"
+              >
+                <img
+                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic2.svg"
+                  alt="我們是誰"
+                />
+                核心團隊
+              </a>
+              <a
+                href="/about#consultor"
+                className="footer-top__team-box-item __mPS2id"
+              >
+                <img
+                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic3.svg"
+                  alt="我們是誰"
+                />
+                顧問群
+              </a>
+              <a
+                href="/about#mail"
+                className="footer-top__team-box-item __mPS2id"
+              >
+                <img
+                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic4.svg"
+                  alt="我們是誰"
+                />
+                聯絡我們
+              </a>
+            </div>
+            <div className="footer-top__button-group">
+              <a
+                href="https://support.twreporter.org/"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-big"
+                target="_blank"
+              >
+                贊助我們
+              </a>
+              <a
+                href="http://eepurl.com/idk8VH"
+                target="_blank"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-orange rpjr-btn-big"
+              >
+                訂閱我們
+              </a>
+              <a
+                href="https://www.twreporter.org/"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-red rpjr-btn-big"
+                target="_blank"
+              >
+                前往報導者
+              </a>
+            </div>
+          </div>
+          <div className="footer-top__right">
+            <img
+              src="https://kids.twreporter.org/wp-content/uploads/2022/10/footer_pic5.svg"
+              className="footer-top__fig"
+            />
           </div>
         </div>
       </div>
