@@ -293,7 +293,7 @@ export const Footer = () => {
 
       <div id="footer" className="footer-copyright" data-id="type-1">
         <div data-row="bottom" className="ct-hidden-sm ct-hidden-md">
-          <div className="ct-container">
+          <div className="footer-copyright-container">
             <div data-column="text">
               <div className="ct-header-text " data-id="text">
                 <div className="entry-content">

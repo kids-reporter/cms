@@ -7,6 +7,13 @@
 }
 
 .footer-copyright {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.footer-copyright-container {
+  width: var(--container-width);
   background-color: var(--paletteColor6);
   display: grid;
   grid-template-columns: var(--grid-template-columns);

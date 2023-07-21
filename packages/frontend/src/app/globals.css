@@ -98,6 +98,8 @@ body {
   color: rgb(var(--foreground-rgb));
   --content-spacing: 1.5em;
   --container-spacing: 25px;
+  --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
+  --container-width: min(100%, var(--container-width-base));
   --stk-block-background-padding: 20px;
 }
 
