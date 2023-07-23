@@ -1,3 +1,5 @@
+import './sidebar.scss'
+
 const shareIcons = [
   'https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/icon/rpjr-icon-color-fb.svg',
   'https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/icon/rpjr-icon-color-twitter.svg',
@@ -12,25 +14,27 @@ const functionIcons = [
 
 export const Sidebar = () => {
   return (
-    <div className="social-sidebar">
-      <div className="share-box">
-        <span className="share-box__text">分享</span>
-        {shareIcons.map((iconURL, index) => {
-          return (
-            <button key={`share-icon-${index}`}>
-              <img alt="" src={iconURL} />
-            </button>
-          )
-        })}
-      </div>
-      <div className="function-box">
-        {functionIcons.map((iconURL, index) => {
-          return (
-            <button key={`function-icon-${index}`}>
-              <img alt="" src={iconURL} />
-            </button>
-          )
-        })}
+    <div className="sidebar-container">
+      <div className="sidebar">
+        <div className="section">
+          <span>分享</span>
+          {shareIcons.map((iconURL, index) => {
+            return (
+              <button key={`share-icon-${index}`}>
+                <img alt="" src={iconURL} />
+              </button>
+            )
+          })}
+        </div>
+        <div className="section">
+          {functionIcons.map((iconURL, index) => {
+            return (
+              <button key={`function-icon-${index}`}>
+                <img alt="" src={iconURL} />
+              </button>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
