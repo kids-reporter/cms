@@ -14,19 +14,6 @@ export const CallToAction = () => {
       <div className="stk-column-wrapper stk-block-column__content stk-container stk-c1bc3aa-container stk--no-background stk--no-padding">
         <div className="stk-block-content stk-inner-blocks stk-c1bc3aa-inner-blocks">
           <div
-            className="wp-block-stackable-heading stk-block-heading stk--hide-mobile stk-block stk-09b5604"
-            id="你的參與，可以讓報導點亮世界"
-            data-block-id="09b5604"
-            style={{
-              fontSize: '28px !important',
-              fontFamily: 'SweiMarkerSansCJKtc-Regular,SansSerif !important',
-            }}
-          >
-            <h3 className="stk-block-heading__text has-text-align-left">
-              你的參與，可以讓報導點亮世界
-            </h3>
-          </div>
-          <div
             className="wp-block-stackable-heading stk-block-heading stk--hide-desktop stk--hide-tablet stk-block stk-fb3d9e5"
             id="你的參與，-br-可以讓報導點亮世界"
             data-block-id="fb3d9e5"
@@ -36,9 +23,7 @@ export const CallToAction = () => {
             }}
           >
             <h3 className="stk-block-heading__text has-text-align-left">
-              你的參與，
-              <br />
-              可以讓報導點亮世界
+              你的參與，可以讓報導點亮世界
             </h3>
           </div>
           <div

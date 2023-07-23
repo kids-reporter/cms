@@ -1,3 +1,4 @@
+import './header.scss'
 import '../assets/css/button.css'
 
 export const Header = () => {
