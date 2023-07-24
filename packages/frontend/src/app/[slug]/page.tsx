@@ -129,6 +129,7 @@ export default async function PostPage({
       <>
         <Header />
         <div className={`post theme-${post.theme}`}>
+          <Sidebar />
           <OGImage image={post.ogImage} />
           <div className="hero-section" data-type="type-1">
             <header className="entry-header">
@@ -140,7 +141,6 @@ export default async function PostPage({
             </header>
           </div>
           <Brief content={post.brief} editors={post.editors} />
-          <Sidebar />
 
           <Divider />
 

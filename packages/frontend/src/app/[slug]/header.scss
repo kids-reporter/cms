@@ -1,0 +1,11 @@
+.ct-container {
+  width: var(--container-width);
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.site-logo-container {
+  --logo-max-height: 30px;
+  line-height: 0;
+  height: var(--logo-shrink-height, var(--logo-max-height, 50px));
+}
