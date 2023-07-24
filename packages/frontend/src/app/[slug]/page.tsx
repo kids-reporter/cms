@@ -100,9 +100,12 @@ export default async function PostPage({
               editors {
                 name
               }
-              ogImage {
-                name
+              heroImage {
+                imageFile {
+                  url
+                }
               }
+              heroCaption
               relatedPosts {
                 name
                 slug
