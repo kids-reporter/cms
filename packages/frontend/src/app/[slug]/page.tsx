@@ -2,7 +2,7 @@ import axios from 'axios'
 import PostRenderer from './post-renderer'
 import Header from './header'
 import Title from './title'
-import HeroImage from './heroImage'
+import HeroImage from './hero-image'
 import PublishedDate from './published-date'
 import Category from './category'
 import Sidebar from './sidebar'
@@ -131,8 +131,8 @@ export default async function PostPage({
     post && (
       <>
         <Header />
+        <Sidebar />
         <div className={`post theme-${post.theme}`}>
-          <Sidebar />
           <HeroImage
             url={post.heroImage?.imageFile?.url}
             caption={post.heroCaption}
