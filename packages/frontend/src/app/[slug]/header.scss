@@ -29,6 +29,53 @@
   }
 
   .right {
+    display: flex;
+    align-items: center;
 
+    .menu {
+      display: flex;
+
+      li {
+        display: flex;
+        align-items: center;
+
+        a {
+          --menu-items-spacing: 22px;
+          --menu-item-padding: 0 calc(var(--menu-items-spacing, 25px) / 2);
+          --fontWeight: 500;
+          --textTransform: uppercase;
+          --fontSize: 14px;
+          --lineHeight: 1.56;
+          --letterSpacing: 0.16em;
+          --linkInitialColor: #232323;
+          --linkHoverColor: var(--paletteColor4);
+
+          padding: var(--menu-item-padding, 0px);
+          font-family: var(--fontFamily);
+          font-size: var(--fontSize);
+          font-weight: var(--fontWeight);
+          font-style: var(--fontStyle, inherit);
+          line-height: var(--lineHeight);
+          letter-spacing: var(--letterSpacing);
+          text-transform: var(--textTransform);
+          -webkit-text-decoration: var(--textDecoration);
+          text-decoration: var(--textDecoration);
+        }
+      }
+    }
+
+    button {
+      --icon-size: 30px;
+      --icon-color: #A3A3A3;
+      --icon-hover-color: var(--paletteColor1);
+      --margin: 0 12px 0 10px !important;
+
+      margin: var(--margin, 0 10px);
+      border: none;
+
+      span {
+        display: none !important;
+      }
+    }
   }
 }
