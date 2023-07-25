@@ -134,7 +134,7 @@ export default async function PostPage({
         <Header />
         <Sidebar />
         <div className={`post theme-${post.theme}`}>
-          {false && (
+          {true && (
             <>
               <HeroImage
                 url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
