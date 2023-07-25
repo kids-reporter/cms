@@ -20,6 +20,7 @@ import '../assets/css/button.css'
 import '../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+const cmsURL = 'https://dev-kids-cms.twreporter.org'
 
 // mockups
 const categoryMockup = {
@@ -134,10 +135,7 @@ export default async function PostPage({
         <Sidebar />
         <div className={`post theme-${post.theme}`}>
           <HeroImage
-            url={
-              post.heroImage?.imageFile?.url ??
-              'https://kids.twreporter.org/wp-content/uploads/2023/07/%E5%BC%B5%E7%91%8B%E6%81%A9%E4%B8%BB%E5%9C%96.jpg' /* TODO: fix url*/
-            }
+            url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
             caption={post.heroCaption}
           />
           <div className="hero-section" data-type="type-1">
