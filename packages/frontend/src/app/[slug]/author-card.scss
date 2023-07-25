@@ -1,0 +1,72 @@
+.author-section {
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 40px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+
+    .card {
+      width: 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: 40px 35px 0px;
+      background: rgb(255, 255, 255);
+      border: 2.5px solid rgb(234, 234, 234);
+      border-radius: 40px;
+
+      .photo-mask {
+        width: 140px;
+        height: 140px;
+        border-radius: 60px;
+        overflow: hidden;
+        margin: 0px auto;
+
+        img {
+          max-width: 100%;
+          vertical-align: middle;
+        }
+      }
+
+      .name {
+        font-weight: bold;
+        text-align: center;
+        margin: 12px 0px 0px;
+        font-size: 22px;
+        line-height: 160%;
+        letter-spacing: 0.08em;
+        color: rgb(35, 35, 35);
+      }
+
+      .group {
+        padding: 2px 14px;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 160%;
+        letter-spacing: 0.08em;
+        color: rgb(255, 255, 255);
+        background-color: var(--title-color, #27B5F7);
+        border-radius: 30px;
+      }
+
+      .desc {
+        display: inline-flex;
+      }
+
+      .more {
+
+      }
+    }
+  }
+}
+
+.icon-rpjr-icon-arrow-right:before {
+    content: "\e900";
+  }
