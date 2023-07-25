@@ -2,7 +2,7 @@ import './call-to-action.scss'
 
 export const CallToAction = () => {
   return (
-    <div className="container">
+    <div className="cta-container">
       <div className="cta">
         <div
           className="wp-block-stackable-column stk-block-column stk-block-column--v2 stk-column stk-block stk-c1bc3aa stk-block-background stk--has-background-overlay"
