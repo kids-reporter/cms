@@ -1,10 +1,10 @@
+import './back-to-top.scss'
+
 export const BackToTop = () => {
   return (
     <a
       href="#main-container"
-      className="ct-back-to-top __mPS2id ct-show"
-      data-shape="circle"
-      data-alignment="right"
+      className="back-to-top"
       title="到最上面"
       aria-label="到最上面"
     >
