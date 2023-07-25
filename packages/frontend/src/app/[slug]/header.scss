@@ -1,11 +1,34 @@
-.ct-container {
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  --height: 62px;
   width: var(--container-width);
-  display: grid;
+  min-height: var(--shrink-height, var(--height));
   grid-template-columns: auto auto;
-}
+  margin-left: auto;
+  margin-right: auto;
 
-.site-logo-container {
-  --logo-max-height: 30px;
-  line-height: 0;
-  height: var(--logo-shrink-height, var(--logo-max-height, 50px));
+  .left {
+    display: flex;
+    align-items: center;
+
+    .site-logo-container {
+      max-height: 100%;
+
+      img {
+        width: 100%;
+        height: 30px;
+        object-fit: contain;
+      }
+    }
+
+    .cta {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .right {
+
+  }
 }

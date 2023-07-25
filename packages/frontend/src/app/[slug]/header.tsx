@@ -3,56 +3,48 @@ import '../assets/css/button.css'
 
 export const Header = () => {
   return (
-    <div className="ct-container">
-      <div data-column="start" data-placements="1">
-        <div data-items="primary">
-          <div className="site-branding" data-id="logo">
-            <a
-              href="https://kids.twreporter.org/"
-              className="site-logo-container"
-              rel="home"
-            >
-              <img
-                width="592"
-                height="120"
-                src="https://kids.twreporter.org/wp-content/uploads/2022/10/LOGO.svg"
-                className="default-logo"
-                alt="少年報導者 The Reporter for Kids"
-              />
-            </a>
-          </div>
-          <div
-            className="ct-header-text "
-            data-id="p89zlD"
-            data-width="stretch"
+    <div className="header-container">
+      <div className="left">
+        <div className="site-branding">
+          <a
+            href="https://kids.twreporter.org/"
+            className="site-logo-container"
+            rel="home"
           >
-            <div className="entry-content">
-              <div className="header-left">
-                <a
-                  href="https://kids.twreporter.org/about#post"
-                  className="header-left__btn-1 rpjr-btn __mPS2id"
-                  style={{ marginRight: '14px' }}
-                >
-                  投稿
-                </a>
-                <a
-                  href="http://eepurl.com/idk8VH"
-                  target="_blank"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
-                  style={{ marginRight: '15px' }}
-                >
-                  訂閱
-                </a>
-                <img
-                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/header-left-slogan.svg"
-                  className="header-left__slogan"
-                />
-              </div>{' '}
+            <img
+              src="https://kids.twreporter.org/wp-content/uploads/2022/10/LOGO.svg"
+              className="default-logo"
+              alt="少年報導者 The Reporter for Kids"
+            />
+          </a>
+        </div>
+        <div className="ct-header-text ">
+          <div className="entry-content">
+            <div className="cta">
+              <a
+                href="https://kids.twreporter.org/about#post"
+                className="header-left__btn-1 rpjr-btn __mPS2id"
+                style={{ marginRight: '14px' }}
+              >
+                投稿
+              </a>
+              <a
+                href="http://eepurl.com/idk8VH"
+                target="_blank"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
+                style={{ marginRight: '15px' }}
+              >
+                訂閱
+              </a>
+              <img
+                src="https://kids.twreporter.org/wp-content/uploads/2022/10/header-left-slogan.svg"
+                className="header-left__slogan"
+              />
             </div>
           </div>
         </div>
       </div>
-      <div data-column="end" data-placements="1">
+      <div className="right">
         <div data-items="primary">
           <nav
             id="header-menu-1"

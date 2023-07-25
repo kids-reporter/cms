@@ -130,36 +130,44 @@ export default async function PostPage({
 
   return (
     post && (
-      <>
+      <div className="page">
         <Header />
         <Sidebar />
         <div className={`post theme-${post.theme}`}>
-          <HeroImage
-            url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
-            caption={post.heroCaption}
-          />
-          <div className="hero-section" data-type="type-1">
-            <header className="entry-header">
-              <Title text={post.name as string} />
-              <div className="post_date_category">
-                <PublishedDate date={post?.publishedDate} />
-                <Category text={post.category.text} link={post.category.link} />
+          {false && (
+            <>
+              <HeroImage
+                url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
+                caption={post.heroCaption}
+              />
+              <div className="hero-section" data-type="type-1">
+                <header className="entry-header">
+                  <Title text={post.name as string} />
+                  <div className="post_date_category">
+                    <PublishedDate date={post?.publishedDate} />
+                    <Category
+                      text={post.category.text}
+                      link={post.category.link}
+                    />
+                  </div>
+                </header>
               </div>
-            </header>
-          </div>
-          <Brief content={post.brief} editors={post.editors} />
+              <Brief content={post.brief} editors={post.editors} />
 
-          <Divider />
+              <Divider />
 
-          <PostRenderer post={post} />
-          <Tags tags={post.tags} />
-          <AuthorCard />
+              <PostRenderer post={post} />
+              <Tags tags={post.tags} />
+              <AuthorCard />
+            </>
+          )}
         </div>
+
         <CallToAction />
         <RelatedPosts posts={post.relatedPosts} />
         <Footer />
         <BackToTop />
-      </>
+      </div>
     )
   )
 }
