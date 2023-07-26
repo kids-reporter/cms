@@ -46,6 +46,10 @@
       }
 
       .group {
+        display: flex;
+        flex-flow: row wrap;
+        column-gap: 12px;
+        margin: 15px 0px;
         padding: 2px 14px;
         font-weight: 700;
         font-size: 15px;
@@ -57,16 +61,34 @@
       }
 
       .desc {
-        display: inline-flex;
+        display: inline-block;
+        height: 154px; // var(--eqhminh-2);
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
+        letter-spacing: 0.05em;
+        color: rgb(35, 35, 35);
+
+        overflow:hidden;
+        // white-space: nowrap; TODO: fix wrap issue
+        text-overflow: ellipsis;
       }
 
       .more {
-
+        margin: 20px 0px 40px;
+        text-align: center;
+        
+        a {
+          --link-color: var(--paletteColor1);
+          color: var(--link-color); // TODO: fix color according to group
+          text-decoration: none;
+        }
       }
     }
   }
 }
 
 .icon-rpjr-icon-arrow-right:before {
-    content: "\e900";
-  }
+  content: "\e900";
+}
