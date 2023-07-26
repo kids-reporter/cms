@@ -9,7 +9,6 @@ import {
 } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
-import draftConverter from '../draft-converter'
 import styled from 'styled-components'
 
 const TitleInput = styled(TextInput)`
@@ -20,7 +19,7 @@ const TitleInput = styled(TextInput)`
 export type RenderBasicEditor = (propsOfBasicEditor: {
   onChange: (es: EditorState) => void
   editorState: EditorState
-}) => React.ReactElement
+}) => React.ReactNode
 
 type InfoBoxInputType = {
   title?: string
@@ -122,10 +121,11 @@ export function InfoBoxInput(props: InfoBoxInputType) {
 }
 
 type InfoBoxButtonProps = {
-  className: string
+  className?: string
   editorState: EditorState
   onChange: (param: EditorState) => void
   renderBasicEditor: RenderBasicEditor
+  decorators: CompositeDecorator
 }
 
 export function InfoBoxButton(props: InfoBoxButtonProps) {
@@ -153,7 +153,6 @@ export function InfoBoxButton(props: InfoBoxButtonProps) {
       {
         title,
         rawContentState,
-        body: draftConverter.convertToHtml(rawContentState),
       }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
