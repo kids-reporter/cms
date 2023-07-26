@@ -21,9 +21,11 @@ export const AuthorCard = (props: AuthorCardProp) => {
               <span className="desc">{author.desc}</span>
 
               <div className="more">
-                <span>
-                  了解更多 <i className="icon-rpjr-icon-arrow-right"></i>
-                </span>
+                <a href={author.link}>
+                  <span>
+                    了解更多 <i className="icon-rpjr-icon-arrow-right"></i>
+                  </span>
+                </a>
               </div>
             </div>
           )

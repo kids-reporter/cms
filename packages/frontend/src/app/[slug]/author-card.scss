@@ -73,6 +73,12 @@
       .more {
         margin: 20px 0px 40px;
         text-align: center;
+        
+        a {
+          --link-color: var(--paletteColor1);
+          color: var(--link-color); // TODO: fix color according to group
+          text-decoration: none;
+        }
       }
     }
   }
