@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-renderer",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -41,11 +41,8 @@
     "lib"
   ],
   "devDependencies": {
-    "@babel/preset-typescript": "^7.22.5",
-    "@types/draft-js": "^0.11.10",
-    "@types/styled-components": "^5.1.26",
-    "babel-plugin-file-loader": "^2.0.0",
-    "babel-plugin-inline-react-svg": "^2.0.1",
-    "webpack-dev-server": "^4.15.1"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "5.3.5"
   }
 }

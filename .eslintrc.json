@@ -11,6 +11,7 @@
     "es2021": true
   },
   "rules": {
+    "no-html-link-for-pages": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],

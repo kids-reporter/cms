@@ -1,7 +1,10 @@
+import { CompositeDecorator } from 'draft-js'
 import { annotationDecorator } from './annotation-decorator'
 import { linkDecorator } from './link-decorator'
 
-export const entityDecorators = {
+export { annotationDecorator, linkDecorator }
+
+export const decorators = new CompositeDecorator([
   annotationDecorator,
   linkDecorator,
-}
+])

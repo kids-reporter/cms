@@ -1,16 +1,6 @@
 import React, { useState } from 'react'
 import { EditorState, RichUtils, convertToRaw } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
-import draftConverter from '../draft-converter'
-
-function escapeHTML(s) {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/'/g, '&#39;')
-}
 
 export function AnnotationButton(props) {
   const toggleEntity = RichUtils.toggleLink
@@ -39,14 +29,11 @@ export function AnnotationButton(props) {
     const rawContentState = convertToRaw(
       inputValue.editorStateOfBasicEditor.getCurrentContent()
     )
-    const bodyHTML = draftConverter.convertToHtml(rawContentState)
     const contentStateWithEntity = contentState.createEntity(
       'ANNOTATION',
       'MUTABLE',
       {
         rawContentState,
-        bodyHTML,
-        bodyEscapedHTML: escapeHTML(bodyHTML),
       }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
