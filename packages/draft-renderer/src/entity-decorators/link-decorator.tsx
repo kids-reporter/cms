@@ -1,20 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ContentBlock, ContentState } from 'draft-js'
 
 const LinkWrapper = styled.a`
-  display: inline;
-  border-bottom: 2px solid #ebf02c;
-  letter-spacing: 0.01em;
-  text-align: justify;
-  color: rgba(0, 9, 40, 0.87);
-  padding-bottom: 2px;
+  text-decoration: underline;
+  color: #27b5f7;
+  transition: color 0.1s ease-in;
 
   &:hover {
-    border-bottom: 2px solid #04295e;
+    color: #232323;
   }
 `
 
-function findLinkEntities(contentBlock, callback, contentState) {
+function findLinkEntities(
+  contentBlock: ContentBlock,
+  callback: (start: number, end: number) => void,
+  contentState: ContentState
+) {
   contentBlock.findEntityRanges((character) => {
     const entityKey = character.getEntity()
     return (
@@ -29,7 +31,11 @@ export const linkDecorator = {
   component: Link,
 }
 
-function Link(props) {
+function Link(props: {
+  contentState: ContentState
+  entityKey: string
+  children: React.ReactNode
+}) {
   const { url } = props.contentState.getEntity(props.entityKey).getData()
   return (
     <LinkWrapper href={url} target="_blank">
