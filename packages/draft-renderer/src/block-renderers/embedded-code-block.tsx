@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-import { DraftEntityInstance } from 'draft-js'
 import styled from 'styled-components'
 import { parse } from 'node-html-parser'
 
@@ -23,8 +22,19 @@ export const Caption = styled.div`
   padding: 15px 15px 0 15px;
 `
 
-export const EmbeddedCodeBlock = (entity: DraftEntityInstance) => {
-  const { caption, embeddedCode } = entity.getData()
+type EmbeddedCodeBlockProps = {
+  className?: string
+  data: {
+    caption?: string
+    embeddedCode: string
+  }
+}
+
+export const EmbeddedCodeBlock = ({
+  className,
+  data,
+}: EmbeddedCodeBlockProps) => {
+  const { caption, embeddedCode } = data
   const embedded = useRef(null)
 
   // `embeddedCode` is a string, which may includes
@@ -64,7 +74,6 @@ export const EmbeddedCodeBlock = (entity: DraftEntityInstance) => {
       const node: HTMLElement = embedded.current
 
       const fragment = document.createDocumentFragment()
-
       scripts.forEach((s) => {
         const scriptEle = document.createElement('script')
         const attrs = s.attributes
@@ -79,12 +88,8 @@ export const EmbeddedCodeBlock = (entity: DraftEntityInstance) => {
     }
   }, [scripts])
 
-  const shouldShowCaption = caption && caption !== 'reporter-scroll-video'
-
   return (
-    // only for READr
-    // if `caption === 'reporter-scroll-video'`，embeddedCode need to cover header
-    <div>
+    <div className={className}>
       {
         // WORKAROUND:
         // The following `<input>` is to solve [issue 153](https://github.com/mirror-media/openwarehouse-k6/issues/153).
@@ -96,13 +101,12 @@ export const EmbeddedCodeBlock = (entity: DraftEntityInstance) => {
       }
       <input hidden disabled />
       <Block
-        style={{ zIndex: caption === 'reporter-scroll-video' ? 999 : 'auto' }}
         ref={embedded}
         dangerouslySetInnerHTML={{
           __html: nonScriptsHtml,
         }}
       />
-      {shouldShowCaption ? <Caption>{caption}</Caption> : null}
+      {caption && <Caption>{caption}</Caption>}
     </div>
   )
 }

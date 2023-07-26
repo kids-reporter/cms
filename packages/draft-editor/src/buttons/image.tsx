@@ -36,7 +36,6 @@ export function ImageButton(props: {
       {
         ...selected?.image,
         desc: selected?.desc,
-        url: selected?.image?.imageFile?.url,
         alignment: align,
       }
     )

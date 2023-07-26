@@ -1,31 +1,13 @@
-import { BGImageBlock } from './background-image-block'
-import { BGVideoBlock } from './background-video-block'
-import { ColorBoxBlock } from './color-box-block'
-import { DividerBlock } from './divider-block'
 import { EmbeddedCodeBlock } from './embedded-code-block'
-import { ImageBlock } from './image-block'
+import { ImageBlock, ImageInArticleBody } from './image-block'
 import { InfoBoxBlock } from './info-box-block'
-import { MediaBlock } from './media-block'
-import { RelatedPostBlock } from './related-post-block'
-import { SideIndexBlock } from './side-index-block'
-import { SlideshowBlock } from './slideshow-block'
-import { TableBlock } from './table-block'
-import { VideoBlock } from './video-block'
-import { AudioBlock } from './audio-block'
+import { SlideshowBlock, SlideshowInArticleBody } from './slideshow-block'
 
 export const blockRenderers = {
-  BGImageBlock,
-  BGVideoBlock,
-  ColorBoxBlock,
-  DividerBlock,
   EmbeddedCodeBlock,
   ImageBlock,
+  ImageInArticleBody,
   InfoBoxBlock,
-  MediaBlock,
-  RelatedPostBlock,
-  SideIndexBlock,
   SlideshowBlock,
-  TableBlock,
-  VideoBlock,
-  AudioBlock,
+  SlideshowInArticleBody,
 }

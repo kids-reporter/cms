@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-editor",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@kids-reporter/draft-renderer": "0.1.1",
+    "@kids-reporter/draft-renderer": "0.2.0",
     "draft-js": "^0.11.7"
   },
   "peerDependencies": {
@@ -31,6 +31,11 @@
     "@keystone-ui/button": "^7.0.2",
     "@keystone-ui/fields": "^7.2.0",
     "@keystone-ui/modals": "^6.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "5.3.5"
+  },
+  "devDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "5.3.5"

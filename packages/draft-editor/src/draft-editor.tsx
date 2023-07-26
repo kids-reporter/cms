@@ -1,7 +1,9 @@
 import React from 'react'
-import styled, { css, ThemeProvider } from 'styled-components'
-import theme from './theme'
+import styled, { css } from 'styled-components'
 import {
+  ContentBlock,
+  DraftBlockType,
+  DraftEditorCommand,
   Editor,
   EditorState,
   KeyBindingUtil,
@@ -9,8 +11,11 @@ import {
   getDefaultKeyBinding,
 } from 'draft-js'
 
-import { atomicBlockRenderer } from './block-renderer-fn'
-import decorators from './entity-decorator'
+import {
+  atomicBlockRenderer,
+  blockRenderMap,
+  decorators,
+} from '@kids-reporter/draft-renderer'
 import { AnnotationButton } from './buttons/annotation'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
 import { EnlargeButton } from './buttons/enlarge'
@@ -18,31 +23,7 @@ import { ImageButton } from './buttons/image'
 import { InfoBoxButton } from './buttons/info-box'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
-import { TableButton } from './buttons/table'
-import { DividerButton } from './buttons/divider'
-import { ColorBoxButton } from './buttons/color-box'
-import { BGImageButton } from './buttons/background-image'
-import { BGVideoButton } from './buttons/background-video'
-import { RelatedPostButton } from './buttons/related-post'
-import { SideIndexButton } from './buttons/side-index'
-import {
-  AlignCenterButton,
-  AlignLeftButton,
-} from './buttons/text-align'
-import { FontColorButton } from './buttons/font-color'
-import { BackgroundColorButton } from './buttons/background-color'
-import { VideoButton } from './buttons/video'
-import { AudioButton } from './buttons/audio'
-
-import {
-  CUSTOM_STYLE_PREFIX_FONT_COLOR,
-  CUSTOM_STYLE_PREFIX_BACKGROUND_COLOR,
-} from './const'
-import { getSelectionBlockData } from './buttons/text-align'
 import { ImageSelector } from './buttons/selector/image-selector'
-import { VideoSelector } from './buttons/selector/video-selector'
-import { PostSelector } from './buttons/selector/post-selector'
-import { AudioSelector } from './buttons/selector/audio-selector'
 
 export const buttonNames = {
   // inline styles
@@ -62,68 +43,44 @@ export const buttonNames = {
 
   // custom styles
   annotation: 'annotation',
-  divider: 'divider',
   embed: 'embed',
-  fontColor: 'font-color',
   image: 'image',
   infoBox: 'info-box',
   link: 'link',
   slideshow: 'slideshow',
-  table: 'table',
-  textAlign: 'text-align',
-  colorBox: 'color-box',
-  backgroundColor: 'background-color',
-  backgroundImage: 'background-image',
-  backgroundVideo: 'background-video',
-  relatedPost: 'related-post',
-  sideIndex: 'side-index',
-  video: 'video',
-  audio: 'audio',
 }
 
 const disabledButtonsOnBasicEditor = [
+  buttonNames.h2,
+  buttonNames.h3,
+  buttonNames.code,
+  buttonNames.codeBlock,
+  buttonNames.blockquote,
   buttonNames.annotation,
-  buttonNames.divider,
   buttonNames.embed,
   buttonNames.image,
   buttonNames.infoBox,
   buttonNames.slideshow,
-  buttonNames.table,
-  buttonNames.textAlign,
-  buttonNames.colorBox,
-  buttonNames.backgroundColor,
-  buttonNames.backgroundImage,
-  buttonNames.backgroundVideo,
-  buttonNames.relatedPost,
-  buttonNames.sideIndex,
-  buttonNames.video,
-  buttonNames.audio,
 ]
 
-type ButtonStyleProps = {
-  isActive: boolean
+const buttonStyle = css<{
   isDisabled: boolean
   readOnly: boolean
-}
-
-const buttonStyle = css`
+  isActive?: boolean
+}>`
+  cursor: pointer;
   border-radius: 6px;
   text-align: center;
   font-size: 1rem;
   padding: 0 12px;
-  margin: 0px 0px 10px 0px;
+  margin: ${(props) => (props.isDisabled ? '0' : '0 0 10px 0')};
   background-color: #fff;
   border: solid 1px rgb(193, 199, 208);
   align-items: center;
   height: 40px;
 
-  cursor: ${(props: ButtonStyleProps) => {
-    if (props.readOnly) {
-      return 'not-allowed'
-    }
-    return 'pointer'
-  }};
-  color: ${(props: ButtonStyleProps) => {
+  cursor: ${(props) => (props.readOnly ? 'not-allowed' : 'pointer')};
+  color: ${(props) => {
     if (props.readOnly) {
       return '#c1c7d0'
     }
@@ -133,7 +90,7 @@ const buttonStyle = css`
     return '#6b7280'
   }};
   border: solid 1px
-    ${(props: ButtonStyleProps) => {
+    ${(props) => {
       if (props.readOnly) {
         return '#c1c7d0'
       }
@@ -142,7 +99,7 @@ const buttonStyle = css`
       }
       return '#6b7280'
     }};
-  box-shadow: ${(props: ButtonStyleProps) => {
+  box-shadow: ${(props) => {
     if (props.readOnly) {
       return 'unset'
     }
@@ -153,7 +110,7 @@ const buttonStyle = css`
   }};
   transition: box-shadow 100ms linear;
 
-  display: ${(props: ButtonStyleProps) => {
+  display: ${(props) => {
     if (props.isDisabled) {
       return 'none'
     }
@@ -161,113 +118,38 @@ const buttonStyle = css`
   }};
 `
 
-const longFormButtonStyle = css`
-  ${buttonStyle}
-  color: ${(props) => {
-    if (props.readOnly) {
-      return '#c1c7d0'
-    }
-    if (props.isActive) {
-      return '#ED8B00'
-    }
-    return '#6b7280'
-  }};
-  border: solid 1px
-    ${(props) => {
-      if (props.readOnly) {
-        return '#c1c7d0'
-      }
-      if (props.isActive) {
-        return '#ED8B00'
-      }
-      return '#FECC85'
-    }};
-  box-shadow: ${(props) => {
-    if (props.readOnly) {
-      return 'unset'
-    }
-    if (props.isActive) {
-      return 'rgba(237, 139, 0, 0.5) 0px 1px 4px'
-    }
-    return 'unset'
-  }};
-`
-
-const CustomFontColorButton = styled(FontColorButton)<{
-  isActive: boolean
-  readOnly: boolean
-}>`
+const CustomButton = styled.div`
   ${buttonStyle}
 `
 
-const CustomBackgroundColorButton = styled(BackgroundColorButton)<{
-  isActive: boolean
-  readOnly: boolean
-}>`
-  ${longFormButtonStyle}
-`
-
-const CustomButton = styled.div<{ isActive: boolean; readOnly: boolean }>`
+const CustomAnnotationButton = styled(AnnotationButton)`
   ${buttonStyle}
 `
 
-const CustomAnnotationButton = styled(AnnotationButton)<{
-  isActive: boolean
-  readOnly: boolean
-  isDisabled: boolean
-}>`
+const CustomLinkButton = styled(LinkButton)`
   ${buttonStyle}
 `
 
-const CustomLinkButton = styled(LinkButton)<{
-  isActive: boolean
-  readOnly: boolean
-  isDisabled: boolean
-}>`
+const CustomEnlargeButton = styled(EnlargeButton)`
+  ${buttonStyle}
+  color: #999;
+`
+
+const CustomImageButton = styled(ImageButton)`
   ${buttonStyle}
 `
 
-function createButtonWithoutProps(
-  referenceComponent,
-  isLongForm = false,
-  additionalCSS = ``
-) {
-  return isLongForm
-    ? styled(referenceComponent)`
-        ${longFormButtonStyle}
-        ${additionalCSS}
-      `
-    : styled(referenceComponent)`
-        ${buttonStyle}
-        ${additionalCSS}
-      `
-}
-const CustomEnlargeButton = createButtonWithoutProps(
-  EnlargeButton,
-  false,
-  `color: #999`
-)
-const CustomImageButton = createButtonWithoutProps(ImageButton)
-const CustomSlideshowButton = createButtonWithoutProps(SlideshowButton)
-const CustomEmbeddedCodeButton = createButtonWithoutProps(EmbeddedCodeButton)
-const CustomTableButton = createButtonWithoutProps(TableButton)
-const CustomInfoBoxButton = createButtonWithoutProps(InfoBoxButton)
-const CustomDividerButton = createButtonWithoutProps(DividerButton)
-const CustomColorBoxButton = createButtonWithoutProps(ColorBoxButton, true)
-const CustomBGImageButton = createButtonWithoutProps(BGImageButton, true)
-const CustomBGVideoButton = createButtonWithoutProps(BGVideoButton, true)
-const CustomRelatedPostButton = createButtonWithoutProps(
-  RelatedPostButton,
-  true
-)
-const CustomSideIndexButton = createButtonWithoutProps(SideIndexButton, true)
-const CustomAlignCenterButton = createButtonWithoutProps(
-  AlignCenterButton,
-  true
-)
-const CustomAlignLeftButton = createButtonWithoutProps(AlignLeftButton, true)
-const CustomVideoButton = createButtonWithoutProps(VideoButton)
-const CustomAudioButton = createButtonWithoutProps(AudioButton)
+const CustomSlideshowButton = styled(SlideshowButton)`
+  ${buttonStyle}
+`
+
+const CustomEmbeddedCodeButton = styled(EmbeddedCodeButton)`
+  ${buttonStyle}
+`
+
+const CustomInfoBoxButton = styled(InfoBoxButton)`
+  ${buttonStyle}
+`
 
 const DraftEditorWrapper = styled.div`
   /* Rich-editor default setting (.RichEditor-root)*/
@@ -286,33 +168,6 @@ const DraftEditorWrapper = styled.div`
   background: rgb(255, 255, 255);
   border-radius: 6px;
   padding: 0 1rem 1rem;
-
-  /* Draft built-in buttons' style */
-  .public-DraftStyleDefault-header-two {
-  }
-  .public-DraftStyleDefault-header-three {
-  }
-  .public-DraftStyleDefault-header-four {
-  }
-  .public-DraftStyleDefault-blockquote {
-  }
-  .public-DraftStyleDefault-ul {
-  }
-  .public-DraftStyleDefault-unorderedListItem {
-  }
-  .public-DraftStyleDefault-ol {
-  }
-  .public-DraftStyleDefault-orderedListItem {
-  }
-  /* code-block */
-  .public-DraftStyleDefault-pre {
-  }
-  .alignCenter * {
-    text-align: center;
-  }
-  .alignLeft * {
-    text-align: left;
-  }
 `
 
 const DraftEditorControls = styled.div`
@@ -336,33 +191,10 @@ const TextEditorWrapper = styled.div`
   cursor: text;
   font-size: 16px;
   margin-top: 10px;
-  /* Custom setting */
-  h2 {
-    font-size: 22px;
-  }
-  h3 {
-    font-size: 17.5px;
-  }
-  font-weight: normal;
-  max-width: 800px;
-
-  // atimoic block float setting
-  display: flow-root;
-  figure {
-    clear: both;
-    margin: 0;
-  }
-  figure.left {
-    float: left;
-    width: 33%;
-  }
-  figure.right {
-    float: right;
-    width: 33%;
-  }
 `
 
 const DraftEditorContainer = styled.div<{ isEnlarged: boolean }>`
+  overflow-x: hidden;
   position: relative;
   margin-top: 4px;
   ${(props) =>
@@ -421,9 +253,6 @@ const DraftEditorContainer = styled.div<{ isEnlarged: boolean }>`
   }
 `
 
-const ButtonGroup = styled.div`
-  margin: 0 10px 0 0;
-`
 const EnlargeButtonWrapper = styled.div`
   position: absolute;
   top: 0;
@@ -434,55 +263,44 @@ const EnlargeButtonWrapper = styled.div`
 type RichTextEditorProps = {
   onChange: (editorState: EditorState) => void
   editorState: EditorState
-  disabledButtons: string[]
+  disabledButtons?: string[]
 }
 
 type BasicEditorProps = RichTextEditorProps
 
 type State = {
-  isEnlarged?: boolean
+  isEnlarged: boolean
   readOnly: boolean
 }
 
 class RichTextEditor extends React.Component<RichTextEditorProps, State> {
-  customStyleMap: {
-    CODE: {
-      backgroundColor: string
-      fontFamily: string
-      fontSize: number
-      padding: number
-    }
-  }
-  constructor(props) {
+  editorRef = null
+
+  constructor(props: RichTextEditorProps) {
     super(props)
     this.state = {
       isEnlarged: false,
       readOnly: false,
     }
-    // Custom overrides for "code" style.
-    this.customStyleMap = {
-      CODE: {
-        backgroundColor: 'rgba(0, 0, 0, 0.05)',
-        fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-        fontSize: 16,
-        padding: 2,
-      },
-    }
   }
-  onChange = (editorState) => {
+
+  onChange = (editorState: EditorState) => {
     this.props.onChange(editorState)
   }
 
-  handleKeyCommand = (command, editorState) => {
+  handleKeyCommand = (
+    command: DraftEditorCommand,
+    editorState: EditorState
+  ) => {
     const newState = RichUtils.handleKeyCommand(editorState, command)
     if (newState) {
       this.onChange(newState)
-      return true
+      return 'handled'
     }
-    return false
+    return 'not-handled'
   }
 
-  handleReturn = (event) => {
+  handleReturn = (event: React.KeyboardEvent) => {
     if (KeyBindingUtil.isSoftNewlineEvent(event)) {
       const { onChange, editorState } = this.props
       onChange(RichUtils.insertSoftNewline(editorState))
@@ -492,7 +310,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     return 'not-handled'
   }
 
-  mapKeyToEditorCommand = (e) => {
+  mapKeyToEditorCommand = (e: React.KeyboardEvent) => {
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
         e,
@@ -502,22 +320,22 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       if (newEditorState !== this.props.editorState) {
         this.onChange(newEditorState)
       }
-      return
+      return null
     }
     return getDefaultKeyBinding(e)
   }
 
-  toggleBlockType = (blockType) => {
+  toggleBlockType = (blockType: DraftBlockType) => {
     this.onChange(RichUtils.toggleBlockType(this.props.editorState, blockType))
   }
 
-  toggleInlineStyle = (inlineStyle) => {
+  toggleInlineStyle = (inlineStyle: string) => {
     this.onChange(
       RichUtils.toggleInlineStyle(this.props.editorState, inlineStyle)
     )
   }
 
-  getEntityType = (editorState) => {
+  getEntityType = (editorState: EditorState) => {
     const contentState = editorState.getCurrentContent()
     const selection = editorState.getSelection()
     const startOffset = selection.getStartOffset()
@@ -547,67 +365,11 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     return entityType
   }
 
-  getCustomStyle = (style) => {
-    return style.reduce((styles, styleName) => {
-      if (styleName?.startsWith(CUSTOM_STYLE_PREFIX_FONT_COLOR)) {
-        styles['color'] = styleName.split(CUSTOM_STYLE_PREFIX_FONT_COLOR)[1]
-      }
-      if (styleName?.startsWith(CUSTOM_STYLE_PREFIX_BACKGROUND_COLOR)) {
-        styles['backgroundColor'] = styleName.split(
-          CUSTOM_STYLE_PREFIX_BACKGROUND_COLOR
-        )[1]
-      }
-      return styles
-    }, {})
-  }
-
   toggleEnlarge = () => {
     this.setState({ isEnlarged: !this.state.isEnlarged })
   }
 
-  customStyleFn = (style) => {
-    return this.getCustomStyle(style)
-  }
-
-  blockStyleFn(block) {
-    const { editorState } = this.props
-
-    const entityKey = block.getEntityAt(0)
-    const entity = entityKey
-      ? editorState.getCurrentContent().getEntity(entityKey)
-      : null
-
-    let result = ''
-    const blockData = block.getData()
-    if (blockData) {
-      const textAlign = blockData?.get('textAlign')
-      if (textAlign === 'center') {
-        result += 'alignCenter '
-      } else if (textAlign === 'left') {
-        result += 'alignLeft '
-      }
-    }
-
-    switch (block.getType()) {
-      case 'header-two':
-      case 'header-three':
-      case 'header-four':
-      case 'blockquote':
-        result += 'public-DraftStyleDefault-' + block.getType()
-        break
-      case 'atomic':
-        if (entity.getData()?.alignment) {
-          // support all atomic block to set alignment
-          result += ' ' + entity.getData().alignment
-        }
-        break
-      default:
-        break
-    }
-    return result
-  }
-
-  blockRendererFn = (block) => {
+  blockRendererFn = (block: ContentBlock) => {
     const atomicBlockObj = atomicBlockRenderer(block)
     if (atomicBlockObj) {
       const onEditStart = () => {
@@ -629,7 +391,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
         entityData,
       }: {
         entityKey?: string
-        entityData?: Record<string, unknown>
+        entityData: { [key: string]: any }
       }) => {
         if (entityKey) {
           const oldContentState = this.props.editorState.getCurrentContent()
@@ -683,7 +445,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     const { isEnlarged, readOnly } = this.state
 
     const entityType = this.getEntityType(editorState)
-    const customStyle = this.getCustomStyle(editorState.getCurrentInlineStyle())
 
     const renderBasicEditor = (propsOfBasicEditor: BasicEditorProps) => {
       return (
@@ -695,279 +456,118 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     }
 
     return (
-      <ThemeProvider theme={theme}>
-        <DraftEditorContainer isEnlarged={isEnlarged}>
-          <DraftEditorWrapper>
-            <link
-              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-              rel="stylesheet"
-              type="text/css"
-            />
-            <link
-              href="https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css"
-              rel="stylesheet"
-              type="text/css"
-            />
-            <link
-              href="https://cdnjs.cloudflare.com/ajax/libs/draft-js/0.11.7/Draft.css"
-              rel="stylesheet"
-              type="text/css"
-            />
-            <link
-              href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-              rel="stylesheet"
-              type="text/css"
-            />
-            <DraftEditorControls>
-              <DraftEditorControlsWrapper>
-                <ButtonGroup>
-                  <BlockStyleControls
-                    disabledButtons={disabledButtons}
-                    editorState={editorState}
-                    onToggle={this.toggleBlockType}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <InlineStyleControls
-                    disabledButtons={disabledButtons}
-                    editorState={editorState}
-                    onToggle={this.toggleInlineStyle}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <EnlargeButtonWrapper>
-                  <CustomEnlargeButton
-                    onToggle={this.toggleEnlarge}
-                    isEnlarged={isEnlarged}
-                  ></CustomEnlargeButton>
-                </EnlargeButtonWrapper>
-              </DraftEditorControlsWrapper>
-              <DraftEditorControlsWrapper>
-                <ButtonGroup>
-                  <CustomLinkButton
-                    isDisabled={disabledButtons.includes(buttonNames.link)}
-                    isActive={entityType === 'LINK'}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomFontColorButton
-                    isDisabled={disabledButtons.includes(buttonNames.fontColor)}
-                    isActive={Object.prototype.hasOwnProperty.call(
-                      customStyle,
-                      'color'
-                    )}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomDividerButton
-                    isDisabled={disabledButtons.includes(buttonNames.divider)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                  ></CustomDividerButton>
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomAnnotationButton
-                    isDisabled={disabledButtons.includes(
-                      buttonNames.annotation
-                    )}
-                    isActive={entityType === 'ANNOTATION'}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    renderBasicEditor={renderBasicEditor}
-                    decorators={decorators}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomImageButton
-                    isDisabled={disabledButtons.includes(buttonNames.image)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    ImageSelector={ImageSelector}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomVideoButton
-                    isDisabled={disabledButtons.includes(buttonNames.video)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    VideoSelector={VideoSelector}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomAudioButton
-                    isDisabled={disabledButtons.includes(buttonNames.audio)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    AudioSelector={AudioSelector}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomSlideshowButton
-                    isDisabled={disabledButtons.includes(buttonNames.slideshow)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    ImageSelector={ImageSelector}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomInfoBoxButton
-                    isDisabled={disabledButtons.includes(buttonNames.infoBox)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    renderBasicEditor={renderBasicEditor}
-                    decorators={decorators}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomEmbeddedCodeButton
-                    isDisabled={disabledButtons.includes(buttonNames.embed)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  ></CustomEmbeddedCodeButton>
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomTableButton
-                    isDisabled={disabledButtons.includes(buttonNames.table)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  ></CustomTableButton>
-                </ButtonGroup>
-              </DraftEditorControlsWrapper>
-              <DraftEditorControlsWrapper>
-                <ButtonGroup>
-                  <CustomAlignLeftButton
-                    isDisabled={disabledButtons.includes(buttonNames.textAlign)}
-                    isActive={
-                      getSelectionBlockData(editorState, 'textAlign') === 'left'
-                    }
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomAlignCenterButton
-                    isDisabled={disabledButtons.includes(buttonNames.textAlign)}
-                    isActive={
-                      getSelectionBlockData(editorState, 'textAlign') ===
-                      'center'
-                    }
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomColorBoxButton
-                    isDisabled={disabledButtons.includes(buttonNames.colorBox)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    renderBasicEditor={renderBasicEditor}
-                    decorators={decorators}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomBackgroundColorButton
-                    isDisabled={disabledButtons.includes(
-                      buttonNames.backgroundColor
-                    )}
-                    isActive={Object.prototype.hasOwnProperty.call(
-                      customStyle,
-                      'backgroundColor'
-                    )}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomBGImageButton
-                    isDisabled={disabledButtons.includes(
-                      buttonNames.backgroundImage
-                    )}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    ImageSelector={ImageSelector}
-                    renderBasicEditor={renderBasicEditor}
-                    decorators={decorators}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomBGVideoButton
-                    isDisabled={disabledButtons.includes(
-                      buttonNames.backgroundVideo
-                    )}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    VideoSelector={VideoSelector}
-                    renderBasicEditor={renderBasicEditor}
-                    decorators={decorators}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomRelatedPostButton
-                    isDisabled={disabledButtons.includes(
-                      buttonNames.relatedPost
-                    )}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                    PostSelector={PostSelector}
-                  />
-                </ButtonGroup>
-                <ButtonGroup>
-                  <CustomSideIndexButton
-                    isDisabled={disabledButtons.includes(buttonNames.sideIndex)}
-                    editorState={editorState}
-                    onChange={this.onChange}
-                    readOnly={this.state.readOnly}
-                  />
-                </ButtonGroup>
-              </DraftEditorControlsWrapper>
-            </DraftEditorControls>
-            <TextEditorWrapper
-              onClick={() => {
-                // eslint-disable-next-line prettier/prettier
-              (this.refs.editor as HTMLElement)?.focus()
-              }}
-            >
-              <Editor
-                blockStyleFn={this.blockStyleFn.bind(this)}
-                blockRendererFn={this.blockRendererFn}
-                customStyleMap={this.customStyleMap}
-                customStyleFn={this.customStyleFn}
+      <DraftEditorContainer isEnlarged={isEnlarged}>
+        <DraftEditorWrapper>
+          <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+            type="text/css"
+          />
+          <link
+            href="https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css"
+            rel="stylesheet"
+            type="text/css"
+          />
+          <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/draft-js/0.11.7/Draft.css"
+            rel="stylesheet"
+            type="text/css"
+          />
+          <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+            rel="stylesheet"
+            type="text/css"
+          />
+          <DraftEditorControls>
+            <DraftEditorControlsWrapper>
+              <BlockStyleControls
+                disabledButtons={disabledButtons}
                 editorState={editorState}
-                handleKeyCommand={this.handleKeyCommand}
-                handleReturn={this.handleReturn}
-                keyBindingFn={this.mapKeyToEditorCommand}
-                onChange={this.onChange}
-                placeholder="Tell a story..."
-                ref="editor"
-                spellCheck={true}
-                readOnly={readOnly}
+                onToggle={this.toggleBlockType}
+                readOnly={this.state.readOnly}
               />
-            </TextEditorWrapper>
-          </DraftEditorWrapper>
-        </DraftEditorContainer>
-      </ThemeProvider>
+              <InlineStyleControls
+                disabledButtons={disabledButtons}
+                editorState={editorState}
+                onToggle={this.toggleInlineStyle}
+                readOnly={this.state.readOnly}
+              />
+              <EnlargeButtonWrapper>
+                <CustomEnlargeButton
+                  onToggle={this.toggleEnlarge}
+                  isEnlarged={isEnlarged}
+                ></CustomEnlargeButton>
+              </EnlargeButtonWrapper>
+              <CustomLinkButton
+                isDisabled={disabledButtons.includes(buttonNames.link)}
+                isActive={entityType === 'LINK'}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+              />
+              <CustomAnnotationButton
+                isDisabled={disabledButtons.includes(buttonNames.annotation)}
+                isActive={entityType === 'ANNOTATION'}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                renderBasicEditor={renderBasicEditor}
+                decorators={decorators}
+              />
+              <CustomImageButton
+                isDisabled={disabledButtons.includes(buttonNames.image)}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                ImageSelector={ImageSelector}
+              />
+              <CustomSlideshowButton
+                isDisabled={disabledButtons.includes(buttonNames.slideshow)}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                ImageSelector={ImageSelector}
+              />
+              <CustomInfoBoxButton
+                isDisabled={disabledButtons.includes(buttonNames.infoBox)}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                renderBasicEditor={renderBasicEditor}
+                decorators={decorators}
+              />
+              <CustomEmbeddedCodeButton
+                isDisabled={disabledButtons.includes(buttonNames.embed)}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+              ></CustomEmbeddedCodeButton>
+            </DraftEditorControlsWrapper>
+          </DraftEditorControls>
+          <TextEditorWrapper
+            onClick={() => {
+              if (this.editorRef) {
+                // eslint-disable-next-line prettier/prettier
+                  (this.editorRef as HTMLElement)?.focus()
+              }
+            }}
+          >
+            <Editor
+              blockRenderMap={blockRenderMap}
+              blockRendererFn={this.blockRendererFn}
+              editorState={editorState}
+              handleKeyCommand={this.handleKeyCommand}
+              handleReturn={this.handleReturn}
+              keyBindingFn={this.mapKeyToEditorCommand}
+              onChange={this.onChange}
+              placeholder="Tell a story..."
+              ref={this.editorRef}
+              spellCheck={true}
+              readOnly={readOnly}
+            />
+          </TextEditorWrapper>
+        </DraftEditorWrapper>
+      </DraftEditorContainer>
     )
   }
 }
@@ -975,7 +575,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
 type StyleButtonProps = {
   active: boolean
   label: string
-  onToggle: (string) => void
+  onToggle: (arg0: string) => void
   style: string
   icon: string
   readOnly: boolean
@@ -983,7 +583,7 @@ type StyleButtonProps = {
 }
 
 class StyleButton extends React.Component<StyleButtonProps> {
-  onToggle = (e) => {
+  onToggle = (e: React.MouseEvent) => {
     e.preventDefault()
     this.props.onToggle(this.props.style)
   }
@@ -1072,8 +672,9 @@ const InlineStyleControls = (props: StyleControlsProps) => {
   )
 }
 
-const DraftEditor = {
+export { RichTextEditor, decorators }
+
+export default {
   RichTextEditor,
   decorators,
 }
-export default DraftEditor

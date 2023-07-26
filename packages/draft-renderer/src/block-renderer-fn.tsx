@@ -1,76 +1,39 @@
+import { ContentState, ContentBlock } from 'draft-js'
 import { blockRenderers } from './block-renderers'
 const {
   EmbeddedCodeBlock,
-  MediaBlock,
-  ImageBlock,
+  ImageInArticleBody,
   InfoBoxBlock,
-  SlideshowBlock,
-  DividerBlock,
-  TableBlock,
-  ColorBoxBlock,
-  BGImageBlock,
-  BGVideoBlock,
-  RelatedPostBlock,
-  SideIndexBlock,
-  VideoBlock,
-  AudioBlock,
+  SlideshowInArticleBody,
 } = blockRenderers
 
-const AtomicBlock = (props: any) => {
+const AtomicBlock = (props: {
+  contentState: ContentState
+  block: ContentBlock
+}) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0))
 
   const entityType = entity.getType()
+  const entityData = entity.getData()
 
   switch (entityType) {
-    case 'audioLink':
-    case 'imageLink':
-    case 'videoLink': {
-      return MediaBlock(entity)
-    }
     case 'image': {
-      return ImageBlock(entity)
+      return ImageInArticleBody({ data: entityData })
     }
     case 'slideshow': {
-      return SlideshowBlock(entity)
+      return SlideshowInArticleBody({ data: entityData })
     }
     case 'EMBEDDEDCODE': {
-      return EmbeddedCodeBlock(entity)
+      return EmbeddedCodeBlock({ data: entityData })
     }
     case 'INFOBOX': {
-      return InfoBoxBlock(props)
-    }
-    case 'DIVIDER': {
-      return DividerBlock()
-    }
-    case 'TABLE': {
-      return TableBlock(props)
-    }
-    case 'COLORBOX': {
-      return ColorBoxBlock(props)
-    }
-    case 'BACKGROUNDIMAGE': {
-      return BGImageBlock(props)
-    }
-    case 'BACKGROUNDVIDEO': {
-      return BGVideoBlock(props)
-    }
-    case 'RELATEDPOST': {
-      return RelatedPostBlock(entity)
-    }
-    case 'SIDEINDEX': {
-      return SideIndexBlock(props)
-    }
-    case 'VIDEO': {
-      return VideoBlock(entity)
-    }
-    case 'AUDIO': {
-      return AudioBlock(entity)
+      return InfoBoxBlock({ data: entityData })
     }
   }
   return null
 }
 
-export function atomicBlockRenderer(block: any) {
+export function atomicBlockRenderer(block: ContentBlock) {
   if (block.getType() === 'atomic') {
     return {
       component: AtomicBlock,

@@ -502,16 +502,14 @@ type ImageEntity = {
   desc: string // figure caption
   imageFile: ImageFile
   resized?: {
-    tiny: string
     small: string
     medium: string
     large: string
-    original: string
   }
 }
 
 type SlideshowBlockProps = {
-  className: string
+  className?: string
   data: {
     delay?: number
     alignment?: string
@@ -519,7 +517,7 @@ type SlideshowBlockProps = {
   }
 }
 
-export function SlideshowBlock({ className, data }: SlideshowBlockProps) {
+export function SlideshowBlock({ className = '', data }: SlideshowBlockProps) {
   const defaultTranslateXUnit = -slidesOffset
 
   // value of curSlideIndex would be in [ 0 ~ props.data.content.length ] range,
@@ -550,12 +548,17 @@ export function SlideshowBlock({ className, data }: SlideshowBlockProps) {
       const height = img.imageFile.height ?? 0
       const imgSrc = img.resized?.medium ?? img.imageFile.url
       const imgSrcSetArr = []
+
+      if (img.resized?.small) {
+        imgSrcSetArr.push(`${img.resized.medium} 600w`)
+      }
+
       if (img.resized?.medium) {
-        imgSrcSetArr.push(`${img.resized.medium} 900w`)
+        imgSrcSetArr.push(`${img.resized.medium} 1200w`)
       }
 
       if (img.resized?.large) {
-        imgSrcSetArr.push(`${img.resized.large} 3000w`)
+        imgSrcSetArr.push(`${img.resized.large} 2000w`)
       }
 
       const objectFit = width > height ? 'cover' : 'contain'
@@ -568,7 +571,7 @@ export function SlideshowBlock({ className, data }: SlideshowBlockProps) {
             srcSet={imgSrcSetArr.join(',')}
             src={imgSrc}
             style={{ objectFit, width: '100%' }}
-            sizes="(max-width: 768px) 400px"
+            sizes="(max-width: 768px) 100vw, (min-width: 1400px) 1000px, 500px"
           />
         </SlideFlexItem>
       )
@@ -672,5 +675,21 @@ function PreArrowSvg() {
         fill="gray"
       />
     </svg>
+  )
+}
+
+const ArticleBodyContainer = styled.div`
+  width: fit-content;
+  margin: 0 auto 27px auto;
+`
+
+export function SlideshowInArticleBody({
+  className = '',
+  data,
+}: SlideshowBlockProps) {
+  return (
+    <ArticleBodyContainer className={className}>
+      <SlideshowBlock data={data} />
+    </ArticleBodyContainer>
   )
 }
