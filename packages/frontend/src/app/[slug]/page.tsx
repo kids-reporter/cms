@@ -159,6 +159,11 @@ export default async function PostPage({
                 slug
                 publishedDate
                 brief
+                heroImage {
+                  imageFile {
+                    url
+                  }
+                }
               }
             }
           }

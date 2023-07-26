@@ -2,4 +2,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+
+  .related-post-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    .bullets {
+      .bullet {
+        cursor: pointer;
+        margin: 50px 10px 0;
+        width: 13px;
+        height: 13px;
+        background-color: #eaeaea;
+        border-radius: 13px;
+        appearance: none;
+        border: none;
+      }
+
+      .bullet.active {
+        background-color: var(--paletteColor6);
+      }
+    }
+  }
 }
