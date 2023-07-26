@@ -27,7 +27,6 @@ export default async function Home() {
 
   return (
     <main>
-      <h1>少年報導者首頁</h1>
       <Header />
       {posts?.map((post, index) => {
         return (
