@@ -8,10 +8,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
+
+    .cards {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+
+      .post {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+    }
+
+    img {
+      height: auto;
+      max-width: 100%;
+      vertical-align: middle;
+    }
 
     .bullets {
-      .bullet {
+      button {
         cursor: pointer;
         margin: 50px 10px 0;
         width: 13px;
@@ -22,7 +42,7 @@
         border: none;
       }
 
-      .bullet.active {
+      button.active {
         background-color: var(--paletteColor6);
       }
     }

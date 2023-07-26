@@ -18,25 +18,26 @@ export const RelatedPosts = (props: RelatedPostsProp) => {
         </h3>
 
         <div className="related-post-slider">
-          {props.posts.map((post, index) => {
-            return (
-              <div key={`related-post-${index}`} className="related-post">
-                <div>
-                  <img src={`${cmsURL}${post.heroImage?.imageFile?.url}`} />
+          <div className="cards">
+            {props.posts.map((post, index) => {
+              return (
+                <div key={`related-post-${index}`} className="post">
+                  <div>
+                    <img src={`${cmsURL}${post.heroImage?.imageFile?.url}`} />
+                  </div>
+                  {post.name}
+                  {post.publishedDate}
                 </div>
-                {post.name}
-                {post.publishedDate}
-              </div>
-            )
-          })}
-
+              )
+            })}
+          </div>
           <div className="bullets">
-            <button className="bullet">&nbsp;</button>
-            <button className="bullet active">&nbsp;</button>
-            <button className="bullet">&nbsp;</button>
-            <button className="bullet">&nbsp;</button>
-            <button className="bullet">&nbsp;</button>
-            <button className="bullet">&nbsp;</button>
+            <button>&nbsp;</button>
+            <button className="active">&nbsp;</button>
+            <button>&nbsp;</button>
+            <button>&nbsp;</button>
+            <button>&nbsp;</button>
+            <button>&nbsp;</button>
           </div>
         </div>
       </div>
