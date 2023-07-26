@@ -1,3 +1,7 @@
+.page {
+  display: block;
+}
+
 body.single-post {
     --theme-color: #27B5F7;
     .entry-content {
@@ -11,7 +15,10 @@ body.single-post {
     }
 }
 .post {
+    margin-top: 64px; // TODO: fix header issue
     font-size: var(--rpjr-text-scale);
+    margin-left: var(--has-boxed-structure, auto);
+    margin-right: var(--has-boxed-structure, auto);
 }
 
 .icon-rpjr-icon-tag .path1:before {
