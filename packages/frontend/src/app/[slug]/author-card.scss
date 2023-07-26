@@ -61,13 +61,18 @@
       }
 
       .desc {
-        display: inline-flex;
+        display: inline-block;
+        height: 154px; // var(--eqhminh-2);
         font-style: normal;
         font-weight: 500;
         font-size: 16px;
         line-height: 160%;
         letter-spacing: 0.05em;
         color: rgb(35, 35, 35);
+
+        overflow:hidden;
+        // white-space: nowrap; TODO: fix wrap issue
+        text-overflow: ellipsis;
       }
 
       .more {
