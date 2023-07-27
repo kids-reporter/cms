@@ -131,14 +131,7 @@ const authorsMockup = [
   },
 ]
 
-export default async function PostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  // TODO: error handling(params.slug, post)
-  const response = await axios.post(apiURL, {
-    query: `
+const postQuery = `
           query($where: PostWhereUniqueInput!) {
             post(where: $where) {
               name
@@ -167,13 +160,25 @@ export default async function PostPage({
               }
             }
           }
-        `,
-    variables: {
-      where: {
-        slug: params.slug,
-      },
-    },
-  })
+        `
+
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  // TODO: error handling(params.slug, post)
+  const response = params?.slug
+    ? await axios.post(apiURL, {
+        query: postQuery,
+        variables: {
+          where: {
+            slug: params.slug,
+          },
+        },
+      })
+    : undefined
+
   const post = response?.data?.data?.post
   post.category = categoryMockup // TODO: find category source
   post.tags = tagsMockup // TODO: find tags source
