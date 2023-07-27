@@ -179,11 +179,13 @@ export default async function PostPage({
     : undefined
 
   const post = response?.data?.data?.post
-  post.category = categoryMockup // TODO: find category source
-  post.tags = tagsMockup // TODO: find tags source
-  post.editors = editorsMockup // TODO: find editors source
-  post.theme = 'yellow'
-  post.authors = authorsMockup // TODO: find editors source
+  if (post) {
+    post.category = categoryMockup // TODO: find category source
+    post.tags = tagsMockup // TODO: find tags source
+    post.editors = editorsMockup // TODO: find editors source
+    post.theme = 'yellow'
+    post.authors = authorsMockup // TODO: find editors source
+  }
 
   return (
     post && (
