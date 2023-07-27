@@ -71,9 +71,22 @@
 
       margin: var(--margin, 0 10px);
       border: none;
+      background: none;
+      cursor: pointer;
 
       span {
         display: none !important;
+      }
+
+      svg {
+        width: var(--icon-size, 15px);
+        height: var(--icon-size, 15px);
+        fill: var(--icon-color, var(--color));
+        transition: var(--icon-transition, fill 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955));
+      }
+
+      svg:hover {
+        fill: var(--icon-hover-color);
       }
     }
   }
