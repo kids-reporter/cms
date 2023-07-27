@@ -2996,66 +2996,6 @@
     "@keystone-ui/popover" "^6.0.2"
     apply-ref "^1.0.0"
 
-"@kids-reporter/cms-core@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/cms-core/-/cms-core-0.1.1.tgz#a678b74e596f721d69fba0851deeff7857de545c"
-  integrity sha512-M002CvljfKDctYoM9qrHdH4gB4zr4POYfZodDG+bzKy+zk3HE1L+3Y5+PeE4enmVdTwikUUUZxrzNvBpO7rNGA==
-  dependencies:
-    "@google-cloud/storage" "^5.18.0"
-    "@keystone-ui/button" "^7.0.2"
-    "@keystone-ui/fields" "^7.2.0"
-    "@keystone-ui/modals" "^6.0.3"
-    "@kids-reporter/draft-editor" "0.1.0"
-    "@twreporter/errors" "^1.1.1"
-    axios "^0.26.0"
-    draft-convert "^2.1.12"
-    draft-js "^0.11.7"
-    htmlparser2 "^7.2.0"
-    immutable "^4.0.0"
-    lodash "^4.17.21"
-    shortid "^2.2.16"
-    styled-components "5.3.5"
-    zlib "^1.0.5"
-
-"@kids-reporter/draft-editor@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/draft-editor/-/draft-editor-0.1.0.tgz#34dfb296629657cb8e704f1b7b9ac364e21526d6"
-  integrity sha512-8rXVIHh1oUjGbFWLJbpnHIMvU5MJodQ1+MwrbN1/Cta0BeN1kPeJIAJ7UpDsbsQQI/vp9D0WBvUbOCtCz3kUzw==
-  dependencies:
-    "@kids-reporter/draft-renderer" "0.1.0"
-    draft-js "^0.11.7"
-
-"@kids-reporter/draft-editor@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/draft-editor/-/draft-editor-0.2.0.tgz#34710ead7a983ac31037d031386bad656a2616f9"
-  integrity sha512-mQRc3nz8QNp1UXPIAlneBnrE92Mij2TvfVfH+x588TXOfE2h6WPsV1UF21jN+RkGuh+m5c64K+qF6FI1IlT9iA==
-  dependencies:
-    "@kids-reporter/draft-renderer" "0.2.0"
-    draft-js "^0.11.7"
-
-"@kids-reporter/draft-renderer@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/draft-renderer/-/draft-renderer-0.1.0.tgz#fd47099cf160a703ef3e88cc37325c3400c23a1a"
-  integrity sha512-CPDD8PasXMdvVRKibgXVbxsSpcjDwKj4FDVhI/YVjnJznbFkNJckknH/GftEkGlnx4TUukXX6noiVmpH2HoY1g==
-  dependencies:
-    "@readr-media/react-image" "1.6.0"
-    body-scroll-lock "3.1.5"
-    draft-js "^0.11.7"
-    node-html-parser "^6.1.5"
-
-"@kids-reporter/draft-renderer@0.1.1":
-  version "0.2.0"
-  dependencies:
-    "@readr-media/react-image" "1.6.0"
-    "@twreporter/core" "^1.10.0"
-    babel-loader "^8.2.5"
-    body-scroll-lock "3.1.5"
-    draft-js "^0.11.7"
-    html-webpack-plugin "^5.5.0"
-    node-html-parser "^6.1.5"
-    webpack "^5.72.1"
-    webpack-cli "^4.9.2"
-
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
@@ -9973,13 +9913,13 @@ react-day-picker@^8.0.4:
   resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-8.2.0.tgz#f6cac34d53e1ce963e561940e33fadec874e48cb"
   integrity sha512-6sI9+qk1xXSvV94WOz0H4FVGFaGquwMLQGw9WXoOZajMY/CVrLsautRFwkdjZ9jWj7WZR2Se1mTMrEpmcB6BEQ==
 
-react-dom@18.1.0, react-dom@18.2.0, react-dom@^18.2.0:
-  version "18.1.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.1.0.tgz#7f6dd84b706408adde05e1df575b3a024d7e8a2f"
-  integrity sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==
+react-dom@18.2.0, react-dom@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
+  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
   dependencies:
     loose-envify "^1.1.0"
-    scheduler "^0.22.0"
+    scheduler "^0.23.0"
 
 react-fast-compare@^3.0.1:
   version "3.2.0"
@@ -10062,7 +10002,14 @@ react-transition-group@^4.3.0, react-transition-group@^4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react@18.1.0, react@18.2.0, react@^18.1.0, react@^18.2.0:
+react@18.2.0, react@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+  dependencies:
+    loose-envify "^1.1.0"
+
+react@^18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
   integrity sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==
@@ -10422,10 +10369,10 @@ sass@^1.64.0:
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
 
-scheduler@^0.22.0:
-  version "0.22.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8"
-  integrity sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==
+scheduler@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
+  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
   dependencies:
     loose-envify "^1.1.0"
 
