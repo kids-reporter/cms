@@ -132,42 +132,41 @@ const authorsMockup = [
 ]
 
 const postQuery = `
-          query($where: PostWhereUniqueInput!) {
-            post(where: $where) {
-              name
-              brief
-              content
-              publishedDate
-              editors {
-                name
-              }
-              heroImage {
-                imageFile {
-                  url
-                }
-              }
-              heroCaption
-              relatedPosts {
-                name
-                slug
-                publishedDate
-                brief
-                heroImage {
-                  imageFile {
-                    url
-                  }
-                }
-              }
-            }
+  query($where: PostWhereUniqueInput!) {
+    post(where: $where) {
+      name
+      brief
+      content
+      publishedDate
+      editors {
+        name
+      }
+      heroImage {
+        imageFile {
+          url
+        }
+      }
+      heroCaption
+      relatedPosts {
+        name
+        slug
+        publishedDate
+        brief
+        heroImage {
+          imageFile {
+            url
           }
-        `
+        }
+      }
+    }
+  }
+`
 
 export default async function PostPage({
   params,
 }: {
   params: { slug: string }
 }) {
-  // TODO: error handling(params.slug, post)
   const response = params?.slug
     ? await axios.post(apiURL, {
         query: postQuery,
