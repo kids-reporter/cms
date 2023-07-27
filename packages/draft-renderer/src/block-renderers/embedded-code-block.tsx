@@ -110,3 +110,19 @@ export const EmbeddedCodeBlock = ({
     </div>
   )
 }
+
+const ArticleBodyContainer = styled.div`
+  max-width: 700px;
+  margin: 0 auto 27px auto;
+`
+
+export function EmbeddedCodeInArticleBody({
+  className = '',
+  data,
+}: EmbeddedCodeBlockProps) {
+  return (
+    <ArticleBodyContainer className={className}>
+      <EmbeddedCodeBlock data={data} />
+    </ArticleBodyContainer>
+  )
+}
