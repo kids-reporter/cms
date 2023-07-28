@@ -1,8 +1,10 @@
 .header-container {
+  --normal-container-max-width: 1440px;
   display: flex;
   justify-content: space-between;
   height: 62px;
   width: var(--container-width);
+  max-width: var(--normal-container-max-width);
   min-height: var(--shrink-height, var(--height));
   margin-left: auto;
   margin-right: auto;

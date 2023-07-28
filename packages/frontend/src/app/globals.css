@@ -96,6 +96,7 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
+  background-color: white;
   --content-spacing: 1.5em;
   --container-spacing: 25px;
   --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);

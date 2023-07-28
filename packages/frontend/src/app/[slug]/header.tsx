@@ -24,7 +24,7 @@ const navItems = [
   },
 ]
 
-export const Header = () => {
+export const StickyHeader = () => {
   return (
     <div className="header-container">
       <div className="left">
@@ -113,4 +113,6 @@ export const Header = () => {
   )
 }
 
-export default Header
+export const Header = () => {
+  return null
+}

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import PostRenderer from './post-renderer'
-import Header from './header'
 import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
@@ -12,8 +11,6 @@ import Tags from './tags'
 import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
-import BackToTop from './back-to-top'
-import Footer from './footer'
 
 import './post.scss'
 import '../assets/css/button.css'
@@ -189,44 +186,38 @@ export default async function PostPage({
 
   return (
     post && (
-      <div className="page">
-        <Header />
-        <Sidebar />
-        <div className={`post theme-${post.theme}`}>
-          {true && (
-            <>
-              <HeroImage
-                url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
-                caption={post.heroCaption}
-              />
-              <div className="hero-section" data-type="type-1">
-                <header className="entry-header">
-                  <Title text={post.name as string} />
-                  <div className="post_date_category">
-                    <PublishedDate date={post?.publishedDate} />
-                    <Category
-                      text={post.category.text}
-                      link={post.category.link}
-                    />
-                  </div>
-                </header>
-              </div>
-              <Brief content={post.brief} editors={post.editors} />
+      <main className="main-container">
+        {true && (
+          <div className={`post theme-${post.theme}`}>
+            <Sidebar />
+            <HeroImage
+              url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
+              caption={post.heroCaption}
+            />
+            <div className="hero-section" data-type="type-1">
+              <header className="entry-header">
+                <Title text={post.name as string} />
+                <div className="post_date_category">
+                  <PublishedDate date={post?.publishedDate} />
+                  <Category
+                    text={post.category.text}
+                    link={post.category.link}
+                  />
+                </div>
+              </header>
+            </div>
+            <Brief content={post.brief} editors={post.editors} />
 
-              <Divider />
+            <Divider />
 
-              <PostRenderer post={post} />
-              <Tags tags={post.tags} />
-              <AuthorCard authors={post.authors} />
-            </>
-          )}
-        </div>
-
+            <PostRenderer post={post} />
+            <Tags tags={post.tags} />
+            <AuthorCard authors={post.authors} />
+          </div>
+        )}
         <CallToAction />
         <RelatedPosts posts={post.relatedPosts} />
-        <Footer />
-        <BackToTop />
-      </div>
+      </main>
     )
   )
 }

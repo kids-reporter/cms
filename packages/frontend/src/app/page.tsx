@@ -1,7 +1,5 @@
 // import styles from './page.module.css'
 import axios from 'axios'
-import Header from './[slug]/header'
-import Footer from './[slug]/footer'
 
 type Post = {
   name: string
@@ -27,7 +25,6 @@ export default async function Home() {
 
   return (
     <main>
-      <Header />
       {posts?.map((post, index) => {
         return (
           <div key={`article-${index}`}>
@@ -52,7 +49,6 @@ export default async function Home() {
       <h1>TODO: 和報導仔交朋友</h1>
       <h1>TODO: CTA</h1>
       <h1>TODO: 前往主網站</h1>
-      <Footer />
     </main>
   )
 }
