@@ -131,55 +131,61 @@ const authorsMockup = [
   },
 ]
 
+const postQuery = `
+  query($where: PostWhereUniqueInput!) {
+    post(where: $where) {
+      name
+      brief
+      content
+      publishedDate
+      editors {
+        name
+      }
+      heroImage {
+        imageFile {
+          url
+        }
+      }
+      heroCaption
+      relatedPosts {
+        name
+        slug
+        publishedDate
+        brief
+        heroImage {
+          imageFile {
+            url
+          }
+        }
+      }
+    }
+  }
+`
+
 export default async function PostPage({
   params,
 }: {
   params: { slug: string }
 }) {
-  // TODO: error handling(params.slug, post)
-  const response = await axios.post(apiURL, {
-    query: `
-          query($where: PostWhereUniqueInput!) {
-            post(where: $where) {
-              name
-              brief
-              content
-              publishedDate
-              editors {
-                name
-              }
-              heroImage {
-                imageFile {
-                  url
-                }
-              }
-              heroCaption
-              relatedPosts {
-                name
-                slug
-                publishedDate
-                brief
-                heroImage {
-                  imageFile {
-                    url
-                  }
-                }
-              }
-            }
-          }
-        `,
-    variables: {
-      where: {
-        slug: params.slug,
-      },
-    },
-  })
+  const response = params?.slug
+    ? await axios.post(apiURL, {
+        query: postQuery,
+        variables: {
+          where: {
+            slug: params.slug,
+          },
+        },
+      })
+    : undefined
+
   const post = response?.data?.data?.post
-  post.category = categoryMockup // TODO: find category source
-  post.tags = tagsMockup // TODO: find tags source
-  post.editors = editorsMockup // TODO: find editors source
-  post.theme = 'yellow'
-  post.authors = authorsMockup // TODO: find editors source
+  if (post) {
+    post.category = categoryMockup // TODO: find category source
+    post.tags = tagsMockup // TODO: find tags source
+    post.editors = editorsMockup // TODO: find editors source
+    post.theme = 'yellow'
+    post.authors = authorsMockup // TODO: find editors source
+  }
 
   return (
     post && (

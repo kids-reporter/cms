@@ -97,30 +97,7 @@ export const Header = () => {
             <path d="M14.8,13.7L12,11c0.9-1.2,1.5-2.6,1.5-4.2c0-3.7-3-6.8-6.8-6.8S0,3,0,6.8s3,6.8,6.8,6.8c1.6,0,3.1-0.6,4.2-1.5l2.8,2.8c0.1,0.1,0.3,0.2,0.5,0.2s0.4-0.1,0.5-0.2C15.1,14.5,15.1,14,14.8,13.7z M1.5,6.8c0-2.9,2.4-5.2,5.2-5.2S12,3.9,12,6.8S9.6,12,6.8,12S1.5,9.6,1.5,6.8z"></path>
           </svg>
         </button>
-        {/* TODO: login function
-          <a
-            data-id="account"
-            className="ct-header-account"
-            data-state="in"
-            data-label="right"
-            href="https://kids.twreporter.org/wp-login.php?action=logout&amp;redirect_to=https%3A%2F%2Fkids.twreporter.org%2Funiversity-exploratory-learning-zoo%2F&amp;_wpnonce=c5cf087865"
-            aria-label="登出"
-          >
-            <span className="ct-label">登出</span>
-            <div className="ct-image-container">
-              <img
-                loading="lazy"
-                src="https://secure.gravatar.com/avatar/ee11385c5582e8ed4fb83f236d1992aa?s=48&amp;d=mm&amp;r=r"
-                width="24"
-                height="24"
-                aria-hidden="true"
-                style={{ aspectRatio: '1/1' }}
-                alt="預設圖片"
-              />
-            </div>
-          </a>
-          */}
-        <div className="ct-header-cta">
+        <div className="about-us">
           <a
             href="/about#us"
             className="rpjr-btn rpjr-btn-red"

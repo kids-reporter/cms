@@ -71,9 +71,41 @@
 
       margin: var(--margin, 0 10px);
       border: none;
+      background: none;
+      cursor: pointer;
 
       span {
         display: none !important;
+      }
+
+      svg {
+        width: var(--icon-size, 15px);
+        height: var(--icon-size, 15px);
+        fill: var(--icon-color, var(--color));
+        transition: var(--icon-transition, fill 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955));
+      }
+
+      svg:hover {
+        fill: var(--icon-hover-color);
+      }
+    }
+
+    .about-us {
+      --margin: 0 0 0 10px;
+      display: flex;
+      align-items: center;
+      margin: var(--margin, 0 10px);
+      height: 36px;
+
+      a {
+        padding: 0px 12px 0px;
+        line-height: 36px;
+        --buttonFontSize: 13px;
+        --buttonFontWeight: 500;
+        --fontFamily: 'Noto Sans TC', Sans-Serif;
+        font-family: var(--buttonFontFamily, var(--fontFamily));
+        font-size: var(--buttonFontSize);
+        font-weight: var(--buttonFontWeight);
       }
     }
   }
