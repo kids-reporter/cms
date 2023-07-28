@@ -1,6 +1,6 @@
 import axios from 'axios'
 import PostRenderer from './post-renderer'
-import Header from './header'
+import { StickyHeader } from './header'
 import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
@@ -190,7 +190,7 @@ export default async function PostPage({
   return (
     post && (
       <div className="main-container">
-        <Header />
+        <StickyHeader />
 
         {true && (
           <main className={`post theme-${post.theme}`}>

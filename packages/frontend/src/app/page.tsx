@@ -1,6 +1,6 @@
 // import styles from './page.module.css'
 import axios from 'axios'
-import Header from './[slug]/header'
+import { StickyHeader } from './[slug]/header'
 import Footer from './[slug]/footer'
 
 type Post = {
@@ -27,7 +27,7 @@ export default async function Home() {
 
   return (
     <main>
-      <Header />
+      <StickyHeader />
       {posts?.map((post, index) => {
         return (
           <div key={`article-${index}`}>
