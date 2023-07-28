@@ -186,9 +186,9 @@ export default async function PostPage({
 
   return (
     post && (
-      <div className="main-container">
+      <main className="main-container">
         {true && (
-          <main className={`post theme-${post.theme}`}>
+          <div className={`post theme-${post.theme}`}>
             <Sidebar />
             <HeroImage
               url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
@@ -213,11 +213,11 @@ export default async function PostPage({
             <PostRenderer post={post} />
             <Tags tags={post.tags} />
             <AuthorCard authors={post.authors} />
-            <CallToAction />
-            <RelatedPosts posts={post.relatedPosts} />
-          </main>
+          </div>
         )}
-      </div>
+        <CallToAction />
+        <RelatedPosts posts={post.relatedPosts} />
+      </main>
     )
   )
 }
