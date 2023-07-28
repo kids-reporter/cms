@@ -1,6 +1,5 @@
 import axios from 'axios'
 import PostRenderer from './post-renderer'
-import { StickyHeader } from './header'
 import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
@@ -12,8 +11,6 @@ import Tags from './tags'
 import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
-import BackToTop from './back-to-top'
-import Footer from './footer'
 
 import './post.scss'
 import '../assets/css/button.css'
@@ -190,8 +187,6 @@ export default async function PostPage({
   return (
     post && (
       <div className="main-container">
-        <StickyHeader />
-
         {true && (
           <main className={`post theme-${post.theme}`}>
             <Sidebar />
@@ -222,9 +217,6 @@ export default async function PostPage({
             <RelatedPosts posts={post.relatedPosts} />
           </main>
         )}
-
-        <BackToTop />
-        <Footer />
       </div>
     )
   )
