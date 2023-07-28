@@ -1,7 +1,7 @@
 import { ContentState, ContentBlock } from 'draft-js'
 import { blockRenderers } from './block-renderers'
 const {
-  EmbeddedCodeBlock,
+  EmbeddedCodeInArticleBody,
   ImageInArticleBody,
   InfoBoxBlock,
   SlideshowInArticleBody,
@@ -24,7 +24,7 @@ const AtomicBlock = (props: {
       return SlideshowInArticleBody({ data: entityData })
     }
     case 'EMBEDDEDCODE': {
-      return EmbeddedCodeBlock({ data: entityData })
+      return EmbeddedCodeInArticleBody({ data: entityData })
     }
     case 'INFOBOX': {
       return InfoBoxBlock({ data: entityData })
