@@ -189,43 +189,42 @@ export default async function PostPage({
 
   return (
     post && (
-      <div className="page">
+      <div className="main-container">
         <Header />
-        <Sidebar />
-        <div className={`post theme-${post.theme}`}>
-          {true && (
-            <>
-              <HeroImage
-                url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
-                caption={post.heroCaption}
-              />
-              <div className="hero-section" data-type="type-1">
-                <header className="entry-header">
-                  <Title text={post.name as string} />
-                  <div className="post_date_category">
-                    <PublishedDate date={post?.publishedDate} />
-                    <Category
-                      text={post.category.text}
-                      link={post.category.link}
-                    />
-                  </div>
-                </header>
-              </div>
-              <Brief content={post.brief} editors={post.editors} />
 
-              <Divider />
+        {true && (
+          <main className={`post theme-${post.theme}`}>
+            <Sidebar />
+            <HeroImage
+              url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
+              caption={post.heroCaption}
+            />
+            <div className="hero-section" data-type="type-1">
+              <header className="entry-header">
+                <Title text={post.name as string} />
+                <div className="post_date_category">
+                  <PublishedDate date={post?.publishedDate} />
+                  <Category
+                    text={post.category.text}
+                    link={post.category.link}
+                  />
+                </div>
+              </header>
+            </div>
+            <Brief content={post.brief} editors={post.editors} />
 
-              <PostRenderer post={post} />
-              <Tags tags={post.tags} />
-              <AuthorCard authors={post.authors} />
-            </>
-          )}
-        </div>
+            <Divider />
 
-        <CallToAction />
-        <RelatedPosts posts={post.relatedPosts} />
-        <Footer />
+            <PostRenderer post={post} />
+            <Tags tags={post.tags} />
+            <AuthorCard authors={post.authors} />
+            <CallToAction />
+            <RelatedPosts posts={post.relatedPosts} />
+          </main>
+        )}
+
         <BackToTop />
+        <Footer />
       </div>
     )
   )
