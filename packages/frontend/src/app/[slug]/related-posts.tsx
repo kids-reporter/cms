@@ -47,7 +47,7 @@ export const RelatedPosts = (props: RelatedPostsProp) => {
                 </div>
               )
             })}
-            <button onClick={onPrevClick}>
+            <button className="prev-btn" onClick={onPrevClick}>
               <svg
                 width="54"
                 height="54"
@@ -71,7 +71,7 @@ export const RelatedPosts = (props: RelatedPostsProp) => {
                 ></path>
               </svg>
             </button>
-            <button onClick={onNextClick}>
+            <button className="next-btn" onClick={onNextClick}>
               <svg
                 width="54"
                 height="54"

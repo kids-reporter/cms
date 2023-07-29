@@ -23,11 +23,22 @@
         flex-direction: column;
       }
 
-      button {
+      .prev-btn {
         --theme-color: #F8C341; // TODO: theme color
         background-color: transparent;
         border: none;
         cursor: pointer;
+        position: absolute;
+        left: 0;
+      }
+
+      .next-btn {
+        --theme-color: #F8C341; // TODO: theme color
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        right: 0;
       }
     }
 
