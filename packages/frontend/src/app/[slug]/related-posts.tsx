@@ -1,112 +1,50 @@
-'use client'
-import './related-post.scss'
-
-type RelatedPostsProp = {
-  posts: any[]
-}
+import PostSlider from './post-slider'
 
 const cmsURL = 'https://dev-kids-cms.twreporter.org'
+const postMockup = [
+  {
+    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+  {
+    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+  {
+    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+]
 
-export const RelatedPosts = (props: RelatedPostsProp) => {
-  const onPrevClick = () => {
-    console.log('prev')
-  }
-  const onNextClick = () => {
-    console.log('next')
-  }
-
+export const RelatedPosts = () => {
   return (
-    props?.posts?.length > 0 && (
-      <div className="related-post-container">
-        <h3 className="ct-block-title">
-          <img
-            src="https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/post-related-post-title.svg"
-            alt="相關文章"
-          />
-        </h3>
-
-        <div className="related-post-slider">
-          <div className="cards">
-            {props.posts.map((post, index) => {
-              return (
-                <div key={`related-post-${index}`} className="post">
-                  <div>
-                    <img src={`${cmsURL}${post.heroImage?.imageFile?.url}`} />
-                  </div>
-                  {
-                    <a href="https://kids.twreporter.org/category/campus">
-                      校園寶可夢
-                    </a>
-                  }
-                  {post.name}
-                  {
-                    '台灣學生閱讀文章的情感感受力較弱，為什麼會如此？文學作家朱宥勳以4個關鍵字，分享如何理解一篇抒情文，以及如何掏出真心，寫出一篇動人文章。'
-                  }
-                  {'動物'}
-                  {post.publishedDate}
-                </div>
-              )
-            })}
-            <button className="prev-btn" onClick={onPrevClick}>
-              <svg
-                width="54"
-                height="54"
-                viewBox="0 0 54 54"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M27 2C13.1929 2 2 13.1929 2 27C2 40.8071 13.1929 52 27 52C40.8071 52 52 40.8071 52 27C52 13.1929 40.8071 2 27 2Z"
-                  fill="var(--theme-color)"
-                  stroke="white"
-                  stroke-width="3"
-                  stroke-miterlimit="10"
-                ></path>
-                <path
-                  d="M29.9297 39.1001L17.9359 27.0002L29.9297 14.9003"
-                  stroke="white"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </button>
-            <button className="next-btn" onClick={onNextClick}>
-              <svg
-                width="54"
-                height="54"
-                viewBox="0 0 54 54"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M27 52C40.8071 52 52 40.8071 52 27C52 13.1929 40.8071 2 27 2C13.1929 2 2 13.1929 2 27C2 40.8071 13.1929 52 27 52Z"
-                  fill="var(--theme-color)"
-                  stroke="white"
-                  stroke-width="3"
-                  stroke-miterlimit="10"
-                ></path>
-                <path
-                  d="M24.0703 14.8999L36.0641 26.9998L24.0703 39.0997"
-                  stroke="white"
-                  stroke-width="4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          <div className="bullets">
-            <button>&nbsp;</button>
-            <button className="active">&nbsp;</button>
-            <button>&nbsp;</button>
-            <button>&nbsp;</button>
-            <button>&nbsp;</button>
-            <button>&nbsp;</button>
-          </div>
-        </div>
-      </div>
-    )
+    <div className="related-post-container">
+      <h3 className="ct-block-title">
+        <img
+          src="https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/post-related-post-title.svg"
+          alt="相關文章"
+        />
+      </h3>
+      <PostSlider posts={postMockup} />
+    </div>
   )
 }
 
