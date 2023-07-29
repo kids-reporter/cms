@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import './post-slider.scss'
 
 type PostsProp = {
@@ -7,6 +8,8 @@ type PostsProp = {
 
 export const PostSlider = (props: PostsProp) => {
   const posts = props?.posts
+  const [current, setCurrent] = useState(0)
+
   const onPrevClick = () => {
     console.log('prev')
   }
@@ -14,7 +17,7 @@ export const PostSlider = (props: PostsProp) => {
     console.log('next')
   }
   const onBulletClick = (index: number) => {
-    console.log('bullet', index)
+    setCurrent(index)
   }
 
   return (
@@ -88,7 +91,7 @@ export const PostSlider = (props: PostsProp) => {
           {posts.map((post, index) => {
             return (
               <button
-                className={index === 0 ? 'active' : ''}
+                className={index === current ? 'active' : ''}
                 key={`bullet-${index}`}
                 onClick={() => onBulletClick(index)}
               />
