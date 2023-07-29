@@ -6,15 +6,19 @@ type PostsProp = {
 }
 
 export const PostSlider = (props: PostsProp) => {
+  const posts = props?.posts
   const onPrevClick = () => {
     console.log('prev')
   }
   const onNextClick = () => {
     console.log('next')
   }
+  const onBulletClick = (index: number) => {
+    console.log('bullet', index)
+  }
 
   return (
-    props?.posts?.length > 0 && (
+    posts?.length > 0 && (
       <div className="post-slider">
         <div className="cards">
           {props.posts.map((post, index) => {
@@ -81,12 +85,15 @@ export const PostSlider = (props: PostsProp) => {
           </button>
         </div>
         <div className="bullets">
-          <button>&nbsp;</button>
-          <button className="active">&nbsp;</button>
-          <button>&nbsp;</button>
-          <button>&nbsp;</button>
-          <button>&nbsp;</button>
-          <button>&nbsp;</button>
+          {posts.map((post, index) => {
+            return (
+              <button
+                className={index === 0 ? 'active' : ''}
+                key={`bullet-${index}`}
+                onClick={() => onBulletClick(index)}
+              />
+            )
+          })}
         </div>
       </div>
     )
