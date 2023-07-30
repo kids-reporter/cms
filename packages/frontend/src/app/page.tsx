@@ -28,7 +28,7 @@ export default async function Home() {
       {posts?.map((post, index) => {
         return (
           <div key={`article-${index}`}>
-            <a href={`${siteURL}/${post.slug}`}>{post.name}</a>
+            <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>
             <p>{post.slug}</p>
             <br />
           </div>

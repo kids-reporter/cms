@@ -13,8 +13,8 @@ import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 
 import './post.scss'
-import '../assets/css/button.css'
-import '../assets/css/icomoon/style.css'
+import '../../assets/css/button.css'
+import '../../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 const cmsURL = 'https://dev-kids-cms.twreporter.org'
