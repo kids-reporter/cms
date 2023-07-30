@@ -1,4 +1,5 @@
 import PostSlider from './post-slider'
+import './related-post.scss'
 
 type RelatedPostsProp = {
   posts: any[]
