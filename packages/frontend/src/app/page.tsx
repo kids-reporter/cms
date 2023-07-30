@@ -165,7 +165,9 @@ export default async function Home() {
               </a>
             </div>
             <PostSlider posts={postMockups} />
-            {/* TODO: divider */}
+            {index < sliderSections.length - 1 ? (
+              <hr className="home-dot-hr" />
+            ) : null}
           </div>
         )
       })}
