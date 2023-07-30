@@ -153,11 +153,17 @@ export default async function Home() {
       {sliderSections.map((section, index) => {
         return (
           <div key={`home-section-${index}`}>
-            <img src={section.image} />
-            <img src={section.titleURL} alt={section.title} />
-            <a href={section.url} className="">
-              看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
-            </a>
+            <div className="section-head">
+              <img className="image-left" src={section.image} />
+              <img
+                className="image-title"
+                src={section.titleURL}
+                alt={section.title}
+              />
+              <a href={section.url} className="rpjr-btn rpjr-btn-theme-outline">
+                看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
+              </a>
+            </div>
             <PostSlider posts={postMockups} />
             {/* TODO: divider */}
           </div>
