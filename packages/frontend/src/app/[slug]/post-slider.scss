@@ -1,15 +1,20 @@
   .post-slider {
     --theme-color: #F8C341; // TODO: theme color
+    --normal-container-max-width: 1440px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    max-width: var(--normal-container-max-width);
 
     .cards {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: row;
+      position: relative;
+      padding-left: 10px;
+      padding-right: 10px;
 
       .post {
         width: 373px;
@@ -49,6 +54,7 @@
         cursor: pointer;
         position: absolute;
         left: 0;
+        top: 150px;
       }
 
       .next-btn {
@@ -57,6 +63,7 @@
         cursor: pointer;
         position: absolute;
         right: 0;
+        top: 150px;
       }
     }
 
