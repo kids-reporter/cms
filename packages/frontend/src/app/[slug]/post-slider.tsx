@@ -8,36 +8,50 @@ type PostsProp = {
 
 export const PostSlider = (props: PostsProp) => {
   const posts = props?.posts
+  const postNum = posts?.length
   const [current, setCurrent] = useState(0)
 
   const onPrevClick = () => {
-    console.log('prev')
+    setCurrent(current - 1 >= 0 ? current - 1 : postNum - 1)
   }
   const onNextClick = () => {
-    console.log('next')
+    setCurrent((current + 1) % postNum)
   }
   const onBulletClick = (index: number) => {
     setCurrent(index)
+  }
+
+  const getSlides = () => {
+    const slides =
+      postNum <= 2
+        ? [...posts]
+        : [
+            posts[current],
+            posts[(current + 1) % postNum],
+            posts[(current + 2) % postNum],
+          ]
+
+    return slides.map((post, index) => {
+      return (
+        <div key={`post-${index}`} className="post">
+          <div>
+            <img src={`${post.image}`} />
+          </div>
+          <a href={post.categoryURL}>{post.categoryName}</a>
+          {post.name}
+          {post.brief}
+          {post.tag}
+          {post.publishedDate}
+        </div>
+      )
+    })
   }
 
   return (
     posts?.length > 0 && (
       <div className="post-slider">
         <div className="cards">
-          {props.posts.map((post, index) => {
-            return (
-              <div key={`post-${index}`} className="post">
-                <div>
-                  <img src={`${post.image}`} />
-                </div>
-                <a href={post.categoryURL}>{post.categoryName}</a>
-                {post.name}
-                {post.brief}
-                {post.tag}
-                {post.publishedDate}
-              </div>
-            )
-          })}
+          {getSlides()}
           <button className="prev-btn" onClick={onPrevClick}>
             <svg
               width="54"
