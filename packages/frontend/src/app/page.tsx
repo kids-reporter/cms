@@ -1,7 +1,7 @@
 // import styles from './page.module.css'
 import axios from 'axios'
-import PostSlider from './article/[slug]/post-slider'
-import { HomeDivider } from './components/divider'
+import PostSlider from '@/app/components/post-slider'
+import { HomeDivider } from '@/app/components/divider'
 import './page.scss'
 
 type Post = {

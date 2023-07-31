@@ -1,4 +1,4 @@
-import PostSlider from './post-slider'
+import PostSlider from '@/app/components/post-slider'
 import './related-post.scss'
 
 type RelatedPostsProp = {
