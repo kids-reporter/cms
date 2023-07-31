@@ -1,5 +1,5 @@
 import './footer.scss'
-import '../../assets/css/button.css'
+import '../assets/css/button.css'
 
 const socialIcons = [
   {

@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { GetFormattedDate } from '@/app/utils'
 import './post-slider.scss'
 
 type PostsProp = {
@@ -14,9 +15,11 @@ export const PostSlider = (props: PostsProp) => {
   const onPrevClick = () => {
     setCurrent(current - 1 >= 0 ? current - 1 : postNum - 1)
   }
+
   const onNextClick = () => {
     setCurrent((current + 1) % postNum)
   }
+
   const onBulletClick = (index: number) => {
     setCurrent(index)
   }
@@ -42,7 +45,7 @@ export const PostSlider = (props: PostsProp) => {
           <span className="post-brief">{post.brief}</span>
           <div className="post-bottom">
             {post.tag}
-            {post.publishedDate}
+            {GetFormattedDate(post.publishedDate)}
           </div>
         </div>
       )

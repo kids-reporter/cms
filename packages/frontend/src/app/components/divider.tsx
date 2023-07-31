@@ -4,4 +4,6 @@ export const Divider = () => {
   return <hr className="dot-hr" />
 }
 
-export default Divider
+export const HomeDivider = () => {
+  return <hr className="home-dot-hr" />
+}

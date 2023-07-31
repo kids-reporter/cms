@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import { StickyHeader } from './article/[slug]/header'
-import BackToTop from './article/[slug]/back-to-top'
-import Footer from './article/[slug]/footer'
+import { StickyHeader } from '@/app/components/header'
+import BackToTop from '@/app/components/back-to-top'
+import Footer from '@/app/components//footer'
 
 import './globals.css'
 

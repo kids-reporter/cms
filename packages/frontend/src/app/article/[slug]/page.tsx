@@ -1,16 +1,16 @@
 import axios from 'axios'
-import PostRenderer from './post-renderer'
 import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
 import Category from './category'
 import Sidebar from './sidebar'
 import Brief from './brief'
-import Divider from './divider'
 import Tags from './tags'
+import PostRenderer from './post-renderer'
 import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
+import { Divider } from '@/app/components/divider'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -249,9 +249,7 @@ export default async function PostPage({
               </header>
             </div>
             <Brief content={post.brief} editors={post.editors} />
-
             <Divider />
-
             <PostRenderer post={post} />
             <Tags tags={post.tags} />
             <AuthorCard authors={post.authors} />
