@@ -1,5 +1,5 @@
 import './header.scss'
-import '../assets/css/button.css'
+import '../../assets/css/button.css'
 
 const navItems = [
   {

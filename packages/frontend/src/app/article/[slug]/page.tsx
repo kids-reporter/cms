@@ -13,8 +13,8 @@ import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 
 import './post.scss'
-import '../assets/css/button.css'
-import '../assets/css/icomoon/style.css'
+import '../../assets/css/button.css'
+import '../../assets/css/icomoon/style.css'
 
 const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 const cmsURL = 'https://dev-kids-cms.twreporter.org'
@@ -127,6 +127,48 @@ const authorsMockup = [
     link: '/staff/chang-en-wei',
   },
 ]
+const relatedPostMockup = [
+  {
+    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+  {
+    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+  {
+    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+  {
+    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    categoryName: '校園寶可夢',
+    categoryURL: 'https://kids.twreporter.org/category/campus',
+    name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    brief:
+      '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+    tag: '動物',
+    publishedDate: '2023-07-06T16:00:00.000Z',
+  },
+]
 
 const postQuery = `
   query($where: PostWhereUniqueInput!) {
@@ -216,7 +258,7 @@ export default async function PostPage({
           </div>
         )}
         <CallToAction />
-        <RelatedPosts posts={post.relatedPosts} />
+        <RelatedPosts posts={relatedPostMockup} />
       </main>
     )
   )

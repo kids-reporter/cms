@@ -1,0 +1,86 @@
+  .post-slider {
+    --theme-color: #F8C341; // TODO: theme color
+    --normal-container-max-width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: var(--normal-container-max-width);
+
+    .cards {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      position: relative;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      .post {
+        width: 373px;
+        max-width: 400px;
+        margin-left: 22px;
+        margin-right: 22px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        img {
+          height: auto;
+          max-width: 100%;
+          vertical-align: middle;
+          border-radius: 20px;
+        }
+
+        .post-category {
+          color: var(--theme-color);
+          text-align: left;
+        }
+
+        .post-title {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 160%;
+          letter-spacing: 0.08em;
+          color: rgb(35, 35, 35);
+          text-align: left;
+        }
+      }
+
+      .prev-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 145px;
+      }
+
+      .next-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 145px;
+      }
+    }
+
+    .bullets {
+      button {
+        cursor: pointer;
+        margin: 50px 10px 0;
+        width: 13px;
+        height: 13px;
+        background-color: #eaeaea;
+        border-radius: 13px;
+        appearance: none;
+        border: none;
+      }
+
+      button.active {
+        background-color: var(--paletteColor6);
+      }
+    }
+  }

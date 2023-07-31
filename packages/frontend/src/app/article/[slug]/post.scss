@@ -16,9 +16,10 @@ body.single-post {
 }
 .post {
     margin-top: 64px; // TODO: fix header issue
+    max-width: 1440px;
     font-size: var(--rpjr-text-scale);
-    margin-left: var(--has-boxed-structure, auto);
-    margin-right: var(--has-boxed-structure, auto);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .icon-rpjr-icon-tag .path1:before {
