@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { GetFormattedDate } from '@/app/utils'
 import './post-slider.scss'
 
 type PostsProp = {
@@ -42,7 +43,7 @@ export const PostSlider = (props: PostsProp) => {
           <span className="post-brief">{post.brief}</span>
           <div className="post-bottom">
             {post.tag}
-            {post.publishedDate}
+            {GetFormattedDate(post.publishedDate)}
           </div>
         </div>
       )
