@@ -15,9 +15,11 @@ export const PostSlider = (props: PostsProp) => {
   const onPrevClick = () => {
     setCurrent(current - 1 >= 0 ? current - 1 : postNum - 1)
   }
+
   const onNextClick = () => {
     setCurrent((current + 1) % postNum)
   }
+
   const onBulletClick = (index: number) => {
     setCurrent(index)
   }
