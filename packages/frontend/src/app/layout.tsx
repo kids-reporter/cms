@@ -20,7 +20,7 @@ export default function RootLayout({
     <html>
       <body>
         <StickyHeader />
-        {children}
+        <div className="content-container">{children}</div>
         <BackToTop />
         <Footer />
       </body>
