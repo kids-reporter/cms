@@ -11,11 +11,8 @@ import {
   getDefaultKeyBinding,
 } from 'draft-js'
 
-import {
-  atomicBlockRenderer,
-  blockRenderMap,
-  decorators,
-} from '@kids-reporter/draft-renderer'
+import { atomicBlockRenderer } from './block-renderer-fn'
+import { blockRenderMap, decorators } from '@kids-reporter/draft-renderer'
 import { AnnotationButton } from './buttons/annotation'
 import { BlockquoteButton } from './buttons/blockquote'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
@@ -396,9 +393,9 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
         entityData,
       }: {
         entityKey?: string
-        entityData: { [key: string]: any }
-      }) => {
-        if (entityKey) {
+        entityData?: { [key: string]: any }
+      } = {}) => {
+        if (entityKey && entityData) {
           const oldContentState = this.props.editorState.getCurrentContent()
           const newContentState = oldContentState.replaceEntityData(
             entityKey,

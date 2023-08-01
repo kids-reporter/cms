@@ -54,21 +54,21 @@ function TypeSelect({
   )
 }
 
-type InputValue = {
+export type BlockquoteInputValue = {
   type: BlockquoteType.borderLeft | BlockquoteType.quoteLeft
   text: string
 }
 
-function BlockquoteInput({
+export function BlockquoteInput({
   isOpen,
   onConfirm,
   onCancel,
   inputValue,
 }: {
   isOpen: boolean
-  onConfirm: ({ type, text }: InputValue) => void
+  onConfirm: ({ type, text }: BlockquoteInputValue) => void
   onCancel: () => void
-  inputValue: InputValue
+  inputValue: BlockquoteInputValue
 }) {
   const [inputValueState, setInputValueState] = useState(inputValue)
 
@@ -143,7 +143,7 @@ export function BlockquoteButton(props: BlockquoteButtonProps) {
     setIsInputOpen(true)
   }
 
-  const onInputChange = (inputValue: InputValue) => {
+  const onInputChange = (inputValue: BlockquoteInputValue) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
       'BLOCKQUOTE',
@@ -168,15 +168,17 @@ export function BlockquoteButton(props: BlockquoteButtonProps) {
 
   return (
     <React.Fragment>
-      <BlockquoteInput
-        isOpen={isInputOpen}
-        onConfirm={onInputChange}
-        onCancel={onInputCancel}
-        inputValue={{
-          type: BlockquoteType.borderLeft,
-          text: '',
-        }}
-      />
+      {isInputOpen && (
+        <BlockquoteInput
+          isOpen={isInputOpen}
+          onConfirm={onInputChange}
+          onCancel={onInputCancel}
+          inputValue={{
+            type: BlockquoteType.borderLeft,
+            text: '',
+          }}
+        />
+      )}
       <div
         onClick={() => {
           promptForInput()
