@@ -45,7 +45,7 @@ export const PostSlider = (props: PostsProp) => {
           <span className="post-brief">{post.brief}</span>
           <div className="post-bottom">
             {post.tag}
-            {GetFormattedDate(post.publishedDate)}
+            {GetFormattedDate(post.publishedDate) ?? ''}
           </div>
         </div>
       )
