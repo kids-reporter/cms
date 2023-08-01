@@ -101,6 +101,7 @@ body {
   align-items: center;
   color: rgb(var(--foreground-rgb));
   background-color: white;
+  --content-margin-top: 64px;
   --content-spacing: 1.5em;
   --container-spacing: 25px;
   --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
@@ -111,6 +112,7 @@ body {
 
 .content-container{
   flex-grow: 1;
+  margin-top: var(--content-margin-top);
 }
 
 a {
