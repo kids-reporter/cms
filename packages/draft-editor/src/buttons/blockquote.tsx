@@ -54,6 +54,80 @@ function TypeSelect({
   )
 }
 
+type InputValue = {
+  type: BlockquoteType.borderLeft | BlockquoteType.quoteLeft
+  text: string
+}
+
+function BlockquoteInput({
+  isOpen,
+  onConfirm,
+  onCancel,
+  inputValue,
+}: {
+  isOpen: boolean
+  onConfirm: ({ type, text }: InputValue) => void
+  onCancel: () => void
+  inputValue: InputValue
+}) {
+  const [inputValueState, setInputValueState] = useState(inputValue)
+
+  const confirmInput = () => {
+    onConfirm(inputValueState)
+  }
+
+  return (
+    <DrawerController isOpen={isOpen}>
+      <Drawer
+        title={`Insert Embedded Code`}
+        //isOpen={toShowInput}
+        actions={{
+          cancel: {
+            label: 'Cancel',
+            action: onCancel,
+          },
+          confirm: {
+            label: 'Confirm',
+            action: confirmInput,
+          },
+        }}
+      >
+        <TypeSelect
+          type={inputValueState.type}
+          options={[
+            {
+              label: BlockquoteLabel.borderLeft,
+              value: BlockquoteType.borderLeft,
+            },
+            {
+              label: BlockquoteLabel.quoteLeft,
+              value: BlockquoteType.quoteLeft,
+            },
+          ]}
+          onChange={(blockquoteType) => {
+            setInputValueState({
+              type: blockquoteType,
+              text: inputValueState.text,
+            })
+          }}
+        />
+        <TextArea
+          onChange={(e) =>
+            setInputValueState({
+              type: inputValueState.type,
+              text: e.target.value,
+            })
+          }
+          placeholder="引言文字"
+          type="text"
+          value={inputValueState.text}
+          style={{ marginBottom: '30px' }}
+        />
+      </Drawer>
+    </DrawerController>
+  )
+}
+
 type BlockquoteButtonProps = {
   className?: string
   editorState: EditorState
@@ -63,21 +137,13 @@ type BlockquoteButtonProps = {
 export function BlockquoteButton(props: BlockquoteButtonProps) {
   const { editorState, onChange, className } = props
 
-  const [toShowInput, setToShowInput] = useState(false)
-  const [inputValue, setInputValue] = useState({
-    type: BlockquoteType.borderLeft,
-    text: '',
-  })
+  const [isInputOpen, setIsInputOpen] = useState(false)
 
   const promptForInput = () => {
-    setToShowInput(true)
-    setInputValue({
-      type: BlockquoteType.borderLeft,
-      text: '',
-    })
+    setIsInputOpen(true)
   }
 
-  const confirmInput = () => {
+  const onInputChange = (inputValue: InputValue) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
       'BLOCKQUOTE',
@@ -93,69 +159,24 @@ export function BlockquoteButton(props: BlockquoteButtonProps) {
     // If you set an empty string, you will get an error: Unknown DraftEntity key: null
     onChange(AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' '))
 
-    setToShowInput(false)
-    setInputValue({
-      type: BlockquoteType.borderLeft,
-      text: '',
-    })
+    setIsInputOpen(false)
   }
 
-  const input = (
-    <DrawerController isOpen={toShowInput}>
-      <Drawer
-        title={`Insert Embedded Code`}
-        //isOpen={toShowInput}
-        actions={{
-          cancel: {
-            label: 'Cancel',
-            action: () => {
-              setToShowInput(false)
-            },
-          },
-          confirm: {
-            label: 'Confirm',
-            action: confirmInput,
-          },
-        }}
-      >
-        <TypeSelect
-          type={inputValue.type}
-          options={[
-            {
-              label: BlockquoteLabel.borderLeft,
-              value: BlockquoteType.borderLeft,
-            },
-            {
-              label: BlockquoteLabel.quoteLeft,
-              value: BlockquoteType.quoteLeft,
-            },
-          ]}
-          onChange={(blockquoteType) => {
-            setInputValue({
-              type: blockquoteType,
-              text: inputValue.text,
-            })
-          }}
-        />
-        <TextArea
-          onChange={(e) =>
-            setInputValue({
-              type: inputValue.type,
-              text: e.target.value,
-            })
-          }
-          placeholder="引言文字"
-          type="text"
-          value={inputValue.text}
-          style={{ marginBottom: '30px' }}
-        />
-      </Drawer>
-    </DrawerController>
-  )
+  const onInputCancel = () => {
+    setIsInputOpen(false)
+  }
 
   return (
     <React.Fragment>
-      {input}
+      <BlockquoteInput
+        isOpen={isInputOpen}
+        onConfirm={onInputChange}
+        onCancel={onInputCancel}
+        inputValue={{
+          type: BlockquoteType.borderLeft,
+          text: '',
+        }}
+      />
       <div
         onClick={() => {
           promptForInput()
