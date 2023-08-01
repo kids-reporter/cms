@@ -314,10 +314,8 @@ export const Footer = () => {
               </div>
             </div>
           </div>
-          <div data-column="copyright">
-            <div className="ct-footer-copyright" data-id="copyright">
-              <p>Copyright © 2023 The Reporter</p>
-            </div>
+          <div className="ct-footer-copyright">
+            <p>Copyright © 2023 The Reporter</p>
           </div>
         </div>
       </div>
