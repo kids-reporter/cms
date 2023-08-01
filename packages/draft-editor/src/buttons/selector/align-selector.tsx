@@ -8,7 +8,7 @@ const Label = styled.label`
   font-weight: 600;
 `
 
-const AlignSelect = styled(Select)`
+const AlignSelect = styled(Select)<{ menuHeight: number }>`
   ${({ menuHeight }) => {
     return `margin-bottom: ${menuHeight}px;`
   }}
@@ -51,9 +51,9 @@ export function AlignSelector(props: {
       <AlignSelect
         id="alignment"
         // default align === undefined
-        value={options.find((option) => option.value === align)}
+        value={options.find((option: Option) => option.value === align) || null}
         options={options}
-        onChange={(option) => {
+        onChange={(option: Option) => {
           onChange(option.value)
         }}
         onMenuOpen={() => setIsOpen(true)}

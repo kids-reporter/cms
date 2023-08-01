@@ -31,7 +31,7 @@ export function ImageButton(props: {
 
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
-      'image',
+      'IMAGE',
       'IMMUTABLE',
       {
         ...selected?.image,
