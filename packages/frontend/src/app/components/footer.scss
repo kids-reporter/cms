@@ -1,3 +1,8 @@
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
 .footer {
   display: flex;
   width: 100%;
@@ -291,4 +296,5 @@
       max-width: 100%;
     }
   }
+}
 }

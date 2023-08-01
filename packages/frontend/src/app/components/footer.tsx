@@ -188,7 +188,7 @@ const socialIcons = [
 
 export const Footer = () => {
   return (
-    <>
+    <div className="footer-container">
       <div className="footer">
         <div className="footer-top">
           <div className="footer-top__left">
@@ -291,7 +291,7 @@ export const Footer = () => {
         </div>
       </div>
 
-      <div id="footer" className="footer-copyright" data-id="type-1">
+      <div className="footer-copyright">
         <div className="footer-copyright-container">
           <div data-column="text">
             <div className="ct-header-text " data-id="text">
@@ -321,7 +321,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

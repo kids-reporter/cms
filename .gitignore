@@ -47,4 +47,4 @@ gcskeyfile.json
 .eslintcache
 
 packages/**/lib
-packages/**/public/*
+# packages/**/public/*

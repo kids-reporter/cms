@@ -6,7 +6,9 @@ type DateProp = {
 
 export const PublishedDate = (props: DateProp) => {
   return (
-    <div className="post_date">刊出日期 {GetFormattedDate(props.date)}</div>
+    <div className="post_date">
+      刊出日期 {GetFormattedDate(props.date) ?? ''}
+    </div>
   )
 }
 
