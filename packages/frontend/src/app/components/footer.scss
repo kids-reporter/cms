@@ -1,3 +1,10 @@
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+
 .footer {
   display: flex;
   width: 100%;
@@ -291,4 +298,5 @@
       max-width: 100%;
     }
   }
+}
 }
