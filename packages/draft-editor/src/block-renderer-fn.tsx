@@ -20,10 +20,10 @@ const AtomicBlock = (props: AtomicBlockProps<Record<string, unknown>>) => {
     case 'BLOCKQUOTE': {
       return EditableBlockquote(props)
     }
-    case 'IMAGE': {
+    case 'image': {
       return ImageInArticleBody({ data: entityData })
     }
-    case 'SLIDESHOW': {
+    case 'slideshow': {
       return SlideshowInArticleBody({ data: entityData })
     }
     case 'EMBEDDEDCODE': {

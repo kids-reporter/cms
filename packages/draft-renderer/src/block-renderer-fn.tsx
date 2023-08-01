@@ -1,6 +1,7 @@
 import { ContentState, ContentBlock } from 'draft-js'
 import { blockRenderers } from './block-renderers'
 const {
+  BlockquoteInArticleBody,
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
   InfoBoxBlock,
@@ -17,10 +18,13 @@ const AtomicBlock = (props: {
   const entityData = entity.getData()
 
   switch (entityType) {
-    case 'image': {
+    case 'BLOCKQUOTE': {
+      return BlockquoteInArticleBody({ data: entityData })
+    }
+    case 'IMAGE': {
       return ImageInArticleBody({ data: entityData })
     }
-    case 'slideshow': {
+    case 'SLIDESHOW': {
       return SlideshowInArticleBody({ data: entityData })
     }
     case 'EMBEDDEDCODE': {
