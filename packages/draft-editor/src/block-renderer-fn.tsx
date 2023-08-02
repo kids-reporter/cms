@@ -1,17 +1,16 @@
-import { ContentState, ContentBlock } from 'draft-js'
-import { blockRenderers } from './block-renderers'
+import { AtomicBlockProps } from './block-renderers/atomic-block'
+import { ContentBlock } from 'draft-js'
+import { EditableBlockquote } from './block-renderers/blockquote'
+import { blockRenderers } from '@kids-reporter/draft-renderer'
+
 const {
-  BlockquoteInArticleBody,
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
   InfoBoxBlock,
   SlideshowInArticleBody,
 } = blockRenderers
 
-const AtomicBlock = (props: {
-  contentState: ContentState
-  block: ContentBlock
-}) => {
+const AtomicBlock = (props: AtomicBlockProps<Record<string, unknown>>) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0))
 
   const entityType = entity.getType()
@@ -19,7 +18,7 @@ const AtomicBlock = (props: {
 
   switch (entityType) {
     case 'BLOCKQUOTE': {
-      return BlockquoteInArticleBody({ data: entityData })
+      return EditableBlockquote(props)
     }
     case 'IMAGE': {
       return ImageInArticleBody({ data: entityData })
@@ -42,6 +41,7 @@ export function atomicBlockRenderer(block: ContentBlock) {
     return {
       component: AtomicBlock,
       editable: false,
+      props: {},
     }
   }
 

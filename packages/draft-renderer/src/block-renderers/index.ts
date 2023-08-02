@@ -1,3 +1,4 @@
+import { BlockquoteInArticleBody } from './blockquote'
 import {
   EmbeddedCodeBlock,
   EmbeddedCodeInArticleBody,
@@ -7,6 +8,7 @@ import { InfoBoxBlock } from './info-box-block'
 import { SlideshowBlock, SlideshowInArticleBody } from './slideshow-block'
 
 export const blockRenderers = {
+  BlockquoteInArticleBody,
   EmbeddedCodeBlock,
   EmbeddedCodeInArticleBody,
   ImageBlock,

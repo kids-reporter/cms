@@ -6,7 +6,7 @@ help:
 
 dev: 
 	@echo "$(P) Start webpack dev server"
-	NODE_ENV=development yarn webpack serve -c dev/webpack.config.js
+	NODE_ENV=development yarn webpack serve -c dev/webpack.config.mjs
 
 build-lib:
 	@echo "$(P) Transpile es6, jsx and (typescript) to es5"

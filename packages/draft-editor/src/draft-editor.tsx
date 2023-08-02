@@ -11,12 +11,10 @@ import {
   getDefaultKeyBinding,
 } from 'draft-js'
 
-import {
-  atomicBlockRenderer,
-  blockRenderMap,
-  decorators,
-} from '@kids-reporter/draft-renderer'
+import { atomicBlockRenderer } from './block-renderer-fn'
+import { blockRenderMap, decorators } from '@kids-reporter/draft-renderer'
 import { AnnotationButton } from './buttons/annotation'
+import { BlockquoteButton } from './buttons/blockquote'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
 import { EnlargeButton } from './buttons/enlarge'
 import { ImageButton } from './buttons/image'
@@ -123,6 +121,10 @@ const CustomButton = styled.div`
 `
 
 const CustomAnnotationButton = styled(AnnotationButton)`
+  ${buttonStyle}
+`
+
+const CustomBlockquoteButton = styled(BlockquoteButton)`
   ${buttonStyle}
 `
 
@@ -391,9 +393,9 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
         entityData,
       }: {
         entityKey?: string
-        entityData: { [key: string]: any }
-      }) => {
-        if (entityKey) {
+        entityData?: { [key: string]: any }
+      } = {}) => {
+        if (entityKey && entityData) {
           const oldContentState = this.props.editorState.getCurrentContent()
           const newContentState = oldContentState.replaceEntityData(
             entityKey,
@@ -469,11 +471,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
             type="text/css"
           />
           <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/draft-js/0.11.7/Draft.css"
-            rel="stylesheet"
-            type="text/css"
-          />
-          <link
             href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
             rel="stylesheet"
             type="text/css"
@@ -501,6 +498,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
                 isActive={entityType === 'LINK'}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+              />
+              <CustomBlockquoteButton
+                isDisabled={disabledButtons.includes(buttonNames.blockquote)}
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
@@ -614,7 +617,6 @@ const blockStyles = [
   { label: 'H2', style: 'header-two', icon: '' },
   { label: 'H3', style: 'header-three', icon: '' },
   { label: 'H4', style: 'header-four', icon: '' },
-  { label: 'Blockquote', style: 'blockquote', icon: 'fas fa-quote-right' },
   { label: 'UL', style: 'unordered-list-item', icon: 'fas fa-list-ul' },
   { label: 'OL', style: 'ordered-list-item', icon: 'fas fa-list-ol' },
   { label: 'Code Block', style: 'code-block', icon: 'fas fa-code' },
