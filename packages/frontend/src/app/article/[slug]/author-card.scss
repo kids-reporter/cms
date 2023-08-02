@@ -56,7 +56,7 @@
         line-height: 160%;
         letter-spacing: 0.08em;
         color: rgb(255, 255, 255);
-        background-color: var(--title-color, #27B5F7);
+        background-color: var(--theme-color, #27B5F7);
         border-radius: 30px;
       }
 
@@ -78,9 +78,10 @@
       .more {
         margin: 20px 0px 40px;
         text-align: center;
+        font-size: 18px;
         
         a {
-          --link-color: var(--paletteColor1);
+          --link-color: var(--theme-color);
           color: var(--link-color); // TODO: fix color according to group
           text-decoration: none;
         }

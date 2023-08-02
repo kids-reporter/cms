@@ -84,6 +84,7 @@ const authorsMockup = [
   {
     name: '張恩瑋',
     group: '文字',
+    theme: 'theme-blue',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/預設頭像_2.png',
     desc:
@@ -93,6 +94,7 @@ const authorsMockup = [
   {
     name: '王家琛',
     group: '設計',
+    theme: 'theme-yellow',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/預設頭像_2.png',
     desc:
@@ -102,6 +104,7 @@ const authorsMockup = [
   {
     name: '黃禹禛',
     group: '設計',
+    theme: 'theme-yellow',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_4_黃禹禛.png',
     desc:
@@ -110,7 +113,8 @@ const authorsMockup = [
   },
   {
     name: '楊惠君',
-    group: '總監',
+    group: '核稿',
+    theme: 'theme-blue',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_1_楊惠君.png',
     desc:
@@ -119,7 +123,8 @@ const authorsMockup = [
   },
   {
     name: '陳韻如',
-    group: '編輯',
+    group: '責任編輯',
+    theme: 'theme-red',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_6_陳韻如.png',
     desc:

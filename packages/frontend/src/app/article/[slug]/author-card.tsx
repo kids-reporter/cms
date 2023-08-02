@@ -17,11 +17,11 @@ export const AuthorCard = (props: AuthorCardProp) => {
               </div>
 
               <span className="name">{author.name}</span>
-              <div className="group">{author.group}</div>
+              <div className={`group ${author.theme}`}>{author.group}</div>
               <span className="desc">{author.desc}</span>
 
               <div className="more">
-                <a href={author.link}>
+                <a href={author.link} className={author.theme}>
                   <span>
                     了解更多 <i className="icon-rpjr-icon-arrow-right"></i>
                   </span>
