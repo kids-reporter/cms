@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
 
 const ParagraphBlock = styled.div`
@@ -151,7 +151,7 @@ const ParagraphForAnnotation = styled(Paragraph)`
   /* overwrite css */
   font-size: 16px;
   font-weight: 400;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 `
 
 const _blockRenderMapForAnnotation = Immutable.Map({
@@ -175,4 +175,53 @@ const _blockRenderMapForAnnotation = Immutable.Map({
 
 export const blockRenderMapForAnnotation = DefaultDraftBlockRenderMap.merge(
   _blockRenderMapForAnnotation
+)
+
+const HeadingForInfoBox = styled(Heading)`
+  margin-top: 30px;
+  margin-bottom: 30px;
+`
+
+export const blockRenderMapForInfoBox = blockRenderMapForAnnotation.merge(
+  Immutable.Map({
+    'header-four': {
+      element: 'h4',
+      wrapper: <HeadingForInfoBox />,
+    },
+  })
+)
+
+const dividerStyles = css`
+  content: '';
+  width: 100%;
+  height: 12px;
+  display: block;
+  background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_768.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+`
+
+const HeadingForInfoBoxWithHeaderBorder = styled(HeadingForInfoBox)`
+  h4 {
+    margin-top: 33px;
+    margin-bottom: 33px;
+  }
+
+  &::before {
+    ${dividerStyles}
+  }
+
+  &::after {
+    ${dividerStyles}
+  }
+`
+
+export const blockRenderMapForInfoBoxWithHeaderBorder = blockRenderMapForInfoBox.merge(
+  Immutable.Map({
+    'header-four': {
+      element: 'h4',
+      wrapper: <HeadingForInfoBoxWithHeaderBorder />,
+    },
+  })
 )

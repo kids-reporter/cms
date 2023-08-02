@@ -4,7 +4,7 @@ import {
   EmbeddedCodeInArticleBody,
 } from './embedded-code-block'
 import { ImageBlock, ImageInArticleBody } from './image-block'
-import { InfoBoxBlock } from './info-box-block'
+import { InfoBoxInArticleBody } from './info-box-block'
 import { SlideshowBlock, SlideshowInArticleBody } from './slideshow-block'
 
 export const blockRenderers = {
@@ -13,7 +13,7 @@ export const blockRenderers = {
   EmbeddedCodeInArticleBody,
   ImageBlock,
   ImageInArticleBody,
-  InfoBoxBlock,
+  InfoBoxInArticleBody,
   SlideshowBlock,
   SlideshowInArticleBody,
 }
