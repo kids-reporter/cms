@@ -12,6 +12,7 @@ const functionIcons = [
   'https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/img/icon/rpjr-icon-color-print.svg',
 ]
 
+// TODO: add functionality to buttons
 export const Sidebar = () => {
   return (
     <div className="sidebar-container">
