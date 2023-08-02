@@ -36,7 +36,7 @@ export const PostSlider = (props: PostsProp) => {
 
     return slides.map((post, index) => {
       return (
-        <div key={`post-${index}`} className="post">
+        <div key={`post-${index}`} className="post-body">
           <img src={`${post.image}`} />
           <span className="post-category">
             <a href={post.categoryURL}>{post.categoryName}</a>

@@ -15,11 +15,11 @@ body.single-post {
     }
 }
 .post {
-    margin-top: 64px; // TODO: fix header issue
     max-width: 1440px;
     font-size: var(--rpjr-text-scale);
     margin-left: auto;
     margin-right: auto;
+    padding: 40px 0px;
 }
 
 .icon-rpjr-icon-tag .path1:before {

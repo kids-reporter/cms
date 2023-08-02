@@ -228,7 +228,7 @@ export default async function PostPage({
 
   return (
     post && (
-      <main className="main-container">
+      <main id="main-container" className="main-container">
         {true && (
           <div className={`post theme-${post.theme}`}>
             <Sidebar />
