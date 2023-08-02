@@ -4,6 +4,13 @@ type AuthorCardProp = {
   authors: any[]
 }
 
+const shortenDesc = (desc: string): string => {
+  const limit = 85
+  return desc?.length > limit
+    ? desc.substring(0, limit).concat('', '...')
+    : desc
+}
+
 export const AuthorCard = (props: AuthorCardProp) => {
   return (
     <div className="author-section">
@@ -15,11 +22,9 @@ export const AuthorCard = (props: AuthorCardProp) => {
               <div className="photo-mask">
                 <img src={author.img} />
               </div>
-
               <span className="name">{author.name}</span>
               <div className={`group ${author.theme}`}>{author.group}</div>
-              <span className="desc">{author.desc}</span>
-
+              <span className="desc">{shortenDesc(author.desc)}</span>
               <div className="more">
                 <a href={author.link} className={author.theme}>
                   <span>
