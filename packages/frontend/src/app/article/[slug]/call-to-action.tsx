@@ -1,5 +1,8 @@
 import './call-to-action.scss'
 
+const subscribeURL = 'http://eepurl.com/idk8VH'
+const contributeURL = '/about#post'
+
 export const CallToAction = () => {
   return (
     <div className="cta-container">
@@ -36,50 +39,21 @@ export const CallToAction = () => {
                 }}
               >
                 <div className="action-container">
-                  <div
-                    className="wp-block-stackable-button stk-block-button stk-block stk-81e873a"
-                    data-block-id="81e873a"
-                    style={{
-                      minHeight: '49px !important',
-                      paddingTop: '9px !important',
-                      paddingRight: '18px !important',
-                      paddingBottom: '11px !important',
-                      paddingLeft: '18px !important',
-                      background: 'var(--paletteColor6,#F8C341) !important',
-                    }}
+                  <a
+                    className="subscribe-btn"
+                    href={subscribeURL}
+                    target="_blank"
+                    rel="noreferrer noopener"
                   >
-                    <a
-                      className="stk-link stk-button stk--hover-effect-darken"
-                      href="http://eepurl.com/idk8VH"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      <span className="has-text-color stk-button__inner-text">
-                        歡迎訂閱
-                      </span>
-                    </a>
-                  </div>
-                  <div
-                    className="wp-block-stackable-button stk-block-button stk-block stk-23c98d2"
-                    data-block-id="23c98d2"
-                    style={{
-                      minHeight: '49px !important',
-                      paddingTop: '9px !important',
-                      paddingRight: '18px !important',
-                      paddingBottom: '11px !important',
-                      paddingLeft: '18px !important',
-                      background: 'var(--paletteColor1,#27B5F7) !important',
-                    }}
-                  >
-                    <a
-                      className="stk-link stk-button stk--hover-effect-darken __mPS2id"
-                      href="/about#post"
-                    >
-                      <span className="has-text-color stk-button__inner-text">
-                        歡迎投稿
-                      </span>
-                    </a>
-                  </div>
+                    <span className="has-text-color stk-button__inner-text">
+                      歡迎訂閱
+                    </span>
+                  </a>
+                  <a className="contribute-btn" href={contributeURL}>
+                    <span className="has-text-color stk-button__inner-text">
+                      歡迎投稿
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>

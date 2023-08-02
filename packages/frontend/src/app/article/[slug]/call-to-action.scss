@@ -37,5 +37,29 @@
 
   .action-container {
     display: flex;
+
+    a {
+      display: flex;
+      align-items: center;
+      min-height: 49px !important;
+      margin-right: 20px;
+      padding-top: 9px !important;
+      padding-right: 18px !important;
+      padding-bottom: 11px !important;
+      padding-left: 18px !important;
+      border-radius: 30px !important;
+
+      span {
+        color: var(--paletteColor8,#ffffff) !important;
+      }
+    }
+
+    .subscribe-btn {
+      background: var(--paletteColor6, #F8C341) !important;
+    }
+
+    .contribute-btn {
+      background: var(--paletteColor1, #F8C341) !important;
+    }
   }
 }
