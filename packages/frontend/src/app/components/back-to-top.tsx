@@ -1,9 +1,10 @@
+import { TOP_DOM_ELEMENT_ID } from '@/app/constants'
 import './back-to-top.scss'
 
 export const BackToTop = () => {
   return (
     <a
-      href="#main-container"
+      href={`#${TOP_DOM_ELEMENT_ID}`}
       className="back-to-top"
       title="到最上面"
       aria-label="到最上面"

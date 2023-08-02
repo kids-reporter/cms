@@ -11,6 +11,7 @@ import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
+import { TOP_DOM_ELEMENT_ID } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -233,7 +234,7 @@ export default async function PostPage({
 
   return (
     post && (
-      <main id="main-container" className="main-container">
+      <main id={TOP_DOM_ELEMENT_ID} className="main-container">
         <div className={`post theme-${post.theme}`}>
           <Sidebar />
           <HeroImage
