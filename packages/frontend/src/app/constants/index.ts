@@ -1,1 +1,2 @@
-export const TOP_DOM_ELEMENT_ID = 'main-container'
+export const CMS_URL = 'https://dev-kids-cms.twreporter.org'
+export const API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'

@@ -1,17 +1,13 @@
-// import styles from './page.module.css'
 import axios from 'axios'
 import PostSlider from '@/app/components/post-slider'
 import { HomeDivider } from '@/app/components/divider'
+import { API_URL, CMS_URL } from '@/app/constants'
 import './page.scss'
 
 type Post = {
   name: string
   slug: string
 }
-
-const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
-const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
-const cmsURL = 'https://dev-kids-cms.twreporter.org'
 
 const sliderSections = [
   {
@@ -80,9 +76,10 @@ const sliderSections = [
   },
 ]
 
+// TODO: remove mockups
 const postMockups = [
   {
-    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -92,7 +89,7 @@ const postMockups = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -102,7 +99,7 @@ const postMockups = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -112,7 +109,7 @@ const postMockups = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -124,7 +121,7 @@ const postMockups = [
 ]
 
 export default async function Home() {
-  const response = await axios.post(apiURL, {
+  const response = await axios.post(API_URL, {
     query: `
     query {
       posts {
@@ -140,6 +137,7 @@ export default async function Home() {
   return (
     <main>
       {posts?.map((post, index) => {
+        const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
         return (
           <div key={`article-${index}`}>
             <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>

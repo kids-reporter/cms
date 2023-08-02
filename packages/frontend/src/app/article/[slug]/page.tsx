@@ -11,16 +11,13 @@ import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { TOP_DOM_ELEMENT_ID } from '@/app/constants'
+import { API_URL, CMS_URL } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
 import '../../assets/css/icomoon/style.css'
 
-const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
-const cmsURL = 'https://dev-kids-cms.twreporter.org'
-
-// mockups
+// TODO: remove mockups
 const categoryMockup = {
   text: '大學好好玩',
   link: '/category/university-exploratory-learning-teaching',
@@ -135,7 +132,7 @@ const authorsMockup = [
 ]
 const relatedPostMockup = [
   {
-    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -145,7 +142,7 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -155,7 +152,7 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -165,7 +162,7 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -213,7 +210,7 @@ export default async function PostPage({
   params: { slug: string }
 }) {
   const response = params?.slug
-    ? await axios.post(apiURL, {
+    ? await axios.post(API_URL, {
         query: postQuery,
         variables: {
           where: {
@@ -234,11 +231,11 @@ export default async function PostPage({
 
   return (
     post && (
-      <main id={TOP_DOM_ELEMENT_ID} className="main-container">
+      <main className="main-container">
         <div className={`post theme-${post.theme}`}>
           <Sidebar />
           <HeroImage
-            url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
+            url={`${CMS_URL}${post.heroImage?.imageFile?.url}`}
             caption={post.heroCaption}
           />
           <div className="hero-section" data-type="type-1">
