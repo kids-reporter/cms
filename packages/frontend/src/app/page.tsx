@@ -1,4 +1,5 @@
 import axios from 'axios'
+import NonStickyHeader from '@/app/components/non-sticky-header'
 import PostSlider from '@/app/components/post-slider'
 import { HomeDivider } from '@/app/components/divider'
 import { API_URL, CMS_URL } from '@/app/constants'
@@ -146,7 +147,7 @@ export default async function Home() {
           </div>
         )
       })}
-      <h1>TODO: none sticky header</h1>
+      <NonStickyHeader />
       <h1>TODO: main slider</h1>
       <h1>TODO: 新聞ing</h1>
       {sliderSections.map((section, index) => {
