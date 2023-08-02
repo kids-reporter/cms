@@ -45,14 +45,10 @@ export const CallToAction = () => {
                     target="_blank"
                     rel="noreferrer noopener"
                   >
-                    <span className="has-text-color stk-button__inner-text">
-                      歡迎訂閱
-                    </span>
+                    <span>歡迎訂閱</span>
                   </a>
                   <a className="contribute-btn" href={contributeURL}>
-                    <span className="has-text-color stk-button__inner-text">
-                      歡迎投稿
-                    </span>
+                    <span>歡迎投稿</span>
                   </a>
                 </div>
               </div>
