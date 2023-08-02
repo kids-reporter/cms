@@ -39,15 +39,15 @@ const HeadingBlock = styled.div`
   }
 
   h2 {
-    font-size: 30px;
+    font-size: 35px;
   }
 
   h3 {
-    font-size: 28px;
+    font-size: 30px;
   }
 
   h4 {
-    font-size: 26px;
+    font-size: 25px;
   }
 `
 
@@ -132,9 +132,7 @@ const _blockRenderMap = Immutable.Map({
 export const blockRenderMap = DefaultDraftBlockRenderMap.merge(_blockRenderMap)
 
 const HeadingForAnnotation = styled(Heading)`
-  h4 {
-    font-size: 20px;
-  }
+  margin: 0 auto 27px auto;
 `
 
 const OrderdedListForAnnotation = styled(OrderdedList)`
