@@ -20,4 +20,22 @@
   padding-right: 40px !important;
   padding-bottom: 30px !important;
   padding-left: 40px !important;
+  --stk-block-margin-bottom: 24px;
+
+  h3, p {
+    margin-bottom: var(--stk-block-margin-bottom);
+  }
+
+  h3 {
+    font-size: 28px !important;
+    font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
+  }
+
+  p {
+    font-size: 16px !important;
+  }
+
+  .action-container {
+    display: flex;
+  }
 }
