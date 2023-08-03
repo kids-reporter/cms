@@ -8,7 +8,7 @@ import {
   convertFromRaw,
 } from 'draft-js'
 import { blockRenderMapForAnnotation } from '../block-render-map'
-import { decorators } from '../entity-decorators/index'
+import { decorator } from '../entity-decorators/index'
 
 const AnnotationWrapper = styled.span`
   display: inline-block;
@@ -76,7 +76,7 @@ function AnnotationBlock(props: {
     .getData()
 
   const contentState = convertFromRaw(rawContentState)
-  const editorState = EditorState.createWithContent(contentState, decorators)
+  const editorState = EditorState.createWithContent(contentState, decorator)
 
   return (
     <React.Fragment>

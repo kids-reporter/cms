@@ -13,7 +13,7 @@ import {
   blockRenderMapForInfoBoxWithHeaderBorder,
 } from '../block-render-map'
 import { ImageInInfoBox } from '../block-renderers/image-block'
-import { decorators } from '../entity-decorators/index'
+import { decorator } from '../entity-decorators/index'
 
 enum InfoBoxType {
   newsChargeStation = 'news-charge-station',
@@ -117,7 +117,7 @@ const ArticleBodyContainer = styled.div`
 export function InfoBoxInArticleBody({ className, data }: InfoBoxBlockProps) {
   const { type, rawContentState } = data
   const contentState = convertFromRaw(rawContentState)
-  const editorState = EditorState.createWithContent(contentState, decorators)
+  const editorState = EditorState.createWithContent(contentState, decorator)
   let Component
   let blockRenderMap = blockRenderMapForInfoBox
   switch (type) {

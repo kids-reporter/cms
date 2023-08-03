@@ -4,7 +4,7 @@ import { linkDecorator } from './link-decorator'
 
 export { annotationDecorator, linkDecorator }
 
-export const decorators = new CompositeDecorator([
+export const decorator = new CompositeDecorator([
   annotationDecorator,
   linkDecorator,
 ])

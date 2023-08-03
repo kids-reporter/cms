@@ -7,7 +7,7 @@ import {
 } from 'draft-js'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderMap } from './block-render-map'
-import { decorators } from './entity-decorators/index'
+import { decorator } from './entity-decorators/index'
 
 const customStyleMap = {
   CODE: {
@@ -24,12 +24,12 @@ const blockRendererFn = (block: any) => {
 }
 
 type DraftRendererProps = {
-  rawContentBlock: RawDraftContentState
+  rawContentState: RawDraftContentState
 }
 
-export function DraftRenderer({ rawContentBlock }: DraftRendererProps) {
-  const contentState = convertFromRaw(rawContentBlock)
-  const editorState = EditorState.createWithContent(contentState, decorators)
+export function DraftRenderer({ rawContentState }: DraftRendererProps) {
+  const contentState = convertFromRaw(rawContentState)
+  const editorState = EditorState.createWithContent(contentState, decorator)
 
   return (
     <Editor
