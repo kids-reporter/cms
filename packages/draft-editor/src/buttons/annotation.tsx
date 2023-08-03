@@ -95,7 +95,7 @@ export function createAnnotationButton({
       })
     }
 
-    const urlInput = (
+    const input = (
       <DrawerController isOpen={toShowInput}>
         <Drawer
           title="Insert Annotation"
@@ -125,7 +125,7 @@ export function createAnnotationButton({
 
     return (
       <React.Fragment>
-        {urlInput}
+        {input}
         <div
           className={props.className}
           onMouseDown={isActive ? removeAnnotation : promptForAnnotation}

@@ -21,10 +21,7 @@ import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
-import {
-  blockRenderMap,
-  decorator as decorators,
-} from '@kids-reporter/draft-renderer'
+import { blockRenderMap, decorator } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
 
@@ -606,7 +603,7 @@ const InlineStyleControls = (props: StyleControlsProps) => {
 
 const AnnotationButton = createAnnotationButton({
   InnerEditor: RichTextEditor,
-  decorator: decorators,
+  decorator,
 })
 
 const CustomAnnotationButton = styled(AnnotationButton)`
@@ -615,16 +612,16 @@ const CustomAnnotationButton = styled(AnnotationButton)`
 
 const InfoBoxButton = createInfoBoxButton({
   InnerEditor: RichTextEditor,
-  decorator: decorators,
+  decorator,
 })
 
 const CustomInfoBoxButton = styled(InfoBoxButton)`
   ${buttonStyle}
 `
 
-export { RichTextEditor, decorators }
+export { RichTextEditor, decorator }
 
 export default {
   RichTextEditor,
-  decorators,
+  decorator,
 }
