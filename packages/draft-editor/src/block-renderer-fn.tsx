@@ -6,7 +6,7 @@ import { blockRenderers } from '@kids-reporter/draft-renderer'
 const {
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
-  InfoBoxBlock,
+  InfoBoxInArticleBody,
   SlideshowInArticleBody,
 } = blockRenderers
 
@@ -30,7 +30,7 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
       return EmbeddedCodeInArticleBody({ data: entityData })
     }
     case 'INFOBOX': {
-      return InfoBoxBlock({ data: entityData })
+      return InfoBoxInArticleBody({ data: entityData })
     }
   }
   return null

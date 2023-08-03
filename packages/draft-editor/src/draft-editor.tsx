@@ -12,31 +12,21 @@ import {
   getDefaultKeyBinding,
 } from 'draft-js'
 
-import { atomicBlockRenderer } from './block-renderer-fn'
-import { blockRenderMap, decorators } from '@kids-reporter/draft-renderer'
-import { createAnnotationButton } from './buttons/annotation'
 import { BlockquoteButton } from './buttons/blockquote'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
 import { EnlargeButton } from './buttons/enlarge'
 import { ImageButton } from './buttons/image'
-import { InfoBoxButton } from './buttons/info-box'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { RichTextEditorProps } from './draft-editor.type'
-
-const disabledButtonsOnBasicEditor = [
-  buttonNames.h2,
-  buttonNames.h3,
-  buttonNames.code,
-  buttonNames.codeBlock,
-  buttonNames.blockquote,
-  buttonNames.annotation,
-  buttonNames.embed,
-  buttonNames.image,
-  buttonNames.infoBox,
-  buttonNames.slideshow,
-]
+import { atomicBlockRenderer } from './block-renderer-fn'
+import {
+  blockRenderMap,
+  decorator as decorators,
+} from '@kids-reporter/draft-renderer'
+import { createAnnotationButton } from './buttons/annotation'
+import { createInfoBoxButton } from './buttons/info-box'
 
 const buttonStyle = css<{
   isDisabled: boolean
@@ -119,10 +109,6 @@ const CustomSlideshowButton = styled(SlideshowButton)`
 `
 
 const CustomEmbeddedCodeButton = styled(EmbeddedCodeButton)`
-  ${buttonStyle}
-`
-
-const CustomInfoBoxButton = styled(InfoBoxButton)`
   ${buttonStyle}
 `
 
@@ -234,8 +220,6 @@ const EnlargeButtonWrapper = styled.div`
   right: 0;
   margin: 0;
 `
-
-type BasicEditorProps = RichTextEditorProps
 
 type State = {
   isEnlarged: boolean
@@ -391,14 +375,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
         onEditStart,
         onEditFinish,
         getMainEditorReadOnly: () => this.state.readOnly,
-        renderBasicEditor: (propsOfBasicEditor: BasicEditorProps) => {
-          return (
-            <RichTextEditor
-              {...propsOfBasicEditor}
-              disabledButtons={disabledButtonsOnBasicEditor}
-            />
-          )
-        },
       }
     }
     return atomicBlockObj
@@ -409,20 +385,11 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     let { editorState } = this.props
 
     if (!(editorState instanceof EditorState)) {
-      editorState = EditorState.createEmpty(decorators)
+      editorState = EditorState.createEmpty(decorator)
     }
     const { isEnlarged, readOnly } = this.state
 
     const entityType = this.getEntityType(editorState)
-
-    const renderBasicEditor = (propsOfBasicEditor: BasicEditorProps) => {
-      return (
-        <RichTextEditor
-          {...propsOfBasicEditor}
-          disabledButtons={disabledButtonsOnBasicEditor}
-        />
-      )
-    }
 
     return (
       <DraftEditorContainer isEnlarged={isEnlarged}>
@@ -501,8 +468,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                renderBasicEditor={renderBasicEditor}
-                decorators={decorators}
               />
               <CustomEmbeddedCodeButton
                 isDisabled={disabledButtons.includes(buttonNames.embed)}
@@ -645,6 +610,15 @@ const AnnotationButton = createAnnotationButton({
 })
 
 const CustomAnnotationButton = styled(AnnotationButton)`
+  ${buttonStyle}
+`
+
+const InfoBoxButton = createInfoBoxButton({
+  InnerEditor: RichTextEditor,
+  decorator: decorators,
+})
+
+const CustomInfoBoxButton = styled(InfoBoxButton)`
   ${buttonStyle}
 `
 
