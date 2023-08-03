@@ -1,4 +1,5 @@
 import React from 'react'
+import buttonNames from './buttons/bt-names'
 import styled, { css } from 'styled-components'
 import {
   ContentBlock,
@@ -13,7 +14,7 @@ import {
 
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderMap, decorators } from '@kids-reporter/draft-renderer'
-import { AnnotationButton } from './buttons/annotation'
+import { createAnnotationButton } from './buttons/annotation'
 import { BlockquoteButton } from './buttons/blockquote'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
 import { EnlargeButton } from './buttons/enlarge'
@@ -22,31 +23,7 @@ import { InfoBoxButton } from './buttons/info-box'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
-
-export const buttonNames = {
-  // inline styles
-  bold: 'bold',
-  italic: 'italic',
-  underline: 'underline',
-  code: 'code',
-
-  // block styles
-  h2: 'header-two',
-  h3: 'header-three',
-  h4: 'header-four',
-  blockquote: 'blockquote',
-  ul: 'unordered-list-item',
-  ol: 'ordered-list-item',
-  codeBlock: 'code-block',
-
-  // custom styles
-  annotation: 'annotation',
-  embed: 'embed',
-  image: 'image',
-  infoBox: 'info-box',
-  link: 'link',
-  slideshow: 'slideshow',
-}
+import { RichTextEditorProps } from './draft-editor.type'
 
 const disabledButtonsOnBasicEditor = [
   buttonNames.h2,
@@ -117,10 +94,6 @@ const buttonStyle = css<{
 `
 
 const CustomButton = styled.div`
-  ${buttonStyle}
-`
-
-const CustomAnnotationButton = styled(AnnotationButton)`
   ${buttonStyle}
 `
 
@@ -261,12 +234,6 @@ const EnlargeButtonWrapper = styled.div`
   right: 0;
   margin: 0;
 `
-
-type RichTextEditorProps = {
-  onChange: (editorState: EditorState) => void
-  editorState: EditorState
-  disabledButtons?: string[]
-}
 
 type BasicEditorProps = RichTextEditorProps
 
@@ -514,8 +481,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                renderBasicEditor={renderBasicEditor}
-                decorators={decorators}
               />
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
@@ -673,6 +638,15 @@ const InlineStyleControls = (props: StyleControlsProps) => {
     </React.Fragment>
   )
 }
+
+const AnnotationButton = createAnnotationButton({
+  InnerEditor: RichTextEditor,
+  decorator: decorators,
+})
+
+const CustomAnnotationButton = styled(AnnotationButton)`
+  ${buttonStyle}
+`
 
 export { RichTextEditor, decorators }
 
