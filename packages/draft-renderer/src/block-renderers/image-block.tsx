@@ -118,3 +118,34 @@ export function ImageInArticleBody({
     </ArticleBodyContainer>
   )
 }
+
+const InfoBoxContainer = styled.div<{ $alignment?: string }>`
+  /* reset browser default styles */
+  figure {
+    margin: 0;
+  }
+  margin-bottom: 30px;
+  width: fit-content;
+
+  ${(props) => {
+    switch (props.$alignment) {
+      case 'center': {
+        return `margin-left: auto; margin-right: auto;`
+      }
+      case 'right': {
+        return `margin-left: auto`
+      }
+    }
+  }}
+`
+
+export function ImageInInfoBox({
+  className = '',
+  data,
+}: ImageBlockInArticleBodyProps) {
+  return (
+    <InfoBoxContainer $alignment={data.alignment} className={className}>
+      <ImageBlock data={data} />
+    </InfoBoxContainer>
+  )
+}

@@ -1,4 +1,4 @@
-import { AtomicBlockProps } from './block-renderers/atomic-block'
+import { AtomicBlockProps } from './block-renderer-fn.type'
 import { ContentBlock } from 'draft-js'
 import { EditableBlockquote } from './block-renderers/blockquote'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
@@ -6,11 +6,11 @@ import { blockRenderers } from '@kids-reporter/draft-renderer'
 const {
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
-  InfoBoxBlock,
+  InfoBoxInArticleBody,
   SlideshowInArticleBody,
 } = blockRenderers
 
-const AtomicBlock = (props: AtomicBlockProps<Record<string, unknown>>) => {
+const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0))
 
   const entityType = entity.getType()
@@ -30,7 +30,7 @@ const AtomicBlock = (props: AtomicBlockProps<Record<string, unknown>>) => {
       return EmbeddedCodeInArticleBody({ data: entityData })
     }
     case 'INFOBOX': {
-      return InfoBoxBlock({ data: entityData })
+      return InfoBoxInArticleBody({ data: entityData })
     }
   }
   return null
