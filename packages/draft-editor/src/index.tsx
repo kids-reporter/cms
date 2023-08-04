@@ -1,5 +1,8 @@
-import DraftEditor from './draft-editor'
+import { RichTextEditor, decorator } from './draft-editor'
+import buttonNames from './buttons/bt-names'
 
 export default {
-  DraftEditor,
+  RichTextEditor,
+  buttonNames,
+  decorator,
 }
