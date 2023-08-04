@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetFormattedDate } from '@/app/utils'
 import './post-slider.scss'
 
@@ -7,10 +7,22 @@ type PostsProp = {
   posts: any[]
 }
 
+const autoPlayInterval = 3000
+
 export const PostSlider = (props: PostsProp) => {
   const posts = props?.posts
   const postNum = posts?.length
   const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // setCurrent(current => (current === postNum - 1 ? 0 : current + 1))
+    }, autoPlayInterval)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [postNum])
 
   const onPrevClick = () => {
     setCurrent(current - 1 >= 0 ? current - 1 : postNum - 1)
