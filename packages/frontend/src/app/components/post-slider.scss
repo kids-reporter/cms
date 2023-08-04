@@ -52,6 +52,22 @@
           justify-content: space-between;
           align-items: center;
 
+          .tag {
+            @media screen and (min-width: 992px) {
+              font-size: 14px;
+            }
+            text-align: center;
+            padding: 3px 12px 5px;
+            background: #F8C341; // TODO: apply post theme
+            border-radius: 30px;
+            color: rgb(255, 255, 255);
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 160%;
+            letter-spacing: 0.05em;
+            pointer-events: none;
+          }
+
           .published-date {
             color: #A3A3A3;
           }
