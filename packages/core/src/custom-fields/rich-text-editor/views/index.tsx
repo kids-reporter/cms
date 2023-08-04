@@ -14,7 +14,7 @@ import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 // import { RichTextEditor, decorators } from '@mirrormedia/lilith-draft-editor'
 import de from '@kids-reporter/draft-editor'
 
-const { RichTextEditor, decorators } = de.DraftEditor
+const { RichTextEditor, decorator } = de.DraftEditor
 export const Field = ({
   field,
   value,
@@ -29,7 +29,7 @@ export const Field = ({
           <RichTextEditor
             disabledButtons={field.disabledButtons}
             editorState={value}
-            onChange={(editorState) => onChange?.(editorState)}
+            onChange={(editorState: EditorState) => onChange?.(editorState)}
           />
         </Stack>
       </FieldLabel>
@@ -60,26 +60,27 @@ export const controller = (
   config: FieldControllerConfig<{ disabledButtons: string[] }>
 ): FieldController<EditorState, JSONValue> & { disabledButtons: string[] } => {
   return {
+    description: '',
     disabledButtons: config.fieldMeta?.disabledButtons ?? [],
     path: config.path,
     label: config.label,
     graphqlSelection: config.path,
-    defaultValue: EditorState.createEmpty(decorators),
+    defaultValue: EditorState.createEmpty(decorator),
     deserialize: (data) => {
       const rawContentState = data[config.path]
       if (rawContentState === null) {
-        return EditorState.createEmpty(decorators)
+        return EditorState.createEmpty(decorator)
       }
       try {
         const contentState = convertFromRaw(rawContentState)
         const editorState = EditorState.createWithContent(
           contentState,
-          decorators
+          decorator
         )
         return editorState
       } catch (err) {
         console.error(err)
-        return EditorState.createEmpty(decorators)
+        return EditorState.createEmpty(decorator)
       }
     },
     serialize: (editorState: EditorState) => {
