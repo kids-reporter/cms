@@ -12,9 +12,8 @@ import {
 import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 // import { RichTextEditor, decorators } from '@mirrormedia/lilith-draft-editor'
-import de from '@kids-reporter/draft-editor'
+import { RichTextEditor, decorator } from '@kids-reporter/draft-editor'
 
-const { RichTextEditor, decorator } = de.DraftEditor
 export const Field = ({
   field,
   value,
