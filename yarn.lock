@@ -2803,58 +2803,6 @@
     "@keystone-ui/popover" "^6.0.2"
     apply-ref "^1.0.0"
 
-"@kids-reporter/cms-core@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/cms-core/-/cms-core-0.3.0.tgz#adfbf3cf6cce39d5f7a1d3553165031c26720a0e"
-  integrity sha512-OFpu7xwCI5QxJsP9F7P5l/c+XuwURWmH0ejhzlstH0hDdj8i38pK0mSOZ15JtCK+KWwBROafZ6eGi+lPWeVQ0w==
-  dependencies:
-    "@google-cloud/storage" "^5.18.0"
-    "@keystone-ui/button" "^7.0.2"
-    "@keystone-ui/fields" "^7.2.0"
-    "@keystone-ui/modals" "^6.0.3"
-    "@kids-reporter/draft-editor" "0.3.0"
-    "@twreporter/errors" "^1.1.1"
-    axios "^0.26.0"
-    draft-convert "^2.1.12"
-    draft-js "^0.11.7"
-    htmlparser2 "^7.2.0"
-    immutable "^4.0.0"
-    lodash "^4.17.21"
-    shortid "^2.2.16"
-    styled-components "5.3.5"
-    zlib "^1.0.5"
-
-"@kids-reporter/draft-editor@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/draft-editor/-/draft-editor-0.3.0.tgz#e83c97a86df0c532e4a4067cc4e192d66974272a"
-  integrity sha512-0q1fEVRDsmMCXkdtp0dFtaTYNgbCGcCsx/+b8RPKmiRJfCm57E5XxPhdGV6Hbj9rhRX5528hqc/60zxxs8Ii0A==
-  dependencies:
-    "@kids-reporter/draft-renderer" "0.3.0"
-    draft-js "^0.11.7"
-
-"@kids-reporter/draft-editor@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/draft-editor/-/draft-editor-0.4.0.tgz#e63b106a92448d1725050a93326df88c188762d5"
-  integrity sha512-at0/3jiDDKFBoeHrJwD1cbCRLR8dP6QDAtP/jNFGzWtz7CQDdN4CZ1h+U1tsa0yzj8rYiTZoQyuAq0yGSVYptg==
-  dependencies:
-    "@kids-reporter/draft-renderer" "0.4.0"
-    draft-js "^0.11.7"
-
-"@kids-reporter/draft-renderer@0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@kids-reporter/draft-renderer/-/draft-renderer-0.3.0.tgz#2730121dc789d3757d9d7997dad167ea7de0bcd2"
-  integrity sha512-soZVDfo22/wdqxvM14kb3AQDCnfh2KN5XquI8VPUSXgbK3ajxLVUryiNWGM5xX6NbqKQ3ZeQZuut4Gipx8o8DQ==
-  dependencies:
-    "@readr-media/react-image" "1.6.0"
-    "@twreporter/core" "^1.10.0"
-    babel-loader "^8.2.5"
-    body-scroll-lock "3.1.5"
-    draft-js "^0.11.7"
-    html-webpack-plugin "^5.5.0"
-    node-html-parser "^6.1.5"
-    webpack "^5.72.1"
-    webpack-cli "^4.9.2"
-
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
