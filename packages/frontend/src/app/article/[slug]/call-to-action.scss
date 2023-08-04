@@ -20,4 +20,52 @@
   padding-right: 40px !important;
   padding-bottom: 30px !important;
   padding-left: 40px !important;
+  --stk-block-margin-bottom: 24px;
+
+  h3, p {
+    margin-bottom: var(--stk-block-margin-bottom);
+  }
+
+  h3 {
+    font-size: 28px !important;
+    font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
+  }
+
+  p {
+    font-size: 16px !important;
+  }
+
+  .action-container {
+    display: flex;
+
+    a {
+      display: flex;
+      align-items: center;
+      min-height: 49px !important;
+      margin-right: 20px;
+      padding-top: 9px !important;
+      padding-right: 18px !important;
+      padding-bottom: 11px !important;
+      padding-left: 18px !important;
+      border-radius: 30px !important;
+
+      span {
+        color: var(--paletteColor8,#ffffff) !important;
+      }
+    }
+
+    .subscribe-btn {
+      background: var(--paletteColor6, #F8C341) !important;
+      &:hover {
+        background: var(--paletteColor6, #F8C341) linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)) !important;
+      }
+    }
+
+    .contribute-btn {
+      background: var(--paletteColor1, #F8C341) !important;
+      &:hover {
+        background: var(--paletteColor1, #F8C341) linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)) !important;
+      }
+    }
+  }
 }

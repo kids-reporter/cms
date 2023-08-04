@@ -1,9 +1,11 @@
+import { BACK_TO_TOP_ELEMENT_ID } from '@/app/constants'
 import './back-to-top.scss'
 
 export const BackToTop = () => {
   return (
     <a
-      href="#main-container"
+      href="#"
+      id={BACK_TO_TOP_ELEMENT_ID}
       className="back-to-top"
       title="到最上面"
       aria-label="到最上面"

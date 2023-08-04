@@ -1,5 +1,8 @@
 import './call-to-action.scss'
 
+const subscribeURL = 'http://eepurl.com/idk8VH'
+const contributeURL = '/about#post'
+
 export const CallToAction = () => {
   return (
     <div className="cta-container">
@@ -17,26 +20,11 @@ export const CallToAction = () => {
         >
           <div className="cta-content">
             <div className="stk-block-content stk-inner-blocks stk-c1bc3aa-inner-blocks">
-              <div
-                className="wp-block-stackable-heading stk-block-heading stk--hide-desktop stk--hide-tablet stk-block stk-fb3d9e5"
-                id="你的參與，-br-可以讓報導點亮世界"
-                data-block-id="fb3d9e5"
-                style={{
-                  fontSize: '28px !important',
-                  fontFamily:
-                    'SweiMarkerSansCJKtc-Regular,Sans-serif !important',
-                }}
-              >
-                <h3 className="stk-block-heading__text has-text-align-left">
-                  你的參與，可以讓報導點亮世界
-                </h3>
+              <div className="wp-block-stackable-heading stk-block-heading stk--hide-desktop stk--hide-tablet stk-block stk-fb3d9e5">
+                <h3>你的參與，可以讓報導點亮世界</h3>
               </div>
-              <div
-                className="wp-block-stackable-text stk-block-text stk-block stk-b3260f7"
-                data-block-id="b3260f7"
-                style={{ marginBottom: '150px !important' }}
-              >
-                <p className="stk-block-text__text has-text-color">
+              <div>
+                <p>
                   一篇豐富、精彩和專業的報導，要經過記者、攝影、設計師、編輯，還有許多專家才能完成，完成後還要靠著社群編輯、行銷企劃，才能送到你的眼前。我們所有的努力，都希望能幫助你更了解這個世界，更希望你對這個世界發出提問。讓每一篇報導點亮世界，訂閱我們、歡迎投稿。
                 </p>
               </div>
@@ -50,51 +38,18 @@ export const CallToAction = () => {
                   marginLeft: '0px !important',
                 }}
               >
-                <div className="stk-row stk-inner-blocks has-text-align-center-mobile stk-block-content stk-button-group">
-                  <div
-                    className="wp-block-stackable-button stk-block-button stk-block stk-81e873a"
-                    data-block-id="81e873a"
-                    style={{
-                      minHeight: '49px !important',
-                      paddingTop: '9px !important',
-                      paddingRight: '18px !important',
-                      paddingBottom: '11px !important',
-                      paddingLeft: '18px !important',
-                      background: 'var(--paletteColor6,#F8C341) !important',
-                    }}
+                <div className="action-container">
+                  <a
+                    className="subscribe-btn"
+                    href={subscribeURL}
+                    target="_blank"
+                    rel="noreferrer noopener"
                   >
-                    <a
-                      className="stk-link stk-button stk--hover-effect-darken"
-                      href="http://eepurl.com/idk8VH"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      <span className="has-text-color stk-button__inner-text">
-                        歡迎訂閱
-                      </span>
-                    </a>
-                  </div>
-                  <div
-                    className="wp-block-stackable-button stk-block-button stk-block stk-23c98d2"
-                    data-block-id="23c98d2"
-                    style={{
-                      minHeight: '49px !important',
-                      paddingTop: '9px !important',
-                      paddingRight: '18px !important',
-                      paddingBottom: '11px !important',
-                      paddingLeft: '18px !important',
-                      background: 'var(--paletteColor1,#27B5F7) !important',
-                    }}
-                  >
-                    <a
-                      className="stk-link stk-button stk--hover-effect-darken __mPS2id"
-                      href="/about#post"
-                    >
-                      <span className="has-text-color stk-button__inner-text">
-                        歡迎投稿
-                      </span>
-                    </a>
-                  </div>
+                    <span>歡迎訂閱</span>
+                  </a>
+                  <a className="contribute-btn" href={contributeURL}>
+                    <span>歡迎投稿</span>
+                  </a>
                 </div>
               </div>
             </div>

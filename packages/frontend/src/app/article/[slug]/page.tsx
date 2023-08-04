@@ -11,15 +11,13 @@ import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
+import { API_URL, CMS_URL } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
 import '../../assets/css/icomoon/style.css'
 
-const apiURL = 'https://dev-kids-cms.twreporter.org/api/graphql'
-const cmsURL = 'https://dev-kids-cms.twreporter.org'
-
-// mockups
+// TODO: remove mockups
 const categoryMockup = {
   text: '大學好好玩',
   link: '/category/university-exploratory-learning-teaching',
@@ -84,6 +82,7 @@ const authorsMockup = [
   {
     name: '張恩瑋',
     group: '文字',
+    theme: 'theme-blue',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/預設頭像_2.png',
     desc:
@@ -93,6 +92,7 @@ const authorsMockup = [
   {
     name: '王家琛',
     group: '設計',
+    theme: 'theme-yellow',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/預設頭像_2.png',
     desc:
@@ -102,6 +102,7 @@ const authorsMockup = [
   {
     name: '黃禹禛',
     group: '設計',
+    theme: 'theme-yellow',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_4_黃禹禛.png',
     desc:
@@ -110,7 +111,8 @@ const authorsMockup = [
   },
   {
     name: '楊惠君',
-    group: '總監',
+    group: '核稿',
+    theme: 'theme-blue',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_1_楊惠君.png',
     desc:
@@ -119,7 +121,8 @@ const authorsMockup = [
   },
   {
     name: '陳韻如',
-    group: '編輯',
+    group: '責任編輯',
+    theme: 'theme-red',
     img:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_6_陳韻如.png',
     desc:
@@ -129,7 +132,7 @@ const authorsMockup = [
 ]
 const relatedPostMockup = [
   {
-    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -139,7 +142,7 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -149,7 +152,7 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -159,7 +162,7 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${cmsURL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -207,7 +210,7 @@ export default async function PostPage({
   params: { slug: string }
 }) {
   const response = params?.slug
-    ? await axios.post(apiURL, {
+    ? await axios.post(API_URL, {
         query: postQuery,
         variables: {
           where: {
@@ -228,33 +231,28 @@ export default async function PostPage({
 
   return (
     post && (
-      <main id="main-container" className="main-container">
-        {true && (
-          <div className={`post theme-${post.theme}`}>
-            <Sidebar />
-            <HeroImage
-              url={`${cmsURL}${post.heroImage?.imageFile?.url}`}
-              caption={post.heroCaption}
-            />
-            <div className="hero-section" data-type="type-1">
-              <header className="entry-header">
-                <Title text={post.name as string} />
-                <div className="post_date_category">
-                  <PublishedDate date={post?.publishedDate} />
-                  <Category
-                    text={post.category.text}
-                    link={post.category.link}
-                  />
-                </div>
-              </header>
-            </div>
-            <Brief content={post.brief} editors={post.editors} />
-            <Divider />
-            <PostRenderer post={post} />
-            <Tags tags={post.tags} />
-            <AuthorCard authors={post.authors} />
+      <main className="main-container">
+        <div className={`post theme-${post.theme}`}>
+          <Sidebar />
+          <HeroImage
+            url={`${CMS_URL}${post.heroImage?.imageFile?.url}`}
+            caption={post.heroCaption}
+          />
+          <div className="hero-section" data-type="type-1">
+            <header className="entry-header">
+              <Title text={post.name as string} />
+              <div className="post_date_category">
+                <PublishedDate date={post?.publishedDate} />
+                <Category text={post.category.text} link={post.category.link} />
+              </div>
+            </header>
           </div>
-        )}
+          <Brief content={post.brief} editors={post.editors} />
+          <Divider />
+          <PostRenderer post={post} />
+          <Tags tags={post.tags} />
+          <AuthorCard authors={post.authors} />
+        </div>
         <CallToAction />
         <RelatedPosts posts={relatedPostMockup} />
       </main>

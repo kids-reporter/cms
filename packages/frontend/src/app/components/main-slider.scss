@@ -1,0 +1,51 @@
+.main-slider {
+    --theme-color: #F8C341; // TODO: theme color
+    --normal-container-max-width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: var(--normal-container-max-width);
+
+    img {
+      height: auto;
+      max-width: 100%;
+      vertical-align: middle;
+      border-radius: 20px;
+    }
+
+    .prev-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 145px;
+      }
+
+      .next-btn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        top: 145px;
+      }
+
+    .bullets {
+      button {
+        cursor: pointer;
+        margin: 50px 10px 0;
+        width: 13px;
+        height: 13px;
+        background-color: #eaeaea;
+        border-radius: 13px;
+        appearance: none;
+        border: none;
+      }
+
+      button.active {
+        background-color: var(--paletteColor6);
+      }
+    }
+  }
