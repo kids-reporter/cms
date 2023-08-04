@@ -21,12 +21,6 @@ enum InfoBoxType {
   boxBorder = 'box-border',
 }
 
-//enum InfoBoxLabel {
-//  newsChargeStation = '新聞充電器',
-//  headerBorder = '無邊框板',
-//  boxBorder = '有邊框板',
-//}
-
 type InfoBoxBlockProps = {
   className?: string
   data: {
