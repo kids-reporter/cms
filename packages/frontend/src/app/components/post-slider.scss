@@ -73,22 +73,20 @@
         }
       }
 
-      .prev-btn {
+      button {
         background-color: transparent;
         border: none;
         cursor: pointer;
         position: absolute;
-        left: 0;
-        top: 145px;
+        top: 20%;
       }
 
-      .next-btn {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        position: absolute;
+      button.prev-btn {
+        left: 0;
+      }
+
+      button.next-btn {
         right: 0;
-        top: 145px;
       }
     }
 
