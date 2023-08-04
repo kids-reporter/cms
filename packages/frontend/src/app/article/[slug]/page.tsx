@@ -241,7 +241,7 @@ export default async function PostPage({
           <div className="hero-section" data-type="type-1">
             <header className="entry-header">
               <Title text={post.name as string} />
-              <div className="post_date_category">
+              <div className="post-date-category">
                 <PublishedDate date={post?.publishedDate} />
                 <Category text={post.category.text} link={post.category.link} />
               </div>
