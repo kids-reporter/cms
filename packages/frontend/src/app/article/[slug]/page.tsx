@@ -132,6 +132,8 @@ const authorsMockup = [
 ]
 const relatedPostMockup = [
   {
+    url:
+      'https://dev-kids.twreporter.org/article/university-exploratory-learning-zoo',
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -142,6 +144,8 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
+    url:
+      'https://dev-kids.twreporter.org/article/university-exploratory-learning-zoo',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -152,6 +156,8 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
+    url:
+      'https://dev-kids.twreporter.org/article/university-exploratory-learning-zoo',
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -162,6 +168,8 @@ const relatedPostMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
+    url:
+      'https://dev-kids.twreporter.org/article/university-exploratory-learning-zoo',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',

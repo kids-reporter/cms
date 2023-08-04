@@ -36,20 +36,22 @@ export const PostSlider = (props: PostsProp) => {
 
     return slides.map((post, index) => {
       return (
-        <div key={`post-${index}`} className="post-body">
-          <img src={`${post.image}`} />
-          <span className="post-category">
-            <a href={post.categoryURL}>{post.categoryName}</a>
-          </span>
-          <span className="post-title">{post.name}</span>
-          <span className="post-brief">{post.brief}</span>
-          <div className="post-bottom">
-            <span className="tag">{post.tag}</span>
-            <span className="published-date">
-              {GetFormattedDate(post.publishedDate) ?? ''}
+        <a key={`post-${index}`} href={post.url}>
+          <div className="post-body">
+            <img src={`${post.image}`} />
+            <span className="post-category">
+              <a href={post.categoryURL}>{post.categoryName}</a>
             </span>
+            <span className="post-title">{post.name}</span>
+            <span className="post-brief">{post.brief}</span>
+            <div className="post-bottom">
+              <span className="tag">{post.tag}</span>
+              <span className="published-date">
+                {GetFormattedDate(post.publishedDate) ?? ''}
+              </span>
+            </div>
           </div>
-        </div>
+        </a>
       )
     })
   }
