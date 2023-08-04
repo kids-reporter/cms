@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import buttonNames from './bt-names'
-import styled from 'styled-components'
 import {
   AtomicBlockUtils,
   DraftDecoratorType,
@@ -11,7 +10,7 @@ import {
 } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { RichTextEditorProps } from '../draft-editor.type'
-import { Select } from '@keystone-ui/fields'
+import { Select } from './select'
 
 const disabledButtons = [
   buttonNames.h2,
@@ -37,53 +36,10 @@ enum InfoBoxLabelEnum {
   boxBorder = '有線框版',
 }
 
-type InfoBoxLabel =
-  | InfoBoxLabelEnum.newsChargeStation
-  | InfoBoxLabelEnum.headerBorder
-  | InfoBoxLabelEnum.boxBorder
-
 type InfoBoxType =
   | InfoBoxTypeEnum.newsChargeStation
   | InfoBoxTypeEnum.headerBorder
   | InfoBoxTypeEnum.boxBorder
-
-type Option = {
-  label: InfoBoxLabel
-  value: InfoBoxType
-}
-
-const Label = styled.label`
-  display: block;
-  margin: 10px 0;
-  font-weight: 600;
-`
-
-const TypeSelectBlock = styled.div`
-  margin: 10px 0;
-`
-
-function TypeSelect({
-  type,
-  options,
-  onChange,
-}: {
-  type: InfoBoxType
-  options: Option[]
-  onChange: (arg0: InfoBoxType) => void
-}) {
-  return (
-    <TypeSelectBlock>
-      <Label htmlFor="infoBoxType">版型</Label>
-      <Select
-        value={options.find((option: Option) => option.value === type) || null}
-        options={options}
-        onChange={(option: Option) => {
-          onChange(option.value)
-        }}
-      />
-    </TypeSelectBlock>
-  )
-}
 
 export type InfoBoxInputValue = {
   type: InfoBoxType
@@ -135,8 +91,9 @@ export function InfoBoxInput(props: InfoBoxInputType) {
           },
         }}
       >
-        <TypeSelect
-          type={inputValueState.type}
+        <Select
+          title="版型"
+          value={inputValueState.type}
           options={[
             {
               label: InfoBoxLabelEnum.newsChargeStation,
@@ -153,7 +110,7 @@ export function InfoBoxInput(props: InfoBoxInputType) {
           ]}
           onChange={(infoBoxType) => {
             setInputValueState({
-              type: infoBoxType,
+              type: infoBoxType as InfoBoxType,
               editorState: inputValueState.editorState,
             })
           }}
