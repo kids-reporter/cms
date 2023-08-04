@@ -11,7 +11,7 @@ import {
 } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { RichTextEditorProps } from '../draft-editor.type'
-import { TextInput } from '@keystone-ui/fields'
+import { Select } from '@keystone-ui/fields'
 
 const disabledButtons = [
   buttonNames.h2,
@@ -25,51 +25,91 @@ const disabledButtons = [
   buttonNames.slideshow,
 ]
 
-const TitleInput = styled(TextInput)`
-  margin-top: 30px;
-  margin-bottom: 10px;
+enum InfoBoxTypeEnum {
+  newsChargeStation = 'news-charge-station',
+  headerBorder = 'header-border',
+  boxBorder = 'box-border',
+}
+
+enum InfoBoxLabelEnum {
+  newsChargeStation = '新聞充電器',
+  headerBorder = '無線框版',
+  boxBorder = '有線框版',
+}
+
+type InfoBoxLabel =
+  | InfoBoxLabelEnum.newsChargeStation
+  | InfoBoxLabelEnum.headerBorder
+  | InfoBoxLabelEnum.boxBorder
+
+type InfoBoxType =
+  | InfoBoxTypeEnum.newsChargeStation
+  | InfoBoxTypeEnum.headerBorder
+  | InfoBoxTypeEnum.boxBorder
+
+type Option = {
+  label: InfoBoxLabel
+  value: InfoBoxType
+}
+
+const Label = styled.label`
+  display: block;
+  margin: 10px 0;
+  font-weight: 600;
 `
 
+const TypeSelectBlock = styled.div`
+  margin: 10px 0;
+`
+
+function TypeSelect({
+  type,
+  options,
+  onChange,
+}: {
+  type: InfoBoxType
+  options: Option[]
+  onChange: (arg0: InfoBoxType) => void
+}) {
+  return (
+    <TypeSelectBlock>
+      <Label htmlFor="infoBoxType">版型</Label>
+      <Select
+        value={options.find((option: Option) => option.value === type) || null}
+        options={options}
+        onChange={(option: Option) => {
+          onChange(option.value)
+        }}
+      />
+    </TypeSelectBlock>
+  )
+}
+
+export type InfoBoxInputValue = {
+  type: InfoBoxType
+  rawContentState: RawDraftContentState
+}
+
 type InfoBoxInputType = {
-  title?: string
-  rawContentState?: RawDraftContentState
   isOpen: boolean
-  onChange: ({
-    title,
-    rawContentState,
-  }: {
-    title: string
+  onChange: (arg0: {
+    type: InfoBoxType
     rawContentState: RawDraftContentState
   }) => void
   onCancel: () => void
   Editor: React.ComponentType<RichTextEditorProps>
   decorator: DraftDecoratorType
+  inputValue: InfoBoxInputValue
 }
 
 export function InfoBoxInput(props: InfoBoxInputType) {
-  const {
-    isOpen,
-    onChange,
-    onCancel,
-    title,
-    rawContentState,
-    Editor,
-    decorator,
-  } = props
-  const initialInputValue = {
-    title: title || '',
-    // create an `editorState` from raw content state object
-    editorState: EditorState.createWithContent(
-      convertFromRaw(rawContentState || { blocks: [], entityMap: {} }),
-      decorator
-    ),
-  }
+  const { isOpen, onChange, onCancel, Editor, decorator, inputValue } = props
 
-  const [inputValue, setInputValue] = useState(initialInputValue)
-
-  const clearInputValue = () => {
-    setInputValue(initialInputValue)
-  }
+  const contentState = convertFromRaw(inputValue.rawContentState)
+  const [inputValueState, setInputValueState] = useState({
+    type: inputValue.type,
+    editorState: EditorState.createWithContent(contentState, decorator),
+  })
 
   return (
     <DrawerController isOpen={isOpen}>
@@ -79,7 +119,6 @@ export function InfoBoxInput(props: InfoBoxInputType) {
           cancel: {
             label: 'Cancel',
             action: () => {
-              clearInputValue()
               onCancel()
             },
           },
@@ -87,34 +126,44 @@ export function InfoBoxInput(props: InfoBoxInputType) {
             label: 'Confirm',
             action: () => {
               onChange({
-                title: inputValue.title,
-                // convert `contentState` of the `editorState` into raw content state object
+                type: inputValueState.type,
                 rawContentState: convertToRaw(
-                  inputValue.editorState.getCurrentContent()
+                  inputValueState.editorState.getCurrentContent()
                 ),
               })
-              clearInputValue()
             },
           },
         }}
       >
-        <TitleInput
-          onChange={(e) =>
-            setInputValue({
-              title: e.target.value,
-              editorState: inputValue.editorState,
+        <TypeSelect
+          type={inputValueState.type}
+          options={[
+            {
+              label: InfoBoxLabelEnum.newsChargeStation,
+              value: InfoBoxTypeEnum.newsChargeStation,
+            },
+            {
+              label: InfoBoxLabelEnum.headerBorder,
+              value: InfoBoxTypeEnum.headerBorder,
+            },
+            {
+              label: InfoBoxLabelEnum.boxBorder,
+              value: InfoBoxTypeEnum.boxBorder,
+            },
+          ]}
+          onChange={(infoBoxType) => {
+            setInputValueState({
+              type: infoBoxType,
+              editorState: inputValueState.editorState,
             })
-          }
-          type="text"
-          placeholder="Title"
-          value={inputValue.title}
+          }}
         />
         <Editor
           disabledButtons={disabledButtons}
-          editorState={inputValue.editorState}
+          editorState={inputValueState.editorState}
           onChange={(editorState: EditorState) => {
-            setInputValue({
-              title: inputValue.title,
+            setInputValueState({
+              type: inputValueState.type,
               editorState,
             })
           }}
@@ -142,10 +191,10 @@ export function createInfoBoxButton({
     const { className, editorState, onChange: onEditorStateChange } = props
 
     const onChange = ({
-      title,
+      type,
       rawContentState,
     }: {
-      title: string
+      type: InfoBoxType
       rawContentState: RawDraftContentState
     }) => {
       const contentState = editorState.getCurrentContent()
@@ -155,7 +204,7 @@ export function createInfoBoxButton({
         'INFOBOX',
         'IMMUTABLE',
         {
-          title,
+          type,
           rawContentState,
         }
       )
@@ -174,15 +223,21 @@ export function createInfoBoxButton({
 
     return (
       <React.Fragment>
-        <InfoBoxInput
-          Editor={InnerEditor}
-          decorator={decorator}
-          onChange={onChange}
-          onCancel={() => {
-            setToShowInput(false)
-          }}
-          isOpen={toShowInput}
-        />
+        {toShowInput && (
+          <InfoBoxInput
+            Editor={InnerEditor}
+            decorator={decorator}
+            onChange={onChange}
+            onCancel={() => {
+              setToShowInput(false)
+            }}
+            isOpen={toShowInput}
+            inputValue={{
+              type: InfoBoxTypeEnum.newsChargeStation,
+              rawContentState: { blocks: [], entityMap: {} },
+            }}
+          />
+        )}
         <div
           className={className}
           onClick={() => {
