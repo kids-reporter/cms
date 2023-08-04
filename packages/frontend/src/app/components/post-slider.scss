@@ -8,13 +8,14 @@
     max-width: var(--normal-container-max-width);
 
     .cards {
+      width: var(--container-width);
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: row;
       position: relative;
-      padding-left: 10px;
-      padding-right: 10px;
 
       .post-body {
         max-width: 400px;
@@ -78,15 +79,16 @@
         border: none;
         cursor: pointer;
         position: absolute;
-        top: 20%;
+        top: 15%;
+        --btn-edge: -10px;
       }
 
       button.prev-btn {
-        left: 0;
+        left: var(--btn-edge);
       }
 
       button.next-btn {
-        right: 0;
+        right: var(--btn-edge);
       }
     }
 
