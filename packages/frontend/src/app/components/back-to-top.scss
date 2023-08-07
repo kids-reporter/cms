@@ -5,7 +5,7 @@
     --border-radius: 100%;
 
     position: fixed;
-    z-index: 100;
+    z-index: 999;
     bottom: calc(var(--frame-size, 10px) + var(--back-top-bottom-offset, 25px));
     display: flex;
     align-items: center;
