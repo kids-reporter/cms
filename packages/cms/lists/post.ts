@@ -27,9 +27,6 @@ const listConfigurations = list({
     subtitle: text({
       label: '副標',
       validation: { isRequired: false },
-      db: {
-        isNullable: true,
-      },
     }),
     status: select({
       label: '狀態',
@@ -103,9 +100,6 @@ const listConfigurations = list({
     otherByline: text({
       validation: { isRequired: false },
       label: '作者（其他）',
-      db: {
-        isNullable: true,
-      },
     }),
     //heroVideo: relationship({
     //  label: 'Leading Video',
@@ -118,9 +112,6 @@ const listConfigurations = list({
     heroCaption: text({
       label: '首圖圖說',
       validation: { isRequired: false },
-      db: {
-        isNullable: true,
-      },
     }),
     heroImageSize: select({
       label: '首圖尺寸',
@@ -134,44 +125,24 @@ const listConfigurations = list({
     brief: customFields.richTextEditor({
       label: '前言',
       disabledButtons: [
-        richTextEditorButtonNames.annotation,
-        richTextEditorButtonNames.audio,
-        richTextEditorButtonNames.backgroundColor,
-        richTextEditorButtonNames.backgroundImage,
-        richTextEditorButtonNames.backgroundVideo,
         richTextEditorButtonNames.blockquote,
         richTextEditorButtonNames.code,
         richTextEditorButtonNames.codeBlock,
-        richTextEditorButtonNames.colorBox,
-        richTextEditorButtonNames.divider,
         richTextEditorButtonNames.embed,
         richTextEditorButtonNames.h2,
         richTextEditorButtonNames.h3,
         richTextEditorButtonNames.h4,
+        richTextEditorButtonNames.h5,
         richTextEditorButtonNames.image,
         richTextEditorButtonNames.infoBox,
-        richTextEditorButtonNames.relatedPost,
-        richTextEditorButtonNames.sideIndex,
-        richTextEditorButtonNames.slideshow,
-        richTextEditorButtonNames.table,
-        richTextEditorButtonNames.video,
       ],
     }),
     content: customFields.richTextEditor({
       label: '內文',
       disabledButtons: [
-        richTextEditorButtonNames.audio,
-        richTextEditorButtonNames.backgroundColor,
-        richTextEditorButtonNames.backgroundImage,
-        richTextEditorButtonNames.backgroundVideo,
+        richTextEditorButtonNames.h2,
         richTextEditorButtonNames.code,
         richTextEditorButtonNames.codeBlock,
-        richTextEditorButtonNames.colorBox,
-        richTextEditorButtonNames.divider,
-        richTextEditorButtonNames.relatedPost,
-        richTextEditorButtonNames.sideIndex,
-        richTextEditorButtonNames.table,
-        richTextEditorButtonNames.video,
       ],
     }),
     //projects: relationship({
@@ -197,16 +168,10 @@ const listConfigurations = list({
     ogTitle: text({
       validation: { isRequired: false },
       label: 'FB分享標題',
-      db: {
-        isNullable: true,
-      },
     }),
     ogDescription: text({
       label: 'FB分享說明',
       validation: { isRequired: false },
-      db: {
-        isNullable: true,
-      },
     }),
     ogImage: relationship({
       label: 'FB分享縮圖',

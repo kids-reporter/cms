@@ -43,7 +43,7 @@ export function BlockquoteInput({
   return (
     <DrawerController isOpen={isOpen}>
       <Drawer
-        title={`Insert Embedded Code`}
+        title="引言"
         //isOpen={toShowInput}
         actions={{
           cancel: {

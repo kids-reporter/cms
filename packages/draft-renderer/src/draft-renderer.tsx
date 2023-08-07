@@ -9,15 +9,6 @@ import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderMap } from './block-render-map'
 import { decorator } from './entity-decorators/index'
 
-const customStyleMap = {
-  CODE: {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-    fontSize: 16,
-    padding: 2,
-  },
-}
-
 const blockRendererFn = (block: any) => {
   const atomicBlockObj = atomicBlockRenderer(block)
   return atomicBlockObj
@@ -34,7 +25,6 @@ export function DraftRenderer({ rawContentState }: DraftRendererProps) {
   return (
     <Editor
       editorState={editorState}
-      customStyleMap={customStyleMap}
       blockRenderMap={blockRenderMap}
       blockRendererFn={blockRendererFn}
       readOnly

@@ -34,7 +34,8 @@ const HeadingBlock = styled.div`
 
   h2,
   h3,
-  h4 {
+  h4,
+  h5 {
     margin: 0;
   }
 
@@ -48,6 +49,10 @@ const HeadingBlock = styled.div`
 
   h4 {
     font-size: 25px;
+  }
+
+  h5 {
+    font-size: 20px;
   }
 `
 
@@ -115,6 +120,10 @@ const _blockRenderMap = Immutable.Map({
     element: 'h4',
     wrapper: <Heading />,
   },
+  'header-five': {
+    element: 'h5',
+    wrapper: <Heading />,
+  },
   'ordered-list-item': {
     element: 'li',
     wrapper: <OrderdedList />,
@@ -157,6 +166,10 @@ const ParagraphForAnnotation = styled(Paragraph)`
 const _blockRenderMapForAnnotation = Immutable.Map({
   'header-four': {
     element: 'h4',
+    wrapper: <HeadingForAnnotation />,
+  },
+  'header-five': {
+    element: 'h5',
     wrapper: <HeadingForAnnotation />,
   },
   'ordered-list-item': {
