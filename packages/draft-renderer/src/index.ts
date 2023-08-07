@@ -2,14 +2,14 @@ import { DraftRenderer } from './draft-renderer'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderMap } from './block-render-map'
 import { blockRenderers } from './block-renderers'
-import { decorators } from './entity-decorators/index'
+import { decorator } from './entity-decorators/index'
 
 export {
   DraftRenderer,
   atomicBlockRenderer,
   blockRenderMap,
   blockRenderers,
-  decorators,
+  decorator,
 }
 
 export default {
@@ -17,5 +17,5 @@ export default {
   atomicBlockRenderer,
   blockRenderMap,
   blockRenderers,
-  decorators,
+  decorator,
 }

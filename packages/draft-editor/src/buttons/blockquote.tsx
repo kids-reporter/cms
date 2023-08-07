@@ -1,61 +1,25 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { AtomicBlockUtils, EditorState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
-import { Select } from '@keystone-ui/fields'
+import { Select } from './select'
 import { TextArea } from '@keystone-ui/fields'
 
-const Label = styled.label`
-  display: block;
-  margin: 10px 0;
-  font-weight: 600;
-`
-
-enum BlockquoteType {
+enum BlockquoteTypeEnum {
   borderLeft = 'border_left',
   quoteLeft = 'quote_left',
 }
 
-enum BlockquoteLabel {
+enum BlockquoteLabelEnum {
   borderLeft = '左邊框',
   quoteLeft = '左引號',
 }
 
-type Option = {
-  label: BlockquoteLabel.borderLeft | BlockquoteLabel.quoteLeft
-  value: BlockquoteType.borderLeft | BlockquoteType.quoteLeft
-  isDisabled?: boolean
-}
-
-const TypeSelectBlock = styled.div`
-  margin: 10px 0;
-`
-
-function TypeSelect({
-  type,
-  options,
-  onChange,
-}: {
-  type: BlockquoteType.borderLeft | BlockquoteType.quoteLeft
-  options: Option[]
-  onChange: (arg0: BlockquoteType.borderLeft | BlockquoteType.quoteLeft) => void
-}) {
-  return (
-    <TypeSelectBlock>
-      <Label htmlFor="blockquoteType">版型</Label>
-      <Select
-        value={options.find((option: Option) => option.value === type) || null}
-        options={options}
-        onChange={(option: Option) => {
-          onChange(option.value)
-        }}
-      />
-    </TypeSelectBlock>
-  )
-}
+type BlockquoteType =
+  | BlockquoteTypeEnum.borderLeft
+  | BlockquoteTypeEnum.quoteLeft
 
 export type BlockquoteInputValue = {
-  type: BlockquoteType.borderLeft | BlockquoteType.quoteLeft
+  type: BlockquoteType
   text: string
 }
 
@@ -92,21 +56,22 @@ export function BlockquoteInput({
           },
         }}
       >
-        <TypeSelect
-          type={inputValueState.type}
+        <Select
+          title="版型"
+          value={inputValueState.type}
           options={[
             {
-              label: BlockquoteLabel.borderLeft,
-              value: BlockquoteType.borderLeft,
+              label: BlockquoteLabelEnum.borderLeft,
+              value: BlockquoteTypeEnum.borderLeft,
             },
             {
-              label: BlockquoteLabel.quoteLeft,
-              value: BlockquoteType.quoteLeft,
+              label: BlockquoteLabelEnum.quoteLeft,
+              value: BlockquoteTypeEnum.quoteLeft,
             },
           ]}
           onChange={(blockquoteType) => {
             setInputValueState({
-              type: blockquoteType,
+              type: blockquoteType as BlockquoteType,
               text: inputValueState.text,
             })
           }}
@@ -174,7 +139,7 @@ export function BlockquoteButton(props: BlockquoteButtonProps) {
           onConfirm={onInputChange}
           onCancel={onInputCancel}
           inputValue={{
-            type: BlockquoteType.borderLeft,
+            type: BlockquoteTypeEnum.borderLeft,
             text: '',
           }}
         />

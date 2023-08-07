@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { AtomicBlockProps } from './atomic-block'
+import { AtomicBlockProps } from '../block-renderer-fn.type'
 import { BlockquoteInput, BlockquoteInputValue } from '../buttons/blockquote'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 

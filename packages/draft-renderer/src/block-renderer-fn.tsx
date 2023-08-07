@@ -4,7 +4,7 @@ const {
   BlockquoteInArticleBody,
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
-  InfoBoxBlock,
+  InfoBoxInArticleBody,
   SlideshowInArticleBody,
 } = blockRenderers
 
@@ -31,7 +31,7 @@ const AtomicBlock = (props: {
       return EmbeddedCodeInArticleBody({ data: entityData })
     }
     case 'INFOBOX': {
-      return InfoBoxBlock({ data: entityData })
+      return InfoBoxInArticleBody({ data: entityData })
     }
   }
   return null
