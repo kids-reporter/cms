@@ -1,15 +1,11 @@
+import { ShortenParagraph } from '@/app/utils'
 import './author-card.scss'
 
 type AuthorCardProp = {
   authors: any[]
 }
 
-const shortenDesc = (desc: string): string => {
-  const limit = 85
-  return desc?.length > limit
-    ? desc.substring(0, limit).concat('', '...')
-    : desc
-}
+const descCharactersLimit = 85
 
 export const AuthorCard = (props: AuthorCardProp) => {
   return (
@@ -24,7 +20,9 @@ export const AuthorCard = (props: AuthorCardProp) => {
               </div>
               <span className="name">{author.name}</span>
               <div className={`group ${author.theme}`}>{author.group}</div>
-              <span className="desc">{shortenDesc(author.desc)}</span>
+              <span className="desc">
+                {ShortenParagraph(author.desc, descCharactersLimit)}
+              </span>
               <div className="more">
                 <a href={author.link} className={author.theme}>
                   <span>

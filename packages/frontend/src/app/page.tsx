@@ -14,67 +14,51 @@ type Post = {
 const sliderSections = [
   {
     title: '時時刻刻',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title1.svg',
+    titleURL: 'topic_title1.svg',
     url: 'https://kids.twreporter.org/category/news/times/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic1.svg',
+    image: 'topic_pic1.svg',
   },
   {
     title: '真的假的',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title2.svg',
+    titleURL: 'topic_title2.svg',
     url: 'https://kids.twreporter.org/category/news/knowledge/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic2.svg',
+    image: 'topic_pic2.svg',
   },
   {
     title: '讀報新聞',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title3.svg',
+    titleURL: 'topic_title3.svg',
     url: 'https://kids.twreporter.org/category/listening-news/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic3.svg',
+    image: 'topic_pic3.svg',
   },
   {
     title: '他們的故事',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title4.svg',
+    titleURL: 'topic_title4.svg',
     url: 'https://kids.twreporter.org/category/news/story/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic4.svg',
+    image: 'topic_pic4.svg',
   },
   {
     title: '文化看世界',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title5.svg',
+    titleURL: 'topic_title5.svg',
     url: 'https://kids.twreporter.org/category/news/explore/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic5.svg',
+    image: 'topic_pic5.svg',
   },
   {
     title: '小讀者連線',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title7.svg',
+    titleURL: 'topic_title7.svg',
     url: 'https://kids.twreporter.org/category/campus/joining/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic7.svg',
+    image: 'topic_pic7.svg',
   },
   {
     title: '圖解新聞',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title8.svg',
+    titleURL: 'topic_title8.svg',
     url: 'https://kids.twreporter.org/category/comics/graphic-news/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic8.svg',
+    image: 'topic_pic8.svg',
   },
   {
     title: '火線新聞台',
-    titleURL:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_title9.svg',
+    titleURL: 'topic_title9.svg',
     url: 'https://kids.twreporter.org/category/comics/comic/',
-    image:
-      'https://kids.twreporter.org/wp-content/uploads/2022/10/topic_pic9.svg',
+    image: 'topic_pic9.svg',
   },
 ]
 
@@ -155,10 +139,10 @@ export default async function Home() {
         return (
           <div key={`home-section-${index}`}>
             <div className="section-head">
-              <img className="image-left" src={section.image} />
+              <img className="image-left" src={`/images/${section.image}`} />
               <img
                 className="image-title"
-                src={section.titleURL}
+                src={`/images/${section.titleURL}`}
                 alt={section.title}
               />
               <a href={section.url} className="rpjr-btn rpjr-btn-theme-outline">
