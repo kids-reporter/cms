@@ -544,6 +544,7 @@ const blockStyles = [
   { label: 'H2', style: 'header-two', icon: '' },
   { label: 'H3', style: 'header-three', icon: '' },
   { label: 'H4', style: 'header-four', icon: '' },
+  { label: 'H5', style: 'header-five', icon: '' },
   { label: 'UL', style: 'unordered-list-item', icon: 'fas fa-list-ul' },
   { label: 'OL', style: 'ordered-list-item', icon: 'fas fa-list-ol' },
   { label: 'Code Block', style: 'code-block', icon: 'fas fa-code' },
