@@ -13,12 +13,12 @@ export const NonStickyHeader = () => {
                 <p></p>
                 <div className="home-header-left">
                   <img
-                    src={`https://kids.twreporter.org/wp-content/uploads/2022/10/navbar_pic.svg`}
+                    src={`/images/navbar_pic.svg`}
                     width="291"
                     className="md:block hidden"
                   />
                   <img
-                    src="https://kids.twreporter.org/wp-content/uploads/2022/10/navbar_RWD_pic.svg"
+                    src="/images/navbar_RWD_pic.svg"
                     width="163"
                     className="md:hidden block"
                   />
@@ -37,7 +37,7 @@ export const NonStickyHeader = () => {
             >
               <div className="entry-content">
                 <div className="home-header-middle">
-                  <img src="https://kids.twreporter.org/wp-content/uploads/2022/10/logo-full.svg?v2" />
+                  <img src="/images/logo-full.svg?v2" />
                   <nav aria-label="頁首選單">
                     <ul
                       id="menu-header-%e4%b8%bb%e9%81%b8%e5%96%ae"
