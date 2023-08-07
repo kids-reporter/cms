@@ -10,7 +10,7 @@ export const GetFormattedDate = (date: string): string => {
 }
 
 export const ShortenParagraph = (paragraph: string, limit: number): string => {
-  return paragraph?.length > limit
+  return paragraph?.length > 0 && limit > 0 && paragraph.length > limit
     ? paragraph.substring(0, limit).concat('', '...')
     : paragraph
 }
