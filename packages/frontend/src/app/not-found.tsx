@@ -40,9 +40,6 @@ export default function NotFound() {
               <span></span>
             </span>
           </button>
-          <div className="screen-reader-text" aria-live="polite" role="status">
-            找不到符合的
-          </div>
         </form>
       </div>
     </div>
