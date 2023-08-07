@@ -12,8 +12,8 @@ export const TopDetector = () => {
           `#${BACK_TO_TOP_ELEMENT_ID}`
         )
         entry.isIntersecting
-          ? backToTopElement?.classList?.add('hidden')
-          : backToTopElement?.classList?.remove('hidden')
+          ? backToTopElement?.classList?.remove('show')
+          : backToTopElement?.classList?.add('show')
       },
       {
         root: null,
