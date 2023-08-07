@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GetFormattedDate } from '@/app/utils'
 import './post-slider.scss'
 
@@ -7,10 +7,22 @@ type PostsProp = {
   posts: any[]
 }
 
+const autoPlayInterval = 3000
+
 export const PostSlider = (props: PostsProp) => {
   const posts = props?.posts
   const postNum = posts?.length
   const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // setCurrent(current => (current === postNum - 1 ? 0 : current + 1))
+    }, autoPlayInterval)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [postNum])
 
   const onPrevClick = () => {
     setCurrent(current - 1 >= 0 ? current - 1 : postNum - 1)
@@ -36,18 +48,18 @@ export const PostSlider = (props: PostsProp) => {
 
     return slides.map((post, index) => {
       return (
-        <div key={`post-${index}`} className="post-body">
+        <a key={`post-${index}`} href={post.url} className="post-body">
           <img src={`${post.image}`} />
-          <span className="post-category">
-            <a href={post.categoryURL}>{post.categoryName}</a>
-          </span>
+          <span className="post-category">{post.categoryName}</span>
           <span className="post-title">{post.name}</span>
           <span className="post-brief">{post.brief}</span>
           <div className="post-bottom">
-            {post.tag}
-            {GetFormattedDate(post.publishedDate) ?? ''}
+            <span className="tag">{post.tag}</span>
+            <span className="published-date">
+              {GetFormattedDate(post.publishedDate) ?? ''}
+            </span>
           </div>
-        </div>
+        </a>
       )
     })
   }
