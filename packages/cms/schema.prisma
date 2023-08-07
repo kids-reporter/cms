@@ -71,7 +71,7 @@ model Post {
   id                           Int           @id @default(autoincrement())
   slug                         String        @unique @default("")
   name                         String        @default("")
-  subtitle                     String?
+  subtitle                     String        @default("")
   status                       String?       @default("draft")
   publishedDate                DateTime?
   writers                      Author[]      @relation("Author_posts")
@@ -86,18 +86,18 @@ model Post {
   manualOrderOfEngineers       Json?
   reviewers                    Author[]      @relation("Post_reviewers")
   manualOrderOfReviewers       Json?
-  otherByline                  String?
+  otherByline                  String        @default("")
   heroImage                    Photo?        @relation("Post_heroImage", fields: [heroImageId], references: [id])
   heroImageId                  Int?          @map("heroImage")
-  heroCaption                  String?
+  heroCaption                  String        @default("")
   heroImageSize                String?       @default("normal")
   brief                        Json?
   content                      Json?
   readingTime                  Int?
   relatedPosts                 Post[]        @relation("Post_relatedPosts")
   manualOrderOfRelatedPosts    Json?
-  ogTitle                      String?
-  ogDescription                String?
+  ogTitle                      String        @default("")
+  ogDescription                String        @default("")
   ogImage                      Photo?        @relation("Post_ogImage", fields: [ogImageId], references: [id])
   ogImageId                    Int?          @map("ogImage")
   createdAt                    DateTime?
