@@ -164,6 +164,9 @@ const ParagraphForAnnotation = styled(Paragraph)`
 `
 
 const _blockRenderMapForAnnotation = Immutable.Map({
+  atomic: {
+    element: 'div',
+  },
   'header-four': {
     element: 'h4',
     wrapper: <HeadingForAnnotation />,
