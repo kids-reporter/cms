@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { GetFormattedDate } from '@/app/utils'
+import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 import './post-slider.scss'
 
 type PostsProp = {
@@ -8,6 +8,8 @@ type PostsProp = {
 }
 
 const autoPlayInterval = 3000
+const titleCharactersLimit = 100
+const briefCharactersLimit = 100
 
 export const PostSlider = (props: PostsProp) => {
   const posts = props?.posts
@@ -51,8 +53,12 @@ export const PostSlider = (props: PostsProp) => {
         <a key={`post-${index}`} href={post.url} className="post-body">
           <img src={`${post.image}`} />
           <span className="post-category">{post.categoryName}</span>
-          <span className="post-title">{post.name}</span>
-          <span className="post-brief">{post.brief}</span>
+          <span className="post-title">
+            {ShortenParagraph(post.name, titleCharactersLimit)}
+          </span>
+          <span className="post-brief">
+            {ShortenParagraph(post.brief, briefCharactersLimit)}
+          </span>
           <div className="post-bottom">
             <span className="tag">{post.tag}</span>
             <span className="published-date">
