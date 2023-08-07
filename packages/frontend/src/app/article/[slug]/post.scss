@@ -117,7 +117,7 @@ body.single-post {
         font-size: 24px;
     }
 }
-.post .post_date {
+.post .post-date {
     font-weight: 500;
     font-size: 16px;
     line-height: 160%;
@@ -125,7 +125,7 @@ body.single-post {
     color: #A3A3A3;
 }
 
-.post .post_date_category {
+.post .post-date-category {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -133,7 +133,7 @@ body.single-post {
     height: 34px;
     margin-top: 60px !important;
 }
-.post .post_date_category .post_date {
+.post .post-date-category .post-date {
     font-weight: 500;
     font-size: 16px;
     line-height: 160%;
@@ -602,8 +602,7 @@ body.single-post {
         --container-width: 100%;
     }
     body.single-post article.post .entry-header,
-    body.single-post article.post .entry-content,
-    {
+    body.single-post article.post .entry-content {
         padding: 0 15px;
     }
 }

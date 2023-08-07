@@ -8,16 +8,16 @@
     max-width: var(--normal-container-max-width);
 
     .cards {
+      width: var(--container-width);
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: row;
       position: relative;
-      padding-left: 10px;
-      padding-right: 10px;
 
       .post-body {
-        width: 373px;
         max-width: 400px;
         margin-left: 22px;
         margin-right: 22px;
@@ -46,24 +46,49 @@
           color: rgb(35, 35, 35);
           text-align: left;
         }
+
+        .post-bottom {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .tag {
+            @media screen and (min-width: 992px) {
+              font-size: 14px;
+            }
+            text-align: center;
+            padding: 3px 12px 5px;
+            background: #F8C341; // TODO: apply post theme
+            border-radius: 30px;
+            color: rgb(255, 255, 255);
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 160%;
+            letter-spacing: 0.05em;
+            pointer-events: none;
+          }
+
+          .published-date {
+            color: #A3A3A3;
+          }
+        }
       }
 
-      .prev-btn {
+      button {
         background-color: transparent;
         border: none;
         cursor: pointer;
         position: absolute;
-        left: 0;
-        top: 145px;
+        top: 15%;
+        --btn-edge: -10px;
       }
 
-      .next-btn {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        position: absolute;
-        right: 0;
-        top: 145px;
+      button.prev-btn {
+        left: var(--btn-edge);
+      }
+
+      button.next-btn {
+        right: var(--btn-edge);
       }
     }
 
