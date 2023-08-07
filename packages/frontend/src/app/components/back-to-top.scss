@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
     padding: 12px;
+    opacity: 0;
     transform: var(--transform, translate3d(0, 15px, 0));
     background: var(--top-button-background-color, var(--paletteColor1));
     box-shadow: var(--box-shadow);
@@ -25,6 +26,6 @@
     }
 }
 
-.back-to-top.hidden {
-  display: none;
+.back-to-top.show {
+  opacity: 1;
 }
