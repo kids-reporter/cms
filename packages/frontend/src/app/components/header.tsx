@@ -36,7 +36,7 @@ export const StickyHeader = () => {
               rel="home"
             >
               <img
-                src="https://kids.twreporter.org/wp-content/uploads/2022/10/LOGO.svg"
+                src="/images/LOGO.svg"
                 className="default-logo"
                 alt="少年報導者 The Reporter for Kids"
               />
@@ -61,7 +61,7 @@ export const StickyHeader = () => {
                   訂閱
                 </a>
                 <img
-                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/header-left-slogan.svg"
+                  src="/images/header-left-slogan.svg"
                   className="header-left__slogan"
                 />
               </div>

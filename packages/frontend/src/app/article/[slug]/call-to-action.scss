@@ -6,65 +6,70 @@
   margin-right: var(--default-editor, auto);
   background-color: #fff9ec !important;
   border-radius: 30px !important;
-}
-
-.cta {
   --stk-block-background-padding: 24px 24px;
   padding: var(--stk-block-background-padding);
-}
 
-.cta-content {
-  max-width: 580px !important;
-  min-width: auto !important;
-  padding-top: 30px !important;
-  padding-right: 40px !important;
-  padding-bottom: 30px !important;
-  padding-left: 40px !important;
-  --stk-block-margin-bottom: 24px;
+  .cta {
+    background-color: transparent !important;
+    background-image: url(/images/G文章頁_CTA.png) !important;
+    background-position: bottom right !important;
+    background-repeat: no-repeat !important;
+    background-size: 327px !important;
 
-  h3, p {
-    margin-bottom: var(--stk-block-margin-bottom);
-  }
+    .cta-content {
+      max-width: 580px !important;
+      min-width: auto !important;
+      padding-top: 30px !important;
+      padding-right: 40px !important;
+      padding-bottom: 30px !important;
+      padding-left: 40px !important;
+      --stk-block-margin-bottom: 24px;
 
-  h3 {
-    font-size: 28px !important;
-    font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
-  }
-
-  p {
-    font-size: 16px !important;
-  }
-
-  .action-container {
-    display: flex;
-
-    a {
-      display: flex;
-      align-items: center;
-      min-height: 49px !important;
-      margin-right: 20px;
-      padding-top: 9px !important;
-      padding-right: 18px !important;
-      padding-bottom: 11px !important;
-      padding-left: 18px !important;
-      border-radius: 30px !important;
-
-      span {
-        color: var(--paletteColor8,#ffffff) !important;
+      h3, p {
+        margin-bottom: var(--stk-block-margin-bottom);
       }
-    }
 
-    .subscribe-btn {
-      background: var(--paletteColor6, #F8C341) !important;
-      &:hover {
-        background: var(--paletteColor6, #F8C341) linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)) !important;
+      h3 {
+        font-size: 28px !important;
+        font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
       }
-    }
 
-    .contribute-btn {
-      background: var(--paletteColor1, #F8C341) !important;
-      &:hover {
-        background: var(--paletteColor1, #F8C341) linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)) !important;
+      p {
+        font-size: 16px !important;
+      }
+
+      .action-container {
+        display: flex;
+
+        a {
+          display: flex;
+          align-items: center;
+          min-height: 49px !important;
+          margin-right: 20px;
+          padding-top: 9px !important;
+          padding-right: 18px !important;
+          padding-bottom: 11px !important;
+          padding-left: 18px !important;
+          border-radius: 30px !important;
+
+          span {
+            color: var(--paletteColor8,#ffffff) !important;
+          }
+        }
+
+        .subscribe-btn {
+          background: var(--paletteColor6, #F8C341) !important;
+          &:hover {
+            background: var(--paletteColor6, #F8C341) linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)) !important;
+          }
+        }
+
+        .contribute-btn {
+          background: var(--paletteColor1, #F8C341) !important;
+          &:hover {
+            background: var(--paletteColor1, #F8C341) linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)) !important;
+          }
+        }
       }
     }
   }
