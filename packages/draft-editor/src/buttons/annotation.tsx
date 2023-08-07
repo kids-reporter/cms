@@ -98,7 +98,7 @@ export function createAnnotationButton({
     const input = (
       <DrawerController isOpen={toShowInput}>
         <Drawer
-          title="Insert Annotation"
+          title="註解"
           actions={{
             cancel: {
               label: 'Cancel',

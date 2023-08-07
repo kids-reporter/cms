@@ -70,7 +70,7 @@ export function InfoBoxInput(props: InfoBoxInputType) {
   return (
     <DrawerController isOpen={isOpen}>
       <Drawer
-        title={`Insert Info Box`}
+        title={`Info Box`}
         actions={{
           cancel: {
             label: 'Cancel',

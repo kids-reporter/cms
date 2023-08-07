@@ -46,7 +46,7 @@ export function EmbeddedCodeButton(props) {
   const input = (
     <DrawerController isOpen={toShowInput}>
       <Drawer
-        title={`Insert Embedded Code`}
+        title="鑲嵌程式碼（Embedded Code）"
         //isOpen={toShowInput}
         actions={{
           cancel: {

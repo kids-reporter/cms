@@ -426,7 +426,7 @@ input PostWhereInput {
   id: IDFilter
   slug: StringFilter
   name: StringFilter
-  subtitle: StringNullableFilter
+  subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   writers: AuthorManyRelationFilter
@@ -435,14 +435,14 @@ input PostWhereInput {
   designers: AuthorManyRelationFilter
   engineers: AuthorManyRelationFilter
   reviewers: AuthorManyRelationFilter
-  otherByline: StringNullableFilter
+  otherByline: StringFilter
   heroImage: PhotoWhereInput
-  heroCaption: StringNullableFilter
+  heroCaption: StringFilter
   heroImageSize: StringNullableFilter
   readingTime: IntNullableFilter
   relatedPosts: PostManyRelationFilter
-  ogTitle: StringNullableFilter
-  ogDescription: StringNullableFilter
+  ogTitle: StringFilter
+  ogDescription: StringFilter
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
