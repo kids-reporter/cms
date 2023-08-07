@@ -9,10 +9,9 @@ export const CallToAction = () => {
       <div className="cta">
         <div
           className="wp-block-stackable-column stk-block-column stk-block-column--v2 stk-column stk-block stk-c1bc3aa stk-block-background stk--has-background-overlay"
-          data-block-id="c1bc3aa"
           style={{
             backgroundColor:
-              'transparent !important;background-image:url(https://kids.twreporter.org/wp-content/uploads/2022/10/G文章頁_CTA.png) !important',
+              'transparent !important;background-image:url(/images/G文章頁_CTA.png) !important',
             backgroundPosition: 'bottom right !important',
             backgroundRepeat: 'no-repeat !important',
             backgroundSize: '327px !important',
