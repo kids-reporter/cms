@@ -246,7 +246,7 @@ export default async function PostPage({
             url={`${CMS_URL}${post.heroImage?.imageFile?.url}`}
             caption={post.heroCaption}
           />
-          <div className="hero-section" data-type="type-1">
+          <div className="hero-section">
             <header className="entry-header">
               <Title text={post.name as string} />
               <div className="post-date-category">
