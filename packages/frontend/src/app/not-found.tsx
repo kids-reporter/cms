@@ -1,4 +1,5 @@
 export default function NotFound() {
+  // TODO: fix style
   return (
     <div>
       <img src="/images/404.png" alt="" width="320px" />
