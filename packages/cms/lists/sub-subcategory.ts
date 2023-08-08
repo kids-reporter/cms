@@ -8,13 +8,13 @@ const listConfigurations = list({
       label: '英文名稱（用於網址）',
       validation: { isRequired: true },
     }),
-    title: text({
-      label: '次類別中文名稱',
+    name: text({
+      label: '次次類別中文名稱',
       validation: { isRequired: true },
     }),
     nameForCMS: text({
       isIndexed: 'unique',
-      label: '次類別中文名稱（使用於 CMS）',
+      label: '次次類別中文名稱（使用於 CMS）',
       validation: { isRequired: true },
     }),
     status: select({
@@ -23,15 +23,15 @@ const listConfigurations = list({
         { label: 'active', value: 'active' },
       ],
     }),
-    category: relationship({
-      ref: 'Category',
+    subcategory: relationship({
+      ref: 'Subcategory',
       many: false,
       ui: {
         hideCreate: true,
       },
     }),
-    subSubcategory: relationship({
-      ref: 'SubSubcategory',
+    relatedPost: relationship({
+      ref: 'Post',
       many: true,
       ui: {
         hideCreate: true,
@@ -43,6 +43,9 @@ const listConfigurations = list({
         updatedAt: true,
       },
     }),
+  },
+  ui: {
+    labelField: 'nameForCMS',
   },
   access: {
     operation: () => true,
