@@ -1,12 +1,13 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
-import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
+import { Theme } from '@/app/constants'
+import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
 import './post-slider.scss'
 
 export type PostSliderProp = {
   posts: any[]
-  themeColor: string
+  theme: Theme
 }
 
 const autoPlayInterval = 3000
@@ -16,7 +17,7 @@ const briefCharactersLimit = 100
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
-  const themeColor = props?.themeColor
+  const themeColor = GetThemeColor(props?.theme)
   const [current, setCurrent] = useState(0)
 
   useEffect(() => {
@@ -53,7 +54,11 @@ export const PostSlider = (props: PostSliderProp) => {
 
     return slides.map((post, index) => {
       return (
-        <a key={`post-${index}`} href={post.url} className="post-body">
+        <a
+          key={`post-${index}`}
+          href={post.url}
+          className={`post-body theme-${post.theme}`}
+        >
           <img src={post.image} />
           <span className="post-category">{post.categoryName}</span>
           <span className="post-title">
@@ -89,7 +94,9 @@ export const PostSlider = (props: PostSliderProp) => {
           {posts.map((post, index) => {
             return (
               <button
-                className={index === current ? 'active' : ''}
+                className={
+                  index === current ? `active theme-${props.theme}` : ''
+                }
                 key={`bullet-${index}`}
                 onClick={() => onBulletClick(index)}
               />

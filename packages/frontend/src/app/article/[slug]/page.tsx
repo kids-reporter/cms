@@ -11,8 +11,7 @@ import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { API_URL, CMS_URL, Theme, ThemeColor } from '@/app/constants'
-import { GetThemeColor } from '@/app/utils'
+import { API_URL, CMS_URL, Theme } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -143,6 +142,7 @@ const relatedPostMockup = [
       '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     tag: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
+    theme: Theme.YELLOW,
   },
   {
     url:
@@ -155,6 +155,7 @@ const relatedPostMockup = [
       '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     tag: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
+    theme: Theme.BLUE,
   },
   {
     url:
@@ -167,6 +168,7 @@ const relatedPostMockup = [
       '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     tag: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
+    theme: Theme.RED,
   },
   {
     url:
@@ -179,6 +181,7 @@ const relatedPostMockup = [
       '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     tag: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
+    theme: Theme.YELLOW,
   },
 ]
 
@@ -263,10 +266,7 @@ export default async function PostPage({
           <AuthorCard authors={post.authors} />
         </div>
         <CallToAction />
-        <RelatedPosts
-          posts={relatedPostMockup}
-          themeColor={GetThemeColor(post.theme) ?? ThemeColor.BLUE}
-        />
+        <RelatedPosts posts={relatedPostMockup} theme={post.theme} />
       </main>
     )
   )

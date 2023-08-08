@@ -124,3 +124,13 @@ a {
     color-scheme: dark;
   }
 }
+
+.theme-red {
+  --theme-color: #F76977;
+}
+.theme-yellow {
+  --theme-color: #F8C341;
+}
+.theme-blue {
+  --theme-color: #27B5F7;
+}

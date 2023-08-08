@@ -3,7 +3,7 @@ import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
 import { HomeDivider } from '@/app/components/divider'
-import { API_URL, CMS_URL } from '@/app/constants'
+import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
 type Post = {
@@ -17,56 +17,56 @@ const sliderSections = [
     titleURL: 'topic_title1.svg',
     url: 'https://kids.twreporter.org/category/news/times/',
     image: 'topic_pic1.svg',
-    themeColor: '#27B5F7',
+    theme: Theme.BLUE,
   },
   {
     title: '真的假的',
     titleURL: 'topic_title2.svg',
     url: 'https://kids.twreporter.org/category/news/knowledge/',
     image: 'topic_pic2.svg',
-    themeColor: '#27B5F7',
+    theme: Theme.BLUE,
   },
   {
     title: '讀報新聞',
     titleURL: 'topic_title3.svg',
     url: 'https://kids.twreporter.org/category/listening-news/',
     image: 'topic_pic3.svg',
-    themeColor: '#27B5F7',
+    theme: Theme.BLUE,
   },
   {
     title: '他們的故事',
     titleURL: 'topic_title4.svg',
     url: 'https://kids.twreporter.org/category/news/story/',
     image: 'topic_pic4.svg',
-    themeColor: '#F76977',
+    theme: Theme.RED,
   },
   {
     title: '文化看世界',
     titleURL: 'topic_title5.svg',
     url: 'https://kids.twreporter.org/category/news/explore/',
     image: 'topic_pic5.svg',
-    themeColor: '#F76977',
+    theme: Theme.RED,
   },
   {
     title: '小讀者連線',
     titleURL: 'topic_title7.svg',
     url: 'https://kids.twreporter.org/category/campus/joining/',
     image: 'topic_pic7.svg',
-    themeColor: '#F8C341',
+    theme: Theme.YELLOW,
   },
   {
     title: '圖解新聞',
     titleURL: 'topic_title8.svg',
     url: 'https://kids.twreporter.org/category/comics/graphic-news/',
     image: 'topic_pic8.svg',
-    themeColor: '#F8C341',
+    theme: Theme.YELLOW,
   },
   {
     title: '火線新聞台',
     titleURL: 'topic_title9.svg',
     url: 'https://kids.twreporter.org/category/comics/comic/',
     image: 'topic_pic9.svg',
-    themeColor: '#F8C341',
+    theme: Theme.YELLOW,
   },
 ]
 
@@ -157,7 +157,7 @@ export default async function Home() {
                 看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
               </a>
             </div>
-            <PostSlider posts={postMockups} themeColor={section.themeColor} />
+            <PostSlider posts={postMockups} theme={section.theme} />
             {index < sliderSections.length - 1 ? <HomeDivider /> : null}
           </div>
         )
