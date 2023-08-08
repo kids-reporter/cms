@@ -177,20 +177,19 @@ type Category {
   slug: String
   title: String
   status: String
+  subcategory(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
+  subcategoryCount(where: SubcategoryWhereInput! = {}): Int
   heroImage: Photo
   ogTitle: String
   ogDescription: String
   ogImage: Photo
-  subCategory(where: SubCategoryWhereInput! = {}, orderBy: [SubCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubCategoryWhereUniqueInput): [SubCategory!]
-  subCategoryCount(where: SubCategoryWhereInput! = {}): Int
-  relatedPost(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  relatedPostCount(where: PostWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
 
 input CategoryWhereUniqueInput {
   id: ID
+  slug: String
   title: String
 }
 
@@ -202,20 +201,19 @@ input CategoryWhereInput {
   slug: StringFilter
   title: StringFilter
   status: StringNullableFilter
+  subcategory: SubcategoryManyRelationFilter
   heroImage: PhotoWhereInput
   ogTitle: StringFilter
   ogDescription: StringFilter
   ogImage: PhotoWhereInput
-  subCategory: SubCategoryManyRelationFilter
-  relatedPost: PostManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
 
-input SubCategoryManyRelationFilter {
-  every: SubCategoryWhereInput
-  some: SubCategoryWhereInput
-  none: SubCategoryWhereInput
+input SubcategoryManyRelationFilter {
+  every: SubcategoryWhereInput
+  some: SubcategoryWhereInput
+  none: SubcategoryWhereInput
 }
 
 input CategoryOrderByInput {
@@ -233,27 +231,26 @@ input CategoryUpdateInput {
   slug: String
   title: String
   status: String
+  subcategory: SubcategoryRelateToManyForUpdateInput
   heroImage: PhotoRelateToOneForUpdateInput
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
-  subCategory: SubCategoryRelateToManyForUpdateInput
-  relatedPost: PostRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input SubcategoryRelateToManyForUpdateInput {
+  disconnect: [SubcategoryWhereUniqueInput!]
+  set: [SubcategoryWhereUniqueInput!]
+  create: [SubcategoryCreateInput!]
+  connect: [SubcategoryWhereUniqueInput!]
 }
 
 input PhotoRelateToOneForUpdateInput {
   create: PhotoCreateInput
   connect: PhotoWhereUniqueInput
   disconnect: Boolean
-}
-
-input SubCategoryRelateToManyForUpdateInput {
-  disconnect: [SubCategoryWhereUniqueInput!]
-  set: [SubCategoryWhereUniqueInput!]
-  create: [SubCategoryCreateInput!]
-  connect: [SubCategoryWhereUniqueInput!]
 }
 
 input CategoryUpdateArgs {
@@ -265,24 +262,23 @@ input CategoryCreateInput {
   slug: String
   title: String
   status: String
+  subcategory: SubcategoryRelateToManyForCreateInput
   heroImage: PhotoRelateToOneForCreateInput
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
-  subCategory: SubCategoryRelateToManyForCreateInput
-  relatedPost: PostRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input SubcategoryRelateToManyForCreateInput {
+  create: [SubcategoryCreateInput!]
+  connect: [SubcategoryWhereUniqueInput!]
 }
 
 input PhotoRelateToOneForCreateInput {
   create: PhotoCreateInput
   connect: PhotoWhereUniqueInput
-}
-
-input SubCategoryRelateToManyForCreateInput {
-  create: [SubCategoryCreateInput!]
-  connect: [SubCategoryWhereUniqueInput!]
 }
 
 type Photo {
@@ -372,6 +368,8 @@ type Post {
   subtitle: String
   status: String
   publishedDate: DateTime
+  subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
+  subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   writers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   writersCount(where: AuthorWhereInput! = {}): Int
   manualOrderOfWriters: JSON
@@ -429,6 +427,7 @@ input PostWhereInput {
   subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
+  subSubcategories: SubSubcategoryManyRelationFilter
   writers: AuthorManyRelationFilter
   photographers: AuthorManyRelationFilter
   editors: AuthorManyRelationFilter
@@ -446,6 +445,12 @@ input PostWhereInput {
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+}
+
+input SubSubcategoryManyRelationFilter {
+  every: SubSubcategoryWhereInput
+  some: SubSubcategoryWhereInput
+  none: SubSubcategoryWhereInput
 }
 
 input AuthorManyRelationFilter {
@@ -488,6 +493,7 @@ input PostUpdateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
+  subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   writers: AuthorRelateToManyForUpdateInput
   manualOrderOfWriters: JSON
   photographers: AuthorRelateToManyForUpdateInput
@@ -516,6 +522,13 @@ input PostUpdateInput {
   updatedAt: DateTime
 }
 
+input SubSubcategoryRelateToManyForUpdateInput {
+  disconnect: [SubSubcategoryWhereUniqueInput!]
+  set: [SubSubcategoryWhereUniqueInput!]
+  create: [SubSubcategoryCreateInput!]
+  connect: [SubSubcategoryWhereUniqueInput!]
+}
+
 input AuthorRelateToManyForUpdateInput {
   disconnect: [AuthorWhereUniqueInput!]
   set: [AuthorWhereUniqueInput!]
@@ -534,6 +547,7 @@ input PostCreateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
+  subSubcategories: SubSubcategoryRelateToManyForCreateInput
   writers: AuthorRelateToManyForCreateInput
   manualOrderOfWriters: JSON
   photographers: AuthorRelateToManyForCreateInput
@@ -562,57 +576,67 @@ input PostCreateInput {
   updatedAt: DateTime
 }
 
+input SubSubcategoryRelateToManyForCreateInput {
+  create: [SubSubcategoryCreateInput!]
+  connect: [SubSubcategoryWhereUniqueInput!]
+}
+
 input AuthorRelateToManyForCreateInput {
   create: [AuthorCreateInput!]
   connect: [AuthorWhereUniqueInput!]
 }
 
-type SubCategory {
+type Subcategory {
   id: ID!
   slug: String
   title: String
+  nameForCMS: String
   status: String
   category: Category
-  relatedPost(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  relatedPostCount(where: PostWhereInput! = {}): Int
+  subSubcategory(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
+  subSubcategoryCount(where: SubSubcategoryWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
 
-input SubCategoryWhereUniqueInput {
+input SubcategoryWhereUniqueInput {
   id: ID
-  title: String
+  slug: String
+  nameForCMS: String
 }
 
-input SubCategoryWhereInput {
-  AND: [SubCategoryWhereInput!]
-  OR: [SubCategoryWhereInput!]
-  NOT: [SubCategoryWhereInput!]
+input SubcategoryWhereInput {
+  AND: [SubcategoryWhereInput!]
+  OR: [SubcategoryWhereInput!]
+  NOT: [SubcategoryWhereInput!]
   id: IDFilter
   slug: StringFilter
   title: StringFilter
+  nameForCMS: StringFilter
   status: StringNullableFilter
   category: CategoryWhereInput
-  relatedPost: PostManyRelationFilter
+  subSubcategory: SubSubcategoryManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
 
-input SubCategoryOrderByInput {
+input SubcategoryOrderByInput {
   id: OrderDirection
   slug: OrderDirection
   title: OrderDirection
+  nameForCMS: OrderDirection
   status: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
 
-input SubCategoryUpdateInput {
+input SubcategoryUpdateInput {
   slug: String
   title: String
+  nameForCMS: String
   status: String
   category: CategoryRelateToOneForUpdateInput
-  relatedPost: PostRelateToManyForUpdateInput
+  subSubcategory: SubSubcategoryRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -623,17 +647,18 @@ input CategoryRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input SubCategoryUpdateArgs {
-  where: SubCategoryWhereUniqueInput!
-  data: SubCategoryUpdateInput!
+input SubcategoryUpdateArgs {
+  where: SubcategoryWhereUniqueInput!
+  data: SubcategoryUpdateInput!
 }
 
-input SubCategoryCreateInput {
+input SubcategoryCreateInput {
   slug: String
   title: String
+  nameForCMS: String
   status: String
   category: CategoryRelateToOneForCreateInput
-  relatedPost: PostRelateToManyForCreateInput
+  subSubcategory: SubSubcategoryRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -641,6 +666,88 @@ input SubCategoryCreateInput {
 input CategoryRelateToOneForCreateInput {
   create: CategoryCreateInput
   connect: CategoryWhereUniqueInput
+}
+
+type SubSubcategory {
+  id: ID!
+  slug: String
+  name: String
+  nameForCMS: String
+  status: String
+  subcategory: Subcategory
+  relatedPost(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
+  relatedPostCount(where: PostWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SubSubcategoryWhereUniqueInput {
+  id: ID
+  slug: String
+  nameForCMS: String
+}
+
+input SubSubcategoryWhereInput {
+  AND: [SubSubcategoryWhereInput!]
+  OR: [SubSubcategoryWhereInput!]
+  NOT: [SubSubcategoryWhereInput!]
+  id: IDFilter
+  slug: StringFilter
+  name: StringFilter
+  nameForCMS: StringFilter
+  status: StringNullableFilter
+  subcategory: SubcategoryWhereInput
+  relatedPost: PostManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input SubSubcategoryOrderByInput {
+  id: OrderDirection
+  slug: OrderDirection
+  name: OrderDirection
+  nameForCMS: OrderDirection
+  status: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input SubSubcategoryUpdateInput {
+  slug: String
+  name: String
+  nameForCMS: String
+  status: String
+  subcategory: SubcategoryRelateToOneForUpdateInput
+  relatedPost: PostRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SubcategoryRelateToOneForUpdateInput {
+  create: SubcategoryCreateInput
+  connect: SubcategoryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input SubSubcategoryUpdateArgs {
+  where: SubSubcategoryWhereUniqueInput!
+  data: SubSubcategoryUpdateInput!
+}
+
+input SubSubcategoryCreateInput {
+  slug: String
+  name: String
+  nameForCMS: String
+  status: String
+  subcategory: SubcategoryRelateToOneForCreateInput
+  relatedPost: PostRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SubcategoryRelateToOneForCreateInput {
+  create: SubcategoryCreateInput
+  connect: SubcategoryWhereUniqueInput
 }
 
 type User {
@@ -746,12 +853,18 @@ type Mutation {
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
-  createSubCategory(data: SubCategoryCreateInput!): SubCategory
-  createSubCategories(data: [SubCategoryCreateInput!]!): [SubCategory]
-  updateSubCategory(where: SubCategoryWhereUniqueInput!, data: SubCategoryUpdateInput!): SubCategory
-  updateSubCategories(data: [SubCategoryUpdateArgs!]!): [SubCategory]
-  deleteSubCategory(where: SubCategoryWhereUniqueInput!): SubCategory
-  deleteSubCategories(where: [SubCategoryWhereUniqueInput!]!): [SubCategory]
+  createSubcategory(data: SubcategoryCreateInput!): Subcategory
+  createSubcategories(data: [SubcategoryCreateInput!]!): [Subcategory]
+  updateSubcategory(where: SubcategoryWhereUniqueInput!, data: SubcategoryUpdateInput!): Subcategory
+  updateSubcategories(data: [SubcategoryUpdateArgs!]!): [Subcategory]
+  deleteSubcategory(where: SubcategoryWhereUniqueInput!): Subcategory
+  deleteSubcategories(where: [SubcategoryWhereUniqueInput!]!): [Subcategory]
+  createSubSubcategory(data: SubSubcategoryCreateInput!): SubSubcategory
+  createSubSubcategories(data: [SubSubcategoryCreateInput!]!): [SubSubcategory]
+  updateSubSubcategory(where: SubSubcategoryWhereUniqueInput!, data: SubSubcategoryUpdateInput!): SubSubcategory
+  updateSubSubcategories(data: [SubSubcategoryUpdateArgs!]!): [SubSubcategory]
+  deleteSubSubcategory(where: SubSubcategoryWhereUniqueInput!): SubSubcategory
+  deleteSubSubcategories(where: [SubSubcategoryWhereUniqueInput!]!): [SubSubcategory]
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
@@ -794,9 +907,12 @@ type Query {
   posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
-  subCategories(where: SubCategoryWhereInput! = {}, orderBy: [SubCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubCategoryWhereUniqueInput): [SubCategory!]
-  subCategory(where: SubCategoryWhereUniqueInput!): SubCategory
-  subCategoriesCount(where: SubCategoryWhereInput! = {}): Int
+  subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
+  subcategory(where: SubcategoryWhereUniqueInput!): Subcategory
+  subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
+  subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
+  subSubcategory(where: SubSubcategoryWhereUniqueInput!): SubSubcategory
+  subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
