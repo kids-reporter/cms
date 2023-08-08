@@ -1,7 +1,8 @@
 import Author from './author'
 import Category from './category'
 import Post from './post'
-import SubCategory from './sub-category'
+import Subcategory from './subcatgory'
+import SubSubcategory from './sub-subcategory'
 import User from './user'
 import Photo from './photo'
 //import Tag from './Tag'
@@ -23,7 +24,8 @@ export const listDefinition = {
   Category,
   Photo,
   Post,
-  SubCategory,
+  Subcategory,
+  SubSubcategory,
   User,
   //EditorChoice,
   //Video,

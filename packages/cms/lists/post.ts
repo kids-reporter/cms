@@ -44,11 +44,14 @@ const listConfigurations = list({
       isIndexed: true,
       label: '發佈日期',
     }),
-    //categories: relationship({
-    //  ref: 'Category',
-    //  label: '分類',
-    //  many: true,
-    //}),
+    subSubcategories: relationship({
+      ref: 'SubSubcategory',
+      label: '次次分類',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
     writers: relationship({
       ref: 'Author.posts',
       many: true,

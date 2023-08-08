@@ -8,9 +8,13 @@ const listConfigurations = list({
       label: '英文名稱（用於網址）',
       validation: { isRequired: true },
     }),
-    title: text({
+    name: text({
+      label: '次次類別中文名稱',
+      validation: { isRequired: true },
+    }),
+    nameForCMS: text({
       isIndexed: 'unique',
-      label: '類別中文名稱',
+      label: '次次類別中文名稱（使用於 CMS）',
       validation: { isRequired: true },
     }),
     status: select({
@@ -21,26 +25,17 @@ const listConfigurations = list({
     }),
     subcategory: relationship({
       ref: 'Subcategory',
-      many: true,
+      many: false,
       ui: {
         hideCreate: true,
       },
     }),
-    heroImage: relationship({
-      label: '列表頁首圖',
-      ref: 'Photo',
-    }),
-    ogTitle: text({
-      label: 'FB分享標題',
-      validation: { isRequired: false },
-    }),
-    ogDescription: text({
-      label: 'FB分享說明',
-      validation: { isRequired: false },
-    }),
-    ogImage: relationship({
-      label: 'FB分享縮圖',
-      ref: 'Photo',
+    relatedPost: relationship({
+      ref: 'Post',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
     }),
     createdAt: timestamp(),
     updatedAt: timestamp({
@@ -49,8 +44,12 @@ const listConfigurations = list({
       },
     }),
   },
+  ui: {
+    labelField: 'nameForCMS',
+  },
   access: {
     operation: () => true,
   },
 })
+
 export default listConfigurations
