@@ -151,11 +151,11 @@ const listConfigurations = list({
     //  label: '專題',
     //  ref: 'Project.posts',
     //}),
-    //tags: relationship({
-    //  ref: 'Tag.posts',
-    //  many: true,
-    //  label: '標籤',
-    //}),
+    tags: relationship({
+      ref: 'Tag.posts',
+      many: true,
+      label: '標籤',
+    }),
     readingTime: integer({
       label: '閱讀時間',
     }),

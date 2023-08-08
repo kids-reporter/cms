@@ -5,7 +5,7 @@ import Subcategory from './subcatgory'
 import SubSubcategory from './sub-subcategory'
 import User from './user'
 import Photo from './photo'
-//import Tag from './Tag'
+import Tag from './tag'
 //import Audio from './Audio'
 //import Collaboration from './Collaboration'
 //import Video from './Video'
@@ -27,10 +27,10 @@ export const listDefinition = {
   Subcategory,
   SubSubcategory,
   User,
+  Tag,
   //EditorChoice,
   //Video,
   //AudioFile: Audio,
-  //Tag,
   //Category,
   //Collaboration,
   //DataSet: Data,
