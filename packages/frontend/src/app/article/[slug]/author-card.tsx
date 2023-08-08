@@ -5,7 +5,7 @@ type AuthorCardProp = {
   authors: any[]
 }
 
-const descCharactersLimit = 85
+const descLengthLimit = 85
 
 export const AuthorCard = (props: AuthorCardProp) => {
   return (
@@ -21,7 +21,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
               <span className="name">{author.name}</span>
               <div className={`group ${author.theme}`}>{author.group}</div>
               <span className="desc">
-                {ShortenParagraph(author.desc, descCharactersLimit) ?? ''}
+                {ShortenParagraph(author.desc, descLengthLimit) ?? ''}
               </span>
               <div className="more">
                 <a href={author.link} className={author.theme}>

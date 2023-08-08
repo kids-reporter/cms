@@ -11,8 +11,8 @@ export type PostSliderProp = {
 }
 
 const autoPlayInterval = 3000
-const titleCharactersLimit = 100
-const briefCharactersLimit = 100
+const titleLengthLimit = 35
+const briefLengthLimit = 100
 
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
@@ -62,10 +62,10 @@ export const PostSlider = (props: PostSliderProp) => {
           <img src={post.image} />
           <span className="post-category">{post.categoryName}</span>
           <span className="post-title">
-            {ShortenParagraph(post.name, titleCharactersLimit) ?? ''}
+            {ShortenParagraph(post.name, titleLengthLimit) ?? ''}
           </span>
           <span className="post-brief">
-            {ShortenParagraph(post.brief, briefCharactersLimit) ?? ''}
+            {ShortenParagraph(post.brief, briefLengthLimit) ?? ''}
           </span>
           <div className="post-bottom">
             <span className="tag">{post.tag}</span>
