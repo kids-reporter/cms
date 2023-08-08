@@ -6,6 +6,7 @@ import SubSubcategory from './sub-subcategory'
 import User from './user'
 import Photo from './photo'
 import Tag from './tag'
+import PDF from './pdf'
 //import Audio from './Audio'
 //import Collaboration from './Collaboration'
 //import Video from './Video'
@@ -28,6 +29,7 @@ export const listDefinition = {
   Subcategory,
   SubSubcategory,
   Tag,
+  PDF,
   //EditorChoice,
   //Video,
   //AudioFile: Audio,
