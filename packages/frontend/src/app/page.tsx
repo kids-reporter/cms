@@ -1,5 +1,5 @@
 import axios from 'axios'
-import NonStickyHeader from '@/app/components/non-sticky-header'
+import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
 import { HomeDivider } from '@/app/components/divider'
@@ -132,7 +132,7 @@ export default async function Home() {
           </div>
         )
       })}
-      <NonStickyHeader />
+      <Header />
       <MainSlider posts={postMockups} />
       <h1>TODO: 新聞ing</h1>
       {sliderSections.map((section, index) => {
