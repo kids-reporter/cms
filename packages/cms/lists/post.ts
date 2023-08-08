@@ -10,7 +10,6 @@ import {
   timestamp,
   text,
   select,
-  json,
 } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
@@ -56,49 +55,49 @@ const listConfigurations = list({
       ref: 'Author.posts',
       many: true,
       label: '作者',
-    }),
-    manualOrderOfWriters: json({
-      label: '作者手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     photographers: relationship({
       many: true,
       label: '攝影',
       ref: 'Author',
-    }),
-    manualOrderOfPhotographers: json({
-      label: '攝影手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     editors: relationship({
       label: '責任編輯',
       many: true,
       ref: 'Author',
-    }),
-    manualOrderOfEditors: json({
-      label: '影音手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     designers: relationship({
       label: '設計',
       many: true,
       ref: 'Author',
-    }),
-    manualOrderOfDesigners: json({
-      label: '設計手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     engineers: relationship({
       many: true,
       label: '工程',
       ref: 'Author',
-    }),
-    manualOrderOfEngineers: json({
-      label: '工程手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     reviewers: relationship({
       many: true,
       label: '核稿',
       ref: 'Author',
-    }),
-    manualOrderOfReviewers: json({
-      label: '工程手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     otherByline: text({
       validation: { isRequired: false },
@@ -164,9 +163,9 @@ const listConfigurations = list({
       ref: 'Post',
       many: true,
       label: '相關文章',
-    }),
-    manualOrderOfRelatedPosts: json({
-      label: '相關文章手動排序結果',
+      ui: {
+        hideCreate: true,
+      },
     }),
     ogTitle: text({
       validation: { isRequired: false },

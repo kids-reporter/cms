@@ -372,22 +372,16 @@ type Post {
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   writers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   writersCount(where: AuthorWhereInput! = {}): Int
-  manualOrderOfWriters: JSON
   photographers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   photographersCount(where: AuthorWhereInput! = {}): Int
-  manualOrderOfPhotographers: JSON
   editors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   editorsCount(where: AuthorWhereInput! = {}): Int
-  manualOrderOfEditors: JSON
   designers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   designersCount(where: AuthorWhereInput! = {}): Int
-  manualOrderOfDesigners: JSON
   engineers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   engineersCount(where: AuthorWhereInput! = {}): Int
-  manualOrderOfEngineers: JSON
   reviewers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   reviewersCount(where: AuthorWhereInput! = {}): Int
-  manualOrderOfReviewers: JSON
   otherByline: String
   heroImage: Photo
   heroCaption: String
@@ -397,18 +391,24 @@ type Post {
   readingTime: Int
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
-  manualOrderOfRelatedPosts: JSON
   ogTitle: String
   ogDescription: String
   ogImage: Photo
   createdAt: DateTime
   updatedAt: DateTime
+  manualOrderOfWriters: JSON
   writersInInputOrder: [Author]
+  manualOrderOfPhotographers: JSON
   photographersInInputOrder: [Author]
+  manualOrderOfDesigners: JSON
   designersInInputOrder: [Author]
+  manualOrderOfEngineers: JSON
   engineersInInputOrder: [Author]
+  manualOrderOfReviewers: JSON
   reviewersInInputOrder: [Author]
+  manualOrderOfEditors: JSON
   editorsInInputOrder: [Author]
+  manualOrderOfRelatedPosts: JSON
   relatedPostsInInputOrder: [Post]
 }
 
@@ -495,17 +495,11 @@ input PostUpdateInput {
   publishedDate: DateTime
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   writers: AuthorRelateToManyForUpdateInput
-  manualOrderOfWriters: JSON
   photographers: AuthorRelateToManyForUpdateInput
-  manualOrderOfPhotographers: JSON
   editors: AuthorRelateToManyForUpdateInput
-  manualOrderOfEditors: JSON
   designers: AuthorRelateToManyForUpdateInput
-  manualOrderOfDesigners: JSON
   engineers: AuthorRelateToManyForUpdateInput
-  manualOrderOfEngineers: JSON
   reviewers: AuthorRelateToManyForUpdateInput
-  manualOrderOfReviewers: JSON
   otherByline: String
   heroImage: PhotoRelateToOneForUpdateInput
   heroCaption: String
@@ -514,12 +508,18 @@ input PostUpdateInput {
   content: JSON
   readingTime: Int
   relatedPosts: PostRelateToManyForUpdateInput
-  manualOrderOfRelatedPosts: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  manualOrderOfWriters: JSON
+  manualOrderOfPhotographers: JSON
+  manualOrderOfDesigners: JSON
+  manualOrderOfEngineers: JSON
+  manualOrderOfReviewers: JSON
+  manualOrderOfEditors: JSON
+  manualOrderOfRelatedPosts: JSON
 }
 
 input SubSubcategoryRelateToManyForUpdateInput {
@@ -549,17 +549,11 @@ input PostCreateInput {
   publishedDate: DateTime
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
   writers: AuthorRelateToManyForCreateInput
-  manualOrderOfWriters: JSON
   photographers: AuthorRelateToManyForCreateInput
-  manualOrderOfPhotographers: JSON
   editors: AuthorRelateToManyForCreateInput
-  manualOrderOfEditors: JSON
   designers: AuthorRelateToManyForCreateInput
-  manualOrderOfDesigners: JSON
   engineers: AuthorRelateToManyForCreateInput
-  manualOrderOfEngineers: JSON
   reviewers: AuthorRelateToManyForCreateInput
-  manualOrderOfReviewers: JSON
   otherByline: String
   heroImage: PhotoRelateToOneForCreateInput
   heroCaption: String
@@ -568,12 +562,18 @@ input PostCreateInput {
   content: JSON
   readingTime: Int
   relatedPosts: PostRelateToManyForCreateInput
-  manualOrderOfRelatedPosts: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  manualOrderOfWriters: JSON
+  manualOrderOfPhotographers: JSON
+  manualOrderOfDesigners: JSON
+  manualOrderOfEngineers: JSON
+  manualOrderOfReviewers: JSON
+  manualOrderOfEditors: JSON
+  manualOrderOfRelatedPosts: JSON
 }
 
 input SubSubcategoryRelateToManyForCreateInput {
