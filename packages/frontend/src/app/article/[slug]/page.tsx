@@ -11,7 +11,8 @@ import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { API_URL, CMS_URL } from '@/app/constants'
+import { API_URL, CMS_URL, Theme, ThemeColor } from '@/app/constants'
+import { GetThemeColor } from '@/app/utils'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -233,7 +234,7 @@ export default async function PostPage({
     post.category = categoryMockup // TODO: find category source
     post.tags = tagsMockup // TODO: find tags source
     post.editors = editorsMockup // TODO: find editors source
-    post.theme = 'yellow'
+    post.theme = Theme.YELLOW
     post.authors = authorsMockup // TODO: find editors source
   }
 
@@ -262,7 +263,10 @@ export default async function PostPage({
           <AuthorCard authors={post.authors} />
         </div>
         <CallToAction />
-        <RelatedPosts posts={relatedPostMockup} themeColor={'#F8C341'} />
+        <RelatedPosts
+          posts={relatedPostMockup}
+          themeColor={GetThemeColor(post.theme) ?? ThemeColor.BLUE}
+        />
       </main>
     )
   )

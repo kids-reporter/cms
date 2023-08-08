@@ -1,3 +1,15 @@
+import { Theme, ThemeColor } from '@/app/constants'
+
+export const GetThemeColor = (theme: Theme) => {
+  if (theme === Theme.YELLOW) {
+    return ThemeColor.YELLOW
+  } else if (theme === Theme.RED) {
+    return ThemeColor.RED
+  } else {
+    return ThemeColor.BLUE
+  }
+}
+
 export const GetFormattedDate = (date: string): string => {
   const dateObj = new Date(date)
   if (!dateObj) {
