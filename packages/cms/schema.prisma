@@ -11,6 +11,80 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String    @default("")
+  email       String    @unique @default("")
+  password    String
+  role        String
+  isProtected Boolean   @default(false)
+  createdAt   DateTime?
+  updatedAt   DateTime? @updatedAt
+}
+
+model Post {
+  id                              Int              @id @default(autoincrement())
+  slug                            String           @unique @default("")
+  name                            String           @default("")
+  subtitle                        String           @default("")
+  status                          String?          @default("draft")
+  publishedDate                   DateTime?
+  subSubcategories                SubSubcategory[] @relation("Post_subSubcategories")
+  writers                         Author[]         @relation("Author_posts")
+  photographers                   Author[]         @relation("Post_photographers")
+  editors                         Author[]         @relation("Post_editors")
+  designers                       Author[]         @relation("Post_designers")
+  engineers                       Author[]         @relation("Post_engineers")
+  reviewers                       Author[]         @relation("Post_reviewers")
+  otherByline                     String           @default("")
+  heroImage                       Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
+  heroImageId                     Int?             @map("heroImage")
+  heroCaption                     String           @default("")
+  heroImageSize                   String?          @default("normal")
+  brief                           Json?
+  content                         Json?
+  tags                            Tag[]            @relation("Post_tags")
+  readingTime                     Int?
+  relatedPosts                    Post[]           @relation("Post_relatedPosts")
+  ogTitle                         String           @default("")
+  ogDescription                   String           @default("")
+  ogImage                         Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
+  ogImageId                       Int?             @map("ogImage")
+  createdAt                       DateTime?
+  updatedAt                       DateTime?        @updatedAt
+  manualOrderOfWriters            Json?
+  manualOrderOfPhotographers      Json?
+  manualOrderOfDesigners          Json?
+  manualOrderOfEngineers          Json?
+  manualOrderOfReviewers          Json?
+  manualOrderOfEditors            Json?
+  manualOrderOfRelatedPosts       Json?
+  from_Post_relatedPosts          Post[]           @relation("Post_relatedPosts")
+  from_SubSubcategory_relatedPost SubSubcategory[] @relation("SubSubcategory_relatedPost")
+
+  @@index([status])
+  @@index([publishedDate])
+  @@index([heroImageId])
+  @@index([ogImageId])
+}
+
+model Photo {
+  id                      Int        @id @default(autoincrement())
+  name                    String     @default("")
+  imageFile_filesize      Int?
+  imageFile_extension     String?
+  imageFile_width         Int?
+  imageFile_height        Int?
+  imageFile_id            String?
+  createdAt               DateTime?
+  updatedAt               DateTime?  @updatedAt
+  from_Post_heroImage     Post[]     @relation("Post_heroImage")
+  from_Post_ogImage       Post[]     @relation("Post_ogImage")
+  from_Category_heroImage Category[] @relation("Category_heroImage")
+  from_Category_ogImage   Category[] @relation("Category_ogImage")
+  from_Tag_ogImage        Tag[]      @relation("Tag_ogImage")
+}
+
 model Author {
   id                      Int       @id @default(autoincrement())
   name                    String    @default("")
@@ -44,67 +118,6 @@ model Category {
   updatedAt                 DateTime?     @updatedAt
   from_Subcategory_category Subcategory[] @relation("Subcategory_category")
 
-  @@index([heroImageId])
-  @@index([ogImageId])
-}
-
-model Photo {
-  id                      Int        @id @default(autoincrement())
-  name                    String     @default("")
-  imageFile_filesize      Int?
-  imageFile_extension     String?
-  imageFile_width         Int?
-  imageFile_height        Int?
-  imageFile_id            String?
-  createdAt               DateTime?
-  updatedAt               DateTime?  @updatedAt
-  from_Category_heroImage Category[] @relation("Category_heroImage")
-  from_Category_ogImage   Category[] @relation("Category_ogImage")
-  from_Post_heroImage     Post[]     @relation("Post_heroImage")
-  from_Post_ogImage       Post[]     @relation("Post_ogImage")
-}
-
-model Post {
-  id                              Int              @id @default(autoincrement())
-  slug                            String           @unique @default("")
-  name                            String           @default("")
-  subtitle                        String           @default("")
-  status                          String?          @default("draft")
-  publishedDate                   DateTime?
-  subSubcategories                SubSubcategory[] @relation("Post_subSubcategories")
-  writers                         Author[]         @relation("Author_posts")
-  photographers                   Author[]         @relation("Post_photographers")
-  editors                         Author[]         @relation("Post_editors")
-  designers                       Author[]         @relation("Post_designers")
-  engineers                       Author[]         @relation("Post_engineers")
-  reviewers                       Author[]         @relation("Post_reviewers")
-  otherByline                     String           @default("")
-  heroImage                       Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
-  heroImageId                     Int?             @map("heroImage")
-  heroCaption                     String           @default("")
-  heroImageSize                   String?          @default("normal")
-  brief                           Json?
-  content                         Json?
-  readingTime                     Int?
-  relatedPosts                    Post[]           @relation("Post_relatedPosts")
-  ogTitle                         String           @default("")
-  ogDescription                   String           @default("")
-  ogImage                         Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
-  ogImageId                       Int?             @map("ogImage")
-  createdAt                       DateTime?
-  updatedAt                       DateTime?        @updatedAt
-  manualOrderOfWriters            Json?
-  manualOrderOfPhotographers      Json?
-  manualOrderOfDesigners          Json?
-  manualOrderOfEngineers          Json?
-  manualOrderOfReviewers          Json?
-  manualOrderOfEditors            Json?
-  manualOrderOfRelatedPosts       Json?
-  from_Post_relatedPosts          Post[]           @relation("Post_relatedPosts")
-  from_SubSubcategory_relatedPost SubSubcategory[] @relation("SubSubcategory_relatedPost")
-
-  @@index([status])
-  @@index([publishedDate])
   @@index([heroImageId])
   @@index([ogImageId])
 }
@@ -143,13 +156,28 @@ model SubSubcategory {
   @@index([subcategoryId])
 }
 
-model User {
-  id          Int       @id @default(autoincrement())
-  name        String    @default("")
-  email       String    @unique @default("")
-  password    String
-  role        String
-  isProtected Boolean   @default(false)
-  createdAt   DateTime?
-  updatedAt   DateTime? @updatedAt
+model Tag {
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique @default("")
+  name          String    @unique @default("")
+  status        String?   @default("active")
+  ogTitle       String    @default("")
+  ogDescription String    @default("")
+  ogImage       Photo?    @relation("Tag_ogImage", fields: [ogImageId], references: [id])
+  ogImageId     Int?      @map("ogImage")
+  posts         Post[]    @relation("Post_tags")
+  createdAt     DateTime?
+  updatedAt     DateTime? @updatedAt
+
+  @@index([ogImageId])
+}
+
+model PDF {
+  id            Int       @id @default(autoincrement())
+  name          String    @default("")
+  file_filesize Int?
+  file_filename String?
+  description   String    @default("")
+  createdAt     DateTime?
+  updatedAt     DateTime? @updatedAt
 }
