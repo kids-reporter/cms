@@ -244,7 +244,7 @@ export default async function PostPage({
         <div className={`post theme-${post.theme}`}>
           <Sidebar />
           <HeroImage
-            url={`${CMS_URL}${post.heroImage?.imageFile?.url}`}
+            url={post.heroImage?.imageFile?.url}
             caption={post.heroCaption}
           />
           <div className="hero-section">
