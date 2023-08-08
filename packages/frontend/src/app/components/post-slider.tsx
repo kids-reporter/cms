@@ -1,19 +1,22 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 import './post-slider.scss'
 
-type PostsProp = {
+export type PostSliderProp = {
   posts: any[]
+  themeColor: string
 }
 
 const autoPlayInterval = 3000
 const titleCharactersLimit = 100
 const briefCharactersLimit = 100
 
-export const PostSlider = (props: PostsProp) => {
+export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
+  const themeColor = props?.themeColor
   const [current, setCurrent] = useState(0)
 
   useEffect(() => {
@@ -76,52 +79,10 @@ export const PostSlider = (props: PostsProp) => {
         <div className="cards">
           {getSlides()}
           <button className="prev-btn" onClick={onPrevClick}>
-            <svg
-              width="54"
-              height="54"
-              viewBox="0 0 54 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M27 2C13.1929 2 2 13.1929 2 27C2 40.8071 13.1929 52 27 52C40.8071 52 52 40.8071 52 27C52 13.1929 40.8071 2 27 2Z"
-                fill="var(--theme-color)"
-                stroke="white"
-                stroke-width="3"
-                stroke-miterlimit="10"
-              ></path>
-              <path
-                d="M29.9297 39.1001L17.9359 27.0002L29.9297 14.9003"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <ArrowLeft color={themeColor} />
           </button>
           <button className="next-btn" onClick={onNextClick}>
-            <svg
-              width="54"
-              height="54"
-              viewBox="0 0 54 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M27 52C40.8071 52 52 40.8071 52 27C52 13.1929 40.8071 2 27 2C13.1929 2 2 13.1929 2 27C2 40.8071 13.1929 52 27 52Z"
-                fill="var(--theme-color)"
-                stroke="white"
-                stroke-width="3"
-                stroke-miterlimit="10"
-              ></path>
-              <path
-                d="M24.0703 14.8999L36.0641 26.9998L24.0703 39.0997"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <ArrowRight color={themeColor} />
           </button>
         </div>
         <div className="bullets">

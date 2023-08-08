@@ -262,7 +262,7 @@ export default async function PostPage({
           <AuthorCard authors={post.authors} />
         </div>
         <CallToAction />
-        <RelatedPosts posts={relatedPostMockup} />
+        <RelatedPosts posts={relatedPostMockup} themeColor={'#F8C341'} />
       </main>
     )
   )
