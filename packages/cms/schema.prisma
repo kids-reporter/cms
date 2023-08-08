@@ -62,8 +62,6 @@ model Photo {
   from_Category_ogImage   Category[] @relation("Category_ogImage")
   from_Post_heroImage     Post[]     @relation("Post_heroImage")
   from_Post_ogImage       Post[]     @relation("Post_ogImage")
-
-  @@map("Image")
 }
 
 model Post {
@@ -75,17 +73,11 @@ model Post {
   publishedDate                   DateTime?
   subSubcategories                SubSubcategory[] @relation("Post_subSubcategories")
   writers                         Author[]         @relation("Author_posts")
-  manualOrderOfWriters            Json?
   photographers                   Author[]         @relation("Post_photographers")
-  manualOrderOfPhotographers      Json?
   editors                         Author[]         @relation("Post_editors")
-  manualOrderOfEditors            Json?
   designers                       Author[]         @relation("Post_designers")
-  manualOrderOfDesigners          Json?
   engineers                       Author[]         @relation("Post_engineers")
-  manualOrderOfEngineers          Json?
   reviewers                       Author[]         @relation("Post_reviewers")
-  manualOrderOfReviewers          Json?
   otherByline                     String           @default("")
   heroImage                       Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
   heroImageId                     Int?             @map("heroImage")
@@ -95,13 +87,19 @@ model Post {
   content                         Json?
   readingTime                     Int?
   relatedPosts                    Post[]           @relation("Post_relatedPosts")
-  manualOrderOfRelatedPosts       Json?
   ogTitle                         String           @default("")
   ogDescription                   String           @default("")
   ogImage                         Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
   ogImageId                       Int?             @map("ogImage")
   createdAt                       DateTime?
   updatedAt                       DateTime?        @updatedAt
+  manualOrderOfWriters            Json?
+  manualOrderOfPhotographers      Json?
+  manualOrderOfDesigners          Json?
+  manualOrderOfEngineers          Json?
+  manualOrderOfReviewers          Json?
+  manualOrderOfEditors            Json?
+  manualOrderOfRelatedPosts       Json?
   from_Post_relatedPosts          Post[]           @relation("Post_relatedPosts")
   from_SubSubcategory_relatedPost SubSubcategory[] @relation("SubSubcategory_relatedPost")
 
