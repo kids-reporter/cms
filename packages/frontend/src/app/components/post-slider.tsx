@@ -54,10 +54,10 @@ export const PostSlider = (props: PostsProp) => {
           <img src={post.image} />
           <span className="post-category">{post.categoryName}</span>
           <span className="post-title">
-            {ShortenParagraph(post.name, titleCharactersLimit)}
+            {ShortenParagraph(post.name, titleCharactersLimit) ?? ''}
           </span>
           <span className="post-brief">
-            {ShortenParagraph(post.brief, briefCharactersLimit)}
+            {ShortenParagraph(post.brief, briefCharactersLimit) ?? ''}
           </span>
           <div className="post-bottom">
             <span className="tag">{post.tag}</span>

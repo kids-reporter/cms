@@ -21,7 +21,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
               <span className="name">{author.name}</span>
               <div className={`group ${author.theme}`}>{author.group}</div>
               <span className="desc">
-                {ShortenParagraph(author.desc, descCharactersLimit)}
+                {ShortenParagraph(author.desc, descCharactersLimit) ?? ''}
               </span>
               <div className="more">
                 <a href={author.link} className={author.theme}>
