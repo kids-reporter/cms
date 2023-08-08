@@ -30,20 +30,19 @@ model Author {
 
 model Category {
   id                        Int           @id @default(autoincrement())
-  slug                      String        @default("")
+  slug                      String        @unique @default("")
   title                     String        @unique @default("")
   status                    String?
+  subcategory               Subcategory[] @relation("Category_subcategory")
   heroImage                 Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
   heroImageId               Int?          @map("heroImage")
   ogTitle                   String        @default("")
   ogDescription             String        @default("")
   ogImage                   Photo?        @relation("Category_ogImage", fields: [ogImageId], references: [id])
   ogImageId                 Int?          @map("ogImage")
-  subCategory               SubCategory[] @relation("Category_subCategory")
-  relatedPost               Post[]        @relation("Category_relatedPost")
   createdAt                 DateTime?
   updatedAt                 DateTime?     @updatedAt
-  from_SubCategory_category SubCategory[] @relation("SubCategory_category")
+  from_Subcategory_category Subcategory[] @relation("Subcategory_category")
 
   @@index([heroImageId])
   @@index([ogImageId])
@@ -68,43 +67,43 @@ model Photo {
 }
 
 model Post {
-  id                           Int           @id @default(autoincrement())
-  slug                         String        @unique @default("")
-  name                         String        @default("")
-  subtitle                     String        @default("")
-  status                       String?       @default("draft")
-  publishedDate                DateTime?
-  writers                      Author[]      @relation("Author_posts")
-  manualOrderOfWriters         Json?
-  photographers                Author[]      @relation("Post_photographers")
-  manualOrderOfPhotographers   Json?
-  editors                      Author[]      @relation("Post_editors")
-  manualOrderOfEditors         Json?
-  designers                    Author[]      @relation("Post_designers")
-  manualOrderOfDesigners       Json?
-  engineers                    Author[]      @relation("Post_engineers")
-  manualOrderOfEngineers       Json?
-  reviewers                    Author[]      @relation("Post_reviewers")
-  manualOrderOfReviewers       Json?
-  otherByline                  String        @default("")
-  heroImage                    Photo?        @relation("Post_heroImage", fields: [heroImageId], references: [id])
-  heroImageId                  Int?          @map("heroImage")
-  heroCaption                  String        @default("")
-  heroImageSize                String?       @default("normal")
-  brief                        Json?
-  content                      Json?
-  readingTime                  Int?
-  relatedPosts                 Post[]        @relation("Post_relatedPosts")
-  manualOrderOfRelatedPosts    Json?
-  ogTitle                      String        @default("")
-  ogDescription                String        @default("")
-  ogImage                      Photo?        @relation("Post_ogImage", fields: [ogImageId], references: [id])
-  ogImageId                    Int?          @map("ogImage")
-  createdAt                    DateTime?
-  updatedAt                    DateTime?     @updatedAt
-  from_Category_relatedPost    Category[]    @relation("Category_relatedPost")
-  from_Post_relatedPosts       Post[]        @relation("Post_relatedPosts")
-  from_SubCategory_relatedPost SubCategory[] @relation("SubCategory_relatedPost")
+  id                              Int              @id @default(autoincrement())
+  slug                            String           @unique @default("")
+  name                            String           @default("")
+  subtitle                        String           @default("")
+  status                          String?          @default("draft")
+  publishedDate                   DateTime?
+  subSubcategories                SubSubcategory[] @relation("Post_subSubcategories")
+  writers                         Author[]         @relation("Author_posts")
+  manualOrderOfWriters            Json?
+  photographers                   Author[]         @relation("Post_photographers")
+  manualOrderOfPhotographers      Json?
+  editors                         Author[]         @relation("Post_editors")
+  manualOrderOfEditors            Json?
+  designers                       Author[]         @relation("Post_designers")
+  manualOrderOfDesigners          Json?
+  engineers                       Author[]         @relation("Post_engineers")
+  manualOrderOfEngineers          Json?
+  reviewers                       Author[]         @relation("Post_reviewers")
+  manualOrderOfReviewers          Json?
+  otherByline                     String           @default("")
+  heroImage                       Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
+  heroImageId                     Int?             @map("heroImage")
+  heroCaption                     String           @default("")
+  heroImageSize                   String?          @default("normal")
+  brief                           Json?
+  content                         Json?
+  readingTime                     Int?
+  relatedPosts                    Post[]           @relation("Post_relatedPosts")
+  manualOrderOfRelatedPosts       Json?
+  ogTitle                         String           @default("")
+  ogDescription                   String           @default("")
+  ogImage                         Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
+  ogImageId                       Int?             @map("ogImage")
+  createdAt                       DateTime?
+  updatedAt                       DateTime?        @updatedAt
+  from_Post_relatedPosts          Post[]           @relation("Post_relatedPosts")
+  from_SubSubcategory_relatedPost SubSubcategory[] @relation("SubSubcategory_relatedPost")
 
   @@index([status])
   @@index([publishedDate])
@@ -112,19 +111,38 @@ model Post {
   @@index([ogImageId])
 }
 
-model SubCategory {
-  id                        Int        @id @default(autoincrement())
-  slug                      String     @default("")
-  title                     String     @unique @default("")
-  status                    String?
-  category                  Category?  @relation("SubCategory_category", fields: [categoryId], references: [id])
-  categoryId                Int?       @map("category")
-  relatedPost               Post[]     @relation("SubCategory_relatedPost")
-  createdAt                 DateTime?
-  updatedAt                 DateTime?  @updatedAt
-  from_Category_subCategory Category[] @relation("Category_subCategory")
+model Subcategory {
+  id                              Int              @id @default(autoincrement())
+  slug                            String           @unique @default("")
+  title                           String           @default("")
+  nameForCMS                      String           @unique @default("")
+  status                          String?
+  category                        Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
+  categoryId                      Int?             @map("category")
+  subSubcategory                  SubSubcategory[] @relation("Subcategory_subSubcategory")
+  createdAt                       DateTime?
+  updatedAt                       DateTime?        @updatedAt
+  from_Category_subcategory       Category[]       @relation("Category_subcategory")
+  from_SubSubcategory_subcategory SubSubcategory[] @relation("SubSubcategory_subcategory")
 
   @@index([categoryId])
+}
+
+model SubSubcategory {
+  id                              Int           @id @default(autoincrement())
+  slug                            String        @unique @default("")
+  name                            String        @default("")
+  nameForCMS                      String        @unique @default("")
+  status                          String?
+  subcategory                     Subcategory?  @relation("SubSubcategory_subcategory", fields: [subcategoryId], references: [id])
+  subcategoryId                   Int?          @map("subcategory")
+  relatedPost                     Post[]        @relation("SubSubcategory_relatedPost")
+  createdAt                       DateTime?
+  updatedAt                       DateTime?     @updatedAt
+  from_Post_subSubcategories      Post[]        @relation("Post_subSubcategories")
+  from_Subcategory_subSubcategory Subcategory[] @relation("Subcategory_subSubcategory")
+
+  @@index([subcategoryId])
 }
 
 model User {
