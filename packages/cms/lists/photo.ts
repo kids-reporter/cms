@@ -3,9 +3,6 @@ import { list, graphql } from '@keystone-6/core'
 import { image, text, virtual, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
-  db: {
-    map: 'Image',
-  },
   fields: {
     name: text({
       label: '標題',
