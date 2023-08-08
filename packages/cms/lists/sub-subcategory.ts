@@ -45,7 +45,10 @@ const listConfigurations = list({
     }),
   },
   ui: {
+    label: 'Sub-subcategories',
     labelField: 'nameForCMS',
+    singular: 'Sub-subcategory',
+    plural: 'Sub-subcategories',
   },
   access: {
     operation: () => true,

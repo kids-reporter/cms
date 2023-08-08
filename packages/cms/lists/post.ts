@@ -3,8 +3,9 @@ import {
   utils,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
-import { list } from '@keystone-6/core'
+import { graphql, list } from '@keystone-6/core'
 import {
+  virtual,
   integer,
   relationship,
   timestamp,
@@ -151,11 +152,11 @@ const listConfigurations = list({
     //  label: '專題',
     //  ref: 'Project.posts',
     //}),
-    //tags: relationship({
-    //  ref: 'Tag.posts',
-    //  many: true,
-    //  label: '標籤',
-    //}),
+    tags: relationship({
+      ref: 'Tag.posts',
+      many: true,
+      label: '標籤',
+    }),
     readingTime: integer({
       label: '閱讀時間',
     }),
@@ -183,6 +184,25 @@ const listConfigurations = list({
     updatedAt: timestamp({
       db: {
         updatedAt: true,
+      },
+    }),
+    preview: virtual({
+      field: graphql.field({
+        type: graphql.JSON,
+        resolve(item: Record<string, unknown>): Record<string, string> {
+          return {
+            href: `https://dev-kids.twreporter.org/article/${item.slug}`,
+            label: '文章預覽',
+            buttonLabel: 'Preview',
+          }
+        },
+      }),
+      ui: {
+        // A module path that is resolved from where `keystone start` is run
+        views: './lists/views/link-button',
+        createView: {
+          fieldMode: 'hidden',
+        },
       },
     }),
   },
