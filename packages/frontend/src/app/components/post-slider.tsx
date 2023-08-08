@@ -71,7 +71,7 @@ export const PostSlider = (props: PostsProp) => {
   }
 
   return (
-    posts?.length > 0 && (
+    postNum > 0 && (
       <div className="post-slider">
         <div className="cards">
           {getSlides()}
