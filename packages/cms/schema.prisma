@@ -62,8 +62,6 @@ model Photo {
   from_Category_ogImage   Category[] @relation("Category_ogImage")
   from_Post_heroImage     Post[]     @relation("Post_heroImage")
   from_Post_ogImage       Post[]     @relation("Post_ogImage")
-
-  @@map("Image")
 }
 
 model Post {
