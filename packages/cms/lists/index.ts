@@ -20,13 +20,13 @@ import Tag from './tag'
 //import NoteCategory from './NoteCategory'
 
 export const listDefinition = {
+  User,
+  Post,
+  Photo,
   Author,
   Category,
-  Photo,
-  Post,
   Subcategory,
   SubSubcategory,
-  User,
   Tag,
   //EditorChoice,
   //Video,
