@@ -51,7 +51,7 @@ export const PostSlider = (props: PostsProp) => {
     return slides.map((post, index) => {
       return (
         <a key={`post-${index}`} href={post.url} className="post-body">
-          <img src={`${post.image}`} />
+          <img src={post.image} />
           <span className="post-category">{post.categoryName}</span>
           <span className="post-title">
             {ShortenParagraph(post.name, titleCharactersLimit)}
