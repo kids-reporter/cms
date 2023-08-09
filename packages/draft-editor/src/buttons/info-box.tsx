@@ -48,7 +48,7 @@ export type InfoBoxInputValue = {
 
 type InfoBoxInputType = {
   isOpen: boolean
-  onChange: (arg0: {
+  onConfirm: (arg0: {
     type: InfoBoxType
     rawContentState: RawDraftContentState
   }) => void
@@ -59,7 +59,7 @@ type InfoBoxInputType = {
 }
 
 export function InfoBoxInput(props: InfoBoxInputType) {
-  const { isOpen, onChange, onCancel, Editor, decorator, inputValue } = props
+  const { isOpen, onConfirm, onCancel, Editor, decorator, inputValue } = props
 
   const contentState = convertFromRaw(inputValue.rawContentState)
   const [inputValueState, setInputValueState] = useState({
@@ -81,7 +81,7 @@ export function InfoBoxInput(props: InfoBoxInputType) {
           confirm: {
             label: 'Confirm',
             action: () => {
-              onChange({
+              onConfirm({
                 type: inputValueState.type,
                 rawContentState: convertToRaw(
                   inputValueState.editorState.getCurrentContent()
@@ -184,7 +184,7 @@ export function createInfoBoxButton({
           <InfoBoxInput
             Editor={InnerEditor}
             decorator={decorator}
-            onChange={onChange}
+            onConfirm={onChange}
             onCancel={() => {
               setToShowInput(false)
             }}
