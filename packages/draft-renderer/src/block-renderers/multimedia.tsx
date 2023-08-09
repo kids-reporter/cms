@@ -1,6 +1,7 @@
 // @ts-ignore @twreporter/core does not provide ts header file
 import mq from '@twreporter/core/lib/utils/media-query'
 import styled from 'styled-components'
+import { getColorHex } from '../utils/index'
 
 const mockup = {
   mobile: {
@@ -46,7 +47,7 @@ const mockup = {
 const Caption = styled.figcaption`
   color: #494949;
   &::after {
-    border-color: #d0a67d;
+    border-color: ${({ theme }) => getColorHex(theme?.themeColor)};
   }
 
   line-height: 1.36;

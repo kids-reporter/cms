@@ -3,6 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 // @ts-ignore pkg does not contain ts header file
 import mq from '@twreporter/core/lib/utils/media-query'
 import styled from 'styled-components'
+import { getColorHex } from '../utils/index'
 
 const mockup = {
   mobile: {
@@ -400,7 +401,7 @@ const SlideshowFlexBox = styled.div`
     border-color: #d8d8d8;
   }
   ${ImageNumberCircle} {
-    background-color: #d0a67d;
+    background-color: ${({ theme }) => getColorHex(theme?.themeColor)};
     &::after {
       border-color: #fff;
     }
@@ -409,7 +410,7 @@ const SlideshowFlexBox = styled.div`
     color: #fff;
   }
   ${SlideMask} {
-    background-color: #d0a67d;
+    background-color: ${({ theme }) => getColorHex(theme?.themeColor)};
   }
 
   width: 100%;

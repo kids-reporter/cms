@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
+import { getColorHex, ThemeColorType } from '../utils/index'
 
-const LinkWrapper = styled.a`
+const LinkWrapper = styled.a<{ theme: { themeColor: ThemeColorType } }>`
   text-decoration: underline;
-  color: #27b5f7;
+  color: ${({ theme }) => getColorHex(theme?.themeColor)};
   transition: color 0.1s ease-in;
 
   &:hover {
