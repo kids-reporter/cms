@@ -1,45 +1,52 @@
-import { list } from '@keystone-6/core';
-import { relationship, checkbox, select, text, timestamp } from '@keystone-6/core/fields';
-	  
-const listConfigurations = list ({
+import { list } from '@keystone-6/core'
+import { relationship, select, text, timestamp } from '@keystone-6/core/fields'
+
+const listConfigurations = list({
   fields: {
-	name: text({
-      isIndexed: 'unique', 
-      label: '標籤名稱', 
-      validation: { isRequired: true} 
+    slug: text({
+      isIndexed: 'unique',
+      label: '英文名稱（用於網址）',
+      validation: { isRequired: true },
+    }),
+    name: text({
+      isIndexed: 'unique',
+      label: '標籤中文名稱',
+      validation: { isRequired: true },
     }),
     status: select({
-      defaultValue: 'active', 
-      options: [ 
-        { label: 'inactive', value: 'inactive' }, 
-        { label: 'active', value: 'active' }, 
-        { label: 'archived', value: 'archived' }
-      ], 
+      defaultValue: 'active',
+      options: [
+        { label: 'inactive', value: 'inactive' },
+        { label: 'active', value: 'active' },
+      ],
       label: '狀態',
     }),
     ogTitle: text({
-      validation: { isRequired: false}, 
-      label: 'FB分享標題' 
+      validation: { isRequired: false },
+      label: 'FB分享標題',
     }),
     ogDescription: text({
-      validation: { isRequired: false}, 
-      label: 'FB分享說明',  
+      validation: { isRequired: false },
+      label: 'FB分享說明',
     }),
     ogImage: relationship({
       ref: 'Photo',
-      label: 'FB分享縮圖' 
+      label: 'FB分享縮圖',
     }),
     posts: relationship({
       ref: 'Post.tags',
       many: true,
       label: '相關文章',
+      ui: {
+        hideCreate: true,
+      },
     }),
     createdAt: timestamp(),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
       },
-    })
+    }),
   },
   access: {
     operation: () => true,
