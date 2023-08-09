@@ -18,7 +18,7 @@ export type PostSliderProp = {
 const slidesPerView = 3
 const autoPlayInterval = 5000
 const titleLengthLimit = 35
-const briefLengthLimit = 100
+const briefLengthLimit = 110
 
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts

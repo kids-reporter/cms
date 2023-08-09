@@ -5,11 +5,11 @@
   justify-content: center;
   flex-direction: column;
   max-width: var(--normal-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
 
   .cards {
-    width: var(--container-width);
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,6 +44,17 @@
         letter-spacing: 0.08em;
         color: rgb(35, 35, 35);
         text-align: left;
+        margin-bottom: 12px;
+      }
+
+      .post-brief {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
+        letter-spacing: 0.05em;
+        color: rgb(35, 35, 35);
+        margin-bottom: 20px;
       }
 
       .post-bottom {
