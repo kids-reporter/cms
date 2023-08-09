@@ -184,7 +184,7 @@ export function createInfoBoxButton({
           <InfoBoxInput
             Editor={InnerEditor}
             decorator={decorator}
-            onChange={onChange}
+            onConfirm={onChange}
             onCancel={() => {
               setToShowInput(false)
             }}
