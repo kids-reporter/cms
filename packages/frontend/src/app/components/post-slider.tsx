@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
+// import { useEffect, useState } from 'react'
+// import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { Theme } from '@/app/constants'
-import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
+// import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
 import './post-slider.scss'
 
 export type PostSliderProp = {
@@ -10,10 +10,44 @@ export type PostSliderProp = {
   theme: Theme
 }
 
+/*
 const autoPlayInterval = 3000
 const titleLengthLimit = 35
 const briefLengthLimit = 100
+*/
 
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
+export const PostSlider = (props: PostSliderProp) => {
+  console.log(props)
+  return (
+    <div className="post-slider">
+      <Swiper
+        navigation={true}
+        pagination={true}
+        modules={[Navigation, Pagination]}
+        loop={true}
+        spaceBetween={20}
+        slidesPerView={3}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+      </Swiper>
+    </div>
+  )
+}
+
+/*
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
@@ -107,5 +141,6 @@ export const PostSlider = (props: PostSliderProp) => {
     )
   )
 }
+*/
 
 export default PostSlider

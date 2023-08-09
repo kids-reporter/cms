@@ -22,6 +22,7 @@
     "react-dom": "18.2.0",
     "sass": "^1.64.0",
     "styled-components": "5.3.5",
+    "swiper": "^10.1.0",
     "typescript": "5.1.6"
   },
   "devDependencies": {
