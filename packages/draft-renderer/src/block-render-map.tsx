@@ -12,6 +12,9 @@ const ParagraphBlock = styled.div`
   color: #3a4f66;
   letter-spacing: 0.9px;
   line-height: 2;
+
+  padding-left: 15px;
+  padding-right: 15px;
 `
 
 function Paragraph({
@@ -31,6 +34,8 @@ const HeadingBlock = styled.div`
   width: 100%;
   max-width: 700px;
   margin: 45px auto 20px auto;
+  padding-left: 15px;
+  padding-right: 15px;
 
   h2,
   h3,
@@ -233,11 +238,12 @@ const HeadingForInfoBoxWithHeaderBorder = styled(HeadingForInfoBox)`
   }
 `
 
-export const blockRenderMapForInfoBoxWithHeaderBorder = blockRenderMapForInfoBox.merge(
-  Immutable.Map({
-    'header-four': {
-      element: 'h4',
-      wrapper: <HeadingForInfoBoxWithHeaderBorder />,
-    },
-  })
-)
+export const blockRenderMapForInfoBoxWithHeaderBorder =
+  blockRenderMapForInfoBox.merge(
+    Immutable.Map({
+      'header-four': {
+        element: 'h4',
+        wrapper: <HeadingForInfoBoxWithHeaderBorder />,
+      },
+    })
+  )

@@ -7,7 +7,9 @@ import {
   convertFromRaw,
 } from 'draft-js'
 import React from 'react'
-import styled from 'styled-components'
+// @ts-ignore pkg does not contain ts header file
+import mq from '@twreporter/core/lib/utils/media-query'
+import styled, { css } from 'styled-components'
 import {
   blockRenderMapForInfoBox,
   blockRenderMapForInfoBoxWithHeaderBorder,
@@ -33,11 +35,19 @@ type InfoBoxBlockProps = {
   }
 }
 
-const NewsChargeStationContainer = styled.div`
+const containerStyles = css`
   padding: 40px;
-  background-color: #fffcf4;
-  position: relative;
   border-radius: 30px;
+  position: relative;
+
+  ${mq.mobileOnly`
+    padding: 20px;
+  `}
+`
+
+const NewsChargeStationContainer = styled.div`
+  ${containerStyles}
+  background-color: #fffcf4;
 
   &::before {
     content: '';
@@ -86,9 +96,7 @@ const HeaderBorderContainer = styled.div`
       `
   }}
 
-  padding: 40px;
-  position: relative;
-  border-radius: 30px;
+  ${containerStyles}
 
   &::before {
     content: '';
@@ -106,10 +114,8 @@ function HeaderBorder({ children }: { children: React.ReactNode }) {
 }
 
 const BoxBorderContainer = styled.div`
-  padding: 40px;
+  ${containerStyles}
   background-color: #ebebeb;
-  position: relative;
-  border-radius: 30px;
   border: 3px solid #232323;
   overflow: hidden;
 
@@ -136,6 +142,12 @@ function BoxBorder({ children }: { children: React.ReactNode }) {
 const ArticleBodyContainer = styled.div`
   max-width: 700px;
   margin: 60px auto;
+
+  ${mq.mobileOnly`
+    width: calc(100vw - 30px);
+    margin-left: auto;
+    margin-right: auto;
+  `}
 `
 
 const EditorContainer = styled.div`
