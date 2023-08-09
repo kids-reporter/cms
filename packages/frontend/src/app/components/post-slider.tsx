@@ -32,7 +32,7 @@ export const PostSlider = (props: PostSliderProp) => {
 
   return (
     postNum > 0 && (
-      <div className="post-slider">
+      <div className={`post-slider theme-${props.theme}`}>
         <div className="cards">
           <Swiper
             autoplay={{ delay: autoPlayInterval }}
