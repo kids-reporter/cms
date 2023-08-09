@@ -145,7 +145,7 @@ export default async function Home() {
       <h1>TODO: 新聞ing</h1>
       {sliderSections.map((section, index) => {
         return (
-          <div key={`home-section-${index}`}>
+          <div className="section" key={`home-section-${index}`}>
             <div className="section-head">
               <img className="image-left" src={`/images/${section.image}`} />
               <img
