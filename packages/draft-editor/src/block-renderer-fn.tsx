@@ -1,12 +1,12 @@
 import { AtomicBlockProps } from './block-renderer-fn.type'
 import { ContentBlock } from 'draft-js'
 import { EditableBlockquote } from './block-renderers/blockquote'
+import { EditableInfoBox } from './block-renderers/info-box'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
 const {
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
-  InfoBoxInArticleBody,
   SlideshowInArticleBody,
 } = blockRenderers
 
@@ -30,7 +30,7 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
       return EmbeddedCodeInArticleBody({ data: entityData })
     }
     case 'INFOBOX': {
-      return InfoBoxInArticleBody({ data: entityData })
+      return EditableInfoBox(props)
     }
   }
   return null

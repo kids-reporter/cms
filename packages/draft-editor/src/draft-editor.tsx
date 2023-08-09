@@ -371,6 +371,8 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       atomicBlockObj['props'] = {
         onEditStart,
         onEditFinish,
+        RichTextEditorComponent: RichTextEditor,
+        decorator,
         getMainEditorReadOnly: () => this.state.readOnly,
       }
     }

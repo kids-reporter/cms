@@ -1,3 +1,4 @@
+import React from 'react'
 import { EditorState } from 'draft-js'
 
 export type RichTextEditorProps = {
@@ -5,3 +6,5 @@ export type RichTextEditorProps = {
   editorState: EditorState
   disabledButtons?: string[]
 }
+
+export type RichTextEditorComponent = React.ComponentType<RichTextEditorProps>
