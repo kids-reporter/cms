@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { getColorHex } from '../utils/index'
 
 const BorderLeftContainer = styled.blockquote`
   margin: 0;
   padding-left: 30px;
-  border-left: 4px solid #27b5f7;
+  border-left: 4px solid ${({ theme }) => getColorHex(theme?.themeColor)};
 `
 
 export function BorderLeftBlockquote({ text }: { text: string }) {
@@ -38,6 +39,7 @@ const SvgBlock = styled.div`
 
   svg {
     width: 36px;
+    fill: ${({ theme }) => getColorHex(theme?.themeColor)};
   }
 `
 
@@ -45,7 +47,6 @@ function QuoteSvg() {
   return (
     <SvgBlock>
       <svg
-        fill="#27B5F7"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 50 50"
         aria-hidden="true"

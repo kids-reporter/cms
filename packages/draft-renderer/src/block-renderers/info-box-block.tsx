@@ -14,6 +14,7 @@ import {
 } from '../block-render-map'
 import { ImageInInfoBox } from '../block-renderers/image-block'
 import { decorator } from '../entity-decorators/index'
+import { ThemeColorEnum } from '../utils/index'
 
 enum InfoBoxType {
   newsChargeStation = 'news-charge-station',
@@ -56,8 +57,36 @@ function NewsChargeStation({ children }: { children: React.ReactNode }) {
 }
 
 const HeaderBorderContainer = styled.div`
+  ${({ theme }) => {
+    let logoColor
+    let bgColor
+    switch (theme?.themeColor) {
+      case ThemeColorEnum.YELLOW: {
+        logoColor = 'red'
+        bgColor = '#fff0d2'
+        break
+      }
+      case ThemeColorEnum.RED: {
+        logoColor = 'blue'
+        bgColor = '#ffd2d2'
+        break
+      }
+      case ThemeColorEnum.BLUE:
+      default: {
+        logoColor = 'yellow'
+        bgColor = '#3a4f66'
+        break
+      }
+    }
+    return `
+      background-color: ${bgColor};
+      &::before {
+        background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_${logoColor}.png);
+      }
+      `
+  }}
+
   padding: 40px;
-  background-color: #d2f5ff;
   position: relative;
   border-radius: 30px;
 
@@ -65,8 +94,6 @@ const HeaderBorderContainer = styled.div`
     content: '';
     width: 120px;
     height: 120px;
-    /* TODO: change image url */
-    background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_yellow.png);
     background-size: contain;
     position: absolute;
     bottom: 10px;
@@ -86,12 +113,15 @@ const BoxBorderContainer = styled.div`
   border: 3px solid #232323;
   overflow: hidden;
 
+  ${({ theme }) => `
+    &::before {
+      background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_${theme?.themeColor}-b.png);
+    }`}
+
   &::before {
     content: '';
     width: 100px;
     height: 100px;
-    /* TODO: change image url */
-    background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_blue-b.png);
     background-size: contain;
     position: absolute;
     bottom: 0;
@@ -106,6 +136,10 @@ function BoxBorder({ children }: { children: React.ReactNode }) {
 const ArticleBodyContainer = styled.div`
   max-width: 700px;
   margin: 60px auto;
+`
+
+const EditorContainer = styled.div`
+  position: relative;
 `
 
 export function InfoBoxInArticleBody({ className, data }: InfoBoxBlockProps) {
@@ -133,14 +167,16 @@ export function InfoBoxInArticleBody({ className, data }: InfoBoxBlockProps) {
   return (
     <ArticleBodyContainer className={className}>
       <Component>
-        <Editor
-          blockRenderMap={blockRenderMap}
-          blockRendererFn={blockRendererFn}
-          editorState={editorState}
-          readOnly
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onChange={() => {}}
-        />
+        <EditorContainer>
+          <Editor
+            blockRenderMap={blockRenderMap}
+            blockRendererFn={blockRendererFn}
+            editorState={editorState}
+            readOnly
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onChange={() => {}}
+          />
+        </EditorContainer>
       </Component>
     </ArticleBodyContainer>
   )
