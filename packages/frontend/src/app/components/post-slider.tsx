@@ -1,19 +1,23 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
+import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
+import { Theme } from '@/app/constants'
+import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
 import './post-slider.scss'
 
-type PostsProp = {
+export type PostSliderProp = {
   posts: any[]
+  theme: Theme
 }
 
 const autoPlayInterval = 3000
-const titleCharactersLimit = 100
-const briefCharactersLimit = 100
+const titleLengthLimit = 35
+const briefLengthLimit = 100
 
-export const PostSlider = (props: PostsProp) => {
+export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
+  const themeColor = GetThemeColor(props?.theme)
   const [current, setCurrent] = useState(0)
 
   useEffect(() => {
@@ -50,14 +54,18 @@ export const PostSlider = (props: PostsProp) => {
 
     return slides.map((post, index) => {
       return (
-        <a key={`post-${index}`} href={post.url} className="post-body">
-          <img src={`${post.image}`} />
+        <a
+          key={`post-${index}`}
+          href={post.url}
+          className={`post-body theme-${post.theme}`}
+        >
+          <img src={post.image} />
           <span className="post-category">{post.categoryName}</span>
           <span className="post-title">
-            {ShortenParagraph(post.name, titleCharactersLimit)}
+            {ShortenParagraph(post.name, titleLengthLimit) ?? ''}
           </span>
           <span className="post-brief">
-            {ShortenParagraph(post.brief, briefCharactersLimit)}
+            {ShortenParagraph(post.brief, briefLengthLimit) ?? ''}
           </span>
           <div className="post-bottom">
             <span className="tag">{post.tag}</span>
@@ -71,64 +79,24 @@ export const PostSlider = (props: PostsProp) => {
   }
 
   return (
-    posts?.length > 0 && (
+    postNum > 0 && (
       <div className="post-slider">
         <div className="cards">
           {getSlides()}
           <button className="prev-btn" onClick={onPrevClick}>
-            <svg
-              width="54"
-              height="54"
-              viewBox="0 0 54 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M27 2C13.1929 2 2 13.1929 2 27C2 40.8071 13.1929 52 27 52C40.8071 52 52 40.8071 52 27C52 13.1929 40.8071 2 27 2Z"
-                fill="var(--theme-color)"
-                stroke="white"
-                stroke-width="3"
-                stroke-miterlimit="10"
-              ></path>
-              <path
-                d="M29.9297 39.1001L17.9359 27.0002L29.9297 14.9003"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <ArrowLeft color={themeColor} />
           </button>
           <button className="next-btn" onClick={onNextClick}>
-            <svg
-              width="54"
-              height="54"
-              viewBox="0 0 54 54"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M27 52C40.8071 52 52 40.8071 52 27C52 13.1929 40.8071 2 27 2C13.1929 2 2 13.1929 2 27C2 40.8071 13.1929 52 27 52Z"
-                fill="var(--theme-color)"
-                stroke="white"
-                stroke-width="3"
-                stroke-miterlimit="10"
-              ></path>
-              <path
-                d="M24.0703 14.8999L36.0641 26.9998L24.0703 39.0997"
-                stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <ArrowRight color={themeColor} />
           </button>
         </div>
         <div className="bullets">
           {posts.map((post, index) => {
             return (
               <button
-                className={index === current ? 'active' : ''}
+                className={
+                  index === current ? `active theme-${props.theme}` : ''
+                }
                 key={`bullet-${index}`}
                 onClick={() => onBulletClick(index)}
               />

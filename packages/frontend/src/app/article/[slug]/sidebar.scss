@@ -4,7 +4,7 @@
   top: 180px;
   left: 0;
   margin-top: -430px;
-  z-index: 999;
+  z-index: 900;
 
   .sidebar {
     position: relative;
@@ -14,32 +14,37 @@
     align-items: center;
     gap: 15px;
 
+    @media screen and (max-width: 1000px) {
+      // TODO: mobile sidebar
+      background: black;
+    }
+
     .section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding: 10px;
-        background: rgb(248, 248, 248);
-        border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      background: rgb(248, 248, 248);
+      border-radius: 30px;
       
-        span {
-          font-weight: 400;
-          font-size: 14px;
-          line-height: 160%;
-          letter-spacing: 0.16em;
-          color: rgb(35, 35, 35);
-        }
-      
-        button {
-          display: block;
-          appearance: none;
-          background: transparent;
-          border: none;
-          width: 48px;
-          aspect-ratio: 1 / 1;
-          cursor: pointer;
-        }
+      span {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 160%;
+        letter-spacing: 0.16em;
+        color: rgb(35, 35, 35);
       }
+      
+      button {
+        display: block;
+        appearance: none;
+        background: transparent;
+        border: none;
+        width: 48px;
+        aspect-ratio: 1 / 1;
+        cursor: pointer;
+      }
+    }
   }
 }

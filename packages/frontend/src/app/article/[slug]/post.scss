@@ -395,29 +395,6 @@ body.single-post main article.post>.entry-content>*:not(.alignwide):not(.alignfu
     font-size: 18px;
 }
 
-/* 主題色 */
-body.single-post {
-    &.theme-red {
-        --theme-color: #F76977;
-    }
-    &.theme-yellow {
-        --theme-color: #F8C341;
-    }
-    &.theme-blue {
-        --theme-color: #27B5F7;
-    }
-}
-
-.theme-red {
-    --theme-color: #F76977;
-}
-.theme-yellow {
-    --theme-color: #F8C341;
-}
-.theme-blue {
-    --theme-color: #27B5F7;
-}
-
 /* News Reader */
 /* Accordion styles */
 .news-reader {
