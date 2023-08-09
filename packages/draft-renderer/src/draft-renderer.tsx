@@ -14,11 +14,28 @@ const blockRendererFn = (block: any) => {
   return atomicBlockObj
 }
 
+enum ThemeColorEnum {
+  RED = 'red',
+  BLUE = 'blue',
+  YELLOW = 'yellow',
+}
+
+type ThemeColorType =
+  | ThemeColorEnum.BLUE
+  | ThemeColorEnum.RED
+  | ThemeColorEnum.YELLOW
+
 type DraftRendererProps = {
+  themeColor: ThemeColorType
   rawContentState: RawDraftContentState
 }
 
-export function DraftRenderer({ rawContentState }: DraftRendererProps) {
+export function DraftRenderer({
+  rawContentState,
+  themeColor,
+}: DraftRendererProps) {
+  // TODO: remove console.log later
+  console.log('themeColor:', themeColor)
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
 
