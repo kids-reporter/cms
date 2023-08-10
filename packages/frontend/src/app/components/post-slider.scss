@@ -131,39 +131,5 @@
         }
       }
     }
-
-    button {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      position: absolute;
-      top: 15%;
-      --btn-edge: -10px;
-    }
-
-    button.prev-btn {
-      left: var(--btn-edge);
-    }
-
-    button.next-btn {
-      right: var(--btn-edge);
-    }
-  }
-
-  .bullets {
-    button {
-      cursor: pointer;
-      margin: 50px 10px 0;
-      width: 13px;
-      height: 13px;
-      background-color: #eaeaea;
-      border-radius: 13px;
-      appearance: none;
-      border: none;
-    }
-
-    button.active {
-      background-color: var(--theme-color);
-    }
   }
 }
