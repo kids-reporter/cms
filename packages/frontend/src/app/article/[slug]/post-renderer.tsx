@@ -5,10 +5,16 @@ export const PostRenderer = ({ post }: { post: any }) => {
   return (
     <>
       {post?.brief && (
-        <draftRenderer.DraftRenderer rawContentState={post.brief} />
+        <draftRenderer.DraftRenderer
+          rawContentState={post.brief}
+          themeColor={post.theme}
+        />
       )}
       {post?.content && (
-        <draftRenderer.DraftRenderer rawContentState={post.content} />
+        <draftRenderer.DraftRenderer
+          rawContentState={post.content}
+          themeColor={post.theme}
+        />
       )}
     </>
   )
