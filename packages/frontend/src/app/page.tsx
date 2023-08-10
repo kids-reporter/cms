@@ -73,6 +73,7 @@ const sliderSections = [
 // TODO: remove mockups
 const postMockups = [
   {
+    url: '',
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -84,6 +85,7 @@ const postMockups = [
     theme: Theme.BLUE,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -95,6 +97,7 @@ const postMockups = [
     theme: Theme.YELLOW,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -106,6 +109,7 @@ const postMockups = [
     theme: Theme.RED,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -120,6 +124,7 @@ const postMockups = [
 
 const postMockupsMore = [
   {
+    url: '',
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -131,6 +136,7 @@ const postMockupsMore = [
     theme: Theme.BLUE,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -142,6 +148,7 @@ const postMockupsMore = [
     theme: Theme.YELLOW,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -153,6 +160,7 @@ const postMockupsMore = [
     theme: Theme.RED,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -164,6 +172,7 @@ const postMockupsMore = [
     theme: Theme.BLUE,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
@@ -175,6 +184,7 @@ const postMockupsMore = [
     theme: Theme.BLUE,
   },
   {
+    url: '',
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
