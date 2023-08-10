@@ -26,6 +26,14 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
+    projects: relationship({
+      label: '專題',
+      ref: 'Project.categories',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
     heroImage: relationship({
       label: '列表頁首圖',
       ref: 'Photo',

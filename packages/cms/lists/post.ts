@@ -148,10 +148,14 @@ const listConfigurations = list({
         richTextEditorButtonNames.codeBlock,
       ],
     }),
-    //projects: relationship({
-    //  label: '專題',
-    //  ref: 'Project.posts',
-    //}),
+    projects: relationship({
+      label: '專題',
+      ref: 'Project.relatedPosts',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
     tags: relationship({
       ref: 'Tag.posts',
       many: true,

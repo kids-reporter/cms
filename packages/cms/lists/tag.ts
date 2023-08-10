@@ -21,6 +21,14 @@ const listConfigurations = list({
       ],
       label: '狀態',
     }),
+    projects: relationship({
+      label: '專題',
+      ref: 'Project.tags',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
     ogTitle: text({
       validation: { isRequired: false },
       label: 'FB分享標題',
