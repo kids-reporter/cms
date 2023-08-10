@@ -1,6 +1,6 @@
 type Tag = {
-  text: string
-  link: string
+  name: string
+  slug: string
 }
 
 type TagsProp = {
@@ -20,13 +20,15 @@ export const Tags = (props: TagsProp) => {
       <div className="rpjr-post-tags__box">
         {props?.tags.map((tag, index) => {
           return (
-            <a
-              key={`post-tag-${index}`}
-              className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
-              href={tag.link}
-            >
-              #&nbsp;{tag.text}
-            </a>
+            tag && (
+              <a
+                key={`post-tag-${index}`}
+                className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
+                href={`/tag/${tag.slug}`}
+              >
+                #&nbsp;{tag.name}
+              </a>
+            )
           )
         })}
       </div>

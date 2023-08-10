@@ -13,7 +13,16 @@ import 'swiper/css/pagination'
 import './post-slider.scss'
 
 export type PostSliderProp = {
-  posts: any[]
+  posts: {
+    image: string
+    name: string
+    url: string
+    brief: string
+    tag: string
+    publishedDate: string
+    categoryName: string
+    theme: Theme
+  }[]
   theme: Theme
 }
 
@@ -53,28 +62,30 @@ export const PostSlider = (props: PostSliderProp) => {
           >
             {posts.map((post, index) => {
               return (
-                <SwiperSlide key={`swiper-slide-${index}`}>
-                  <a
-                    key={`post-${index}`}
-                    href={post.url}
-                    className={`post-body theme-${post.theme}`}
-                  >
-                    <img src={post.image} />
-                    <span className="post-category">{post.categoryName}</span>
-                    <span className="post-title">
-                      {ShortenParagraph(post.name, titleLengthLimit) ?? ''}
-                    </span>
-                    <span className="post-brief">
-                      {ShortenParagraph(post.brief, briefLengthLimit) ?? ''}
-                    </span>
-                    <div className="post-bottom">
-                      <span className="tag">{post.tag}</span>
-                      <span className="published-date">
-                        {GetFormattedDate(post.publishedDate) ?? ''}
+                post && (
+                  <SwiperSlide key={`swiper-slide-${index}`}>
+                    <a
+                      key={`post-${index}`}
+                      href={post.url}
+                      className={`post-body theme-${post.theme}`}
+                    >
+                      <img src={post.image} />
+                      <span className="post-category">{post.categoryName}</span>
+                      <span className="post-title">
+                        {ShortenParagraph(post.name, titleLengthLimit) ?? ''}
                       </span>
-                    </div>
-                  </a>
-                </SwiperSlide>
+                      <span className="post-brief">
+                        {ShortenParagraph(post.brief, briefLengthLimit) ?? ''}
+                      </span>
+                      <div className="post-bottom">
+                        <span className="tag">{post.tag}</span>
+                        <span className="published-date">
+                          {GetFormattedDate(post.publishedDate) ?? ''}
+                        </span>
+                      </div>
+                    </a>
+                  </SwiperSlide>
+                )
               )
             })}
           </Swiper>

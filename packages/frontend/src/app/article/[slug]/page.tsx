@@ -64,18 +64,6 @@ const editorsMockup = [
     ],
   },
 ]
-const tagsMockup = [
-  {
-    link: 'https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/',
-    text: '動物保護',
-  },
-  {
-    link: 'https://kids.twreporter.org/tag/%e5%a4%a7%e5%ad%b8%e5%a5%bd%e5%a5%bd%e7%8e%a9/',
-    text: '大學好好玩',
-  },
-  { link: 'https://kids.twreporter.org/tag/%e6%95%99%e8%82%b2/', text: '教育' },
-  { link: 'https://kids.twreporter.org/tag/%e7%94%9f%e5%91%bd/', text: '生命' },
-]
 const authorsMockup = [
   {
     name: '張恩瑋',
@@ -117,6 +105,19 @@ const authorsMockup = [
     desc: '新聞系畢業後，就投入編輯這份工作，非常努力讓每一篇報導都美美的呈現在讀者面前，希望你也喜歡這篇文章。',
     link: '/staff/chang-en-wei',
   },
+]
+/*
+const tagsMockup = [
+  {
+    link: 'https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/',
+    text: '動物保護',
+  },
+  {
+    link: 'https://kids.twreporter.org/tag/%e5%a4%a7%e5%ad%b8%e5%a5%bd%e5%a5%bd%e7%8e%a9/',
+    text: '大學好好玩',
+  },
+  { link: 'https://kids.twreporter.org/tag/%e6%95%99%e8%82%b2/', text: '教育' },
+  { link: 'https://kids.twreporter.org/tag/%e7%94%9f%e5%91%bd/', text: '生命' },
 ]
 const relatedPostMockup = [
   {
@@ -186,6 +187,7 @@ const relatedPostMockup = [
     theme: Theme.BLUE,
   },
 ]
+*/
 
 const postQuery = `
   query($where: PostWhereUniqueInput!) {
@@ -203,6 +205,10 @@ const postQuery = `
         }
       }
       heroCaption
+      tags {
+        name
+        slug
+      }
       relatedPosts {
         name
         slug
@@ -235,9 +241,27 @@ export default async function PostPage({
     : undefined
 
   const post = response?.data?.data?.post
+  const relatedPosts = post?.relatedPosts?.map((post: any) => {
+    const imageURL = post?.heroImage?.imageFile?.url
+      ? `${CMS_URL}${post.heroImage.imageFile.url}`
+      : undefined
+    return post
+      ? {
+          name: post.name,
+          url: `/article/${post.slug}`,
+          image: imageURL,
+          // TODO: find correct brief
+          brief:
+            '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+          tag: 'test',
+          publishedDate: post.publishedDate,
+          categoryName: 'test',
+          theme: Theme.YELLOW,
+        }
+      : undefined
+  })
   if (post) {
     post.category = categoryMockup // TODO: find category source
-    post.tags = tagsMockup // TODO: find tags source
     post.editors = editorsMockup // TODO: find editors source
     post.theme = Theme.YELLOW
     post.authors = authorsMockup // TODO: find editors source
@@ -268,7 +292,7 @@ export default async function PostPage({
           <AuthorCard authors={post.authors} />
         </div>
         <CallToAction />
-        <RelatedPosts posts={relatedPostMockup} theme={post.theme} />
+        <RelatedPosts posts={relatedPosts} theme={post.theme} />
       </main>
     )
   )
