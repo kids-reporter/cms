@@ -590,8 +590,8 @@ type Category {
   slug: String
   title: String
   status: String
-  subcategory(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
-  subcategoryCount(where: SubcategoryWhereInput! = {}): Int
+  subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
+  subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
   heroImage: Photo
   ogTitle: String
   ogDescription: String
@@ -614,7 +614,7 @@ input CategoryWhereInput {
   slug: StringFilter
   title: StringFilter
   status: StringNullableFilter
-  subcategory: SubcategoryManyRelationFilter
+  subcategories: SubcategoryManyRelationFilter
   heroImage: PhotoWhereInput
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -644,7 +644,7 @@ input CategoryUpdateInput {
   slug: String
   title: String
   status: String
-  subcategory: SubcategoryRelateToManyForUpdateInput
+  subcategories: SubcategoryRelateToManyForUpdateInput
   heroImage: PhotoRelateToOneForUpdateInput
   ogTitle: String
   ogDescription: String
@@ -669,7 +669,7 @@ input CategoryCreateInput {
   slug: String
   title: String
   status: String
-  subcategory: SubcategoryRelateToManyForCreateInput
+  subcategories: SubcategoryRelateToManyForCreateInput
   heroImage: PhotoRelateToOneForCreateInput
   ogTitle: String
   ogDescription: String
@@ -690,8 +690,8 @@ type Subcategory {
   nameForCMS: String
   status: String
   category: Category
-  subSubcategory(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
-  subSubcategoryCount(where: SubSubcategoryWhereInput! = {}): Int
+  subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
+  subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -712,7 +712,7 @@ input SubcategoryWhereInput {
   nameForCMS: StringFilter
   status: StringNullableFilter
   category: CategoryWhereInput
-  subSubcategory: SubSubcategoryManyRelationFilter
+  subSubcategories: SubSubcategoryManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -733,7 +733,7 @@ input SubcategoryUpdateInput {
   nameForCMS: String
   status: String
   category: CategoryRelateToOneForUpdateInput
-  subSubcategory: SubSubcategoryRelateToManyForUpdateInput
+  subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -755,7 +755,7 @@ input SubcategoryCreateInput {
   nameForCMS: String
   status: String
   category: CategoryRelateToOneForCreateInput
-  subSubcategory: SubSubcategoryRelateToManyForCreateInput
+  subSubcategories: SubSubcategoryRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -772,8 +772,8 @@ type SubSubcategory {
   nameForCMS: String
   status: String
   subcategory: Subcategory
-  relatedPost(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  relatedPostCount(where: PostWhereInput! = {}): Int
+  relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
+  relatedPostsCount(where: PostWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -794,7 +794,7 @@ input SubSubcategoryWhereInput {
   nameForCMS: StringFilter
   status: StringNullableFilter
   subcategory: SubcategoryWhereInput
-  relatedPost: PostManyRelationFilter
+  relatedPosts: PostManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -815,7 +815,7 @@ input SubSubcategoryUpdateInput {
   nameForCMS: String
   status: String
   subcategory: SubcategoryRelateToOneForUpdateInput
-  relatedPost: PostRelateToManyForUpdateInput
+  relatedPosts: PostRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -837,7 +837,7 @@ input SubSubcategoryCreateInput {
   nameForCMS: String
   status: String
   subcategory: SubcategoryRelateToOneForCreateInput
-  relatedPost: PostRelateToManyForCreateInput
+  relatedPosts: PostRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
