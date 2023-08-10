@@ -25,5 +25,6 @@ export enum AuthorGroup {
   PHOTOGRAPHERS = 'photographers',
   ENGINEERS = 'engineers',
 }
+export const AUTHOR_GROUPS = Object.values(AuthorGroup)
 
 export const DEFAULT_AVATAR = '/images/avatar_default.png'

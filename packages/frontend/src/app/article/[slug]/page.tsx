@@ -7,11 +7,11 @@ import Sidebar from './sidebar'
 import Brief from './brief'
 import Tags from './tags'
 import PostRenderer from './post-renderer'
-import AuthorCard from './author-card'
+import AuthorCard, { Author } from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { API_URL, CMS_URL, AuthorGroup, Theme } from '@/app/constants'
+import { API_URL, CMS_URL, AUTHOR_GROUPS, Theme } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -200,8 +200,7 @@ const heroImageGQL = `
   }
 `
 
-const stakeholderGroups = Object.values(AuthorGroup)
-const stakeholdersGQL = stakeholderGroups.reduce(
+const stakeholdersGQL = AUTHOR_GROUPS.reduce(
   (gqlStr, stakeholderGroup) =>
     gqlStr +
     `
@@ -260,22 +259,28 @@ export default async function PostPage({
     : undefined
 
   const post = response?.data?.data?.post
-  const authors: any[] = []
-  stakeholderGroups.forEach((stakeholderGroup) => {
-    const stackeHolders = post?.[stakeholderGroup]
-    if (stackeHolders?.length > 0) {
-      stackeHolders.forEach((stakeholder: any) => {
-        stakeholder &&
-          authors.push({
-            id: stakeholder.id,
-            name: stakeholder.name,
-            avatar: stakeholder.avatar?.imageFile?.url,
-            group: stakeholderGroup,
-            bio: stakeholder.bio,
-          })
-      })
-    }
-  })
+
+  /* TODO: error handling
+  if (!post) {
+    return 404
+  }
+  */
+
+  const authors = AUTHOR_GROUPS.reduce((allAuthors: Author[], authorGroup) => {
+    const authorConfigArray = post?.[authorGroup]?.map((author: any) => {
+      return author
+        ? {
+            id: author.id,
+            name: author.name,
+            avatar: author.avatar?.imageFile?.url,
+            group: authorGroup,
+            bio: author.bio,
+          }
+        : undefined
+    })
+    return [...allAuthors, ...authorConfigArray]
+  }, [])
+
   const relatedPosts = post?.relatedPosts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
       ? `${CMS_URL}${post.heroImage.imageFile.url}`

@@ -26,14 +26,16 @@ const getTheme = (group: AuthorGroup) => {
   }
 }
 
+export type Author = {
+  id: string
+  name: string
+  avatar: string
+  group: AuthorGroup
+  bio: string
+}
+
 type AuthorCardProp = {
-  authors: {
-    id: string
-    name: string
-    avatar: string
-    group: AuthorGroup
-    bio: string
-  }[]
+  authors: Author[]
 }
 
 const descLengthLimit = 85
