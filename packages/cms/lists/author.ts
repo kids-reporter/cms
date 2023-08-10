@@ -8,9 +8,7 @@ const listConfigurations = list({
       label: '作者姓名',
       validation: { isRequired: true },
     }),
-    email: text({
-      isIndexed: 'unique',
-    }),
+    email: text(),
     bio: text({
       label: '簡介',
     }),
