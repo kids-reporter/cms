@@ -64,18 +64,6 @@ const editorsMockup = [
     ],
   },
 ]
-const tagsMockup = [
-  {
-    link: 'https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/',
-    text: '動物保護',
-  },
-  {
-    link: 'https://kids.twreporter.org/tag/%e5%a4%a7%e5%ad%b8%e5%a5%bd%e5%a5%bd%e7%8e%a9/',
-    text: '大學好好玩',
-  },
-  { link: 'https://kids.twreporter.org/tag/%e6%95%99%e8%82%b2/', text: '教育' },
-  { link: 'https://kids.twreporter.org/tag/%e7%94%9f%e5%91%bd/', text: '生命' },
-]
 const authorsMockup = [
   {
     name: '張恩瑋',
@@ -119,6 +107,18 @@ const authorsMockup = [
   },
 ]
 /*
+const tagsMockup = [
+  {
+    link: 'https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/',
+    text: '動物保護',
+  },
+  {
+    link: 'https://kids.twreporter.org/tag/%e5%a4%a7%e5%ad%b8%e5%a5%bd%e5%a5%bd%e7%8e%a9/',
+    text: '大學好好玩',
+  },
+  { link: 'https://kids.twreporter.org/tag/%e6%95%99%e8%82%b2/', text: '教育' },
+  { link: 'https://kids.twreporter.org/tag/%e7%94%9f%e5%91%bd/', text: '生命' },
+]
 const relatedPostMockup = [
   {
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
@@ -205,6 +205,10 @@ const postQuery = `
         }
       }
       heroCaption
+      tags {
+        name
+        slug
+      }
       relatedPosts {
         name
         slug
@@ -258,7 +262,6 @@ export default async function PostPage({
   })
   if (post) {
     post.category = categoryMockup // TODO: find category source
-    post.tags = tagsMockup // TODO: find tags source
     post.editors = editorsMockup // TODO: find editors source
     post.theme = Theme.YELLOW
     post.authors = authorsMockup // TODO: find editors source
