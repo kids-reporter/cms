@@ -24,14 +24,14 @@ const listConfigurations = list({
       ],
     }),
     category: relationship({
-      ref: 'Category',
+      ref: 'Category.subcategories',
       many: false,
       ui: {
         hideCreate: true,
       },
     }),
-    subSubcategory: relationship({
-      ref: 'SubSubcategory',
+    subSubcategories: relationship({
+      ref: 'SubSubcategory.subcategory',
       many: true,
       ui: {
         hideCreate: true,
