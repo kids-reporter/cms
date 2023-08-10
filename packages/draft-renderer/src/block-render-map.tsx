@@ -2,6 +2,8 @@ import Immutable from 'immutable'
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
+// @ts-ignore pkg does not contain ts header file
+import mq from '@twreporter/core/lib/utils/media-query'
 
 const ParagraphBlock = styled.div`
   width: 100%;
@@ -13,8 +15,10 @@ const ParagraphBlock = styled.div`
   letter-spacing: 0.9px;
   line-height: 2;
 
-  padding-left: 15px;
-  padding-right: 15px;
+  ${mq.mobileOnly`
+    padding-left: 15px;
+    padding-right: 15px;
+  `}
 `
 
 function Paragraph({
@@ -34,8 +38,6 @@ const HeadingBlock = styled.div`
   width: 100%;
   max-width: 700px;
   margin: 45px auto 20px auto;
-  padding-left: 15px;
-  padding-right: 15px;
 
   h2,
   h3,
@@ -59,6 +61,11 @@ const HeadingBlock = styled.div`
   h5 {
     font-size: 20px;
   }
+
+  ${mq.mobileOnly`
+    padding-left: 15px;
+    padding-right: 15px;
+  `}
 `
 
 function Heading({
