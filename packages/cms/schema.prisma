@@ -106,7 +106,7 @@ model Category {
   slug          String        @unique @default("")
   title         String        @unique @default("")
   status        String?
-  subcategory   Subcategory[] @relation("Subcategory_category")
+  subcategories Subcategory[] @relation("Subcategory_category")
   heroImage     Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?          @map("heroImage")
   ogTitle       String        @default("")
@@ -121,16 +121,16 @@ model Category {
 }
 
 model Subcategory {
-  id             Int              @id @default(autoincrement())
-  slug           String           @unique @default("")
-  title          String           @default("")
-  nameForCMS     String           @unique @default("")
-  status         String?
-  category       Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
-  categoryId     Int?             @map("category")
-  subSubcategory SubSubcategory[] @relation("SubSubcategory_subcategory")
-  createdAt      DateTime?
-  updatedAt      DateTime?        @updatedAt
+  id               Int              @id @default(autoincrement())
+  slug             String           @unique @default("")
+  title            String           @default("")
+  nameForCMS       String           @unique @default("")
+  status           String?
+  category         Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
+  categoryId       Int?             @map("category")
+  subSubcategories SubSubcategory[] @relation("SubSubcategory_subcategory")
+  createdAt        DateTime?
+  updatedAt        DateTime?        @updatedAt
 
   @@index([categoryId])
 }
@@ -143,7 +143,7 @@ model SubSubcategory {
   status        String?
   subcategory   Subcategory? @relation("SubSubcategory_subcategory", fields: [subcategoryId], references: [id])
   subcategoryId Int?         @map("subcategory")
-  relatedPost   Post[]       @relation("Post_subSubcategories")
+  relatedPosts  Post[]       @relation("Post_subSubcategories")
   createdAt     DateTime?
   updatedAt     DateTime?    @updatedAt
 
