@@ -14,7 +14,9 @@ const listConfigurations = list({
     description: text({
       label: '檔案說明',
     }),
-    createdAt: timestamp(),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+    }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
