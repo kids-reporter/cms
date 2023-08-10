@@ -4,7 +4,7 @@ import TopDetector from '@/app/components/top-detector'
 import BackToTop from '@/app/components/back-to-top'
 import Footer from '@/app/components/footer'
 
-import './globals.css'
+import './globals.scss'
 
 export const metadata: Metadata = {
   title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',

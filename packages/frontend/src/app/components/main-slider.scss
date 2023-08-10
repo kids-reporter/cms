@@ -6,15 +6,59 @@
   justify-content: center;
   flex-direction: column;
   max-width: var(--normal-container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 100px;
 
   .posts {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
     position: relative;
-    padding-left: 10px;
-    padding-right: 10px;
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: white;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      background-color: transparent;
+      color: var(--theme-color);
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      top: 20%;
+      --btn-edge: -50px;
+    }
+
+    .swiper-pagination-bullets {
+      height: 62px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-end;
+      position: relative;
+
+      .swiper-pagination-bullet {
+        width: 13px;
+        height: 13px;
+        margin: 50px 10px 0;
+      }
+
+      .swiper-pagination-bullet-active {
+        background-color: var(--theme-color);
+      }
+    }
 
     .post-body {
       width: 373px;
@@ -41,41 +85,6 @@
         color: rgb(35, 35, 35);
         text-align: left;
       }
-    }
-
-    .prev-btn {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      position: absolute;
-      left: 0;
-      top: 145px;
-    }
-
-    .next-btn {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      position: absolute;
-      right: 0;
-      top: 145px;
-    }
-  }
-
-  .bullets {
-    button {
-      cursor: pointer;
-      margin: 50px 10px 0;
-      width: 13px;
-      height: 13px;
-      background-color: #eaeaea;
-      border-radius: 13px;
-      appearance: none;
-      border: none;
-    }
-
-    button.active {
-      background-color: var(--paletteColor6);
     }
   }
 }
