@@ -1,5 +1,11 @@
 import { list } from '@keystone-6/core'
-import { text, password, select, checkbox, timestamp } from '@keystone-6/core/fields'
+import {
+  text,
+  password,
+  select,
+  checkbox,
+  timestamp,
+} from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -40,14 +46,16 @@ const listConfigurations = list({
         {
           label: 'contributor',
           value: 'contributor',
-        }
+        },
       ],
       validation: { isRequired: true },
     }),
     isProtected: checkbox({
       defaultValue: false,
     }),
-    createdAt: timestamp(),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+    }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,

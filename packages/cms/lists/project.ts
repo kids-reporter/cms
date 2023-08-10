@@ -89,7 +89,9 @@ const listConfigurations = list({
       ref: 'Photo',
       label: 'FB分享縮圖',
     }),
-    createdAt: timestamp(),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+    }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,

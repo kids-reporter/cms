@@ -11,7 +11,9 @@ const listConfigurations = list({
     imageFile: image({
       storage: 'images',
     }),
-    createdAt: timestamp(),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+    }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
