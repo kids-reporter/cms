@@ -19,7 +19,7 @@ const listConfigurations = list({
         { label: 'active', value: 'active' },
       ],
     }),
-    subcategory: relationship({
+    subcategories: relationship({
       ref: 'Subcategory.category',
       many: true,
       ui: {
