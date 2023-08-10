@@ -91,7 +91,7 @@ model Photo {
 model Author {
   id                      Int       @id @default(autoincrement())
   name                    String    @default("")
-  email                   String    @unique @default("")
+  email                   String    @default("")
   bio                     String    @default("")
   avatar                  Photo?    @relation("Author_avatar", fields: [avatarId], references: [id])
   avatarId                Int?      @map("avatar")
