@@ -23,44 +23,43 @@ model User {
 }
 
 model Post {
-  id                              Int              @id @default(autoincrement())
-  slug                            String           @unique @default("")
-  name                            String           @default("")
-  subtitle                        String           @default("")
-  status                          String?          @default("draft")
-  publishedDate                   DateTime?
-  subSubcategories                SubSubcategory[] @relation("Post_subSubcategories")
-  writers                         Author[]         @relation("Author_posts")
-  photographers                   Author[]         @relation("Post_photographers")
-  editors                         Author[]         @relation("Post_editors")
-  designers                       Author[]         @relation("Post_designers")
-  engineers                       Author[]         @relation("Post_engineers")
-  reviewers                       Author[]         @relation("Post_reviewers")
-  otherByline                     String           @default("")
-  heroImage                       Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
-  heroImageId                     Int?             @map("heroImage")
-  heroCaption                     String           @default("")
-  heroImageSize                   String?          @default("normal")
-  brief                           Json?
-  content                         Json?
-  tags                            Tag[]            @relation("Post_tags")
-  readingTime                     Int?
-  relatedPosts                    Post[]           @relation("Post_relatedPosts")
-  ogTitle                         String           @default("")
-  ogDescription                   String           @default("")
-  ogImage                         Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
-  ogImageId                       Int?             @map("ogImage")
-  createdAt                       DateTime?
-  updatedAt                       DateTime?        @updatedAt
-  manualOrderOfWriters            Json?
-  manualOrderOfPhotographers      Json?
-  manualOrderOfDesigners          Json?
-  manualOrderOfEngineers          Json?
-  manualOrderOfReviewers          Json?
-  manualOrderOfEditors            Json?
-  manualOrderOfRelatedPosts       Json?
-  from_Post_relatedPosts          Post[]           @relation("Post_relatedPosts")
-  from_SubSubcategory_relatedPost SubSubcategory[] @relation("SubSubcategory_relatedPost")
+  id                         Int              @id @default(autoincrement())
+  slug                       String           @unique @default("")
+  name                       String           @default("")
+  subtitle                   String           @default("")
+  status                     String?          @default("draft")
+  publishedDate              DateTime?
+  subSubcategories           SubSubcategory[] @relation("Post_subSubcategories")
+  writers                    Author[]         @relation("Author_posts")
+  photographers              Author[]         @relation("Post_photographers")
+  editors                    Author[]         @relation("Post_editors")
+  designers                  Author[]         @relation("Post_designers")
+  engineers                  Author[]         @relation("Post_engineers")
+  reviewers                  Author[]         @relation("Post_reviewers")
+  otherByline                String           @default("")
+  heroImage                  Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
+  heroImageId                Int?             @map("heroImage")
+  heroCaption                String           @default("")
+  heroImageSize              String?          @default("normal")
+  brief                      Json?
+  content                    Json?
+  tags                       Tag[]            @relation("Post_tags")
+  readingTime                Int?
+  relatedPosts               Post[]           @relation("Post_relatedPosts")
+  ogTitle                    String           @default("")
+  ogDescription              String           @default("")
+  ogImage                    Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
+  ogImageId                  Int?             @map("ogImage")
+  createdAt                  DateTime?
+  updatedAt                  DateTime?        @updatedAt
+  manualOrderOfWriters       Json?
+  manualOrderOfPhotographers Json?
+  manualOrderOfDesigners     Json?
+  manualOrderOfEngineers     Json?
+  manualOrderOfReviewers     Json?
+  manualOrderOfEditors       Json?
+  manualOrderOfRelatedPosts  Json?
+  from_Post_relatedPosts     Post[]           @relation("Post_relatedPosts")
 
   @@index([status])
   @@index([publishedDate])
@@ -103,55 +102,50 @@ model Author {
 }
 
 model Category {
-  id                        Int           @id @default(autoincrement())
-  slug                      String        @unique @default("")
-  title                     String        @unique @default("")
-  status                    String?
-  subcategory               Subcategory[] @relation("Category_subcategory")
-  heroImage                 Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
-  heroImageId               Int?          @map("heroImage")
-  ogTitle                   String        @default("")
-  ogDescription             String        @default("")
-  ogImage                   Photo?        @relation("Category_ogImage", fields: [ogImageId], references: [id])
-  ogImageId                 Int?          @map("ogImage")
-  createdAt                 DateTime?
-  updatedAt                 DateTime?     @updatedAt
-  from_Subcategory_category Subcategory[] @relation("Subcategory_category")
+  id            Int           @id @default(autoincrement())
+  slug          String        @unique @default("")
+  title         String        @unique @default("")
+  status        String?
+  subcategory   Subcategory[] @relation("Subcategory_category")
+  heroImage     Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
+  heroImageId   Int?          @map("heroImage")
+  ogTitle       String        @default("")
+  ogDescription String        @default("")
+  ogImage       Photo?        @relation("Category_ogImage", fields: [ogImageId], references: [id])
+  ogImageId     Int?          @map("ogImage")
+  createdAt     DateTime?
+  updatedAt     DateTime?     @updatedAt
 
   @@index([heroImageId])
   @@index([ogImageId])
 }
 
 model Subcategory {
-  id                              Int              @id @default(autoincrement())
-  slug                            String           @unique @default("")
-  title                           String           @default("")
-  nameForCMS                      String           @unique @default("")
-  status                          String?
-  category                        Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
-  categoryId                      Int?             @map("category")
-  subSubcategory                  SubSubcategory[] @relation("Subcategory_subSubcategory")
-  createdAt                       DateTime?
-  updatedAt                       DateTime?        @updatedAt
-  from_Category_subcategory       Category[]       @relation("Category_subcategory")
-  from_SubSubcategory_subcategory SubSubcategory[] @relation("SubSubcategory_subcategory")
+  id             Int              @id @default(autoincrement())
+  slug           String           @unique @default("")
+  title          String           @default("")
+  nameForCMS     String           @unique @default("")
+  status         String?
+  category       Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
+  categoryId     Int?             @map("category")
+  subSubcategory SubSubcategory[] @relation("SubSubcategory_subcategory")
+  createdAt      DateTime?
+  updatedAt      DateTime?        @updatedAt
 
   @@index([categoryId])
 }
 
 model SubSubcategory {
-  id                              Int           @id @default(autoincrement())
-  slug                            String        @unique @default("")
-  name                            String        @default("")
-  nameForCMS                      String        @unique @default("")
-  status                          String?
-  subcategory                     Subcategory?  @relation("SubSubcategory_subcategory", fields: [subcategoryId], references: [id])
-  subcategoryId                   Int?          @map("subcategory")
-  relatedPost                     Post[]        @relation("SubSubcategory_relatedPost")
-  createdAt                       DateTime?
-  updatedAt                       DateTime?     @updatedAt
-  from_Post_subSubcategories      Post[]        @relation("Post_subSubcategories")
-  from_Subcategory_subSubcategory Subcategory[] @relation("Subcategory_subSubcategory")
+  id            Int          @id @default(autoincrement())
+  slug          String       @unique @default("")
+  name          String       @default("")
+  nameForCMS    String       @unique @default("")
+  status        String?
+  subcategory   Subcategory? @relation("SubSubcategory_subcategory", fields: [subcategoryId], references: [id])
+  subcategoryId Int?         @map("subcategory")
+  relatedPost   Post[]       @relation("Post_subSubcategories")
+  createdAt     DateTime?
+  updatedAt     DateTime?    @updatedAt
 
   @@index([subcategoryId])
 }
