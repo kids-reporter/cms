@@ -1,0 +1,102 @@
+import {
+  customFields,
+  richTextEditorButtonNames,
+} from '@kids-reporter/cms-core'
+import { list } from '@keystone-6/core'
+import { relationship, text, select, timestamp } from '@keystone-6/core/fields'
+
+const listConfigurations = list({
+  fields: {
+    slug: text({
+      isIndexed: 'unique',
+      label: '英文名稱（用於網址）',
+      validation: { isRequired: true },
+    }),
+    title: text({
+      validation: { isRequired: true },
+      label: '專題標題',
+    }),
+    subtitle: text({
+      label: '副標',
+      validation: { isRequired: false },
+    }),
+    state: select({
+      isIndexed: true,
+      defaultValue: 'draft',
+      options: [
+        { label: 'draft', value: 'draft' },
+        { label: 'published', value: 'published' },
+      ],
+      label: '狀態',
+    }),
+    introduction: customFields.richTextEditor({
+      label: '前言',
+      disabledButtons: [
+        richTextEditorButtonNames.blockquote,
+        richTextEditorButtonNames.code,
+        richTextEditorButtonNames.codeBlock,
+        richTextEditorButtonNames.embed,
+        richTextEditorButtonNames.h2,
+        richTextEditorButtonNames.h3,
+        richTextEditorButtonNames.h4,
+        richTextEditorButtonNames.h5,
+        richTextEditorButtonNames.image,
+        richTextEditorButtonNames.infoBox,
+        richTextEditorButtonNames.slideshow,
+      ],
+    }),
+    publishedDate: timestamp({
+      isIndexed: true,
+      label: '發布時間',
+    }),
+    heroImage: relationship({
+      ref: 'Photo',
+      label: '首圖',
+    }),
+    relatedPosts: relationship({
+      ref: 'Post.projects',
+      label: '相關文章',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
+    categories: relationship({
+      many: true,
+      label: '分類',
+      ref: 'Category.projects',
+      ui: {
+        hideCreate: true,
+      },
+    }),
+    tags: relationship({
+      ref: 'Tag.projects',
+      label: '標籤',
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
+    ogTitle: text({
+      label: 'FB分享標題',
+      validation: { isRequired: false },
+    }),
+    ogDescription: text({
+      label: 'FB分享說明',
+      validation: { isRequired: false },
+    }),
+    ogImage: relationship({
+      ref: 'Photo',
+      label: 'FB分享縮圖',
+    }),
+    createdAt: timestamp(),
+    updatedAt: timestamp({
+      db: {
+        updatedAt: true,
+      },
+    }),
+  },
+  access: () => true,
+})
+
+export default listConfigurations

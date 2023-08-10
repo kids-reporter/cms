@@ -1,12 +1,13 @@
 import Author from './author'
 import Category from './category'
-import Post from './post'
-import Subcategory from './subcatgory'
-import SubSubcategory from './sub-subcategory'
-import User from './user'
-import Photo from './photo'
-import Tag from './tag'
 import PDF from './pdf'
+import Photo from './photo'
+import Post from './post'
+import Project from './project'
+import SubSubcategory from './sub-subcategory'
+import Subcategory from './subcatgory'
+import Tag from './tag'
+import User from './user'
 //import Audio from './Audio'
 //import Collaboration from './Collaboration'
 //import Video from './Video'
@@ -25,6 +26,7 @@ export const listDefinition = {
   Post,
   Photo,
   Author,
+  Project,
   Category,
   Subcategory,
   SubSubcategory,
