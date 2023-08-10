@@ -138,6 +138,7 @@ const listConfigurations = list({
         richTextEditorButtonNames.h5,
         richTextEditorButtonNames.image,
         richTextEditorButtonNames.infoBox,
+        richTextEditorButtonNames.slideshow,
       ],
     }),
     content: customFields.richTextEditor({
