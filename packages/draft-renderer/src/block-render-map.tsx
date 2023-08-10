@@ -152,6 +152,35 @@ const _blockRenderMap = Immutable.Map({
 
 export const blockRenderMap = DefaultDraftBlockRenderMap.merge(_blockRenderMap)
 
+const ParagraphForIntroduction = styled(Paragraph)`
+  color: #575757;
+`
+
+const OrderdedListForIntroduction = styled(OrderdedList)`
+  color: #575757;
+`
+
+const UnorderdedListForIntroduction = styled(UnorderdedList)`
+  color: #575757;
+`
+
+export const blockRenderMapForIntroduction = DefaultDraftBlockRenderMap.merge(
+  Immutable.Map({
+    'ordered-list-item': {
+      element: 'li',
+      wrapper: <OrderdedListForIntroduction />,
+    },
+    'unordered-list-item': {
+      element: 'li',
+      wrapper: <UnorderdedListForIntroduction />,
+    },
+    unstyled: {
+      element: 'div',
+      wrapper: <ParagraphForIntroduction />,
+    },
+  })
+)
+
 const HeadingForAnnotation = styled(Heading)`
   margin: 0 auto 27px auto;
 `
