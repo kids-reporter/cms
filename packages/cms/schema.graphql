@@ -164,6 +164,8 @@ type Post {
   heroImageSize: String
   brief: JSON
   content: JSON
+  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
+  projectsCount(where: ProjectWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   readingTime: Int
@@ -217,6 +219,7 @@ input PostWhereInput {
   heroImage: PhotoWhereInput
   heroCaption: StringFilter
   heroImageSize: StringNullableFilter
+  projects: ProjectManyRelationFilter
   tags: TagManyRelationFilter
   readingTime: IntNullableFilter
   relatedPosts: PostManyRelationFilter
@@ -266,6 +269,12 @@ input AuthorManyRelationFilter {
   every: AuthorWhereInput
   some: AuthorWhereInput
   none: AuthorWhereInput
+}
+
+input ProjectManyRelationFilter {
+  every: ProjectWhereInput
+  some: ProjectWhereInput
+  none: ProjectWhereInput
 }
 
 input TagManyRelationFilter {
@@ -327,6 +336,7 @@ input PostUpdateInput {
   heroImageSize: String
   brief: JSON
   content: JSON
+  projects: ProjectRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
   readingTime: Int
   relatedPosts: PostRelateToManyForUpdateInput
@@ -362,6 +372,13 @@ input PhotoRelateToOneForUpdateInput {
   create: PhotoCreateInput
   connect: PhotoWhereUniqueInput
   disconnect: Boolean
+}
+
+input ProjectRelateToManyForUpdateInput {
+  disconnect: [ProjectWhereUniqueInput!]
+  set: [ProjectWhereUniqueInput!]
+  create: [ProjectCreateInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
 input TagRelateToManyForUpdateInput {
@@ -402,6 +419,7 @@ input PostCreateInput {
   heroImageSize: String
   brief: JSON
   content: JSON
+  projects: ProjectRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
   readingTime: Int
   relatedPosts: PostRelateToManyForCreateInput
@@ -432,6 +450,11 @@ input AuthorRelateToManyForCreateInput {
 input PhotoRelateToOneForCreateInput {
   create: PhotoCreateInput
   connect: PhotoWhereUniqueInput
+}
+
+input ProjectRelateToManyForCreateInput {
+  create: [ProjectCreateInput!]
+  connect: [ProjectWhereUniqueInput!]
 }
 
 input TagRelateToManyForCreateInput {
@@ -585,6 +608,126 @@ input AuthorCreateInput {
   updatedAt: DateTime
 }
 
+type Project {
+  id: ID!
+  slug: String
+  title: String
+  subtitle: String
+  state: String
+  introduction: JSON
+  publishedDate: DateTime
+  heroImage: Photo
+  relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
+  relatedPostsCount(where: PostWhereInput! = {}): Int
+  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
+  categoriesCount(where: CategoryWhereInput! = {}): Int
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  ogTitle: String
+  ogDescription: String
+  ogImage: Photo
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input ProjectWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input ProjectWhereInput {
+  AND: [ProjectWhereInput!]
+  OR: [ProjectWhereInput!]
+  NOT: [ProjectWhereInput!]
+  id: IDFilter
+  slug: StringFilter
+  title: StringFilter
+  subtitle: StringFilter
+  state: StringNullableFilter
+  publishedDate: DateTimeNullableFilter
+  heroImage: PhotoWhereInput
+  relatedPosts: PostManyRelationFilter
+  categories: CategoryManyRelationFilter
+  tags: TagManyRelationFilter
+  ogTitle: StringFilter
+  ogDescription: StringFilter
+  ogImage: PhotoWhereInput
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input CategoryManyRelationFilter {
+  every: CategoryWhereInput
+  some: CategoryWhereInput
+  none: CategoryWhereInput
+}
+
+input ProjectOrderByInput {
+  id: OrderDirection
+  slug: OrderDirection
+  title: OrderDirection
+  subtitle: OrderDirection
+  state: OrderDirection
+  publishedDate: OrderDirection
+  ogTitle: OrderDirection
+  ogDescription: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input ProjectUpdateInput {
+  slug: String
+  title: String
+  subtitle: String
+  state: String
+  introduction: JSON
+  publishedDate: DateTime
+  heroImage: PhotoRelateToOneForUpdateInput
+  relatedPosts: PostRelateToManyForUpdateInput
+  categories: CategoryRelateToManyForUpdateInput
+  tags: TagRelateToManyForUpdateInput
+  ogTitle: String
+  ogDescription: String
+  ogImage: PhotoRelateToOneForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CategoryRelateToManyForUpdateInput {
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateInput!]
+  connect: [CategoryWhereUniqueInput!]
+}
+
+input ProjectUpdateArgs {
+  where: ProjectWhereUniqueInput!
+  data: ProjectUpdateInput!
+}
+
+input ProjectCreateInput {
+  slug: String
+  title: String
+  subtitle: String
+  state: String
+  introduction: JSON
+  publishedDate: DateTime
+  heroImage: PhotoRelateToOneForCreateInput
+  relatedPosts: PostRelateToManyForCreateInput
+  categories: CategoryRelateToManyForCreateInput
+  tags: TagRelateToManyForCreateInput
+  ogTitle: String
+  ogDescription: String
+  ogImage: PhotoRelateToOneForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CategoryRelateToManyForCreateInput {
+  create: [CategoryCreateInput!]
+  connect: [CategoryWhereUniqueInput!]
+}
+
 type Category {
   id: ID!
   slug: String
@@ -592,6 +735,8 @@ type Category {
   status: String
   subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
   subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
+  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
+  projectsCount(where: ProjectWhereInput! = {}): Int
   heroImage: Photo
   ogTitle: String
   ogDescription: String
@@ -615,6 +760,7 @@ input CategoryWhereInput {
   title: StringFilter
   status: StringNullableFilter
   subcategories: SubcategoryManyRelationFilter
+  projects: ProjectManyRelationFilter
   heroImage: PhotoWhereInput
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -645,6 +791,7 @@ input CategoryUpdateInput {
   title: String
   status: String
   subcategories: SubcategoryRelateToManyForUpdateInput
+  projects: ProjectRelateToManyForUpdateInput
   heroImage: PhotoRelateToOneForUpdateInput
   ogTitle: String
   ogDescription: String
@@ -670,6 +817,7 @@ input CategoryCreateInput {
   title: String
   status: String
   subcategories: SubcategoryRelateToManyForCreateInput
+  projects: ProjectRelateToManyForCreateInput
   heroImage: PhotoRelateToOneForCreateInput
   ogTitle: String
   ogDescription: String
@@ -852,6 +1000,8 @@ type Tag {
   slug: String
   name: String
   status: String
+  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
+  projectsCount(where: ProjectWhereInput! = {}): Int
   ogTitle: String
   ogDescription: String
   ogImage: Photo
@@ -875,6 +1025,7 @@ input TagWhereInput {
   slug: StringFilter
   name: StringFilter
   status: StringNullableFilter
+  projects: ProjectManyRelationFilter
   ogTitle: StringFilter
   ogDescription: StringFilter
   ogImage: PhotoWhereInput
@@ -898,6 +1049,7 @@ input TagUpdateInput {
   slug: String
   name: String
   status: String
+  projects: ProjectRelateToManyForUpdateInput
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
@@ -915,6 +1067,7 @@ input TagCreateInput {
   slug: String
   name: String
   status: String
+  projects: ProjectRelateToManyForCreateInput
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
@@ -1016,6 +1169,12 @@ type Mutation {
   updateAuthors(data: [AuthorUpdateArgs!]!): [Author]
   deleteAuthor(where: AuthorWhereUniqueInput!): Author
   deleteAuthors(where: [AuthorWhereUniqueInput!]!): [Author]
+  createProject(data: ProjectCreateInput!): Project
+  createProjects(data: [ProjectCreateInput!]!): [Project]
+  updateProject(where: ProjectWhereUniqueInput!, data: ProjectUpdateInput!): Project
+  updateProjects(data: [ProjectUpdateArgs!]!): [Project]
+  deleteProject(where: ProjectWhereUniqueInput!): Project
+  deleteProjects(where: [ProjectWhereUniqueInput!]!): [Project]
   createCategory(data: CategoryCreateInput!): Category
   createCategories(data: [CategoryCreateInput!]!): [Category]
   updateCategory(where: CategoryWhereUniqueInput!, data: CategoryUpdateInput!): Category
@@ -1082,6 +1241,9 @@ type Query {
   authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   author(where: AuthorWhereUniqueInput!): Author
   authorsCount(where: AuthorWhereInput! = {}): Int
+  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
+  project(where: ProjectWhereUniqueInput!): Project
+  projectsCount(where: ProjectWhereInput! = {}): Int
   categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
   categoriesCount(where: CategoryWhereInput! = {}): Int
