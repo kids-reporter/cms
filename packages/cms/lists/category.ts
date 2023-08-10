@@ -20,7 +20,7 @@ const listConfigurations = list({
       ],
     }),
     subcategory: relationship({
-      ref: 'Subcategory',
+      ref: 'Subcategory.category',
       many: true,
       ui: {
         hideCreate: true,

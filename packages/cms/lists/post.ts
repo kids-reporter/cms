@@ -45,7 +45,7 @@ const listConfigurations = list({
       label: '發佈日期',
     }),
     subSubcategories: relationship({
-      ref: 'SubSubcategory',
+      ref: 'SubSubcategory.relatedPost',
       label: '次次分類',
       many: true,
       ui: {
