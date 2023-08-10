@@ -285,7 +285,11 @@ export default async function PostPage({
               </div>
             </header>
           </div>
-          <Brief content={post.brief} editors={post.editors} />
+          <Brief
+            content={post.brief}
+            editors={post.editors}
+            themeColor={post.theme}
+          />
           <Divider />
           <PostRenderer post={post} />
           <Tags tags={post.tags} />
