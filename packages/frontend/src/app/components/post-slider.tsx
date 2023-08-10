@@ -1,7 +1,6 @@
 'use client'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-// import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { Theme } from '@/app/constants'
 import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
 
