@@ -10,12 +10,14 @@ const listConfigurations = list({
     }),
     email: text({
       isIndexed: 'unique',
-      db: {
-        isNullable: true,
-      },
     }),
     bio: text({
       label: '簡介',
+    }),
+    avatar: relationship({
+      ref: 'Photo',
+      many: false,
+      label: '大頭照',
     }),
     posts: relationship({
       ref: 'Post.writers',
