@@ -189,22 +189,51 @@ const relatedPostMockup = [
 ]
 */
 
-const postQuery = `
+const heroImageGQL = `
+  heroImage {
+    imageFile {
+      url
+    }
+  }
+`
+
+const stakeHoldersGQL = `
+  editors {
+    name
+    bio
+  }
+  designers {
+    name
+    bio
+  }
+  photographers {
+    bio
+    name
+  }
+  engineers {
+    bio
+    name
+  }
+  writers {
+    bio
+    name
+  }
+  reviewers {
+    bio
+    name
+  }
+`
+
+const postQueryGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
       name
       brief
       content
       publishedDate
-      editors {
-        name
-      }
-      heroImage {
-        imageFile {
-          url
-        }
-      }
+      ${heroImageGQL}
       heroCaption
+      ${stakeHoldersGQL}
       tags {
         name
         slug
@@ -214,11 +243,7 @@ const postQuery = `
         slug
         publishedDate
         brief
-        heroImage {
-          imageFile {
-            url
-          }
-        }
+        ${heroImageGQL}
       }
     }
   }
@@ -231,7 +256,7 @@ export default async function PostPage({
 }) {
   const response = params?.slug
     ? await axios.post(API_URL, {
-        query: postQuery,
+        query: postQueryGQL,
         variables: {
           where: {
             slug: params.slug,
