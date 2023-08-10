@@ -1,19 +1,22 @@
+'use client'
+import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import Editors, { EditorGroup } from './editors'
 
 import './brief.scss'
 
 type BriefProp = {
   content: any
+  themeColor: string
   editors: EditorGroup[]
 }
 
 export const Brief = (props: BriefProp) => {
   return (
     <div className="post-intro">
-      {props.content?.blocks?.map(
-        (block: any, index: number) =>
-          block?.text && <p key={`brief-paragraph-${index}`}>{block.text}</p>
-      )}
+      <ArticleIntroductionDraftRenderer
+        rawContentState={props.content}
+        themeColor={props.themeColor}
+      />
       <Editors editorGroups={props.editors} />
     </div>
   )

@@ -12,8 +12,8 @@ type EditorsProp = {
 
 export const Editors = (props: EditorsProp) => {
   return (
-    <p>
-      <span style={{ color: '#575757' }}>
+    <p style={{ textAlign: 'center' }}>
+      <span style={{ color: '#575757', fontSize: '14px' }}>
         {'('}
         {props?.editorGroups?.map((editorGroup, editorGroupIndex) => {
           return (
