@@ -37,7 +37,9 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    createdAt: timestamp(),
+    createdAt: timestamp({
+      defaultValue: { kind: 'now' },
+    }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
