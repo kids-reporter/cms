@@ -1,7 +1,10 @@
 'use client'
+import { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper as SwiperCore } from 'swiper/types'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-import { Theme } from '@/app/constants'
+import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
+import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
 import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
 
 import 'swiper/css'
@@ -22,12 +25,15 @@ const briefLengthLimit = 110
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
-  const themeColor = GetThemeColor(props?.theme)
-  console.log(themeColor)
+  const themeColor = GetThemeColor(props?.theme) ?? DEFAULT_THEME_COLOR
 
   // Note: swiper loop mode is only available when slideNum >= slidesPerView * 2
   // ref: https://swiperjs.com/swiper-api#param-loop
   const isLoopAvailable = postNum >= slidesPerView * 2
+
+  // Note: for swiper custom navigation buttons
+  // https://github.com/nolimits4web/swiper/issues/3855#issuecomment-1287871054
+  const swiperRef = useRef<SwiperCore>()
 
   return (
     postNum > 0 && (
@@ -35,7 +41,9 @@ export const PostSlider = (props: PostSliderProp) => {
         <div className="cards">
           <Swiper
             autoplay={{ delay: autoPlayInterval }}
-            navigation={true}
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper
+            }}
             pagination={{ clickable: true }}
             modules={[Autoplay, Navigation, Pagination]}
             loop={isLoopAvailable}
@@ -70,6 +78,18 @@ export const PostSlider = (props: PostSliderProp) => {
               )
             })}
           </Swiper>
+          <button
+            className="prev-btn"
+            onClick={() => swiperRef.current?.slidePrev()}
+          >
+            <ArrowLeft color={themeColor} />
+          </button>
+          <button
+            className="next-btn"
+            onClick={() => swiperRef.current?.slideNext()}
+          >
+            <ArrowRight color={themeColor} />
+          </button>
         </div>
       </div>
     )

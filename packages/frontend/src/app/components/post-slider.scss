@@ -29,17 +29,6 @@
       background: white;
     }
 
-    .swiper-button-next,
-    .swiper-button-prev {
-      background-color: transparent;
-      color: var(--theme-color);
-      border: none;
-      cursor: pointer;
-      position: absolute;
-      top: 20%;
-      --btn-edge: -50px;
-    }
-
     .swiper-pagination-bullets {
       height: 62px;
       display: flex;
@@ -130,6 +119,24 @@
           color: #A3A3A3;
         }
       }
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      top: 15%;
+      --btn-edge: -5px;
+      z-index: 999;
+    }
+
+    button.prev-btn {
+      left: var(--btn-edge);
+    }
+
+    button.next-btn {
+      right: var(--btn-edge);
     }
   }
 }

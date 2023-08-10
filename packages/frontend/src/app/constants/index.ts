@@ -14,3 +14,5 @@ export enum ThemeColor {
   BLUE = '#27B5F7',
   RED = '#F76977',
 }
+
+export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
