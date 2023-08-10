@@ -16,3 +16,14 @@ export enum ThemeColor {
 }
 
 export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
+
+export enum AuthorGroup {
+  WRITERS = 'writers',
+  DESIGNERS = 'designers',
+  REVIEWERS = 'reviewers',
+  EDITORS = 'editors',
+  PHOTOGRAPHERS = 'photographers',
+  ENGINEERS = 'engineers',
+}
+
+export const DEFAULT_AVATAR = '/images/avatar_default.png'

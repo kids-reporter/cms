@@ -11,7 +11,7 @@ import AuthorCard from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { API_URL, CMS_URL, Theme } from '@/app/constants'
+import { API_URL, CMS_URL, AuthorGroup, Theme } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -64,6 +64,7 @@ const editorsMockup = [
     ],
   },
 ]
+/*
 const authorsMockup = [
   {
     name: '張恩瑋',
@@ -106,7 +107,6 @@ const authorsMockup = [
     link: '/staff/chang-en-wei',
   },
 ]
-/*
 const tagsMockup = [
   {
     link: 'https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/',
@@ -191,38 +191,32 @@ const relatedPostMockup = [
 
 const heroImageGQL = `
   heroImage {
+    resized {
+      medium
+    }
     imageFile {
       url
     }
   }
 `
 
-const stakeHoldersGQL = `
-  editors {
+const stakeholderGroups = Object.values(AuthorGroup)
+const stakeholdersGQL = stakeholderGroups.reduce(
+  (gqlStr, stakeholderGroup) =>
+    gqlStr +
+    `
+  ${stakeholderGroup} {
+    id
     name
     bio
-  }
-  designers {
-    name
-    bio
-  }
-  photographers {
-    bio
-    name
-  }
-  engineers {
-    bio
-    name
-  }
-  writers {
-    bio
-    name
-  }
-  reviewers {
-    bio
-    name
-  }
-`
+    avatar {
+      imageFile {
+        url
+      }
+    }
+  }`,
+  ''
+)
 
 const postQueryGQL = `
   query($where: PostWhereUniqueInput!) {
@@ -233,7 +227,7 @@ const postQueryGQL = `
       publishedDate
       ${heroImageGQL}
       heroCaption
-      ${stakeHoldersGQL}
+      ${stakeholdersGQL}
       tags {
         name
         slug
@@ -266,6 +260,22 @@ export default async function PostPage({
     : undefined
 
   const post = response?.data?.data?.post
+  const authors: any[] = []
+  stakeholderGroups.forEach((stakeholderGroup) => {
+    const stackeHolders = post?.[stakeholderGroup]
+    if (stackeHolders?.length > 0) {
+      stackeHolders.forEach((stakeholder: any) => {
+        stakeholder &&
+          authors.push({
+            id: stakeholder.id,
+            name: stakeholder.name,
+            avatar: stakeholder.avatar?.imageFile?.url,
+            group: stakeholderGroup,
+            bio: stakeholder.bio,
+          })
+      })
+    }
+  })
   const relatedPosts = post?.relatedPosts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
       ? `${CMS_URL}${post.heroImage.imageFile.url}`
@@ -289,7 +299,6 @@ export default async function PostPage({
     post.category = categoryMockup // TODO: find category source
     post.editors = editorsMockup // TODO: find editors source
     post.theme = Theme.YELLOW
-    post.authors = authorsMockup // TODO: find editors source
   }
 
   return (
@@ -298,7 +307,7 @@ export default async function PostPage({
         <div className={`post theme-${post.theme}`}>
           <Sidebar />
           <HeroImage
-            url={post.heroImage?.imageFile?.url}
+            url={post?.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
             caption={post.heroCaption}
           />
           <div className="hero-section">
@@ -314,7 +323,7 @@ export default async function PostPage({
           <Divider />
           <PostRenderer post={post} />
           <Tags tags={post.tags} />
-          <AuthorCard authors={post.authors} />
+          <AuthorCard authors={authors} />
         </div>
         <CallToAction />
         <RelatedPosts posts={relatedPosts} theme={post.theme} />
