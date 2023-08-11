@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-width: var(--normal-container-max-width);
+  width: min(var(--normal-container-max-width), 100%);
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 100px;
