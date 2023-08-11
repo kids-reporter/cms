@@ -7,11 +7,11 @@ import Sidebar from './sidebar'
 import Brief from './brief'
 import Tags from './tags'
 import PostRenderer from './post-renderer'
-import AuthorCard from './author-card'
+import AuthorCard, { Author } from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { API_URL, CMS_URL, Theme } from '@/app/constants'
+import { API_URL, CMS_URL, AUTHOR_GROUPS, Theme } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -64,6 +64,7 @@ const editorsMockup = [
     ],
   },
 ]
+/*
 const authorsMockup = [
   {
     name: '張恩瑋',
@@ -106,7 +107,6 @@ const authorsMockup = [
     link: '/staff/chang-en-wei',
   },
 ]
-/*
 const tagsMockup = [
   {
     link: 'https://kids.twreporter.org/tag/%e5%8b%95%e7%89%a9%e4%bf%9d%e8%ad%b7/',
@@ -189,22 +189,44 @@ const relatedPostMockup = [
 ]
 */
 
-const postQuery = `
+const heroImageGQL = `
+  heroImage {
+    resized {
+      medium
+    }
+    imageFile {
+      url
+    }
+  }
+`
+
+const stakeholdersGQL = AUTHOR_GROUPS.reduce(
+  (gqlStr, stakeholderGroup) =>
+    gqlStr +
+    `
+  ${stakeholderGroup} {
+    id
+    name
+    bio
+    avatar {
+      imageFile {
+        url
+      }
+    }
+  }`,
+  ''
+)
+
+const postQueryGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
       name
       brief
       content
       publishedDate
-      editors {
-        name
-      }
-      heroImage {
-        imageFile {
-          url
-        }
-      }
+      ${heroImageGQL}
       heroCaption
+      ${stakeholdersGQL}
       tags {
         name
         slug
@@ -214,11 +236,7 @@ const postQuery = `
         slug
         publishedDate
         brief
-        heroImage {
-          imageFile {
-            url
-          }
-        }
+        ${heroImageGQL}
       }
     }
   }
@@ -231,7 +249,7 @@ export default async function PostPage({
 }) {
   const response = params?.slug
     ? await axios.post(API_URL, {
-        query: postQuery,
+        query: postQueryGQL,
         variables: {
           where: {
             slug: params.slug,
@@ -241,6 +259,28 @@ export default async function PostPage({
     : undefined
 
   const post = response?.data?.data?.post
+
+  /* TODO: error handling
+  if (!post) {
+    return 404
+  }
+  */
+
+  const authors = AUTHOR_GROUPS.reduce((allAuthors: Author[], authorGroup) => {
+    const authorConfigArray = post?.[authorGroup]?.map((author: any) => {
+      return author
+        ? {
+            id: author.id,
+            name: author.name,
+            avatar: author.avatar?.imageFile?.url,
+            group: authorGroup,
+            bio: author.bio,
+          }
+        : undefined
+    })
+    return [...allAuthors, ...authorConfigArray]
+  }, [])
+
   const relatedPosts = post?.relatedPosts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
       ? `${CMS_URL}${post.heroImage.imageFile.url}`
@@ -264,7 +304,6 @@ export default async function PostPage({
     post.category = categoryMockup // TODO: find category source
     post.editors = editorsMockup // TODO: find editors source
     post.theme = Theme.YELLOW
-    post.authors = authorsMockup // TODO: find editors source
   }
 
   return (
@@ -273,7 +312,7 @@ export default async function PostPage({
         <div className={`post theme-${post.theme}`}>
           <Sidebar />
           <HeroImage
-            url={post.heroImage?.imageFile?.url}
+            url={post?.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
             caption={post.heroCaption}
           />
           <div className="hero-section">
@@ -293,7 +332,7 @@ export default async function PostPage({
           <Divider />
           <PostRenderer post={post} />
           <Tags tags={post.tags} />
-          <AuthorCard authors={post.authors} />
+          <AuthorCard authors={authors} />
         </div>
         <CallToAction />
         <RelatedPosts posts={relatedPosts} theme={post.theme} />
