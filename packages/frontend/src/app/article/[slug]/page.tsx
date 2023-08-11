@@ -335,7 +335,7 @@ export default async function PostPage({
           <AuthorCard authors={authors} />
         </div>
         <CallToAction />
-        <RelatedPosts posts={relatedPosts} theme={post.theme} />
+        <RelatedPosts posts={relatedPosts} sliderTheme={post.theme} />
       </main>
     )
   )
