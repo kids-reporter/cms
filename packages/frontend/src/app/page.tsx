@@ -246,7 +246,7 @@ export default async function Home() {
                   ? postMockups
                   : postMockupsMore /* TODO: remove mockup */
               }
-              theme={section.theme}
+              sliderTheme={section.theme}
             />
             {index < sliderSections.length - 1 ? <HomeDivider /> : null}
           </div>

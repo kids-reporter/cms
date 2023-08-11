@@ -12,18 +12,20 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './post-slider.scss'
 
-export type PostSliderProp = {
-  posts: {
-    image: string
-    name: string
-    url: string
-    brief: string
-    tag: string
-    publishedDate: string
-    categoryName: string
-    theme: Theme
-  }[]
+type Post = {
+  image: string
+  name: string
+  url: string
+  brief: string
+  tag: string
+  publishedDate: string
+  categoryName: string
   theme: Theme
+}
+
+export type PostSliderProp = {
+  posts: Post[]
+  sliderTheme: Theme
 }
 
 const slidesPerView = 3
@@ -34,7 +36,7 @@ const briefLengthLimit = 110
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
-  const themeColor = GetThemeColor(props?.theme) ?? DEFAULT_THEME_COLOR
+  const themeColor = GetThemeColor(props?.sliderTheme) ?? DEFAULT_THEME_COLOR
 
   // Note: swiper loop mode is only available when slideNum >= slidesPerView * 2
   // ref: https://swiperjs.com/swiper-api#param-loop
@@ -46,7 +48,7 @@ export const PostSlider = (props: PostSliderProp) => {
 
   return (
     postNum > 0 && (
-      <div className={`post-slider theme-${props.theme}`}>
+      <div className={`post-slider theme-${props.sliderTheme}`}>
         <div className="cards">
           <Swiper
             autoplay={{ delay: autoPlayInterval }}
