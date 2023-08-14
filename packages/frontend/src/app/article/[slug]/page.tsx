@@ -233,7 +233,7 @@ const postQueryGQL = `
         name
         slug
       }
-      relatedPosts {
+      relatedPosts${inputOrderSuffix} {
         name
         slug
         publishedDate
@@ -284,25 +284,27 @@ export default async function PostPage({
     return [...allAuthors, ...(authorConfigArray ?? [])]
   }, [])
 
-  const relatedPosts = post?.relatedPosts?.map((post: any) => {
-    const imageURL = post?.heroImage?.imageFile?.url
-      ? `${CMS_URL}${post.heroImage.imageFile.url}`
-      : undefined
-    return post
-      ? {
-          name: post.name,
-          url: `/article/${post.slug}`,
-          image: imageURL,
-          // TODO: find correct brief
-          brief:
-            '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-          tag: 'test',
-          publishedDate: post.publishedDate,
-          categoryName: 'test',
-          theme: Theme.YELLOW,
-        }
-      : undefined
-  })
+  const relatedPosts = post?.[`relatedPosts${inputOrderSuffix}`]?.map(
+    (post: any) => {
+      const imageURL = post?.heroImage?.imageFile?.url
+        ? `${CMS_URL}${post.heroImage.imageFile.url}`
+        : undefined
+      return post
+        ? {
+            name: post.name,
+            url: `/article/${post.slug}`,
+            image: imageURL,
+            // TODO: find correct brief
+            brief:
+              '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+            tag: 'test',
+            publishedDate: post.publishedDate,
+            categoryName: 'test',
+            theme: Theme.YELLOW,
+          }
+        : undefined
+    }
+  )
   if (post) {
     post.category = categoryMockup // TODO: find category source
     post.editors = editorsMockup // TODO: find editors source
