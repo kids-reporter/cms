@@ -81,7 +81,7 @@ const HeaderBorderContainer = styled.div`
       case ThemeColorEnum.BLUE:
       default: {
         logoColor = 'yellow'
-        bgColor = '#3a4f66'
+        bgColor = '#d2f5ff'
         break
       }
     }
