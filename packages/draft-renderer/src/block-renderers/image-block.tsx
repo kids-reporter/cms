@@ -88,6 +88,12 @@ const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
 
   ${(props) => {
     switch (props.$alignment) {
+      case 'paragraph-width':
+        return `
+          ${theme.breakpoint.xl} {
+            max-width: 700px;
+          }
+        `
       case 'right':
         return `
           ${theme.breakpoint.xl} {
