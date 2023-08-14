@@ -11,7 +11,13 @@ import AuthorCard, { Author } from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
-import { API_URL, CMS_URL, AUTHOR_GROUPS, Theme } from '@/app/constants'
+import {
+  API_URL,
+  CMS_URL,
+  AUTHOR_GROUPS,
+  Theme,
+  GetThemeFromCategory,
+} from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
@@ -308,15 +314,17 @@ export default async function PostPage({
         : undefined
     }
   )
+
+  const category = undefined // TODO: find category
+  const theme = GetThemeFromCategory(category)
   if (post) {
     post.editors = editorsMockup // TODO: find editors source
-    post.theme = Theme.YELLOW
   }
 
   return (
     post && (
       <main className="main-container">
-        <div className={`post theme-${post.theme}`}>
+        <div className={`post theme-${theme}`}>
           <Sidebar />
           <HeroImage
             url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
@@ -337,7 +345,7 @@ export default async function PostPage({
           <Brief
             content={post.brief}
             editors={post.editors}
-            themeColor={post.theme}
+            themeColor={theme}
           />
           <Divider />
           <PostRenderer post={post} />
@@ -345,7 +353,7 @@ export default async function PostPage({
           <AuthorCard authors={authors} />
         </div>
         <CallToAction />
-        <RelatedPosts posts={relatedPosts ?? []} sliderTheme={post.theme} />
+        <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
       </main>
     )
   )

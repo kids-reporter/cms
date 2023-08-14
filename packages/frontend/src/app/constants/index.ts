@@ -9,6 +9,14 @@ export enum Theme {
   RED = 'red',
 }
 
+// TODO: set category mapping
+export const GetThemeFromCategory = (Category: any): Theme => {
+  switch (Category) {
+    default:
+      return Theme.YELLOW
+  }
+}
+
 export enum ThemeColor {
   YELLOW = '#F8C341',
   BLUE = '#27B5F7',
