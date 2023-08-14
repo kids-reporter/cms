@@ -1,12 +1,14 @@
 'use client'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
+import { RawDraftContentState } from 'draft-js'
 import Editors, { EditorGroup } from './editors'
+import { Theme } from '@/app/constants'
 
 import './brief.scss'
 
 type BriefProp = {
-  content: any
-  themeColor: string
+  content: RawDraftContentState
+  themeColor: Theme
   editors: EditorGroup[]
 }
 
