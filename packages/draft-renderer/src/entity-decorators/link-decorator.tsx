@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
-import { getColorHex, ThemeColorType } from '../utils/index'
+import { getColorHex, ThemeColorEnum } from '../utils/index'
 
-const LinkWrapper = styled.a<{ theme: { themeColor: ThemeColorType } }>`
+const LinkWrapper = styled.a<{ theme: { themeColor: ThemeColorEnum } }>`
   text-decoration: underline;
   color: ${({ theme }) => getColorHex(theme?.themeColor)};
   transition: color 0.1s ease-in;

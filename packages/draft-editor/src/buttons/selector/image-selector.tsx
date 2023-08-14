@@ -302,6 +302,7 @@ export function ImageSelector(props: {
 
   const options = [
     { value: undefined, label: 'default', isDisabled: false },
+    { value: 'paragraph-width', label: '與文章段落等寬', isDisabled: false },
     { value: 'left', label: 'left', isDisabled: false },
     { value: 'right', label: 'right', isDisabled: false },
   ]
