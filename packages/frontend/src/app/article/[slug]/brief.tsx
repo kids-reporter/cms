@@ -8,7 +8,7 @@ import './brief.scss'
 
 type BriefProp = {
   content: RawDraftContentState
-  themeColor: Theme.BLUE | Theme.RED | Theme.YELLOW
+  themeColor: Theme
   editors: EditorGroup[]
 }
 
