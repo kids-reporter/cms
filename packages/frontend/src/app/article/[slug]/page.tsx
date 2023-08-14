@@ -200,11 +200,11 @@ const heroImageGQL = `
   }
 `
 
-const stakeholdersGQL = AUTHOR_GROUPS.reduce(
-  (gqlStr, stakeholderGroup) =>
+const authorsGQL = AUTHOR_GROUPS.reduce(
+  (gqlStr, authorGroup) =>
     gqlStr +
     `
-  ${stakeholderGroup} {
+  ${authorGroup}InInputOrder {
     id
     name
     bio
@@ -226,7 +226,7 @@ const postQueryGQL = `
       publishedDate
       ${heroImageGQL}
       heroCaption
-      ${stakeholdersGQL}
+      ${authorsGQL}
       tags {
         name
         slug
