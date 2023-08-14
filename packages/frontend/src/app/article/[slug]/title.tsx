@@ -6,10 +6,11 @@ type TitleProp = {
 }
 
 export const Title = (props: TitleProp) => {
+  const subtitle = props.subtitle
   return (
     <>
-      {props.subtitle && <h2>{props.subtitle}</h2>}
-      <h1 className="title">{props.text}</h1>
+      {subtitle && <div className="subtitle">{props.subtitle}</div>}
+      <h1 className={`title ${subtitle ? '' : 'noSubtitle'}`}>{props.text}</h1>
     </>
   )
 }

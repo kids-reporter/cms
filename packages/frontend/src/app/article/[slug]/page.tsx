@@ -329,7 +329,7 @@ export default async function PostPage({
                 <PublishedDate date={post.publishedDate} />
                 <Category
                   text={post.subSubcategories?.[0]?.name}
-                  link={`/category/${post.subSubcategories?.[0]?.slug}`}
+                  link={`/category/${post.subSubcategories?.[0]?.slug}`} // TODO: correct path
                 />
               </div>
             </header>
