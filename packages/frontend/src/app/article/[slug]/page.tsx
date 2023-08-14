@@ -231,6 +231,7 @@ const categoryGQL = `
     subcategory {
       slug
       category {
+        title
         slug
       }
     }
@@ -312,28 +313,32 @@ export default async function PostPage({
       const imageURL = post?.heroImage?.imageFile?.url
         ? `${CMS_URL}${post.heroImage.imageFile.url}`
         : undefined
-      const subSubCategory = post?.subSubcategories?.[0]
-      const category = subSubCategory?.subcategory?.category?.slug
+      const subSubcategory = post?.subSubcategories?.[0]
+      const category = subSubcategory?.subcategory?.category
 
       return post
         ? {
             name: post.name,
             url: `/article/${post.slug}`,
             image: imageURL,
-            brief: post.ogDescription,
-            tag: 'test',
+            desc: post.ogDescription,
+            category: category?.title,
+            subSubcategory: subSubcategory?.name,
             publishedDate: post.publishedDate,
-            categoryName: 'test',
-            category: category,
-            subSubCategory: subSubCategory,
             theme: GetThemeFromCategory(category),
           }
         : undefined
     }
   )
 
-  const category = post.subSubcategories?.[0]?.subcategory?.category?.slug
-  const theme = GetThemeFromCategory(category)
+  const subSubcategory = post.subSubcategories?.[0]
+  const subcategory = subSubcategory?.subcategory
+  const category = subcategory?.category
+  const subSubcategoryURL =
+    category?.slug && subcategory?.slug && subSubcategory?.slug
+      ? `/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
+      : ''
+  const theme = GetThemeFromCategory(subSubcategory?.slug)
 
   return (
     post && (
@@ -350,13 +355,13 @@ export default async function PostPage({
               <div className="post-date-category">
                 <PublishedDate date={post.publishedDate} />
                 <Category
-                  text={post.subSubcategories?.[0]?.name}
-                  link={`/category/${post.subSubcategories?.[0]?.slug}`} // TODO: correct path
+                  text={subSubcategory?.name}
+                  link={subSubcategoryURL}
                 />
               </div>
             </header>
           </div>
-          <Brief content={post.brief} editors={authorsInBrief} theme={theme} />
+          <Brief content={post.brief} authors={authorsInBrief} theme={theme} />
           <Divider />
           <PostRenderer post={post} theme={theme} />
           <Tags tags={post.tags} />

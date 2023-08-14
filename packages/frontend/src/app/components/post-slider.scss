@@ -84,7 +84,7 @@
         margin-bottom: 12px;
       }
 
-      .post-brief {
+      .post-desc {
         font-style: normal;
         font-weight: 500;
         font-size: 16px;
@@ -99,7 +99,7 @@
         justify-content: space-between;
         align-items: center;
 
-        .tag {
+        .subSubcategory {
           @media screen and (min-width: 992px) {
             font-size: 14px;
           }
