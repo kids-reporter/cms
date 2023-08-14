@@ -189,6 +189,8 @@ const relatedPostMockup = [
 ]
 */
 
+const inputOrderSuffix = 'InInputOrder'
+
 const heroImageGQL = `
   heroImage {
     resized {
@@ -204,7 +206,7 @@ const authorsGQL = AUTHOR_GROUPS.reduce(
   (gqlStr, authorGroup) =>
     gqlStr +
     `
-  ${authorGroup}InInputOrder {
+  ${authorGroup}${inputOrderSuffix} {
     id
     name
     bio
@@ -267,7 +269,8 @@ export default async function PostPage({
   */
 
   const authors = AUTHOR_GROUPS.reduce((allAuthors: Author[], authorGroup) => {
-    const authorConfigArray = post?.[authorGroup]?.map((author: any) => {
+    const orderedAuthorField = `${authorGroup}${inputOrderSuffix}`
+    const authorConfigArray = post?.[orderedAuthorField]?.map((author: any) => {
       return author
         ? {
             id: author.id,
@@ -278,7 +281,7 @@ export default async function PostPage({
           }
         : undefined
     })
-    return [...allAuthors, ...authorConfigArray]
+    return [...allAuthors, ...(authorConfigArray ?? [])]
   }, [])
 
   const relatedPosts = post?.relatedPosts?.map((post: any) => {
