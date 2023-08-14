@@ -18,7 +18,7 @@ import { ImageInInfoBox } from '../block-renderers/image-block'
 import { decorator } from '../entity-decorators/index'
 import { ThemeColorEnum } from '../utils/index'
 
-enum InfoBoxType {
+enum InfoBoxTypeEnum {
   newsChargeStation = 'news-charge-station',
   headerBorder = 'header-border',
   boxBorder = 'box-border',
@@ -27,10 +27,7 @@ enum InfoBoxType {
 type InfoBoxBlockProps = {
   className?: string
   data: {
-    type:
-      | InfoBoxType.boxBorder
-      | InfoBoxType.headerBorder
-      | InfoBoxType.newsChargeStation
+    type: InfoBoxTypeEnum
     rawContentState: RawDraftContentState
   }
 }
@@ -84,7 +81,7 @@ const HeaderBorderContainer = styled.div`
       case ThemeColorEnum.BLUE:
       default: {
         logoColor = 'yellow'
-        bgColor = '#3a4f66'
+        bgColor = '#d2f5ff'
         break
       }
     }
@@ -161,16 +158,16 @@ export function InfoBoxInArticleBody({ className, data }: InfoBoxBlockProps) {
   let Component
   let blockRenderMap = blockRenderMapForInfoBox
   switch (type) {
-    case InfoBoxType.headerBorder: {
+    case InfoBoxTypeEnum.headerBorder: {
       Component = HeaderBorder
       blockRenderMap = blockRenderMapForInfoBoxWithHeaderBorder
       break
     }
-    case InfoBoxType.boxBorder: {
+    case InfoBoxTypeEnum.boxBorder: {
       Component = BoxBorder
       break
     }
-    case InfoBoxType.newsChargeStation:
+    case InfoBoxTypeEnum.newsChargeStation:
     default: {
       Component = NewsChargeStation
       break

@@ -11,7 +11,7 @@ import {
   blockRenderMapForIntroduction,
 } from './block-render-map'
 import { decorator } from './entity-decorators/index'
-import { ThemeColorEnum, ThemeColorType } from './utils/index'
+import { ThemeColorEnum } from './utils/index'
 import { ThemeProvider } from 'styled-components'
 
 const blockRendererFn = (block: any) => {
@@ -20,7 +20,7 @@ const blockRendererFn = (block: any) => {
 }
 
 type DraftRendererProps = {
-  themeColor: ThemeColorType
+  themeColor: ThemeColorEnum
   rawContentState: RawDraftContentState
 }
 

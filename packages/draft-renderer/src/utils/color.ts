@@ -6,12 +6,7 @@ export enum ThemeColorEnum {
   YELLOW = 'yellow',
 }
 
-export type ThemeColorType =
-  | ThemeColorEnum.BLUE
-  | ThemeColorEnum.RED
-  | ThemeColorEnum.YELLOW
-
-export function getColorHex(themeColor: ThemeColorType) {
+export function getColorHex(themeColor: ThemeColorEnum) {
   switch (themeColor) {
     case ThemeColorEnum.RED: {
       return colorHex.red

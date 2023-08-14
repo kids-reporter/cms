@@ -79,7 +79,7 @@ const ArticleBodyContainer = styled.div`
   `}
 `
 
-enum BlockquoteType {
+enum BlockquoteTypeEnum {
   borderLeft = 'border_left',
   quoteLeft = 'quote_left',
 }
@@ -87,7 +87,7 @@ enum BlockquoteType {
 export type BlockquoteProps = {
   className?: string
   data?: {
-    type: BlockquoteType.borderLeft | BlockquoteType.quoteLeft
+    type: BlockquoteTypeEnum
     text: string
   }
 }
@@ -95,13 +95,13 @@ export type BlockquoteProps = {
 export function BlockquoteInArticleBody({
   className = '',
   data = {
-    type: BlockquoteType.borderLeft,
+    type: BlockquoteTypeEnum.borderLeft,
     text: '',
   },
 }: BlockquoteProps) {
   const { type, text } = data
   const BlockQuote =
-    type === BlockquoteType.quoteLeft
+    type === BlockquoteTypeEnum.quoteLeft
       ? QuoteLeftBlockquote
       : BorderLeftBlockquote
   return (

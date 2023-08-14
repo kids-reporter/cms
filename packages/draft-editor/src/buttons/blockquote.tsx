@@ -14,12 +14,8 @@ enum BlockquoteLabelEnum {
   quoteLeft = '左引號',
 }
 
-type BlockquoteType =
-  | BlockquoteTypeEnum.borderLeft
-  | BlockquoteTypeEnum.quoteLeft
-
 export type BlockquoteInputValue = {
-  type: BlockquoteType
+  type: BlockquoteTypeEnum
   text: string
 }
 
@@ -71,7 +67,7 @@ export function BlockquoteInput({
           ]}
           onChange={(blockquoteType) => {
             setInputValueState({
-              type: blockquoteType as BlockquoteType,
+              type: blockquoteType as BlockquoteTypeEnum,
               text: inputValueState.text,
             })
           }}

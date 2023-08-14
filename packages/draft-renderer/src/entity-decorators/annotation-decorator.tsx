@@ -44,7 +44,7 @@ const ArrowIcon = styled.span<{ $showContent: boolean }>`
     top: 5px;
     right: 5px;
     transform: ${(props) =>
-      props.$showContent ? 'rotate(45deg)' : 'rotate(-45deg)'};
+      props.$showContent ? 'rotate(-45deg)' : 'rotate(45deg)'};
     display: block;
     position: absolute;
     transition: transform 200ms ease 0s;
@@ -58,7 +58,7 @@ const ArrowIcon = styled.span<{ $showContent: boolean }>`
     top: 5px;
     left: 5px;
     transform: ${(props) =>
-      props.$showContent ? 'rotate(-45deg)' : 'rotate(45deg)'};
+      props.$showContent ? 'rotate(45deg)' : 'rotate(-45deg)'};
     display: block;
     position: absolute;
     transition: transform 200ms ease 0s;
