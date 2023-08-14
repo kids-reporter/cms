@@ -1,12 +1,10 @@
 import {
   customFields,
-  utils,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
 import { graphql, list } from '@keystone-6/core'
 import {
   virtual,
-  integer,
   relationship,
   timestamp,
   text,
@@ -52,7 +50,7 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    writers: relationship({
+    authors: relationship({
       ref: 'Author.posts',
       many: true,
       label: '作者',
@@ -60,54 +58,6 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    photographers: relationship({
-      many: true,
-      label: '攝影',
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    editors: relationship({
-      label: '責任編輯',
-      many: true,
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    designers: relationship({
-      label: '設計',
-      many: true,
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    engineers: relationship({
-      many: true,
-      label: '工程',
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    reviewers: relationship({
-      many: true,
-      label: '核稿',
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    otherByline: text({
-      validation: { isRequired: false },
-      label: '作者（其他）',
-    }),
-    //heroVideo: relationship({
-    //  label: 'Leading Video',
-    //  ref: 'Video',
-    //}),
     heroImage: relationship({
       label: '首圖',
       ref: 'Photo',
@@ -115,15 +65,6 @@ const listConfigurations = list({
     heroCaption: text({
       label: '首圖圖說',
       validation: { isRequired: false },
-    }),
-    heroImageSize: select({
-      label: '首圖尺寸',
-      options: [
-        { label: 'extend', value: 'extend' },
-        { label: 'normal', value: 'normal' },
-        { label: 'small', value: 'small' },
-      ],
-      defaultValue: 'normal',
     }),
     brief: customFields.richTextEditor({
       label: '前言',
@@ -161,9 +102,6 @@ const listConfigurations = list({
       ref: 'Tag.posts',
       many: true,
       label: '標籤',
-    }),
-    readingTime: integer({
-      label: '閱讀時間',
     }),
     relatedPosts: relationship({
       ref: 'Post',
@@ -231,50 +169,4 @@ const listConfigurations = list({
   },
   hooks: {},
 })
-export default utils.addManualOrderRelationshipFields(
-  [
-    {
-      fieldName: 'manualOrderOfWriters',
-      targetFieldName: 'writers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfPhotographers',
-      targetFieldName: 'photographers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfDesigners',
-      targetFieldName: 'designers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfEngineers',
-      targetFieldName: 'engineers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfReviewers',
-      targetFieldName: 'reviewers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfEditors',
-      targetFieldName: 'editors',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfRelatedPosts',
-      targetFieldName: 'relatedPosts',
-      targetListName: 'Post',
-      targetListLabelField: 'name',
-    },
-  ],
-  listConfigurations
-)
+export default listConfigurations

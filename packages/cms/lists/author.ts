@@ -18,7 +18,7 @@ const listConfigurations = list({
       label: '大頭照',
     }),
     posts: relationship({
-      ref: 'Post.writers',
+      ref: 'Post.authors',
       many: true,
       label: '文章',
     }),
