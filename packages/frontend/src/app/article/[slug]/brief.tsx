@@ -8,7 +8,7 @@ import './brief.scss'
 
 type BriefProp = {
   content: RawDraftContentState
-  themeColor: Theme
+  theme: Theme
   editors: EditorGroup[]
 }
 
@@ -17,7 +17,7 @@ export const Brief = (props: BriefProp) => {
     <div className="post-intro">
       <ArticleIntroductionDraftRenderer
         rawContentState={props.content}
-        themeColor={props.themeColor}
+        themeColor={props.theme}
       />
       <Editors editorGroups={props.editors} />
     </div>

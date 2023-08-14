@@ -1,16 +1,21 @@
 'use client'
 import { ArticleBodyDraftRenderer } from '@kids-reporter/draft-renderer'
+import { Theme } from '@/app/constants'
 
-export const PostRenderer = ({ post }: { post: any }) => {
+type PostProp = {
+  post: any
+  theme: Theme
+}
+
+export const PostRenderer = (props: PostProp) => {
   return (
-    <>
-      {post?.content && (
-        <ArticleBodyDraftRenderer
-          rawContentState={post.content}
-          themeColor={post.theme}
-        />
-      )}
-    </>
+    props?.post?.content &&
+    props?.theme && (
+      <ArticleBodyDraftRenderer
+        rawContentState={props.post.content}
+        themeColor={props.theme}
+      />
+    )
   )
 }
 

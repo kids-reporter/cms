@@ -15,7 +15,6 @@ import {
   API_URL,
   CMS_URL,
   AUTHOR_GROUPS,
-  Theme,
   GetThemeFromCategory,
 } from '@/app/constants'
 
@@ -225,6 +224,19 @@ const authorsGQL = AUTHOR_GROUPS.reduce(
   ''
 )
 
+const categoryGQL = `
+  subSubcategories {
+    name
+    slug
+    subcategory {
+      slug
+      category {
+        slug
+      }
+    }
+  }
+`
+
 const postQueryGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
@@ -245,12 +257,10 @@ const postQueryGQL = `
         publishedDate
         ${heroImageGQL}
         ogDescription
+        ${categoryGQL}
       }
       subtitle
-      subSubcategories {
-        name
-        slug
-      }
+      ${categoryGQL}
     }
   }
 `
@@ -295,11 +305,16 @@ export default async function PostPage({
     return [...allAuthors, ...(authorConfigArray ?? [])]
   }, [])
 
+  const authorsInBrief = editorsMockup
+
   const relatedPosts = post?.[`relatedPosts${inputOrderSuffix}`]?.map(
     (post: any) => {
       const imageURL = post?.heroImage?.imageFile?.url
         ? `${CMS_URL}${post.heroImage.imageFile.url}`
         : undefined
+      const subSubCategory = post?.subSubcategories?.[0]
+      const category = subSubCategory?.subcategory?.category?.slug
+
       return post
         ? {
             name: post.name,
@@ -309,17 +324,16 @@ export default async function PostPage({
             tag: 'test',
             publishedDate: post.publishedDate,
             categoryName: 'test',
-            theme: Theme.YELLOW,
+            category: category,
+            subSubCategory: subSubCategory,
+            theme: GetThemeFromCategory(category),
           }
         : undefined
     }
   )
 
-  const category = undefined // TODO: find category
+  const category = post.subSubcategories?.[0]?.subcategory?.category?.slug
   const theme = GetThemeFromCategory(category)
-  if (post) {
-    post.editors = editorsMockup // TODO: find editors source
-  }
 
   return (
     post && (
@@ -342,13 +356,9 @@ export default async function PostPage({
               </div>
             </header>
           </div>
-          <Brief
-            content={post.brief}
-            editors={post.editors}
-            themeColor={theme}
-          />
+          <Brief content={post.brief} editors={authorsInBrief} theme={theme} />
           <Divider />
-          <PostRenderer post={post} />
+          <PostRenderer post={post} theme={theme} />
           <Tags tags={post.tags} />
           <AuthorCard authors={authors} />
         </div>
