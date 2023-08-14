@@ -5,11 +5,14 @@ type CategoryProp = {
 
 export const Category = (props: CategoryProp) => {
   return (
-    <div className="post_primary_category">
-      <a className="rpjr-btn rpjr-btn-theme" href={props.link}>
-        {props.text}
-      </a>
-    </div>
+    props.text &&
+    props.link && (
+      <div className="post_primary_category">
+        <a className="rpjr-btn rpjr-btn-theme" href={props.link}>
+          {props.text}
+        </a>
+      </div>
+    )
   )
 }
 

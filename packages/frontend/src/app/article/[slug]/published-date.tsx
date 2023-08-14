@@ -5,10 +5,11 @@ type DateProp = {
 }
 
 export const PublishedDate = (props: DateProp) => {
+  const date = props.date
   return (
-    <div className="post-date">
-      刊出日期 {GetFormattedDate(props.date) ?? ''}
-    </div>
+    date && (
+      <div className="post-date">刊出日期 {GetFormattedDate(date) ?? ''}</div>
+    )
   )
 }
 
