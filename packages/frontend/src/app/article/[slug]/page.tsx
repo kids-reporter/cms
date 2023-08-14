@@ -18,10 +18,6 @@ import '../../assets/css/button.css'
 import '../../assets/css/icomoon/style.css'
 
 // TODO: remove mockups
-const categoryMockup = {
-  text: '大學好好玩',
-  link: '/category/university-exploratory-learning-teaching',
-}
 const editorsMockup = [
   {
     title: '文字',
@@ -65,6 +61,10 @@ const editorsMockup = [
   },
 ]
 /*
+const categoryMockup = {
+  text: '大學好好玩',
+  link: '/category/university-exploratory-learning-teaching',
+}
 const authorsMockup = [
   {
     name: '張恩瑋',
@@ -237,8 +237,13 @@ const postQueryGQL = `
         name
         slug
         publishedDate
-        brief
         ${heroImageGQL}
+        ogDescription
+      }
+      subtitle
+      subSubcategories {
+        name
+        slug
       }
     }
   }
@@ -294,9 +299,7 @@ export default async function PostPage({
             name: post.name,
             url: `/article/${post.slug}`,
             image: imageURL,
-            // TODO: find correct brief
-            brief:
-              '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
+            brief: post.ogDescription,
             tag: 'test',
             publishedDate: post.publishedDate,
             categoryName: 'test',
@@ -306,7 +309,6 @@ export default async function PostPage({
     }
   )
   if (post) {
-    post.category = categoryMockup // TODO: find category source
     post.editors = editorsMockup // TODO: find editors source
     post.theme = Theme.YELLOW
   }
@@ -317,15 +319,18 @@ export default async function PostPage({
         <div className={`post theme-${post.theme}`}>
           <Sidebar />
           <HeroImage
-            url={post?.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
+            url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
             caption={post.heroCaption}
           />
           <div className="hero-section">
             <header className="entry-header">
-              <Title text={post.name as string} />
+              <Title text={post.name} subtitle={post.subtitle} />
               <div className="post-date-category">
-                <PublishedDate date={post?.publishedDate} />
-                <Category text={post.category.text} link={post.category.link} />
+                <PublishedDate date={post.publishedDate} />
+                <Category
+                  text={post.subSubcategories?.[0]?.name}
+                  link={`/category/${post.subSubcategories?.[0]?.slug}`}
+                />
               </div>
             </header>
           </div>
@@ -340,7 +345,7 @@ export default async function PostPage({
           <AuthorCard authors={authors} />
         </div>
         <CallToAction />
-        <RelatedPosts posts={relatedPosts} sliderTheme={post.theme} />
+        <RelatedPosts posts={relatedPosts ?? []} sliderTheme={post.theme} />
       </main>
     )
   )
