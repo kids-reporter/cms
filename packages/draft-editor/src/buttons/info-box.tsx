@@ -36,20 +36,15 @@ enum InfoBoxLabelEnum {
   boxBorder = '有線框版',
 }
 
-type InfoBoxType =
-  | InfoBoxTypeEnum.newsChargeStation
-  | InfoBoxTypeEnum.headerBorder
-  | InfoBoxTypeEnum.boxBorder
-
 export type InfoBoxInputValue = {
-  type: InfoBoxType
+  type: InfoBoxTypeEnum
   rawContentState: RawDraftContentState
 }
 
 type InfoBoxInputType = {
   isOpen: boolean
   onConfirm: (arg0: {
-    type: InfoBoxType
+    type: InfoBoxTypeEnum
     rawContentState: RawDraftContentState
   }) => void
   onCancel: () => void
@@ -110,7 +105,7 @@ export function InfoBoxInput(props: InfoBoxInputType) {
           ]}
           onChange={(infoBoxType) => {
             setInputValueState({
-              type: infoBoxType as InfoBoxType,
+              type: infoBoxType as InfoBoxTypeEnum,
               editorState: inputValueState.editorState,
             })
           }}
@@ -151,7 +146,7 @@ export function createInfoBoxButton({
       type,
       rawContentState,
     }: {
-      type: InfoBoxType
+      type: InfoBoxTypeEnum
       rawContentState: RawDraftContentState
     }) => {
       const contentState = editorState.getCurrentContent()
