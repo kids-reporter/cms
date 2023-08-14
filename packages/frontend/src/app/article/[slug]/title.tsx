@@ -2,7 +2,7 @@ import './title.scss'
 
 type TitleProp = {
   text: string
-  subtitle?: string // TODO: style
+  subtitle?: string
 }
 
 export const Title = (props: TitleProp) => {
