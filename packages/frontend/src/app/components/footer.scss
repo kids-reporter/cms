@@ -11,6 +11,13 @@
   padding: var(--stk-block-background-padding);
 }
 
+.footer-desc {
+  --letterSpacing: 0.05em;
+  letter-spacing: var(--letterSpacing);
+  line-height: 32px;
+  margin-bottom: 30px;
+}
+
 .footer-copyright {
   display: flex;
   width: 100%;
