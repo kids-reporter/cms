@@ -24,17 +24,13 @@ const Authors = (props: AuthorsProp) => {
         {'('}
         {props?.authorGroups?.map((authorGroup, authorGroupIndex) => {
           return (
-            <>
+            <span key={`brief-author-group-${authorGroupIndex}`}>
               {`${authorGroup.title}／`}
               {authorGroup?.authors?.map((author, index) => {
                 return (
-                  <>
-                    <span
-                      key={`editorGroup-${authorGroupIndex}`}
-                      style={{ textDecoration: 'underline' }}
-                    >
+                  <span key={`brief-author-${index}`}>
+                    <span style={{ textDecoration: 'underline' }}>
                       <a
-                        key={`editor-${index}`}
                         style={{
                           color: '#575757',
                           textDecoration: 'underline',
@@ -47,11 +43,11 @@ const Authors = (props: AuthorsProp) => {
                       </a>
                     </span>
                     {index + 1 < authorGroup.authors.length ? '、' : ''}
-                  </>
+                  </span>
                 )
               })}
               {authorGroupIndex + 1 < props.authorGroups.length ? `；` : ''}
-            </>
+            </span>
           )
         })}
         {')'}
