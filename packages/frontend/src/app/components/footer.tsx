@@ -277,7 +277,7 @@ export const Footer = () => {
         <div className="footer-copyright-container">
           <div data-column="text">
             <div className="ct-header-text " data-id="text">
-              <div className="entry-content">
+              <div className="footer-number">
                 公益勸募許可字號｜衛部救字第 1101363853 號{' '}
                 <a
                   href="https://www.twreporter.org/a/privacy-footer"

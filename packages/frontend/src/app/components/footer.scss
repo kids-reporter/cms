@@ -39,6 +39,12 @@
   --lineHeight: 1.3;
   --color: var(--paletteColor4);
 
+  .footer-number {
+    letter-spacing: var(--letterSpacing);
+    font-size: 14px;
+    color: var(--color);
+  }
+
   a {
     margin-left: 40px;
     margin-right: -20px;
@@ -51,6 +57,9 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    font-size: var(--fontSize);
+    letter-spacing: var(--letterSpacing);
+    color: var(--color);
   }
 }
 
