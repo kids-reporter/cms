@@ -1,3 +1,4 @@
+'use client'
 import './header.scss'
 import '../assets/css/button.css'
 
@@ -120,6 +121,11 @@ export const StickyHeader = () => {
 }
 
 export const Header = () => {
+  const handleSearchInputChange = () => {
+    // TODO: handle search
+    console.log('handleSearchInputChange')
+  }
+
   return (
     <div data-row="top:boxed" data-column-set="3">
       <div className="ct-container">
@@ -247,6 +253,7 @@ export const Header = () => {
                   name="s"
                   title="Search for..."
                   aria-label="Search for..." /*required="required"*/
+                  onChange={handleSearchInputChange}
                 />
                 <button
                   type="submit"
