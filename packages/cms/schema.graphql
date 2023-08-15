@@ -744,6 +744,7 @@ type Category {
   ogTitle: String
   ogDescription: String
   ogImage: Photo
+  relatedPosts(take: Int! = 12, skip: Int! = 0): [Post]
   createdAt: DateTime
   updatedAt: DateTime
 }
