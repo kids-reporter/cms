@@ -17,6 +17,7 @@ type AuthorsProp = {
   authorGroups: AuthorGroup[]
 }
 
+// TODO: refactor to clear
 const Authors = (props: AuthorsProp) => {
   return (
     <p style={{ textAlign: 'center' }}>
