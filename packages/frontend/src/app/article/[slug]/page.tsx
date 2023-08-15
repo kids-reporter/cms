@@ -184,7 +184,7 @@ export default async function PostPage({
   const category = subcategory?.category
   const subSubcategoryURL =
     category?.slug && subcategory?.slug && subSubcategory?.slug
-      ? `/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
+      ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
   const theme = GetThemeFromCategory(subSubcategory?.slug)
 
