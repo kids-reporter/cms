@@ -4,7 +4,7 @@ import HeroImage from './hero-image'
 import PublishedDate from './published-date'
 import Category from './category'
 import Sidebar from './sidebar'
-import Brief from './brief'
+import Brief, { AuthorGroup } from './brief'
 import Tags from './tags'
 import PostRenderer from './post-renderer'
 import AuthorCard, { Author } from './author-card'
@@ -15,56 +15,13 @@ import {
   API_URL,
   CMS_URL,
   AUTHOR_GROUPS,
+  AUTHOR_GROUP_LABEL,
   GetThemeFromCategory,
 } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
 import '../../assets/css/icomoon/style.css'
-
-// TODO: remove mockups
-const editorsMockup = [
-  {
-    title: '文字',
-    editors: [
-      {
-        name: '張恩瑋',
-        link: 'https://kids.twreporter.org/staff/chang-en-wei/',
-      },
-    ],
-  },
-  {
-    title: '設計',
-    editors: [
-      {
-        name: '王家琛',
-        link: 'https://kids.twreporter.org/staff/wang-chia-chen/',
-      },
-      {
-        name: '黃禹禛',
-        link: 'https://kids.twreporter.org/staff/hychen/',
-      },
-    ],
-  },
-  {
-    title: '核稿',
-    editors: [
-      {
-        name: '楊惠君',
-        link: 'https://kids.twreporter.org/staff/jill718/',
-      },
-    ],
-  },
-  {
-    title: '責任編輯',
-    editors: [
-      {
-        name: '陳韻如',
-        link: 'https://kids.twreporter.org/staff/yunruchen/',
-      },
-    ],
-  },
-]
 
 const inputOrderSuffix = 'InInputOrder'
 
@@ -178,7 +135,26 @@ export default async function PostPage({
     return [...allAuthors, ...(authorConfigArray ?? [])]
   }, [])
 
-  const authorsInBrief = editorsMockup
+  const authorsInBrief = AUTHOR_GROUPS.reduce(
+    (allAuthors: AuthorGroup[], authorGroup) => {
+      const orderedAuthorField = `${authorGroup}${inputOrderSuffix}`
+      const authorConfigArray = post?.[orderedAuthorField]?.map(
+        (author: any) => {
+          return author
+            ? {
+                name: author.name,
+                link: `/staff/${author.id}`,
+              }
+            : undefined
+        }
+      )
+      const groupName = AUTHOR_GROUP_LABEL.get(authorGroup) ?? '其他'
+      return authorConfigArray?.length > 0
+        ? [...allAuthors, { title: groupName, authors: authorConfigArray }]
+        : allAuthors
+    },
+    []
+  )
 
   const relatedPosts = post?.[`relatedPosts${inputOrderSuffix}`]?.map(
     (post: any) => {

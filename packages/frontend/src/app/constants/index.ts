@@ -34,5 +34,13 @@ export enum AuthorGroup {
   ENGINEERS = 'engineers',
 }
 export const AUTHOR_GROUPS = Object.values(AuthorGroup)
+export const AUTHOR_GROUP_LABEL = new Map<AuthorGroup, string>([
+  [AuthorGroup.WRITERS, '文字'],
+  [AuthorGroup.DESIGNERS, '設計'],
+  [AuthorGroup.REVIEWERS, '核稿'],
+  [AuthorGroup.EDITORS, '責任編輯'],
+  [AuthorGroup.PHOTOGRAPHERS, '攝影'],
+  [AuthorGroup.ENGINEERS, '工程'],
+])
 
 export const DEFAULT_AVATAR = '/images/avatar_default.png'

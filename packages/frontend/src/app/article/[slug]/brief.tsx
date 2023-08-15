@@ -5,32 +5,32 @@ import { Theme } from '@/app/constants'
 
 import './brief.scss'
 
-export type EditorGroup = {
+export type AuthorGroup = {
   title: string
-  editors: {
+  authors: {
     name: string
     link: string
   }[]
 }
 
-type EditorsProp = {
-  editorGroups: EditorGroup[]
+type AuthorsProp = {
+  authorGroups: AuthorGroup[]
 }
 
-const Authors = (props: EditorsProp) => {
+const Authors = (props: AuthorsProp) => {
   return (
     <p style={{ textAlign: 'center' }}>
       <span style={{ color: '#575757', fontSize: '14px' }}>
         {'('}
-        {props?.editorGroups?.map((editorGroup, editorGroupIndex) => {
+        {props?.authorGroups?.map((authorGroup, authorGroupIndex) => {
           return (
             <>
-              {`${editorGroup.title}／`}
-              {editorGroup?.editors?.map((editor, index) => {
+              {`${authorGroup.title}／`}
+              {authorGroup?.authors?.map((author, index) => {
                 return (
                   <>
                     <span
-                      key={`editorGroup-${editorGroupIndex}`}
+                      key={`editorGroup-${authorGroupIndex}`}
                       style={{ textDecoration: 'underline' }}
                     >
                       <a
@@ -39,18 +39,18 @@ const Authors = (props: EditorsProp) => {
                           color: '#575757',
                           textDecoration: 'underline',
                         }}
-                        href={editor.link}
+                        href={author.link}
                         target="_blank"
                         rel="noopener"
                       >
-                        {editor.name}
+                        {author.name}
                       </a>
                     </span>
-                    {index + 1 < editorGroup.editors.length ? '、' : ''}
+                    {index + 1 < authorGroup.authors.length ? '、' : ''}
                   </>
                 )
               })}
-              {editorGroupIndex + 1 < props.editorGroups.length ? `；` : ''}
+              {authorGroupIndex + 1 < props.authorGroups.length ? `；` : ''}
             </>
           )
         })}
@@ -63,18 +63,21 @@ const Authors = (props: EditorsProp) => {
 type BriefProp = {
   content: RawDraftContentState
   theme: Theme
-  authors: EditorGroup[]
+  authors: AuthorGroup[]
 }
 
 export const Brief = (props: BriefProp) => {
+  const content = props?.content
   return (
-    <div className="post-intro">
-      <ArticleIntroductionDraftRenderer
-        rawContentState={props.content}
-        themeColor={props.theme}
-      />
-      <Authors editorGroups={props.authors} />
-    </div>
+    content && (
+      <div className="post-intro">
+        <ArticleIntroductionDraftRenderer
+          rawContentState={content}
+          themeColor={props.theme}
+        />
+        {props.authors && <Authors authorGroups={props.authors} />}
+      </div>
+    )
   )
 }
 
