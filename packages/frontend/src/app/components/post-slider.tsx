@@ -16,10 +16,10 @@ type Post = {
   image: string
   name: string
   url: string
-  brief: string
-  tag: string
+  desc: string
+  category: string
+  subSubcategory: string
   publishedDate: string
-  categoryName: string
   theme: Theme
 }
 
@@ -31,7 +31,7 @@ export type PostSliderProp = {
 const slidesPerView = 3
 const autoPlayInterval = 5000
 const titleLengthLimit = 35
-const briefLengthLimit = 110
+const descLengthLimit = 110
 
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
@@ -72,15 +72,19 @@ export const PostSlider = (props: PostSliderProp) => {
                       className={`post-body theme-${post.theme}`}
                     >
                       <img src={post.image} />
-                      <span className="post-category">{post.categoryName}</span>
+                      <span className="post-category">{post.category}</span>
                       <span className="post-title">
                         {ShortenParagraph(post.name, titleLengthLimit) ?? ''}
                       </span>
-                      <span className="post-brief">
-                        {ShortenParagraph(post.brief, briefLengthLimit) ?? ''}
+                      <span className="post-desc">
+                        {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
                       </span>
                       <div className="post-bottom">
-                        <span className="tag">{post.tag}</span>
+                        {post.subSubcategory && (
+                          <span className="subSubcategory">
+                            {post.subSubcategory}
+                          </span>
+                        )}
                         <span className="published-date">
                           {GetFormattedDate(post.publishedDate) ?? ''}
                         </span>

@@ -2,10 +2,17 @@ import './title.scss'
 
 type TitleProp = {
   text: string
+  subtitle?: string
 }
 
 export const Title = (props: TitleProp) => {
-  return <h1 className="title">{props.text}</h1>
+  const subtitle = props.subtitle
+  return (
+    <>
+      {subtitle && <div className="subtitle">{subtitle}</div>}
+      <h1 className={`title ${subtitle ? '' : 'noSubtitle'}`}>{props.text}</h1>
+    </>
+  )
 }
 
 export default Title
