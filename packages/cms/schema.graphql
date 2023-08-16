@@ -478,6 +478,7 @@ input PhotoCreateInput {
 
 type Author {
   id: ID!
+  slug: String
   name: String
   email: String
   bio: String
@@ -490,6 +491,7 @@ type Author {
 
 input AuthorWhereUniqueInput {
   id: ID
+  slug: String
 }
 
 input AuthorWhereInput {
@@ -497,6 +499,7 @@ input AuthorWhereInput {
   OR: [AuthorWhereInput!]
   NOT: [AuthorWhereInput!]
   id: IDFilter
+  slug: StringFilter
   name: StringFilter
   email: StringFilter
   bio: StringFilter
@@ -508,6 +511,7 @@ input AuthorWhereInput {
 
 input AuthorOrderByInput {
   id: OrderDirection
+  slug: OrderDirection
   name: OrderDirection
   email: OrderDirection
   bio: OrderDirection
@@ -516,6 +520,7 @@ input AuthorOrderByInput {
 }
 
 input AuthorUpdateInput {
+  slug: String
   name: String
   email: String
   bio: String
@@ -531,6 +536,7 @@ input AuthorUpdateArgs {
 }
 
 input AuthorCreateInput {
+  slug: String
   name: String
   email: String
   bio: String
