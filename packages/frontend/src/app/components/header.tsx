@@ -46,31 +46,27 @@ export const StickyHeader = () => {
   )
 
   const cta = (
-    <div className="ct-header-text ">
-      <div className="entry-content">
-        <div className="cta">
-          <a
-            href="/about#post"
-            className="header-left__btn-1 rpjr-btn __mPS2id"
-            style={{ marginRight: '14px' }}
-          >
-            投稿
-          </a>
-          <a
-            href={SUBSCRIBE_URL}
-            target="_blank"
-            className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
-            style={{ marginRight: '15px' }}
-          >
-            訂閱
-          </a>
-          <img
-            src="/images/header-left-slogan.svg"
-            className="header-left__slogan"
-          />
-        </div>
-      </div>
-    </div>
+    <>
+      <a
+        href="/about#post"
+        className="header-left__btn-1 rpjr-btn __mPS2id"
+        style={{ marginRight: '14px' }}
+      >
+        投稿
+      </a>
+      <a
+        href={SUBSCRIBE_URL}
+        target="_blank"
+        className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
+        style={{ marginRight: '15px' }}
+      >
+        訂閱
+      </a>
+      <img
+        src="/images/header-left-slogan.svg"
+        className="header-left__slogan"
+      />
+    </>
   )
 
   const navi = (
@@ -121,10 +117,12 @@ export const StickyHeader = () => {
       <div className="header-container">
         <div className="left">{logo}</div>
         <div className="right">
-          {cta}
-          {navi}
-          {search}
-          {about}
+          <div className="cta">{cta}</div>
+          <div className="others">
+            {navi}
+            {search}
+            {about}
+          </div>
         </div>
         <div className="right-mobile">{hamburger}</div>
       </div>
