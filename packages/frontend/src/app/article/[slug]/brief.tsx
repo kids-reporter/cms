@@ -65,6 +65,7 @@ type BriefProp = {
 
 export const Brief = (props: BriefProp) => {
   const content = props?.content
+  const authors = props?.authors
   return (
     content && (
       <div className="post-intro">
@@ -72,7 +73,7 @@ export const Brief = (props: BriefProp) => {
           rawContentState={content}
           themeColor={props.theme}
         />
-        {props.authors && <Authors authorGroups={props.authors} />}
+        {authors?.length > 0 && <Authors authorGroups={authors} />}
       </div>
     )
   )
