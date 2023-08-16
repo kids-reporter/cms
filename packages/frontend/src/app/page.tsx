@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
@@ -188,18 +189,23 @@ const postMockupsMore = [
 ]
 
 export default async function Home() {
-  const response = await axios.post(API_URL, {
-    query: `
-    query {
-      posts {
-        name
-        slug
+  let response
+  try {
+    response = await axios.post(API_URL, {
+      query: `
+      query {
+        posts {
+          name
+          slug
+        }
       }
-    }
-  `,
-  })
+    `,
+    })
+  } catch (err) {
+    console.error('Fetch post data failed!', err)
+    notFound()
+  }
   const posts: Post[] = response?.data?.data?.posts
-  // TODO: error handling
 
   return (
     <main>

@@ -30,19 +30,24 @@ const authorQueryGQL = `
 `
 
 export default async function Staff({ params }: { params: { id: string } }) {
-  const staffID = params?.id
-  const response = staffID
-    ? await axios.post(API_URL, {
-        query: authorQueryGQL,
-        variables: {
-          authorWhere2: {
-            id: staffID,
+  let response
+  try {
+    response = params?.id
+      ? await axios.post(API_URL, {
+          query: authorQueryGQL,
+          variables: {
+            authorWhere2: {
+              id: params.id,
+            },
           },
-        },
-      })
-    : undefined
-  const author = response?.data?.data?.author
+        })
+      : undefined
+  } catch (err) {
+    console.error('Fetch post data failed!', err)
+    notFound()
+  }
 
+  const author = response?.data?.data?.author
   if (!author) {
     notFound()
   }
