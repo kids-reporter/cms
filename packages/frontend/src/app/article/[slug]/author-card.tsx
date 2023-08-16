@@ -1,23 +1,18 @@
 import { ShortenParagraph } from '@/app/utils'
-import {
-  AUTHOR_GROUP_LABEL,
-  CMS_URL,
-  DEFAULT_AVATAR,
-  AuthorGroup,
-  Theme,
-} from '@/app/constants'
+import { CMS_URL, DEFAULT_AVATAR, AuthorRole, Theme } from '@/app/constants'
 import './author-card.scss'
 
-const getTheme = (group: AuthorGroup) => {
+const getTheme = (group: AuthorRole) => {
   switch (group) {
-    case AuthorGroup.EDITORS:
+    case AuthorRole.EDITORS:
+    case AuthorRole.AUDITORS:
       return Theme.RED
-    case AuthorGroup.WRITERS:
-    case AuthorGroup.REVIEWERS:
+    case AuthorRole.WRITERS:
+    case AuthorRole.REVIEWERS:
       return Theme.BLUE
-    case AuthorGroup.DESIGNERS:
-    case AuthorGroup.PHOTOGRAPHERS:
-    case AuthorGroup.ENGINEERS:
+    case AuthorRole.DESIGNERS:
+    case AuthorRole.PHOTOGRAPHERS:
+    case AuthorRole.CONSULTANTS:
     default:
       return Theme.YELLOW
   }
@@ -27,7 +22,7 @@ export type Author = {
   id: string
   name: string
   avatar: string
-  group: AuthorGroup
+  role: AuthorRole
   bio: string
 }
 
@@ -49,7 +44,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
             const avatarURL = author?.avatar
               ? `${CMS_URL}${author.avatar}`
               : DEFAULT_AVATAR
-            const theme = getTheme(author?.group)
+            const theme = getTheme(author?.role)
 
             return (
               author && (
@@ -59,7 +54,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   </div>
                   <span className="name">{author.name}</span>
                   <div className={`group theme-${theme}`}>
-                    {AUTHOR_GROUP_LABEL.get(author.group) ?? '其他'}
+                    {author.role ?? '其他'}
                   </div>
                   <span className="desc">
                     {ShortenParagraph(author.bio, descLengthLimit) ?? ''}

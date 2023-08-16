@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { notFound } from 'next/navigation'
 import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
@@ -13,17 +14,14 @@ import RelatedPosts from './related-posts'
 import { Divider } from '@/app/components/divider'
 import {
   API_URL,
+  AUTHOR_ROLES_IN_ORDER,
   CMS_URL,
-  AUTHOR_GROUPS,
-  AUTHOR_GROUP_LABEL,
   GetThemeFromCategory,
 } from '@/app/constants'
 
 import './post.scss'
 import '../../assets/css/button.css'
 import '../../assets/css/icomoon/style.css'
-
-const inputOrderSuffix = 'InInputOrder'
 
 const heroImageGQL = `
   heroImage {
@@ -35,23 +33,6 @@ const heroImageGQL = `
     }
   }
 `
-
-const authorsGQL = AUTHOR_GROUPS.reduce(
-  (gqlStr, authorGroup) =>
-    gqlStr +
-    `
-  ${authorGroup}${inputOrderSuffix} {
-    id
-    name
-    bio
-    avatar {
-      imageFile {
-        url
-      }
-    }
-  }`,
-  ''
-)
 
 const categoryGQL = `
   subSubcategories {
@@ -76,12 +57,23 @@ const postQueryGQL = `
       publishedDate
       ${heroImageGQL}
       heroCaption
-      ${authorsGQL}
+      authors {
+        avatar {
+          imageFile {
+            url
+          }
+        }
+        bio
+        id
+        name
+        slug
+      }
+      authorsJSON
       tags {
         name
         slug
       }
-      relatedPosts${inputOrderSuffix} {
+      relatedPosts {
         name
         slug
         publishedDate
@@ -100,84 +92,77 @@ export default async function PostPage({
 }: {
   params: { slug: string }
 }) {
-  const response = params?.slug
-    ? await axios.post(API_URL, {
-        query: postQueryGQL,
-        variables: {
-          where: {
-            slug: params.slug,
+  let response
+  try {
+    response = params?.slug
+      ? await axios.post(API_URL, {
+          query: postQueryGQL,
+          variables: {
+            where: {
+              slug: params.slug,
+            },
           },
-        },
-      })
-    : undefined
+        })
+      : undefined
+  } catch (err) {
+    console.error('Fetch post data failed!', err)
+    notFound()
+  }
 
   const post = response?.data?.data?.post
-
-  /* TODO: error handling
   if (!post) {
-    return 404
+    notFound()
   }
-  */
 
-  const authors = AUTHOR_GROUPS.reduce((allAuthors: Author[], authorGroup) => {
-    const orderedAuthorField = `${authorGroup}${inputOrderSuffix}`
-    const authorConfigArray = post?.[orderedAuthorField]?.map((author: any) => {
-      return author
-        ? {
-            id: author.id,
-            name: author.name,
-            avatar: author.avatar?.imageFile?.url,
-            group: authorGroup,
-            bio: author.bio,
-          }
-        : undefined
-    })
-    return [...allAuthors, ...(authorConfigArray ?? [])]
-  }, [])
-
-  const authorsInBrief = AUTHOR_GROUPS.reduce(
-    (allAuthors: AuthorGroup[], authorGroup) => {
-      const orderedAuthorField = `${authorGroup}${inputOrderSuffix}`
-      const authorConfigArray = post?.[orderedAuthorField]?.map(
-        (author: any) => {
-          return author
-            ? {
-                name: author.name,
-                link: `/staff/${author.id}`,
-              }
-            : undefined
+  // Assemble ordered authors
+  const authorsJSON = post?.authorsJSON
+  const authors = post?.authors?.map((author: any) => {
+    const authorJSON = authorsJSON.find((a: any) => a.id === author?.id)
+    return author && authorJSON
+      ? {
+          id: author.id,
+          name: author.name,
+          avatar: author.avatar?.imageFile?.url,
+          bio: author.bio,
+          role: authorJSON.role,
+          link: authorJSON.type === 'link' ? `/staff/${author.id}` : undefined,
         }
-      )
-      const groupName = AUTHOR_GROUP_LABEL.get(authorGroup) ?? '其他'
-      return authorConfigArray?.length > 0
-        ? [...allAuthors, { title: groupName, authors: authorConfigArray }]
-        : allAuthors
-    },
-    []
-  )
+      : undefined
+  })
+  const orderedAuthors: Author[] = []
+  const orderedAuthorsInBrief: AuthorGroup[] = []
+  AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
+    const authorsOfRole = authors.filter(
+      (author: any) => authorRole === author.role && author.link
+    )
+    orderedAuthors.push(...(authorsOfRole ?? []))
+    authorsOfRole?.length > 0 &&
+      orderedAuthorsInBrief.push({
+        title: authorRole,
+        authors: [...(authorsOfRole ?? [])],
+      })
+  })
 
-  const relatedPosts = post?.[`relatedPosts${inputOrderSuffix}`]?.map(
-    (post: any) => {
-      const imageURL = post?.heroImage?.imageFile?.url
-        ? `${CMS_URL}${post.heroImage.imageFile.url}`
-        : undefined
-      const subSubcategory = post?.subSubcategories?.[0]
-      const category = subSubcategory?.subcategory?.category
+  const relatedPosts = post?.relatedPosts?.map((post: any) => {
+    const imageURL = post?.heroImage?.imageFile?.url
+      ? `${CMS_URL}${post.heroImage.imageFile.url}`
+      : undefined
+    const subSubcategory = post?.subSubcategories?.[0]
+    const category = subSubcategory?.subcategory?.category
 
-      return post
-        ? {
-            name: post.name,
-            url: `/article/${post.slug}`,
-            image: imageURL,
-            desc: post.ogDescription,
-            category: category?.title,
-            subSubcategory: subSubcategory?.name,
-            publishedDate: post.publishedDate,
-            theme: GetThemeFromCategory(category),
-          }
-        : undefined
-    }
-  )
+    return post
+      ? {
+          name: post.name,
+          url: `/article/${post.slug}`,
+          image: imageURL,
+          desc: post.ogDescription,
+          category: category?.title,
+          subSubcategory: subSubcategory?.name,
+          publishedDate: post.publishedDate,
+          theme: GetThemeFromCategory(category),
+        }
+      : undefined
+  })
 
   const subSubcategory = post.subSubcategories?.[0]
   const subcategory = subSubcategory?.subcategory
@@ -209,11 +194,15 @@ export default async function PostPage({
               </div>
             </header>
           </div>
-          <Brief content={post.brief} authors={authorsInBrief} theme={theme} />
+          <Brief
+            content={post.brief}
+            authors={orderedAuthorsInBrief}
+            theme={theme}
+          />
           <Divider />
           <PostRenderer post={post} theme={theme} />
           <Tags tags={post.tags} />
-          <AuthorCard authors={authors} />
+          <AuthorCard authors={orderedAuthors} />
         </div>
         <CallToAction />
         <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />

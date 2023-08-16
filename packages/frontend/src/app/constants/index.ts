@@ -25,22 +25,23 @@ export enum ThemeColor {
 
 export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
 
-export enum AuthorGroup {
-  WRITERS = 'writers',
-  DESIGNERS = 'designers',
-  REVIEWERS = 'reviewers',
-  EDITORS = 'editors',
-  PHOTOGRAPHERS = 'photographers',
-  ENGINEERS = 'engineers',
+export enum AuthorRole {
+  CONSULTANTS = '諮詢專家',
+  WRITERS = '文字',
+  PHOTOGRAPHERS = '攝影',
+  DESIGNERS = '設計',
+  REVIEWERS = '核稿',
+  AUDITORS = '審閱',
+  EDITORS = '責任編輯',
 }
-export const AUTHOR_GROUPS = Object.values(AuthorGroup)
-export const AUTHOR_GROUP_LABEL = new Map<AuthorGroup, string>([
-  [AuthorGroup.WRITERS, '文字'],
-  [AuthorGroup.DESIGNERS, '設計'],
-  [AuthorGroup.REVIEWERS, '核稿'],
-  [AuthorGroup.EDITORS, '責任編輯'],
-  [AuthorGroup.PHOTOGRAPHERS, '攝影'],
-  [AuthorGroup.ENGINEERS, '工程'],
-])
+export const AUTHOR_ROLES_IN_ORDER = [
+  AuthorRole.CONSULTANTS,
+  AuthorRole.WRITERS,
+  AuthorRole.PHOTOGRAPHERS,
+  AuthorRole.DESIGNERS,
+  AuthorRole.REVIEWERS,
+  AuthorRole.AUDITORS,
+  AuthorRole.EDITORS,
+]
 
 export const DEFAULT_AVATAR = '/images/avatar_default.png'

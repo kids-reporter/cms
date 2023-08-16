@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { notFound } from 'next/navigation'
 import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
 
 const authorQueryGQL = `
@@ -40,8 +41,12 @@ export default async function Staff({ params }: { params: { id: string } }) {
         },
       })
     : undefined
-
   const author = response?.data?.data?.author
+
+  if (!author) {
+    notFound()
+  }
+
   const avatarURL = author?.avatar?.imageFile?.url
     ? `${CMS_URL}${author.avatar.imageFile.url}`
     : DEFAULT_AVATAR
