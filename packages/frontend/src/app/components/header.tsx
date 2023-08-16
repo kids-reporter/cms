@@ -31,11 +31,7 @@ const navItems = [
 export const StickyHeader = () => {
   const logo = (
     <div className="site-branding">
-      <a
-        href="https://kids.twreporter.org/"
-        className="site-logo-container"
-        rel="home"
-      >
+      <a href="/" className="site-logo-container" rel="home">
         <img
           src="/images/LOGO.svg"
           className="default-logo"
@@ -50,7 +46,7 @@ export const StickyHeader = () => {
       <div className="entry-content">
         <div className="cta">
           <a
-            href="https://kids.twreporter.org/about#post"
+            href="/about#post"
             className="header-left__btn-1 rpjr-btn __mPS2id"
             style={{ marginRight: '14px' }}
           >
