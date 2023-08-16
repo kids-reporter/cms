@@ -1,5 +1,5 @@
 'use client'
-import { SearchIcon } from '@/app/icons/header'
+import { HamburgerIcon, SearchIcon } from '@/app/icons/header'
 import { SUBSCRIBE_URL } from '@/app/constants'
 
 import './header.scss'
@@ -29,6 +29,10 @@ const navItems = [
 ]
 
 export const StickyHeader = () => {
+  const onHamburgerClick = () => {
+    console.log('onHamburgerClick')
+  }
+
   const logo = (
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
@@ -91,6 +95,7 @@ export const StickyHeader = () => {
       {SearchIcon}
     </button>
   )
+
   const about = (
     <div className="about-us">
       <a
@@ -105,18 +110,23 @@ export const StickyHeader = () => {
     </div>
   )
 
+  const hamburger = (
+    <button className="hamburger" onClick={onHamburgerClick}>
+      {HamburgerIcon}
+    </button>
+  )
+
   return (
     <div className="header">
       <div className="header-container">
-        <div className="left">
-          {logo}
-          {cta}
-        </div>
+        <div className="left">{logo}</div>
         <div className="right">
+          {cta}
           {navi}
           {search}
           {about}
         </div>
+        <div className="right-mobile">{hamburger}</div>
       </div>
     </div>
   )
