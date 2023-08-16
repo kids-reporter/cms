@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { notFound } from 'next/navigation'
 import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
@@ -110,14 +111,11 @@ export default async function PostPage({
         },
       })
     : undefined
-
   const post = response?.data?.data?.post
 
-  /* TODO: error handling
   if (!post) {
-    return 404
+    notFound()
   }
-  */
 
   const authors = AUTHOR_GROUPS.reduce((allAuthors: Author[], authorGroup) => {
     const orderedAuthorField = `${authorGroup}${inputOrderSuffix}`
