@@ -1,4 +1,8 @@
 .sidebar-container {
+  @media screen and (max-width: 999px) {
+    display: none;
+  }
+
   position: sticky;
   width: 68px;
   top: 180px;
@@ -13,10 +17,6 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
-
-    @media screen and (max-width: 1000px) {
-      // TODO: mobile sidebar
-    }
 
     .section {
       display: flex;
@@ -44,6 +44,77 @@
         aspect-ratio: 1 / 1;
         cursor: pointer;
       }
+    }
+  }
+}
+
+.mobile-sidebar-container {
+  @media screen and (min-width: 1000px) {
+    display: none;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  bottom: 10px;
+  z-index: 900;
+
+  .sidebar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .share-buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 10px 0px 15px;
+      gap: 7px;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      padding: 0px 30px 8px;
+      background: rgb(255, 255, 255);
+      box-shadow: rgba(35, 35, 35, 0.2) 0px 1px 8px 0px;
+      border-radius: 30px;
+      gap: 40px;
+      height: 75px;
+
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        span {
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 160%;
+          white-space: nowrap;
+          text-align: center;
+          letter-spacing: 0.08em;
+          color: rgb(35, 35, 35);
+          opacity: 1;
+        }
+      }
+    }
+
+    button {
+      display: block;
+      appearance: none;
+      background: transparent;
+      border: none;
+      width: 48px;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
     }
   }
 }
