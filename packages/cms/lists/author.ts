@@ -3,6 +3,11 @@ import { relationship, text, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
+    slug: text({
+      isIndexed: 'unique',
+      label: '作者英文姓名（用於網址）',
+      validation: { isRequired: true },
+    }),
     name: text({
       isIndexed: true,
       label: '作者姓名',
