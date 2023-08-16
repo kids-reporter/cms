@@ -1,12 +1,11 @@
 import {
   customFields,
-  utils,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
 import { graphql, list } from '@keystone-6/core'
 import {
+  json,
   virtual,
-  integer,
   relationship,
   timestamp,
   text,
@@ -52,7 +51,7 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    writers: relationship({
+    authors: relationship({
       ref: 'Author.posts',
       many: true,
       label: '作者',
@@ -60,54 +59,10 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    photographers: relationship({
-      many: true,
-      label: '攝影',
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
+    authorsJSON: json({
+      label: '作者列',
+      defaultValue: [],
     }),
-    editors: relationship({
-      label: '責任編輯',
-      many: true,
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    designers: relationship({
-      label: '設計',
-      many: true,
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    engineers: relationship({
-      many: true,
-      label: '工程',
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    reviewers: relationship({
-      many: true,
-      label: '核稿',
-      ref: 'Author',
-      ui: {
-        hideCreate: true,
-      },
-    }),
-    otherByline: text({
-      validation: { isRequired: false },
-      label: '作者（其他）',
-    }),
-    //heroVideo: relationship({
-    //  label: 'Leading Video',
-    //  ref: 'Video',
-    //}),
     heroImage: relationship({
       label: '首圖',
       ref: 'Photo',
@@ -115,15 +70,6 @@ const listConfigurations = list({
     heroCaption: text({
       label: '首圖圖說',
       validation: { isRequired: false },
-    }),
-    heroImageSize: select({
-      label: '首圖尺寸',
-      options: [
-        { label: 'extend', value: 'extend' },
-        { label: 'normal', value: 'normal' },
-        { label: 'small', value: 'small' },
-      ],
-      defaultValue: 'normal',
     }),
     brief: customFields.richTextEditor({
       label: '前言',
@@ -161,9 +107,6 @@ const listConfigurations = list({
       ref: 'Tag.posts',
       many: true,
       label: '標籤',
-    }),
-    readingTime: integer({
-      label: '閱讀時間',
     }),
     relatedPosts: relationship({
       ref: 'Post',
@@ -229,52 +172,111 @@ const listConfigurations = list({
       delete: () => true,
     },
   },
-  hooks: {},
+  hooks: {
+    resolveInput: async ({ inputData, item, resolvedData, context }) => {
+      let authorsJSON: AuthorsJSON =
+        inputData?.authorsJSON || item?.authorsJSON || []
+      authorsJSON = resolveAuthorsJSON(authorsJSON)
+
+      // `authors` is a relationship field.
+      // Therefore, `authors` only store author id
+      const relationshipAuthors: RelationshipInput = inputData?.authors
+      if (relationshipAuthors) {
+        const disconnect = relationshipAuthors?.disconnect
+        // delete disconnected authors from `authorsJSON`
+        if (Array.isArray(disconnect) && disconnect.length > 0) {
+          disconnect.forEach(({ id }) => {
+            authorsJSON = authorsJSON.filter((item) => {
+              // if `item.id` is not existed,
+              // which means it is manually added by users,
+              // and then we don't filter this item out.
+              if (!item.id) {
+                return true
+              }
+              // filter out disconnected item
+              return item.id !== id
+            })
+          })
+        }
+
+        // add new connected authors into `authorsJSON`
+        const connect = relationshipAuthors?.connect
+        if (Array.isArray(connect) && connect.length > 0) {
+          const ids = connect.map(({ id }) => id)
+          // find author items via gql query
+          const items = await context.query.Author.findMany({
+            where: { id: { in: ids } },
+            query: 'id name',
+          })
+          items.forEach((item) => {
+            authorsJSON.push({
+              id: item.id,
+              name: item.name,
+              type: 'link',
+              role: heuristicallyPickRole(item.name),
+            })
+          })
+        }
+      }
+
+      resolvedData.authorsJSON = authorsJSON
+      return resolvedData
+    },
+  },
 })
-export default utils.addManualOrderRelationshipFields(
-  [
-    {
-      fieldName: 'manualOrderOfWriters',
-      targetFieldName: 'writers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfPhotographers',
-      targetFieldName: 'photographers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfDesigners',
-      targetFieldName: 'designers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfEngineers',
-      targetFieldName: 'engineers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfReviewers',
-      targetFieldName: 'reviewers',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfEditors',
-      targetFieldName: 'editors',
-      targetListName: 'Author',
-      targetListLabelField: 'name',
-    },
-    {
-      fieldName: 'manualOrderOfRelatedPosts',
-      targetFieldName: 'relatedPosts',
-      targetListName: 'Post',
-      targetListLabelField: 'name',
-    },
-  ],
-  listConfigurations
-)
+
+/**
+ * This function is used to resolve field `authorsJSON`.
+ * It filters out invalid data and
+ * adds missing properties, such as `type`.
+ */
+function resolveAuthorsJSON(authorsJSON: AuthorsJSON): AuthorsJSON {
+  return authorsJSON
+    .filter(
+      (item) =>
+        typeof item === 'object' &&
+        typeof item.name === 'string' &&
+        typeof item.role === 'string'
+    )
+    .map((item) => {
+      if (item.id) {
+        item.type = 'link'
+      } else {
+        item.type = 'string'
+      }
+      return item
+    })
+}
+
+function heuristicallyPickRole(authorName: string): string {
+  switch (authorName) {
+    case '陳韻如': {
+      return '責任編輯'
+    }
+    case '楊惠君': {
+      return '核稿'
+    }
+    case '黃禹禛':
+    case '鄭涵文': {
+      return '設計'
+    }
+    default:
+      return '文字'
+  }
+}
+
+type AuthorsJSON = {
+  id?: string
+  name: string
+  type?: 'link' | 'string'
+  role: string
+}[]
+
+type RelationshipInput =
+  | {
+      disconnect?: { id: string }[]
+      connect?: { id: string }[]
+    }
+  | undefined
+
+export default listConfigurations

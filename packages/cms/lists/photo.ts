@@ -1,6 +1,12 @@
 import config from '../config'
 import { list, graphql } from '@keystone-6/core'
-import { image, text, virtual, timestamp } from '@keystone-6/core/fields'
+import {
+  image,
+  text,
+  virtual,
+  timestamp,
+  relationship,
+} from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -10,6 +16,11 @@ const listConfigurations = list({
     }),
     imageFile: image({
       storage: 'images',
+    }),
+    authors: relationship({
+      label: '作者',
+      ref: 'Author',
+      many: true,
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },

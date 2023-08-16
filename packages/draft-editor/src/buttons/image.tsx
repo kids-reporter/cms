@@ -56,7 +56,7 @@ export function ImageButton(props: {
         <ImageSelector
           onChange={onImageSelectorChange}
           enableCaption={true}
-          enableUrl={true}
+          enableUrl={false}
           enableAlignment={true}
         />
       )}

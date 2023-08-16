@@ -23,44 +23,30 @@ model User {
 }
 
 model Post {
-  id                         Int              @id @default(autoincrement())
-  slug                       String           @unique @default("")
-  name                       String           @default("")
-  subtitle                   String           @default("")
-  status                     String?          @default("draft")
-  publishedDate              DateTime?
-  subSubcategories           SubSubcategory[] @relation("Post_subSubcategories")
-  writers                    Author[]         @relation("Author_posts")
-  photographers              Author[]         @relation("Post_photographers")
-  editors                    Author[]         @relation("Post_editors")
-  designers                  Author[]         @relation("Post_designers")
-  engineers                  Author[]         @relation("Post_engineers")
-  reviewers                  Author[]         @relation("Post_reviewers")
-  otherByline                String           @default("")
-  heroImage                  Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
-  heroImageId                Int?             @map("heroImage")
-  heroCaption                String           @default("")
-  heroImageSize              String?          @default("normal")
-  brief                      Json?
-  content                    Json?
-  projects                   Project[]        @relation("Post_projects")
-  tags                       Tag[]            @relation("Post_tags")
-  readingTime                Int?
-  relatedPosts               Post[]           @relation("Post_relatedPosts")
-  ogTitle                    String           @default("")
-  ogDescription              String           @default("")
-  ogImage                    Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
-  ogImageId                  Int?             @map("ogImage")
-  createdAt                  DateTime?        @default(now())
-  updatedAt                  DateTime?        @updatedAt
-  manualOrderOfWriters       Json?
-  manualOrderOfPhotographers Json?
-  manualOrderOfDesigners     Json?
-  manualOrderOfEngineers     Json?
-  manualOrderOfReviewers     Json?
-  manualOrderOfEditors       Json?
-  manualOrderOfRelatedPosts  Json?
-  from_Post_relatedPosts     Post[]           @relation("Post_relatedPosts")
+  id                     Int              @id @default(autoincrement())
+  slug                   String           @unique @default("")
+  name                   String           @default("")
+  subtitle               String           @default("")
+  status                 String?          @default("draft")
+  publishedDate          DateTime?
+  subSubcategories       SubSubcategory[] @relation("Post_subSubcategories")
+  authors                Author[]         @relation("Author_posts")
+  authorsJSON            Json?            @default("[]")
+  heroImage              Photo?           @relation("Post_heroImage", fields: [heroImageId], references: [id])
+  heroImageId            Int?             @map("heroImage")
+  heroCaption            String           @default("")
+  brief                  Json?
+  content                Json?
+  projects               Project[]        @relation("Post_projects")
+  tags                   Tag[]            @relation("Post_tags")
+  relatedPosts           Post[]           @relation("Post_relatedPosts")
+  ogTitle                String           @default("")
+  ogDescription          String           @default("")
+  ogImage                Photo?           @relation("Post_ogImage", fields: [ogImageId], references: [id])
+  ogImageId              Int?             @map("ogImage")
+  createdAt              DateTime?        @default(now())
+  updatedAt              DateTime?        @updatedAt
+  from_Post_relatedPosts Post[]           @relation("Post_relatedPosts")
 
   @@index([status])
   @@index([publishedDate])
@@ -76,6 +62,7 @@ model Photo {
   imageFile_width         Int?
   imageFile_height        Int?
   imageFile_id            String?
+  authors                 Author[]   @relation("Photo_authors")
   createdAt               DateTime?  @default(now())
   updatedAt               DateTime?  @updatedAt
   from_Post_heroImage     Post[]     @relation("Post_heroImage")
@@ -89,20 +76,16 @@ model Photo {
 }
 
 model Author {
-  id                      Int       @id @default(autoincrement())
-  name                    String    @default("")
-  email                   String    @default("")
-  bio                     String    @default("")
-  avatar                  Photo?    @relation("Author_avatar", fields: [avatarId], references: [id])
-  avatarId                Int?      @map("avatar")
-  posts                   Post[]    @relation("Author_posts")
-  createdAt               DateTime? @default(now())
-  updatedAt               DateTime? @updatedAt
-  from_Post_photographers Post[]    @relation("Post_photographers")
-  from_Post_editors       Post[]    @relation("Post_editors")
-  from_Post_designers     Post[]    @relation("Post_designers")
-  from_Post_engineers     Post[]    @relation("Post_engineers")
-  from_Post_reviewers     Post[]    @relation("Post_reviewers")
+  id                 Int       @id @default(autoincrement())
+  name               String    @default("")
+  email              String    @default("")
+  bio                String    @default("")
+  avatar             Photo?    @relation("Author_avatar", fields: [avatarId], references: [id])
+  avatarId           Int?      @map("avatar")
+  posts              Post[]    @relation("Author_posts")
+  createdAt          DateTime? @default(now())
+  updatedAt          DateTime? @updatedAt
+  from_Photo_authors Photo[]   @relation("Photo_authors")
 
   @@index([name])
   @@index([avatarId])

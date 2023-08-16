@@ -146,29 +146,17 @@ type Post {
   publishedDate: DateTime
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
-  writers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
-  writersCount(where: AuthorWhereInput! = {}): Int
-  photographers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
-  photographersCount(where: AuthorWhereInput! = {}): Int
-  editors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
-  editorsCount(where: AuthorWhereInput! = {}): Int
-  designers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
-  designersCount(where: AuthorWhereInput! = {}): Int
-  engineers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
-  engineersCount(where: AuthorWhereInput! = {}): Int
-  reviewers(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
-  reviewersCount(where: AuthorWhereInput! = {}): Int
-  otherByline: String
+  authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
+  authorsCount(where: AuthorWhereInput! = {}): Int
+  authorsJSON: JSON
   heroImage: Photo
   heroCaption: String
-  heroImageSize: String
   brief: JSON
   content: JSON
   projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   projectsCount(where: ProjectWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
-  readingTime: Int
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
   ogTitle: String
@@ -177,20 +165,6 @@ type Post {
   createdAt: DateTime
   updatedAt: DateTime
   preview: JSON
-  manualOrderOfWriters: JSON
-  writersInInputOrder: [Author]
-  manualOrderOfPhotographers: JSON
-  photographersInInputOrder: [Author]
-  manualOrderOfDesigners: JSON
-  designersInInputOrder: [Author]
-  manualOrderOfEngineers: JSON
-  engineersInInputOrder: [Author]
-  manualOrderOfReviewers: JSON
-  reviewersInInputOrder: [Author]
-  manualOrderOfEditors: JSON
-  editorsInInputOrder: [Author]
-  manualOrderOfRelatedPosts: JSON
-  relatedPostsInInputOrder: [Post]
 }
 
 input PostWhereUniqueInput {
@@ -209,19 +183,11 @@ input PostWhereInput {
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   subSubcategories: SubSubcategoryManyRelationFilter
-  writers: AuthorManyRelationFilter
-  photographers: AuthorManyRelationFilter
-  editors: AuthorManyRelationFilter
-  designers: AuthorManyRelationFilter
-  engineers: AuthorManyRelationFilter
-  reviewers: AuthorManyRelationFilter
-  otherByline: StringFilter
+  authors: AuthorManyRelationFilter
   heroImage: PhotoWhereInput
   heroCaption: StringFilter
-  heroImageSize: StringNullableFilter
   projects: ProjectManyRelationFilter
   tags: TagManyRelationFilter
-  readingTime: IntNullableFilter
   relatedPosts: PostManyRelationFilter
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -283,17 +249,6 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
 input PostManyRelationFilter {
   every: PostWhereInput
   some: PostWhereInput
@@ -307,10 +262,7 @@ input PostOrderByInput {
   subtitle: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
-  otherByline: OrderDirection
   heroCaption: OrderDirection
-  heroImageSize: OrderDirection
-  readingTime: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
   createdAt: OrderDirection
@@ -324,34 +276,20 @@ input PostUpdateInput {
   status: String
   publishedDate: DateTime
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
-  writers: AuthorRelateToManyForUpdateInput
-  photographers: AuthorRelateToManyForUpdateInput
-  editors: AuthorRelateToManyForUpdateInput
-  designers: AuthorRelateToManyForUpdateInput
-  engineers: AuthorRelateToManyForUpdateInput
-  reviewers: AuthorRelateToManyForUpdateInput
-  otherByline: String
+  authors: AuthorRelateToManyForUpdateInput
+  authorsJSON: JSON
   heroImage: PhotoRelateToOneForUpdateInput
   heroCaption: String
-  heroImageSize: String
   brief: JSON
   content: JSON
   projects: ProjectRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
-  readingTime: Int
   relatedPosts: PostRelateToManyForUpdateInput
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  manualOrderOfWriters: JSON
-  manualOrderOfPhotographers: JSON
-  manualOrderOfDesigners: JSON
-  manualOrderOfEngineers: JSON
-  manualOrderOfReviewers: JSON
-  manualOrderOfEditors: JSON
-  manualOrderOfRelatedPosts: JSON
 }
 
 input SubSubcategoryRelateToManyForUpdateInput {
@@ -407,34 +345,20 @@ input PostCreateInput {
   status: String
   publishedDate: DateTime
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
-  writers: AuthorRelateToManyForCreateInput
-  photographers: AuthorRelateToManyForCreateInput
-  editors: AuthorRelateToManyForCreateInput
-  designers: AuthorRelateToManyForCreateInput
-  engineers: AuthorRelateToManyForCreateInput
-  reviewers: AuthorRelateToManyForCreateInput
-  otherByline: String
+  authors: AuthorRelateToManyForCreateInput
+  authorsJSON: JSON
   heroImage: PhotoRelateToOneForCreateInput
   heroCaption: String
-  heroImageSize: String
   brief: JSON
   content: JSON
   projects: ProjectRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
-  readingTime: Int
   relatedPosts: PostRelateToManyForCreateInput
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  manualOrderOfWriters: JSON
-  manualOrderOfPhotographers: JSON
-  manualOrderOfDesigners: JSON
-  manualOrderOfEngineers: JSON
-  manualOrderOfReviewers: JSON
-  manualOrderOfEditors: JSON
-  manualOrderOfRelatedPosts: JSON
 }
 
 input SubSubcategoryRelateToManyForCreateInput {
@@ -471,6 +395,8 @@ type Photo {
   id: ID!
   name: String
   imageFile: ImageFieldOutput
+  authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
+  authorsCount(where: AuthorWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   resized: ResizedImages
@@ -510,6 +436,7 @@ input PhotoWhereInput {
   NOT: [PhotoWhereInput!]
   id: IDFilter
   name: StringFilter
+  authors: AuthorManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -524,6 +451,7 @@ input PhotoOrderByInput {
 input PhotoUpdateInput {
   name: String
   imageFile: ImageFieldInput
+  authors: AuthorRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -543,6 +471,7 @@ input PhotoUpdateArgs {
 input PhotoCreateInput {
   name: String
   imageFile: ImageFieldInput
+  authors: AuthorRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
