@@ -1,15 +1,12 @@
 import { ShortenParagraph } from '@/app/utils'
-import { CMS_URL, DEFAULT_AVATAR, AuthorGroup, Theme } from '@/app/constants'
+import {
+  AUTHOR_GROUP_LABEL,
+  CMS_URL,
+  DEFAULT_AVATAR,
+  AuthorGroup,
+  Theme,
+} from '@/app/constants'
 import './author-card.scss'
-
-const AuthorGroupLabel = new Map<AuthorGroup, string>([
-  [AuthorGroup.WRITERS, '文字'],
-  [AuthorGroup.DESIGNERS, '設計'],
-  [AuthorGroup.REVIEWERS, '核稿'],
-  [AuthorGroup.EDITORS, '責任編輯'],
-  [AuthorGroup.PHOTOGRAPHERS, '攝影'],
-  [AuthorGroup.ENGINEERS, '工程'],
-])
 
 const getTheme = (group: AuthorGroup) => {
   switch (group) {
@@ -62,7 +59,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   </div>
                   <span className="name">{author.name}</span>
                   <div className={`group theme-${theme}`}>
-                    {AuthorGroupLabel.get(author.group) ?? '其他'}
+                    {AUTHOR_GROUP_LABEL.get(author.group) ?? '其他'}
                   </div>
                   <span className="desc">
                     {ShortenParagraph(author.bio, descLengthLimit) ?? ''}

@@ -195,7 +195,7 @@ export const Footer = () => {
             <picture className="footer-top__left-logo">
               <img src="/images/footer-logo.svg" alt="" />
             </picture>
-            <p className="footer-top__left-p">
+            <p className="footer-desc">
               《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。
             </p>
             <div className="footer-top__left-social">
@@ -277,7 +277,7 @@ export const Footer = () => {
         <div className="footer-copyright-container">
           <div data-column="text">
             <div className="ct-header-text " data-id="text">
-              <div className="entry-content">
+              <div className="footer-number">
                 公益勸募許可字號｜衛部救字第 1101363853 號{' '}
                 <a
                   href="https://www.twreporter.org/a/privacy-footer"

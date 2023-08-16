@@ -36,6 +36,9 @@
 
       p {
         font-size: 16px !important;
+        letter-spacing: var(--letterSpacing);
+        line-height: 32px;
+        color: var(--paletteColor4, #232323) !important;
       }
 
       .action-container {

@@ -11,6 +11,12 @@
   padding: var(--stk-block-background-padding);
 }
 
+.footer-desc {
+  letter-spacing: var(--letterSpacing);
+  line-height: 32px;
+  margin-bottom: 30px;
+}
+
 .footer-copyright {
   display: flex;
   width: 100%;
@@ -32,6 +38,12 @@
   --lineHeight: 1.3;
   --color: var(--paletteColor4);
 
+  .footer-number {
+    letter-spacing: var(--letterSpacing);
+    font-size: 14px;
+    color: var(--color);
+  }
+
   a {
     margin-left: 40px;
     margin-right: -20px;
@@ -44,6 +56,9 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    font-size: var(--fontSize);
+    letter-spacing: var(--letterSpacing);
+    color: var(--color);
   }
 }
 
