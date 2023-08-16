@@ -1,5 +1,6 @@
 'use client'
 import { SearchIcon } from '@/app/icons/header'
+import { SUBSCRIBE_URL } from '@/app/constants'
 
 import './header.scss'
 import '../assets/css/button.css'
@@ -56,7 +57,7 @@ export const StickyHeader = () => {
             投稿
           </a>
           <a
-            href="http://eepurl.com/idk8VH"
+            href={SUBSCRIBE_URL}
             target="_blank"
             className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
             style={{ marginRight: '15px' }}
@@ -319,7 +320,7 @@ export const Header = () => {
                     投稿
                   </a>
                   <a
-                    href="http://eepurl.com/idk8VH"
+                    href={SUBSCRIBE_URL}
                     target="_blank"
                     className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
                     style={{ marginLeft: '16px' }}
