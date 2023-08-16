@@ -1,5 +1,11 @@
-import { list } from '@keystone-6/core'
-import { relationship, select, text, timestamp } from '@keystone-6/core/fields'
+import { graphql, list } from '@keystone-6/core'
+import {
+  virtual,
+  relationship,
+  select,
+  text,
+  timestamp,
+} from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -37,6 +43,73 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
+    relatedPosts: virtual({
+      field: (lists) =>
+        graphql.field({
+          type: graphql.list(lists.Post.types.output),
+          args: {
+            take: graphql.arg({
+              type: graphql.nonNull(graphql.Int),
+              defaultValue: 12,
+            }),
+            skip: graphql.arg({
+              type: graphql.nonNull(graphql.Int),
+              defaultValue: 0,
+            }),
+          },
+          async resolve(item: Record<string, any>, args, context) {
+            // subcategory id
+            const itemId = item?.id
+
+            // find subcategory item via GQL query
+            const category = await context.query.Subcategory.findOne({
+              where: { id: itemId },
+              query: 'subSubcategories { id slug }',
+            })
+
+            // collect all subSubcategory ids under a category
+            const subSubcategoryIds = collectSubSubcategoryIds(
+              category as SubcategoryItem
+            )
+
+            if (subSubcategoryIds.length === 0) {
+              return []
+            }
+
+            // find published posts with
+            // at least one specified subSubcategory
+            const posts = await context.prisma.Post.findMany({
+              where: {
+                OR: [{ status: 'published' }, { status: 'archived' }],
+                subSubcategories: {
+                  some: {
+                    id: {
+                      in: subSubcategoryIds,
+                    },
+                  },
+                },
+              },
+              take: args.take,
+              skip: args.skip,
+              orderBy: {
+                publishedDate: 'desc',
+              },
+            })
+            return posts
+          },
+        }),
+      ui: {
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
     }),
@@ -50,5 +123,24 @@ const listConfigurations = list({
     operation: () => true,
   },
 })
+
+type SubcategoryItem = {
+  subSubcategories: {
+    id: string
+    slug: string
+  }[]
+}
+
+function collectSubSubcategoryIds(subcategory: SubcategoryItem): number[] {
+  const ids = []
+  const subSubcategories = subcategory.subSubcategories || []
+  for (const subSubcategory of subSubcategories) {
+    if (subSubcategory?.id) {
+      const id = parseInt(subSubcategory.id)
+      ids.push(id)
+    }
+  }
+  return ids
+}
 
 export default listConfigurations
