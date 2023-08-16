@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { HamburgerIcon, SearchIcon } from '@/app/icons/header'
 import { SUBSCRIBE_URL } from '@/app/constants'
 
@@ -29,8 +30,10 @@ const navItems = [
 ]
 
 export const StickyHeader = () => {
+  const [isHamburgerClicked, setIsHamburgerClicked] = useState(false)
+
   const onHamburgerClick = () => {
-    console.log('onHamburgerClick')
+    setIsHamburgerClicked(!isHamburgerClicked)
   }
 
   const logo = (
