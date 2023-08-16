@@ -2,21 +2,15 @@ import { ThemeColor } from '@/app/constants'
 
 export const HamburgerIcon = (
   <svg
-    // width="18"
-    // height="14"
+    width="30"
+    height="30"
     viewBox="0 0 18 14"
     aria-hidden="true"
     data-type="type-1"
   >
-    <rect fill={ThemeColor.BLUE} y="0.00" width="18" height="1.7" rx="1"></rect>
-    <rect fill={ThemeColor.RED} y="6.15" width="18" height="1.7" rx="1"></rect>
-    <rect
-      fill={ThemeColor.YELLOW}
-      y="12.3"
-      width="18"
-      height="1.7"
-      rx="1"
-    ></rect>
+    <rect fill={ThemeColor.BLUE} y="0.00" width="18" height="3" rx="1"></rect>
+    <rect fill={ThemeColor.RED} y="6.15" width="18" height="3" rx="1"></rect>
+    <rect fill={ThemeColor.YELLOW} y="12.3" width="18" height="3" rx="1"></rect>
   </svg>
 )
 
