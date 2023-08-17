@@ -252,99 +252,34 @@ export default async function Home() {
         )
       })}
       <h1>TODO: 搜尋文章</h1>
-      {MakeFriend}
+      <div className="make-friend">
+        <div>
+          <h3>和報導仔交朋友</h3>
+          <p className="stk-block-text__text has-text-color">
+            哈囉，我是「報導仔」！
+          </p>
+          <p className="stk-block-text__text has-text-color">
+            <br />
+            我是《報導者》2022年10月誕生的夥伴，在《少年報導者》擔任管家。天秤座的我重視平等、客觀，個性熱情、觀察力強。有人說我的樣子像大聲公，也有人說我像探照燈。
+            <br />
+            <br />
+            歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
+          </p>
+        </div>
+        <img
+          decoding="async"
+          loading="lazy"
+          className="stk-img wp-image-4155"
+          src="https://kids.twreporter.org/wp-content/uploads/2022/10/home-cat-1.svg"
+          width="255"
+          height="300"
+        />
+      </div>
       <h1>TODO: CTA</h1>
       {GOTOMainSite}
     </main>
   )
 }
-
-const MakeFriend = (
-  <div>
-    <div className="ugb-inner-block ugb-inner-block--center">
-      <div className="ugb-block-content">
-        <div className="ugb-columns__item ugb-662249a-content-wrapper">
-          <div className="wp-block-ugb-column ugb-column ugb-0c52f71 ugb-column--design-plain ugb-main-block ugb--has-custom-content-width-tablet">
-            <div className="ugb-inner-block">
-              <div className="ugb-block-content">
-                <div className="ugb-column__item ugb-0c52f71-column-wrapper">
-                  <div className="ugb-column__content-wrapper">
-                    <div>
-                      <figure className="stk-img-wrapper stk-image--shape-stretch">
-                        <img
-                          decoding="async"
-                          loading="lazy"
-                          className="stk-img wp-image-4155"
-                          src="https://kids.twreporter.org/wp-content/uploads/2022/10/home-cat-1.svg"
-                          width="255"
-                          height="300"
-                        />
-                      </figure>
-                    </div>
-                    <div>
-                      <p className="stk-block-text__text has-text-color">
-                        哈囉，我是「報導仔」！
-                      </p>
-                    </div>
-                    <div>
-                      <p className="stk-block-text__text has-text-color">
-                        <br />
-                        我是《報導者》2022年10月誕生的夥伴，在《少年報導者》擔任管家。天秤座的我重視平等、客觀，個性熱情、觀察力強。有人說我的樣子像大聲公，也有人說我像探照燈。
-                        <br />
-                        <br />
-                        歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="wp-block-ugb-column ugb-column ugb-8a00ea4 ugb-column--design-plain ugb-main-block">
-            <div className="ugb-inner-block">
-              <div className="ugb-block-content">
-                <div className="ugb-column__item ugb-8a00ea4-column-wrapper">
-                  <div className="ugb-column__content-wrapper">
-                    <div
-                      className="wp-block-stackable-image stk-block-image stk--hide-tablet stk--hide-mobile stk-block stk-fdc6d15"
-                      data-block-id="fdc6d15"
-                    >
-                      <figure className="stk-img-wrapper stk-image--shape-stretch">
-                        <img
-                          decoding="async"
-                          loading="lazy"
-                          className="stk-img wp-image-5006"
-                          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_pic.svg"
-                          width="340"
-                          height="300"
-                        />
-                      </figure>
-                    </div>
-                    <div
-                      className="wp-block-stackable-image stk-block-image stk--hide-desktop stk-block stk-0a7ca78"
-                      data-block-id="0a7ca78"
-                    >
-                      <figure className="stk-img-wrapper stk-image--shape-stretch">
-                        <img
-                          decoding="async"
-                          loading="lazy"
-                          className="stk-img wp-image-5007"
-                          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_RWD_pic.svg"
-                          width="340"
-                          height="300"
-                        />
-                      </figure>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)
 
 const GOTOMainSite = (
   <div data-block-id="f68be26">
