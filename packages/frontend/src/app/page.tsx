@@ -253,7 +253,7 @@ export default async function Home() {
       })}
       <h1>TODO: 搜尋文章</h1>
       <div className="make-friend">
-        <div>
+        <div className="content">
           <h3>和報導仔交朋友</h3>
           <p className="stk-block-text__text has-text-color">
             哈囉，我是「報導仔」！
@@ -266,14 +266,6 @@ export default async function Home() {
             歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
           </p>
         </div>
-        <img
-          decoding="async"
-          loading="lazy"
-          className="stk-img wp-image-4155"
-          src="https://kids.twreporter.org/wp-content/uploads/2022/10/home-cat-1.svg"
-          width="255"
-          height="300"
-        />
       </div>
       <h1>TODO: CTA</h1>
       {GOTOMainSite}
