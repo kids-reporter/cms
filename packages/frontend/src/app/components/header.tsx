@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { HamburgerIcon, SearchIcon } from '@/app/icons/header'
+import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons/header'
 import { SUBSCRIBE_URL } from '@/app/constants'
 
 import './header.scss'
@@ -156,13 +156,26 @@ export const StickyHeader = () => {
 
   const overlay = (
     <div className="overlay-mobile">
-      {logo}
-      {slogan}
-      {contributeBtn}
-      {subscribeBtn}
-      {aboutUsBtn}
-      {searchInput}
-      {navi}
+      <div className="control">
+        <button
+          className="ct-toggle-close"
+          data-type="type-1"
+          aria-label="關閉側選單"
+        >
+          {CrossIcon}
+        </button>
+      </div>
+      <div className="content">
+        {logo}
+        {slogan}
+        <div className="btn-group">
+          {contributeBtn}
+          {subscribeBtn}
+          {aboutUsBtn}
+        </div>
+        {searchInput}
+        {navi}
+      </div>
     </div>
   )
 
