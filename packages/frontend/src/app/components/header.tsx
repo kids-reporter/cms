@@ -29,14 +29,6 @@ const navItems = [
   },
 ]
 
-const logo = (
-  <img
-    src="/images/LOGO.svg"
-    className="default-logo"
-    alt="少年報導者 The Reporter for Kids"
-  />
-)
-
 const slogan = <img src="/images/header-left-slogan.svg" />
 
 const contributeBtn = (
@@ -82,7 +74,11 @@ export const StickyHeader = () => {
   const brand = (
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
-        {logo}
+        <img
+          src="/images/LOGO.svg"
+          className="default-logo"
+          alt="少年報導者 The Reporter for Kids"
+        />
       </a>
     </div>
   )
@@ -166,8 +162,12 @@ export const StickyHeader = () => {
         </button>
       </div>
       <div className="content">
-        {logo}
-        {slogan}
+        <a href="/" className="logo-mobile">
+          <img
+            src="/images/logo-full.svg"
+            alt="少年報導者 The Reporter for Kids"
+          />
+        </a>
         <div className="btn-group">
           {contributeBtn}
           {subscribeBtn}
@@ -340,7 +340,7 @@ export const Header = () => {
                   value=""
                   name="s"
                   title="Search for..."
-                  aria-label="Search for..." /*required="required"*/
+                  aria-label="Search for..."
                   onChange={handleSearchInputChange}
                 />
                 <button

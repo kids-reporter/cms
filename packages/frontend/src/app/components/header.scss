@@ -184,9 +184,22 @@
           align-items: center;
           padding: var(--panel-padding, 35px);
 
+          .logo-mobile {
+            --logo-max-height: 92px;
+            height: var(--logo-shrink-height, var(--logo-max-height, 50px));
+
+            img {
+              width: auto;
+              max-width: initial;
+              object-fit: contain;
+              height: inherit;
+    vertical-align: initial;
+            }
+          }
+
           .btn-group {
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-top: 60px;
+            margin-bottom: 40px;
           }
         }
       }
