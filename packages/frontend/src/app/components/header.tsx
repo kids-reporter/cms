@@ -29,6 +29,14 @@ const navItems = [
   },
 ]
 
+const logo = (
+  <img
+    src="/images/LOGO.svg"
+    className="default-logo"
+    alt="少年報導者 The Reporter for Kids"
+  />
+)
+
 const slogan = <img src="/images/header-left-slogan.svg" />
 
 const contributeBtn = (
@@ -71,24 +79,12 @@ export const StickyHeader = () => {
     setIsHamburgerClicked(!isHamburgerClicked)
   }
 
-  const logo = (
+  const brand = (
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
-        <img
-          src="/images/LOGO.svg"
-          className="default-logo"
-          alt="少年報導者 The Reporter for Kids"
-        />
+        {logo}
       </a>
     </div>
-  )
-
-  const cta = (
-    <>
-      {contributeBtn}
-      {subscribeBtn}
-      {slogan}
-    </>
   )
 
   const navi = (
@@ -130,11 +126,7 @@ export const StickyHeader = () => {
 
   const overlay = (
     <div className="overlay-mobile">
-      <img
-        src="/images/LOGO.svg"
-        className="default-logo"
-        alt="少年報導者 The Reporter for Kids"
-      />
+      {logo}
       {slogan}
       {contributeBtn}
       {subscribeBtn}
@@ -152,9 +144,13 @@ export const StickyHeader = () => {
   return (
     <div className="header">
       <div className="header-container">
-        <div className="left">{logo}</div>
+        <div className="left">{brand}</div>
         <div className="right">
-          <div className="cta">{cta}</div>
+          <div className="cta">
+            {contributeBtn}
+            {subscribeBtn}
+            {slogan}
+          </div>
           <div className="others">
             {navi}
             {search}
