@@ -1,4 +1,4 @@
-.header {
+.sticky-header {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -245,5 +245,32 @@
         padding: 6px 5px;
       }
     }
+  }
+}
+
+.home-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .left {
+    img {
+      height: auto;
+      max-width: 100%;
+      vertical-align: middle;
+    }
+  }
+
+  .center {
+    height: 257px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
