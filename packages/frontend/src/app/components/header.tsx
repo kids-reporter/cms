@@ -177,13 +177,6 @@ export const StickyHeader = () => {
     </div>
   )
 
-  const hamburger = (
-    <button className="hamburger" onClick={onHamburgerClick}>
-      {HamburgerIcon}
-      {isHamburgerClicked && overlay}
-    </button>
-  )
-
   return (
     <div className="header">
       <div className="header-container">
@@ -200,7 +193,12 @@ export const StickyHeader = () => {
             {about}
           </div>
         </div>
-        <div className="right-mobile">{hamburger}</div>
+        <div className="right-mobile">
+          <button className="hamburger" onClick={onHamburgerClick}>
+            {HamburgerIcon}
+          </button>
+          {isHamburgerClicked && overlay}
+        </div>
       </div>
     </div>
   )
