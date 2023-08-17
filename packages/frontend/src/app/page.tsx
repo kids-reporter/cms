@@ -208,7 +208,7 @@ export default async function Home() {
   const posts: Post[] = response?.data?.data?.posts
 
   return (
-    <main>
+    <main className="home">
       {
         /* TODO: remove list */ false &&
           posts?.map((post, index) => {
