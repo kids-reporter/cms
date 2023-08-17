@@ -167,3 +167,18 @@ export const relatedPostMockup = [
     theme: Theme.BLUE,
   },
 ]
+
+export const MOCKUP_TAGS = [
+  {
+    name: '兒少',
+    slug: '兒少',
+  },
+  {
+    name: '國際',
+    slug: '國際',
+  },
+  {
+    name: 'HPV',
+    slug: 'HPV',
+  },
+]

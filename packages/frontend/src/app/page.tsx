@@ -6,6 +6,8 @@ import PostSlider from '@/app/components/post-slider'
 import Tags from '@/app/components/tags'
 import { HomeDivider } from '@/app/components/divider'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
+import { MOCKUP_TAGS } from './mockup'
+
 import './page.scss'
 
 type Post = {
@@ -259,22 +261,7 @@ export default async function Home() {
           width="265"
           height="300"
         />
-        <Tags
-          tags={[
-            {
-              name: '兒少',
-              slug: '兒少',
-            },
-            {
-              name: '國際',
-              slug: '國際',
-            },
-            {
-              name: 'HPV',
-              slug: 'HPV',
-            },
-          ]}
-        />
+        <Tags tags={MOCKUP_TAGS} />
       </div>
       <div className="make-friend">
         <div className="content">
