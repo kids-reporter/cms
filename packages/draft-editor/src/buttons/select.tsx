@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Select as KeystoneSelect } from '@keystone-ui/fields'
 
-const TypeSelectBlock = styled.div`
+const SelectBlock = styled.div`
   margin: 10px 0;
 `
 
@@ -17,17 +17,17 @@ type Option = {
   value: string
 }
 
-type TypeSelectProps = {
+type SelectProps = {
   title: string
   value: string
   options: Option[]
   onChange: (arg0: string) => void
 }
 
-export function Select({ title, value, options, onChange }: TypeSelectProps) {
+export function Select({ title, value, options, onChange }: SelectProps) {
   return (
-    <TypeSelectBlock>
-      <Label htmlFor="infoBoxType">{title}</Label>
+    <SelectBlock>
+      <Label htmlFor={title}>{title}</Label>
       <KeystoneSelect
         value={options.find((option: Option) => option.value === value) || null}
         options={options}
@@ -35,6 +35,6 @@ export function Select({ title, value, options, onChange }: TypeSelectProps) {
           onChange(option.value)
         }}
       />
-    </TypeSelectBlock>
+    </SelectBlock>
   )
 }
