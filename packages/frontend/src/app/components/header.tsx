@@ -29,6 +29,41 @@ const navItems = [
   },
 ]
 
+const slogan = <img src="/images/header-left-slogan.svg" />
+
+const contributeBtn = (
+  <a
+    href="/about#post"
+    className="header-left__btn-1 rpjr-btn"
+    style={{ marginRight: '14px' }}
+  >
+    投稿
+  </a>
+)
+
+const subscribeBtn = (
+  <a
+    href={SUBSCRIBE_URL}
+    target="_blank"
+    className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
+    style={{ marginRight: '15px' }}
+  >
+    訂閱
+  </a>
+)
+
+const aboutUsBtn = (
+  <a
+    href="/about#us"
+    className="rpjr-btn rpjr-btn-red"
+    aria-label="我們是誰"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    我們是誰
+  </a>
+)
+
 export const StickyHeader = () => {
   const [isHamburgerClicked, setIsHamburgerClicked] = useState(false)
 
@@ -50,25 +85,9 @@ export const StickyHeader = () => {
 
   const cta = (
     <>
-      <a
-        href="/about#post"
-        className="header-left__btn-1 rpjr-btn __mPS2id"
-        style={{ marginRight: '14px' }}
-      >
-        投稿
-      </a>
-      <a
-        href={SUBSCRIBE_URL}
-        target="_blank"
-        className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
-        style={{ marginRight: '15px' }}
-      >
-        訂閱
-      </a>
-      <img
-        src="/images/header-left-slogan.svg"
-        className="header-left__slogan"
-      />
+      {contributeBtn}
+      {subscribeBtn}
+      {slogan}
     </>
   )
 
@@ -109,9 +128,24 @@ export const StickyHeader = () => {
     </div>
   )
 
+  const overlay = (
+    <div className="overlay-mobile">
+      <img
+        src="/images/LOGO.svg"
+        className="default-logo"
+        alt="少年報導者 The Reporter for Kids"
+      />
+      {slogan}
+      {contributeBtn}
+      {subscribeBtn}
+      {aboutUsBtn}
+    </div>
+  )
+
   const hamburger = (
     <button className="hamburger" onClick={onHamburgerClick}>
       {HamburgerIcon}
+      {isHamburgerClicked && overlay}
     </button>
   )
 
