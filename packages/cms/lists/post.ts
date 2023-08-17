@@ -153,6 +153,9 @@ const listConfigurations = list({
         createView: {
           fieldMode: 'hidden',
         },
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
       },
     }),
   },
