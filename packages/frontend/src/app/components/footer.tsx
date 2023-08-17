@@ -1,3 +1,5 @@
+import { SUBSCRIBE_URL } from '@/app/constants'
+
 import './footer.scss'
 import '../assets/css/button.css'
 
@@ -252,7 +254,7 @@ export const Footer = () => {
                 贊助我們
               </a>
               <a
-                href="http://eepurl.com/idk8VH"
+                href={SUBSCRIBE_URL}
                 target="_blank"
                 className="header-left__btn-1 rpjr-btn rpjr-btn-orange rpjr-btn-big"
               >

@@ -1,6 +1,6 @@
+import { SUBSCRIBE_URL } from '@/app/constants'
 import './call-to-action.scss'
 
-const subscribeURL = 'http://eepurl.com/idk8VH'
 const contributeURL = '/about#post'
 
 export const CallToAction = () => {
@@ -30,7 +30,7 @@ export const CallToAction = () => {
               <div className="action-container">
                 <a
                   className="subscribe-btn"
-                  href={subscribeURL}
+                  href={SUBSCRIBE_URL}
                   target="_blank"
                   rel="noreferrer noopener"
                 >

@@ -1,6 +1,8 @@
 export const CMS_URL = 'https://dev-kids-cms.twreporter.org'
 export const API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
+export const SUBSCRIBE_URL = 'http://eepurl.com/idk8VH'
+
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
 export enum Theme {

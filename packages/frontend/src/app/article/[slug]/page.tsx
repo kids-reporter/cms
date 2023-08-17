@@ -4,7 +4,7 @@ import Title from './title'
 import HeroImage from './hero-image'
 import PublishedDate from './published-date'
 import Category from './category'
-import Sidebar from './sidebar'
+import { Sidebar, MobileSidebar } from './sidebar'
 import Brief, { AuthorGroup } from './brief'
 import Tags from './tags'
 import PostRenderer from './post-renderer'
@@ -178,6 +178,7 @@ export default async function PostPage({
       <main className="main-container">
         <div className={`post theme-${theme}`}>
           <Sidebar />
+          <MobileSidebar />
           <HeroImage
             url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
             caption={post.heroCaption}

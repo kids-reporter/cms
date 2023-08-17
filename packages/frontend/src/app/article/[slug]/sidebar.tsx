@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import './sidebar.scss'
 
 const shareIcons = [
@@ -86,4 +87,47 @@ export const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export const MobileSidebar = () => {
+  const [isShareClicked, setIsShareClicked] = useState(false)
+
+  const onShareClick = () => {
+    setIsShareClicked(!isShareClicked)
+  }
+
+  const onChangeTextClick = () => {
+    // TODO: change font handler
+    console.log('onChangeTextClick')
+  }
+
+  return (
+    <div className="mobile-sidebar-container">
+      <div className="sidebar">
+        {isShareClicked && (
+          <div className="share-buttons">
+            {shareIcons.map((icon, index) => {
+              return (
+                <button key={`share-icon-${index}`} onClick={icon.onClick}>
+                  <img src={`/images/${icon.image}`} />
+                </button>
+              )
+            })}
+          </div>
+        )}
+        <div className="section">
+          <div className="button-group">
+            <button onClick={onShareClick}>
+              <img src={`/images/mobile-sidebar-share.svg`} />
+            </button>
+            <span>分享文章</span>
+          </div>
+          <div className="button-group">
+            <button onClick={onChangeTextClick}>
+              <img src={`/images/mobile-sidebar-change-font.svg`} />
+            </button>
+            <span>文字大小</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
