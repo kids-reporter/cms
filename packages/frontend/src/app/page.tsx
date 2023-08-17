@@ -209,16 +209,19 @@ export default async function Home() {
 
   return (
     <main>
-      {posts?.map((post, index) => {
-        const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
-        return (
-          <div key={`article-${index}`}>
-            <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>
-            <p>{post.slug}</p>
-            <br />
-          </div>
-        )
-      })}
+      {
+        /* TODO: remove list */ false &&
+          posts?.map((post, index) => {
+            const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
+            return (
+              <div key={`article-${index}`}>
+                <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>
+                <p>{post.slug}</p>
+                <br />
+              </div>
+            )
+          })
+      }
       <Header />
       <MainSlider posts={postMockups} />
       <h1>TODO: 新聞ing</h1>
