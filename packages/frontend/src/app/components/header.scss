@@ -163,6 +163,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-image: url(/images/navbar_pic.svg);
+        background-repeat: no-repeat;
+        background-position: bottom left 20%;
+        background-size: 317px;
 
         .control {
           width: 100%;
