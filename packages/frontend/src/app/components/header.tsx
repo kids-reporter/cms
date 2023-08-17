@@ -224,10 +224,10 @@ export const Header = () => {
   return (
     <div className="home-header">
       <div className="left">
-        <img src="/images/navbar_pic.svg" />
+        <img src="/images/navbar_pic.svg" width="291" />
       </div>
       <div className="center">
-        <a>
+        <a href="/">
           <img
             src="/images/logo-full.svg"
             alt="少年報導者 The Reporter for Kids"
