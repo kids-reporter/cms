@@ -274,7 +274,7 @@ export const Header = () => {
             <input type="hidden" name="post_type" value="post" />
           </form>
         </div>
-        <div>
+        <div className="btn-group">
           {contributeBtn}
           {subscribeBtn}
           {aboutUsBtn}
