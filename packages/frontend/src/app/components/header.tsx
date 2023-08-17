@@ -71,6 +71,10 @@ export const StickyHeader = () => {
     setIsHamburgerClicked(!isHamburgerClicked)
   }
 
+  const onOverlayClose = () => {
+    setIsHamburgerClicked(false)
+  }
+
   const brand = (
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
@@ -153,13 +157,7 @@ export const StickyHeader = () => {
   const overlay = (
     <div className="overlay-mobile">
       <div className="control">
-        <button
-          className="ct-toggle-close"
-          data-type="type-1"
-          aria-label="關閉側選單"
-        >
-          {CrossIcon}
-        </button>
+        <button onClick={onOverlayClose}>{CrossIcon}</button>
       </div>
       <div className="content">
         <a href="/" className="logo-mobile">
