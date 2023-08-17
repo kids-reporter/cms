@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
+import Tags from '@/app/components/tags'
 import { HomeDivider } from '@/app/components/divider'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
@@ -251,7 +252,30 @@ export default async function Home() {
           </div>
         )
       })}
-      <h1>TODO: 搜尋文章</h1>
+      <div className="search">
+        <img
+          decoding="async"
+          src="/images/search_title.svg"
+          width="265"
+          height="300"
+        />
+        <Tags
+          tags={[
+            {
+              name: '兒少',
+              slug: '兒少',
+            },
+            {
+              name: '國際',
+              slug: '國際',
+            },
+            {
+              name: 'HPV',
+              slug: 'HPV',
+            },
+          ]}
+        />
+      </div>
       <div className="make-friend">
         <div className="content">
           <h3>和報導仔交朋友</h3>
