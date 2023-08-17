@@ -223,7 +223,7 @@ export default async function Home() {
           })
       }
       <Header />
-      <MainSlider posts={postMockups} />
+      <MainSlider posts={postMockupsMore} />
       <h1>TODO: 新聞ing</h1>
       {sliderSections.map((section, index) => {
         return (

@@ -86,5 +86,23 @@
         text-align: left;
       }
     }
+
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      top: 25%;
+      --btn-edge: 400px;
+      z-index: 900;
+    }
+
+    button.prev-btn {
+      left: var(--btn-edge);
+    }
+
+    button.next-btn {
+      right: var(--btn-edge);
+    }
   }
 }

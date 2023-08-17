@@ -1,11 +1,15 @@
 'use client'
+import { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper as SwiperCore } from 'swiper/types'
 import {
   Autoplay,
   EffectCoverflow,
   Navigation,
   Pagination,
 } from 'swiper/modules'
+import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
+import { DEFAULT_THEME_COLOR } from '@/app/constants'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
@@ -21,23 +25,25 @@ const autoPlayInterval = 5000
 
 export const MainSlider = (props: SliderProp) => {
   const posts = props?.posts
+  const swiperRef = useRef<SwiperCore>()
 
   return (
     <div className="main-slider">
       <div className="posts">
         <Swiper
           autoplay={{ delay: autoPlayInterval }}
-          navigation={true}
+          onBeforeInit={(swiper) => {
+            swiperRef.current = swiper
+          }}
           pagination={{ clickable: true }}
           modules={[Autoplay, EffectCoverflow, Navigation, Pagination]}
           loop={true}
-          spaceBetween={20}
-          slidesPerView={'auto'}
+          slidesPerView={2}
           effect={'coverflow'}
           centeredSlides={true}
           coverflowEffect={{
             rotate: 0,
-            stretch: 0,
+            stretch: 100,
             depth: 100,
             modifier: 1,
             slideShadows: true,
@@ -54,6 +60,18 @@ export const MainSlider = (props: SliderProp) => {
             )
           })}
         </Swiper>
+        <button
+          className="prev-btn"
+          onClick={() => swiperRef.current?.slidePrev()}
+        >
+          <ArrowLeft color={DEFAULT_THEME_COLOR} />
+        </button>
+        <button
+          className="next-btn"
+          onClick={() => swiperRef.current?.slideNext()}
+        >
+          <ArrowRight color={DEFAULT_THEME_COLOR} />
+        </button>
       </div>
     </div>
   )
