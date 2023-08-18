@@ -110,7 +110,18 @@ const Dropdown: React.FC<DropdownProps> = function ({
   return (
     <Container className={className}>
       <InputBlock onClick={toggleList}>
-        <Input readOnly placeholder="請選擇" value={selectedOption.name} />
+        {
+          // WORKAROUND:
+          // `disabled` attribute is used to prevent `<input>` from hijacking the user's cursors.
+          // If `disabled`  is not provided, and then users will not be able to edit the content
+          // in the DraftEditor.
+        }
+        <Input
+          disabled
+          readOnly
+          placeholder="請選擇"
+          value={selectedOption.name}
+        />
         {options.length > 1 && <Arrow $isListOpen={isListOpen} />}
       </InputBlock>
       {isListOpen && <DropdownOptionList>{optionItem}</DropdownOptionList>}
