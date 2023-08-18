@@ -3,8 +3,11 @@ import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
+import Tags from '@/app/components/tags'
 import { HomeDivider } from '@/app/components/divider'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
+import { MOCKUP_TAGS } from './mockup'
+
 import './page.scss'
 
 type Post = {
@@ -208,19 +211,22 @@ export default async function Home() {
   const posts: Post[] = response?.data?.data?.posts
 
   return (
-    <main>
-      {posts?.map((post, index) => {
-        const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
-        return (
-          <div key={`article-${index}`}>
-            <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>
-            <p>{post.slug}</p>
-            <br />
-          </div>
-        )
-      })}
+    <main className="home">
+      {
+        /* TODO: remove list */ false &&
+          posts?.map((post, index) => {
+            const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
+            return (
+              <div key={`article-${index}`}>
+                <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>
+                <p>{post.slug}</p>
+                <br />
+              </div>
+            )
+          })
+      }
       <Header />
-      <MainSlider posts={postMockups} />
+      <MainSlider posts={postMockupsMore} />
       <h1>TODO: 新聞ing</h1>
       {sliderSections.map((section, index) => {
         return (
@@ -248,190 +254,64 @@ export default async function Home() {
           </div>
         )
       })}
-      <h1>TODO: 搜尋文章</h1>
-      {MakeFriend}
+      <div className="search">
+        <img
+          decoding="async"
+          src="/images/search_title.svg"
+          width="265"
+          height="300"
+        />
+        <Tags tags={MOCKUP_TAGS} />
+      </div>
+      <div className="make-friend">
+        <div className="content">
+          <h3>和報導仔交朋友</h3>
+          <p className="stk-block-text__text has-text-color">
+            哈囉，我是「報導仔」！
+          </p>
+          <p className="stk-block-text__text has-text-color">
+            <br />
+            我是《報導者》2022年10月誕生的夥伴，在《少年報導者》擔任管家。天秤座的我重視平等、客觀，個性熱情、觀察力強。有人說我的樣子像大聲公，也有人說我像探照燈。
+            <br />
+            <br />
+            歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
+          </p>
+        </div>
+      </div>
       <h1>TODO: CTA</h1>
-      {GOTOMainSite}
+      <div className="goto">
+        <img
+          decoding="async"
+          loading="lazy"
+          className="stk-img wp-image-6055"
+          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
+          width="160"
+          height="300"
+        />
+        <div>
+          <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
+            前往《報導者》主網站
+          </h2>
+          <p className="stk-block-text__text">
+            <span
+              style={{ color: 'var(--paletteColor4, #232323)' }}
+              className="stk-highlight"
+            >
+              如果你是大人，或者還想看更進階、更深度的報導，《報導者》主網站有更多調查採訪和重磅新聞。
+            </span>
+          </p>
+        </div>
+        <a
+          className="stk-link stk-button stk--hover-effect-darken"
+          href="https://www.twreporter.org/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <span className="has-text-color stk-button__inner-text">
+            前往報導者
+          </span>
+        </a>
+      </div>
     </main>
   )
 }
-
-const MakeFriend = (
-  <div>
-    <div className="ugb-inner-block ugb-inner-block--center">
-      <div className="ugb-block-content">
-        <div className="ugb-columns__item ugb-662249a-content-wrapper">
-          <div className="wp-block-ugb-column ugb-column ugb-0c52f71 ugb-column--design-plain ugb-main-block ugb--has-custom-content-width-tablet">
-            <div className="ugb-inner-block">
-              <div className="ugb-block-content">
-                <div className="ugb-column__item ugb-0c52f71-column-wrapper">
-                  <div className="ugb-column__content-wrapper">
-                    <div>
-                      <figure className="stk-img-wrapper stk-image--shape-stretch">
-                        <img
-                          decoding="async"
-                          loading="lazy"
-                          className="stk-img wp-image-4155"
-                          src="https://kids.twreporter.org/wp-content/uploads/2022/10/home-cat-1.svg"
-                          width="255"
-                          height="300"
-                        />
-                      </figure>
-                    </div>
-                    <div>
-                      <p className="stk-block-text__text has-text-color">
-                        哈囉，我是「報導仔」！
-                      </p>
-                    </div>
-                    <div>
-                      <p className="stk-block-text__text has-text-color">
-                        <br />
-                        我是《報導者》2022年10月誕生的夥伴，在《少年報導者》擔任管家。天秤座的我重視平等、客觀，個性熱情、觀察力強。有人說我的樣子像大聲公，也有人說我像探照燈。
-                        <br />
-                        <br />
-                        歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="wp-block-ugb-column ugb-column ugb-8a00ea4 ugb-column--design-plain ugb-main-block">
-            <div className="ugb-inner-block">
-              <div className="ugb-block-content">
-                <div className="ugb-column__item ugb-8a00ea4-column-wrapper">
-                  <div className="ugb-column__content-wrapper">
-                    <div
-                      className="wp-block-stackable-image stk-block-image stk--hide-tablet stk--hide-mobile stk-block stk-fdc6d15"
-                      data-block-id="fdc6d15"
-                    >
-                      <figure className="stk-img-wrapper stk-image--shape-stretch">
-                        <img
-                          decoding="async"
-                          loading="lazy"
-                          className="stk-img wp-image-5006"
-                          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_pic.svg"
-                          width="340"
-                          height="300"
-                        />
-                      </figure>
-                    </div>
-                    <div
-                      className="wp-block-stackable-image stk-block-image stk--hide-desktop stk-block stk-0a7ca78"
-                      data-block-id="0a7ca78"
-                    >
-                      <figure className="stk-img-wrapper stk-image--shape-stretch">
-                        <img
-                          decoding="async"
-                          loading="lazy"
-                          className="stk-img wp-image-5007"
-                          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_RWD_pic.svg"
-                          width="340"
-                          height="300"
-                        />
-                      </figure>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)
-
-const GOTOMainSite = (
-  <div data-block-id="f68be26">
-    <div className="stk-row stk-inner-blocks stk-block-content stk-content-align stk-f68be26-column">
-      <div
-        className="wp-block-stackable-column stk-block-column stk-block-column--v3 stk-column stk-block-column--v2 stk-block stk-194a96e"
-        data-block-id="194a96e"
-      >
-        <div className="stk-column-wrapper stk-block-column__content stk-container stk-194a96e-container stk--no-background stk--no-padding">
-          <div className="stk-block-content stk-inner-blocks stk-194a96e-inner-blocks">
-            <div
-              className="wp-block-stackable-image stk-block-image stk-block stk-cd21f1d"
-              data-block-id="cd21f1d"
-            >
-              <figure className="stk-img-wrapper stk-image--shape-stretch">
-                <img
-                  decoding="async"
-                  loading="lazy"
-                  className="stk-img wp-image-6055"
-                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
-                  width="160"
-                  height="300"
-                />
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="wp-block-stackable-column stk-block-column stk-block-column--v3 stk-column stk-block-column--v2 stk-block stk-9c3358c"
-        data-block-id="9c3358c"
-      >
-        <div className="stk-column-wrapper stk-block-column__content stk-container stk-9c3358c-container stk--no-background stk--no-padding">
-          <div className="stk-block-content stk-inner-blocks stk-9c3358c-inner-blocks">
-            <div
-              className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-b2be157"
-              id="前往《報導者》主網站"
-              data-block-id="b2be157"
-            >
-              <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
-                前往《報導者》主網站
-              </h2>
-            </div>
-            <div
-              className="wp-block-stackable-text stk-block-text stk-block stk-840da0e"
-              data-block-id="840da0e"
-            >
-              <p className="stk-block-text__text">
-                <span
-                  style={{ color: 'var(--paletteColor4, #232323)' }}
-                  className="stk-highlight"
-                >
-                  如果你是大人，或者還想看更進階、更深度的報導，《報導者》主網站有更多調查採訪和重磅新聞。
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="wp-block-stackable-column stk-block-column stk-block-column--v3 stk-column stk-block-column--v2 stk-block stk-24340df"
-        data-block-id="24340df"
-      >
-        <div className="stk-column-wrapper stk-block-column__content stk-container stk-24340df-container stk--no-background stk--no-padding">
-          <div className="has-text-align-center stk-block-content stk-inner-blocks stk-24340df-inner-blocks">
-            <div
-              className="wp-block-stackable-button-group stk-block-button-group stk-block stk-f369a4c"
-              data-block-id="f369a4c"
-            >
-              <div className="stk-row stk-inner-blocks has-text-align-right-tablet has-text-align-center-mobile stk-block-content stk-button-group">
-                <div
-                  className="wp-block-stackable-button stk-block-button stk-block stk-d122ff6"
-                  data-block-id="d122ff6"
-                >
-                  <a
-                    className="stk-link stk-button stk--hover-effect-darken"
-                    href="https://www.twreporter.org/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <span className="has-text-color stk-button__inner-text">
-                      前往報導者
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)
