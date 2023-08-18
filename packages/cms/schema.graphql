@@ -779,6 +779,7 @@ type Subcategory {
   category: Category
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
+  relatedPosts(take: Int! = 12, skip: Int! = 0): [Post]
   createdAt: DateTime
   updatedAt: DateTime
 }
