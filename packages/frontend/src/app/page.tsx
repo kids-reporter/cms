@@ -279,100 +279,39 @@ export default async function Home() {
         </div>
       </div>
       <h1>TODO: CTA</h1>
-      {GOTOMainSite}
+      <div className="goto">
+        <img
+          decoding="async"
+          loading="lazy"
+          className="stk-img wp-image-6055"
+          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
+          width="160"
+          height="300"
+        />
+        <div>
+          <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
+            前往《報導者》主網站
+          </h2>
+          <p className="stk-block-text__text">
+            <span
+              style={{ color: 'var(--paletteColor4, #232323)' }}
+              className="stk-highlight"
+            >
+              如果你是大人，或者還想看更進階、更深度的報導，《報導者》主網站有更多調查採訪和重磅新聞。
+            </span>
+          </p>
+        </div>
+        <a
+          className="stk-link stk-button stk--hover-effect-darken"
+          href="https://www.twreporter.org/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <span className="has-text-color stk-button__inner-text">
+            前往報導者
+          </span>
+        </a>
+      </div>
     </main>
   )
 }
-
-const GOTOMainSite = (
-  <div data-block-id="f68be26">
-    <div className="stk-row stk-inner-blocks stk-block-content stk-content-align stk-f68be26-column">
-      <div
-        className="wp-block-stackable-column stk-block-column stk-block-column--v3 stk-column stk-block-column--v2 stk-block stk-194a96e"
-        data-block-id="194a96e"
-      >
-        <div className="stk-column-wrapper stk-block-column__content stk-container stk-194a96e-container stk--no-background stk--no-padding">
-          <div className="stk-block-content stk-inner-blocks stk-194a96e-inner-blocks">
-            <div
-              className="wp-block-stackable-image stk-block-image stk-block stk-cd21f1d"
-              data-block-id="cd21f1d"
-            >
-              <figure className="stk-img-wrapper stk-image--shape-stretch">
-                <img
-                  decoding="async"
-                  loading="lazy"
-                  className="stk-img wp-image-6055"
-                  src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
-                  width="160"
-                  height="300"
-                />
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="wp-block-stackable-column stk-block-column stk-block-column--v3 stk-column stk-block-column--v2 stk-block stk-9c3358c"
-        data-block-id="9c3358c"
-      >
-        <div className="stk-column-wrapper stk-block-column__content stk-container stk-9c3358c-container stk--no-background stk--no-padding">
-          <div className="stk-block-content stk-inner-blocks stk-9c3358c-inner-blocks">
-            <div
-              className="wp-block-stackable-heading stk-block-heading stk-block-heading--v2 stk-block stk-b2be157"
-              id="前往《報導者》主網站"
-              data-block-id="b2be157"
-            >
-              <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
-                前往《報導者》主網站
-              </h2>
-            </div>
-            <div
-              className="wp-block-stackable-text stk-block-text stk-block stk-840da0e"
-              data-block-id="840da0e"
-            >
-              <p className="stk-block-text__text">
-                <span
-                  style={{ color: 'var(--paletteColor4, #232323)' }}
-                  className="stk-highlight"
-                >
-                  如果你是大人，或者還想看更進階、更深度的報導，《報導者》主網站有更多調查採訪和重磅新聞。
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="wp-block-stackable-column stk-block-column stk-block-column--v3 stk-column stk-block-column--v2 stk-block stk-24340df"
-        data-block-id="24340df"
-      >
-        <div className="stk-column-wrapper stk-block-column__content stk-container stk-24340df-container stk--no-background stk--no-padding">
-          <div className="has-text-align-center stk-block-content stk-inner-blocks stk-24340df-inner-blocks">
-            <div
-              className="wp-block-stackable-button-group stk-block-button-group stk-block stk-f369a4c"
-              data-block-id="f369a4c"
-            >
-              <div className="stk-row stk-inner-blocks has-text-align-right-tablet has-text-align-center-mobile stk-block-content stk-button-group">
-                <div
-                  className="wp-block-stackable-button stk-block-button stk-block stk-d122ff6"
-                  data-block-id="d122ff6"
-                >
-                  <a
-                    className="stk-link stk-button stk--hover-effect-darken"
-                    href="https://www.twreporter.org/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <span className="has-text-color stk-button__inner-text">
-                      前往報導者
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)

@@ -71,4 +71,19 @@
       }
     }
   }
+
+  .goto {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 30px 50px;
+    border-radius: 30px !important;
+    border: 1.5px solid #eaeaea;
+    margin-bottom: 30px;
+
+    a {
+      border-radius: 30px !important;
+      border: 1.5px solid #F76977;
+    }
+  }
 }
