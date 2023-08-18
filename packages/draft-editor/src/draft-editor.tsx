@@ -81,6 +81,9 @@ const buttonStyle = css<{
   }};
 `
 
+// TODO: refactor custom button
+// Refactoring goal is to avoid `styled()` on every button,
+// which is tedious and duplicate.
 const CustomButton = styled.div`
   ${buttonStyle}
 `
