@@ -133,7 +133,7 @@ export default async function PostPage({
   const orderedAuthorsInBrief: AuthorGroup[] = []
   AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
     const authorsOfRole = authors.filter(
-      (author: any) => authorRole === author.role && author.link
+      (author: any) => authorRole === author?.role && author?.link
     )
     orderedAuthors.push(...(authorsOfRole ?? []))
     authorsOfRole?.length > 0 &&
