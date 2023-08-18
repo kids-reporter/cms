@@ -21,37 +21,42 @@ const IframeContainer = styled.div`
 `
 
 type NewsReadingProps = {
-  readings: {
-    title: string
-    iframeCode: string
-  }[]
+  className?: string
+  data: {
+    readings: {
+      name: string
+      embedCode: string
+    }[]
+  }
 }
 
-const NewsReading = function ({ readings }: NewsReadingProps) {
+const NewsReading = function ({ className, data }: NewsReadingProps) {
+  const { readings } = data
+
   const options = useMemo(
     () =>
       readings.map((r) => {
         return {
-          name: r.title,
-          value: r.title,
+          name: r.name,
+          value: r.name,
         }
       }),
     [readings]
   )
   const [selectedOption, setSelectedOption] = useState(options[0])
-  const selectedReading = readings.find((r) => r.title === selectedOption.value)
+  const selectedReading = readings.find((r) => r.name === selectedOption.value)
 
   return (
-    <ArticleBodyContainer>
+    <ArticleBodyContainer className={className}>
       <Dropdown
         options={options}
         onChange={(option) => setSelectedOption(option)}
       />
       <Divider />
-      {selectedReading?.iframeCode && (
+      {selectedReading?.embedCode && (
         <IframeContainer>
           <div
-            dangerouslySetInnerHTML={{ __html: selectedReading.iframeCode }}
+            dangerouslySetInnerHTML={{ __html: selectedReading.embedCode }}
           />
         </IframeContainer>
       )}
