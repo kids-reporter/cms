@@ -8,6 +8,7 @@ import SubSubcategory from './sub-subcategory'
 import Subcategory from './subcatgory'
 import Tag from './tag'
 import User from './user'
+import { NewsReadingGroup, NewsReadingGroupItem } from './news-reading'
 //import Audio from './Audio'
 //import Collaboration from './Collaboration'
 //import Video from './Video'
@@ -31,6 +32,8 @@ export const listDefinition = {
   Subcategory,
   SubSubcategory,
   Tag,
+  NewsReadingGroup,
+  NewsReadingGroupItem,
   PDF,
   //EditorChoice,
   //Video,
