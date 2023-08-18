@@ -8,6 +8,7 @@ const {
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
   SlideshowInArticleBody,
+  NewsReading,
 } = blockRenderers
 
 const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
@@ -31,6 +32,9 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
     }
     case 'INFOBOX': {
       return EditableInfoBox(props)
+    }
+    case 'NEWS_READING': {
+      return NewsReading({ data: entityData })
     }
   }
   return null
