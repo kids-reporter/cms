@@ -227,7 +227,7 @@ export default async function Home() {
       }
       <Header />
       <MainSlider posts={postMockupsMore} />
-      <h1>TODO: 新聞ing</h1>
+      <h1>TODO: 精選文章</h1>
       {sliderSections.map((section, index) => {
         return (
           <div className="section" key={`home-section-${index}`}>
