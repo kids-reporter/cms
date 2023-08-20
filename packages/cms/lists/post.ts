@@ -62,6 +62,12 @@ const listConfigurations = list({
     authorsJSON: json({
       label: '作者列',
       defaultValue: [],
+      ui: {
+        views: './views/authorsJSON-editor',
+        createView: { fieldMode: 'edit' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'edit' },
+      },
     }),
     heroImage: relationship({
       label: '首圖',

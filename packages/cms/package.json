@@ -22,7 +22,9 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.3",
-    "patch-package": "^6.4.7"
+    "patch-package": "^6.4.7",
+    "react-beautiful-dnd": "^13.1.1",
+    "@types/react-beautiful-dnd": "^13.1.4"
   },
   "resolutions": {
     "**/next": "13.3.4",
