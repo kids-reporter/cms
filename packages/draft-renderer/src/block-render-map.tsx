@@ -5,7 +5,7 @@ import { DefaultDraftBlockRenderMap } from 'draft-js'
 // @ts-ignore pkg does not contain ts header file
 import mq from '@twreporter/core/lib/utils/media-query'
 
-const ParagraphBlock = styled.div`
+const Paragraph = styled.div`
   width: 100%;
   max-width: 700px;
   font-size: 18px;
@@ -25,17 +25,7 @@ const ParagraphBlock = styled.div`
   }
 `
 
-function Paragraph({
-  className,
-  children,
-}: {
-  className?: string
-  children?: React.ReactNode
-}) {
-  return <ParagraphBlock className={className}>{children}</ParagraphBlock>
-}
-
-const HeadingBlock = styled.div`
+const Heading = styled.div`
   font-weight: 700;
   line-height: 1.5;
   color: #232323;
@@ -72,17 +62,7 @@ const HeadingBlock = styled.div`
   `}
 `
 
-function Heading({
-  className,
-  children,
-}: {
-  children?: React.ReactNode
-  className?: string
-}) {
-  return <HeadingBlock className={className}>{children}</HeadingBlock>
-}
-
-const ListBlock = styled.ol`
+const List = styled.ol`
   width: 100%;
   max-width: 700px;
   margin: 0 auto 27px auto;
@@ -96,33 +76,9 @@ const ListBlock = styled.ol`
   }
 `
 
-function OrderdedList({
-  children,
-  className,
-}: {
-  children?: React.ReactNode
-  className?: string
-}) {
-  return <ListBlock className={className}>{children}</ListBlock>
-}
-
-function UnorderdedList({
-  children,
-  className,
-}: {
-  children?: React.ReactNode
-  className?: string
-}) {
-  return (
-    <ListBlock as="ul" className={className}>
-      {children}
-    </ListBlock>
-  )
-}
-
 const Atomic = styled.div`
   /* hide empty block which immediately follows atomic block */
-  & + ${ParagraphBlock} {
+  & + ${Paragraph} {
     display: none;
   }
 `
@@ -150,11 +106,11 @@ const _blockRenderMap = Immutable.Map({
   },
   'ordered-list-item': {
     element: 'li',
-    wrapper: <OrderdedList />,
+    wrapper: <List />,
   },
   'unordered-list-item': {
     element: 'li',
-    wrapper: <UnorderdedList />,
+    wrapper: <List as="ul" />,
   },
   unstyled: {
     element: 'div',
@@ -168,11 +124,7 @@ const ParagraphForIntroduction = styled(Paragraph)`
   color: #575757;
 `
 
-const OrderdedListForIntroduction = styled(OrderdedList)`
-  color: #575757;
-`
-
-const UnorderdedListForIntroduction = styled(UnorderdedList)`
+const ListForIntroduction = styled(List)`
   color: #575757;
 `
 
@@ -180,11 +132,11 @@ export const blockRenderMapForIntroduction = DefaultDraftBlockRenderMap.merge(
   Immutable.Map({
     'ordered-list-item': {
       element: 'li',
-      wrapper: <OrderdedListForIntroduction />,
+      wrapper: <ListForIntroduction />,
     },
     'unordered-list-item': {
       element: 'li',
-      wrapper: <UnorderdedListForIntroduction />,
+      wrapper: <ListForIntroduction as="ul" />,
     },
     unstyled: {
       element: 'div',
@@ -197,13 +149,7 @@ const HeadingForAnnotation = styled(Heading)`
   margin: 0 auto 27px auto;
 `
 
-const OrderdedListForAnnotation = styled(OrderdedList)`
-  li {
-    font-size: 16px;
-  }
-`
-
-const UnorderdedListForAnnotation = styled(UnorderdedList)`
+const ListForAnnotation = styled(List)`
   li {
     font-size: 16px;
   }
@@ -230,11 +176,11 @@ const _blockRenderMapForAnnotation = Immutable.Map({
   },
   'ordered-list-item': {
     element: 'li',
-    wrapper: <OrderdedListForAnnotation />,
+    wrapper: <ListForAnnotation />,
   },
   'unordered-list-item': {
     element: 'li',
-    wrapper: <UnorderdedListForAnnotation />,
+    wrapper: <ListForAnnotation as="ul" />,
   },
   unstyled: {
     element: 'div',
