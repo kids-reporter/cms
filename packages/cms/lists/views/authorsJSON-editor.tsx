@@ -22,8 +22,6 @@ const AuthorContainer = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   gap: 15px;
-  margin-top: 5px;
-  margin-bottom: 5px;
 `
 
 const ID = styled.span`
@@ -60,7 +58,7 @@ const authorTemplate = {
   id: undefined,
   name: '',
   role: '文字',
-  type: 'text',
+  type: 'string',
 }
 
 const AuthorComponent = (props: {
@@ -111,40 +109,48 @@ export const Field = ({
   const [newAuthor, setNewAuthor] = useState<Author>({ ...authorTemplate })
 
   const onAddNewAuthor = () => {
-    const newAuthors = [...authors, newAuthor]
-    setAuthors(newAuthors)
-    setNewAuthor({ ...authorTemplate })
+    if (onChange) {
+      const newAuthors = [...authors, newAuthor]
+      setAuthors(newAuthors)
+      onChange(JSON.stringify(newAuthors))
+      setNewAuthor({ ...authorTemplate })
+    }
   }
 
   const onDeleteAuthor = (index: number) => {
-    if (index >= 0 && index < authors.length) {
+    if (onChange && index >= 0 && index < authors.length) {
       const newAuthors = [...authors]
       newAuthors.splice(index, 1)
       setAuthors(newAuthors)
+      onChange(JSON.stringify(newAuthors))
     }
   }
 
   const onUpdateAuthorName = (index: number, name: string) => {
-    if (index >= 0 && index < authors.length) {
+    if (onChange && index >= 0 && index < authors.length) {
       const before = authors.slice(0, index)
       const modifiedAuthor = {
         ...authors[index],
       }
       modifiedAuthor.name = name
       const after = authors.slice(index + 1)
-      setAuthors([...before, modifiedAuthor, ...after])
+      const newAuthors = [...before, modifiedAuthor, ...after]
+      setAuthors(newAuthors)
+      onChange(JSON.stringify(newAuthors))
     }
   }
 
   const onUpdateAuthorRole = (index: number, role: string) => {
-    if (index >= 0 && index < authors.length) {
+    if (onChange && index >= 0 && index < authors.length) {
       const before = authors.slice(0, index)
       const modifiedAuthor = {
         ...authors[index],
       }
       modifiedAuthor.role = role
       const after = authors.slice(index + 1)
-      setAuthors([...before, modifiedAuthor, ...after])
+      const newAuthors = [...before, modifiedAuthor, ...after]
+      setAuthors(newAuthors)
+      onChange(JSON.stringify(newAuthors))
     }
   }
 
@@ -181,14 +187,15 @@ export const Field = ({
     if (!result.destination) {
       return
     }
-    setAuthors(
-      reorderAuthor(authors, result.source.index, result.destination.index)
-    )
-  }
 
-  const onUpdateAuthors = () => {
     if (onChange) {
-      onChange(JSON.stringify(authors))
+      const newAuthors = reorderAuthor(
+        authors,
+        result.source.index,
+        result.destination.index
+      )
+      setAuthors(newAuthors)
+      onChange(JSON.stringify(newAuthors))
     }
   }
 
@@ -200,6 +207,7 @@ export const Field = ({
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {authors.map((author: any, index: number) => {
               const id = `author-component-${index}`
+              const isRealAuthor = author.id !== undefined
               return (
                 <Draggable key={id} draggableId={id} index={index}>
                   {(provided) => (
@@ -220,8 +228,10 @@ export const Field = ({
                         actionElement={
                           <IconButton
                             size="small"
-                            onClick={() => onDeleteAuthor(index)}
-                            isDisabled={author.id !== undefined}
+                            onClick={() =>
+                              !isRealAuthor && onDeleteAuthor(index)
+                            }
+                            isDisabled={isRealAuthor}
                           >
                             <TrashIcon size="small" />
                           </IconButton>
@@ -257,9 +267,6 @@ export const Field = ({
           }
         />
       )}
-      <Button tone="active" onClick={onUpdateAuthors}>
-        更新
-      </Button>
     </FieldContainer>
   )
 }
