@@ -51,6 +51,7 @@ const NewsReading = function ({ className, data }: NewsReadingProps) {
       <Dropdown
         options={options}
         onChange={(option) => setSelectedOption(option)}
+        labelForMore="更多語言"
       />
       <Divider />
       {selectedReading?.embedCode && (

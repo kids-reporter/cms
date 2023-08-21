@@ -53,7 +53,14 @@ const Input = styled.input`
   cursor: pointer;
 `
 
+const More = styled.span`
+  margin-left: 10px;
+  font-size: 14px;
+`
+
 const Arrow = styled.span<{ $isListOpen: boolean }>`
+  margin-left: auto;
+
   width: 20px;
   height: 20px;
   background-color: #27b5f7;
@@ -84,12 +91,14 @@ type DropdownProps = {
   className?: string
   options: Option[]
   onChange: (option: Option) => void
+  labelForMore?: string
 }
 
 const Dropdown: React.FC<DropdownProps> = function ({
   className,
   options,
   onChange,
+  labelForMore = '',
 }) {
   const [isListOpen, setIsListOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState(options?.[0])
@@ -122,7 +131,12 @@ const Dropdown: React.FC<DropdownProps> = function ({
           placeholder="請選擇"
           value={selectedOption.name}
         />
-        {options.length > 1 && <Arrow $isListOpen={isListOpen} />}
+        {options.length > 1 && (
+          <>
+            <Arrow $isListOpen={isListOpen} />
+            {labelForMore && <More>{labelForMore}</More>}
+          </>
+        )}
       </InputBlock>
       {isListOpen && <DropdownOptionList>{optionItem}</DropdownOptionList>}
     </Container>
