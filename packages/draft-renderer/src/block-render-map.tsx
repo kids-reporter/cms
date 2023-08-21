@@ -8,17 +8,21 @@ import mq from '@twreporter/core/lib/utils/media-query'
 const ParagraphBlock = styled.div`
   width: 100%;
   max-width: 700px;
-  margin: 0 auto 27px auto;
   font-size: 18px;
   font-weight: 500;
   color: #3a4f66;
   letter-spacing: 0.9px;
   line-height: 2;
+  margin: 0 auto;
 
   ${mq.mobileOnly`
     padding-left: 15px;
     padding-right: 15px;
   `}
+
+  > div[data-block="true"] {
+    margin-bottom: 27px;
+  }
 `
 
 function Paragraph({
@@ -116,9 +120,17 @@ function UnorderdedList({
   )
 }
 
+const Atomic = styled.div`
+  /* hide empty block which immediately follows atomic block */
+  & + ${ParagraphBlock} {
+    display: none;
+  }
+`
+
 const _blockRenderMap = Immutable.Map({
   atomic: {
     element: 'div',
+    wrapper: <Atomic />,
   },
   'header-two': {
     element: 'h2',
