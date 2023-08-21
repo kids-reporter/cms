@@ -63,7 +63,7 @@ const listConfigurations = list({
       label: '作者列',
       defaultValue: [],
       ui: {
-        views: './views/authorsJSON-editor',
+        views: './lists/views/authorsJSON-editor',
         createView: { fieldMode: 'edit' },
         listView: { fieldMode: 'hidden' },
         itemView: { fieldMode: 'edit' },
