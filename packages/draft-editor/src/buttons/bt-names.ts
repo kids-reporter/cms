@@ -22,4 +22,5 @@ export default {
   infoBox: 'info-box',
   link: 'link',
   slideshow: 'slideshow',
+  newsReading: 'news-reading',
 }

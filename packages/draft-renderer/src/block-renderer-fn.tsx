@@ -6,6 +6,7 @@ const {
   ImageInArticleBody,
   InfoBoxInArticleBody,
   SlideshowInArticleBody,
+  NewsReading,
 } = blockRenderers
 
 const AtomicBlock = (props: {
@@ -32,6 +33,9 @@ const AtomicBlock = (props: {
     }
     case 'INFOBOX': {
       return InfoBoxInArticleBody({ data: entityData })
+    }
+    case 'NEWS_READING': {
+      return NewsReading({ data: entityData })
     }
   }
   return null
