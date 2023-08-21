@@ -60,7 +60,7 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
         srcSet={imgSrcSetArr.join(',')}
         sizes="(min-width: 1200px) 1000px, 100vw"
       />
-      <FigureCaption>{desc}</FigureCaption>
+      {desc && <FigureCaption>{desc}</FigureCaption>}
     </Figure>
   )
 
