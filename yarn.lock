@@ -3745,7 +3745,7 @@
     prop-types "^15.0.0"
     styled-components "^4.0.0"
 
-"@twreporter/errors@^1.1.1":
+"@twreporter/errors@^1.1.1", "@twreporter/errors@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@twreporter/errors/-/errors-1.1.2.tgz#533e3d14411fe0ac7836c4301a74a3556158ce12"
   integrity sha512-arIe0H1CdBY9PSzCUTf66oxoBgYcPJRfjohdFBN+CCE8xbJZ1j4A5y1NgR0ZtRvhdNzHOskfjPLA2bU5ZgSxYQ==

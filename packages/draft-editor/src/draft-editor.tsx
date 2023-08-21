@@ -19,6 +19,7 @@ import { ImageButton } from './buttons/image'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
+import { NewsReadingButton } from './buttons/news-reading'
 import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderMap, decorator } from '@kids-reporter/draft-renderer'
@@ -80,6 +81,9 @@ const buttonStyle = css<{
   }};
 `
 
+// TODO: refactor custom button
+// Refactoring goal is to avoid `styled()` on every button,
+// which is tedious and duplicate.
 const CustomButton = styled.div`
   ${buttonStyle}
 `
@@ -106,6 +110,10 @@ const CustomSlideshowButton = styled(SlideshowButton)`
 `
 
 const CustomEmbeddedCodeButton = styled(EmbeddedCodeButton)`
+  ${buttonStyle}
+`
+
+const CustomNewsReadingButton = styled(NewsReadingButton)`
   ${buttonStyle}
 `
 
@@ -474,6 +482,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
               ></CustomEmbeddedCodeButton>
+              <CustomNewsReadingButton
+                isDisabled={disabledButtons.includes(buttonNames.newsReading)}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+              ></CustomNewsReadingButton>
             </DraftEditorControlsWrapper>
           </DraftEditorControls>
           <TextEditorWrapper

@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-editor",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -23,7 +23,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@kids-reporter/draft-renderer": "^0.4.7",
+    "@kids-reporter/draft-renderer": "^0.4.8",
+    "@twreporter/errors": "^1.1.2",
     "draft-js": "^0.11.7"
   },
   "peerDependencies": {

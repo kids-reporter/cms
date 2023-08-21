@@ -1016,6 +1016,124 @@ input TagCreateInput {
   updatedAt: DateTime
 }
 
+type NewsReadingGroup {
+  id: ID!
+  name: String
+  items(where: NewsReadingGroupItemWhereInput! = {}, orderBy: [NewsReadingGroupItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NewsReadingGroupItemWhereUniqueInput): [NewsReadingGroupItem!]
+  itemsCount(where: NewsReadingGroupItemWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input NewsReadingGroupWhereUniqueInput {
+  id: ID
+}
+
+input NewsReadingGroupWhereInput {
+  AND: [NewsReadingGroupWhereInput!]
+  OR: [NewsReadingGroupWhereInput!]
+  NOT: [NewsReadingGroupWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  items: NewsReadingGroupItemManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input NewsReadingGroupItemManyRelationFilter {
+  every: NewsReadingGroupItemWhereInput
+  some: NewsReadingGroupItemWhereInput
+  none: NewsReadingGroupItemWhereInput
+}
+
+input NewsReadingGroupOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input NewsReadingGroupUpdateInput {
+  name: String
+  items: NewsReadingGroupItemRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input NewsReadingGroupItemRelateToManyForUpdateInput {
+  disconnect: [NewsReadingGroupItemWhereUniqueInput!]
+  set: [NewsReadingGroupItemWhereUniqueInput!]
+  create: [NewsReadingGroupItemCreateInput!]
+  connect: [NewsReadingGroupItemWhereUniqueInput!]
+}
+
+input NewsReadingGroupUpdateArgs {
+  where: NewsReadingGroupWhereUniqueInput!
+  data: NewsReadingGroupUpdateInput!
+}
+
+input NewsReadingGroupCreateInput {
+  name: String
+  items: NewsReadingGroupItemRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input NewsReadingGroupItemRelateToManyForCreateInput {
+  create: [NewsReadingGroupItemCreateInput!]
+  connect: [NewsReadingGroupItemWhereUniqueInput!]
+}
+
+type NewsReadingGroupItem {
+  id: ID!
+  name: String
+  embedCode: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input NewsReadingGroupItemWhereUniqueInput {
+  id: ID
+}
+
+input NewsReadingGroupItemWhereInput {
+  AND: [NewsReadingGroupItemWhereInput!]
+  OR: [NewsReadingGroupItemWhereInput!]
+  NOT: [NewsReadingGroupItemWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  embedCode: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input NewsReadingGroupItemOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  embedCode: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input NewsReadingGroupItemUpdateInput {
+  name: String
+  embedCode: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input NewsReadingGroupItemUpdateArgs {
+  where: NewsReadingGroupItemWhereUniqueInput!
+  data: NewsReadingGroupItemUpdateInput!
+}
+
+input NewsReadingGroupItemCreateInput {
+  name: String
+  embedCode: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type PDF {
   id: ID!
   name: String
@@ -1139,6 +1257,18 @@ type Mutation {
   updateTags(data: [TagUpdateArgs!]!): [Tag]
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
+  createNewsReadingGroup(data: NewsReadingGroupCreateInput!): NewsReadingGroup
+  createNewsReadingGroups(data: [NewsReadingGroupCreateInput!]!): [NewsReadingGroup]
+  updateNewsReadingGroup(where: NewsReadingGroupWhereUniqueInput!, data: NewsReadingGroupUpdateInput!): NewsReadingGroup
+  updateNewsReadingGroups(data: [NewsReadingGroupUpdateArgs!]!): [NewsReadingGroup]
+  deleteNewsReadingGroup(where: NewsReadingGroupWhereUniqueInput!): NewsReadingGroup
+  deleteNewsReadingGroups(where: [NewsReadingGroupWhereUniqueInput!]!): [NewsReadingGroup]
+  createNewsReadingGroupItem(data: NewsReadingGroupItemCreateInput!): NewsReadingGroupItem
+  createNewsReadingGroupItems(data: [NewsReadingGroupItemCreateInput!]!): [NewsReadingGroupItem]
+  updateNewsReadingGroupItem(where: NewsReadingGroupItemWhereUniqueInput!, data: NewsReadingGroupItemUpdateInput!): NewsReadingGroupItem
+  updateNewsReadingGroupItems(data: [NewsReadingGroupItemUpdateArgs!]!): [NewsReadingGroupItem]
+  deleteNewsReadingGroupItem(where: NewsReadingGroupItemWhereUniqueInput!): NewsReadingGroupItem
+  deleteNewsReadingGroupItems(where: [NewsReadingGroupItemWhereUniqueInput!]!): [NewsReadingGroupItem]
   createPDF(data: PDFCreateInput!): PDF
   createPDFS(data: [PDFCreateInput!]!): [PDF]
   updatePDF(where: PDFWhereUniqueInput!, data: PDFUpdateInput!): PDF
@@ -1196,6 +1326,12 @@ type Query {
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
   tagsCount(where: TagWhereInput! = {}): Int
+  newsReadingGroups(where: NewsReadingGroupWhereInput! = {}, orderBy: [NewsReadingGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NewsReadingGroupWhereUniqueInput): [NewsReadingGroup!]
+  newsReadingGroup(where: NewsReadingGroupWhereUniqueInput!): NewsReadingGroup
+  newsReadingGroupsCount(where: NewsReadingGroupWhereInput! = {}): Int
+  newsReadingGroupItems(where: NewsReadingGroupItemWhereInput! = {}, orderBy: [NewsReadingGroupItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NewsReadingGroupItemWhereUniqueInput): [NewsReadingGroupItem!]
+  newsReadingGroupItem(where: NewsReadingGroupItemWhereUniqueInput!): NewsReadingGroupItem
+  newsReadingGroupItemsCount(where: NewsReadingGroupItemWhereInput! = {}): Int
   pDFS(where: PDFWhereInput! = {}, orderBy: [PDFOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PDFWhereUniqueInput): [PDF!]
   pDF(where: PDFWhereUniqueInput!): PDF
   pDFSCount(where: PDFWhereInput! = {}): Int

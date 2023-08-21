@@ -6,6 +6,7 @@ import {
 import { ImageBlock, ImageInArticleBody } from './image-block'
 import { InfoBoxInArticleBody } from './info-box-block'
 import { SlideshowBlock, SlideshowInArticleBody } from './slideshow-block'
+import { NewsReading } from './news-reading'
 
 export const blockRenderers = {
   BlockquoteInArticleBody,
@@ -14,6 +15,7 @@ export const blockRenderers = {
   ImageBlock,
   ImageInArticleBody,
   InfoBoxInArticleBody,
+  NewsReading,
   SlideshowBlock,
   SlideshowInArticleBody,
 }
