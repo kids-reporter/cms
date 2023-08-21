@@ -185,6 +185,25 @@ model Tag {
   @@index([ogImageId])
 }
 
+model NewsReadingGroup {
+  id        Int                    @id @default(autoincrement())
+  name      String                 @default("")
+  items     NewsReadingGroupItem[] @relation("NewsReadingGroup_items")
+  createdAt DateTime?              @default(now())
+  updatedAt DateTime?              @updatedAt
+
+  @@index([name])
+}
+
+model NewsReadingGroupItem {
+  id                          Int                @id @default(autoincrement())
+  name                        String             @default("")
+  embedCode                   String             @default("")
+  createdAt                   DateTime?          @default(now())
+  updatedAt                   DateTime?          @updatedAt
+  from_NewsReadingGroup_items NewsReadingGroup[] @relation("NewsReadingGroup_items")
+}
+
 model PDF {
   id            Int       @id @default(autoincrement())
   name          String    @default("")

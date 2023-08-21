@@ -10,7 +10,7 @@ import {
 } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { RichTextEditorProps } from '../draft-editor.type'
-import { Select } from './select'
+import { Select } from './form/select'
 
 const disabledButtons = [
   buttonNames.h2,
