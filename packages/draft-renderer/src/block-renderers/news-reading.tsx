@@ -46,6 +46,10 @@ const NewsReading = function ({ className, data }: NewsReadingProps) {
   const [selectedOption, setSelectedOption] = useState(options[0])
   const selectedReading = readings.find((r) => r.name === selectedOption.value)
 
+  if (readings.length === 0) {
+    return null
+  }
+
   return (
     <ArticleBodyContainer className={className}>
       <Dropdown

@@ -73,6 +73,9 @@ export function NewsReadingInput({
   const confirmInput = async () => {
     try {
       const newsReadingGroup = await fetchNewsReadingGroup(inputValueState)
+      if (newsReadingGroup === null || newsReadingGroup?.items?.length === 0) {
+        throw new Error(`input ${inputValueState} has no data.`)
+      }
       onConfirm({
         newsReadingGroupId: inputValueState,
         newsReadingGroup,
@@ -130,6 +133,7 @@ export function NewsReadingInput({
             placeholder="News-readings-groups Item ID"
             type="text"
             value={inputValueState}
+            style={{ marginBottom: '10px', marginTop: '30px' }}
           />
         </Drawer>
       </DrawerController>
