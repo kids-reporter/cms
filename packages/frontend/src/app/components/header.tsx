@@ -209,6 +209,11 @@ export const StickyHeader = () => {
 }
 
 export const Header = () => {
+  // TODO: handle search
+  const onHandleSearch = () => {
+    console.log('search')
+  }
+
   const navi = (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
@@ -255,6 +260,7 @@ export const Header = () => {
               name="s"
               title="Search for..."
               aria-label="Search for..."
+              onChange={onHandleSearch}
             />
             <button
               type="submit"

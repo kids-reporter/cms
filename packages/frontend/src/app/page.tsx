@@ -3,11 +3,9 @@ import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
-import Tags from '@/app/components/tags'
 import { HomeDivider } from '@/app/components/divider'
+import SearchTags from '@/app/home/search-tags'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
-import { SearchIcon } from '@/app/icons'
-import { MOCKUP_TAGS } from './mockup'
 
 import './page.scss'
 
@@ -255,40 +253,7 @@ export default async function Home() {
           </div>
         )
       })}
-      <div className="search">
-        <img
-          decoding="async"
-          src="/images/search_title.svg"
-          width="265"
-          height="300"
-        />
-        <form
-          role="search"
-          method="get"
-          className="search-form"
-          action="https://kids.twreporter.org/"
-          aria-haspopup="listbox"
-        >
-          <input
-            type="search"
-            placeholder="搜尋更多新聞、議題"
-            value=""
-            name="s"
-            title="Search for..."
-            aria-label="Search for..."
-          />
-          <button type="submit" className="search-submit" aria-label="搜尋按鈕">
-            {SearchIcon}
-            <span data-loader="circles">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </button>
-          <input type="hidden" name="post_type" value="post" />
-        </form>
-        <Tags tags={MOCKUP_TAGS} />
-      </div>
+      <SearchTags />
       <div className="make-friend">
         <div className="content">
           <h3>和報導仔交朋友</h3>
