@@ -1,7 +1,8 @@
 .cta-container {
   --true: initial;
   --default-editor: var(--true);
-  width: 1100px;// var(--default-editor, var(--block-width));
+  width: 100%;
+  max-width: var(--max-width);
   margin-left: var(--default-editor, auto);
   margin-right: var(--default-editor, auto);
   background-color: #fff9ec !important;
