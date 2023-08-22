@@ -207,7 +207,7 @@ export const Field = ({
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {authors.map((author: any, index: number) => {
               const id = `author-component-${index}`
-              const isRealAuthor = author.id !== undefined
+              const isAuthorEntity = author.id !== undefined
               return (
                 <Draggable key={id} draggableId={id} index={index}>
                   {(provided) => (
@@ -229,9 +229,9 @@ export const Field = ({
                           <IconButton
                             size="small"
                             onClick={() =>
-                              !isRealAuthor && onDeleteAuthor(index)
+                              !isAuthorEntity && onDeleteAuthor(index)
                             }
-                            isDisabled={isRealAuthor}
+                            isDisabled={isAuthorEntity}
                           >
                             <TrashIcon size="small" />
                           </IconButton>
