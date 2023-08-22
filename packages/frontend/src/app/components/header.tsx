@@ -76,6 +76,9 @@ export const StickyHeader = () => {
   }
 
   // TODO: handle search
+  const onHandleSearch = () => {
+    console.log('search')
+  }
 
   const brand = (
     <div className="site-branding">
@@ -141,6 +144,7 @@ export const StickyHeader = () => {
         name="s"
         title="Search for..."
         aria-label="Search for..."
+        onChange={onHandleSearch}
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
