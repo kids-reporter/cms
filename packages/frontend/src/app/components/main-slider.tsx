@@ -54,7 +54,7 @@ export const MainSlider = (props: SliderProp) => {
               <SwiperSlide key={`swiper-main-slide-${index}`}>
                 <div key={`post-${index}`} className="post-body">
                   <img src={`${post.image}`} />
-                  <span className="post-title">{post.name}</span>
+                  <span className="post-title">{post.title}</span>
                 </div>
               </SwiperSlide>
             )
