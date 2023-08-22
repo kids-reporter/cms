@@ -3,9 +3,10 @@ import { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Swiper as SwiperCore } from 'swiper/types'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import PostCard from '@/app/components/post-card'
 import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
-import { GetFormattedDate, GetThemeColor, ShortenParagraph } from '@/app/utils'
+import { GetThemeColor } from '@/app/utils'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -30,8 +31,6 @@ export type PostSliderProp = {
 
 const slidesPerView = 3
 const autoPlayInterval = 5000
-const titleLengthLimit = 35
-const descLengthLimit = 110
 
 export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
@@ -66,30 +65,7 @@ export const PostSlider = (props: PostSliderProp) => {
               return (
                 post && (
                   <SwiperSlide key={`swiper-slide-${index}`}>
-                    <a
-                      key={`post-${index}`}
-                      href={post.url}
-                      className={`post-body theme-${post.theme}`}
-                    >
-                      <img src={post.image} />
-                      <span className="post-category">{post.category}</span>
-                      <span className="post-title">
-                        {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
-                      </span>
-                      <span className="post-desc">
-                        {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
-                      </span>
-                      <div className="post-bottom">
-                        {post.subSubcategory && (
-                          <span className="subSubcategory">
-                            {post.subSubcategory}
-                          </span>
-                        )}
-                        <span className="published-date">
-                          {GetFormattedDate(post.publishedDate) ?? ''}
-                        </span>
-                      </div>
-                    </a>
+                    <PostCard post={post} />
                   </SwiperSlide>
                 )
               )

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import PostCard from '@/app/components/post-card'
 import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
 import { postMockupsMore } from '@/app/mockup'
 
@@ -66,11 +67,14 @@ export default async function Staff({ params }: { params: { id: string } }) {
           <div className="avatar">
             <img src={avatarURL} alt={author.name} />
           </div>
-          <h1 className="staff-banner__name">{author.name}</h1>
-          <p className="staff-banner__title"></p>
+          <h1>{author.name}</h1>
           <p className="bio">{author.bio}</p>
         </div>
-        <div className="post-list">{postMockupsMore.toString()}</div>
+        <div className="post-list">
+          {postMockupsMore.map((post, index) => {
+            return <PostCard key={`author-post-card-${index}`} post={post} />
+          })}
+        </div>
       </main>
     )
   )
