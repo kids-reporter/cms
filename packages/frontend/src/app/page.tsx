@@ -3,8 +3,11 @@ import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
-import { HomeDivider } from '@/app/components/divider'
+import Divider from '@/app/home/divider'
 import SearchTags from '@/app/home/search-tags'
+import MakeFriends from '@/app/home/make-friend'
+import CallToAction from '@/app/home/call-to-action'
+import GoToMainSite from '@/app/home/go-to-main-site'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
 
 import './page.scss'
@@ -245,60 +248,14 @@ export default async function Home() {
               }
               sliderTheme={section.theme}
             />
-            {index < sliderSections.length - 1 ? <HomeDivider /> : null}
+            {index < sliderSections.length - 1 ? <Divider /> : null}
           </div>
         )
       })}
       <SearchTags />
-      <div className="make-friend">
-        <div className="content">
-          <h3>和報導仔交朋友</h3>
-          <p className="stk-block-text__text has-text-color">
-            哈囉，我是「報導仔」！
-          </p>
-          <p className="stk-block-text__text has-text-color">
-            <br />
-            我是《報導者》2022年10月誕生的夥伴，在《少年報導者》擔任管家。天秤座的我重視平等、客觀，個性熱情、觀察力強。有人說我的樣子像大聲公，也有人說我像探照燈。
-            <br />
-            <br />
-            歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
-          </p>
-        </div>
-      </div>
-      <h1>TODO: CTA</h1>
-      <div className="goto">
-        <img
-          decoding="async"
-          loading="lazy"
-          className="stk-img wp-image-6055"
-          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
-          width="160"
-          height="300"
-        />
-        <div>
-          <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
-            前往《報導者》主網站
-          </h2>
-          <p className="stk-block-text__text">
-            <span
-              style={{ color: 'var(--paletteColor4, #232323)' }}
-              className="stk-highlight"
-            >
-              如果你是大人，或者還想看更進階、更深度的報導，《報導者》主網站有更多調查採訪和重磅新聞。
-            </span>
-          </p>
-        </div>
-        <a
-          className="stk-link stk-button stk--hover-effect-darken"
-          href="https://www.twreporter.org/"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span className="has-text-color stk-button__inner-text">
-            前往報導者
-          </span>
-        </a>
-      </div>
+      <MakeFriends />
+      <CallToAction />
+      <GoToMainSite />
     </main>
   )
 }
