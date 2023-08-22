@@ -30,7 +30,6 @@ const DropdownOption = styled.li`
 const Container = styled.div`
   width: 100%;
   overflow: hidden;
-  cursor: pointer;
 
   font-size: 18px;
   font-weight: 400;
@@ -50,15 +49,16 @@ const Input = styled.input`
   padding: 12px 0;
   outline: none;
   border: none;
+`
+
+const Label = styled.span`
+  margin-left: 10px;
+  font-size: 14px;
   cursor: pointer;
 `
 
-const More = styled.span`
-  margin-left: 10px;
-  font-size: 14px;
-`
-
 const Arrow = styled.span<{ $isListOpen: boolean }>`
+  cursor: pointer;
   margin-left: auto;
 
   width: 20px;
@@ -103,6 +103,9 @@ const Dropdown: React.FC<DropdownProps> = function ({
   const [isListOpen, setIsListOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState(options?.[0])
   const toggleList = () => {
+    if (options.length <= 1) {
+      return
+    }
     setIsListOpen(!isListOpen)
   }
   const selectOption = (option: Option) => {
@@ -134,7 +137,7 @@ const Dropdown: React.FC<DropdownProps> = function ({
         {options.length > 1 && (
           <>
             <Arrow $isListOpen={isListOpen} />
-            {labelForMore && <More>{labelForMore}</More>}
+            {labelForMore && <Label>{labelForMore}</Label>}
           </>
         )}
       </InputBlock>
