@@ -56,5 +56,8 @@ main {
     --container-width: min(100%, var(--container-width-base));
     max-width: var(--normal-container-max-width);
     width: var(--container-width);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
