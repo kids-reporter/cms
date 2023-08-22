@@ -75,6 +75,8 @@ export const StickyHeader = () => {
     setIsHamburgerClicked(false)
   }
 
+  // TODO: handle search
+
   const brand = (
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
@@ -88,7 +90,7 @@ export const StickyHeader = () => {
   )
 
   const navi = (
-    <nav className="header-menu-1" aria-label="頁首選單">
+    <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
         {navItems.map((item, index) => {
           return (
@@ -204,7 +206,7 @@ export const StickyHeader = () => {
 
 export const Header = () => {
   const navi = (
-    <nav className="header-menu-1" aria-label="頁首選單">
+    <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
         {navItems.map((item, index) => {
           return (

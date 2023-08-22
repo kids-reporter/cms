@@ -234,6 +234,29 @@
               right: 0;
             }
           }
+
+          .menu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 138px;
+            margin: 40px auto 0;
+
+            li {
+              flex-basis: 50%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+
+              a {
+                --menu-item-padding: var(--items-vertical-spacing, 10px) 0;
+                font-size: 20px;
+                font-weight: 700;
+                padding: var(--menu-item-padding, 0px);
+              }
+            }
+          }
         }
       }
 
