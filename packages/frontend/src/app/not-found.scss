@@ -1,0 +1,51 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 60px;
+
+  .desc {
+    --fontSize: 18px;
+    --fontWeight: 500;
+    --color: var(--paletteColor3);
+    font-family: var(--fontFamily);
+    font-size: var(--fontSize);
+    font-weight: var(--fontWeight);
+    color: var(--paletteColor3);
+  }
+
+  form {
+    --max-width: 400px;
+    width: 100%;
+    height: 40px;
+    max-width: var(--max-width, 250px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+
+    input {
+      width: 100%;
+      height: 100%;
+      border-radius: 30px;
+      border-color: var(--paletteColor1);
+      border-width: 2px;
+      background-color: white;
+      font-size: var(--form-font-size, 16px);
+      padding-left: 12px;
+      padding-right: 40px;
+    }
+
+    button {
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      right: 10px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+  }
+}
