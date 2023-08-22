@@ -1,21 +1,10 @@
-import { Theme } from '@/app/constants'
+import { PostSummary } from '@/app/components/types'
 import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 
 import './post-card.scss'
 
-type Post = {
-  image: string
-  title: string
-  url: string
-  desc: string
-  category: string
-  subSubcategory: string
-  publishedDate: string
-  theme: Theme
-}
-
 export type PostCardProp = {
-  post: Post
+  post: PostSummary
 }
 
 const titleLengthLimit = 35

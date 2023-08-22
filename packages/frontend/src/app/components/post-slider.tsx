@@ -7,25 +7,15 @@ import PostCard from '@/app/components/post-card'
 import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
 import { GetThemeColor } from '@/app/utils'
+import { PostSummary } from '@/app/components/types'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './post-slider.scss'
 
-type Post = {
-  image: string
-  title: string
-  url: string
-  desc: string
-  category: string
-  subSubcategory: string
-  publishedDate: string
-  theme: Theme
-}
-
 export type PostSliderProp = {
-  posts: Post[]
+  posts: PostSummary[]
   sliderTheme: Theme
 }
 
