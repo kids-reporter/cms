@@ -14,7 +14,7 @@ import './post-slider.scss'
 
 type Post = {
   image: string
-  name: string
+  title: string
   url: string
   desc: string
   category: string
@@ -74,7 +74,7 @@ export const PostSlider = (props: PostSliderProp) => {
                       <img src={post.image} />
                       <span className="post-category">{post.category}</span>
                       <span className="post-title">
-                        {ShortenParagraph(post.name, titleLengthLimit) ?? ''}
+                        {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
                       </span>
                       <span className="post-desc">
                         {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
