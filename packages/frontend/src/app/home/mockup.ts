@@ -181,4 +181,28 @@ export const MOCKUP_TAGS = [
     name: 'HPV',
     slug: 'HPV',
   },
+  {
+    name: '兒少',
+    slug: '兒少',
+  },
+  {
+    name: '國際',
+    slug: '國際',
+  },
+  {
+    name: 'HPV',
+    slug: 'HPV',
+  },
+  {
+    name: '兒少',
+    slug: '兒少',
+  },
+  {
+    name: '國際',
+    slug: '國際',
+  },
+  {
+    name: 'HPV',
+    slug: 'HPV',
+  },
 ]

@@ -3,6 +3,8 @@ import Tags from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
 import { MOCKUP_TAGS } from './mockup'
 
+import './search-tags.scss'
+
 export const SearchTags = () => {
   // TODO: handle search
   const onHandleSearch = () => {
@@ -10,7 +12,7 @@ export const SearchTags = () => {
   }
 
   return (
-    <div className="search">
+    <div className="search-tags">
       <img
         decoding="async"
         src="/images/search_title.svg"
