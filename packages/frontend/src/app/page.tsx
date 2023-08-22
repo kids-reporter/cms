@@ -97,7 +97,7 @@ export default async function Home() {
   const posts: Post[] = response?.data?.data?.posts
 
   return (
-    <main className="home">
+    <main>
       <Header />
       <MainSlider posts={postMockupsMore} />
       <h1>TODO: 精選文章</h1>
