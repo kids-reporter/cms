@@ -13,16 +13,10 @@ export const SearchTags = () => {
 
   return (
     <div className="search-tags">
-      <img
-        decoding="async"
-        src="/images/search_title.svg"
-        width="265"
-        height="300"
-      />
+      <img decoding="async" src="/images/search_title.svg" width="265" />
       <form
         role="search"
         method="get"
-        className="search-form"
         action="https://kids.twreporter.org/"
         aria-haspopup="listbox"
       >
@@ -37,11 +31,6 @@ export const SearchTags = () => {
         />
         <button type="submit" className="search-submit" aria-label="搜尋按鈕">
           {SearchIcon}
-          <span data-loader="circles">
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
         </button>
         <input type="hidden" name="post_type" value="post" />
       </form>
