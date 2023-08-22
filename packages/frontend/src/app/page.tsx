@@ -211,22 +211,18 @@ export default async function Home() {
 
   return (
     <main className="home">
-      {
-        /* TODO: remove list */ false &&
-          posts?.map((post, index) => {
-            const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
-            return (
-              <div key={`article-${index}`}>
-                <a href={`${siteURL}/article/${post.slug}`}>{post.title}</a>
-                <p>{post.slug}</p>
-                <br />
-              </div>
-            )
-          })
-      }
       <Header />
       <MainSlider posts={postMockupsMore} />
       <h1>TODO: 精選文章</h1>
+      {posts?.map((post, index) => {
+        return (
+          <div key={`article-${index}`}>
+            <a href={`/article/${post.slug}`}>{post.title}</a>
+            <p>{post.slug}</p>
+            <br />
+          </div>
+        )
+      })}
       {sliderSections.map((section, index) => {
         return (
           <div className="section" key={`home-section-${index}`}>
