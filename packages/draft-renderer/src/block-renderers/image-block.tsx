@@ -75,12 +75,6 @@ const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
     margin: 0;
   }
 
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-
   max-width: 100%;
   margin: 0 auto 27px auto;
 
@@ -97,31 +91,23 @@ const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
       case 'paragraph-width':
         return `
           ${theme.breakpoint.xl} {
-            figure {
-              width: 700px;
-              margin-left: auto;
-              margin-right: auto;
-            }
+            max-width: 700px;
           }
         `
       case 'right':
         return `
           ${theme.breakpoint.xl} {
-            figure {
-              width: 361px;
-              float: right;
-              margin: 5px 0px 5px 27px;
-            }
+            width: 361px;
+            float: right;
+            margin: 5px 0px 5px 27px;
           }
         `
       case 'left':
         return `
           ${theme.breakpoint.xl} {
-            figure {
-              width: 361px;
-              float: left;
-              margin: 5px 27px 5px 0px;
-            }
+            width: 361px;
+            float: left;
+            margin: 5px 27px 5px 0px;
           }
         `
     }
@@ -147,37 +133,13 @@ const InfoBoxContainer = styled.div<{ $alignment?: string }>`
   margin-bottom: 30px;
   width: fit-content;
 
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-
   ${(props) => {
     switch (props.$alignment) {
-      case 'paragraph-width': {
-        return `
-          figure {
-            margin-left: auto;
-            margin-right: auto;
-          }
-          `
-      }
-      case 'left': {
-        return `
-          figure {
-            max-width: 50%; 
-            margin-right: auto;
-          }
-          `
+      case 'center': {
+        return `margin-left: auto; margin-right: auto;`
       }
       case 'right': {
-        return `
-          figure {
-            max-width: 50%;
-            margin-left: auto;
-          }
-        `
+        return `margin-left: auto`
       }
     }
   }}
