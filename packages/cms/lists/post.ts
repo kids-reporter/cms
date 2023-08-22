@@ -19,7 +19,7 @@ const listConfigurations = list({
       label: '網址名稱（英文）',
       isIndexed: 'unique',
     }),
-    name: text({
+    title: text({
       label: '標題',
       validation: { isRequired: true },
     }),
@@ -169,7 +169,7 @@ const listConfigurations = list({
   ui: {
     labelField: 'slug',
     listView: {
-      initialColumns: ['id', 'slug', 'name', 'status'],
+      initialColumns: ['id', 'slug', 'title', 'status'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },
       pageSize: 50,
     },
