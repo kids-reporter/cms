@@ -221,7 +221,6 @@ export default async function Home() {
         return (
           <div key={`article-${index}`}>
             <a href={`/article/${post.slug}`}>{post.title}</a>
-            <p>{post.slug}</p>
             <br />
           </div>
         )
