@@ -249,7 +249,6 @@ export const Header = () => {
           <form
             role="search"
             method="get"
-            className="search-form"
             action="https://kids.twreporter.org/"
             aria-haspopup="listbox"
           >
