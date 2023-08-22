@@ -21,7 +21,7 @@ const authorQueryGQL = `
             url
           }
         }
-        name
+        title
         slug
         publishedDate
       }

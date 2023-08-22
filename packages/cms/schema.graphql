@@ -140,7 +140,7 @@ input UserCreateInput {
 type Post {
   id: ID!
   slug: String
-  name: String
+  title: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -178,7 +178,7 @@ input PostWhereInput {
   NOT: [PostWhereInput!]
   id: IDFilter
   slug: StringFilter
-  name: StringFilter
+  title: StringFilter
   subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
@@ -258,7 +258,7 @@ input PostManyRelationFilter {
 input PostOrderByInput {
   id: OrderDirection
   slug: OrderDirection
-  name: OrderDirection
+  title: OrderDirection
   subtitle: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
@@ -271,7 +271,7 @@ input PostOrderByInput {
 
 input PostUpdateInput {
   slug: String
-  name: String
+  title: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -340,7 +340,7 @@ input PostUpdateArgs {
 
 input PostCreateInput {
   slug: String
-  name: String
+  title: String
   subtitle: String
   status: String
   publishedDate: DateTime

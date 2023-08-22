@@ -51,7 +51,7 @@ const categoryGQL = `
 const postQueryGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
-      name
+      title
       brief
       content
       publishedDate
@@ -74,7 +74,7 @@ const postQueryGQL = `
         slug
       }
       relatedPosts {
-        name
+        title
         slug
         publishedDate
         ${heroImageGQL}
@@ -152,7 +152,7 @@ export default async function PostPage({
 
     return post
       ? {
-          name: post.name,
+          title: post.title,
           url: `/article/${post.slug}`,
           image: imageURL,
           desc: post.ogDescription,
@@ -185,7 +185,7 @@ export default async function PostPage({
           />
           <div className="hero-section">
             <header className="entry-header">
-              <Title text={post.name} subtitle={post.subtitle} />
+              <Title text={post.title} subtitle={post.subtitle} />
               <div className="post-date-category">
                 <PublishedDate date={post.publishedDate} />
                 <Category

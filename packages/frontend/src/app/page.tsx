@@ -12,7 +12,7 @@ import { MOCKUP_TAGS } from './mockup'
 import './page.scss'
 
 type Post = {
-  name: string
+  title: string
   slug: string
 }
 
@@ -82,7 +82,7 @@ const postMockups = [
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -93,7 +93,7 @@ const postMockups = [
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -104,7 +104,7 @@ const postMockups = [
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -115,7 +115,7 @@ const postMockups = [
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -129,7 +129,7 @@ const postMockupsMore = [
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -140,7 +140,7 @@ const postMockupsMore = [
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -151,7 +151,7 @@ const postMockupsMore = [
     image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -162,7 +162,7 @@ const postMockupsMore = [
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -173,7 +173,7 @@ const postMockupsMore = [
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -184,7 +184,7 @@ const postMockupsMore = [
     image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
-    name: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
+    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
     desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
     subSubcategory: '動物',
     publishedDate: '2023-07-06T16:00:00.000Z',
@@ -199,7 +199,7 @@ export default async function Home() {
       query: `
       query {
         posts {
-          name
+          title
           slug
         }
       }
@@ -219,7 +219,7 @@ export default async function Home() {
             const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
             return (
               <div key={`article-${index}`}>
-                <a href={`${siteURL}/article/${post.slug}`}>{post.name}</a>
+                <a href={`${siteURL}/article/${post.slug}`}>{post.title}</a>
                 <p>{post.slug}</p>
                 <br />
               </div>
