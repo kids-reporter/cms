@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
+import { postMockupsMore } from '@/app/mockup'
 
 import './page.scss'
 
@@ -69,7 +70,7 @@ export default async function Staff({ params }: { params: { id: string } }) {
           <p className="staff-banner__title"></p>
           <p className="bio">{author.bio}</p>
         </div>
-        TODO: post list
+        <div className="post-list">{postMockupsMore.toString()}</div>
       </main>
     )
   )
