@@ -85,6 +85,7 @@ const listConfigurations = list({
         richTextEditorButtonNames.image,
         richTextEditorButtonNames.infoBox,
         richTextEditorButtonNames.slideshow,
+        richTextEditorButtonNames.newsReading,
       ],
     }),
     content: customFields.richTextEditor({
@@ -162,7 +163,7 @@ const listConfigurations = list({
   ui: {
     labelField: 'slug',
     listView: {
-      initialColumns: ['id', 'slug', 'status'],
+      initialColumns: ['id', 'slug', 'name', 'status'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },
       pageSize: 50,
     },
@@ -256,9 +257,11 @@ function heuristicallyPickRole(authorName: string): string {
     case '陳韻如': {
       return '責任編輯'
     }
+    case '邱紹雯':
     case '楊惠君': {
       return '核稿'
     }
+    case '王家琛':
     case '黃禹禛':
     case '鄭涵文': {
       return '設計'
