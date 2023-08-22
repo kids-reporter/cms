@@ -2,6 +2,8 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
 
+import './page.scss'
+
 const authorQueryGQL = `
   query($authorWhere2: AuthorWhereUniqueInput!) {
     author(where: $authorWhere2) {
@@ -59,13 +61,13 @@ export default async function Staff({ params }: { params: { id: string } }) {
   return (
     author && (
       <main>
-        <div className="staff-banner">
-          <div className="staff-banner__image">
+        <div className="info">
+          <div className="avatar">
             <img src={avatarURL} alt={author.name} />
           </div>
           <h1 className="staff-banner__name">{author.name}</h1>
           <p className="staff-banner__title"></p>
-          <p className="staff-banner__description">{author.bio}</p>
+          <p className="bio">{author.bio}</p>
         </div>
         TODO: post list
       </main>
