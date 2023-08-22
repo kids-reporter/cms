@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
@@ -66,8 +67,16 @@ type BriefProp = {
 export const Brief = (props: BriefProp) => {
   const content = props?.content
   const authors = props?.authors
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  // TODO: render skeleton
   return (
-    content && (
+    content &&
+    isMounted && (
       <div className="post-intro">
         <ArticleIntroductionDraftRenderer
           rawContentState={content}
