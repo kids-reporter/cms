@@ -50,17 +50,12 @@
       display: flex;
       flex-direction: column;
       border-radius: 30px;
-      background-color: white;
       flex-grow: 25;
       flex-shrink: 1;
       flex-basis: 75%;
+      gap: 20px;
 
-      .top {
-        display: flex;
-        flex-direction: row;
-      }
-
-      .bottom {
+      .cards {
         display: flex;
         flex-direction: row;
       }

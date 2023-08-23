@@ -47,11 +47,11 @@ export const PostSelection = (props: PostSelectionProp) => {
           </div>
         </div>
         <div className="featured-post">
-          <div className="top">
+          <div className="cards">
             <PostCard post={featuredPosts[0]} showDesc={false} />
             <PostCard post={featuredPosts[1]} showDesc={false} />
           </div>
-          <div className="bottom">
+          <div className="cards">
             <PostCard post={featuredPosts[2]} showDesc={false} />
             <PostCard post={featuredPosts[3]} showDesc={false} />
             <PostCard post={featuredPosts[4]} showDesc={false} />
