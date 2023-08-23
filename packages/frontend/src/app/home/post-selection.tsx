@@ -47,15 +47,15 @@ export const PostSelection = (props: PostSelectionProp) => {
           </div>
         </div>
         <div className="featured-post">
-          {featuredPosts?.map((post, index) => {
-            return (
-              <PostCard
-                key={`featured-post-${index}`}
-                post={post}
-                showDesc={false}
-              />
-            )
-          })}
+          <div className="top">
+            <PostCard post={featuredPosts[0]} showDesc={false} />
+            <PostCard post={featuredPosts[1]} showDesc={false} />
+          </div>
+          <div className="bottom">
+            <PostCard post={featuredPosts[2]} showDesc={false} />
+            <PostCard post={featuredPosts[3]} showDesc={false} />
+            <PostCard post={featuredPosts[4]} showDesc={false} />
+          </div>
         </div>
       </div>
     </div>
