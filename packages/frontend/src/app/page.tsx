@@ -21,58 +21,58 @@ type Post = {
 const sliderSections = [
   {
     title: '時時刻刻',
-    titleURL: 'topic_title1.svg',
-    url: 'https://kids.twreporter.org/category/news/times/',
     image: 'topic_pic1.svg',
+    titleImg: 'topic_title1.svg',
+    link: '/category/news/times/',
     theme: Theme.BLUE,
   },
   {
     title: '真的假的',
-    titleURL: 'topic_title2.svg',
-    url: 'https://kids.twreporter.org/category/news/knowledge/',
     image: 'topic_pic2.svg',
+    titleImg: 'topic_title2.svg',
+    link: '/category/news/knowledge/',
     theme: Theme.BLUE,
   },
   {
     title: '讀報新聞',
-    titleURL: 'topic_title3.svg',
-    url: 'https://kids.twreporter.org/category/listening-news/',
     image: 'topic_pic3.svg',
+    titleImg: 'topic_title3.svg',
+    link: '/category/listening-news/',
     theme: Theme.BLUE,
   },
   {
     title: '他們的故事',
-    titleURL: 'topic_title4.svg',
-    url: 'https://kids.twreporter.org/category/news/story/',
     image: 'topic_pic4.svg',
+    titleImg: 'topic_title4.svg',
+    link: '/category/news/story/',
     theme: Theme.RED,
   },
   {
     title: '文化看世界',
-    titleURL: 'topic_title5.svg',
-    url: 'https://kids.twreporter.org/category/news/explore/',
     image: 'topic_pic5.svg',
+    titleImg: 'topic_title5.svg',
+    link: '/category/news/explore/',
     theme: Theme.RED,
   },
   {
     title: '小讀者連線',
-    titleURL: 'topic_title7.svg',
-    url: 'https://kids.twreporter.org/category/campus/joining/',
     image: 'topic_pic7.svg',
+    titleImg: 'topic_title7.svg',
+    link: '/category/campus/joining/',
     theme: Theme.YELLOW,
   },
   {
     title: '圖解新聞',
-    titleURL: 'topic_title8.svg',
-    url: 'https://kids.twreporter.org/category/comics/graphic-news/',
     image: 'topic_pic8.svg',
+    titleImg: 'topic_title8.svg',
+    link: '/category/comics/graphic-news/',
     theme: Theme.YELLOW,
   },
   {
     title: '火線新聞台',
-    titleURL: 'topic_title9.svg',
-    url: 'https://kids.twreporter.org/category/comics/comic/',
     image: 'topic_pic9.svg',
+    titleImg: 'topic_title9.svg',
+    link: '/category/comics/comic/',
     theme: Theme.YELLOW,
   },
 ]
@@ -116,10 +116,13 @@ export default async function Home() {
               <img className="image-left" src={`/images/${section.image}`} />
               <img
                 className="image-title"
-                src={`/images/${section.titleURL}`}
+                src={`/images/${section.titleImg}`}
                 alt={section.title}
               />
-              <a href={section.url} className="rpjr-btn rpjr-btn-theme-outline">
+              <a
+                href={section.link}
+                className="rpjr-btn rpjr-btn-theme-outline"
+              >
                 看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
               </a>
             </div>
