@@ -1,0 +1,23 @@
+.post-selection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff9ec !important;
+
+  .featured-post-container {
+    display: flex;
+    flex-direction: row;
+
+    .lastest-post {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .featured-post {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

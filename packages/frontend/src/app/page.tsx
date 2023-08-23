@@ -101,7 +101,10 @@ export default async function Home() {
     <main>
       <Header />
       <MainSlider posts={postMockupsMore} />
-      <PostSelection />
+      <PostSelection
+        latestPosts={postMockupsMore}
+        featuredPosts={postMockupsMore}
+      />
       {posts?.map((post, index) => {
         return (
           <div key={`article-${index}`}>

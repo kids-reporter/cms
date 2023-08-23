@@ -1,5 +1,55 @@
-export const PostSelection = () => {
-  return <h1>TODO: 精選文章</h1>
+import PostCard from '@/app/components/post-card'
+import { PostSummary } from '@/app/components/types'
+import { GetFormattedDate } from '@/app/utils'
+
+import './post-selection.scss'
+
+type PostSelectionProp = {
+  latestPosts: PostSummary[]
+  featuredPosts: PostSummary[]
+}
+
+const PostBrick = (props: { post: PostSummary }) => {
+  const post = props?.post
+  return (
+    post && (
+      <a href={post.url}>
+        <p>{`${post.category}/${post.subSubcategory} ${GetFormattedDate(
+          post.publishedDate
+        )}`}</p>
+        <p>{post.title}</p>
+      </a>
+    )
+  )
+}
+
+export const PostSelection = (props: PostSelectionProp) => {
+  const latestPosts = props?.latestPosts
+  const featuredPosts = props?.featuredPosts
+
+  return (
+    <div className="post-selection">
+      <img src={'/images/featured-post.png'} alt="精選文章" />
+      <div className="featured-post-container">
+        <div className="lastest-post">
+          <div className="more">
+            <p>最新文章</p>
+            <a href={'/all'}>更多</a>
+          </div>
+          <div className="latest-post-list">
+            {latestPosts?.map((post, index) => {
+              return <PostBrick key={`latest-post-${index}`} post={post} />
+            })}
+          </div>
+        </div>
+        <div className="featured-post">
+          {featuredPosts?.map((post, index) => {
+            return <PostCard key={`featured-post-${index}`} post={post} />
+          })}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default PostSelection
