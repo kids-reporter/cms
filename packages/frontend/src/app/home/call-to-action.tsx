@@ -11,7 +11,7 @@ export const CallToAction = () => {
           訂閱我們，第一時間接收《少年報導者》
           最新文章和專題，不會錯過精彩新聞。
         </p>
-        歡迎訂閱
+        <div className="btn-like">歡迎訂閱</div>
       </a>
       <div className="bottom">
         <a href={'/about#mail'} className="mail">
@@ -19,14 +19,14 @@ export const CallToAction = () => {
           <p>
             如果想給我們團隊一個鼓勵、一個建議，或是提供我們採訪線索，請寫信給我們，不要猶豫。
           </p>
-          歡迎來信
+          <div className="btn-like">歡迎來信</div>
         </a>
         <a href={'/about#post'} className="contribute">
           <h3>投稿給報導仔</h3>
           <p>
             各位同學們，你對熱門時事或是生活、文化、社會有自己的觀察和想法嗎？歡迎你寫成文章，投稿給報導仔！
           </p>
-          歡迎投稿
+          <div className="btn-like">歡迎投稿</div>
         </a>
       </div>
     </div>
