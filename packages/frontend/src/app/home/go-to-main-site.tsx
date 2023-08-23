@@ -1,3 +1,5 @@
+import './go-to-main-site.scss'
+
 export const GoToMainSite = () => {
   return (
     <div className="goto">

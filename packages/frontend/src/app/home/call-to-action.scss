@@ -1,0 +1,32 @@
+.cta-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 60px;
+
+  .top {
+    width: 100%;
+    padding: 40px 30px 38px 40px;
+    background-color: var(--paletteColor6);
+    border-radius: 30px;
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+
+    .mail {
+      background-color: var(--paletteColor5);
+      border-radius: 30px;
+    }
+
+    .contribute {
+      flex-grow: 2;
+      background-color: var(--paletteColor1);
+      border-radius: 30px;
+    }
+  }
+}

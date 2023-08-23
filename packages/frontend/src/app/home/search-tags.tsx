@@ -1,6 +1,8 @@
 'use client'
 import Tags from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
+
+// TODO: remove mockup
 import { MOCKUP_TAGS } from '@/app/mockup'
 
 import './search-tags.scss'

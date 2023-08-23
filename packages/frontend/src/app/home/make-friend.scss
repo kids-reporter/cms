@@ -1,0 +1,26 @@
+.make-friend {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #fff9ec !important;
+  margin-bottom: 60px;
+
+  .content {
+    max-width: 900px;
+    background-color: transparent !important;
+    background-image: url(/images/reporter_pic.svg) !important;
+    background-position: bottom right !important;
+    background-repeat: no-repeat !important;
+    background-size: 327px !important;
+    padding-top: 30px !important;
+    padding-bottom: 40px !important;
+    padding-right: 30px !important;
+    padding-left: 0px !important;
+
+    h3 {
+      font-size: 32px !important;
+      font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
+    }
+  }
+}

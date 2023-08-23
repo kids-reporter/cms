@@ -1,3 +1,5 @@
+import './make-friend.scss'
+
 export const MakeFriends = () => {
   return (
     <div className="make-friend">

@@ -10,6 +10,8 @@ import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
 import { API_URL, Theme } from '@/app/constants'
+
+// TODO: remove mockup
 import { postMockups, postMockupsMore } from '@/app/mockup'
 
 import './page.scss'
@@ -132,11 +134,7 @@ export default async function Home() {
               </a>
             </div>
             <PostSlider
-              posts={
-                index % 2
-                  ? postMockups
-                  : postMockupsMore /* TODO: remove mockup */
-              }
+              posts={index % 2 ? postMockups : postMockupsMore}
               sliderTheme={section.theme}
             />
             {index < sliderSections.length - 1 ? <Divider /> : null}
