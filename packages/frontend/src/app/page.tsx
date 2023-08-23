@@ -3,11 +3,13 @@ import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
-import Tags from '@/app/components/tags'
-import { HomeDivider } from '@/app/components/divider'
-import { API_URL, CMS_URL, Theme } from '@/app/constants'
-import { SearchIcon } from '@/app/icons'
-import { MOCKUP_TAGS } from './mockup'
+import Divider from '@/app/home/divider'
+import SearchTags from '@/app/home/search-tags'
+import MakeFriends from '@/app/home/make-friend'
+import CallToAction from '@/app/home/call-to-action'
+import GoToMainSite from '@/app/home/go-to-main-site'
+import { API_URL, Theme } from '@/app/constants'
+import { postMockups, postMockupsMore } from '@/app/mockup'
 
 import './page.scss'
 
@@ -75,123 +77,6 @@ const sliderSections = [
   },
 ]
 
-// TODO: remove mockups
-const postMockups = [
-  {
-    url: '',
-    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.BLUE,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.YELLOW,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.RED,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.BLUE,
-  },
-]
-
-const postMockupsMore = [
-  {
-    url: '',
-    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.BLUE,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.YELLOW,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.RED,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.BLUE,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.BLUE,
-  },
-  {
-    url: '',
-    image: `${CMS_URL}/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
-    category: '校園寶可夢',
-    categoryURL: 'https://kids.twreporter.org/category/campus',
-    title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
-    desc: '台灣大學「探索學習」課程打破了學習場域與修課的界限，讓學習不再只限於校內。學生得以運用校內及外部資源，自行制定學習內容、也能拿到課堂學分。學生透過探索計畫找到學習方向、甚至尋回學習動機。文作者張恩瑋喜愛動物，2022年參與探索學習課程，她便選擇探索「動物園」產業，推助她從農業化學系轉系到動物科學技術學系，申請上創新領域學士學位學程。',
-    subSubcategory: '動物',
-    publishedDate: '2023-07-06T16:00:00.000Z',
-    theme: Theme.BLUE,
-  },
-]
-
 export default async function Home() {
   let response
   try {
@@ -212,23 +97,18 @@ export default async function Home() {
   const posts: Post[] = response?.data?.data?.posts
 
   return (
-    <main className="home">
-      {
-        /* TODO: remove list */ false &&
-          posts?.map((post, index) => {
-            const siteURL = 'https://dev-kids.twreporter.org' // 'http://localhost:3000'
-            return (
-              <div key={`article-${index}`}>
-                <a href={`${siteURL}/article/${post.slug}`}>{post.title}</a>
-                <p>{post.slug}</p>
-                <br />
-              </div>
-            )
-          })
-      }
+    <main>
       <Header />
       <MainSlider posts={postMockupsMore} />
       <h1>TODO: 精選文章</h1>
+      {posts?.map((post, index) => {
+        return (
+          <div key={`article-${index}`}>
+            <a href={`/article/${post.slug}`}>{post.title}</a>
+            <br />
+          </div>
+        )
+      })}
       {sliderSections.map((section, index) => {
         return (
           <div className="section" key={`home-section-${index}`}>
@@ -251,93 +131,14 @@ export default async function Home() {
               }
               sliderTheme={section.theme}
             />
-            {index < sliderSections.length - 1 ? <HomeDivider /> : null}
+            {index < sliderSections.length - 1 ? <Divider /> : null}
           </div>
         )
       })}
-      <div className="search">
-        <img
-          decoding="async"
-          src="/images/search_title.svg"
-          width="265"
-          height="300"
-        />
-        <form
-          role="search"
-          method="get"
-          className="search-form"
-          action="https://kids.twreporter.org/"
-          aria-haspopup="listbox"
-        >
-          <input
-            type="search"
-            placeholder="搜尋更多新聞、議題"
-            value=""
-            name="s"
-            title="Search for..."
-            aria-label="Search for..."
-          />
-          <button type="submit" className="search-submit" aria-label="搜尋按鈕">
-            {SearchIcon}
-            <span data-loader="circles">
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
-          </button>
-          <input type="hidden" name="post_type" value="post" />
-        </form>
-        <Tags tags={MOCKUP_TAGS} />
-      </div>
-      <div className="make-friend">
-        <div className="content">
-          <h3>和報導仔交朋友</h3>
-          <p className="stk-block-text__text has-text-color">
-            哈囉，我是「報導仔」！
-          </p>
-          <p className="stk-block-text__text has-text-color">
-            <br />
-            我是《報導者》2022年10月誕生的夥伴，在《少年報導者》擔任管家。天秤座的我重視平等、客觀，個性熱情、觀察力強。有人說我的樣子像大聲公，也有人說我像探照燈。
-            <br />
-            <br />
-            歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
-          </p>
-        </div>
-      </div>
-      <h1>TODO: CTA</h1>
-      <div className="goto">
-        <img
-          decoding="async"
-          loading="lazy"
-          className="stk-img wp-image-6055"
-          src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
-          width="160"
-          height="300"
-        />
-        <div>
-          <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
-            前往《報導者》主網站
-          </h2>
-          <p className="stk-block-text__text">
-            <span
-              style={{ color: 'var(--paletteColor4, #232323)' }}
-              className="stk-highlight"
-            >
-              如果你是大人，或者還想看更進階、更深度的報導，《報導者》主網站有更多調查採訪和重磅新聞。
-            </span>
-          </p>
-        </div>
-        <a
-          className="stk-link stk-button stk--hover-effect-darken"
-          href="https://www.twreporter.org/"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <span className="has-text-color stk-button__inner-text">
-            前往報導者
-          </span>
-        </a>
-      </div>
+      <SearchTags />
+      <MakeFriends />
+      <CallToAction />
+      <GoToMainSite />
     </main>
   )
 }

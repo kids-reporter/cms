@@ -1,7 +1,7 @@
 import './divider.scss'
 
 export const Divider = () => {
-  return <hr className="dot-hr" />
+  return <hr className="home-dot-hr" />
 }
 
 export default Divider

@@ -11,7 +11,7 @@ import PostRenderer from './post-renderer'
 import AuthorCard, { Author } from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
-import { Divider } from '@/app/components/divider'
+import Divider from '@/app/components/divider'
 import {
   API_URL,
   AUTHOR_ROLES_IN_ORDER,

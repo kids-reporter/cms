@@ -76,6 +76,9 @@ export const StickyHeader = () => {
   }
 
   // TODO: handle search
+  const onHandleSearch = () => {
+    console.log('search')
+  }
 
   const brand = (
     <div className="site-branding">
@@ -141,6 +144,7 @@ export const StickyHeader = () => {
         name="s"
         title="Search for..."
         aria-label="Search for..."
+        onChange={onHandleSearch}
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
@@ -205,6 +209,11 @@ export const StickyHeader = () => {
 }
 
 export const Header = () => {
+  // TODO: handle search
+  const onHandleSearch = () => {
+    console.log('search')
+  }
+
   const navi = (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
@@ -240,7 +249,6 @@ export const Header = () => {
           <form
             role="search"
             method="get"
-            className="search-form"
             action="https://kids.twreporter.org/"
             aria-haspopup="listbox"
           >
@@ -251,6 +259,7 @@ export const Header = () => {
               name="s"
               title="Search for..."
               aria-label="Search for..."
+              onChange={onHandleSearch}
             />
             <button
               type="submit"
