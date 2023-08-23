@@ -5,6 +5,13 @@
   align-items: center;
   background-color: #fff9ec !important;
 
+  .title-img {
+    margin-top: 30px !important;
+    margin-right: auto !important;
+    margin-bottom: 40px !important;
+    margin-left: auto !important;
+  }
+
   .featured-post-container {
     display: flex;
     flex-direction: row;
@@ -13,6 +20,11 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      .more {
+        display: flex;
+        flex-direction: row;
+      }
     }
 
     .featured-post {
