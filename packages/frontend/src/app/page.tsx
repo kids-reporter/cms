@@ -105,14 +105,15 @@ export default async function Home() {
         latestPosts={postMockupsMore}
         featuredPosts={postMockupsMore}
       />
-      {posts?.map((post, index) => {
-        return (
-          <div key={`article-${index}`}>
-            <a href={`/article/${post.slug}`}>{post.title}</a>
-            <br />
-          </div>
-        )
-      })}
+      {false &&
+        posts?.map((post, index) => {
+          return (
+            <div key={`article-${index}`}>
+              <a href={`/article/${post.slug}`}>{post.title}</a>
+              <br />
+            </div>
+          )
+        })}
       {sliderSections.map((section, index) => {
         return (
           <div className="section" key={`home-section-${index}`}>

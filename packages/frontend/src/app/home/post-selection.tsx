@@ -13,7 +13,7 @@ const PostBrick = (props: { post: PostSummary }) => {
   const post = props?.post
   return (
     post && (
-      <a href={post.url}>
+      <a className="post-brick" href={post.url}>
         <p>{`${post.category}/${post.subSubcategory} ${GetFormattedDate(
           post.publishedDate
         )}`}</p>
@@ -44,7 +44,13 @@ export const PostSelection = (props: PostSelectionProp) => {
         </div>
         <div className="featured-post">
           {featuredPosts?.map((post, index) => {
-            return <PostCard key={`featured-post-${index}`} post={post} />
+            return (
+              <PostCard
+                key={`featured-post-${index}`}
+                post={post}
+                showDesc={false}
+              />
+            )
           })}
         </div>
       </div>
