@@ -4,6 +4,7 @@ import { Header } from '@/app/components/header'
 import MainSlider from '@/app/components/main-slider'
 import PostSlider from '@/app/components/post-slider'
 import Divider from '@/app/home/divider'
+import PostSelection from '@/app/home/post-selection'
 import SearchTags from '@/app/home/search-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
@@ -100,7 +101,7 @@ export default async function Home() {
     <main>
       <Header />
       <MainSlider posts={postMockupsMore} />
-      <h1>TODO: 精選文章</h1>
+      <PostSelection />
       {posts?.map((post, index) => {
         return (
           <div key={`article-${index}`}>
