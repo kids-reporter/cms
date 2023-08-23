@@ -1,14 +1,35 @@
 .goto {
+  max-width: 1000px;
+  height: 250px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   padding: 30px 50px;
   border-radius: 30px !important;
   border: 1.5px solid #eaeaea;
   margin-bottom: 30px;
 
+  .desc {
+    width: 60%;
+    padding: 40px;
+  }
+
+  h2 {
+    font-family: SweiMarkerSansCJKtc-Regular,noto sans tc,Sans-Serif,serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 160%;
+    letter-spacing: .08em;
+    margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
+  }
+
   a {
+    width: fit-content;
     border-radius: 30px !important;
-    border: 1.5px solid #F76977;
+    border: 2px solid var(--paletteColor5);
+    padding: 12px 16px;
+    font-size: 18px;
+    letter-spacing: .08em;
   }
 }

@@ -11,7 +11,7 @@ export const GoToMainSite = () => {
         width="160"
         height="300"
       />
-      <div>
+      <div className="desc">
         <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">
           前往《報導者》主網站
         </h2>
@@ -25,14 +25,11 @@ export const GoToMainSite = () => {
         </p>
       </div>
       <a
-        className="stk-link stk-button stk--hover-effect-darken"
         href="https://www.twreporter.org/"
         target="_blank"
         rel="noreferrer noopener"
       >
-        <span className="has-text-color stk-button__inner-text">
-          前往報導者
-        </span>
+        前往報導者
       </a>
     </div>
   )
