@@ -39,6 +39,7 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
     setIsSelectorOpen(false)
 
     if (selectedImages?.length === 0) {
+      onEditFinish()
       return
     }
 
