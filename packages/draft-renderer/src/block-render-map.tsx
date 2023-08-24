@@ -79,9 +79,8 @@ const List = styled.ol`
 const Atomic = styled.div`
   /* hide empty block which immediately follows atomic block */
   & + ${Paragraph} {
-    line-height: 0;
-
-    > div[data-block='true'] {
+    > div[data-block='true']:first-child {
+      line-height: 0;
       margin-bottom: 0;
     }
   }
