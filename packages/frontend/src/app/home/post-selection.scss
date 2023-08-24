@@ -31,9 +31,29 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
         border-radius: 30px;
         background-color: white;
         padding: 10px 20px 12px 14px;
+
+        span {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-weight: 700;
+          font-size: 22px;
+          line-height: 160%;
+          letter-spacing: .08em;
+          color: #232323;
+        }
+
+        a {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 160%;
+          letter-spacing: .08em;
+          color: #232323;
+        }
       }
 
       .latest-post-list {

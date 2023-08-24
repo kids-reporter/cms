@@ -37,8 +37,13 @@ export const PostSelection = (props: PostSelectionProp) => {
       <div className="featured-post-container">
         <div className="lastest-post">
           <div className="more">
-            <p>最新文章</p>
-            <a href={'/all'}>更多</a>
+            <span>
+              <img src={'/images/home-icon-clock.svg'} />
+              最新文章
+            </span>
+            <a href={'/all'}>
+              更多<i className="icon-rpjr-icon-arrow-right"></i>
+            </a>
           </div>
           <div className="latest-post-list">
             {latestPosts?.map((post, index) => {
