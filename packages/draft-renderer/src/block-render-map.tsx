@@ -79,7 +79,11 @@ const List = styled.ol`
 const Atomic = styled.div`
   /* hide empty block which immediately follows atomic block */
   & + ${Paragraph} {
-    display: none;
+    line-height: 0;
+
+    > div[data-block='true'] {
+      margin-bottom: 0;
+    }
   }
 `
 
