@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
+import { EditButton, EditableBlock as _EditableBlock } from './styled'
 import { InfoBoxInput, InfoBoxInputValue } from '../buttons/info-box'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
@@ -8,29 +9,12 @@ const { InfoBoxInArticleBody } = blockRenderers
 
 const StyledInfoBox = styled(InfoBoxInArticleBody)``
 
-const EditButton = styled.div`
-  cursor: pointer;
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const EditableBlock = styled.div`
-  position: relative;
-
+const EditableBlock = styled(_EditableBlock)`
   &:hover {
     ${StyledInfoBox} {
       background-color: #f0f0f0;
       opacity: 0.3;
     }
-
-    ${EditButton} {
-      opacity: 1;
-      display: block;
-    }
-  }
 `
 
 export function EditableInfoBox(props: AtomicBlockProps<InfoBoxInputValue>) {

@@ -2,35 +2,19 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
 import { BlockquoteInput, BlockquoteInputValue } from '../buttons/blockquote'
+import { EditButton, EditableBlock as _EditableBlock } from './styled'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
 const { BlockquoteInArticleBody } = blockRenderers
 
 const StyledBlockquote = styled(BlockquoteInArticleBody)``
 
-const EditButton = styled.div`
-  cursor: pointer;
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const EditableBlock = styled.div`
-  position: relative;
-
+const EditableBlock = styled(_EditableBlock)`
   &:hover {
     ${StyledBlockquote} {
       background-color: #f0f0f0;
       opacity: 0.3;
     }
-
-    ${EditButton} {
-      opacity: 1;
-      display: block;
-    }
-  }
 `
 
 export function EditableBlockquote(
