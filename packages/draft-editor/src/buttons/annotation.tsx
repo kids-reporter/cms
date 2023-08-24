@@ -20,6 +20,7 @@ const disabledButtons = [
   buttonNames.image,
   buttonNames.infoBox,
   buttonNames.slideshow,
+  buttonNames.newsReading,
 ]
 
 type AnnotationButtonProps = {

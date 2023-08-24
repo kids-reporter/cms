@@ -26,7 +26,7 @@ export function SlideshowButton(props: {
 
   const onImageSelectorChange = (
     selected: ImageEntityWithMeta[],
-    align?: string,
+    alignment?: string,
     delay?: number
   ) => {
     if (selected.length === 0) {
@@ -40,14 +40,9 @@ export function SlideshowButton(props: {
       'SLIDESHOW',
       'IMMUTABLE',
       {
-        alignment: align,
+        alignment,
         delay,
-        images: selected.map((ele) => {
-          return {
-            ...ele?.image,
-            desc: ele?.desc,
-          }
-        }),
+        images: selected,
       }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
@@ -67,8 +62,8 @@ export function SlideshowButton(props: {
         <ImageSelector
           onChange={onImageSelectorChange}
           enableCaption={true}
-          enableDelay={false}
           enableMultiSelect={true}
+          enableAlignment={false}
         />
       )}
       <div className={className} onClick={promptForImageSelector}>
