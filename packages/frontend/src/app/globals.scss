@@ -149,5 +149,6 @@ a {
   font-weight: bold;
 }
 
-// TODO: isolate icomoon
-@import './assets/css/icomoon/style.css'
+// TODO: isolate icomoon, button
+@import './assets/css/icomoon/style.css';
+@import './assets/css/button.css';

@@ -21,9 +21,6 @@ import {
 
 import './post.scss'
 
-// TODO: isolate button.css
-import '../../assets/css/button.css'
-
 const heroImageGQL = `
   heroImage {
     resized {
