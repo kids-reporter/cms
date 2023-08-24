@@ -1,6 +1,6 @@
 import PostCard from '@/app/components/post-card'
 import { PostSummary } from '@/app/components/types'
-import { GetFormattedDate } from '@/app/utils'
+import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 
 import './post-selection.scss'
 
@@ -14,10 +14,11 @@ const PostBrick = (props: { post: PostSummary }) => {
   return (
     post && (
       <a className="post-brick" href={post.url}>
-        <p>{`${post.category}/${post.subSubcategory} ${GetFormattedDate(
-          post.publishedDate
-        )}`}</p>
-        <p>{post.title}</p>
+        <div className="top">
+          <p className="category">{`${post.category}/${post.subSubcategory}`}</p>
+          <p className="date">{GetFormattedDate(post.publishedDate)}</p>
+        </div>
+        <p className="title">{ShortenParagraph(post.title, 20)}</p>
       </a>
     )
   )
