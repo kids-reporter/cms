@@ -33,9 +33,9 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
   const entityKey = block.getEntityAt(0)
   const entity = contentState.getEntity(entityKey)
   const data = entity.getData() || {}
-  const { desc, alignment, ...imageEntity } = data
+  const {alignment: _alignment, ...imageWithMeta} = data // eslint-disable-line
 
-  const onChange: ImageSelectorOnChangeFn = (selectedImages, newAlignment) => {
+  const onChange: ImageSelectorOnChangeFn = (selectedImages, alignment) => {
     // close `ImageSelector`
     setIsSelectorOpen(false)
 
@@ -43,15 +43,11 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
       return
     }
 
-    const imageEntityWithMeta = selectedImages?.[0]
+    const selectedImage = selectedImages?.[0]
 
     onEditFinish({
       entityKey,
-      entityData: {
-        ...imageEntityWithMeta?.image,
-        desc: imageEntityWithMeta?.desc,
-        alignment: newAlignment,
-      },
+      entityData: Object.assign({ alignment: alignment }, selectedImage),
     })
   }
 
@@ -63,13 +59,8 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
           enableCaption={true}
           enableUrl={false}
           enableAlignment={true}
-          alignment={alignment}
-          selected={[
-            {
-              desc,
-              image: imageEntity,
-            },
-          ]}
+          alignment={data.alignment}
+          selected={[imageWithMeta]}
         />
       )}
       <EditableBlock>

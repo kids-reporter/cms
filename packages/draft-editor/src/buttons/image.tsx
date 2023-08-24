@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { AtomicBlockUtils, EditorState } from 'draft-js'
 
-import { ImageSelector as DefaultImageSelector } from './selector/image-selector'
+import {
+  ImageSelector as DefaultImageSelector,
+  ImageSelectorOnChangeFn,
+} from './selector/image-selector'
 
 export function ImageButton(props: {
   editorState: EditorState
@@ -22,8 +25,11 @@ export function ImageButton(props: {
     setToShowImageSelector(true)
   }
 
-  const onImageSelectorChange = (selectedImagesWithMeta, align) => {
-    const selected = selectedImagesWithMeta?.[0]
+  const onImageSelectorChange: ImageSelectorOnChangeFn = (
+    selectedImages,
+    alignment
+  ) => {
+    const selected = selectedImages?.[0]
     if (!selected) {
       setToShowImageSelector(false)
       return
@@ -33,11 +39,7 @@ export function ImageButton(props: {
     const contentStateWithEntity = contentState.createEntity(
       'IMAGE',
       'IMMUTABLE',
-      {
-        ...selected?.image,
-        desc: selected?.desc,
-        alignment: align,
-      }
+      Object.assign({ alignment }, selected)
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
     const newEditorState = EditorState.set(editorState, {

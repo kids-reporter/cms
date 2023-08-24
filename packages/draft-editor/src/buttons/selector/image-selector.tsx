@@ -95,8 +95,7 @@ export type ImageEntity = {
   }
 }
 
-export type ImageEntityWithMeta = {
-  image: ImageEntity
+export type ImageEntityWithMeta = ImageEntity & {
   desc?: string
   url?: string
 }
@@ -155,7 +154,7 @@ function ImageMetaGrids(props: {
     <ImageMetaGridsWrapper>
       {imageMetas.map((imageMeta) => (
         <ImageMetaGrid
-          key={imageMeta?.image?.id}
+          key={imageMeta?.id}
           imageMeta={imageMeta}
           enableCaption={enableCaption}
           enableUrl={enableUrl}
@@ -173,25 +172,26 @@ function ImageMetaGrid(props: {
   enableUrl: boolean
 }): React.ReactElement {
   const { imageMeta, enableCaption, enableUrl, onChange } = props
-  const { image, desc, url } = imageMeta
+  const { desc, url } = imageMeta
 
   return (
     <ImageMetaGridWrapper>
-      <Image src={image?.imageFile?.url} />
+      <Image src={imageMeta?.imageFile?.url} />
       {enableCaption && (
         <React.Fragment>
           <Label htmlFor="caption">Image Caption:</Label>
           <TextInput
             id="caption"
             type="text"
-            placeholder={image?.name}
+            placeholder={imageMeta?.name}
             defaultValue={desc}
             onChange={_.debounce((e) => {
-              onChange({
-                image,
-                desc: e.target.value,
-                url,
-              })
+              onChange(
+                Object.assign({}, imageMeta, {
+                  desc: e.target.value,
+                  url,
+                })
+              )
             })}
           />
         </React.Fragment>
@@ -205,11 +205,12 @@ function ImageMetaGrid(props: {
             placeholder="(Optional)"
             defaultValue={url}
             onChange={_.debounce((e) => {
-              onChange({
-                image,
-                desc,
-                url: e.target.value,
-              })
+              onChange(
+                Object.assign({}, imageMeta, {
+                  desc,
+                  url: e.target.value,
+                })
+              )
             })}
           />
         </React.Fragment>
@@ -271,7 +272,7 @@ const imagesQuery = gql`
 
 export type ImageSelectorOnChangeFn = (
   params: ImageEntityWithMeta[],
-  align?: string,
+  alignment?: string,
   delay?: number
 ) => void
 
@@ -285,6 +286,7 @@ export function ImageSelector(props: {
   selected?: ImageEntityWithMeta[]
   alignment?: string
 }) {
+  const alignment = props.alignment || 'default'
   const [
     queryImages,
     {
@@ -299,13 +301,13 @@ export function ImageSelector(props: {
     props.selected || []
   )
   const [delay, setDelay] = useState('5')
-  const [align, setAlign] = useState(props.alignment)
-  const contentWrapperRef = useRef<HTMLDivElement>()
+  const [align, setAlign] = useState(alignment)
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const pageSize = 6
 
   const options = [
-    { value: undefined, label: 'default', isDisabled: false },
+    { value: 'default', label: 'default', isDisabled: false },
     { value: 'paragraph-width', label: '與文章段落等寬', isDisabled: false },
     { value: 'left', label: 'left', isDisabled: false },
     { value: 'right', label: 'right', isDisabled: false },
@@ -345,13 +347,15 @@ export function ImageSelector(props: {
 
   const onAlignSelectOpen = () => {
     const scrollWrapper = contentWrapperRef.current?.parentElement
-    scrollWrapper.scrollTop = scrollWrapper.scrollHeight
+    if (scrollWrapper) {
+      scrollWrapper.scrollTop = scrollWrapper?.scrollHeight
+    }
   }
 
   const onImageMetaChange: ImageMetaOnChangeFn = (imageEntityWithMeta) => {
     if (enableMultiSelect) {
       const foundIndex = selected.findIndex(
-        (ele) => ele?.image?.id === imageEntityWithMeta?.image?.id
+        (ele) => ele?.id === imageEntityWithMeta?.id
       )
       if (foundIndex !== -1) {
         selected[foundIndex] = imageEntityWithMeta
@@ -365,7 +369,7 @@ export function ImageSelector(props: {
   const onImagesGridSelect: ImageEntityOnSelectFn = (imageEntity) => {
     setSelected((selected) => {
       const filterdSelected = selected.filter(
-        (ele) => ele.image?.id !== imageEntity.id
+        (ele) => ele?.id !== imageEntity.id
       )
 
       // deselect the image
@@ -375,17 +379,13 @@ export function ImageSelector(props: {
 
       // add new selected one
       if (enableMultiSelect) {
-        return selected.concat([{ image: imageEntity, desc: '' }])
+        return selected.concat([Object.assign({ desc: '' }, imageEntity)])
       }
 
       // single select
-      return [{ image: imageEntity, desc: '' }]
+      return [Object.assign({ desc: '' }, imageEntity)]
     })
   }
-
-  const selectedImages = selected.map((ele: ImageEntityWithMeta) => {
-    return ele.image
-  })
 
   useEffect(() => {
     if (currentPage !== 0) {
@@ -403,14 +403,14 @@ export function ImageSelector(props: {
     <React.Fragment>
       <ImageGrids
         images={images}
-        selected={selectedImages}
+        selected={selected}
         onSelect={onImagesGridSelect}
       />
       <Pagination
         currentPage={currentPage}
         total={imagesCount}
         pageSize={pageSize}
-        onChange={(pageIndex) => {
+        onChange={(pageIndex: number) => {
           setCurrentPage(pageIndex)
         }}
       />
@@ -432,7 +432,7 @@ export function ImageSelector(props: {
           <div>{error.stack}</div>
           <br />
           <b>Query:</b>
-          <pre>{imagesQuery.loc.source.body}</pre>
+          <pre>{imagesQuery.loc?.source.body}</pre>
         </div>
       </ErrorWrapper>
     )
