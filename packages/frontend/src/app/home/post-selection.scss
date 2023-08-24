@@ -48,11 +48,18 @@
         }
 
         a {
+          display: flex;
+          align-items: center;
           font-weight: 500;
           font-size: 18px;
           line-height: 160%;
           letter-spacing: .08em;
           color: #232323;
+          gap: 3px;
+
+          .icon-rpjr-icon-arrow-right {
+            color: var(--paletteColor6);
+          }
         }
       }
 
