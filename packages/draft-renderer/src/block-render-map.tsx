@@ -78,12 +78,14 @@ const List = styled.ol`
 
 const Atomic = styled.div`
   /* hide empty block which immediately follows atomic block */
+  /*
   & + ${Paragraph} {
     > div[data-block='true']:first-child {
       line-height: 0;
       margin-bottom: 0;
     }
   }
+  */
 `
 
 const _blockRenderMap = Immutable.Map({
