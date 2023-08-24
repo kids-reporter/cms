@@ -269,7 +269,7 @@ const imagesQuery = gql`
   }
 `
 
-type ImageSelectorOnChangeFn = (
+export type ImageSelectorOnChangeFn = (
   params: ImageEntityWithMeta[],
   align?: string,
   delay?: number
@@ -282,6 +282,8 @@ export function ImageSelector(props: {
   enableAlignment?: boolean
   enableDelay?: boolean
   onChange: ImageSelectorOnChangeFn
+  selected?: ImageEntityWithMeta[]
+  alignment?: string
 }) {
   const [
     queryImages,
@@ -293,9 +295,11 @@ export function ImageSelector(props: {
   ] = useLazyQuery(imagesQuery, { fetchPolicy: 'no-cache' })
   const [currentPage, setCurrentPage] = useState(0) // page starts with 1, 0 is used to detect initialization
   const [searchText, setSearchText] = useState('')
-  const [selected, setSelected] = useState<ImageEntityWithMeta[]>([])
+  const [selected, setSelected] = useState<ImageEntityWithMeta[]>(
+    props.selected || []
+  )
   const [delay, setDelay] = useState('5')
-  const [align, setAlign] = useState(undefined)
+  const [align, setAlign] = useState(props.alignment)
   const contentWrapperRef = useRef<HTMLDivElement>()
 
   const pageSize = 6
