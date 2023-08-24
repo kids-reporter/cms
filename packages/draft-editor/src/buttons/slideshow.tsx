@@ -62,7 +62,6 @@ export function SlideshowButton(props: {
         <ImageSelector
           onChange={onImageSelectorChange}
           enableCaption={true}
-          enableDelay={false}
           enableMultiSelect={true}
           enableAlignment={false}
         />

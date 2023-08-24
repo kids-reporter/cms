@@ -5,49 +5,36 @@ import { TextInput } from '@keystone-ui/fields'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { gql, useLazyQuery } from '@keystone-6/core/admin-ui/apollo'
 import { AlignSelector } from './align-selector'
-import { SearchBox, SearchBoxOnChangeFn } from './search-box'
+import { SearchBox as _SearchBox, SearchBoxOnChangeFn } from './search-box'
 import { Pagination } from './pagination'
 
 const _ = {
   debounce,
 }
 
-const ImageSearchBox = styled(SearchBox)`
+const SearchBox = styled(_SearchBox)`
   margin-top: 10px;
 `
 
-const ImageSelectionWrapper = styled.div`
+const MainBlock = styled.div`
   overflow: auto;
   margin-top: 10px;
 `
-const ImageBlockMetaWrapper = styled.div``
 
-const ImageGridsWrapper = styled.div`
+const GridsBlock = styled.div`
   display: flex;
   flex-wrap: wrap;
   overflow: auto;
   margin-top: 5px;
 `
 
-const ImageGridWrapper = styled.div`
+const GridBlock = styled.div`
   flex: 0 0 33.3333%;
   cursor: pointer;
   padding: 0 10px 10px;
 `
 
-const ImageMetaGridsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  overflow: auto;
-`
-
-const ImageMetaGridWrapper = styled.div`
-  flex: 0 0 33.3333%;
-  cursor: pointer;
-  padding: 0 10px 10px;
-`
-
-const Image = styled.img`
+const Img = styled.img`
   display: block;
   width: 100%;
   aspect-ratio: 2;
@@ -107,20 +94,20 @@ function ImageGrids(props: {
   const { images, onSelect } = props
 
   return (
-    <ImageGridsWrapper>
+    <GridsBlock>
       {images.map((image) => {
         return (
-          <ImageGridWrapper key={image.id} onClick={() => onSelect(image)}>
-            <Image src={image?.imageFile?.url} />
-          </ImageGridWrapper>
+          <GridBlock key={image.id} onClick={() => onSelect(image)}>
+            <Img src={image?.imageFile?.url} />
+          </GridBlock>
         )
       })}
-    </ImageGridsWrapper>
+    </GridsBlock>
   )
 }
 
 type ImageMetaOnChangeFn = (
-  params: ImageEntityWithMeta,
+  selectedImage: ImageEntityWithMeta,
   actionType: 'delete' | 'modify'
 ) => void
 
@@ -128,113 +115,48 @@ function ImageMetaGrids(props: {
   imageMetas: ImageEntityWithMeta[]
   onChange: ImageMetaOnChangeFn
   enableCaption: boolean
-  enableUrl: boolean
   enableDelete: boolean
 }) {
-  const { imageMetas, onChange, enableCaption, enableUrl, enableDelete } = props
+  const { imageMetas, onChange, enableCaption, enableDelete } = props
   return (
-    <ImageMetaGridsWrapper>
-      {imageMetas.map((imageMeta, idx) => (
-        <ImageMetaGrid
-          key={`${imageMeta.id}_${idx}`}
-          imageMeta={imageMeta}
-          enableCaption={enableCaption}
-          enableUrl={enableUrl}
-          enableDelete={enableDelete}
-          onChange={onChange}
-        />
-      ))}
-    </ImageMetaGridsWrapper>
-  )
-}
-
-function ImageMetaGrid(props: {
-  imageMeta: ImageEntityWithMeta
-  onChange: ImageMetaOnChangeFn
-  enableCaption: boolean
-  enableUrl: boolean
-  enableDelete: boolean
-}): React.ReactElement {
-  const { imageMeta, enableCaption, enableUrl, enableDelete, onChange } = props
-  const { desc, url } = imageMeta
-
-  return (
-    <ImageMetaGridWrapper>
-      {enableDelete && (
-        <i
-          onClick={() => {
-            onChange(imageMeta, 'delete')
-          }}
-          className="fas fa-check-circle"
-        ></i>
-      )}
-      <Image src={imageMeta?.imageFile?.url} />
-      {enableCaption && (
-        <React.Fragment>
-          <Label htmlFor="caption">Image Caption:</Label>
-          <TextInput
-            id="caption"
-            type="text"
-            placeholder={imageMeta?.name}
-            defaultValue={desc}
-            onChange={_.debounce((e) => {
-              onChange(
-                Object.assign({}, imageMeta, {
-                  desc: e.target.value,
-                  url,
-                }),
-                'modify'
-              )
-            })}
-          />
-        </React.Fragment>
-      )}
-      {enableUrl && (
-        <React.Fragment>
-          <Label htmlFor="url">Url:</Label>
-          <TextInput
-            id="url"
-            type="text"
-            placeholder="(Optional)"
-            defaultValue={url}
-            onChange={_.debounce((e) => {
-              onChange(
-                Object.assign({}, imageMeta, {
-                  desc,
-                  url: e.target.value,
-                }),
-                'modify'
-              )
-            })}
-          />
-        </React.Fragment>
-      )}
-    </ImageMetaGridWrapper>
-  )
-}
-
-type DelayInputOnChangeFn = (param: string) => void
-
-function DelayInput(props: {
-  delay: string
-  onChange: DelayInputOnChangeFn
-}): React.ReactElement {
-  const { delay, onChange } = props
-
-  return (
-    <React.Fragment>
-      <Label>Slideshow delay:</Label>
-      <TextInput
-        type="number"
-        placeholder="請輸入自動切換秒數"
-        step="0.5"
-        min="1"
-        value={delay}
-        onChange={(e) => {
-          onChange(e.target.value)
-        }}
-      />
-    </React.Fragment>
+    <GridsBlock>
+      {imageMetas.map((imageMeta, idx) => {
+        const { desc, url } = imageMeta
+        return (
+          <GridBlock key={idx}>
+            {enableDelete && (
+              <i
+                onClick={() => {
+                  onChange(imageMeta, 'delete')
+                }}
+                className="fas fa-check-circle"
+              />
+            )}
+            <Img src={imageMeta?.imageFile?.url} />
+            {enableCaption && (
+              <React.Fragment>
+                <Label htmlFor="caption">Image Caption:</Label>
+                <TextInput
+                  id="caption"
+                  type="text"
+                  placeholder={imageMeta?.name}
+                  defaultValue={desc}
+                  onChange={_.debounce((e) => {
+                    onChange(
+                      Object.assign({}, imageMeta, {
+                        desc: e.target.value,
+                        url,
+                      }),
+                      'modify'
+                    )
+                  })}
+                />
+              </React.Fragment>
+            )}
+          </GridBlock>
+        )
+      })}
+    </GridsBlock>
   )
 }
 
@@ -265,17 +187,14 @@ const imagesQuery = gql`
 `
 
 export type ImageSelectorOnChangeFn = (
-  params: ImageEntityWithMeta[],
-  alignment?: string,
-  delay?: number
+  selectedImages: ImageEntityWithMeta[],
+  alignment?: string
 ) => void
 
 export function ImageSelector(props: {
   enableMultiSelect?: boolean
   enableCaption?: boolean
-  enableUrl?: boolean
   enableAlignment?: boolean
-  enableDelay?: boolean
   onChange: ImageSelectorOnChangeFn
   selected?: ImageEntityWithMeta[]
   alignment?: string
@@ -294,7 +213,6 @@ export function ImageSelector(props: {
   const [selected, setSelected] = useState<ImageEntityWithMeta[]>(
     props.selected || []
   )
-  const [delay, setDelay] = useState('5')
   const [align, setAlign] = useState(alignment)
   const contentWrapperRef = useRef<HTMLDivElement>(null)
 
@@ -310,16 +228,12 @@ export function ImageSelector(props: {
   const {
     enableMultiSelect = false,
     enableCaption = false,
-    enableUrl = false,
     enableAlignment = false,
-    enableDelay = false,
     onChange,
   } = props
 
   const onSave = () => {
-    let adjustedDelay = +delay
-    adjustedDelay = adjustedDelay < 1 ? 1 : adjustedDelay
-    onChange(selected, align, adjustedDelay)
+    onChange(selected, align)
   }
 
   const onCancel = () => {
@@ -329,10 +243,6 @@ export function ImageSelector(props: {
   const onSearchBoxChange: SearchBoxOnChangeFn = async (searchInput) => {
     setSearchText(searchInput)
     setCurrentPage(1)
-  }
-
-  const onDealyChange = (delay: string) => {
-    setDelay(delay)
   }
 
   const onAlignSelectChange = (align: string) => {
@@ -346,7 +256,7 @@ export function ImageSelector(props: {
     }
   }
 
-  const onImageMetaChange: ImageMetaOnChangeFn = (
+  const changeSelectedImage: ImageMetaOnChangeFn = (
     imageEntityWithMeta,
     actionType
   ) => {
@@ -377,7 +287,7 @@ export function ImageSelector(props: {
     }
   }
 
-  const onImagesGridSelect: ImageEntityOnSelectFn = (imageEntity) => {
+  const selectImage: ImageEntityOnSelectFn = (imageEntity) => {
     const newImageEntity = Object.assign(
       {
         // `idForImageSelectorOnly` is designed for selecting one image multiple times
@@ -408,8 +318,8 @@ export function ImageSelector(props: {
   }, [currentPage, searchText])
 
   let searchResult = (
-    <React.Fragment>
-      <ImageGrids images={images} onSelect={onImagesGridSelect} />
+    <div>
+      <ImageGrids images={images} onSelect={selectImage} />
       <Pagination
         currentPage={currentPage}
         total={imagesCount}
@@ -418,7 +328,7 @@ export function ImageSelector(props: {
           setCurrentPage(pageIndex)
         }}
       />
-    </React.Fragment>
+    </div>
   )
   if (loading) {
     searchResult = <p>searching...</p>
@@ -458,32 +368,25 @@ export function ImageSelector(props: {
         }}
       >
         <div ref={contentWrapperRef}>
-          <ImageSearchBox onChange={onSearchBoxChange} />
-          <ImageSelectionWrapper>
-            <div>{searchResult}</div>
-            {!!selected.length && <SeparationLine />}
+          <SearchBox onChange={onSearchBoxChange} />
+          <MainBlock>
+            {searchResult}
+            {selected.length > 0 && <SeparationLine />}
             <ImageMetaGrids
               imageMetas={selected}
-              onChange={onImageMetaChange}
+              onChange={changeSelectedImage}
               enableCaption={enableCaption}
-              enableUrl={enableUrl}
               enableDelete={enableMultiSelect}
             />
-          </ImageSelectionWrapper>
-          <ImageBlockMetaWrapper>
-            {(enableDelay || enableAlignment) && <SeparationLine />}
-            {enableDelay && (
-              <DelayInput delay={delay} onChange={onDealyChange} />
-            )}
-            {enableAlignment && (
-              <AlignSelector
-                align={align}
-                options={options}
-                onChange={onAlignSelectChange}
-                onOpen={onAlignSelectOpen}
-              />
-            )}
-          </ImageBlockMetaWrapper>
+          </MainBlock>
+          {enableAlignment && (
+            <AlignSelector
+              align={align}
+              options={options}
+              onChange={onAlignSelectChange}
+              onOpen={onAlignSelectOpen}
+            />
+          )}
         </div>
       </Drawer>
     </DrawerController>
