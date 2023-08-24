@@ -83,6 +83,7 @@ const sliderSections = [
 export default async function Home() {
   let response
   try {
+    // TODO: fetch date from cms
     response = await axios.post(API_URL, {
       query: `
       query {

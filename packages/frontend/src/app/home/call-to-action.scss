@@ -11,6 +11,14 @@
     background-color: var(--paletteColor6);
     border-radius: 30px;
     padding: 40px 30px 38px 40px;
+    background-image: url(/images/Home-CTA-subscribe.svg);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: 340px;
+
+    &:hover {
+      background-image: url(/images/Home-CTA-subscribe-hover.svg);
+    }
   }
 
   .bottom {
@@ -24,12 +32,28 @@
       background-color: var(--paletteColor5);
       border-radius: 30px;
       padding: 40px 30px 38px 40px;
+      background-image: url(/images/Home-CTA-mail.svg);
+      background-position: bottom right;
+      background-repeat: no-repeat;
+      background-size: 200px;
+
+      &:hover {
+        background-image: url(/images/Home-CTA-mail-hover.svg);
+      }
     }
 
     .contribute {
       background-color: var(--paletteColor1);
       border-radius: 30px;
       padding: 40px 30px 38px 40px;
+      background-image: url(/images/Home-CTA-contribute.svg);
+      background-position: bottom right;
+      background-repeat: no-repeat;
+      background-size: 300px;
+
+      &:hover {
+        background-image: url(/images/Home-CTA-contribute-hover.svg);
+      }
     }
   }
 
