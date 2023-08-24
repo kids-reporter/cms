@@ -64,6 +64,7 @@ export function SlideshowButton(props: {
           enableCaption={true}
           enableDelay={false}
           enableMultiSelect={true}
+          enableAlignment={false}
         />
       )}
       <div className={className} onClick={promptForImageSelector}>

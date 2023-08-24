@@ -66,10 +66,6 @@ const SeparationLine = styled.div`
   margin-bottom: 10px;
 `
 
-const ImageSelected = styled.div`
-  height: 1.4rem;
-`
-
 const ErrorWrapper = styled.div`
   & * {
     margin: 0;
@@ -80,6 +76,8 @@ type ID = string
 
 export type ImageEntity = {
   id: ID
+  // `idForImageSelectorOnly` is designed for selecting one image multiple times
+  idForImageSelectorOnly?: ID
   name?: string
   imageFile: {
     url: string
@@ -104,60 +102,45 @@ type ImageEntityOnSelectFn = (param: ImageEntity) => void
 
 function ImageGrids(props: {
   images: ImageEntity[]
-  selected: ImageEntity[]
   onSelect: ImageEntityOnSelectFn
 }): React.ReactElement {
-  const { images, selected, onSelect } = props
+  const { images, onSelect } = props
 
   return (
     <ImageGridsWrapper>
       {images.map((image) => {
         return (
-          <ImageGrid
-            key={image.id}
-            isSelected={selected?.includes(image)}
-            onSelect={() => onSelect(image)}
-            image={image}
-          />
+          <ImageGridWrapper key={image.id} onClick={() => onSelect(image)}>
+            <Image src={image?.imageFile?.url} />
+          </ImageGridWrapper>
         )
       })}
     </ImageGridsWrapper>
   )
 }
 
-function ImageGrid(props: {
-  image: ImageEntity
-  isSelected: boolean
-  onSelect: ImageEntityOnSelectFn
-}) {
-  const { image, onSelect, isSelected } = props
-  return (
-    <ImageGridWrapper key={image?.id} onClick={() => onSelect(image)}>
-      <ImageSelected>
-        {isSelected ? <i className="fas fa-check-circle"></i> : null}
-      </ImageSelected>
-      <Image src={image?.imageFile?.url} />
-    </ImageGridWrapper>
-  )
-}
-
-type ImageMetaOnChangeFn = (params: ImageEntityWithMeta) => void
+type ImageMetaOnChangeFn = (
+  params: ImageEntityWithMeta,
+  actionType: 'delete' | 'modify'
+) => void
 
 function ImageMetaGrids(props: {
   imageMetas: ImageEntityWithMeta[]
   onChange: ImageMetaOnChangeFn
   enableCaption: boolean
   enableUrl: boolean
+  enableDelete: boolean
 }) {
-  const { imageMetas, onChange, enableCaption, enableUrl } = props
+  const { imageMetas, onChange, enableCaption, enableUrl, enableDelete } = props
   return (
     <ImageMetaGridsWrapper>
-      {imageMetas.map((imageMeta) => (
+      {imageMetas.map((imageMeta, idx) => (
         <ImageMetaGrid
-          key={imageMeta?.id}
+          key={`${imageMeta.id}_${idx}`}
           imageMeta={imageMeta}
           enableCaption={enableCaption}
           enableUrl={enableUrl}
+          enableDelete={enableDelete}
           onChange={onChange}
         />
       ))}
@@ -170,12 +153,21 @@ function ImageMetaGrid(props: {
   onChange: ImageMetaOnChangeFn
   enableCaption: boolean
   enableUrl: boolean
+  enableDelete: boolean
 }): React.ReactElement {
-  const { imageMeta, enableCaption, enableUrl, onChange } = props
+  const { imageMeta, enableCaption, enableUrl, enableDelete, onChange } = props
   const { desc, url } = imageMeta
 
   return (
     <ImageMetaGridWrapper>
+      {enableDelete && (
+        <i
+          onClick={() => {
+            onChange(imageMeta, 'delete')
+          }}
+          className="fas fa-check-circle"
+        ></i>
+      )}
       <Image src={imageMeta?.imageFile?.url} />
       {enableCaption && (
         <React.Fragment>
@@ -190,7 +182,8 @@ function ImageMetaGrid(props: {
                 Object.assign({}, imageMeta, {
                   desc: e.target.value,
                   url,
-                })
+                }),
+                'modify'
               )
             })}
           />
@@ -209,7 +202,8 @@ function ImageMetaGrid(props: {
                 Object.assign({}, imageMeta, {
                   desc,
                   url: e.target.value,
-                })
+                }),
+                'modify'
               )
             })}
           />
@@ -352,39 +346,53 @@ export function ImageSelector(props: {
     }
   }
 
-  const onImageMetaChange: ImageMetaOnChangeFn = (imageEntityWithMeta) => {
-    if (enableMultiSelect) {
-      const foundIndex = selected.findIndex(
-        (ele) => ele?.id === imageEntityWithMeta?.id
-      )
-      if (foundIndex !== -1) {
-        selected[foundIndex] = imageEntityWithMeta
-        setSelected(selected)
+  const onImageMetaChange: ImageMetaOnChangeFn = (
+    imageEntityWithMeta,
+    actionType
+  ) => {
+    switch (actionType) {
+      case 'delete': {
+        setSelected(
+          selected.filter(
+            (s) =>
+              s.idForImageSelectorOnly !==
+              imageEntityWithMeta.idForImageSelectorOnly
+          )
+        )
+        break
       }
-      return
+      case 'modify': {
+        const foundIndex = selected.findIndex(
+          (ele) =>
+            ele.idForImageSelectorOnly ===
+            imageEntityWithMeta.idForImageSelectorOnly
+        )
+        if (foundIndex !== -1) {
+          const newSelected = [...selected]
+          newSelected[foundIndex] = imageEntityWithMeta
+          setSelected(newSelected)
+        }
+        break
+      }
     }
-    setSelected([imageEntityWithMeta])
   }
 
   const onImagesGridSelect: ImageEntityOnSelectFn = (imageEntity) => {
-    setSelected((selected) => {
-      const filterdSelected = selected.filter(
-        (ele) => ele?.id !== imageEntity.id
-      )
+    const newImageEntity = Object.assign(
+      {
+        // `idForImageSelectorOnly` is designed for selecting one image multiple times
+        idForImageSelectorOnly: `${imageEntity.id}_${selected.length + 1}`,
+        desc: '',
+      },
+      imageEntity
+    )
 
-      // deselect the image
-      if (filterdSelected.length !== selected.length) {
-        return filterdSelected
-      }
+    if (enableMultiSelect) {
+      setSelected(selected.concat(newImageEntity))
+      return
+    }
 
-      // add new selected one
-      if (enableMultiSelect) {
-        return selected.concat([Object.assign({ desc: '' }, imageEntity)])
-      }
-
-      // single select
-      return [Object.assign({ desc: '' }, imageEntity)]
-    })
+    setSelected([newImageEntity])
   }
 
   useEffect(() => {
@@ -401,11 +409,7 @@ export function ImageSelector(props: {
 
   let searchResult = (
     <React.Fragment>
-      <ImageGrids
-        images={images}
-        selected={selected}
-        onSelect={onImagesGridSelect}
-      />
+      <ImageGrids images={images} onSelect={onImagesGridSelect} />
       <Pagination
         currentPage={currentPage}
         total={imagesCount}
@@ -463,6 +467,7 @@ export function ImageSelector(props: {
               onChange={onImageMetaChange}
               enableCaption={enableCaption}
               enableUrl={enableUrl}
+              enableDelete={enableMultiSelect}
             />
           </ImageSelectionWrapper>
           <ImageBlockMetaWrapper>

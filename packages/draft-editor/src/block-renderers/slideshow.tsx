@@ -9,44 +9,44 @@ import {
 import { EditButton, EditableBlock as _EditableBlock } from './styled'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
-const { ImageInArticleBody } = blockRenderers
+const { SlideshowInArticleBody } = blockRenderers
 
-const StyledImage = styled(ImageInArticleBody)``
+const StyledSlideshow = styled(SlideshowInArticleBody)``
 
 const EditableBlock = styled(_EditableBlock)`
   &:hover {
-    ${StyledImage} {
+    ${StyledSlideshow} {
       background-color: #f0f0f0;
       opacity: 0.3;
     }
 `
 
-type EntityData = ImageEntityWithMeta & {
+type EntityData = {
   alignment?: string
+  delay?: number
+  images: ImageEntityWithMeta[]
 }
 
-export function EditableImage(props: AtomicBlockProps<EntityData>) {
+export function EditableSlideshow(props: AtomicBlockProps<EntityData>) {
   const [isSelectorOpen, setIsSelectorOpen] = useState(false)
   const { block, blockProps, contentState } = props
   const { onEditStart, onEditFinish } = blockProps
   const entityKey = block.getEntityAt(0)
   const entity = contentState.getEntity(entityKey)
   const data = entity.getData() || {}
-  const {alignment: _alignment, ...imageWithMeta} = data // eslint-disable-line
 
   const onChange: ImageSelectorOnChangeFn = (selectedImages, alignment) => {
     // close `ImageSelector`
     setIsSelectorOpen(false)
 
     if (selectedImages?.length === 0) {
+      onEditFinish()
       return
     }
 
-    const selectedImage = selectedImages?.[0]
-
     onEditFinish({
       entityKey,
-      entityData: Object.assign({ alignment: alignment }, selectedImage),
+      entityData: { alignment: alignment, images: selectedImages },
     })
   }
 
@@ -57,13 +57,14 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
           onChange={onChange}
           enableCaption={true}
           enableUrl={false}
-          enableAlignment={true}
+          enableAlignment={false}
+          enableMultiSelect={true}
           alignment={data.alignment}
-          selected={[imageWithMeta]}
+          selected={data.images}
         />
       )}
       <EditableBlock>
-        <StyledImage data={data} />
+        <StyledSlideshow data={data} />
         <EditButton
           onClick={() => {
             // call `onEditStart` prop as we are trying to update the blockquote entity
