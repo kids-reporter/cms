@@ -1,0 +1,69 @@
+.post-selection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff9ec !important;
+
+  .title-img {
+    margin-top: 30px !important;
+    margin-right: auto !important;
+    margin-bottom: 40px !important;
+    margin-left: auto !important;
+  }
+
+  .featured-post-container {
+    max-width: 1280px;
+    display: flex;
+    flex-direction: row;
+    padding: 24px;
+    gap: 40px;
+
+    .lastest-post {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 8;
+      flex-shrink: 1;
+      flex-basis: 25%;
+
+      .more {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        border-radius: 30px;
+        background-color: white;
+        padding: 10px 20px 12px 14px;
+      }
+
+      .latest-post-list {
+        display: flex;
+        flex-direction: column;
+        border-radius: 30px;
+        background-color: white;
+        padding: 20px 30px;
+        gap: 48px;
+      }
+    }
+
+    .featured-post {
+      display: flex;
+      flex-direction: column;
+      border-radius: 30px;
+      flex-grow: 25;
+      flex-shrink: 1;
+      flex-basis: 75%;
+      gap: 20px;
+
+      .cards {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+}
+
+.post-brick {
+  display: flex;
+  flex-direction: column;
+}

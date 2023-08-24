@@ -41,45 +41,4 @@ main {
       content: "\e900";
     }
   }
-
-  .make-friend {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: #fff9ec !important;
-
-    .content {
-      max-width: 900px;
-      background-color: transparent !important;
-      background-image: url(/images/reporter_pic.svg) !important;
-      background-position: bottom right !important;
-      background-repeat: no-repeat !important;
-      background-size: 327px !important;
-      padding-top: 30px !important;
-      padding-bottom: 40px !important;
-      padding-right: 30px !important;
-      padding-left: 0px !important;
-
-      h3 {
-        font-size: 32px !important;
-        font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
-      }
-    }
-  }
-
-  .goto {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 30px 50px;
-    border-radius: 30px !important;
-    border: 1.5px solid #eaeaea;
-    margin-bottom: 30px;
-
-    a {
-      border-radius: 30px !important;
-      border: 1.5px solid #F76977;
-    }
-  }
 }

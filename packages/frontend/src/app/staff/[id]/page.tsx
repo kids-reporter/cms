@@ -2,6 +2,8 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
+
+// TODO: remove mockup
 import { postMockupsMore } from '@/app/mockup'
 
 import './page.scss'

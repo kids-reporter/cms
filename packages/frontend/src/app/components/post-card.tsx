@@ -5,14 +5,13 @@ import './post-card.scss'
 
 export type PostCardProp = {
   post: PostSummary
+  showDesc?: boolean
 }
 
 const titleLengthLimit = 35
 const descLengthLimit = 110
 
-export const PostCard = (props: PostCardProp) => {
-  const post = props.post
-
+export const PostCard = ({ post, showDesc = true }: PostCardProp) => {
   return (
     post && (
       <a href={post.url} className={`post-body theme-${post.theme}`}>
@@ -21,9 +20,11 @@ export const PostCard = (props: PostCardProp) => {
         <span className="post-title">
           {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
         </span>
-        <span className="post-desc">
-          {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
-        </span>
+        {showDesc && (
+          <span className="post-desc">
+            {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
+          </span>
+        )}
         <div className="post-bottom">
           {post.subSubcategory && (
             <span className="subSubcategory">{post.subSubcategory}</span>

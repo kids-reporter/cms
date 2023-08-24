@@ -1,0 +1,42 @@
+.make-friend {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff9ec !important;
+  margin-bottom: 60px;
+
+  .container {
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+
+    .content {
+      max-width: 500px;
+      padding-top: 30px !important;
+      padding-bottom: 40px !important;
+      padding-right: 30px !important;
+      padding-left: 0px !important;
+
+      h3 {
+        font-size: 32px !important;
+        font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
+        margin-bottom: 30px;
+      }
+
+      p {
+        font-size: 14px !important;
+        color: var(--paletteColor4,#232323) !important;
+        line-height: 1.6em !important;
+        font-weight: 500 !important;
+      }
+    }
+
+    img {
+      width: 340px;
+      height: 300px;
+    }
+  }
+}
