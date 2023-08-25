@@ -16,17 +16,17 @@ export const PostCard = ({ post, showDesc = true }: PostCardProp) => {
     post && (
       <a href={post.url} className={`post-body theme-${post.theme}`}>
         <img src={post.image} />
-        <div className="info">
-          <span className="post-category">{post.category}</span>
-          <span className="post-title">
+        <div className="card-info">
+          <span className="card-category">{post.category}</span>
+          <span className="card-title">
             {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
           </span>
           {showDesc && (
-            <span className="post-desc">
+            <span className="card-desc">
               {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
             </span>
           )}
-          <div className="post-bottom">
+          <div className="card-bottom">
             {post.subSubcategory && (
               <span className="subSubcategory">{post.subSubcategory}</span>
             )}
