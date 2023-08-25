@@ -1,3 +1,5 @@
+import './tags.scss'
+
 type Tag = {
   name: string
   slug: string
@@ -9,7 +11,7 @@ type TagsProp = {
 
 export const Tags = (props: TagsProp) => {
   return (
-    <div className="rpjr-post-tags">
+    <div className="tags">
       <h3 className="rpjr-post-tags__heading">
         <i className="icon-rpjr-icon-tag">
           <i className="path1 text-color-theme"></i>
