@@ -129,7 +129,7 @@ export default async function Home() {
               />
               <a
                 href={section.link}
-                className="rpjr-btn rpjr-btn-theme-outline"
+                className={`rpjr-btn rpjr-btn-theme-outline theme-${section.theme}`}
               >
                 看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
               </a>
