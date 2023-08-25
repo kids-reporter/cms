@@ -1,6 +1,7 @@
 'use client'
 import Tags from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
+import { Theme } from '@/app/constants'
 
 // TODO: remove mockup
 import { MOCKUP_TAGS } from '@/app/mockup'
@@ -14,7 +15,7 @@ export const SearchTags = () => {
   }
 
   return (
-    <div className="search-tags">
+    <div className={`search-tags theme-${Theme.YELLOW}`}>
       <img decoding="async" src="/images/search_title.svg" width="265" />
       <form
         role="search"
