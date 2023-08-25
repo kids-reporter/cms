@@ -1,6 +1,6 @@
 import PostCard from '@/app/components/post-card'
 import { PostSummary } from '@/app/components/types'
-import { GetFormattedDate } from '@/app/utils'
+import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 
 import './post-selection.scss'
 
@@ -14,10 +14,11 @@ const PostBrick = (props: { post: PostSummary }) => {
   return (
     post && (
       <a className="post-brick" href={post.url}>
-        <p>{`${post.category}/${post.subSubcategory} ${GetFormattedDate(
-          post.publishedDate
-        )}`}</p>
-        <p>{post.title}</p>
+        <div className="top">
+          <p className="category">{`${post.category}/${post.subSubcategory}`}</p>
+          <p className="date">{GetFormattedDate(post.publishedDate)}</p>
+        </div>
+        <p className="title">{ShortenParagraph(post.title, 20)}</p>
       </a>
     )
   )
@@ -37,8 +38,13 @@ export const PostSelection = (props: PostSelectionProp) => {
       <div className="featured-post-container">
         <div className="lastest-post">
           <div className="more">
-            <p>最新文章</p>
-            <a href={'/all'}>更多</a>
+            <span>
+              <img src={'/images/home-icon-clock.svg'} />
+              最新文章
+            </span>
+            <a href={'/all'}>
+              更多<i className="icon-rpjr-icon-arrow-right"></i>
+            </a>
           </div>
           <div className="latest-post-list">
             {latestPosts?.map((post, index) => {

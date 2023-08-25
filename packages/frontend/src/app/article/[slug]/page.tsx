@@ -20,8 +20,6 @@ import {
 } from '@/app/constants'
 
 import './post.scss'
-import '../../assets/css/button.css'
-import '../../assets/css/icomoon/style.css'
 
 const heroImageGQL = `
   heroImage {

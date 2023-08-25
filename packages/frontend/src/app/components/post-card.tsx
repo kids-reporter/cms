@@ -8,7 +8,7 @@ export type PostCardProp = {
   showDesc?: boolean
 }
 
-const titleLengthLimit = 35
+const titleLengthLimit = 30
 const descLengthLimit = 110
 
 export const PostCard = ({ post, showDesc = true }: PostCardProp) => {
@@ -16,22 +16,24 @@ export const PostCard = ({ post, showDesc = true }: PostCardProp) => {
     post && (
       <a href={post.url} className={`post-body theme-${post.theme}`}>
         <img src={post.image} />
-        <span className="post-category">{post.category}</span>
-        <span className="post-title">
-          {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
-        </span>
-        {showDesc && (
-          <span className="post-desc">
-            {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
+        <div className="card-info">
+          <span className="card-category">{post.category}</span>
+          <span className="card-title">
+            {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
           </span>
-        )}
-        <div className="post-bottom">
-          {post.subSubcategory && (
-            <span className="subSubcategory">{post.subSubcategory}</span>
+          {showDesc && (
+            <span className="card-desc">
+              {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
+            </span>
           )}
-          <span className="published-date">
-            {GetFormattedDate(post.publishedDate) ?? ''}
-          </span>
+          <div className="card-bottom">
+            {post.subSubcategory && (
+              <span className="subSubcategory">{post.subSubcategory}</span>
+            )}
+            <span className="published-date">
+              {GetFormattedDate(post.publishedDate) ?? ''}
+            </span>
+          </div>
         </div>
       </a>
     )

@@ -138,6 +138,10 @@ a {
   --theme-color: #27B5F7;
 }
 
+.icon-rpjr-icon-arrow-right::before {
+  content: "\e900";
+}
+
 @font-face {
   font-family: SweiMarkerSansCJKtc-Regular;
   src: url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Bold.woff2) format("woff2")
@@ -145,11 +149,6 @@ a {
   font-weight: bold;
 }
 
-/*
-@font-face {
-  font-family: SweiMarkerSansCJKtc-Regular;
-  src: url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Regular.woff2) format("woff2")
-  , url(https://cdn.jsdelivr.net/gh/max32002/swei-marker-sans@2.0/WebFont/CJK%20TC/SweiMarkerSansCJKtc-Regular.woff) format("woff");
-  font-weight: normal;
-}
-*/
+// TODO: isolate icomoon, button
+@import './assets/css/icomoon/style.css';
+@import './assets/css/button.css';
