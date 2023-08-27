@@ -11,14 +11,22 @@ const styles = {
   },
 }
 
-export function LinkButton(props) {
+export function LinkButton(props: {
+  className?: string
+  isActive: boolean
+  editorState: EditorState
+  onChange: (arg0: EditorState) => void
+  onEditStart: () => void
+  onEditFinish: () => void
+}) {
   const { isActive, editorState, onChange } = props
 
   const [toShowUrlInput, setToShowUrlInput] = useState(false)
   const [urlValue, setUrlValue] = useState('')
 
-  const promptForLink = (e) => {
+  const promptForLink = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
+    props.onEditStart()
     const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
       setToShowUrlInput(true)
@@ -46,6 +54,7 @@ export function LinkButton(props) {
 
     setToShowUrlInput(false)
     setUrlValue('')
+    props.onEditFinish()
   }
 
   const onLinkInputKeyDown = (e) => {
@@ -62,6 +71,7 @@ export function LinkButton(props) {
     }
     setToShowUrlInput(false)
     setUrlValue('')
+    props.onEditFinish()
   }
 
   const urlInput = (
