@@ -28,6 +28,8 @@ type AnnotationButtonProps = {
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
+  onEditStart: () => void
+  onEditFinish: () => void
 }
 
 export function createAnnotationButton({
@@ -37,12 +39,7 @@ export function createAnnotationButton({
   InnerEditor: React.ComponentType<RichTextEditorProps>
   decorator: DraftDecoratorType
 }): React.FC<AnnotationButtonProps> {
-  return function AnnotationButton(props: {
-    className?: string
-    isActive: boolean
-    editorState: EditorState
-    onChange: (arg0: EditorState) => void
-  }) {
+  return function AnnotationButton(props) {
     const toggleEntity = RichUtils.toggleLink
     const { isActive, editorState: editorStateOfOuterEditor, onChange } = props
     const [toShowInput, setToShowInput] = useState(false)
@@ -52,6 +49,7 @@ export function createAnnotationButton({
 
     const promptForAnnotation = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
+      props.onEditStart()
       const selection = editorStateOfOuterEditor.getSelection()
       if (!selection.isCollapsed()) {
         setToShowInput(true)
@@ -83,6 +81,7 @@ export function createAnnotationButton({
       setInputValue({
         editorStateOfInnerEditor: EditorState.createEmpty(decorator),
       })
+      props.onEditFinish()
     }
 
     const removeAnnotation = () => {
@@ -94,6 +93,7 @@ export function createAnnotationButton({
       setInputValue({
         editorStateOfInnerEditor: EditorState.createEmpty(decorator),
       })
+      props.onEditFinish()
     }
 
     const input = (

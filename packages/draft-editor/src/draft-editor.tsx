@@ -442,6 +442,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
               />
               <CustomBlockquoteButton
                 isDisabled={disabledButtons.includes(buttonNames.blockquote)}
@@ -453,8 +459,16 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
                 isActive={entityType === 'ANNOTATION'}
                 editorState={editorState}
-                onChange={this.onChange}
+                onChange={(editorState) => {
+                  this.onChange(editorState)
+                }}
                 readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
               />
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
@@ -494,7 +508,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
             onClick={() => {
               if (this.editorRef) {
                 // eslint-disable-next-line prettier/prettier
-                  (this.editorRef as HTMLElement)?.focus()
+                (this.editorRef as HTMLElement)?.focus()
               }
             }}
           >
