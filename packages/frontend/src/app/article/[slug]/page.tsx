@@ -200,7 +200,7 @@ export default async function PostPage({
           />
           <Divider />
           <PostRenderer post={post} theme={theme} />
-          <Tags tags={post.tags} />
+          <Tags title={'常用關鍵字'} tags={post.tags} />
           <AuthorCard authors={orderedAuthors} />
         </div>
         <CallToAction />

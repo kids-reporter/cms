@@ -6,6 +6,7 @@ import { API_URL } from '@/app/constants'
 
 // TODO: remove mockup
 import { postMockupsMore } from '@/app/mockup'
+import { MOCKUP_TAGS } from '@/app/mockup'
 
 const categoryGQL = ``
 
@@ -52,7 +53,7 @@ export default async function SubCategory({
     }
   })
   const post = postRes?.data?.data?.post
-  if (!post) {
+  if (!categoryTags || !post) {
     notFound()
   }
 
@@ -63,7 +64,7 @@ export default async function SubCategory({
           <img src={'/images/category_news.svg'} />
         </div>
         <div>
-          <Tags tags={categoryTags} />
+          <Tags tags={MOCKUP_TAGS} />
         </div>
       </div>
       <div className="post-list">
