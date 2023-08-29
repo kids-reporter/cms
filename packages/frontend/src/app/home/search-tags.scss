@@ -1,4 +1,5 @@
 .search-tags {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,10 +13,9 @@
   }
 
   form {
-    --max-width: 400px;
     width: 100%;
+    max-width: 50%;
     height: 40px;
-    max-width: var(--max-width, 250px);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -43,5 +43,9 @@
       background-color: transparent;
       cursor: pointer;
     }
+  }
+
+  .tags {
+    max-width: 500px;
   }
 }

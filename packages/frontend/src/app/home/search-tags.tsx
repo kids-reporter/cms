@@ -37,7 +37,9 @@ export const SearchTags = () => {
         </button>
         <input type="hidden" name="post_type" value="post" />
       </form>
-      <Tags title={'常用關鍵字'} tags={MOCKUP_TAGS} />
+      <div className="tags">
+        <Tags title={'常用關鍵字'} tags={MOCKUP_TAGS} />
+      </div>
     </div>
   )
 }
