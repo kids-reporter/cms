@@ -1,5 +1,5 @@
 .main-slider {
-  --theme-color: #F8C341; // TODO: theme color
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,6 +32,15 @@
       justify-content: center;
       align-items: center;
       background: white;
+    }
+
+    .swiper-slide-visible.swiper-slide-active{
+      width: 50vw;
+      opacity: 1;
+    }
+
+    .swiper-slide-visible {
+      opacity: 0.5;
     }
 
     .swiper-pagination-bullets {
