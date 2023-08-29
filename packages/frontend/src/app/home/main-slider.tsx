@@ -52,10 +52,10 @@ export const MainSlider = (props: SliderProp) => {
           {posts.map((post, index) => {
             return (
               <SwiperSlide key={`swiper-main-slide-${index}`}>
-                <div key={`post-${index}`} className="post-body">
+                <a key={`post-${index}`} className="post-body" href={post.url}>
                   <img src={`${post.image}`} />
                   <span className="post-title">{post.title}</span>
-                </div>
+                </a>
               </SwiperSlide>
             )
           })}

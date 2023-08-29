@@ -62,6 +62,7 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      cursor: pointer;
 
       img {
         height: auto;
@@ -71,13 +72,16 @@
       }
 
       .post-title {
+        font-family: SweiMarkerSansCJKtc-Regular,noto sans tc,Sans-Serif,serif;
         font-style: normal;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 28px;
+        padding: 30px 0 0;
+        max-width: 500px;
         line-height: 160%;
-        letter-spacing: 0.08em;
-        color: rgb(35, 35, 35);
-        text-align: left;
+        letter-spacing: .08em;
+        color: #232323;
+        text-align: center;
       }
     }
 
