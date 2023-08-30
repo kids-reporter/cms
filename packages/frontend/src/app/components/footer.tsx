@@ -159,7 +159,7 @@ const socialIcons = [
     ),
   },
   {
-    link: 'https://kids.twreporter.org/feed/',
+    link: '/feed/',
     svg: (
       <svg
         width="28"
