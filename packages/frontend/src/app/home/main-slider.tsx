@@ -18,7 +18,7 @@ import 'swiper/css/pagination'
 import './main-slider.scss'
 
 type SliderProp = {
-  posts: any[]
+  posts: { url: string; image: string; title: string }[]
 }
 
 const autoPlayInterval = 5000
