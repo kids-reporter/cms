@@ -1,5 +1,5 @@
 .main-slider {
-  --theme-color: #F8C341; // TODO: theme color
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,6 +34,15 @@
       background: white;
     }
 
+    .swiper-slide-visible.swiper-slide-active{
+      width: 50vw;
+      opacity: 1;
+    }
+
+    .swiper-slide-visible {
+      opacity: 0.5;
+    }
+
     .swiper-pagination-bullets {
       height: 150px;
       display: flex;
@@ -62,6 +71,7 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      cursor: pointer;
 
       img {
         height: auto;
@@ -71,13 +81,16 @@
       }
 
       .post-title {
+        font-family: SweiMarkerSansCJKtc-Regular,noto sans tc,Sans-Serif,serif;
         font-style: normal;
         font-weight: 700;
-        font-size: 20px;
+        font-size: 28px;
+        padding: 30px 0 0;
+        max-width: 500px;
         line-height: 160%;
-        letter-spacing: 0.08em;
-        color: rgb(35, 35, 35);
-        text-align: left;
+        letter-spacing: .08em;
+        color: #232323;
+        text-align: center;
       }
     }
 

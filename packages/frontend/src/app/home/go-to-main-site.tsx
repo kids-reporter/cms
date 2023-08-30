@@ -7,7 +7,7 @@ export const GoToMainSite = () => {
         decoding="async"
         loading="lazy"
         className="stk-img wp-image-6055"
-        src="https://kids.twreporter.org/wp-content/uploads/2022/10/reporter_logo.svg"
+        src="/images/main_site_logo.svg"
         width="160"
         height="300"
       />

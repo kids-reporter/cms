@@ -1,4 +1,5 @@
 .search-tags {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,10 +13,9 @@
   }
 
   form {
-    --max-width: 400px;
     width: 100%;
+    max-width: 50%;
     height: 40px;
-    max-width: var(--max-width, 250px);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -26,12 +26,17 @@
       width: 100%;
       height: 100%;
       border-radius: 30px;
-      border-color: var(--paletteColor6);
+      border-color: var(--theme-color);
+      border-style: solid;
       border-width: 2px;
       background-color: white;
       font-size: var(--form-font-size, 16px);
       padding-left: 12px;
       padding-right: 40px;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     button {
@@ -43,5 +48,9 @@
       background-color: transparent;
       cursor: pointer;
     }
+  }
+
+  .tags {
+    max-width: 500px;
   }
 }

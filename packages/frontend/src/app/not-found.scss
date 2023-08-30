@@ -31,10 +31,15 @@
       border-radius: 30px;
       border-color: var(--paletteColor1);
       border-width: 2px;
+      border-style: solid;
       background-color: white;
       font-size: var(--form-font-size, 16px);
       padding-left: 12px;
       padding-right: 40px;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     button {

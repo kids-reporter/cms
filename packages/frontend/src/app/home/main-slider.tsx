@@ -28,7 +28,7 @@ export const MainSlider = (props: SliderProp) => {
   const swiperRef = useRef<SwiperCore>()
 
   return (
-    <div className="main-slider">
+    <div className={`main-slider theme-${DEFAULT_THEME_COLOR}`}>
       <div className="posts">
         <Swiper
           autoplay={{ delay: autoPlayInterval }}
@@ -46,16 +46,17 @@ export const MainSlider = (props: SliderProp) => {
             stretch: 100,
             depth: 100,
             modifier: 1,
-            slideShadows: true,
+            scale: 0.75,
+            slideShadows: false,
           }}
         >
           {posts.map((post, index) => {
             return (
               <SwiperSlide key={`swiper-main-slide-${index}`}>
-                <div key={`post-${index}`} className="post-body">
+                <a key={`post-${index}`} className="post-body" href={post.url}>
                   <img src={`${post.image}`} />
                   <span className="post-title">{post.title}</span>
-                </div>
+                </a>
               </SwiperSlide>
             )
           })}
