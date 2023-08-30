@@ -26,18 +26,20 @@ export const Section = (props: SectionProp) => {
     posts?.length > 0 && (
       <div className="section">
         <div className="section-head">
-          <img className="image-left" src={`/images/${config.image}`} />
-          <img
-            className="image-title"
-            src={`/images/${config.titleImg}`}
-            alt={config.title}
-          />
-          <a
-            href={config.link}
-            className={`rpjr-btn rpjr-btn-theme-outline theme-${config.theme}`}
-          >
-            看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
-          </a>
+          <div className="image-left">
+            <img src={`/images/${config.image}`} />
+          </div>
+          <div className="image-title">
+            <img src={`/images/${config.titleImg}`} alt={config.title} />
+          </div>
+          <div className="more">
+            <a
+              href={config.link}
+              className={`rpjr-btn rpjr-btn-theme-outline theme-${config.theme}`}
+            >
+              看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
+            </a>
+          </div>
         </div>
         <PostSlider posts={posts} sliderTheme={config.theme} />
       </div>

@@ -14,21 +14,34 @@
     padding-top: 40px;
 
     .image-left {
-      width: 360px;
+      flex: 1;
+
+      img {
+        width: 360px;
+      }
     }
 
     .image-title {
-      display: flex;
-      height: 90px;
-      align-items: center;
-      justify-content: center;
-      margin-top: 48px;
+      flex: 1;
+
+      img {
+        display: flex;
+        height: 90px;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
-    a {
-      padding: 9px 20px 11px;
-      font-size: 20px;
-      margin-top: 28px;
+    .more{
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+
+      a {
+        padding: 9px 20px 11px;
+        font-size: 20px;
+      }
     }
   }
 }
