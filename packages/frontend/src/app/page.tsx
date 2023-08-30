@@ -13,7 +13,7 @@ import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
-import { postMockups, postMockupsMore } from '@/app/mockup'
+import { MOCKUP_TAGS, postMockupsMore } from '@/app/mockup'
 
 const sections = [
   {
@@ -112,28 +112,29 @@ export default async function Home() {
       title: post.title,
     }
   })
+  const latestPosts = postMockupsMore
+  const featuredPosts = postMockupsMore
+  const sectionPosts = postMockupsMore
+  const tags = MOCKUP_TAGS
 
   return (
     <main>
       <Header />
       {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
-      <PostSelection
-        latestPosts={postMockupsMore}
-        featuredPosts={postMockupsMore}
-      />
+      <PostSelection latestPosts={latestPosts} featuredPosts={featuredPosts} />
       {sections.map((sectionConfig, index) => {
         return (
           <>
             <Section
               key={`section-${index}`}
               config={sectionConfig}
-              posts={index % 2 ? postMockups : postMockupsMore}
+              posts={sectionPosts}
             />
             {index < sections.length - 1 ? <Divider /> : null}
           </>
         )
       })}
-      <SearchTags />
+      <SearchTags tags={tags} />
       <MakeFriends />
       <CallToAction />
       <GoToMainSite />

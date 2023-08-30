@@ -1,6 +1,6 @@
 import './tags.scss'
 
-type Tag = {
+export type Tag = {
   name: string
   slug: string
 }
