@@ -11,7 +11,11 @@ export const Pagination = (props: PaginationProp) => {
     pageNum > 0 && (
       <div className="pagination">
         {Array(pageNum).map((pageIndex) => {
-          return <div key={`pagination-index-${pageIndex}`}>{pageIndex}</div>
+          return (
+            <div key={`pagination-index-${pageIndex}`}>
+              <a href={``}>{pageIndex}</a>
+            </div>
+          )
         })}
       </div>
     )
