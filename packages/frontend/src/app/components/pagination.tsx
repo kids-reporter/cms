@@ -1,3 +1,4 @@
+import { AngleLeft, AngleRight } from '@/app/icons'
 import './pagination.scss'
 
 type PaginationProp = {
@@ -10,15 +11,23 @@ export const Pagination = (props: PaginationProp) => {
   return (
     pageNum > 0 && (
       <div className="pagination">
+        <a className="prev" href={''}>
+          {AngleLeft}
+        </a>
         {Array(pageNum)
           .fill(0)
-          .map((pageIndex) => {
+          .map((indexValue, index) => {
             return (
-              <div key={`pagination-index-${pageIndex}`}>
-                <a href={``}>{pageIndex}</a>
+              <div key={`pagination-index-${index}`}>
+                <a className="index" href={``}>
+                  {index + 1}
+                </a>
               </div>
             )
           })}
+        <a className="next" href={''}>
+          {AngleRight}
+        </a>
       </div>
     )
   )
