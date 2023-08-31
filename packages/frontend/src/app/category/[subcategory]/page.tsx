@@ -4,6 +4,7 @@ import PostCard from '@/app/components/post-card'
 import Tags from '@/app/components/tags'
 import Pagination from '@/app/components/pagination'
 import { API_URL } from '@/app/constants'
+import './page.scss'
 
 // TODO: remove mockup
 import { postMockupsMore } from '@/app/mockup'
@@ -60,18 +61,16 @@ export default async function SubCategory({
 
   return (
     <main>
-      <div className="info">
+      <div className="content">
         <img src={'/images/category_news.svg'} />
-        <div>
-          <Tags tags={MOCKUP_TAGS} />
+        <Tags tags={MOCKUP_TAGS} />
+        <div className="post-list">
+          {postMockupsMore.map((post, index) => {
+            return <PostCard key={`author-post-card-${index}`} post={post} />
+          })}
         </div>
+        <Pagination pageNum={10} />
       </div>
-      <div className="post-list">
-        {postMockupsMore.map((post, index) => {
-          return <PostCard key={`author-post-card-${index}`} post={post} />
-        })}
-      </div>
-      <Pagination pageNum={10} />
     </main>
   )
 }
