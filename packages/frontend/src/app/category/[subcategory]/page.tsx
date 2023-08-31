@@ -2,6 +2,7 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Tags from '@/app/components/tags'
+import Pagination from '@/app/components/pagination'
 import { API_URL } from '@/app/constants'
 
 // TODO: remove mockup
@@ -60,9 +61,7 @@ export default async function SubCategory({
   return (
     <main>
       <div className="info">
-        <div className="avatar">
-          <img src={'/images/category_news.svg'} />
-        </div>
+        <img src={'/images/category_news.svg'} />
         <div>
           <Tags tags={MOCKUP_TAGS} />
         </div>
@@ -72,6 +71,7 @@ export default async function SubCategory({
           return <PostCard key={`author-post-card-${index}`} post={post} />
         })}
       </div>
+      <Pagination pageNum={10} />
     </main>
   )
 }

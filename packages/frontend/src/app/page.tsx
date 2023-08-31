@@ -1,27 +1,21 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import { Header } from '@/app/components/header'
-import PostSlider from '@/app/components/post-slider'
 import MainSlider from '@/app/home/main-slider'
 import PostSelection from '@/app/home/post-selection'
+import Section from '@/app/home/section'
 import Divider from '@/app/home/divider'
 import SearchTags from '@/app/home/search-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
-import { API_URL, Theme } from '@/app/constants'
-
-// TODO: remove mockup
-import { postMockups, postMockupsMore } from '@/app/mockup'
-
+import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
-type Post = {
-  title: string
-  slug: string
-}
+// TODO: remove mockup
+import { MOCKUP_TAGS, postMockupsMore } from '@/app/mockup'
 
-const sliderSections = [
+const sections = [
   {
     title: '時時刻刻',
     image: 'topic_pic1.svg',
@@ -83,13 +77,24 @@ const sliderSections = [
 export default async function Home() {
   let response
   try {
-    // TODO: fetch date from cms
+    // TODO: fetch main slider posts
+    // TODO: fetch post selection posts
+    // TODO: fetch posts of each section
+    // TODO: fetch tags
     response = await axios.post(API_URL, {
       query: `
       query {
         posts {
           title
           slug
+          heroImage {
+            resized {
+              medium
+            }
+            imageFile {
+              url
+            }
+          }
         }
       }
     `,
@@ -98,51 +103,38 @@ export default async function Home() {
     console.error('Fetch post data failed!', err)
     notFound()
   }
-  const posts: Post[] = response?.data?.data?.posts
+  const mainPosts = response?.data?.data?.posts?.map((post: any) => {
+    return {
+      url: `/article/${post.slug}`,
+      image: post?.heroImage?.imageFile?.url
+        ? `${CMS_URL}${post.heroImage.imageFile.url}`
+        : undefined,
+      title: post.title,
+    }
+  })
+  const latestPosts = postMockupsMore
+  const featuredPosts = postMockupsMore
+  const sectionPosts = postMockupsMore
+  const tags = MOCKUP_TAGS
 
   return (
     <main>
       <Header />
-      <MainSlider posts={postMockupsMore} />
-      <PostSelection
-        latestPosts={postMockupsMore}
-        featuredPosts={postMockupsMore}
-      />
-      {false &&
-        posts?.map((post, index) => {
-          return (
-            <div key={`article-${index}`}>
-              <a href={`/article/${post.slug}`}>{post.title}</a>
-              <br />
-            </div>
-          )
-        })}
-      {sliderSections.map((section, index) => {
+      {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
+      <PostSelection latestPosts={latestPosts} featuredPosts={featuredPosts} />
+      {sections.map((sectionConfig, index) => {
         return (
-          <div className="section" key={`home-section-${index}`}>
-            <div className="section-head">
-              <img className="image-left" src={`/images/${section.image}`} />
-              <img
-                className="image-title"
-                src={`/images/${section.titleImg}`}
-                alt={section.title}
-              />
-              <a
-                href={section.link}
-                className={`rpjr-btn rpjr-btn-theme-outline theme-${section.theme}`}
-              >
-                看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
-              </a>
-            </div>
-            <PostSlider
-              posts={index % 2 ? postMockups : postMockupsMore}
-              sliderTheme={section.theme}
+          <>
+            <Section
+              key={`section-${index}`}
+              config={sectionConfig}
+              posts={sectionPosts}
             />
-            {index < sliderSections.length - 1 ? <Divider /> : null}
-          </div>
+            {index < sections.length - 1 ? <Divider /> : null}
+          </>
         )
       })}
-      <SearchTags />
+      <SearchTags tags={tags} />
       <MakeFriends />
       <CallToAction />
       <GoToMainSite />

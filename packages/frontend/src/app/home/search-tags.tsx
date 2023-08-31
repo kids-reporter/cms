@@ -1,14 +1,16 @@
 'use client'
-import Tags from '@/app/components/tags'
+import Tags, { Tag } from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
 import { Theme } from '@/app/constants'
-
-// TODO: remove mockup
-import { MOCKUP_TAGS } from '@/app/mockup'
-
 import './search-tags.scss'
 
-export const SearchTags = () => {
+type SearchTagsProp = {
+  tags: Tag[]
+}
+
+export const SearchTags = (props: SearchTagsProp) => {
+  const tags = props?.tags
+
   // TODO: handle search
   const onHandleSearch = () => {
     console.log('search')
@@ -37,9 +39,11 @@ export const SearchTags = () => {
         </button>
         <input type="hidden" name="post_type" value="post" />
       </form>
-      <div className="tags">
-        <Tags title={'常用關鍵字'} tags={MOCKUP_TAGS} />
-      </div>
+      {tags && (
+        <div className="tags">
+          <Tags title={'常用關鍵字'} tags={tags} />
+        </div>
+      )}
     </div>
   )
 }
