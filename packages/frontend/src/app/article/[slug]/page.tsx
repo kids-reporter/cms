@@ -18,8 +18,7 @@ import {
   CMS_URL,
   GetThemeFromCategory,
 } from '@/app/constants'
-
-import './post.scss'
+import './page.scss'
 
 const heroImageGQL = `
   heroImage {
