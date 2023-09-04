@@ -182,7 +182,7 @@ export const StickyHeader = () => {
   )
 
   return (
-    <div className="sticky-header">
+    <div className="sticky-header" id="sticky-header">
       <div className="header-container">
         <div className="left">{brand}</div>
         <div className="right">

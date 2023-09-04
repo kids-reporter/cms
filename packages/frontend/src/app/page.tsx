@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
-import { Header } from '@/app/components/header'
+import { Header, StickyHeader } from '@/app/components/header'
+import HomeTopDetector from '@/app/home/home-top-detector'
 import MainSlider from '@/app/home/main-slider'
 import PostSelection from '@/app/home/post-selection'
 import Section from '@/app/home/section'
@@ -118,26 +119,33 @@ export default async function Home() {
   const tags = MOCKUP_TAGS
 
   return (
-    <main>
-      <Header />
-      {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
-      <PostSelection latestPosts={latestPosts} featuredPosts={featuredPosts} />
-      {sections.map((sectionConfig, index) => {
-        return (
-          <>
-            <Section
-              key={`section-${index}`}
-              config={sectionConfig}
-              posts={sectionPosts}
-            />
-            {index < sections.length - 1 ? <Divider /> : null}
-          </>
-        )
-      })}
-      <SearchTags tags={tags} />
-      <MakeFriends />
-      <CallToAction />
-      <GoToMainSite />
-    </main>
+    <>
+      <StickyHeader />
+      <main>
+        <Header />
+        <HomeTopDetector />
+        {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
+        <PostSelection
+          latestPosts={latestPosts}
+          featuredPosts={featuredPosts}
+        />
+        {sections.map((sectionConfig, index) => {
+          return (
+            <>
+              <Section
+                key={`section-${index}`}
+                config={sectionConfig}
+                posts={sectionPosts}
+              />
+              {index < sections.length - 1 ? <Divider /> : null}
+            </>
+          )
+        })}
+        <SearchTags tags={tags} />
+        <MakeFriends />
+        <CallToAction />
+        <GoToMainSite />
+      </main>
+    </>
   )
 }
