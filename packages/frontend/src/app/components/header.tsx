@@ -2,9 +2,7 @@
 import { useState } from 'react'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
-
 import './header.scss'
-import '../assets/css/button.css'
 
 export const NavItems = [
   {
