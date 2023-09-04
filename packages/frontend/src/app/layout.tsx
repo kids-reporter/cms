@@ -1,9 +1,6 @@
 import { Metadata } from 'next'
-import { StickyHeader } from '@/app/components/header'
-import TopDetector from '@/app/components/top-detector'
 import BackToTop from '@/app/components/back-to-top'
 import Footer from '@/app/components/footer'
-
 import './globals.scss'
 
 export const metadata: Metadata = {
@@ -20,11 +17,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <StickyHeader />
-        <div className="content-container">
-          <TopDetector />
-          {children}
-        </div>
+        {children}
         <BackToTop />
         <Footer />
       </body>

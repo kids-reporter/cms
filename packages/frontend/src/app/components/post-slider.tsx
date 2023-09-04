@@ -49,7 +49,15 @@ export const PostSlider = (props: PostSliderProp) => {
             loop={isLoopAvailable}
             rewind={!isLoopAvailable}
             spaceBetween={20}
-            slidesPerView={slidesPerView}
+            slidesPerView={1}
+            breakpoints={{
+              1000: {
+                slidesPerView: 3,
+              },
+              730: {
+                slidesPerView: 2,
+              },
+            }}
           >
             {posts.map((post, index) => {
               return (

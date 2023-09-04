@@ -9,7 +9,7 @@ import {
   Pagination,
 } from 'swiper/modules'
 import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
-import { DEFAULT_THEME_COLOR } from '@/app/constants'
+import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
 
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
@@ -28,7 +28,7 @@ export const MainSlider = (props: SliderProp) => {
   const swiperRef = useRef<SwiperCore>()
 
   return (
-    <div className={`main-slider theme-${DEFAULT_THEME_COLOR}`}>
+    <div className={`main-slider theme-${Theme.YELLOW}`}>
       <div className="posts">
         <Swiper
           autoplay={{ delay: autoPlayInterval }}
@@ -38,7 +38,7 @@ export const MainSlider = (props: SliderProp) => {
           pagination={{ clickable: true }}
           modules={[Autoplay, EffectCoverflow, Navigation, Pagination]}
           loop={true}
-          slidesPerView={2}
+          slidesPerView={1}
           effect={'coverflow'}
           centeredSlides={true}
           coverflowEffect={{
@@ -48,6 +48,11 @@ export const MainSlider = (props: SliderProp) => {
             modifier: 1,
             scale: 0.75,
             slideShadows: false,
+          }}
+          breakpoints={{
+            1000: {
+              slidesPerView: 2,
+            },
           }}
         >
           {posts.map((post, index) => {

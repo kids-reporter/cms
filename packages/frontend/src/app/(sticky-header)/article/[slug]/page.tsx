@@ -18,8 +18,7 @@ import {
   CMS_URL,
   GetThemeFromCategory,
 } from '@/app/constants'
-
-import './post.scss'
+import './page.scss'
 
 const heroImageGQL = `
   heroImage {
@@ -173,7 +172,7 @@ export default async function PostPage({
 
   return (
     post && (
-      <main className="main-container">
+      <main>
         <div className={`post theme-${theme}`}>
           <Sidebar />
           <MobileSidebar />
