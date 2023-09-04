@@ -6,7 +6,7 @@ import { SUBSCRIBE_URL } from '@/app/constants'
 import './header.scss'
 import '../assets/css/button.css'
 
-const navItems = [
+export const NavItems = [
   {
     title: '專題',
     link: '/topic/',
@@ -31,7 +31,7 @@ const navItems = [
 
 const slogan = <img src="/images/header-left-slogan.svg" />
 
-const contributeBtn = (
+export const ContributeBtn = (
   <a
     href="/about#post"
     className="header-left__btn-1 rpjr-btn"
@@ -41,7 +41,7 @@ const contributeBtn = (
   </a>
 )
 
-const subscribeBtn = (
+export const SubscribeBtn = (
   <a
     href={SUBSCRIBE_URL}
     target="_blank"
@@ -52,7 +52,7 @@ const subscribeBtn = (
   </a>
 )
 
-const aboutUsBtn = (
+export const AboutUsBtn = (
   <a
     href="/about#us"
     className="rpjr-btn rpjr-btn-red"
@@ -95,7 +95,7 @@ export const StickyHeader = () => {
   const navi = (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
-        {navItems.map((item, index) => {
+        {NavItems.map((item, index) => {
           return (
             <li key={`header-nav-item-${index}`}>
               <a href={item.link} className="ct-menu-link" role="menuitem">
@@ -171,9 +171,9 @@ export const StickyHeader = () => {
           />
         </a>
         <div className="btn-group">
-          {contributeBtn}
-          {subscribeBtn}
-          {aboutUsBtn}
+          {ContributeBtn}
+          {SubscribeBtn}
+          {AboutUsBtn}
         </div>
         {searchInput}
         {navi}
@@ -187,8 +187,8 @@ export const StickyHeader = () => {
         <div className="left">{brand}</div>
         <div className="right">
           <div className="cta">
-            {contributeBtn}
-            {subscribeBtn}
+            {ContributeBtn}
+            {SubscribeBtn}
             {slogan}
           </div>
           <div className="others">
@@ -208,80 +208,4 @@ export const StickyHeader = () => {
   )
 }
 
-export const Header = () => {
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
-  }
-
-  const navi = (
-    <nav aria-label="頁首選單">
-      <ul className="menu" role="menubar">
-        {navItems.map((item, index) => {
-          return (
-            <li key={`header-nav-item-${index}`}>
-              <a href={item.link} className="ct-menu-link" role="menuitem">
-                {item.title}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
-  )
-
-  return (
-    <div className="home-header">
-      <div className="left">
-        <img src="/images/navbar_pic.svg" width="291" />
-      </div>
-      <div className="center">
-        <a href="/">
-          <img
-            src="/images/logo-full.svg"
-            alt="少年報導者 The Reporter for Kids"
-          />
-        </a>
-        {navi}
-      </div>
-      <div className="right">
-        <div>
-          <form
-            role="search"
-            method="get"
-            action="https://kids.twreporter.org/"
-            aria-haspopup="listbox"
-          >
-            <input
-              type="search"
-              placeholder="搜尋更多新聞、議題"
-              value=""
-              name="s"
-              title="Search for..."
-              aria-label="Search for..."
-              onChange={onHandleSearch}
-            />
-            <button
-              type="submit"
-              className="search-submit"
-              aria-label="搜尋按鈕"
-            >
-              {SearchIcon}
-              <span data-loader="circles">
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-            </button>
-            <input type="hidden" name="post_type" value="post" />
-          </form>
-        </div>
-        <div className="btn-group">
-          {contributeBtn}
-          {subscribeBtn}
-          {aboutUsBtn}
-        </div>
-      </div>
-    </div>
-  )
-}
+export default StickyHeader
