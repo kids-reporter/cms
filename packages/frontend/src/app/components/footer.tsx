@@ -7,9 +7,7 @@ import {
   TwitterIcon,
 } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
-
 import './footer.scss'
-import '../assets/css/button.css'
 
 const socialIcons = [
   {

@@ -111,6 +111,7 @@ export default async function PostPage({
     notFound()
   }
 
+  // TODO: show authors according to json
   // Assemble ordered authors
   const authorsJSON = post?.authorsJSON
   const authors = post?.authors?.map((author: any) => {

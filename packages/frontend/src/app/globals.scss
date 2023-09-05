@@ -111,11 +111,6 @@ body {
   --letterSpacing: 0.05em;
 }
 
-.content-container{
-  width: 100%;
-  flex-grow: 1;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -148,6 +143,5 @@ a {
   font-weight: bold;
 }
 
-// TODO: isolate icomoon, button
-@import './assets/css/icomoon/style.css';
-@import './assets/css/button.css';
+@import './assets/style.css';
+@import './assets/button.css';

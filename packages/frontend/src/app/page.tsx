@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
-import { Header, StickyHeader } from '@/app/components/header'
+import StickyHeader from '@/app/components/header'
+import MainHeader from '@/app/home/main-header'
 import HomeTopDetector from '@/app/home/home-top-detector'
 import MainSlider from '@/app/home/main-slider'
 import PostSelection from '@/app/home/post-selection'
@@ -122,7 +123,7 @@ export default async function Home() {
     <>
       <StickyHeader />
       <main>
-        <Header />
+        <MainHeader />
         <HomeTopDetector />
         {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
         <PostSelection
