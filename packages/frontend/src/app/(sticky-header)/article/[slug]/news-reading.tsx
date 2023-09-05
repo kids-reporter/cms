@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { Dropdown } from './dropdown'
 
@@ -33,28 +33,24 @@ type NewsReadingProps = {
   }
 }
 
-const NewsReading = function ({ className, data }: NewsReadingProps) {
-  const [isMounted, setIsMounted] = useState(false)
-  const { items } = data
+const NewsReading = ({ className, data }: NewsReadingProps) => {
+  const items = data?.items || []
 
   const options = useMemo(
     () =>
       items.map((r) => {
         return {
-          name: r.name,
-          value: r.name,
+          name: r?.name,
+          value: r?.name,
         }
       }),
     [items]
   )
+
   const [selectedOption, setSelectedOption] = useState(options[0])
-  const selectedReading = items.find((r) => r.name === selectedOption.value)
+  const selectedReading = items?.find((r) => r?.name === selectedOption?.value)
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted || items.length === 0) {
+  if (items.length === 0) {
     return null
   }
 

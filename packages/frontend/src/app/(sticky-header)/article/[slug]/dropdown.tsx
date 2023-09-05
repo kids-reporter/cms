@@ -96,14 +96,19 @@ type DropdownProps = {
   labelForMore?: string
 }
 
-const Dropdown: React.FC<DropdownProps> = function ({
+const Dropdown: React.FC<DropdownProps> = ({
   className,
   options,
   onChange,
   labelForMore = '',
-}) {
+}) => {
   const [isListOpen, setIsListOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState(options?.[0])
+
+  if (!Array.isArray(options)) {
+    return null
+  }
+
   const toggleList = () => {
     if (options.length <= 1) {
       return
@@ -115,11 +120,19 @@ const Dropdown: React.FC<DropdownProps> = function ({
     onChange(option)
     setSelectedOption(option)
   }
-  const optionItem = options.map((option, idx) => (
-    <DropdownOption onClick={() => selectOption(option)} key={`option-${idx}`}>
-      {option.name}
-    </DropdownOption>
-  ))
+  const optionItem = options.map((option, idx) => {
+    if (option?.name) {
+      return (
+        <DropdownOption
+          onClick={() => selectOption(option)}
+          key={'option-' + idx}
+        >
+          {option.name}
+        </DropdownOption>
+      )
+    }
+    return null
+  })
 
   return (
     <Container className={className}>
@@ -134,7 +147,7 @@ const Dropdown: React.FC<DropdownProps> = function ({
           disabled
           readOnly
           placeholder="請選擇"
-          value={selectedOption.name}
+          value={selectedOption?.name}
         />
         {options.length > 1 && (
           <>
