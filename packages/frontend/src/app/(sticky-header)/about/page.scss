@@ -36,4 +36,45 @@ main {
       }
     }
   }
+
+  .subscribe {
+    max-width: 1000px; // TODO: replace 1000px with var
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    padding: 40px 30px 38px 40px;
+    background-color: var(--paletteColor6);
+    border-radius: 30px;
+    padding: 40px 30px 38px 40px;
+    background-image: url(/images/about_CTA_subscribe.svg);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: 340px;
+
+    h3 {
+      color: white;
+      font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
+      font-weight: 700;
+      font-size: 34px;
+      line-height: 160%;
+      letter-spacing: .08em;
+      margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
+    }
+
+    p {
+      max-width: 350px;
+      font-size: 18px;
+      padding-bottom: 40px;
+      letter-spacing: .08em;
+      line-height: 160%;
+    }
+
+    .btn-like {
+      border-radius: 20px;
+      background-color: white;
+      width: fit-content;
+      padding: 8px 18px;
+    }
+  }
 }

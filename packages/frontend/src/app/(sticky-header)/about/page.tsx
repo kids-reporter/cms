@@ -47,12 +47,24 @@ export default function About() {
     </div>
   )
 
+  const subscribe = (
+    <div className="subscribe">
+      <div>
+        <h3>訂閱《少年報導者》</h3>
+        <p>
+          不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
+        </p>
+      </div>
+      <div className="btn-like">歡迎訂閱</div>
+    </div>
+  )
+
   return (
     <main>
       {us}
       {tellYou}
       {news}
-      <div className="subscribe"></div>
+      {subscribe}
       <div className="contribute"></div>
       <div className="mail"></div>
       <AuthorCard title="誰在為你服務" authors={authorsMockup} />
