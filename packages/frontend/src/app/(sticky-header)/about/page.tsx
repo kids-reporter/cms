@@ -1,4 +1,5 @@
 import AuthorCard from '@/app/components/author-card'
+import { SUBSCRIBE_URL } from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
@@ -55,7 +56,21 @@ export default function About() {
           不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
         </p>
       </div>
-      <div className="btn-like">歡迎訂閱</div>
+      <div className="btn-like">
+        <a href={SUBSCRIBE_URL}>歡迎訂閱</a>
+      </div>
+    </div>
+  )
+
+  const mail = (
+    <div className="mail">
+      <div>
+        <h3>報導仔信箱，歡迎來信</h3>
+        <p>
+          如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
+        </p>
+      </div>
+      <div className="btn-like">聯絡信箱 kidsnews@twreporter.org</div>
     </div>
   )
 
@@ -66,7 +81,7 @@ export default function About() {
       {news}
       {subscribe}
       <div className="contribute"></div>
-      <div className="mail"></div>
+      {mail}
       <AuthorCard title="誰在為你服務" authors={authorsMockup} />
       <AuthorCard title="我們的顧問" authors={authorsMockup} />
       <div className="donate"></div>
