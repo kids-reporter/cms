@@ -2,8 +2,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
-// @ts-ignore pkg does not contain ts header file
-import mq from '@twreporter/core/lib/utils/media-query'
+import { mediaQuery } from './utils/media-query'
 
 const Paragraph = styled.div`
   width: 100%;
@@ -15,12 +14,12 @@ const Paragraph = styled.div`
   line-height: 2;
   margin: 0 auto;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     padding-left: 15px;
     padding-right: 15px;
-  `}
+  }
 
-  > div[data-block="true"] {
+  > div[data-block='true'] {
     margin-bottom: 27px;
   }
 `
@@ -56,10 +55,10 @@ const Heading = styled.div`
     font-size: 20px;
   }
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     padding-left: 15px;
     padding-right: 15px;
-  `}
+  }
 `
 
 const List = styled.ol`
