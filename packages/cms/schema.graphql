@@ -151,6 +151,7 @@ type Post {
   authorsJSON: JSON
   heroImage: Photo
   heroCaption: String
+  newsReadingGroup: NewsReadingGroup
   brief: JSON
   content: JSON
   projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
@@ -186,6 +187,7 @@ input PostWhereInput {
   authors: AuthorManyRelationFilter
   heroImage: PhotoWhereInput
   heroCaption: StringFilter
+  newsReadingGroup: NewsReadingGroupWhereInput
   projects: ProjectManyRelationFilter
   tags: TagManyRelationFilter
   relatedPosts: PostManyRelationFilter
@@ -280,6 +282,7 @@ input PostUpdateInput {
   authorsJSON: JSON
   heroImage: PhotoRelateToOneForUpdateInput
   heroCaption: String
+  newsReadingGroup: NewsReadingGroupRelateToOneForUpdateInput
   brief: JSON
   content: JSON
   projects: ProjectRelateToManyForUpdateInput
@@ -309,6 +312,12 @@ input AuthorRelateToManyForUpdateInput {
 input PhotoRelateToOneForUpdateInput {
   create: PhotoCreateInput
   connect: PhotoWhereUniqueInput
+  disconnect: Boolean
+}
+
+input NewsReadingGroupRelateToOneForUpdateInput {
+  create: NewsReadingGroupCreateInput
+  connect: NewsReadingGroupWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -349,6 +358,7 @@ input PostCreateInput {
   authorsJSON: JSON
   heroImage: PhotoRelateToOneForCreateInput
   heroCaption: String
+  newsReadingGroup: NewsReadingGroupRelateToOneForCreateInput
   brief: JSON
   content: JSON
   projects: ProjectRelateToManyForCreateInput
@@ -374,6 +384,11 @@ input AuthorRelateToManyForCreateInput {
 input PhotoRelateToOneForCreateInput {
   create: PhotoCreateInput
   connect: PhotoWhereUniqueInput
+}
+
+input NewsReadingGroupRelateToOneForCreateInput {
+  create: NewsReadingGroupCreateInput
+  connect: NewsReadingGroupWhereUniqueInput
 }
 
 input ProjectRelateToManyForCreateInput {
