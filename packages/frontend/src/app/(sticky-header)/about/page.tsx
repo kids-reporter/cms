@@ -10,8 +10,22 @@ export default function About() {
       <div className="who-we-are">
         <img src={'/images/about_who_we_are.svg'} />
       </div>
-      <div className="tell-you"></div>
-      <div className="news">
+      <div className="pic-group">
+        <span>在這裡，我們想告訴你們：</span>
+        <div className="pics">
+          <img src={'/images/about_tell_pic1.svg'} />
+          <span>重要的議題</span>
+          <img src={'/images/about_tell_pic2.svg'} />
+          <span>多元的社會</span>
+          <img src={'/images/about_tell_pic3.svg'} />
+          <span>國際的動態</span>
+          <img src={'/images/about_tell_pic4.svg'} />
+          <span>豐富的知識</span>
+          <img src={'/images/about_tell_pic5.svg'} />
+          <span>開放的思辨</span>
+        </div>
+      </div>
+      <div className="pic-group">
         <span>在這裡，你們可以這樣看新聞：</span>
         <div className="pics">
           <img src={'/images/about_news_pic1.svg'} />
