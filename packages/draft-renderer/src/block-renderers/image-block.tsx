@@ -130,16 +130,28 @@ const InfoBoxContainer = styled.div<{ $alignment?: string }>`
   figure {
     margin: 0;
   }
-  margin-bottom: 30px;
-  width: fit-content;
 
   ${(props) => {
     switch (props.$alignment) {
-      case 'center': {
-        return `margin-left: auto; margin-right: auto;`
+      case 'left': {
+        return `
+        width: 200px;
+        margin-right: auto;
+        `
       }
       case 'right': {
-        return `margin-left: auto`
+        return `
+        width: 200px;
+        margin-left: auto;
+        `
+      }
+      case 'paragraph-width':
+      default: {
+        return `
+        width: fit-content;
+        margin-left: auto; 
+        margin-right: auto;
+        `
       }
     }
   }}

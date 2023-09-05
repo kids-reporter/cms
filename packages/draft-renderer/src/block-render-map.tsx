@@ -75,22 +75,9 @@ const List = styled.ol`
   }
 `
 
-const Atomic = styled.div`
-  /* hide empty block which immediately follows atomic block */
-  /*
-  & + ${Paragraph} {
-    > div[data-block='true']:first-child {
-      line-height: 0;
-      margin-bottom: 0;
-    }
-  }
-  */
-`
-
 const _blockRenderMap = Immutable.Map({
   atomic: {
     element: 'div',
-    wrapper: <Atomic />,
   },
   'header-two': {
     element: 'h2',
@@ -201,8 +188,20 @@ const HeadingForInfoBox = styled(Heading)`
   margin-bottom: 30px;
 `
 
+const Atomic = styled.div`
+  /* hide last empty block which immediately follows an atomic block */
+  & + ${Paragraph}:last-of-type {
+    line-height: 0;
+    margin-bottom: 0;
+  }
+`
+
 export const blockRenderMapForInfoBox = blockRenderMapForAnnotation.merge(
   Immutable.Map({
+    atomic: {
+      element: 'div',
+      wrapper: <Atomic />,
+    },
     'header-four': {
       element: 'h4',
       wrapper: <HeadingForInfoBox />,
@@ -223,8 +222,8 @@ const dividerStyles = css`
 
 const HeadingForInfoBoxWithHeaderBorder = styled(HeadingForInfoBox)`
   h4 {
-    margin-top: 33px;
-    margin-bottom: 33px;
+    margin-top: 12px;
+    margin-bottom: 12px;
   }
 
   &::before {
