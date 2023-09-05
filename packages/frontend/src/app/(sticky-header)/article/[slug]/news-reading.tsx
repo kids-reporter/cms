@@ -74,3 +74,4 @@ const NewsReading = ({ className, data }: NewsReadingProps) => {
 }
 
 export { NewsReading }
+export default NewsReading
