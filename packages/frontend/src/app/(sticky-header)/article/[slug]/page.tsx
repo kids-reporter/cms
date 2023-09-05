@@ -19,6 +19,7 @@ import {
   GetThemeFromCategory,
 } from '@/app/constants'
 import './page.scss'
+import { NewsReading } from './news-reading'
 
 const heroImageGQL = `
   heroImage {
@@ -49,6 +50,12 @@ const postQueryGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
       title
+      newsReadingGroup {
+        items {
+          name
+          embedCode
+        }
+      }
       brief
       content
       publishedDate
@@ -193,6 +200,9 @@ export default async function PostPage({
               </div>
             </header>
           </div>
+          {post.newsReadingGroup && (
+            <NewsReading data={post.newsReadingGroup} />
+          )}
           <Brief
             content={post.brief}
             authors={orderedAuthorsInBrief}
