@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react'
-// @ts-ignore pkg does not contain ts header file
-import mq from '@twreporter/core/lib/utils/media-query'
 import styled from 'styled-components'
+import { mediaQuery } from '../utils/media-query'
 import { parse } from 'node-html-parser'
 
 export const Block = styled.div`
@@ -117,11 +116,11 @@ const ArticleBodyContainer = styled.div`
   max-width: 700px;
   margin: 0 auto 27px auto;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     width: calc(100vw - 30px);
     margin-left: auto;
     margin-right: auto;
-  `}
+  }
 `
 
 export function EmbeddedCodeInArticleBody({

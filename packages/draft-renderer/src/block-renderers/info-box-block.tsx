@@ -7,16 +7,15 @@ import {
   convertFromRaw,
 } from 'draft-js'
 import React from 'react'
-// @ts-ignore pkg does not contain ts header file
-import mq from '@twreporter/core/lib/utils/media-query'
 import styled, { css } from 'styled-components'
 import {
   blockRenderMapForInfoBox,
   blockRenderMapForInfoBoxWithHeaderBorder,
 } from '../block-render-map'
 import { ImageInInfoBox } from '../block-renderers/image-block'
-import { decorator } from '../entity-decorators/index'
 import { ThemeColorEnum } from '../utils/index'
+import { decorator } from '../entity-decorators/index'
+import { mediaQuery } from '../utils/media-query'
 
 enum InfoBoxTypeEnum {
   newsChargeStation = 'news-charge-station',
@@ -37,9 +36,9 @@ const containerStyles = css`
   border-radius: 30px;
   position: relative;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     padding: 20px;
-  `}
+  }
 `
 
 const NewsChargeStationContainer = styled.div`
@@ -140,11 +139,11 @@ const ArticleBodyContainer = styled.div`
   max-width: 700px;
   margin: 60px auto;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     width: calc(100vw - 30px);
     margin-left: auto;
     margin-right: auto;
-  `}
+  }
 `
 
 const EditorContainer = styled.div`

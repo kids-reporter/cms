@@ -1,5 +1,4 @@
-// @ts-ignore @twreporter/core does not provide ts header file
-import mq from '@twreporter/core/lib/utils/media-query'
+import { mediaQuery } from '../utils/media-query'
 import styled from 'styled-components'
 import { getColorHex } from '../utils/index'
 
@@ -67,24 +66,20 @@ const Caption = styled.figcaption`
     border-style: solid;
   }
 
-  ${mq.tabletAndBelow`
+  ${mediaQuery.smallOnly} {
     position: relative;
     margin-left: auto;
     padding: 15px 15px 15px 0;
     &:after {
       width: calc(100% - 15px);
     }
-  `}
+  }
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     max-width: ${mockup.mobile.caption.width}px;
-  `}
+  }
 
-  ${mq.tabletOnly`
-    max-width: ${mockup.tablet.caption.width}px;
-  `}
-
-  ${mq.desktopAndAbove`
+  ${mediaQuery.mediumAbove} {
     /* clear float */
     clear: both;
 
@@ -94,16 +89,17 @@ const Caption = styled.figcaption`
     &:after {
       width: 100%;
     }
-  `}
+  }
 
-  ${mq.desktopOnly`
+  ${mediaQuery.mediumOnly} {
     width: ${mockup.desktop.caption.width}px;
     padding: 15px 0 15px 0;
-  `}
-  ${mq.hdOnly`
+  }
+
+  ${mediaQuery.largeOnly} {
     width: ${mockup.hd.caption.width}px;
     padding: 25px 0 20px 0;
-  `}
+  }
 `
 
 export default {
