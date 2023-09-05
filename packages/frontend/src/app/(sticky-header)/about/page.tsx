@@ -63,7 +63,7 @@ export default function About() {
   )
 
   const mail = (
-    <div className="mail">
+    <div id="mail" className="mail">
       <div>
         <h3>報導仔信箱，歡迎來信</h3>
         <p>
@@ -82,8 +82,12 @@ export default function About() {
       {subscribe}
       <div className="contribute"></div>
       {mail}
-      <AuthorCard title="誰在為你服務" authors={authorsMockup} />
-      <AuthorCard title="我們的顧問" authors={authorsMockup} />
+      <div id="team">
+        <AuthorCard title="誰在為你服務" authors={authorsMockup} />
+      </div>
+      <div id="consultor">
+        <AuthorCard title="我們的顧問" authors={authorsMockup} />
+      </div>
       <div className="donate"></div>
     </main>
   )
