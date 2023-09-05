@@ -77,6 +77,11 @@ const listConfigurations = list({
       label: '首圖圖說',
       validation: { isRequired: false },
     }),
+    newsReadingGroup: relationship({
+      label: '讀報',
+      ref: 'NewsReadingGroup',
+      many: false,
+    }),
     brief: customFields.richTextEditor({
       label: '前言',
       disabledButtons: [
@@ -100,6 +105,7 @@ const listConfigurations = list({
         richTextEditorButtonNames.h2,
         richTextEditorButtonNames.code,
         richTextEditorButtonNames.codeBlock,
+        richTextEditorButtonNames.newsReading,
       ],
     }),
     projects: relationship({
