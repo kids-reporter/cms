@@ -7,8 +7,8 @@ import { authorsMockup } from '@/app/mockup'
 export default function About() {
   // TODO: fetch stakeholders from cms
 
-  const whoWeAre = (
-    <div className="who-we-are">
+  const us = (
+    <div id="us" className="us">
       <img src={'/images/about_who_we_are.svg'} />
       <span>
         《少年報導者》是由非營利媒體《報導者》孕生出的「孩子」，我們對10～15歲的同學提供深度的新聞報導，每一篇文章都是記者獨立採訪、專家審核把關下完成。我們把每個兒童和少年當成獨立的大人，你們將是改變世界的起點。
@@ -49,7 +49,7 @@ export default function About() {
 
   return (
     <main>
-      {whoWeAre}
+      {us}
       {tellYou}
       {news}
       <div className="subscribe"></div>
