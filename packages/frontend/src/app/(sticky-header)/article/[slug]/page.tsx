@@ -6,11 +6,11 @@ import PublishedDate from './published-date'
 import Category from './category'
 import { Sidebar, MobileSidebar } from './sidebar'
 import Brief, { AuthorGroup } from './brief'
-import Tags from '@/app/components/tags'
 import PostRenderer from './post-renderer'
-import AuthorCard, { Author } from './author-card'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
+import Tags from '@/app/components/tags'
+import AuthorCard, { Author } from '@/app/components/author-card'
 import Divider from '@/app/components/divider'
 import {
   API_URL,
@@ -201,7 +201,7 @@ export default async function PostPage({
           <Divider />
           <PostRenderer post={post} theme={theme} />
           <Tags title={'常用關鍵字'} tags={post.tags} />
-          <AuthorCard authors={orderedAuthors} />
+          <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
         </div>
         <CallToAction />
         <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
