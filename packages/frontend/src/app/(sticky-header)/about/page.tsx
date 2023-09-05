@@ -1,5 +1,10 @@
 import AuthorCard from '@/app/components/author-card'
-import { SUBSCRIBE_URL } from '@/app/constants'
+import {
+  CREDIT_DONATE_URL,
+  DONATE_URL,
+  MAIN_SITE_URL,
+  SUBSCRIBE_URL,
+} from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
@@ -74,6 +79,30 @@ export default function About() {
     </div>
   )
 
+  const mainSite = (
+    <div className="main-site">
+      <img src={'/images/about_go_to_main_site.png'} />
+      <h3>大人通道，了解更多的《報導者》</h3>
+      <p>
+        如果您是家長、老師或是關注台灣媒體環境的大人們，我們邀請您進一步認識《報導者》。《報導者》以及《少年報導者》都是由非營利的報導者文化基金會支持，我們不靠商業廣告，是由讀者直接資助的獨立媒體，屢獲國內、外重要新聞獎項。我們致力開創媒體公共服務的精神，文章皆全文開放免費閱讀。
+      </p>
+      <p>
+        無論針對大人及少年製作的報導，都仰賴大量專業人力製作，需要社會捐款贊助才能完成，希望您能成為製作好新聞的一股力量。報導者文化基金會遵從嚴謹的公益責信原則，每一筆捐款都公布在《報導者》官網，在報導者文化基金會董、監事監督下，依編務實務需求統籌分配於《報導者》及《少年報導者》，您的捐款收據不會註明使用在哪一個平台。
+      </p>
+      <div className="btns">
+        <div className="btn-like">
+          <a href={MAIN_SITE_URL}>報導者官網</a>
+        </div>
+        <div className="btn-like">
+          <a href={DONATE_URL}>贊助報導者</a>
+        </div>
+        <div className="btn-like">
+          <a href={CREDIT_DONATE_URL}>了解捐款徵信</a>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <main>
       {us}
@@ -88,7 +117,7 @@ export default function About() {
       <div id="consultor">
         <AuthorCard title="我們的顧問" authors={authorsMockup} />
       </div>
-      <div className="donate"></div>
+      {mainSite}
     </main>
   )
 }

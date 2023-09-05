@@ -2,6 +2,9 @@ export const CMS_URL = 'https://dev-kids-cms.twreporter.org'
 export const API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'
 
 export const SUBSCRIBE_URL = 'http://eepurl.com/idk8VH'
+export const MAIN_SITE_URL = 'https://www.twreporter.org/'
+export const DONATE_URL = 'https://support.twreporter.org/'
+export const CREDIT_DONATE_URL = 'https://www.twreporter.org/a/credit-donate'
 
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
