@@ -15,6 +15,7 @@ export default function StyledComponentsRegistry({
 
   useServerInsertedHTML(() => {
     const styles = styledComponentsStyleSheet.getStyleElement()
+    // @ts-ignore `@types/styled-components` does not introduce `instance.clearTag` yet.
     styledComponentsStyleSheet.instance.clearTag()
     return <>{styles}</>
   })
