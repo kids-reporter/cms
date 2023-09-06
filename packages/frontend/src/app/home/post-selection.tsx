@@ -32,7 +32,7 @@ export const PostSelection = (props: PostSelectionProp) => {
     <div className="post-selection">
       <img
         className="title-img"
-        src={'/images/featured-post.png'}
+        src={'/images/selected_news.png'}
         alt="精選文章"
       />
       <div className="featured-post-container">

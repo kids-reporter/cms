@@ -1,3 +1,4 @@
+import { MAIN_SITE_URL } from '@/app/constants'
 import './go-to-main-site.scss'
 
 export const GoToMainSite = () => {
@@ -24,11 +25,7 @@ export const GoToMainSite = () => {
           </span>
         </p>
       </div>
-      <a
-        href="https://www.twreporter.org/"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
+      <a href={MAIN_SITE_URL} target="_blank" rel="noreferrer noopener">
         前往報導者
       </a>
     </div>
