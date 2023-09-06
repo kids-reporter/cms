@@ -1,6 +1,7 @@
 import AuthorCard from '@/app/components/author-card'
 import {
   CREDIT_DONATE_URL,
+  CONTRIBUTE_FORM,
   DONATE_URL,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
@@ -67,6 +68,28 @@ export default function About() {
     </div>
   )
 
+  const contribute = (
+    <div className="contribute">
+      <h3>投稿給報導仔，成為小評論員</h3>
+      <p>
+        《少年報導者》是一個開放的公共平台，報導仔希望聽見大家的看法和心聲，歡迎10～15歲的同學投稿給報導仔，針對新聞時事、國家政策、校園生活，或是藝術文化、運動體育，都可以寫下你的觀點、評論，讓報導仔協助你成為我們的評論員。
+      </p>
+      <img src={'/images/about_road.svg'} />
+      <p>
+        投稿都會刊登嗎？ •編輯群和專家會做討論 •如果刊登你會收到通知
+        •不合適刊登的文章不會另行通知
+      </p>
+      <p>
+        刊登有什麼獎勵？ •你會收到微薄稿酬 •你會收到「少年報導者評論員」證書
+      </p>
+      <img src={'/images/about_certification_template.jpg'} />
+      <p>少年報導者評論員證書範例</p>
+      <div className="btn-like">
+        <a href={CONTRIBUTE_FORM}>我要投稿！</a>
+      </div>
+    </div>
+  )
+
   const mail = (
     <div id="mail" className="mail">
       <div>
@@ -109,7 +132,7 @@ export default function About() {
       {tellYou}
       {news}
       {subscribe}
-      <div className="contribute"></div>
+      {contribute}
       {mail}
       <div id="team">
         <AuthorCard title="誰在為你服務" authors={authorsMockup} />
