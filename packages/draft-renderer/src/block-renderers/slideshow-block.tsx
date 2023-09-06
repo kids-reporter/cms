@@ -1,9 +1,8 @@
 import Multimedia from './multimedia'
 import React, { useState, useEffect, useMemo } from 'react'
-// @ts-ignore pkg does not contain ts header file
-import mq from '@twreporter/core/lib/utils/media-query'
 import styled from 'styled-components'
 import { getColorHex } from '../utils/index'
+import { mediaQuery } from '../utils/media-query'
 
 const mockup = {
   mobile: {
@@ -85,41 +84,43 @@ const SlidesSection = styled.div`
   overflow: hidden;
   position: relative;
 
-  ${mq.tabletAndBelow`
+  ${mediaQuery.smallOnly} {
     order: 2;
-  `}
+  }
 
-  ${mq.mobileOnly`
-    padding-bottom: calc(${mockup.mobile.slide.height}/${mockup.mobile.container.width}*100%);
-  `}
+  ${mediaQuery.smallOnly} {
+    padding-bottom: calc(
+      ${mockup.mobile.slide.height} / ${mockup.mobile.container.width}*100%
+    );
+  }
 
-  ${mq.tabletOnly`
-    padding-bottom: calc(${mockup.tablet.slide.height}/${mockup.tablet.container.width}*100%);
-  `}
+  ${mediaQuery.mediumOnly} {
+    padding-bottom: calc(
+      ${mockup.desktop.slide.height} / ${mockup.desktop.container.width}*100%
+    );
+  }
 
-  ${mq.desktopOnly`
-    padding-bottom: calc(${mockup.desktop.slide.height}/${mockup.desktop.container.width}*100%);
-  `}
-
-  ${mq.hdOnly`
-    padding-bottom: calc(${mockup.hd.slide.height}/${mockup.hd.container.width}*100%);
-  `}
+  ${mediaQuery.largeOnly} {
+    padding-bottom: calc(
+      ${mockup.hd.slide.height} / ${mockup.hd.container.width}*100%
+    );
+  }
 `
 
 const PrevNextSection = styled.div`
   margin-top: 20px;
 
-  ${mq.tabletAndBelow`
+  ${mediaQuery.smallOnly} {
     order: 3;
-  `}
+  }
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     margin-left: 25px;
-  `}
+  }
 
-  ${mq.tabletOnly`
+  ${mediaQuery.mediumAbove} {
     margin-left: 47px;
-  `}
+  }
 `
 
 const PrevButton = styled.div`
@@ -134,14 +135,14 @@ const PrevButton = styled.div`
     width: 21px;
   }
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     width: 83px;
     height: 83px;
 
     > svg {
       width: 31px;
     }
-  `}
+  }
 
   &:hover {
     > svg {
@@ -181,23 +182,23 @@ const ImageNumberCircle = styled.div`
     left: 7px;
   }
 
-  ${mq.tabletAndBelow`
+  ${mediaQuery.smallOnly} {
     order: 1;
 
     /* align right */
     margin-left: auto;
     /* 10px is the border-right width of body */
     margin-right: 10px;
-  `}
+  }
 
-  ${mq.desktopAndAbove`
+  ${mediaQuery.mediumAbove} {
     margin-top: 6px;
 
     /* align right */
     margin-left: auto;
-  `}
+  }
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     margin-right: -18px;
     width: 110px;
     height: 110px;
@@ -207,7 +208,7 @@ const ImageNumberCircle = styled.div`
       top: 93px;
       left: 10px;
     }
-  `}
+  }
 `
 
 const ImageNumber = styled.span`
@@ -218,20 +219,20 @@ const ImageNumber = styled.span`
   font-weight: bold;
   line-height: 0.79;
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     top: 35px;
     left: 10px;
-  `}
+  }
 `
 
 const ImageTotal = styled(ImageNumber)`
   top: 46px;
   left: 36px;
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     top: 71px;
     left: 50px;
-  `}
+  }
 `
 
 const Desc = styled(Multimedia.Caption)`
@@ -241,21 +242,21 @@ const Desc = styled(Multimedia.Caption)`
   /* overwrite Multimedia.Caption styles */
   margin-bottom: 0;
 
-  ${mq.tabletAndBelow`
+  ${mediaQuery.smallOnly} {
     order: 4;
     padding-top: 15px;
-  `}
+  }
 
-  ${mq.mobileOnly`
-    width: calc(180/355*100%);
-  `}
+  ${mediaQuery.smallOnly} {
+    width: calc(180 / 355 * 100%);
+  }
 
-  ${mq.desktopAndAbove`
+  ${mediaQuery.mediumAbove} {
     padding-top: 30px;
 
     /* overwrite Multimedia.Caption styles */
     float: none;
-  `}
+  }
 `
 
 const EmptyDesc = styled(Desc)`
@@ -282,63 +283,53 @@ const SlidesFlexBox = styled.div`
     }
   }}
 
-  ${mq.mobileOnly`
-    transform: translateX(${(props: { translateXUint: number }) =>
-      (getTranslateX(mockup.mobile, props.translateXUint) /
-        getContainerWidth(mockup.mobile)) *
-      100}%);
-  `}
+  ${mediaQuery.smallOnly} {
+    transform: translateX(
+      ${(props: { translateXUint: number }) =>
+        (getTranslateX(mockup.mobile, props.translateXUint) /
+          getContainerWidth(mockup.mobile)) *
+        100}%
+    );
+  }
 
-  ${mq.tabletOnly`
-    transform: translateX(${(props: { translateXUint: number }) =>
-      (getTranslateX(mockup.tablet, props.translateXUint) /
-        getContainerWidth(mockup.tablet)) *
-      100}%);
-  `}
+  ${mediaQuery.mediumOnly} {
+    transform: translateX(
+      ${(props: { translateXUint: number }) =>
+        getTranslateX(mockup.desktop, props.translateXUint)}px
+    );
+  }
 
-  ${mq.desktopOnly`
-    transform: translateX(${(props: { translateXUint: number }) =>
-      getTranslateX(mockup.desktop, props.translateXUint)}px);
-  `}
-
-  ${mq.hdOnly`
-    transform: translateX(${(props: { translateXUint: number }) =>
-      getTranslateX(mockup.hd, props.translateXUint)}px);
-  `}
+  ${mediaQuery.largeOnly} {
+    transform: translateX(
+      ${(props: { translateXUint: number }) =>
+        getTranslateX(mockup.hd, props.translateXUint)}px
+    );
+  }
 `
 
 const SlideFlexItem = styled.div`
   height: 100%;
   flex-shrink: 0;
 
-  ${mq.mobileOnly`
-    flex-basis: calc(${getSlideWidth(mockup.mobile)}/${getContainerWidth(
-    mockup.mobile
-  )}*100%);
-    padding-right: calc(${mockup.mobile.slide.paddingRight}/${getContainerWidth(
-    mockup.mobile
-  )}*100%);
-  `}
+  ${mediaQuery.smallOnly} {
+    flex-basis: calc(
+      ${getSlideWidth(mockup.mobile)} / ${getContainerWidth(mockup.mobile)}*100%
+    );
+    padding-right: calc(
+      ${mockup.mobile.slide.paddingRight} /
+        ${getContainerWidth(mockup.mobile)}*100%
+    );
+  }
 
-  ${mq.tabletOnly`
-    flex-basis: calc(${getSlideWidth(mockup.tablet)}/${getContainerWidth(
-    mockup.tablet
-  )}*100%);
-    padding-right: calc(${mockup.tablet.slide.paddingRight}/${getContainerWidth(
-    mockup.tablet
-  )}*100%);
-  `}
-
-
-  ${mq.desktopOnly`
+  ${mediaQuery.mediumOnly} {
     flex-basis: ${getSlideWidth(mockup.desktop)}px;
     padding-right: ${mockup.desktop.slide.paddingRight}px;
-  `}
+  }
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     flex-basis: ${getSlideWidth(mockup.hd)}px;
     padding-right: ${mockup.hd.slide.paddingRight}px;
-  `}
+  }
 `
 
 const SlideMask = styled.div`
@@ -351,49 +342,37 @@ const SlideMask = styled.div`
 const LeftSlideMask = styled(SlideMask)`
   left: 0;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     width: ${(getLeftMaskWidth(mockup.mobile) /
       getContainerWidth(mockup.mobile)) *
-      100}%;
-  `}
+    100}%;
+  }
 
-  ${mq.tabletOnly`
-    width: ${(getLeftMaskWidth(mockup.tablet) /
-      getContainerWidth(mockup.tablet)) *
-      100}%;
-  `}
-
-  ${mq.desktopOnly`
+  ${mediaQuery.mediumOnly} {
     width: ${getLeftMaskWidth(mockup.desktop)}px;
-  `}
+  }
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     width: ${getLeftMaskWidth(mockup.hd)}px;
-  `}
+  }
 `
 
 const RightSlideMask = styled(SlideMask)`
   right: 0;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     width: ${(getRightMaskWidth(mockup.mobile) /
       getContainerWidth(mockup.mobile)) *
-      100}%;
-  `}
+    100}%;
+  }
 
-  ${mq.tabletOnly`
-    width: ${(getRightMaskWidth(mockup.tablet) /
-      getContainerWidth(mockup.tablet)) *
-      100}%;
-  `}
-
-  ${mq.desktopOnly`
+  ${mediaQuery.mediumOnly} {
     width: ${getRightMaskWidth(mockup.desktop)}px;
-  `}
+  }
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     width: ${getRightMaskWidth(mockup.hd)}px;
-  `}
+  }
 `
 
 const SlideshowFlexBox = styled.div`
@@ -414,21 +393,22 @@ const SlideshowFlexBox = styled.div`
   }
 
   width: 100%;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 
-  ${mq.tabletAndBelow`
+  ${mediaQuery.smallOnly} {
     width: 100%;
-  `}
+  }
 
-  ${mq.desktopOnly`
+  ${mediaQuery.mediumOnly} {
     width: ${mockup.desktop.container.width}px;
-  `}
+  }
 
-  ${mq.hdOnly`
+  ${mediaQuery.largeOnly} {
     width: ${mockup.hd.container.width}px;
-  `}
+  }
 `
 
 type DeviceMockup = {
@@ -680,7 +660,6 @@ function PreArrowSvg() {
 }
 
 const ArticleBodyContainer = styled.div`
-  width: fit-content;
   margin: 0 auto 27px auto;
 `
 

@@ -96,12 +96,12 @@ type DropdownProps = {
   labelForMore?: string
 }
 
-const Dropdown: React.FC<DropdownProps> = ({
+const Dropdown = ({
   className,
   options,
   onChange,
   labelForMore = '',
-}) => {
+}: DropdownProps) => {
   const [isListOpen, setIsListOpen] = useState(false)
   const [selectedOption, setSelectedOption] = useState(options?.[0])
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { theme } from '../theme/index'
+import { mediaQuery } from '../utils/media-query'
 
 const Figure = styled.figure`
   width: 100%;
@@ -75,14 +75,14 @@ const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
     margin: 0;
   }
 
-  max-width: 100%;
+  max-width: 72vw;
   margin: 0 auto 27px auto;
 
-  ${theme.breakpoint.sm} {
-    max-width: 72vw;
+  ${mediaQuery.smallOnly} {
+    max-width: 100%;
   }
 
-  ${theme.breakpoint.xl} {
+  ${mediaQuery.largeOnly} {
     max-width: 1000px;
   }
 
@@ -90,13 +90,13 @@ const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
     switch (props.$alignment) {
       case 'paragraph-width':
         return `
-          ${theme.breakpoint.xl} {
+          ${mediaQuery.mediumAbove} {
             max-width: 700px;
           }
         `
       case 'right':
         return `
-          ${theme.breakpoint.xl} {
+          ${mediaQuery.mediumAbove} {
             width: 361px;
             float: right;
             margin: 5px 0px 5px 27px;
@@ -104,7 +104,7 @@ const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
         `
       case 'left':
         return `
-          ${theme.breakpoint.xl} {
+          ${mediaQuery.mediumAbove} {
             width: 361px;
             float: left;
             margin: 5px 27px 5px 0px;
@@ -130,16 +130,28 @@ const InfoBoxContainer = styled.div<{ $alignment?: string }>`
   figure {
     margin: 0;
   }
-  margin-bottom: 30px;
-  width: fit-content;
 
   ${(props) => {
     switch (props.$alignment) {
-      case 'center': {
-        return `margin-left: auto; margin-right: auto;`
+      case 'left': {
+        return `
+        width: 200px;
+        margin-right: auto;
+        `
       }
       case 'right': {
-        return `margin-left: auto`
+        return `
+        width: 200px;
+        margin-left: auto;
+        `
+      }
+      case 'paragraph-width':
+      default: {
+        return `
+        width: fit-content;
+        margin-left: auto; 
+        margin-right: auto;
+        `
       }
     }
   }}

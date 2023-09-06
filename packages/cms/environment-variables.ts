@@ -57,7 +57,7 @@ export default {
       60 * 60 * 24 * 1, // 1 days
   },
   gcs: {
-    origin: GCS_ORIGIN || '',
+    origin: GCS_ORIGIN || 'http://localhost:3000',
   },
   files: {
     baseUrl: FILES_BASE_URL || '/files',

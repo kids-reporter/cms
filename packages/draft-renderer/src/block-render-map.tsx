@@ -2,8 +2,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
-// @ts-ignore pkg does not contain ts header file
-import mq from '@twreporter/core/lib/utils/media-query'
+import { mediaQuery } from './utils/media-query'
 
 const Paragraph = styled.div`
   width: 100%;
@@ -15,12 +14,12 @@ const Paragraph = styled.div`
   line-height: 2;
   margin: 0 auto;
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     padding-left: 15px;
     padding-right: 15px;
-  `}
+  }
 
-  > div[data-block="true"] {
+  > div[data-block='true'] {
     margin-bottom: 27px;
   }
 `
@@ -56,10 +55,10 @@ const Heading = styled.div`
     font-size: 20px;
   }
 
-  ${mq.mobileOnly`
+  ${mediaQuery.smallOnly} {
     padding-left: 15px;
     padding-right: 15px;
-  `}
+  }
 `
 
 const List = styled.ol`
@@ -76,22 +75,9 @@ const List = styled.ol`
   }
 `
 
-const Atomic = styled.div`
-  /* hide empty block which immediately follows atomic block */
-  /*
-  & + ${Paragraph} {
-    > div[data-block='true']:first-child {
-      line-height: 0;
-      margin-bottom: 0;
-    }
-  }
-  */
-`
-
 const _blockRenderMap = Immutable.Map({
   atomic: {
     element: 'div',
-    wrapper: <Atomic />,
   },
   'header-two': {
     element: 'h2',
@@ -202,8 +188,20 @@ const HeadingForInfoBox = styled(Heading)`
   margin-bottom: 30px;
 `
 
+const Atomic = styled.div`
+  /* hide last empty block which immediately follows an atomic block */
+  & + ${Paragraph}:last-of-type {
+    line-height: 0;
+    margin-bottom: 0;
+  }
+`
+
 export const blockRenderMapForInfoBox = blockRenderMapForAnnotation.merge(
   Immutable.Map({
+    atomic: {
+      element: 'div',
+      wrapper: <Atomic />,
+    },
     'header-four': {
       element: 'h4',
       wrapper: <HeadingForInfoBox />,
@@ -224,8 +222,8 @@ const dividerStyles = css`
 
 const HeadingForInfoBoxWithHeaderBorder = styled(HeadingForInfoBox)`
   h4 {
-    margin-top: 33px;
-    margin-bottom: 33px;
+    margin-top: 12px;
+    margin-bottom: 12px;
   }
 
   &::before {

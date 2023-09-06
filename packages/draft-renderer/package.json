@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-renderer",
-  "version": "0.4.16",
+  "version": "0.4.18",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -23,7 +23,6 @@
   "license": "MIT",
   "dependencies": {
     "@readr-media/react-image": "1.6.0",
-    "@twreporter/core": "^1.10.0",
     "babel-loader": "^8.2.5",
     "body-scroll-lock": "3.1.5",
     "html-webpack-plugin": "^5.5.0",
