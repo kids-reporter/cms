@@ -1,10 +1,12 @@
 import Tags from '@/app/components/tags'
+import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
+import { Theme } from '@/app/constants'
 import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 import './page.scss'
 
 // TODO: remove mockup
-import { MOCKUP_TAGS, topicMockup } from '@/app/mockup'
+import { MOCKUP_TAGS, topicMockup, postMockupsMore } from '@/app/mockup'
 
 const titleLengthLimit = 30
 const descLengthLimit = 110
@@ -15,7 +17,29 @@ const moreComponent = (
   </div>
 )
 
+const TopicCard = (props: any) => {
+  const topic = props.topic
+  return (
+    <a href={topic.url}>
+      <div className="topic-container">
+        <img src={topic.image} />
+        <div className="topic-info">
+          <p>{ShortenParagraph(topic.title, titleLengthLimit) ?? ''}</p>
+          <p>{ShortenParagraph(topic.brief, descLengthLimit) ?? ''}</p>
+          <div className="bottom">
+            <p>{GetFormattedDate(topic.lastUpdateDate) ?? ''} 最後更新</p>
+            {moreComponent}
+          </div>
+        </div>
+      </div>
+    </a>
+  )
+}
+
 export default function Topic() {
+  // TODO: fetch data
+  const featuredTopic = topicMockup[0]
+  const featuredTopics = postMockupsMore
   const topics = topicMockup
 
   return (
@@ -23,30 +47,13 @@ export default function Topic() {
       <div className="content">
         <img src={'/images/topic_pic.svg'} />
         <Tags tags={MOCKUP_TAGS} />
-        <div className="topic-summary"></div>
+        <div className="topic-summary">
+          <TopicCard topic={featuredTopic} />
+          <PostSlider posts={featuredTopics} sliderTheme={Theme.BLUE} />
+        </div>
         <div className="topic-list">
           {topics.map((topic, index) => {
-            return (
-              <a key={`topic-${index}`} href={topic.url}>
-                <div className="topic-container">
-                  <img src={topic.image} />
-                  <div className="topic-info">
-                    <p>
-                      {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
-                    </p>
-                    <p>
-                      {ShortenParagraph(topic.brief, descLengthLimit) ?? ''}
-                    </p>
-                    <div className="bottom">
-                      <p>
-                        {GetFormattedDate(topic.lastUpdateDate) ?? ''} 最後更新
-                      </p>
-                      {moreComponent}
-                    </div>
-                  </div>
-                </div>
-              </a>
-            )
+            return <TopicCard key={`topic-card-${index}`} topic={topic} />
           })}
         </div>
         <Pagination pageNum={10} />
