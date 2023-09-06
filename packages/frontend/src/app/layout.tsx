@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import BackToTop from '@/app/components/back-to-top'
 import Footer from '@/app/components/footer'
+import StyledComponentsRegistry from './registry'
 import './globals.scss'
 
 export const metadata: Metadata = {
@@ -16,11 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>
-        {children}
-        <BackToTop />
-        <Footer />
-      </body>
+      <StyledComponentsRegistry>
+        <body>
+          {children}
+          <BackToTop />
+          <Footer />
+        </body>
+      </StyledComponentsRegistry>
     </html>
   )
 }
