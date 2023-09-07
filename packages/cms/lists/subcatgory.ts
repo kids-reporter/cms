@@ -18,6 +18,10 @@ const listConfigurations = list({
       label: '次類別中文名稱',
       validation: { isRequired: true },
     }),
+    name: text({
+      label: '次類別中文名稱',
+      validation: { isRequired: true },
+    }),
     nameForCMS: text({
       isIndexed: 'unique',
       label: '次類別中文名稱（使用於 CMS）',
