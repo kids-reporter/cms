@@ -100,9 +100,9 @@ model Project {
   slug          String     @unique @default("")
   title         String     @default("")
   subtitle      String     @default("")
-  state         String?    @default("draft")
-  introduction  Json?
+  status        String?    @default("draft")
   publishedDate DateTime?
+  content       Json?
   heroImage     Photo?     @relation("Project_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?       @map("heroImage")
   relatedPosts  Post[]     @relation("Post_projects")
@@ -115,7 +115,7 @@ model Project {
   createdAt     DateTime?  @default(now())
   updatedAt     DateTime?  @updatedAt
 
-  @@index([state])
+  @@index([status])
   @@index([publishedDate])
   @@index([heroImageId])
   @@index([ogImageId])
@@ -125,6 +125,7 @@ model Category {
   id            Int           @id @default(autoincrement())
   slug          String        @unique @default("")
   title         String        @unique @default("")
+  name          String        @unique @default("")
   status        String?
   subcategories Subcategory[] @relation("Subcategory_category")
   projects      Project[]     @relation("Category_projects")
@@ -145,6 +146,7 @@ model Subcategory {
   id               Int              @id @default(autoincrement())
   slug             String           @unique @default("")
   title            String           @default("")
+  name             String           @default("")
   nameForCMS       String           @unique @default("")
   status           String?
   category         Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
