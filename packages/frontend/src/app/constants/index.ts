@@ -6,6 +6,7 @@ export const CONTRIBUTE_FORM = 'https://forms.gle/7Yh4iPjfq92NDaSm9'
 export const MAIN_SITE_URL = 'https://www.twreporter.org/'
 export const DONATE_URL = 'https://support.twreporter.org/'
 export const CREDIT_DONATE_URL = 'https://www.twreporter.org/a/credit-donate'
+export const EMAIL = 'kidsnews@twreporter.org'
 
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 

@@ -3,6 +3,7 @@ import {
   CREDIT_DONATE_URL,
   CONTRIBUTE_FORM,
   DONATE_URL,
+  EMAIL,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
 } from '@/app/constants'
@@ -122,7 +123,11 @@ export default function About() {
           如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
         </p>
       </div>
-      <div className="btn-like">聯絡信箱 kidsnews@twreporter.org</div>
+      <span>
+        聯絡信箱
+        <br />
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </span>
     </div>
   )
 
