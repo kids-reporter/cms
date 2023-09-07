@@ -17,6 +17,7 @@ const moreComponent = (
   </div>
 )
 
+// TODO: improve '國內專題' logic
 const TopicCard = (props: any) => {
   const topic = props.topic
   return (
@@ -24,6 +25,13 @@ const TopicCard = (props: any) => {
       <div className="topic-container">
         <img src={topic.image} />
         <div className="topic-info">
+          <img
+            src={
+              topic.type === '國內專題'
+                ? '/images/topic-local.png'
+                : '/images/topic-international.png'
+            }
+          />
           <p>{ShortenParagraph(topic.title, titleLengthLimit) ?? ''}</p>
           <p>{ShortenParagraph(topic.brief, descLengthLimit) ?? ''}</p>
           <div className="bottom">
