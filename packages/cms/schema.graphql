@@ -685,6 +685,7 @@ type Category {
   id: ID!
   slug: String
   title: String
+  name: String
   status: String
   subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
   subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
@@ -703,6 +704,7 @@ input CategoryWhereUniqueInput {
   id: ID
   slug: String
   title: String
+  name: String
 }
 
 input CategoryWhereInput {
@@ -712,6 +714,7 @@ input CategoryWhereInput {
   id: IDFilter
   slug: StringFilter
   title: StringFilter
+  name: StringFilter
   status: StringNullableFilter
   subcategories: SubcategoryManyRelationFilter
   projects: ProjectManyRelationFilter
@@ -733,6 +736,7 @@ input CategoryOrderByInput {
   id: OrderDirection
   slug: OrderDirection
   title: OrderDirection
+  name: OrderDirection
   status: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
@@ -743,6 +747,7 @@ input CategoryOrderByInput {
 input CategoryUpdateInput {
   slug: String
   title: String
+  name: String
   status: String
   subcategories: SubcategoryRelateToManyForUpdateInput
   projects: ProjectRelateToManyForUpdateInput
@@ -769,6 +774,7 @@ input CategoryUpdateArgs {
 input CategoryCreateInput {
   slug: String
   title: String
+  name: String
   status: String
   subcategories: SubcategoryRelateToManyForCreateInput
   projects: ProjectRelateToManyForCreateInput
@@ -789,6 +795,7 @@ type Subcategory {
   id: ID!
   slug: String
   title: String
+  name: String
   nameForCMS: String
   status: String
   category: Category
@@ -812,6 +819,7 @@ input SubcategoryWhereInput {
   id: IDFilter
   slug: StringFilter
   title: StringFilter
+  name: StringFilter
   nameForCMS: StringFilter
   status: StringNullableFilter
   category: CategoryWhereInput
@@ -824,6 +832,7 @@ input SubcategoryOrderByInput {
   id: OrderDirection
   slug: OrderDirection
   title: OrderDirection
+  name: OrderDirection
   nameForCMS: OrderDirection
   status: OrderDirection
   createdAt: OrderDirection
@@ -833,6 +842,7 @@ input SubcategoryOrderByInput {
 input SubcategoryUpdateInput {
   slug: String
   title: String
+  name: String
   nameForCMS: String
   status: String
   category: CategoryRelateToOneForUpdateInput
@@ -855,6 +865,7 @@ input SubcategoryUpdateArgs {
 input SubcategoryCreateInput {
   slug: String
   title: String
+  name: String
   nameForCMS: String
   status: String
   category: CategoryRelateToOneForCreateInput

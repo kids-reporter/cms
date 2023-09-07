@@ -125,6 +125,7 @@ model Category {
   id            Int           @id @default(autoincrement())
   slug          String        @unique @default("")
   title         String        @unique @default("")
+  name          String        @unique @default("")
   status        String?
   subcategories Subcategory[] @relation("Subcategory_category")
   projects      Project[]     @relation("Category_projects")
@@ -145,6 +146,7 @@ model Subcategory {
   id               Int              @id @default(autoincrement())
   slug             String           @unique @default("")
   title            String           @default("")
+  name             String           @default("")
   nameForCMS       String           @unique @default("")
   status           String?
   category         Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
