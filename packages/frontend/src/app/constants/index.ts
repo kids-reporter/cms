@@ -1,5 +1,6 @@
 export const CMS_URL = 'https://dev-kids-cms.twreporter.org'
-export const API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+// export const API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+export const API_URL = 'http://localhost:3000/api/graphql'
 
 export const SUBSCRIBE_URL = 'http://eepurl.com/idk8VH'
 export const CONTRIBUTE_FORM = 'https://forms.gle/7Yh4iPjfq92NDaSm9'
