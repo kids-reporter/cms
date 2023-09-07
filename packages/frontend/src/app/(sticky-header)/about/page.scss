@@ -5,6 +5,24 @@ main {
   align-items: center;
   gap: 40px;
 
+  span.title {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1.08px;
+  }
+
+  h3 {
+    color: white;
+    font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 160%;
+    letter-spacing: .08em;
+    margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
+  }
+
   .us {
     max-width: 700px;
     display: flex;
@@ -20,14 +38,6 @@ main {
       letter-spacing: 0.9px;
       line-height: 36px;
     }
-  }
-
-  span.title {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 1.08px;
   }
 
   .tell-you {
@@ -75,24 +85,13 @@ main {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    padding: 40px 30px 38px 40px;
+    padding: 30px 50px 30px 50px;
     background-color: var(--paletteColor6);
     border-radius: 30px;
-    padding: 40px 30px 38px 40px;
     background-image: url(/images/about_CTA_subscribe.svg);
     background-position: bottom right;
     background-repeat: no-repeat;
-    background-size: 340px;
-
-    h3 {
-      color: white;
-      font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
-      font-weight: 700;
-      font-size: 34px;
-      line-height: 160%;
-      letter-spacing: .08em;
-      margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
-    }
+    background-size: 340px 300px;
 
     p {
       max-width: 350px;
@@ -121,22 +120,22 @@ main {
     background-color: var(--paletteColor1);
     border-radius: 30px;
 
-    h3 {
-      color: white;
-      font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
-      font-weight: 700;
-      font-size: 34px;
-      line-height: 160%;
-      letter-spacing: .08em;
-      margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
-    }
-
     p {
-      max-width: 350px;
+      max-width: 600px;
       font-size: 18px;
       padding-bottom: 40px;
       letter-spacing: .08em;
-      line-height: 160%;
+      line-height: 36px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .road {
+      max-width: 700px;
+    }
+
+    .certification {
+      max-width: 820px;
     }
 
     .btn-like {
@@ -162,16 +161,6 @@ main {
     background-repeat: no-repeat;
     background-size: 340px;
 
-    h3 {
-      color: white;
-      font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
-      font-weight: 700;
-      font-size: 34px;
-      line-height: 160%;
-      letter-spacing: .08em;
-      margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
-    }
-
     p {
       max-width: 350px;
       font-size: 18px;
@@ -190,28 +179,22 @@ main {
 
   .main-site {
     max-width: 1000px; // TODO: replace 1000px with var
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     padding: 40px 30px 38px 40px;
     background-color: var(--paletteColor6);
     border-radius: 30px;
     padding: 40px 30px 38px 40px;
 
-    h3 {
-      color: white;
-      font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
-      font-weight: 700;
-      font-size: 34px;
-      line-height: 160%;
-      letter-spacing: .08em;
-      margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
+    img {
+      margin-bottom: 40px;
     }
 
     p {
-      max-width: 350px;
+      max-width: 600px;
       font-size: 18px;
       padding-bottom: 40px;
       letter-spacing: .08em;
@@ -219,17 +202,19 @@ main {
     }
 
     .btns {
+      max-width: 600px;
+      width: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
 
-    .btn-like {
-      border-radius: 20px;
-      background-color: white;
-      width: fit-content;
-      padding: 8px 18px;
-    }
+      .btn-like {
+        border-radius: 20px;
+        background-color: white;
+        width: fit-content;
+        padding: 8px 18px;
+      }
     }
   }
 }

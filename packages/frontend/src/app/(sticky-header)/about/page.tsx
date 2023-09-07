@@ -80,7 +80,7 @@ export default function About() {
       <p>
         《少年報導者》是一個開放的公共平台，報導仔希望聽見大家的看法和心聲，歡迎10～15歲的同學投稿給報導仔，針對新聞時事、國家政策、校園生活，或是藝術文化、運動體育，都可以寫下你的觀點、評論，讓報導仔協助你成為我們的評論員。
       </p>
-      <img src={'/images/about_road.svg'} />
+      <img className="road" src={'/images/about_road.svg'} />
       <p>
         投稿都會刊登嗎？ •編輯群和專家會做討論 •如果刊登你會收到通知
         •不合適刊登的文章不會另行通知
@@ -88,7 +88,10 @@ export default function About() {
       <p>
         刊登有什麼獎勵？ •你會收到微薄稿酬 •你會收到「少年報導者評論員」證書
       </p>
-      <img src={'/images/about_certification_template.jpg'} />
+      <img
+        className="certification"
+        src={'/images/about_certification_template.jpg'}
+      />
       <p>少年報導者評論員證書範例</p>
       <div className="btn-like">
         <a href={CONTRIBUTE_FORM}>我要投稿！</a>
