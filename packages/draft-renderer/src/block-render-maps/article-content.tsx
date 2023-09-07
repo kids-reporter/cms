@@ -8,7 +8,7 @@ export const Paragraph = styled.div`
   width: 100%;
   max-width: 700px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   color: #3a4f66;
   letter-spacing: 0.9px;
   line-height: 2;
