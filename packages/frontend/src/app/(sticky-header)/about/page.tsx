@@ -11,6 +11,14 @@ import './page.scss'
 // TODO: remove mockup
 import { authorsMockup } from '@/app/mockup'
 
+const tellYouItems = [
+  { image: '/images/about_tell_pic1.svg', desc: '重要的議題' },
+  { image: '/images/about_tell_pic2.svg', desc: '多元的社會' },
+  { image: '/images/about_tell_pic3.svg', desc: '國際的動態' },
+  { image: '/images/about_tell_pic4.svg', desc: '豐富的知識' },
+  { image: '/images/about_tell_pic5.svg', desc: '開放的思辨' },
+]
+
 export default function About() {
   // TODO: fetch stakeholders from cms
 
@@ -24,26 +32,24 @@ export default function About() {
   )
 
   const tellYou = (
-    <div className="pic-group">
-      <span>在這裡，我們想告訴你們：</span>
+    <div className="tell-you">
+      <span className="title">在這裡，我們想告訴你們：</span>
       <div className="pics">
-        <img src={'/images/about_tell_pic1.svg'} />
-        <span>重要的議題</span>
-        <img src={'/images/about_tell_pic2.svg'} />
-        <span>多元的社會</span>
-        <img src={'/images/about_tell_pic3.svg'} />
-        <span>國際的動態</span>
-        <img src={'/images/about_tell_pic4.svg'} />
-        <span>豐富的知識</span>
-        <img src={'/images/about_tell_pic5.svg'} />
-        <span>開放的思辨</span>
+        {tellYouItems.map((item, index) => {
+          return (
+            <div key={`tell-you-${index}`} className="tell-you-item">
+              <img src={item.image} />
+              <p>{item.desc}</p>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
 
   const news = (
-    <div className="pic-group">
-      <span>在這裡，你們可以這樣看新聞：</span>
+    <div className="news">
+      <span className="title">在這裡，你們可以這樣看新聞：</span>
       <div className="pics">
         <img src={'/images/about_news_pic1.svg'} />
         <img src={'/images/about_news_pic2.svg'} />

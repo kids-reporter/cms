@@ -22,17 +22,38 @@ main {
     }
   }
 
-  .pic-group {
+  span.title {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1.08px;
+  }
+
+  .tell-you {
+    max-width: 840px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 40px;
 
-    span {
-      margin-top: 40px;
-      margin-bottom: 40px;
+    .pics {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 40px;
     }
+  }
+
+  .news {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
 
     .pics {
       display: flex;
@@ -41,10 +62,10 @@ main {
       align-items: center;
       flex-wrap: wrap;
       gap: 40px;
+    }
 
-      img {
-        width: 340px;
-      }
+    img {
+      width: 340px;
     }
   }
 
@@ -210,5 +231,22 @@ main {
       padding: 8px 18px;
     }
     }
+  }
+}
+
+.tell-you-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 200px;
+  }
+
+  p {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--paletteColor4,#232323);
+    letter-spacing: 1.08px;
   }
 }
