@@ -1,4 +1,5 @@
 import React from 'react'
+import blockRenderMaps from './block-render-maps/index'
 import {
   Editor,
   EditorState,
@@ -6,10 +7,6 @@ import {
   convertFromRaw,
 } from 'draft-js'
 import { atomicBlockRenderer } from './block-renderer-fn'
-import {
-  blockRenderMap,
-  blockRenderMapForIntroduction,
-} from './block-render-map'
 import { decorator } from './entity-decorators/index'
 import { ThemeColorEnum } from './utils/index'
 import { ThemeProvider } from 'styled-components'
@@ -39,7 +36,7 @@ function DraftRenderer({
     >
       <Editor
         editorState={editorState}
-        blockRenderMap={blockRenderMap}
+        blockRenderMap={blockRenderMaps.content}
         blockRendererFn={blockRendererFn}
         readOnly
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -66,7 +63,32 @@ function ArticleIntroductionDraftRenderer({
     >
       <Editor
         editorState={editorState}
-        blockRenderMap={blockRenderMapForIntroduction}
+        blockRenderMap={blockRenderMaps.brief}
+        readOnly
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onChange={() => {}}
+      />
+    </ThemeProvider>
+  )
+}
+
+function ProjectContentDraftRenderer({
+  rawContentState,
+  themeColor = ThemeColorEnum.BLUE,
+}: DraftRendererProps) {
+  const contentState = convertFromRaw(rawContentState)
+  const editorState = EditorState.createWithContent(contentState, decorator)
+
+  return (
+    <ThemeProvider
+      theme={{
+        themeColor,
+      }}
+    >
+      <Editor
+        editorState={editorState}
+        blockRenderMap={blockRenderMaps.projectContent}
+        blockRendererFn={blockRendererFn}
         readOnly
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onChange={() => {}}
@@ -79,4 +101,5 @@ export {
   DraftRenderer,
   ArticleBodyDraftRenderer,
   ArticleIntroductionDraftRenderer,
+  ProjectContentDraftRenderer,
 }
