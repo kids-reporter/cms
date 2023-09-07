@@ -49,7 +49,11 @@ export default function Topic() {
         <Tags tags={MOCKUP_TAGS} />
         <div className="topic-summary">
           <TopicCard topic={featuredTopic} />
-          <PostSlider posts={featuredTopics} sliderTheme={Theme.BLUE} />
+          <PostSlider
+            posts={featuredTopics}
+            sliderTheme={Theme.BLUE}
+            showDesc={false}
+          />
         </div>
         <div className="topic-list">
           {topics.map((topic, index) => {
