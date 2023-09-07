@@ -32,8 +32,12 @@ const TopicCard = (props: any) => {
                 : '/images/topic-international.png'
             }
           />
-          <p>{ShortenParagraph(topic.title, titleLengthLimit) ?? ''}</p>
-          <p>{ShortenParagraph(topic.brief, descLengthLimit) ?? ''}</p>
+          <p className="title">
+            {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
+          </p>
+          <p className="desc">
+            {ShortenParagraph(topic.brief, descLengthLimit) ?? ''}
+          </p>
           <div className="bottom">
             <p>{GetFormattedDate(topic.lastUpdateDate) ?? ''} 最後更新</p>
             {moreComponent}
