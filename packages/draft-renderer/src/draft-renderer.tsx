@@ -72,8 +72,34 @@ function ArticleIntroductionDraftRenderer({
   )
 }
 
+function ProjectContentDraftRenderer({
+  rawContentState,
+  themeColor = ThemeColorEnum.BLUE,
+}: DraftRendererProps) {
+  const contentState = convertFromRaw(rawContentState)
+  const editorState = EditorState.createWithContent(contentState, decorator)
+
+  return (
+    <ThemeProvider
+      theme={{
+        themeColor,
+      }}
+    >
+      <Editor
+        editorState={editorState}
+        blockRenderMap={blockRenderMaps.projectContent}
+        blockRendererFn={blockRendererFn}
+        readOnly
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onChange={() => {}}
+      />
+    </ThemeProvider>
+  )
+}
+
 export {
   DraftRenderer,
   ArticleBodyDraftRenderer,
   ArticleIntroductionDraftRenderer,
+  ProjectContentDraftRenderer,
 }
