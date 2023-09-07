@@ -566,9 +566,9 @@ type Project {
   slug: String
   title: String
   subtitle: String
-  state: String
-  introduction: JSON
+  status: String
   publishedDate: DateTime
+  content: JSON
   heroImage: Photo
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
@@ -596,7 +596,7 @@ input ProjectWhereInput {
   slug: StringFilter
   title: StringFilter
   subtitle: StringFilter
-  state: StringNullableFilter
+  status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   heroImage: PhotoWhereInput
   relatedPosts: PostManyRelationFilter
@@ -620,7 +620,7 @@ input ProjectOrderByInput {
   slug: OrderDirection
   title: OrderDirection
   subtitle: OrderDirection
-  state: OrderDirection
+  status: OrderDirection
   publishedDate: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
@@ -632,9 +632,9 @@ input ProjectUpdateInput {
   slug: String
   title: String
   subtitle: String
-  state: String
-  introduction: JSON
+  status: String
   publishedDate: DateTime
+  content: JSON
   heroImage: PhotoRelateToOneForUpdateInput
   relatedPosts: PostRelateToManyForUpdateInput
   categories: CategoryRelateToManyForUpdateInput
@@ -662,9 +662,9 @@ input ProjectCreateInput {
   slug: String
   title: String
   subtitle: String
-  state: String
-  introduction: JSON
+  status: String
   publishedDate: DateTime
+  content: JSON
   heroImage: PhotoRelateToOneForCreateInput
   relatedPosts: PostRelateToManyForCreateInput
   categories: CategoryRelateToManyForCreateInput

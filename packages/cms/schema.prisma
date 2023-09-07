@@ -100,9 +100,9 @@ model Project {
   slug          String     @unique @default("")
   title         String     @default("")
   subtitle      String     @default("")
-  state         String?    @default("draft")
-  introduction  Json?
+  status        String?    @default("draft")
   publishedDate DateTime?
+  content       Json?
   heroImage     Photo?     @relation("Project_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?       @map("heroImage")
   relatedPosts  Post[]     @relation("Post_projects")
@@ -115,7 +115,7 @@ model Project {
   createdAt     DateTime?  @default(now())
   updatedAt     DateTime?  @updatedAt
 
-  @@index([state])
+  @@index([status])
   @@index([publishedDate])
   @@index([heroImageId])
   @@index([ogImageId])
