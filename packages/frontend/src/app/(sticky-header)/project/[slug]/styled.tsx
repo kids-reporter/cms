@@ -18,14 +18,12 @@ const _DownButton = ({ className }: { className?: string }) => {
           d="M58.4962 29.9981C58.4962 45.7372 45.7372 58.4962 29.9981 58.4962C14.259 58.4962 1.5 45.7372 1.5 29.9981C1.5 14.259 14.259 1.5 29.9981 1.5C45.7372 1.5 58.4962 14.259 58.4962 29.9981Z"
           fill="white"
           stroke="#27B5F7"
-          stroke-width="3"
+          strokeWidth="3"
         ></path>
         <path
           d="M44 26L29.9944 40L16 26"
           stroke="#27B5F7"
-          stroke-width="4"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="4"
         ></path>
       </g>
     </svg>
