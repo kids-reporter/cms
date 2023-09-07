@@ -64,7 +64,7 @@ export default async function Staff({ params }: { params: { id: string } }) {
     : DEFAULT_AVATAR
 
   return (
-    <main>
+    <main className="container">
       <div className="info">
         <div className="avatar">
           <img src={avatarURL} alt={author.name} />
