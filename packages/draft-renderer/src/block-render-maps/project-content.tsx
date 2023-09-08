@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
 import {
+  Atomic,
   Paragraph as _Paragraph,
   List,
   Heading as _Heading,
@@ -19,7 +20,8 @@ export const Heading = styled(_Heading)`
 
 const _blockRenderMap = Immutable.Map({
   atomic: {
-    element: 'div',
+    element: 'figure',
+    wrapper: <Atomic />,
   },
   'header-two': {
     element: 'h2',

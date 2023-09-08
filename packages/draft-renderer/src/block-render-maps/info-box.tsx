@@ -23,6 +23,11 @@ const ParagraphForInfoBox = styled(Paragraph)`
 `
 
 const Atomic = styled.div`
+  /* reset figure default styles */
+  figure {
+    margin: 0;
+  }
+
   /* hide last empty block which immediately follows an atomic block */
   & + ${Paragraph}:last-of-type {
     line-height: 0;
