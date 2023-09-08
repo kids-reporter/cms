@@ -67,11 +67,13 @@ export default function Topic() {
             showDesc={false}
           />
         </div>
-        <div className="topic-list">
-          {topics.map((topic, index) => {
-            return <TopicCard key={`topic-card-${index}`} topic={topic} />
-          })}
-        </div>
+        {topics?.length > 0 && (
+          <div className="topic-list">
+            {topics.map((topic, index) => {
+              return <TopicCard key={`topic-card-${index}`} topic={topic} />
+            })}
+          </div>
+        )}
         <Pagination pageNum={10} />
       </div>
     </main>
