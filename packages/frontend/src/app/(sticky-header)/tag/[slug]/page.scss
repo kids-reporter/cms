@@ -16,40 +16,14 @@ main {
     background: #fff;
     gap: 5px;
 
-    .avatar {
-      width: 180px;
-      height: 180px;
-      border-radius: 80px;
-      overflow: hidden;
-      margin: 0 auto 6px;
-      object-fit: cover;
-
-      img {
-        width: 180px;
-        height: 180px;
-        object-fit: cover;
-      }
-    }
-
     h1 {
       text-align: center;
       margin: 12px 0 35px;
-      font-size: 22px;
+      font-size: 30px;
       line-height: 160%;
       letter-spacing: .08em;
       color: #232323;
       font-weight: 700;
-    }
-
-    p {
-      text-align: center;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 18px;
-      letter-spacing: .05em;
-      color: #232323;
-      line-height: 200%;
-      white-space: pre-wrap;
     }
   }
 

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
+import Pagination from '@/app/components/pagination'
 import { API_URL } from '@/app/constants'
 
 // TODO: remove mockup
@@ -11,12 +12,25 @@ import './page.scss'
 const tagQueryGQL = `
   query($where: TagWhereUniqueInput!) {
     tag(where: $where) {
+      posts {
+        slug
+        title
+        ogImage {
+          resized {
+            small
+          }
+        }
+        ogDescription
+        subSubcategories {
+          name
+        }
+      }
       name
     }
   }
 `
 
-export default async function Staff({ params }: { params: { slug: string } }) {
+export default async function Tag({ params }: { params: { slug: string } }) {
   let response
   try {
     response = params?.slug
@@ -34,27 +48,27 @@ export default async function Staff({ params }: { params: { slug: string } }) {
     notFound()
   }
 
-  const tagName = response?.data?.data?.name
-  const posts = response?.data?.data?.posts
-  if (!posts) {
+  const tag = response?.data?.data?.tag
+  if (!tag) {
     notFound()
   }
 
-  //const tagName = params.slug
-  //const posts = postMockupsMore
+  const tagName = tag.name
+  const posts = postMockupsMore // tag.posts
 
   return (
-    posts && (
-      <main>
-        <div className="info">
-          <h1>#{tagName}</h1>
-        </div>
+    <main>
+      <div className="info">
+        <h1>#{tagName}</h1>
+      </div>
+      {posts?.length > 0 && (
         <div className="post-list">
-          {postMockupsMore.map((post, index) => {
+          {posts.map((post, index) => {
             return <PostCard key={`author-post-card-${index}`} post={post} />
           })}
         </div>
-      </main>
-    )
+      )}
+      <Pagination pageNum={10} />
+    </main>
   )
 }
