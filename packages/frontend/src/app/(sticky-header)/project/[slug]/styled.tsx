@@ -13,7 +13,7 @@ const _DownButton = ({ className }: { className?: string }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1717_3084)">
+      <g>
         <path
           d="M58.4962 29.9981C58.4962 45.7372 45.7372 58.4962 29.9981 58.4962C14.259 58.4962 1.5 45.7372 1.5 29.9981C1.5 14.259 14.259 1.5 29.9981 1.5C45.7372 1.5 58.4962 14.259 58.4962 29.9981Z"
           fill="white"
@@ -30,15 +30,16 @@ const _DownButton = ({ className }: { className?: string }) => {
   )
 }
 
+export const DownButton = styled(_DownButton)`
+  cursor: pointer;
+`
+
 export const Title = styled.h1`
   max-width: 750px;
   font-weight: 700;
   text-align: center;
   text-shadow: 0 2px 10px #00537a;
   color: #fff;
-
-  /* horizontal and vertical center */
-  margin: auto;
 
   ${mediaQuery.mediumAbove} {
     font-size: 42px;
@@ -78,15 +79,22 @@ export const BackgroundImage = styled.div<{ $imageEntity: Photo }>`
   background-size: cover;
   background-position: center;
 
-  /* make children easily align center*/
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
+  /* make children align center*/
+  position: relative;
 
-export const DownButton = styled(_DownButton)`
-  margin-bottom: 70px;
-  cursor: pointer;
+  ${Title} {
+    /* horizontal and vertical center */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  ${DownButton} {
+    position: absolute;
+    left: 50%;
+    bottom: 70px;
+  }
 `
 
 export const PublishedDate = styled.div`
