@@ -180,7 +180,7 @@ export default async function PostPage({
 
   return (
     post && (
-      <main>
+      <main className="container">
         <div className={`post theme-${theme}`}>
           <Sidebar />
           <MobileSidebar />

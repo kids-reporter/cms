@@ -60,7 +60,7 @@ export default async function SubCategory({
   }
 
   return (
-    <main>
+    <main className="container">
       <div className="content">
         <img src={'/images/category_news.svg'} />
         <Tags tags={MOCKUP_TAGS} />

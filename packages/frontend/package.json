@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@kids-reporter/draft-renderer": "^0.4.19",
+    "@twreporter/errors": "^1.1.2",
     "@types/draft-js": "^0.11.10",
     "@types/node": "20.4.1",
     "@types/react": "18.2.18",

@@ -4,6 +4,7 @@ import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 import './post-card.scss'
 
 export type PostCardProp = {
+  className?: string
   post: PostSummary
   showDesc?: boolean
 }
@@ -11,10 +12,17 @@ export type PostCardProp = {
 const titleLengthLimit = 30
 const descLengthLimit = 110
 
-export const PostCard = ({ post, showDesc = true }: PostCardProp) => {
+export const PostCard = ({
+  className,
+  post,
+  showDesc = true,
+}: PostCardProp) => {
   return (
     post && (
-      <a href={post.url} className={`post-body theme-${post.theme}`}>
+      <a
+        href={post.url}
+        className={`${className} post-body theme-${post.theme}`}
+      >
         <img src={post.image} />
         <div className="card-info">
           <span className="card-category">{post.category}</span>
