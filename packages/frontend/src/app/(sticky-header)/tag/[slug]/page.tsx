@@ -3,11 +3,10 @@ import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
 import { API_URL } from '@/app/constants'
+import './page.scss'
 
 // TODO: remove mockup
 import { postMockupsMore } from '@/app/mockup'
-
-import './page.scss'
 
 const tagQueryGQL = `
   query($where: TagWhereUniqueInput!) {
