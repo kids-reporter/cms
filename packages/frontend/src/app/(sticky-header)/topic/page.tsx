@@ -17,6 +17,7 @@ const moreComponent = (
   </div>
 )
 
+// TODO: improve '國內專題' logic
 const TopicCard = (props: any) => {
   const topic = props.topic
   return (
@@ -24,8 +25,19 @@ const TopicCard = (props: any) => {
       <div className="topic-container">
         <img src={topic.image} />
         <div className="topic-info">
-          <p>{ShortenParagraph(topic.title, titleLengthLimit) ?? ''}</p>
-          <p>{ShortenParagraph(topic.brief, descLengthLimit) ?? ''}</p>
+          <img
+            src={
+              topic.type === '國內專題'
+                ? '/images/topic-local.png'
+                : '/images/topic-international.png'
+            }
+          />
+          <p className="title">
+            {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
+          </p>
+          <p className="desc">
+            {ShortenParagraph(topic.brief, descLengthLimit) ?? ''}
+          </p>
           <div className="bottom">
             <p>{GetFormattedDate(topic.lastUpdateDate) ?? ''} 最後更新</p>
             {moreComponent}
@@ -49,7 +61,11 @@ export default function Topic() {
         <Tags tags={MOCKUP_TAGS} />
         <div className="topic-summary">
           <TopicCard topic={featuredTopic} />
-          <PostSlider posts={featuredTopics} sliderTheme={Theme.BLUE} />
+          <PostSlider
+            posts={featuredTopics}
+            sliderTheme={Theme.BLUE}
+            showDesc={false}
+          />
         </div>
         <div className="topic-list">
           {topics.map((topic, index) => {

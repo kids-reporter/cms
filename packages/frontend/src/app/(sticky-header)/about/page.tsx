@@ -3,6 +3,7 @@ import {
   CREDIT_DONATE_URL,
   CONTRIBUTE_FORM,
   DONATE_URL,
+  EMAIL,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
 } from '@/app/constants'
@@ -10,6 +11,14 @@ import './page.scss'
 
 // TODO: remove mockup
 import { authorsMockup } from '@/app/mockup'
+
+const tellYouItems = [
+  { image: '/images/about_tell_pic1.svg', desc: '重要的議題' },
+  { image: '/images/about_tell_pic2.svg', desc: '多元的社會' },
+  { image: '/images/about_tell_pic3.svg', desc: '國際的動態' },
+  { image: '/images/about_tell_pic4.svg', desc: '豐富的知識' },
+  { image: '/images/about_tell_pic5.svg', desc: '開放的思辨' },
+]
 
 export default function About() {
   // TODO: fetch stakeholders from cms
@@ -24,26 +33,24 @@ export default function About() {
   )
 
   const tellYou = (
-    <div className="pic-group">
-      <span>在這裡，我們想告訴你們：</span>
+    <div className="tell-you">
+      <span className="title">在這裡，我們想告訴你們：</span>
       <div className="pics">
-        <img src={'/images/about_tell_pic1.svg'} />
-        <span>重要的議題</span>
-        <img src={'/images/about_tell_pic2.svg'} />
-        <span>多元的社會</span>
-        <img src={'/images/about_tell_pic3.svg'} />
-        <span>國際的動態</span>
-        <img src={'/images/about_tell_pic4.svg'} />
-        <span>豐富的知識</span>
-        <img src={'/images/about_tell_pic5.svg'} />
-        <span>開放的思辨</span>
+        {tellYouItems.map((item, index) => {
+          return (
+            <div key={`tell-you-${index}`} className="tell-you-item">
+              <img src={item.image} />
+              <p>{item.desc}</p>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
 
   const news = (
-    <div className="pic-group">
-      <span>在這裡，你們可以這樣看新聞：</span>
+    <div className="news">
+      <span className="title">在這裡，你們可以這樣看新聞：</span>
       <div className="pics">
         <img src={'/images/about_news_pic1.svg'} />
         <img src={'/images/about_news_pic2.svg'} />
@@ -74,15 +81,33 @@ export default function About() {
       <p>
         《少年報導者》是一個開放的公共平台，報導仔希望聽見大家的看法和心聲，歡迎10～15歲的同學投稿給報導仔，針對新聞時事、國家政策、校園生活，或是藝術文化、運動體育，都可以寫下你的觀點、評論，讓報導仔協助你成為我們的評論員。
       </p>
-      <img src={'/images/about_road.svg'} />
-      <p>
-        投稿都會刊登嗎？ •編輯群和專家會做討論 •如果刊登你會收到通知
-        •不合適刊登的文章不會另行通知
-      </p>
-      <p>
-        刊登有什麼獎勵？ •你會收到微薄稿酬 •你會收到「少年報導者評論員」證書
-      </p>
-      <img src={'/images/about_certification_template.jpg'} />
+      <img className="road" src={'/images/about_road.svg'} />
+      <div className="desc">
+        <span>
+          投稿都會刊登嗎？
+          <p>
+            <br />
+            •編輯群和專家會做討論
+            <br />
+            •如果刊登你會收到通知
+            <br />
+            •不合適刊登的文章不會另行通知
+          </p>
+        </span>
+        <span>
+          刊登有什麼獎勵？
+          <p>
+            <br />
+            •你會收到微薄稿酬
+            <br />
+            •你會收到「少年報導者評論員」證書
+          </p>
+        </span>
+      </div>
+      <img
+        className="certification"
+        src={'/images/about_certification_template.jpg'}
+      />
       <p>少年報導者評論員證書範例</p>
       <div className="btn-like">
         <a href={CONTRIBUTE_FORM}>我要投稿！</a>
@@ -98,7 +123,11 @@ export default function About() {
           如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
         </p>
       </div>
-      <div className="btn-like">聯絡信箱 kidsnews@twreporter.org</div>
+      <span>
+        聯絡信箱
+        <br />
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </span>
     </div>
   )
 

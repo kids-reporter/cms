@@ -17,6 +17,7 @@ import './post-slider.scss'
 export type PostSliderProp = {
   posts: PostSummary[]
   sliderTheme: Theme
+  showDesc?: boolean
 }
 
 const slidesPerView = 3
@@ -26,6 +27,7 @@ export const PostSlider = (props: PostSliderProp) => {
   const posts = props?.posts
   const postNum = posts?.length
   const themeColor = GetThemeColor(props?.sliderTheme) ?? DEFAULT_THEME_COLOR
+  const showDesc = props?.showDesc ?? true
 
   // Note: swiper loop mode is only available when slideNum >= slidesPerView * 2
   // ref: https://swiperjs.com/swiper-api#param-loop
@@ -63,7 +65,7 @@ export const PostSlider = (props: PostSliderProp) => {
               return (
                 post && (
                   <SwiperSlide key={`swiper-slide-${index}`}>
-                    <PostCard post={post} />
+                    <PostCard post={post} showDesc={showDesc} />
                   </SwiperSlide>
                 )
               )
