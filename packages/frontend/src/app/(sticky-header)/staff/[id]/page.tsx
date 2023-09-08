@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
+import Pagination from '@/app/components/pagination'
 import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
+import './page.scss'
 
 // TODO: remove mockup
 import { postMockupsMore } from '@/app/mockup'
-
-import './page.scss'
 
 const authorQueryGQL = `
   query($authorWhere2: AuthorWhereUniqueInput!) {
@@ -58,26 +58,28 @@ export default async function Staff({ params }: { params: { id: string } }) {
     notFound()
   }
 
-  const avatarURL = author?.avatar?.imageFile?.url
+  const posts = postMockupsMore // author.posts
+  const avatarURL = author.avatar?.imageFile?.url
     ? `${CMS_URL}${author.avatar.imageFile.url}`
     : DEFAULT_AVATAR
 
   return (
-    author && (
-      <main>
-        <div className="info">
-          <div className="avatar">
-            <img src={avatarURL} alt={author.name} />
-          </div>
-          <h1>{author.name}</h1>
-          <p className="bio">{author.bio}</p>
+    <main>
+      <div className="info">
+        <div className="avatar">
+          <img src={avatarURL} alt={author.name} />
         </div>
+        <h1>{author.name}</h1>
+        <p className="bio">{author.bio}</p>
+      </div>
+      {posts?.length > 0 && (
         <div className="post-list">
-          {postMockupsMore.map((post, index) => {
+          {posts.map((post, index) => {
             return <PostCard key={`author-post-card-${index}`} post={post} />
           })}
         </div>
-      </main>
-    )
+      )}
+      <Pagination pageNum={10} />
+    </main>
   )
 }
