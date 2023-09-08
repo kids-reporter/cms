@@ -7,7 +7,7 @@ import {
   EditorState,
   convertFromRaw,
 } from 'draft-js'
-import { blockRenderMapForAnnotation } from '../block-render-map'
+import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
 import { getColorHex } from '../utils/index'
 
@@ -94,7 +94,7 @@ function AnnotationBlock(props: {
         <AnnotationBody>
           <Editor
             editorState={editorState}
-            blockRenderMap={blockRenderMapForAnnotation}
+            blockRenderMap={blockRenderMaps.annotation}
             readOnly
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onChange={() => {}}

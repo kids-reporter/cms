@@ -8,10 +8,7 @@ import {
 } from 'draft-js'
 import React from 'react'
 import styled, { css } from 'styled-components'
-import {
-  blockRenderMapForInfoBox,
-  blockRenderMapForInfoBoxWithHeaderBorder,
-} from '../block-render-map'
+import blockRenderMaps from '../block-render-maps/index'
 import { ImageInInfoBox } from '../block-renderers/image-block'
 import { ThemeColorEnum } from '../utils/index'
 import { decorator } from '../entity-decorators/index'
@@ -155,11 +152,11 @@ export function InfoBoxInArticleBody({ className, data }: InfoBoxBlockProps) {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
   let Component
-  let blockRenderMap = blockRenderMapForInfoBox
+  let blockRenderMap = blockRenderMaps.infoBox.default
   switch (type) {
     case InfoBoxTypeEnum.headerBorder: {
       Component = HeaderBorder
-      blockRenderMap = blockRenderMapForInfoBoxWithHeaderBorder
+      blockRenderMap = blockRenderMaps.infoBox.headerBorder
       break
     }
     case InfoBoxTypeEnum.boxBorder: {

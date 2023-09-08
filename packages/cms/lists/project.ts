@@ -20,7 +20,7 @@ const listConfigurations = list({
       label: '副標',
       validation: { isRequired: false },
     }),
-    state: select({
+    status: select({
       isIndexed: true,
       defaultValue: 'draft',
       options: [
@@ -29,25 +29,18 @@ const listConfigurations = list({
       ],
       label: '狀態',
     }),
-    introduction: customFields.richTextEditor({
-      label: '前言',
-      disabledButtons: [
-        richTextEditorButtonNames.blockquote,
-        richTextEditorButtonNames.code,
-        richTextEditorButtonNames.codeBlock,
-        richTextEditorButtonNames.embed,
-        richTextEditorButtonNames.h2,
-        richTextEditorButtonNames.h3,
-        richTextEditorButtonNames.h4,
-        richTextEditorButtonNames.h5,
-        richTextEditorButtonNames.image,
-        richTextEditorButtonNames.infoBox,
-        richTextEditorButtonNames.slideshow,
-      ],
-    }),
     publishedDate: timestamp({
       isIndexed: true,
       label: '發布時間',
+    }),
+    content: customFields.richTextEditor({
+      label: '前言',
+      disabledButtons: [
+        richTextEditorButtonNames.code,
+        richTextEditorButtonNames.codeBlock,
+        richTextEditorButtonNames.h2,
+        richTextEditorButtonNames.newsReading,
+      ],
     }),
     heroImage: relationship({
       ref: 'Photo',

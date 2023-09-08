@@ -19,6 +19,11 @@ const listConfigurations = list({
       label: '類別中文名稱',
       validation: { isRequired: true },
     }),
+    name: text({
+      isIndexed: 'unique',
+      label: '類別中文名稱',
+      validation: { isRequired: true },
+    }),
     status: select({
       options: [
         { label: 'inactive', value: 'inactive' },
