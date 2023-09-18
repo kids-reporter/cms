@@ -23,6 +23,7 @@ export type Author = {
   name: string
   avatar: string
   role: AuthorRole
+  roleName?: string
   bio: string
 }
 
@@ -55,7 +56,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   </div>
                   <span className="name">{author.name}</span>
                   <div className={`group theme-${theme}`}>
-                    {author.role ?? '其他'}
+                    {author.roleName ? author.roleName : author.role}
                   </div>
                   <span className="desc">
                     {ShortenParagraph(author.bio, descLengthLimit) ?? ''}
