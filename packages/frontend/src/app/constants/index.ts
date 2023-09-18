@@ -41,6 +41,7 @@ export enum AuthorRole {
   AUDITORS = '審閱',
   EDITORS = '責任編輯',
 }
+
 export const AUTHOR_ROLES_IN_ORDER = [
   AuthorRole.CONSULTANTS,
   AuthorRole.WRITERS,
