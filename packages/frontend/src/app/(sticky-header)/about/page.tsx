@@ -33,7 +33,6 @@ const teamInfo = [
 ]
 */
 
-// TODO: add sub-title
 const consultants = [
   {
     id: undefined,
