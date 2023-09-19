@@ -3,5 +3,9 @@
   flex-direction: column;
   margin-top: var(--content-margin-top);
   max-width: var(--normal-container-max-width);
+}
+
+.main-content {
+  display: flex;
   flex-grow: 1;
 }
