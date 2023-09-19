@@ -2,6 +2,7 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import Title from './title'
 import HeroImage from './hero-image'
+import { NewsReading } from './news-reading'
 import PublishedDate from './published-date'
 import Category from './category'
 import { Sidebar, MobileSidebar } from './sidebar'
@@ -19,7 +20,6 @@ import {
   GetThemeFromCategory,
 } from '@/app/constants'
 import './page.scss'
-import { NewsReading } from './news-reading'
 
 const heroImageGQL = `
   heroImage {
