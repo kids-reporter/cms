@@ -9,20 +9,21 @@ const getTheme = (group: AuthorRole) => {
       return Theme.RED
     case AuthorRole.WRITERS:
     case AuthorRole.REVIEWERS:
+    case AuthorRole.CONSULTANTS:
       return Theme.BLUE
     case AuthorRole.DESIGNERS:
     case AuthorRole.PHOTOGRAPHERS:
-    case AuthorRole.CONSULTANTS:
     default:
       return Theme.YELLOW
   }
 }
 
 export type Author = {
-  id: string
+  id: string | undefined
   name: string
   avatar: string
   role: AuthorRole
+  roleName?: string
   bio: string
 }
 
@@ -55,21 +56,24 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   </div>
                   <span className="name">{author.name}</span>
                   <div className={`group theme-${theme}`}>
-                    {author.role ?? '其他'}
+                    {author.roleName ? author.roleName : author.role}
                   </div>
                   <span className="desc">
                     {ShortenParagraph(author.bio, descLengthLimit) ?? ''}
                   </span>
-                  <div className="more">
-                    <a
-                      href={`/staff/${author.id}`}
-                      className={`theme-${theme}`}
-                    >
-                      <span>
-                        了解更多 <i className="icon-rpjr-icon-arrow-right"></i>
-                      </span>
-                    </a>
-                  </div>
+                  {author.id && (
+                    <div className="more">
+                      <a
+                        href={`/staff/${author.id}`}
+                        className={`theme-${theme}`}
+                      >
+                        <span>
+                          了解更多{' '}
+                          <i className="icon-rpjr-icon-arrow-right"></i>
+                        </span>
+                      </a>
+                    </div>
+                  )}
                 </div>
               )
             )

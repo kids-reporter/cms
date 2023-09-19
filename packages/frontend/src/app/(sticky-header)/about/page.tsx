@@ -6,11 +6,9 @@ import {
   EMAIL,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
+  AuthorRole,
 } from '@/app/constants'
 import './page.scss'
-
-// TODO: remove mockup
-import { authorsMockup } from '@/app/mockup'
 
 const tellYouItems = [
   { image: '/images/about_tell_pic1.svg', desc: '重要的議題' },
@@ -20,8 +18,103 @@ const tellYouItems = [
   { image: '/images/about_tell_pic5.svg', desc: '開放的思辨' },
 ]
 
+const teamMemebers = [
+  {
+    id: '1',
+    name: '楊惠君',
+    role: AuthorRole.REVIEWERS,
+    roleName: '總監',
+    avatar: '',
+    bio: '總監工作就是「總兼」，把大家的企畫統合，同時我也是一名記者。我和團隊努力把重要的新聞和事件，轉成豐富的報導，讓大家透過報導，更認識這個世界和自己。',
+  },
+  {
+    id: '1',
+    name: '邱紹雯',
+    role: AuthorRole.AUDITORS,
+    roleName: '主編',
+    avatar: '',
+    bio: '主編就是協助稿件從企劃到編輯完成的主要橋樑。我也負責Podcast聲音平台及教案規劃，和團隊用多元的呈現方式，把重要議題轉成孩子有興趣閱讀、老師家長容易教學應用的素材。',
+  },
+  {
+    id: '1',
+    name: '陳麗婷',
+    role: AuthorRole.AUDITORS,
+    roleName: '記者',
+    avatar: '',
+    bio: '記者的工作是將每位人物的故事、事件歷程，透過每一次的訪問紀錄下來，並將重點寫成大家能夠讀懂的文章，讓讀者看到來自各領域的不同面貌，獲取更多的資訊。',
+  },
+  {
+    id: '1',
+    name: '余志偉',
+    role: AuthorRole.PHOTOGRAPHERS,
+    roleName: '攝影監製',
+    avatar: '',
+    bio: '我在左腦擅長理性邏輯的學習中，用圖像刺激右腦感性創意的思考，依報導內容開發出兼具資訊事實、引人入勝的圖像，讓報導有趣，豐富閱讀多重體驗。',
+  },
+  {
+    id: '1',
+    name: '黃禹禛',
+    role: AuthorRole.DESIGNERS,
+    roleName: '設計',
+    avatar: '',
+    bio: '在這裡，大家所看見的圖表、插畫、圖文故事，大大小小的視覺元素，都是由設計師或插畫家完成。希望透過圖像的力量，幫助讀者理解事件、開啟對世界的想像！',
+  },
+  {
+    id: '1',
+    name: '鄭涵文',
+    role: AuthorRole.DESIGNERS,
+    roleName: '設計',
+    avatar: '',
+    bio: '在新聞的世界裡，「設計」這個角色就是要發力讓報導變得更好看、更好懂，所以我們把重要的故事情境化成畫作，把複雜的資料轉成圖表，努力吸引你們的眼球！',
+  },
+  {
+    id: '1',
+    name: '陳韻如',
+    role: AuthorRole.EDITORS,
+    roleName: '編輯',
+    avatar: '',
+    bio: '身為編輯，我是每篇報導的第一個讀者，要核對內容屬實無誤，也要給文章一個吸睛又能傳達重點的標題，同時我也要運用各種管道，讓更多讀者看見我們的文章，並且感同身受。',
+  },
+]
+
+const consultants = [
+  {
+    id: undefined,
+    name: '陳明蕾',
+    role: AuthorRole.CONSULTANTS,
+    roleName: '閱讀素養專家',
+    avatar: '/images/consultant_陳明蕾.png',
+    bio: '清華大學台灣語言研究與教學研究所副教授，同時亦主持清大柯華葳教授閱讀研究中心。',
+  },
+  {
+    id: undefined,
+    name: '林玫伶',
+    role: AuthorRole.CONSULTANTS,
+    roleName: '教育專家',
+    avatar: '/images/consultant_林玫伶.png',
+    bio: '曾任台北市大橋、明德、士東、國語實驗國小校長，現為清華大學竹師教育學院客座助理教授、台灣閱讀文化基金會數位閱讀推廣顧問。',
+  },
+  {
+    id: undefined,
+    name: '黃惠鈴',
+    role: AuthorRole.CONSULTANTS,
+    roleName: '兒童文學家',
+    avatar: '/images/consultant_黃惠鈴.png',
+    bio: '曾在媒體與出版工作，曾獲出版與文學獎，出過一些書與繪本，現勤於創作與企劃、諮商，在大學兼任繪本與兒童文學課程。',
+  },
+  {
+    id: undefined,
+    name: '陳榮裕',
+    role: AuthorRole.CONSULTANTS,
+    roleName: '資深媒體人',
+    avatar: '/images/consultant_陳榮裕.png',
+    bio: '曾任中學及大專教職，並為資深教育路線記者。現為紀錄片工作者，兼任佛光大學傳播學系助理教授。',
+  },
+]
+
 export default function About() {
-  // TODO: fetch stakeholders from cms
+  // TODO: fetch members avatar from cms
+  // const memberIDs = teamMemebers.map(member => member.id)
 
   const us = (
     <div id="us" className="us">
@@ -164,10 +257,10 @@ export default function About() {
       {contribute}
       {mail}
       <div id="team">
-        <AuthorCard title="誰在為你服務" authors={authorsMockup} />
+        <AuthorCard title="誰在為你服務" authors={teamMemebers} />
       </div>
       <div id="consultor">
-        <AuthorCard title="我們的顧問" authors={authorsMockup} />
+        <AuthorCard title="我們的顧問" authors={consultants} />
       </div>
       {mainSite}
     </main>

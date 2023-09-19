@@ -10,7 +10,8 @@ import './page.scss'
 import { postMockupsMore } from '@/app/mockup'
 import { MOCKUP_TAGS } from '@/app/mockup'
 
-const categoryGQL = ``
+const categoryGQL = `
+`
 
 const postQueryGQL = `
 `
