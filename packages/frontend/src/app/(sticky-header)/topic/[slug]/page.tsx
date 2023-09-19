@@ -1,15 +1,10 @@
 import axios from 'axios'
 import errors from '@twreporter/errors'
 import { API_URL, GetThemeFromCategory, Theme } from '@/app/constants'
-import {
-  BackgroundImage,
-  DownButton,
-  PublishedDate,
-  SubTitle,
-  Title,
-} from './styled'
+import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { GetFormattedDate } from '@/app/utils'
+import { Leading } from './leading'
 import { Post } from './type-def'
 import { PostSummary } from '@/app/components/types'
 import { RelatedPosts } from './related-posts'
@@ -145,10 +140,7 @@ export default async function PostPage({
   return (
     project && (
       <div>
-        <BackgroundImage $imageEntity={project.heroImage}>
-          <Title>{project.title}</Title>
-          <DownButton />
-        </BackgroundImage>
+        <Leading title={project.title} backgroundImage={project.heroImage} />
         {project.subtitle && <SubTitle>{project.subtitle}</SubTitle>}
         {project.publishedDate && (
           <PublishedDate>
