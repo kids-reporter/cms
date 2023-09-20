@@ -12,6 +12,7 @@
     width: 95%;
     flex-direction: row;
     padding-top: 40px;
+    overflow: hidden;
 
     .image-left {
       @media screen and (max-width: 999px) {
