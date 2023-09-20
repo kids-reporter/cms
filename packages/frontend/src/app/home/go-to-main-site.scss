@@ -1,14 +1,27 @@
 .goto {
+  width: 95vw;
   max-width: 1000px;
-  height: 250px;
+  height: 100%;
   display: flex;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
   flex-direction: row;
+
   justify-content: space-between;
   align-items: center;
   padding: 30px 50px;
   border-radius: 30px !important;
   border: 1.5px solid #eaeaea;
   margin-bottom: 30px;
+
+  img {
+    width: 160px;
+    @media screen and (max-width: 999px) {
+      width: 110px;
+    }
+  }
 
   .desc {
     width: 60%;
