@@ -1,6 +1,6 @@
 .cta-container {
   max-width: 1000px;
-  width: 100%;
+  width: 95vw;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -26,9 +26,14 @@
   }
 
   .bottom {
-    height: 500px; // TODO
+    height: 100%;
     display: flex;
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+    }
     flex-direction: row;
+
     justify-content: space-between;
     gap: 40px;
 
