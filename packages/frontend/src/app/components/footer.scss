@@ -10,6 +10,7 @@
   background-color: #fafafa !important;
   justify-content: center !important;
   padding: var(--stk-block-background-padding);
+  overflow: hidden;
 }
 
 .footer-desc {
@@ -23,6 +24,7 @@
   width: 100%;
   justify-content: center;
   background-color: var(--paletteColor6);
+  overflow: hidden;
 }
 
 .footer-copyright-container {
@@ -107,7 +109,6 @@
   }
 
   &__left-social {
-    display: none;
   }
 
   &__left-p {
