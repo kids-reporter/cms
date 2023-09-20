@@ -102,7 +102,7 @@ export default async function Home() {
     console.error('Fetch post data failed!', err)
     notFound()
   }
-  const mainPosts = response?.data?.data?.posts?.map((post: any) => {
+  const topics = response?.data?.data?.posts?.map((post: any) => {
     return {
       url: `/article/${post.slug}`,
       image: post?.heroImage?.imageFile?.url
@@ -122,7 +122,7 @@ export default async function Home() {
       <main>
         <MainHeader />
         <HomeTopDetector />
-        {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
+        {topics?.length > 0 && <MainSlider topics={topics} />}
         <PostSelection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}
