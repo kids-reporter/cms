@@ -6,10 +6,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <StickyHeader />
-      <div className="main-content">
-        <TopDetector />
-        {children}
-      </div>
+      <TopDetector />
+      <div className="main-content">{children}</div>
     </>
   )
 }
