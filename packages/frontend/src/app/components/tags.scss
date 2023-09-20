@@ -13,5 +13,10 @@
     row-gap: 30px;
     align-items: center;
     justify-content: center;
+
+    .fill {
+      color: black !important;
+      background: var(--theme-color) !important;
+    }
   }
 }
