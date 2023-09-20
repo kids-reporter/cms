@@ -1,6 +1,6 @@
 'use client'
 import { SearchIcon } from '@/app/icons'
-import {
+import StickyHeader, {
   NavItems,
   ContributeBtn,
   SubscribeBtn,
@@ -59,30 +59,35 @@ export const MainHeader = () => {
   )
 
   return (
-    <div className="main-header">
-      <div className="left">
-        <img src="/images/navbar_pic.svg" width="291" />
+    <>
+      <div className="main-header-mobile">
+        <StickyHeader />
       </div>
-      <div className="center">
-        <a href="/">
-          <img
-            src="/images/logo-full.svg"
-            alt="少年報導者 The Reporter for Kids"
-          />
-        </a>
-        {navi}
-      </div>
-      <div className="right">
-        <div className="content">
-          {searchInput}
-          <div className="btn-group">
-            {ContributeBtn}
-            {SubscribeBtn}
-            {AboutUsBtn}
+      <div className="main-header">
+        <div className="left">
+          <img src="/images/navbar_pic.svg" width="291" />
+        </div>
+        <div className="center">
+          <a href="/">
+            <img
+              src="/images/logo-full.svg"
+              alt="少年報導者 The Reporter for Kids"
+            />
+          </a>
+          {navi}
+        </div>
+        <div className="right">
+          <div className="content">
+            {searchInput}
+            <div className="btn-group">
+              {ContributeBtn}
+              {SubscribeBtn}
+              {AboutUsBtn}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
