@@ -556,33 +556,6 @@ body.single-post main article.post>.entry-content>*:not(.alignwide):not(.alignfu
     }
 }
 
-// 覆蓋 post-card.js 中的部分樣式
-// TODO: 將樣式覆蓋設定移至正確位置
-//:host(.subtitle) {
-//    font-size: 14px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 16px;
-//    }
-//}
-//:host(.title) {
-//    font-size: 20px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 22px;
-//    }
-//}
-//:host(.date) {
-//    font-size: 12px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 14px;
-//    }
-//}
-//:host(.category) {
-//    font-size: 12px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 14px;
-//    }
-//}
-
 /** Post Page Mobile Container Adjust */
 @media screen and (max-width: 767px) {
     body.single-post article.post {

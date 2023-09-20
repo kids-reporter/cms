@@ -79,10 +79,7 @@ const sections = [
 export default async function Home() {
   let response
   try {
-    // TODO: fetch main slider posts
-    // TODO: fetch post selection posts
-    // TODO: fetch posts of each section
-    // TODO: fetch tags
+    // TODO: fetch main slider posts/post selection posts/posts of each section/tags
     response = await axios.post(API_URL, {
       query: `
       query {
