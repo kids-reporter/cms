@@ -1,6 +1,7 @@
 import { MAIN_SITE_URL } from '@/app/constants'
 import './go-to-main-site.scss'
 
+// TOOD: rwd fonts
 export const GoToMainSite = () => {
   return (
     <div className="goto">
