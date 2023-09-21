@@ -14,7 +14,12 @@
   .featured-post-container {
     max-width: 1280px;
     display: flex;
+
     flex-direction: row;
+    @media screen and (max-width: 999px) {
+      flex-direction: column;
+    }
+
     padding: 24px;
     gap: 40px;
 
