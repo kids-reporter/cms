@@ -1,10 +1,16 @@
 .not-found {
+  width: 95vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 40px;
   margin-bottom: 60px;
+
+  img {
+    max-width: 320px;
+    width: 100%;
+  }
 
   .desc {
     --fontSize: 18px;
