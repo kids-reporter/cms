@@ -126,21 +126,23 @@ export const Footer = () => {
       <div className="footer-copyright">
         <div className="footer-copyright-container">
           <div className="footer-number">
-            公益勸募許可字號｜衛部救字第 1101363853 號{' '}
-            <a
-              href="https://www.twreporter.org/a/privacy-footer"
-              target="_blank"
-              className="footer-link"
-            >
-              <strong>隱私政策</strong>
-            </a>{' '}
-            <a
-              href="https://www.twreporter.org/a/license-footer"
-              target="_blank"
-              className="footer-link"
-            >
-              <strong>許可協議</strong>
-            </a>{' '}
+            <p>公益勸募許可字號｜衛部救字第 1101363853 號 </p>
+            <div>
+              <a
+                href="https://www.twreporter.org/a/privacy-footer"
+                target="_blank"
+                className="footer-link"
+              >
+                <strong>隱私政策</strong>
+              </a>{' '}
+              <a
+                href="https://www.twreporter.org/a/license-footer"
+                target="_blank"
+                className="footer-link"
+              >
+                <strong>許可協議</strong>
+              </a>{' '}
+            </div>
           </div>
           <div className="ct-footer-copyright">
             <p>Copyright © 2023 The Reporter</p>

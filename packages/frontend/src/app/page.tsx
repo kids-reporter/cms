@@ -79,10 +79,7 @@ const sections = [
 export default async function Home() {
   let response
   try {
-    // TODO: fetch main slider posts
-    // TODO: fetch post selection posts
-    // TODO: fetch posts of each section
-    // TODO: fetch tags
+    // TODO: fetch main slider posts/post selection posts/posts of each section/tags
     response = await axios.post(API_URL, {
       query: `
       query {
@@ -105,7 +102,7 @@ export default async function Home() {
     console.error('Fetch post data failed!', err)
     notFound()
   }
-  const mainPosts = response?.data?.data?.posts?.map((post: any) => {
+  const topics = response?.data?.data?.posts?.map((post: any) => {
     return {
       url: `/article/${post.slug}`,
       image: post?.heroImage?.imageFile?.url
@@ -125,7 +122,7 @@ export default async function Home() {
       <main>
         <MainHeader />
         <HomeTopDetector />
-        {mainPosts?.length > 0 && <MainSlider posts={mainPosts} />}
+        {topics?.length > 0 && <MainSlider topics={topics} />}
         <PostSelection
           latestPosts={latestPosts}
           featuredPosts={featuredPosts}

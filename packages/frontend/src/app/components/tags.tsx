@@ -8,6 +8,7 @@ export type Tag = {
 type TagsProp = {
   title?: string
   tags: Tag[]
+  fill?: boolean
 }
 
 export const Tags = (props: TagsProp) => {
@@ -28,7 +29,9 @@ export const Tags = (props: TagsProp) => {
             tag && (
               <a
                 key={`post-tag-${index}`}
-                className="rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag"
+                className={`rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag ${
+                  props?.fill ? 'fill' : ''
+                }`}
                 href={`/tag/${tag.slug}`}
               >
                 #&nbsp;{tag.name}

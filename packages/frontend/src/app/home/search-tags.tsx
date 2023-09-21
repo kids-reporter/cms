@@ -41,7 +41,7 @@ export const SearchTags = (props: SearchTagsProp) => {
       </form>
       {tags && (
         <div className="tags">
-          <Tags title={'常用關鍵字'} tags={tags} />
+          <Tags title={'常用關鍵字'} tags={tags} fill={true} />
         </div>
       )}
     </div>

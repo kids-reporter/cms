@@ -9,12 +9,16 @@
   margin-right: auto;
   margin-bottom: 20px;
   padding-top: 80px;
+
   background-image: url(/images/navbar_pic2.svg);
+  @media screen and (max-width: 999px) {
+    background-image: none;
+  }
   background-repeat: no-repeat;
   background-position: bottom right 15%;
   background-size: 317px;
 
-  .posts {
+  .topics {
     width: 100%;
     display: flex;
     align-items: center;
@@ -63,7 +67,7 @@
       }
     }
 
-    .post-body {
+    .topic-body {
       width: 373px;
       max-width: 400px;
       margin-left: 22px;
@@ -80,7 +84,7 @@
         border-radius: 20px;
       }
 
-      .post-title {
+      .topic-title {
         font-family: SweiMarkerSansCJKtc-Regular,noto sans tc,Sans-Serif,serif;
         font-style: normal;
         font-weight: 700;

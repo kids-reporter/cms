@@ -1,4 +1,15 @@
+.main-header-mobile {
+  width: var(--container-width);
+  @media screen and (min-width: 1000px) {
+    display: none;
+  }
+}
+
 .main-header {
+  @media screen and (max-width: 999px) {
+    display: none;
+  }
+
   --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
   --container-width: min(100%, var(--container-width-base));
   max-width: var(--normal-container-max-width);

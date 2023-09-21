@@ -17,6 +17,7 @@ type SectionProp = {
   posts: PostSummary[]
 }
 
+// TODO: rwd - head-more-slider
 export const Section = (props: SectionProp) => {
   const config = props?.config
   const posts = props?.posts

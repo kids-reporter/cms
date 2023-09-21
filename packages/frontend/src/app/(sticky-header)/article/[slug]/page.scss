@@ -5,26 +5,26 @@ main {
 }
 
 body.single-post {
-    --theme-color: #27B5F7;
-    .entry-content {
-        --block-wide-max-width: 1000px;
-        @media screen and (max-width: 1280px) and (min-width: 1080px) {
-            --block-wide-max-width: 72vw;
-        }
-        @media screen and (max-width: 1080px) and (min-width: 960px) {
-            --block-wide-max-width: 700px;
-        }
+  --theme-color: #27B5F7;
+  .entry-content {
+    --block-wide-max-width: 1000px;
+    @media screen and (max-width: 1280px) and (min-width: 1080px) {
+      --block-wide-max-width: 72vw;
     }
+    @media screen and (max-width: 1080px) and (min-width: 960px) {
+      --block-wide-max-width: 700px;
+    }
+  }
 }
 .post {
-    --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
-    --container-width: min(100%, var(--container-width-base));
-    max-width: 1440px;
-    width: var(--container-width);
-    font-size: var(--rpjr-text-scale);
-    margin-left: auto;
-    margin-right: auto;
-    padding: 40px 0px;
+  --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
+  --container-width: var(--container-width-base);
+  max-width: 1440px;
+  width: var(--container-width);
+  font-size: var(--rpjr-text-scale);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px 0px;
 }
 
 .icon-rpjr-icon-tag .path1:before {
@@ -555,33 +555,6 @@ body.single-post main article.post>.entry-content>*:not(.alignwide):not(.alignfu
         }
     }
 }
-
-// 覆蓋 post-card.js 中的部分樣式
-// TODO: 將樣式覆蓋設定移至正確位置
-//:host(.subtitle) {
-//    font-size: 14px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 16px;
-//    }
-//}
-//:host(.title) {
-//    font-size: 20px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 22px;
-//    }
-//}
-//:host(.date) {
-//    font-size: 12px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 14px;
-//    }
-//}
-//:host(.category) {
-//    font-size: 12px;
-//    @media screen and (min-width: 992px) {
-//        font-size: 14px;
-//    }
-//}
 
 /** Post Page Mobile Container Adjust */
 @media screen and (max-width: 767px) {

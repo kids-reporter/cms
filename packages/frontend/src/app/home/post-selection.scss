@@ -64,6 +64,9 @@
 
       .latest-post-list {
         display: flex;
+        @media screen and (max-width: 767px) {
+          display: none;
+        }
         flex-direction: column;
         border-radius: 30px;
         background-color: white;

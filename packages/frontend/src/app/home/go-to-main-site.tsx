@@ -1,6 +1,7 @@
 import { MAIN_SITE_URL } from '@/app/constants'
 import './go-to-main-site.scss'
 
+// TOOD: rwd fonts
 export const GoToMainSite = () => {
   return (
     <div className="goto">
@@ -9,8 +10,6 @@ export const GoToMainSite = () => {
         loading="lazy"
         className="stk-img wp-image-6055"
         src="/images/main_site_logo.svg"
-        width="160"
-        height="300"
       />
       <div className="desc">
         <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">

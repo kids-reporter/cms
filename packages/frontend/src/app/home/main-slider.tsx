@@ -18,18 +18,18 @@ import 'swiper/css/pagination'
 import './main-slider.scss'
 
 type SliderProp = {
-  posts: { url: string; image: string; title: string }[]
+  topics: { url: string; image: string; title: string }[]
 }
 
 const autoPlayInterval = 5000
 
 export const MainSlider = (props: SliderProp) => {
-  const posts = props?.posts
+  const topics = props?.topics
   const swiperRef = useRef<SwiperCore>()
 
   return (
     <div className={`main-slider theme-${Theme.YELLOW}`}>
-      <div className="posts">
+      <div className="topics">
         <Swiper
           autoplay={{ delay: autoPlayInterval }}
           onBeforeInit={(swiper) => {
@@ -55,12 +55,16 @@ export const MainSlider = (props: SliderProp) => {
             },
           }}
         >
-          {posts.map((post, index) => {
+          {topics.map((topic, index) => {
             return (
               <SwiperSlide key={`swiper-main-slide-${index}`}>
-                <a key={`post-${index}`} className="post-body" href={post.url}>
-                  <img src={`${post.image}`} />
-                  <span className="post-title">{post.title}</span>
+                <a
+                  key={`topic-${index}`}
+                  className="topic-body"
+                  href={topic.url}
+                >
+                  <img src={`${topic.image}`} />
+                  <span className="topic-title">{topic.title}</span>
                 </a>
               </SwiperSlide>
             )
