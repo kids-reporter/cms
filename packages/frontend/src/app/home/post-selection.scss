@@ -69,11 +69,17 @@
       }
 
       .latest-post-list {
-        display: flex;
+        @media screen and (min-width: 1000px) {
+          display: flex;
+          flex-direction: column;
+        }
+        @media screen and (max-width: 999px) {
+          display: grid;
+          grid-template-columns: Repeat(2, 1fr);
+        }
         @media screen and (max-width: 767px) {
           display: none;
         }
-        flex-direction: column;
         border-radius: 30px;
         background-color: white;
         padding: 20px 30px;
