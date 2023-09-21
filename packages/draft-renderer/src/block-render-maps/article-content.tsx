@@ -75,9 +75,17 @@ export const List = styled.ol`
   }
 `
 
+export const Atomic = styled.div`
+  /* reset browser default styles */
+  > figure {
+    margin: 0;
+  }
+`
+
 const _blockRenderMap = Immutable.Map({
   atomic: {
-    element: 'div',
+    element: 'figure',
+    wrapper: <Atomic />,
   },
   'header-two': {
     element: 'h2',
