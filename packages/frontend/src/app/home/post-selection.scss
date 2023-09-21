@@ -97,8 +97,40 @@
       gap: 20px;
 
       .cards {
-        display: flex;
-        flex-direction: row;
+        display: inline-flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 20px;
+
+        @media screen and (min-width: 1000px) {
+          .card-child-1, .card-child-2 {
+            flex-basis: 50%;
+          }
+
+          .card-child-rest {
+            flex-basis: 33%;
+          }
+        }
+
+        @media screen and (max-width: 999px) {
+          .card-child-1{
+            flex-basis: 100%;
+            display: flex;
+            justify-content: center;
+          }
+
+          .card-child-2, .card-child-rest {
+            flex-basis: 50%;
+          }
+        }
+
+        @media screen and (max-width: 767px) {
+          .card-child-1, .card-child-2, .card-child-rest {
+            flex-basis: 100%;
+            display: flex;
+            justify-content: center;
+          }
+        }
       }
     }
   }
