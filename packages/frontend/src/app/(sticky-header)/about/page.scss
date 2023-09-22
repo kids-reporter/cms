@@ -42,6 +42,7 @@ main {
   }
 
   .tell-you {
+    width: 95vw;
     max-width: 840px;
     display: flex;
     flex-direction: column;
@@ -50,12 +51,18 @@ main {
     margin-bottom: 40px;
 
     .pics {
+      max-width: 650px;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
       flex-wrap: wrap;
       gap: 40px;
+
+      img {
+        width: 100%;
+        max-width: 140px;
+      }
     }
   }
 
