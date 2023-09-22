@@ -259,10 +259,10 @@ export default function About() {
       {subscribe}
       {contribute}
       {mail}
-      <div id="team">
+      <div id="team" className="team">
         <AuthorCard title="誰在為你服務" authors={teamMemebers} />
       </div>
-      <div id="consultor">
+      <div id="consultor" className="consultor">
         <AuthorCard title="我們的顧問" authors={consultants} />
       </div>
       {mainSite}
