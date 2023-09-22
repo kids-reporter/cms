@@ -265,8 +265,8 @@ main {
   }
 
   .main-site {
-    max-width: 1000px; // TODO: replace 1000px with var
-    width: 100%;
+    width: 95vw;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -274,9 +274,10 @@ main {
     padding: 40px 30px 38px 40px;
     background-color: var(--paletteColor6);
     border-radius: 30px;
-    padding: 40px 30px 38px 40px;
 
     img {
+      width: 100%;
+      max-width: 340px;
       margin-bottom: 40px;
     }
 
@@ -294,6 +295,7 @@ main {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
+      flex-wrap: wrap;
       align-items: center;
 
       .btn-like {
@@ -301,6 +303,7 @@ main {
         background-color: white;
         width: fit-content;
         padding: 8px 18px;
+        margin-bottom: 10px;
       }
     }
   }
