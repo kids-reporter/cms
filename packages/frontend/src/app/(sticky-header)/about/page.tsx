@@ -156,15 +156,18 @@ export default function About() {
 
   const subscribe = (
     <div className="subscribe">
-      <div>
-        <h3>訂閱《少年報導者》</h3>
-        <p>
-          不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
-        </p>
+      <div className="subscribe-desc">
+        <div>
+          <h3>訂閱《少年報導者》</h3>
+          <p>
+            不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
+          </p>
+        </div>
+        <a className="btn-like" href={SUBSCRIBE_URL}>
+          歡迎訂閱
+        </a>
       </div>
-      <div className="btn-like">
-        <a href={SUBSCRIBE_URL}>歡迎訂閱</a>
-      </div>
+      <img src="/images/about_CTA_subscribe.svg" />
     </div>
   )
 
