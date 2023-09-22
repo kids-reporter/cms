@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 10px;
 
   .section-head {
     display: flex;
@@ -12,7 +13,6 @@
     width: 95%;
     flex-direction: row;
     padding-top: 40px;
-    overflow: hidden;
 
     .image-left {
       @media screen and (max-width: 999px) {
@@ -33,6 +33,7 @@
       justify-content: center;
 
       img {
+        width: 100%;
         display: flex;
         height: 90px;
         align-items: center;
@@ -40,7 +41,11 @@
       }
     }
 
-    .more{
+    .more {
+      @media screen and (max-width: 729px) {
+        display: none;
+      }
+
       flex: 1;
       display: flex;
       flex-direction: row;
@@ -50,6 +55,12 @@
         padding: 9px 20px 11px;
         font-size: 20px;
       }
+    }
+  }
+
+  .more-mobile {
+    @media screen and (min-width: 730px) {
+      display: none;
     }
   }
 }

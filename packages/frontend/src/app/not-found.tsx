@@ -15,7 +15,7 @@ export default function NotFound() {
       <StickyHeader />
       <div className="not-found">
         <TopDetector />
-        <img src="/images/404.png" alt="Not found" width="320px" />
+        <img src="/images/404.png" alt="Not found" />
         <h1>很抱歉，找不到符合條件的頁面。</h1>
         <div className="desc">
           看起來在這個位置找不到東西。也許可以試著找其他的？

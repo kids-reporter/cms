@@ -6,14 +6,20 @@
   background-color: #fff9ec !important;
 
   .title-img {
-    width: 200px;
+    max-width: 200px;
+    width: 100%;
     margin: 30px auto;
   }
 
   .featured-post-container {
     max-width: 1280px;
     display: flex;
+
     flex-direction: row;
+    @media screen and (max-width: 999px) {
+      flex-direction: column;
+    }
+
     padding: 24px;
     gap: 40px;
 
@@ -63,11 +69,17 @@
       }
 
       .latest-post-list {
-        display: flex;
+        @media screen and (min-width: 1000px) {
+          display: flex;
+          flex-direction: column;
+        }
+        @media screen and (max-width: 999px) {
+          display: grid;
+          grid-template-columns: Repeat(2, 1fr);
+        }
         @media screen and (max-width: 767px) {
           display: none;
         }
-        flex-direction: column;
         border-radius: 30px;
         background-color: white;
         padding: 20px 30px;
@@ -85,8 +97,40 @@
       gap: 20px;
 
       .cards {
-        display: flex;
-        flex-direction: row;
+        display: inline-flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 20px;
+
+        @media screen and (min-width: 1000px) {
+          .card-child-1, .card-child-2 {
+            flex-basis: 50%;
+          }
+
+          .card-child-rest {
+            flex-basis: 33%;
+          }
+        }
+
+        @media screen and (max-width: 999px) {
+          .card-child-1{
+            flex-basis: 100%;
+            display: flex;
+            justify-content: center;
+          }
+
+          .card-child-2, .card-child-rest {
+            flex-basis: 50%;
+          }
+        }
+
+        @media screen and (max-width: 767px) {
+          .card-child-1, .card-child-2, .card-child-rest {
+            flex-basis: 100%;
+            display: flex;
+            justify-content: center;
+          }
+        }
       }
     }
   }

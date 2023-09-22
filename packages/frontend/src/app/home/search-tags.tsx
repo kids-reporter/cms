@@ -18,7 +18,7 @@ export const SearchTags = (props: SearchTagsProp) => {
 
   return (
     <div className={`search-tags theme-${Theme.YELLOW}`}>
-      <img decoding="async" src="/images/search_title.svg" width="265" />
+      <img decoding="async" src="/images/search_title.svg" />
       <form
         role="search"
         method="get"

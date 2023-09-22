@@ -17,10 +17,18 @@ type SectionProp = {
   posts: PostSummary[]
 }
 
-// TODO: rwd - head-more-slider
 export const Section = (props: SectionProp) => {
   const config = props?.config
   const posts = props?.posts
+
+  const moreBtn = config && (
+    <a
+      href={config.link}
+      className={`rpjr-btn rpjr-btn-theme-outline theme-${config.theme}`}
+    >
+      看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
+    </a>
+  )
 
   return (
     config &&
@@ -33,16 +41,10 @@ export const Section = (props: SectionProp) => {
           <div className="image-title">
             <img src={`/images/${config.titleImg}`} alt={config.title} />
           </div>
-          <div className="more">
-            <a
-              href={config.link}
-              className={`rpjr-btn rpjr-btn-theme-outline theme-${config.theme}`}
-            >
-              看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
-            </a>
-          </div>
+          <div className="more">{moreBtn}</div>
         </div>
         <PostSlider posts={posts} sliderTheme={config.theme} />
+        <div className="more-mobile">{moreBtn}</div>
       </div>
     )
   )
