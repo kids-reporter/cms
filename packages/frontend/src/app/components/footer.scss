@@ -20,10 +20,7 @@
 }
 
 .footer-copyright {
-  --fontWeight: 400;
   --fontSize: 15px;
-  --lineHeight: 1.3;
-  --color: var(--paletteColor4);
 
   width: 100%;
   display: flex;
@@ -48,8 +45,8 @@
 
   p {
     letter-spacing: var(--letterSpacing);
-    font-size: 14px;
-    color: var(--color);
+    font-size: var(--fontSize);
+    color: var(--paletteColor4);
   }
 
   .footer-copyright-left {
