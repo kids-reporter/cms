@@ -213,17 +213,20 @@ export default function About() {
 
   const mail = (
     <div id="mail" className="mail">
-      <div>
-        <h3>報導仔信箱，歡迎來信</h3>
-        <p>
-          如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
-        </p>
+      <div className="mail-desc">
+        <div>
+          <h3>報導仔信箱，歡迎來信</h3>
+          <p>
+            如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
+          </p>
+        </div>
+        <span>
+          聯絡信箱
+          <br />
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        </span>
       </div>
-      <span>
-        聯絡信箱
-        <br />
-        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-      </span>
+      <img src="/images/about_CTA_mail.svg" />
     </div>
   )
 
