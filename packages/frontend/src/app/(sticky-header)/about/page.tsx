@@ -156,15 +156,18 @@ export default function About() {
 
   const subscribe = (
     <div className="subscribe">
-      <div>
-        <h3>訂閱《少年報導者》</h3>
-        <p>
-          不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
-        </p>
+      <div className="subscribe-desc">
+        <div>
+          <h3>訂閱《少年報導者》</h3>
+          <p>
+            不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
+          </p>
+        </div>
+        <a className="btn-like" href={SUBSCRIBE_URL}>
+          歡迎訂閱
+        </a>
       </div>
-      <div className="btn-like">
-        <a href={SUBSCRIBE_URL}>歡迎訂閱</a>
-      </div>
+      <img src="/images/about_CTA_subscribe.svg" />
     </div>
   )
 
@@ -210,17 +213,20 @@ export default function About() {
 
   const mail = (
     <div id="mail" className="mail">
-      <div>
-        <h3>報導仔信箱，歡迎來信</h3>
-        <p>
-          如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
-        </p>
+      <div className="mail-desc">
+        <div>
+          <h3>報導仔信箱，歡迎來信</h3>
+          <p>
+            如果想給我們的團隊一個鼓勵、一個建議，或提供採訪的線索，請寫信給報導仔，他會幫大家傳達。
+          </p>
+        </div>
+        <span>
+          聯絡信箱
+          <br />
+          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        </span>
       </div>
-      <span>
-        聯絡信箱
-        <br />
-        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-      </span>
+      <img src="/images/about_CTA_mail.svg" />
     </div>
   )
 
@@ -256,10 +262,10 @@ export default function About() {
       {subscribe}
       {contribute}
       {mail}
-      <div id="team">
+      <div id="team" className="team">
         <AuthorCard title="誰在為你服務" authors={teamMemebers} />
       </div>
-      <div id="consultor">
+      <div id="consultor" className="consultor">
         <AuthorCard title="我們的顧問" authors={consultants} />
       </div>
       {mainSite}

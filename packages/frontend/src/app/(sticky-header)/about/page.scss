@@ -24,6 +24,7 @@ main {
   }
 
   .us {
+    width: 95vw;
     max-width: 700px;
     display: flex;
     flex-direction: column;
@@ -41,6 +42,7 @@ main {
   }
 
   .tell-you {
+    width: 95vw;
     max-width: 840px;
     display: flex;
     flex-direction: column;
@@ -49,16 +51,23 @@ main {
     margin-bottom: 40px;
 
     .pics {
+      max-width: 650px;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
       flex-wrap: wrap;
       gap: 40px;
+
+      img {
+        width: 100%;
+        max-width: 140px;
+      }
     }
   }
 
   .news {
+    width: 95vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -75,37 +84,65 @@ main {
     }
 
     img {
-      width: 340px;
+      width: 100%;
+      max-width: 340px;
     }
   }
 
   .subscribe {
-    max-width: 1000px; // TODO: replace 1000px with var
+    width: 95vw;
+    max-width: 1000px;
     display: flex;
-    flex-direction: column;
+
+    flex-direction: row;
     justify-content: space-between;
-    width: 100%;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    align-items: center;
     padding: 30px 50px 30px 50px;
     background-color: var(--paletteColor6);
     border-radius: 30px;
-    background-image: url(/images/about_CTA_subscribe.svg);
-    background-position: bottom right;
-    background-repeat: no-repeat;
-    background-size: 340px 300px;
 
-    p {
-      max-width: 350px;
-      font-size: 18px;
-      padding-bottom: 40px;
-      letter-spacing: .08em;
-      line-height: 160%;
+    .subscribe-desc {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        align-items: center;
+        h3 {
+          text-align: center;
+        }
+      }
+
+      p {
+        font-size: 18px;
+        padding-bottom: 40px;
+        letter-spacing: .08em;
+        line-height: 160%;
+      }
+
+      .btn-like {
+        border-radius: 20px;
+        background-color: white;
+        width: fit-content;
+        padding: 8px 18px;
+      }
     }
 
-    .btn-like {
-      border-radius: 20px;
-      background-color: white;
-      width: fit-content;
-      padding: 8px 18px;
+    img {
+      width: 100%;
+      max-width: 340px;
+      @media screen and (max-width: 999px) {
+        max-width: 280px;
+      }
+      @media screen and (max-width: 767px) {
+        max-width: 180px;
+      }
     }
   }
 
@@ -166,39 +203,70 @@ main {
   }
 
   .mail {
-    max-width: 1000px; // TODO: replace 1000px with var
+    width: 95vw;
+    max-width: 1000px;
     display: flex;
-    flex-direction: column;
+
+    flex-direction: row;
     justify-content: space-between;
-    width: 100%;
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    align-items: center;
     padding: 40px 30px 38px 40px;
     background-color: var(--paletteColor5);
     border-radius: 30px;
-    padding: 40px 30px 38px 40px;
-    background-image: url(/images/about_CTA_mail.svg);
-    background-position: bottom right;
-    background-repeat: no-repeat;
-    background-size: 340px;
 
-    p {
-      max-width: 350px;
-      font-size: 18px;
-      padding-bottom: 40px;
-      letter-spacing: .08em;
-      line-height: 160%;
+    .mail-desc {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      @media screen and (max-width: 767px) {
+        width: 100%;
+        align-items: center;
+        h3 {
+          text-align: center;
+        }
+      }
+
+      p {
+        max-width: 350px;
+        font-size: 18px;
+        padding-bottom: 40px;
+        letter-spacing: .08em;
+        line-height: 160%;
+      }
+
+      span {
+        color: white;
+        font-size: 18px;
+        letter-spacing: .08em;
+        line-height: 160%;
+      }
     }
 
-    .btn-like {
-      border-radius: 20px;
-      background-color: white;
-      width: fit-content;
-      padding: 8px 18px;
+    img {
+      width: 100%;
+      max-width: 340px;
+      @media screen and (max-width: 999px) {
+        max-width: 280px;
+      }
+      @media screen and (max-width: 767px) {
+        max-width: 180px;
+      }
     }
   }
 
+  .team, .consultor {
+    width: 95vw;
+  }
+
   .main-site {
-    max-width: 1000px; // TODO: replace 1000px with var
-    width: 100%;
+    width: 95vw;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -206,9 +274,10 @@ main {
     padding: 40px 30px 38px 40px;
     background-color: var(--paletteColor6);
     border-radius: 30px;
-    padding: 40px 30px 38px 40px;
 
     img {
+      width: 100%;
+      max-width: 340px;
       margin-bottom: 40px;
     }
 
@@ -226,6 +295,7 @@ main {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
+      flex-wrap: wrap;
       align-items: center;
 
       .btn-like {
@@ -233,6 +303,7 @@ main {
         background-color: white;
         width: fit-content;
         padding: 8px 18px;
+        margin-bottom: 10px;
       }
     }
   }
@@ -244,7 +315,8 @@ main {
   align-items: center;
 
   img {
-    width: 200px;
+    width: 100%;
+    max-width: 200px;
   }
 
   p {
