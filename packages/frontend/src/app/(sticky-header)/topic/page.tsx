@@ -57,7 +57,7 @@ export default function Topic() {
   return (
     <main>
       <div className="content">
-        <img src={'/images/topic_pic.svg'} />
+        <img className="topic-image" src={'/images/topic_pic.svg'} />
         <Tags tags={MOCKUP_TAGS} />
         <div className="topic-summary">
           <TopicCard topic={featuredTopic} />
