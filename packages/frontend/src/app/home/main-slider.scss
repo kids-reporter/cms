@@ -1,5 +1,5 @@
 .main-slider {
-  width: 100%;
+  width: 95vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,16 +104,21 @@
       cursor: pointer;
       position: absolute;
       top: 25%;
-      --btn-edge: 400px;
       z-index: 900;
     }
 
     button.prev-btn {
-      left: var(--btn-edge);
+      @media screen and (min-width: 800px) {
+        left: calc(50% - 400px);
+      }
+      left: -5px;
     }
 
     button.next-btn {
-      right: var(--btn-edge);
+      @media screen and (min-width: 800px) {
+        right: calc(50% - 400px);
+      }
+      right: -5px;
     }
   }
 }
