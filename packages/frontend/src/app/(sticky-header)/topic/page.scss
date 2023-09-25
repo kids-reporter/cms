@@ -26,9 +26,19 @@ main {
       flex-direction: column;
       justify-content: center;
       border-radius: 45px;
+      @media screen and (max-width: 999px) {
+        background-color: white;
+        padding: 0px;
+      }
       background-color: #F8F8F8;
       padding: 20px;
       gap: 20px;
+
+      .topic-slider {
+        @media screen and (max-width: 999px) {
+          display: none;
+        }
+      }
     }
 
     .topic-list {
