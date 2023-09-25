@@ -106,14 +106,14 @@
     }
 
     button.prev-btn {
-      @media screen and (min-width: 800px) {
+      @media screen and (min-width: 1000px) {
         left: calc(50% - 400px - 50px);
       }
       left: -5px;
     }
 
     button.next-btn {
-      @media screen and (min-width: 800px) {
+      @media screen and (min-width: 1000px) {
         right: calc(50% - 400px - 50px);
       }
       right: -5px;
