@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  max-width: var(--normal-container-max-width);
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
@@ -77,8 +76,8 @@
       cursor: pointer;
 
       img {
-        height: auto;
         max-width: 100%;
+        height: auto;
         vertical-align: middle;
         border-radius: 20px;
       }
@@ -108,14 +107,14 @@
 
     button.prev-btn {
       @media screen and (min-width: 800px) {
-        left: calc(50% - 400px);
+        left: calc(50% - 400px - 50px);
       }
       left: -5px;
     }
 
     button.next-btn {
       @media screen and (min-width: 800px) {
-        right: calc(50% - 400px);
+        right: calc(50% - 400px - 50px);
       }
       right: -5px;
     }
