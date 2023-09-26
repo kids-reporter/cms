@@ -31,6 +31,7 @@ query($orderBy: [PostOrderByInput!]!) {
 }
 `
 
+// TODO: error handling & pagination
 export default async function LatestPosts() {
   let postsRes
   try {
