@@ -11,25 +11,25 @@ import { postMockupsMore } from '@/app/mockup'
 const latestPostsGQL = `
 query($orderBy: [PostOrderByInput!]!) {
   posts(orderBy: $orderBy) {
-          title
-          slug
-          heroImage {
-            resized {
-              medium
-            }
-            imageFile {
-              url
-            }
-          }
-          publishedDate
-        }
+    title
+    slug
+    heroImage {
+      resized {
+        medium
       }
-    `
+      imageFile {
+        url
+      }
+    }
+    publishedDate
+  }
+}
+`
 
 export default async function LatestPosts() {
-  let postRes
+  let postsRes
   try {
-    postRes = await axios.post(API_URL, {
+    postsRes = await axios.post(API_URL, {
       query: latestPostsGQL,
       variables: {
         orderBy: {
@@ -42,7 +42,7 @@ export default async function LatestPosts() {
     notFound()
   }
 
-  const posts = postRes?.data?.data?.posts
+  const posts = postsRes?.data?.data?.posts
   if (!posts) {
     notFound()
   }
