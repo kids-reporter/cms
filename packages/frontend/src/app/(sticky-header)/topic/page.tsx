@@ -61,11 +61,13 @@ export default function Topic() {
         <Tags tags={MOCKUP_TAGS} />
         <div className="topic-summary">
           <TopicCard topic={featuredTopic} />
-          <PostSlider
-            posts={featuredTopics}
-            sliderTheme={Theme.BLUE}
-            showDesc={false}
-          />
+          <div className="topic-slider">
+            <PostSlider
+              posts={featuredTopics}
+              sliderTheme={Theme.BLUE}
+              showDesc={false}
+            />
+          </div>
         </div>
         {topics?.length > 0 && (
           <div className="topic-list">
