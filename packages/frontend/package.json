@@ -26,6 +26,7 @@
     "next": "13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-transition-group": "^4.4.5",
     "sass": "^1.64.0",
     "styled-components": "5.3.5",
     "swiper": "^10.1.0",
