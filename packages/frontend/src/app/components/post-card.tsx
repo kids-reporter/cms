@@ -21,7 +21,9 @@ export const PostCard = ({
     post && (
       <a
         href={post.url}
-        className={`${className} post-body theme-${post.theme}`}
+        className={`post-body theme-${post.theme} ${
+          className ? className : ''
+        }`}
       >
         <img src={post.image} />
         <div className="card-info">
