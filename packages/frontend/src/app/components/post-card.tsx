@@ -39,7 +39,8 @@ export const PostCard = ({
               <span className="subSubcategory">{post.subSubcategory}</span>
             )}
             <span className="published-date">
-              {GetFormattedDate(post.publishedDate) ?? ''}
+              {(post.publishedDate && GetFormattedDate(post.publishedDate)) ??
+                ''}
             </span>
           </div>
         </div>
