@@ -2,23 +2,28 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
-import { API_URL } from '@/app/constants'
+import { PostSummary } from '@/app/components/types'
+import { API_URL, CMS_URL, GetThemeFromCategory } from '@/app/constants'
 import './page.scss'
-
-// TODO: remove mockup
-import { postMockupsMore } from '@/app/mockup'
 
 const latestPostsGQL = `
 query($orderBy: [PostOrderByInput!]!) {
   posts(orderBy: $orderBy) {
     title
     slug
+    ogDescription
     heroImage {
       resized {
         medium
       }
       imageFile {
         url
+      }
+    }
+    subSubcategories {
+      name
+      subcategory {
+        name
       }
     }
     publishedDate
@@ -43,7 +48,21 @@ export default async function LatestPosts() {
   }
 
   const posts = postsRes?.data?.data?.posts
-  if (!posts) {
+  const postSummeries: PostSummary[] = posts?.map((post: any) => {
+    return (
+      post && {
+        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+        title: post.title,
+        url: `/article/${post.slug}`,
+        desc: post.ogDescription,
+        category: post.subSubcategories?.subcategory?.name,
+        subSubcategory: post.subSubcategories.name,
+        publishedDate: post.publishedDate,
+        theme: GetThemeFromCategory(post.subSubcategories?.subcategory?.name),
+      }
+    )
+  })
+  if (!postSummeries) {
     notFound()
   }
 
@@ -52,8 +71,10 @@ export default async function LatestPosts() {
       <div className="content">
         <img src={'/images/new_article.svg'} />
         <div className="post-list">
-          {postMockupsMore.map((post, index) => {
-            return <PostCard key={`author-post-card-${index}`} post={post} />
+          {postSummeries.map((post, index) => {
+            return (
+              post && <PostCard key={`author-post-card-${index}`} post={post} />
+            )
           })}
         </div>
         <Pagination pageNum={10} />
