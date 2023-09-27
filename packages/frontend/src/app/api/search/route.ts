@@ -23,6 +23,10 @@ type SearchResult = {
 export function transferItemsToPostCards(
   items: customsearch_v1.Schema$Result[]
 ): PostCardProp[] {
+  if (!Array.isArray(items)) {
+    return items
+  }
+
   const cardItems: PostCardProp[] = []
   items.forEach((item) => {
     const metaTag = item?.pagemap?.metatags?.[0]
@@ -31,7 +35,7 @@ export function transferItemsToPostCards(
     const title = creativeWork?.headline || metaTag?.['og:title']
     const desc = metaTag?.['og:description']
     const publishedDate = metaTag?.['article:published_time']
-    const url = item.link || metaTag?.['og:url']
+    const url = item?.link || metaTag?.['og:url']
 
     // @TODO: add `subcategory` and `subSubcategory`
     // Currently, we don't have `subcategory` and `subSubcategory`

@@ -45,7 +45,7 @@ const Cards = ({ items }: { items: PostCardProp[] }) => {
         classNames="item"
       >
         <div ref={nodeRef}>
-          <PostCard post={item.post} showDesc={item?.showDesc} />
+          <PostCard post={item.post} showDesc={item.showDesc} />
         </div>
       </CSSTransition>
     )
