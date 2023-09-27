@@ -1,11 +1,5 @@
 import { list } from '@keystone-6/core'
-import {
-  text,
-  password,
-  select,
-  checkbox,
-  timestamp,
-} from '@keystone-6/core/fields'
+import { text, password, select, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -49,9 +43,6 @@ const listConfigurations = list({
         },
       ],
       validation: { isRequired: true },
-    }),
-    isProtected: checkbox({
-      defaultValue: false,
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
