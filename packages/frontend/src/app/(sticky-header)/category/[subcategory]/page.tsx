@@ -70,7 +70,7 @@ export default async function SubCategory({
             return <PostCard key={`author-post-card-${index}`} post={post} />
           })}
         </div>
-        <Pagination currentPage={1} pageNum={10} />
+        <Pagination currentPage={1} totalPages={10} />
       </div>
     </main>
   )

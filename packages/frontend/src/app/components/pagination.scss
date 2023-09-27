@@ -13,12 +13,11 @@
     cursor: pointer;
   }
 
-  .prev {
+  button {
+    border: none;
+    cursor: pointer;
     margin: 0 20px;
-  }
-
-  .next {
-    margin: 0 20px;
+    background-color: transparent;
   }
 
   .index {
@@ -35,6 +34,10 @@
     &:hover, &.active {
       color: var(--colorActive, white);
       background: var(--paletteColor1);
+    }
+
+    &.active {
+      pointer-events: none;
     }
   }
 }

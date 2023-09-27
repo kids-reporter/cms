@@ -1,40 +1,56 @@
+'use client'
 import { AngleLeft, AngleRight } from '@/app/icons'
 import './pagination.scss'
 
 type PaginationProp = {
   currentPage: number
-  pageNum: number
+  totalPages: number
 }
 
 export const Pagination = (props: PaginationProp) => {
   const currentPage = props?.currentPage
-  const pageNum = props?.pageNum
+  const totalPages = props?.totalPages
+
+  if (!totalPages || !currentPage) {
+    return null
+  }
+
+  const handleClickPrev = () => {
+    console.log('click prev')
+  }
+
+  const handleClickNext = () => {
+    console.log('click next')
+  }
+
+  const pagesArrayJSX = Array(totalPages)
+    .fill(0)
+    .map((indexValue, index) => {
+      const pageIndex = index + 1
+      return (
+        <div key={`pagination-index-${pageIndex}`}>
+          <a
+            className={`index ${pageIndex === currentPage ? 'active' : ''}`}
+            href={`/all/${pageIndex}`}
+          >
+            {pageIndex}
+          </a>
+        </div>
+      )
+    })
+  const belowFirstPage = currentPage <= 1
+  const aboveFinalPage = currentPage >= totalPages
 
   return (
-    pageNum > 0 && (
+    totalPages > 0 && (
       <div className="pagination">
-        <a className="prev" href={''}>
-          {AngleLeft}
-        </a>
-        {Array(pageNum)
-          .fill(0)
-          .map((indexValue, index) => {
-            return (
-              <div key={`pagination-index-${index}`}>
-                <a
-                  className={`index ${
-                    index + 1 === currentPage ? 'active' : ''
-                  }`}
-                  href={``}
-                >
-                  {index + 1}
-                </a>
-              </div>
-            )
-          })}
-        <a className="next" href={''}>
-          {AngleRight}
-        </a>
+        {belowFirstPage ? null : (
+          <button onClick={handleClickPrev}>{AngleLeft}</button>
+        )}
+        {pagesArrayJSX}
+        {aboveFinalPage ? null : (
+          <button onClick={handleClickNext}>{AngleRight}</button>
+        )}
       </div>
     )
   )
