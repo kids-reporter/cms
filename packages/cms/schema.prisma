@@ -101,9 +101,10 @@ model Project {
   subtitle      String     @default("")
   status        String?    @default("draft")
   publishedDate DateTime?
-  content       Json?
   heroImage     Photo?     @relation("Project_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?       @map("heroImage")
+  content       Json?
+  credits       Json?
   relatedPosts  Post[]     @relation("Post_projects")
   categories    Category[] @relation("Category_projects")
   tags          Tag[]      @relation("Project_tags")
