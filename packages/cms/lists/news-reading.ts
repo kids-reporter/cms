@@ -4,7 +4,7 @@ import { relationship, text, timestamp } from '@keystone-6/core/fields'
 const NewsReadingGroupItem = list({
   fields: {
     name: text({
-      label: '讀報名稱',
+      label: '語言類別',
       validation: { isRequired: true },
     }),
     embedCode: text({

@@ -1,21 +1,11 @@
 import { graphql, list } from '@keystone-6/core'
-import {
-  virtual,
-  relationship,
-  select,
-  text,
-  timestamp,
-} from '@keystone-6/core/fields'
+import { virtual, relationship, text, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
     slug: text({
       isIndexed: 'unique',
       label: '英文名稱（用於網址）',
-      validation: { isRequired: true },
-    }),
-    title: text({
-      label: '次類別中文名稱',
       validation: { isRequired: true },
     }),
     name: text({
@@ -26,12 +16,6 @@ const listConfigurations = list({
       isIndexed: 'unique',
       label: '次類別中文名稱（使用於 CMS）',
       validation: { isRequired: true },
-    }),
-    status: select({
-      options: [
-        { label: 'inactive', value: 'inactive' },
-        { label: 'active', value: 'active' },
-      ],
     }),
     category: relationship({
       ref: 'Category.subcategories',
@@ -125,6 +109,11 @@ const listConfigurations = list({
   },
   access: {
     operation: () => true,
+  },
+  ui: {
+    listView: {
+      initialColumns: ['slug', 'name'],
+    },
   },
 })
 

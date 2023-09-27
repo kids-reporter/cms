@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core'
-import { relationship, select, text, timestamp } from '@keystone-6/core/fields'
+import { relationship, text, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -12,14 +12,6 @@ const listConfigurations = list({
       isIndexed: 'unique',
       label: '標籤中文名稱',
       validation: { isRequired: true },
-    }),
-    status: select({
-      defaultValue: 'active',
-      options: [
-        { label: 'inactive', value: 'inactive' },
-        { label: 'active', value: 'active' },
-      ],
-      label: '狀態',
     }),
     projects: relationship({
       label: '專題',

@@ -44,7 +44,7 @@ const query = `
           subcategory {
             slug
             category {
-              title
+              name
               slug
             }
           }
@@ -129,7 +129,7 @@ export default async function PostPage({
       url: `/article/${post.slug}`,
       image: imageURL,
       desc: post.ogDescription || '',
-      category: category?.title,
+      category: category?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
       theme: GetThemeFromCategory(category),

@@ -11,7 +11,7 @@ export type Photo = {
 
 type Category = {
   // TODO: title -> name
-  title: string
+  name: string
   slug: string
 }
 
