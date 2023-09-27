@@ -3,6 +3,7 @@ import errors from '@twreporter/errors'
 import { API_URL, GetThemeFromCategory, Theme } from '@/app/constants'
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
+import { Credits } from './credits'
 import { GetFormattedDate } from '@/app/utils'
 import { Leading } from './leading'
 import { Post } from './type-def'
@@ -26,6 +27,7 @@ const query = `
       title
       subtitle
       content
+      credits
       publishedDate
       heroImage {
         ...ImageEntity
@@ -148,6 +150,7 @@ export default async function PostPage({
           </PublishedDate>
         )}
         <Content rawContentState={project.content} theme={Theme.BLUE} />
+        <Credits rawContentState={project.credits} theme={Theme.BLUE} />
         <RelatedPosts posts={relatedPosts} />
       </div>
     )
