@@ -12,14 +12,13 @@ generator client {
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  name        String    @default("")
-  email       String    @unique @default("")
-  password    String
-  role        String
-  isProtected Boolean   @default(false)
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @default("")
+  email     String    @unique @default("")
+  password  String
+  role      String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Post {
@@ -124,9 +123,7 @@ model Project {
 model Category {
   id            Int           @id @default(autoincrement())
   slug          String        @unique @default("")
-  title         String        @unique @default("")
   name          String        @unique @default("")
-  status        String?
   subcategories Subcategory[] @relation("Subcategory_category")
   projects      Project[]     @relation("Category_projects")
   heroImage     Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
@@ -145,10 +142,8 @@ model Category {
 model Subcategory {
   id               Int              @id @default(autoincrement())
   slug             String           @unique @default("")
-  title            String           @default("")
   name             String           @default("")
   nameForCMS       String           @unique @default("")
-  status           String?
   category         Category?        @relation("Subcategory_category", fields: [categoryId], references: [id])
   categoryId       Int?             @map("category")
   subSubcategories SubSubcategory[] @relation("SubSubcategory_subcategory")
@@ -163,7 +158,6 @@ model SubSubcategory {
   slug          String       @unique @default("")
   name          String       @default("")
   nameForCMS    String       @unique @default("")
-  status        String?
   subcategory   Subcategory? @relation("SubSubcategory_subcategory", fields: [subcategoryId], references: [id])
   subcategoryId Int?         @map("subcategory")
   relatedPosts  Post[]       @relation("Post_subSubcategories")
@@ -177,7 +171,6 @@ model Tag {
   id            Int       @id @default(autoincrement())
   slug          String    @unique @default("")
   name          String    @unique @default("")
-  status        String?   @default("active")
   projects      Project[] @relation("Project_tags")
   ogTitle       String    @default("")
   ogDescription String    @default("")

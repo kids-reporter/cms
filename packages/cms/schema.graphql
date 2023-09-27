@@ -7,7 +7,6 @@ type User {
   email: String
   password: PasswordState
   role: String
-  isProtected: Boolean
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -31,7 +30,6 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   role: StringFilter
-  isProtected: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -81,11 +79,6 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
 input DateTimeNullableFilter {
   equals: DateTime
   in: [DateTime!]
@@ -102,7 +95,6 @@ input UserOrderByInput {
   name: OrderDirection
   email: OrderDirection
   role: OrderDirection
-  isProtected: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -117,7 +109,6 @@ input UserUpdateInput {
   email: String
   password: String
   role: String
-  isProtected: Boolean
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -132,7 +123,6 @@ input UserCreateInput {
   email: String
   password: String
   role: String
-  isProtected: Boolean
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -684,9 +674,7 @@ input CategoryRelateToManyForCreateInput {
 type Category {
   id: ID!
   slug: String
-  title: String
   name: String
-  status: String
   subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
   subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
   projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
@@ -703,7 +691,6 @@ type Category {
 input CategoryWhereUniqueInput {
   id: ID
   slug: String
-  title: String
   name: String
 }
 
@@ -713,9 +700,7 @@ input CategoryWhereInput {
   NOT: [CategoryWhereInput!]
   id: IDFilter
   slug: StringFilter
-  title: StringFilter
   name: StringFilter
-  status: StringNullableFilter
   subcategories: SubcategoryManyRelationFilter
   projects: ProjectManyRelationFilter
   heroImage: PhotoWhereInput
@@ -735,9 +720,7 @@ input SubcategoryManyRelationFilter {
 input CategoryOrderByInput {
   id: OrderDirection
   slug: OrderDirection
-  title: OrderDirection
   name: OrderDirection
-  status: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
   createdAt: OrderDirection
@@ -746,9 +729,7 @@ input CategoryOrderByInput {
 
 input CategoryUpdateInput {
   slug: String
-  title: String
   name: String
-  status: String
   subcategories: SubcategoryRelateToManyForUpdateInput
   projects: ProjectRelateToManyForUpdateInput
   heroImage: PhotoRelateToOneForUpdateInput
@@ -773,9 +754,7 @@ input CategoryUpdateArgs {
 
 input CategoryCreateInput {
   slug: String
-  title: String
   name: String
-  status: String
   subcategories: SubcategoryRelateToManyForCreateInput
   projects: ProjectRelateToManyForCreateInput
   heroImage: PhotoRelateToOneForCreateInput
@@ -794,10 +773,8 @@ input SubcategoryRelateToManyForCreateInput {
 type Subcategory {
   id: ID!
   slug: String
-  title: String
   name: String
   nameForCMS: String
-  status: String
   category: Category
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
@@ -818,10 +795,8 @@ input SubcategoryWhereInput {
   NOT: [SubcategoryWhereInput!]
   id: IDFilter
   slug: StringFilter
-  title: StringFilter
   name: StringFilter
   nameForCMS: StringFilter
-  status: StringNullableFilter
   category: CategoryWhereInput
   subSubcategories: SubSubcategoryManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -831,20 +806,16 @@ input SubcategoryWhereInput {
 input SubcategoryOrderByInput {
   id: OrderDirection
   slug: OrderDirection
-  title: OrderDirection
   name: OrderDirection
   nameForCMS: OrderDirection
-  status: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
 
 input SubcategoryUpdateInput {
   slug: String
-  title: String
   name: String
   nameForCMS: String
-  status: String
   category: CategoryRelateToOneForUpdateInput
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   createdAt: DateTime
@@ -864,10 +835,8 @@ input SubcategoryUpdateArgs {
 
 input SubcategoryCreateInput {
   slug: String
-  title: String
   name: String
   nameForCMS: String
-  status: String
   category: CategoryRelateToOneForCreateInput
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
   createdAt: DateTime
@@ -884,7 +853,6 @@ type SubSubcategory {
   slug: String
   name: String
   nameForCMS: String
-  status: String
   subcategory: Subcategory
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
@@ -906,7 +874,6 @@ input SubSubcategoryWhereInput {
   slug: StringFilter
   name: StringFilter
   nameForCMS: StringFilter
-  status: StringNullableFilter
   subcategory: SubcategoryWhereInput
   relatedPosts: PostManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -918,7 +885,6 @@ input SubSubcategoryOrderByInput {
   slug: OrderDirection
   name: OrderDirection
   nameForCMS: OrderDirection
-  status: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -927,7 +893,6 @@ input SubSubcategoryUpdateInput {
   slug: String
   name: String
   nameForCMS: String
-  status: String
   subcategory: SubcategoryRelateToOneForUpdateInput
   relatedPosts: PostRelateToManyForUpdateInput
   createdAt: DateTime
@@ -949,7 +914,6 @@ input SubSubcategoryCreateInput {
   slug: String
   name: String
   nameForCMS: String
-  status: String
   subcategory: SubcategoryRelateToOneForCreateInput
   relatedPosts: PostRelateToManyForCreateInput
   createdAt: DateTime
@@ -965,7 +929,6 @@ type Tag {
   id: ID!
   slug: String
   name: String
-  status: String
   projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   projectsCount(where: ProjectWhereInput! = {}): Int
   ogTitle: String
@@ -990,7 +953,6 @@ input TagWhereInput {
   id: IDFilter
   slug: StringFilter
   name: StringFilter
-  status: StringNullableFilter
   projects: ProjectManyRelationFilter
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -1004,7 +966,6 @@ input TagOrderByInput {
   id: OrderDirection
   slug: OrderDirection
   name: OrderDirection
-  status: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
   createdAt: OrderDirection
@@ -1014,7 +975,6 @@ input TagOrderByInput {
 input TagUpdateInput {
   slug: String
   name: String
-  status: String
   projects: ProjectRelateToManyForUpdateInput
   ogTitle: String
   ogDescription: String
@@ -1032,7 +992,6 @@ input TagUpdateArgs {
 input TagCreateInput {
   slug: String
   name: String
-  status: String
   projects: ProjectRelateToManyForCreateInput
   ogTitle: String
   ogDescription: String
