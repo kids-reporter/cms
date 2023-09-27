@@ -17,6 +17,7 @@
     "@types/node": "20.4.1",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.6",
+    "@types/react-transition-group": "^4.4.6",
     "@types/styled-components": "^5.1.26",
     "axios": "^1.4.0",
     "draft-js": "^0.11.7",
