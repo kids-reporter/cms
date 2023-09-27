@@ -76,6 +76,31 @@ const sections = [
   },
 ]
 
+/*
+const projectsGQL = `
+  query {
+    projects {
+      slug
+      title
+      heroImage {
+        imageFile {
+          url
+        }
+      }
+    }
+  }
+`
+
+const lastestPostsGQL = `
+`
+
+const featuredPostsGQL = `
+`
+
+const tagsGQL = `
+`
+*/
+
 export default async function Home() {
   let response
   try {
@@ -99,7 +124,7 @@ export default async function Home() {
     `,
     })
   } catch (err) {
-    console.error('Fetch post data failed!', err)
+    console.error('Fetch home data failed!', err)
     notFound()
   }
   const topics = response?.data?.data?.posts?.map((post: any) => {
