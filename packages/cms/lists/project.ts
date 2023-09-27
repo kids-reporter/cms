@@ -33,6 +33,10 @@ const listConfigurations = list({
       isIndexed: true,
       label: '發布時間',
     }),
+    heroImage: relationship({
+      ref: 'Photo',
+      label: '首圖',
+    }),
     content: customFields.richTextEditor({
       label: '前言',
       disabledButtons: [
@@ -42,9 +46,30 @@ const listConfigurations = list({
         richTextEditorButtonNames.newsReading,
       ],
     }),
-    heroImage: relationship({
-      ref: 'Photo',
-      label: '首圖',
+    credits: customFields.richTextEditor({
+      label: '團隊成員',
+      disabledButtons: [
+        richTextEditorButtonNames.annotation,
+        richTextEditorButtonNames.blockquote,
+        richTextEditorButtonNames.ol,
+        richTextEditorButtonNames.ul,
+        richTextEditorButtonNames.code,
+        richTextEditorButtonNames.codeBlock,
+        richTextEditorButtonNames.embed,
+        richTextEditorButtonNames.h2,
+        richTextEditorButtonNames.h3,
+        richTextEditorButtonNames.h4,
+        richTextEditorButtonNames.h5,
+        richTextEditorButtonNames.image,
+        richTextEditorButtonNames.infoBox,
+        richTextEditorButtonNames.slideshow,
+        richTextEditorButtonNames.newsReading,
+      ],
+      ui: {
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
     }),
     relatedPosts: relationship({
       ref: 'Post.projects',

@@ -558,8 +558,9 @@ type Project {
   subtitle: String
   status: String
   publishedDate: DateTime
-  content: JSON
   heroImage: Photo
+  content: JSON
+  credits: JSON
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
   categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
@@ -624,8 +625,9 @@ input ProjectUpdateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
-  content: JSON
   heroImage: PhotoRelateToOneForUpdateInput
+  content: JSON
+  credits: JSON
   relatedPosts: PostRelateToManyForUpdateInput
   categories: CategoryRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
@@ -654,8 +656,9 @@ input ProjectCreateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
-  content: JSON
   heroImage: PhotoRelateToOneForCreateInput
+  content: JSON
+  credits: JSON
   relatedPosts: PostRelateToManyForCreateInput
   categories: CategoryRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
