@@ -21,7 +21,9 @@ export const PostCard = ({
     post && (
       <a
         href={post.url}
-        className={`${className} post-body theme-${post.theme}`}
+        className={`post-body theme-${post.theme} ${
+          className ? className : ''
+        }`}
       >
         <img src={post.image} />
         <div className="card-info">
@@ -39,7 +41,8 @@ export const PostCard = ({
               <span className="subSubcategory">{post.subSubcategory}</span>
             )}
             <span className="published-date">
-              {GetFormattedDate(post.publishedDate) ?? ''}
+              {(post.publishedDate && GetFormattedDate(post.publishedDate)) ??
+                ''}
             </span>
           </div>
         </div>
