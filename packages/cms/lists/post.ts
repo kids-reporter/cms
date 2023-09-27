@@ -41,7 +41,7 @@ const listConfigurations = list({
     }),
     publishedDate: timestamp({
       isIndexed: true,
-      label: '發佈日期',
+      label: '發布時間',
     }),
     subSubcategories: relationship({
       ref: 'SubSubcategory.relatedPosts',
@@ -98,6 +98,11 @@ const listConfigurations = list({
         richTextEditorButtonNames.slideshow,
         richTextEditorButtonNames.newsReading,
       ],
+      ui: {
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
     }),
     content: customFields.richTextEditor({
       label: '內文',
@@ -107,6 +112,11 @@ const listConfigurations = list({
         richTextEditorButtonNames.codeBlock,
         richTextEditorButtonNames.newsReading,
       ],
+      ui: {
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
     }),
     projects: relationship({
       label: '專題',
@@ -169,13 +179,16 @@ const listConfigurations = list({
         itemView: {
           fieldPosition: 'sidebar',
         },
+        listView: {
+          fieldMode: 'hidden',
+        },
       },
     }),
   },
   ui: {
     labelField: 'slug',
     listView: {
-      initialColumns: ['id', 'slug', 'title', 'status'],
+      initialColumns: ['slug', 'title', 'status'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },
       pageSize: 50,
     },
