@@ -6,6 +6,14 @@ import { PostSummary } from '@/app/components/types'
 import { API_URL, CMS_URL, GetThemeFromCategory } from '@/app/constants'
 import './page.scss'
 
+const postsPerPage = 9
+
+const postsCountGQL = `
+query Query {
+  postsCount
+}
+`
+
 const latestPostsGQL = `
 query($orderBy: [PostOrderByInput!]!) {
   posts(orderBy: $orderBy) {
@@ -31,54 +39,67 @@ query($orderBy: [PostOrderByInput!]!) {
 }
 `
 
-// TODO: error handling & pagination
 export default async function LatestPosts() {
-  let postsRes
+  let postsCount, posts
   try {
-    postsRes = await axios.post(API_URL, {
-      query: latestPostsGQL,
-      variables: {
-        orderBy: {
-          publishedDate: 'desc',
-        },
-      },
+    const postsCountRes = await axios.post(API_URL, {
+      query: postsCountGQL,
     })
+    postsCount = postsCountRes?.data?.data?.postsCount
+
+    if (postsCount > 0) {
+      const postsRes = await axios.post(API_URL, {
+        query: latestPostsGQL,
+        variables: {
+          orderBy: {
+            publishedDate: 'desc',
+          },
+        },
+      })
+      posts = postsRes?.data?.data?.posts
+    }
   } catch (err) {
     console.error('Fetch post data failed!', err)
     notFound()
   }
 
-  const posts = postsRes?.data?.data?.posts
-  const postSummeries: PostSummary[] = posts?.map((post: any) => {
-    return (
-      post && {
-        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-        title: post.title,
-        url: `/article/${post.slug}`,
-        desc: post.ogDescription,
-        category: post.subSubcategories?.subcategory?.name,
-        subSubcategory: post.subSubcategories.name,
-        publishedDate: post.publishedDate,
-        theme: GetThemeFromCategory(post.subSubcategories?.subcategory?.name),
-      }
-    )
-  })
-  if (!postSummeries) {
-    notFound()
-  }
+  const postSummeries: (PostSummary | undefined)[] = Array.isArray(posts)
+    ? posts.map((post: any) => {
+        return post
+          ? {
+              image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+              title: post.title,
+              url: `/article/${post.slug}`,
+              desc: post.ogDescription,
+              category: post.subSubcategories?.subcategory?.name,
+              subSubcategory: post.subSubcategories.name,
+              publishedDate: post.publishedDate,
+              theme: GetThemeFromCategory(
+                post.subSubcategories?.subcategory?.name
+              ),
+            }
+          : undefined
+      })
+    : []
 
   return (
     <main className="container">
       <div className="content">
         <img src={'/images/new_article.svg'} />
         <div className="post-list">
-          {postSummeries.map((post, index) => {
-            return (
-              post && <PostCard key={`author-post-card-${index}`} post={post} />
-            )
-          })}
+          {postSummeries.length > 0 ? (
+            postSummeries.map((post, index) => {
+              return (
+                post && (
+                  <PostCard key={`author-post-card-${index}`} post={post} />
+                )
+              )
+            })
+          ) : (
+            <p>沒有文章</p>
+          )}
         </div>
-        <Pagination pageNum={10} />
+        {postsCount > postsPerPage && <Pagination pageNum={10} />}
       </div>
     </main>
   )
