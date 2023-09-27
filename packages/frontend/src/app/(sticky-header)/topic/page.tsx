@@ -76,7 +76,7 @@ export default function Topic() {
             })}
           </div>
         )}
-        <Pagination pageNum={10} />
+        <Pagination currentPage={1} pageNum={10} />
       </div>
     </main>
   )
