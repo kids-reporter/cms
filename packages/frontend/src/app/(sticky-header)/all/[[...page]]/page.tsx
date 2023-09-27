@@ -6,6 +6,7 @@ import { PostSummary } from '@/app/components/types'
 import { API_URL, CMS_URL, GetThemeFromCategory } from '@/app/constants'
 import './page.scss'
 
+// TODO: replace 3 to 9
 const postsPerPage = 3
 
 const postsCountGQL = `
