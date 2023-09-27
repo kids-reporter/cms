@@ -99,7 +99,9 @@ export default async function LatestPosts() {
             <p>沒有文章</p>
           )}
         </div>
-        {postsCount > postsPerPage && <Pagination pageNum={10} />}
+        {postsCount > postsPerPage && (
+          <Pagination currentPage={1} pageNum={10} />
+        )}
       </div>
     </main>
   )

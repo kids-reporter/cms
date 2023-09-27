@@ -2,10 +2,12 @@ import { AngleLeft, AngleRight } from '@/app/icons'
 import './pagination.scss'
 
 type PaginationProp = {
+  currentPage: number
   pageNum: number
 }
 
 export const Pagination = (props: PaginationProp) => {
+  const currentPage = props?.currentPage
   const pageNum = props?.pageNum
 
   return (
@@ -19,7 +21,12 @@ export const Pagination = (props: PaginationProp) => {
           .map((indexValue, index) => {
             return (
               <div key={`pagination-index-${index}`}>
-                <a className="index" href={``}>
+                <a
+                  className={`index ${
+                    index + 1 === currentPage ? 'active' : ''
+                  }`}
+                  href={``}
+                >
                   {index + 1}
                 </a>
               </div>
