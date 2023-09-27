@@ -1,37 +1,22 @@
 'use client'
 import styled from 'styled-components'
-import { ProjectContentDraftRenderer } from '@kids-reporter/draft-renderer'
-import { RawDraftContentState } from 'draft-js'
-import { Theme } from '@/app/constants'
-import { useEffect, useState } from 'react'
-
-type ContentProp = {
-  rawContentState: RawDraftContentState
-  theme: Theme
-}
+import { DraftRenderer, DraftRendererProp } from './draft-renderer'
+import { mediaQuery } from '@/app/utils/media-query'
 
 const Container = styled.div`
-  margin-bottom: 120px;
+  margin-bottom: 70x;
+  ${mediaQuery.smallOnly} {
+    margin-bottom: 50px;
+  }
 `
 
-export const Content = ({
-  rawContentState,
-  theme = Theme.BLUE,
-}: ContentProp) => {
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
+export const Content = ({ rawContentState, theme }: DraftRendererProp) => {
   // TODO: render skeleton
-  return isMounted ? (
+  return (
     <Container>
-      <ProjectContentDraftRenderer
-        rawContentState={rawContentState}
-        themeColor={theme}
-      />
+      <DraftRenderer rawContentState={rawContentState} theme={theme} />
     </Container>
-  ) : null
+  )
 }
 
 export default Content

@@ -8,6 +8,7 @@ const FlexContainer = styled.div`
   /* flexbox related styles */
   display: flex;
   justify-content: space-around;
+  align-items: flex-start;
   row-gap: 45px;
   column-gap: 40px;
   flex-wrap: wrap;

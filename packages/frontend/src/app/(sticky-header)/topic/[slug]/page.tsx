@@ -3,6 +3,7 @@ import errors from '@twreporter/errors'
 import { API_URL, GetThemeFromCategory, Theme } from '@/app/constants'
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
+import { Credits } from './credits'
 import { GetFormattedDate } from '@/app/utils'
 import { Leading } from './leading'
 import { Post } from './type-def'
@@ -26,6 +27,7 @@ const query = `
       title
       subtitle
       content
+      credits
       publishedDate
       heroImage {
         ...ImageEntity
@@ -141,13 +143,18 @@ export default async function PostPage({
     project && (
       <div>
         <Leading title={project.title} backgroundImage={project.heroImage} />
-        {project.subtitle && <SubTitle>{project.subtitle}</SubTitle>}
-        {project.publishedDate && (
+        {project.subtitle ? <SubTitle>{project.subtitle}</SubTitle> : null}
+        {project.publishedDate ? (
           <PublishedDate>
             {GetFormattedDate(project.publishedDate)} 最後更新
           </PublishedDate>
-        )}
-        <Content rawContentState={project.content} theme={Theme.BLUE} />
+        ) : null}
+        {project.content ? (
+          <Content rawContentState={project.content} theme={Theme.BLUE} />
+        ) : null}
+        {project.credits ? (
+          <Credits rawContentState={project.credits} theme={Theme.BLUE} />
+        ) : null}
         <RelatedPosts posts={relatedPosts} />
       </div>
     )
