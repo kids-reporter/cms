@@ -6,7 +6,6 @@ import { PostSummary } from '@/app/components/types'
 import { API_URL, CMS_URL, GetThemeFromCategory } from '@/app/constants'
 import './page.scss'
 
-const currentPage = 1
 const postsPerPage = 3
 
 const postsCountGQL = `
@@ -40,7 +39,13 @@ query($orderBy: [PostOrderByInput!]!, $take: Int, $skip: Int!) {
 }
 `
 
-export default async function LatestPosts() {
+export default async function LatestPosts({
+  params,
+}: {
+  params: { page: string }
+}) {
+  const currentPage = Number(params.page)
+
   let postsCount, posts
   try {
     const postsCountRes = await axios.post(API_URL, {
