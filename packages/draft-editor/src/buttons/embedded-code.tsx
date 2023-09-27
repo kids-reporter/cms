@@ -61,18 +61,6 @@ export function EmbeddedCodeButton(props) {
           },
         }}
       >
-        <TextInput
-          onChange={(e) =>
-            setInputValue({
-              caption: e.target.value,
-              embeddedCode: inputValue.embeddedCode,
-            })
-          }
-          type="text"
-          placeholder="Caption"
-          value={inputValue.caption}
-          style={{ marginBottom: '10px', marginTop: '30px' }}
-        />
         <TextArea
           onChange={(e) =>
             setInputValue({
@@ -84,6 +72,18 @@ export function EmbeddedCodeButton(props) {
           type="text"
           value={inputValue.embeddedCode}
           style={{ marginBottom: '30px' }}
+        />
+        <TextInput
+          onChange={(e) =>
+            setInputValue({
+              caption: e.target.value,
+              embeddedCode: inputValue.embeddedCode,
+            })
+          }
+          type="text"
+          placeholder="Caption"
+          value={inputValue.caption}
+          style={{ marginBottom: '10px', marginTop: '30px' }}
         />
       </Drawer>
     </DrawerController>
