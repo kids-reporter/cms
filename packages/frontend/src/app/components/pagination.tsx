@@ -58,14 +58,6 @@ export const Pagination = (props: PaginationProp) => {
     return null
   }
 
-  const handleClickPrev = () => {
-    console.log('click prev')
-  }
-
-  const handleClickNext = () => {
-    console.log('click next')
-  }
-
   const buildPageBox = (pageIndex: number) => {
     return (
       <div key={`pagination-index-${pageIndex}`}>
@@ -170,11 +162,15 @@ export const Pagination = (props: PaginationProp) => {
     totalPages > 0 && (
       <div className="pagination">
         {belowFirstPage ? null : (
-          <button onClick={handleClickPrev}>{AngleLeft}</button>
+          <a className="prev" href={`/all/${currentPage - 1}`}>
+            {AngleLeft}
+          </a>
         )}
         {pagesArrayJSX}
         {aboveFinalPage ? null : (
-          <button onClick={handleClickNext}>{AngleRight}</button>
+          <a className="next" href={`/all/${currentPage + 1}`}>
+            {AngleRight}
+          </a>
         )}
       </div>
     )
