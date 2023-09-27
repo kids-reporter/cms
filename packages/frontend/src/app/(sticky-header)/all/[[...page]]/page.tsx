@@ -47,8 +47,8 @@ export default async function LatestPosts({
 }) {
   const currentPage = !params.page ? 1 : Number(params.page?.[0])
 
-  if (!(currentPage > 0)) {
-    console.error('Incorrect page!', currentPage)
+  if (params.page?.length > 1 || !(currentPage > 0)) {
+    console.error('Incorrect page!', params.page, currentPage)
     notFound()
   }
 
