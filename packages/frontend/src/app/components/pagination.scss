@@ -30,13 +30,16 @@
     color: #232323;
     background-color: #f5f5f5;
     margin: 5px;
+    border: 2px solid rgba(0,0,0,0);
+    transition: all 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
-    &:hover, &.active {
-      color: var(--colorActive, white);
-      background: var(--paletteColor1);
+    &:hover {
+      border: 2px solid var(--paletteColor1);
     }
 
     &.active {
+      color: var(--colorActive, white);
+      background: var(--paletteColor1);
       pointer-events: none;
     }
   }
