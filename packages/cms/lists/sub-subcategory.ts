@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core'
-import { relationship, select, text, timestamp } from '@keystone-6/core/fields'
+import { relationship, text, timestamp } from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -17,12 +17,6 @@ const listConfigurations = list({
       label: '次次類別中文名稱（使用於 CMS）',
       validation: { isRequired: true },
     }),
-    status: select({
-      options: [
-        { label: 'inactive', value: 'inactive' },
-        { label: 'active', value: 'active' },
-      ],
-    }),
     subcategory: relationship({
       ref: 'Subcategory.subSubcategories',
       many: false,
@@ -31,6 +25,7 @@ const listConfigurations = list({
       },
     }),
     relatedPosts: relationship({
+      label: '相關文章',
       ref: 'Post.subSubcategories',
       many: true,
       ui: {
@@ -51,6 +46,9 @@ const listConfigurations = list({
     labelField: 'nameForCMS',
     singular: 'Sub-subcategory',
     plural: 'Sub-subcategories',
+    listView: {
+      initialColumns: ['slug', 'name'],
+    },
   },
   access: {
     operation: () => true,
