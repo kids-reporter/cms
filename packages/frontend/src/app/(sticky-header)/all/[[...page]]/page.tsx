@@ -3,11 +3,13 @@ import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import { API_URL, CMS_URL, GetThemeFromCategory } from '@/app/constants'
+import {
+  API_URL,
+  CMS_URL,
+  POST_PER_PAGE,
+  GetThemeFromCategory,
+} from '@/app/constants'
 import './page.scss'
-
-// TODO: replace 3 to 9
-const postsPerPage = 3
 
 const postsCountGQL = `
 query Query {
@@ -66,8 +68,8 @@ export default async function LatestPosts({
           orderBy: {
             publishedDate: 'desc',
           },
-          take: postsPerPage,
-          skip: (currentPage - 1) * postsPerPage,
+          take: POST_PER_PAGE,
+          skip: (currentPage - 1) * POST_PER_PAGE,
         },
       })
       posts = postsRes?.data?.data?.posts
@@ -96,7 +98,7 @@ export default async function LatestPosts({
       })
     : []
 
-  const totalPages = Math.ceil(postsCount / postsPerPage)
+  const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
 
   return (
     <main className="container">
