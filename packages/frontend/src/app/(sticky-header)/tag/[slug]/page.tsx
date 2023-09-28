@@ -9,24 +9,24 @@ import './page.scss'
 import { postMockupsMore } from '@/app/mockup'
 
 const tagQueryGQL = `
-  query($where: TagWhereUniqueInput!) {
-    tag(where: $where) {
-      posts {
-        slug
-        title
-        ogImage {
-          resized {
-            small
-          }
-        }
-        ogDescription
-        subSubcategories {
-          name
+query($where: TagWhereUniqueInput!) {
+  tag(where: $where) {
+    posts {
+      slug
+      title
+      ogImage {
+        resized {
+          small
         }
       }
-      name
+      ogDescription
+      subSubcategories {
+        name
+      }
     }
+    name
   }
+}
 `
 
 export default async function Tag({ params }: { params: { slug: string } }) {
