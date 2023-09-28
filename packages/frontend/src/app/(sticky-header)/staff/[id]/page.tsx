@@ -79,7 +79,7 @@ export default async function Staff({ params }: { params: { id: string } }) {
           })}
         </div>
       )}
-      <Pagination pageNum={10} />
+      <Pagination currentPage={1} totalPages={10} />
     </main>
   )
 }

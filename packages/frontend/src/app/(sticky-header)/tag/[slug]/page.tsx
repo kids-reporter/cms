@@ -67,7 +67,7 @@ export default async function Tag({ params }: { params: { slug: string } }) {
           })}
         </div>
       )}
-      <Pagination pageNum={10} />
+      <Pagination currentPage={1} totalPages={10} />
     </main>
   )
 }
