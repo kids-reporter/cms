@@ -55,7 +55,7 @@ export default async function LatestPosts({
     notFound()
   }
 
-  let postsCount, posts
+  let postsCount, posts, totalPages
   try {
     const postsCountRes = await axios.post(API_URL, {
       query: postsCountGQL,
@@ -63,6 +63,16 @@ export default async function LatestPosts({
     postsCount = postsCountRes?.data?.data?.postsCount
 
     if (postsCount > 0) {
+      totalPages = Math.ceil(postsCount / POST_PER_PAGE)
+      if (currentPage > totalPages) {
+        console.error(
+          'Request page exceeds total pages!',
+          currentPage,
+          totalPages
+        )
+        notFound()
+      }
+
       const postsRes = await axios.post(API_URL, {
         query: latestPostsGQL,
         variables: {
@@ -99,8 +109,6 @@ export default async function LatestPosts({
       })
     : []
 
-  const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-
   return (
     <main className="container">
       <div className="content">
@@ -115,10 +123,10 @@ export default async function LatestPosts({
               )
             })
           ) : (
-            <p>沒有文章</p>
+            <h1>沒有文章</h1>
           )}
         </div>
-        {totalPages > 0 && (
+        {totalPages && totalPages > 0 && (
           <Pagination currentPage={currentPage} totalPages={totalPages} />
         )}
       </div>

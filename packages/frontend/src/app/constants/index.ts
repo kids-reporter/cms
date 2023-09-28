@@ -54,5 +54,4 @@ export const AUTHOR_ROLES_IN_ORDER = [
 
 export const DEFAULT_AVATAR = '/images/avatar_default.png'
 
-// TODO: replace 3 to 9
-export const POST_PER_PAGE = 3
+export const POST_PER_PAGE = 9
