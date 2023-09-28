@@ -9,8 +9,6 @@ type PaginationProp = {
   totalPages: number
 }
 
-const absoluteCentering =
-  '\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n'
 const styles = {
   btnBoxSize: {
     mobile: 36,
@@ -36,7 +34,10 @@ const Box = styled.div`
   color: black;
   position: relative;
   > :first-child {
-    ${absoluteCentering}
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `
 
