@@ -57,6 +57,7 @@ export default async function LatestPosts({
 
   let postsCount, posts, totalPages
   try {
+    // Fetch total posts count
     const postsCountRes = await axios.post(API_URL, {
       query: postsCountGQL,
     })
@@ -66,13 +67,12 @@ export default async function LatestPosts({
       totalPages = Math.ceil(postsCount / POST_PER_PAGE)
       if (currentPage > totalPages) {
         console.error(
-          'Request page exceeds total pages!',
-          currentPage,
-          totalPages
+          `Request page(${currentPage}) exceeds total pages(${totalPages}!`
         )
         notFound()
       }
 
+      // Fetch posts of specific page
       const postsRes = await axios.post(API_URL, {
         query: latestPostsGQL,
         variables: {
