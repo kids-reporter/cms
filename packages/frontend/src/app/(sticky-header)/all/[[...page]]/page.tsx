@@ -127,7 +127,11 @@ export default async function LatestPosts({
           )}
         </div>
         {totalPages && totalPages > 0 && (
-          <Pagination currentPage={currentPage} totalPages={totalPages} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            routingPrefix={'/all'}
+          />
         )}
       </div>
     </main>

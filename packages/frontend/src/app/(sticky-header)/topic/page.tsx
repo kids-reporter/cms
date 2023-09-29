@@ -76,7 +76,7 @@ export default function Topic() {
             })}
           </div>
         )}
-        <Pagination currentPage={1} totalPages={10} />
+        <Pagination currentPage={1} totalPages={10} routingPrefix={``} />
       </div>
     </main>
   )
