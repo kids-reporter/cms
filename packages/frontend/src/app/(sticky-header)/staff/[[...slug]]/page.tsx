@@ -124,7 +124,9 @@ export default async function Staff({ params }: { params: { slug: string } }) {
           <img src={avatarURL} alt={author.name} />
         </div>
         <h1>{author.name}</h1>
-        {author.email && <span>{author.email}</span>}
+        {author.email && (
+          <a href={`mailto://${author.email}`}>{author.email}</a>
+        )}
         <p className="bio">{author.bio}</p>
       </div>
       <div className="post-list">
