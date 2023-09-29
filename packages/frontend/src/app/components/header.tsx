@@ -1,13 +1,13 @@
 'use client'
 import { useState } from 'react'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL } from '@/app/constants'
+import { SUBSCRIBE_URL, TOPIC_PAGE_ROUTE } from '@/app/constants'
 import './header.scss'
 
 export const NavItems = [
   {
     title: '專題',
-    link: '/topic/page/',
+    link: TOPIC_PAGE_ROUTE,
   },
   {
     title: '新聞',

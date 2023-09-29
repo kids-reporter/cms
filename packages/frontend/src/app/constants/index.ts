@@ -8,6 +8,8 @@ export const DONATE_URL = 'https://support.twreporter.org/'
 export const CREDIT_DONATE_URL = 'https://www.twreporter.org/a/credit-donate'
 export const EMAIL = 'kidsnews@twreporter.org'
 
+export const TOPIC_PAGE_ROUTE = '/topic/page/'
+
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
 export enum Theme {

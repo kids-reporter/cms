@@ -2,7 +2,13 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
-import { API_URL, CMS_URL, POST_PER_PAGE, Theme } from '@/app/constants'
+import {
+  API_URL,
+  CMS_URL,
+  POST_PER_PAGE,
+  TOPIC_PAGE_ROUTE,
+  Theme,
+} from '@/app/constants'
 import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 import './page.scss'
 
@@ -159,7 +165,7 @@ export default async function Topic({
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            routingPrefix={'/topic/page'}
+            routingPrefix={TOPIC_PAGE_ROUTE}
           />
         )}
       </div>
