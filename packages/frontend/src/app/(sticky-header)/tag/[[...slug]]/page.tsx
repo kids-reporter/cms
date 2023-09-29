@@ -40,7 +40,7 @@ query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrde
 }
 `
 // Tag's routing path: /tag/[slug]/[page num], ex: /tag/life/1
-export default async function Tag({ params }: { params: { slug: string } }) {
+export default async function Tag({ params }: { params: { slug: any } }) {
   const slug = params.slug?.[0]
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 

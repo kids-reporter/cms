@@ -47,8 +47,9 @@ const authorGQL = `
     }
   }
 `
-
-export default async function Staff({ params }: { params: { slug: string } }) {
+// TODO: rename staff to author
+// Author's routing path: /staff/[slug]/[page num], ex: /staff/yunruchen/1
+export default async function Staff({ params }: { params: { slug: any } }) {
   const slug = params.slug?.[0]
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 

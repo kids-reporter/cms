@@ -7,7 +7,7 @@ import './header.scss'
 export const NavItems = [
   {
     title: '專題',
-    link: '/topic/',
+    link: '/topic/page/',
   },
   {
     title: '新聞',

@@ -47,7 +47,7 @@ query($orderBy: [PostOrderByInput!]!, $take: Int, $skip: Int!) {
 export default async function LatestPosts({
   params,
 }: {
-  params: { page: string }
+  params: { page: any }
 }) {
   const currentPage = !params.page ? 1 : Number(params.page?.[0])
 
