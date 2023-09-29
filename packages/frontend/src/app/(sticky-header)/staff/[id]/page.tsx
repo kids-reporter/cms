@@ -2,23 +2,32 @@ import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
-import { API_URL, CMS_URL, DEFAULT_AVATAR } from '@/app/constants'
+import {
+  API_URL,
+  CMS_URL,
+  POST_PER_PAGE,
+  DEFAULT_AVATAR,
+} from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
 import { postMockupsMore } from '@/app/mockup'
 
-const authorQueryGQL = `
-  query($authorWhere2: AuthorWhereUniqueInput!) {
+const authorGQL = `
+  query($authorWhere2: AuthorWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
     author(where: $authorWhere2) {
       bio
       name
+      email
       avatar {
         imageFile {
           url
         }
       }
-      posts {
+      posts(orderBy: $orderBy, take: $take, skip: $skip) {
+        title
+        slug
+        ogDescription
         heroImage {
           resized {
             medium
@@ -27,24 +36,37 @@ const authorQueryGQL = `
             url
           }
         }
-        title
-        slug
+        subSubcategories {
+          name
+          subcategory {
+            name
+          }
+        }
         publishedDate
       }
+      postsCount
     }
   }
 `
 
 export default async function Staff({ params }: { params: { id: string } }) {
+  const currentPage = 1
   let response
   try {
     response = params?.id
       ? await axios.post(API_URL, {
-          query: authorQueryGQL,
+          query: authorGQL,
           variables: {
             authorWhere2: {
               id: params.id,
             },
+            orderBy: [
+              {
+                publishedDate: 'desc',
+              },
+            ],
+            take: POST_PER_PAGE,
+            skip: (currentPage - 1) * POST_PER_PAGE,
           },
         })
       : undefined
@@ -70,6 +92,7 @@ export default async function Staff({ params }: { params: { id: string } }) {
           <img src={avatarURL} alt={author.name} />
         </div>
         <h1>{author.name}</h1>
+        {author.email && <span>{author.email}</span>}
         <p className="bio">{author.bio}</p>
       </div>
       {posts?.length > 0 && (
