@@ -43,6 +43,7 @@ query($orderBy: [PostOrderByInput!]!, $take: Int, $skip: Int!) {
 `
 
 // TODO: improve posts loading with ajax instead of routing to avoid page reload
+// Latest post page's routing path: /all/[page num], ex: /all/1
 export default async function LatestPosts({
   params,
 }: {
