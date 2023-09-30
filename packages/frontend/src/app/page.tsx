@@ -118,6 +118,8 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 }
 `
 
+// const featuredPostsGQL = ``
+
 const sectionPostsGQL = `
 query($orderBy: [PostOrderByInput!]!, $take: Int) {
   posts(orderBy: $orderBy, take: $take) {
@@ -143,13 +145,7 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 }
 `
 
-/*
-const featuredPostsGQL = `
-`
-
-const tagsGQL = `
-`
-*/
+// const tagsGQL = ``
 
 const topicsNum = 5 // TODO: check number
 const latestPostsNum = 6
@@ -161,7 +157,6 @@ const sortOrder = {
 export default async function Home() {
   let topicsRes, latestPostsRes, sectionPostsRes
   try {
-    // TODO: fetch post selection posts/posts of each section/tags
     topicsRes = await axios.post(API_URL, {
       query: topicsGQL,
       variables: {
@@ -212,6 +207,10 @@ export default async function Home() {
     }
   })
 
+  // TODO: wire up featured posts
+  const featuredPosts = postMockupsMore
+
+  // TODO: wire up data of each section
   const sectionPosts = sectionPostsRes?.data?.data?.posts?.map((post: any) => {
     return {
       image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
@@ -223,7 +222,8 @@ export default async function Home() {
       publishedDate: post.publishedDate,
     }
   })
-  const featuredPosts = postMockupsMore
+
+  // TODO: wire up tags
   const tags = MOCKUP_TAGS
 
   return (
