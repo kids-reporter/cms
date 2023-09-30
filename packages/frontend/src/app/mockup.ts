@@ -1,3 +1,4 @@
+// TODO: keep mockups below for writing tests
 import { CMS_URL, Theme, AuthorRole } from '@/app/constants'
 
 export const editorsMockup = [
