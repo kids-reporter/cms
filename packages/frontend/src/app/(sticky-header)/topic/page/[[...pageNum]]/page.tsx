@@ -44,21 +44,23 @@ const moreComponent = (
   </div>
 )
 
+type TopicSummary = {
+  image: string
+  title: string
+  url: string
+  desc: string
+  publishedDate: string
+}
+
 // TODO: integrate 專題 logic
-const TopicCard = (props: any) => {
+const TopicCard = (props: { topic: TopicSummary }) => {
   const topic = props.topic
   return (
     <a href={topic.url}>
       <div className="topic-container">
         <img src={topic.image} />
         <div className="topic-info">
-          <img
-            src={
-              topic.type === '國內專題'
-                ? '/images/topic-local.png'
-                : '/images/topic-international.png'
-            }
-          />
+          <img src={'/images/topic-local.png'} />
           <p className="title">
             {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
           </p>
@@ -66,7 +68,7 @@ const TopicCard = (props: any) => {
             {ShortenParagraph(topic.desc, descLengthLimit) ?? ''}
           </p>
           <div className="bottom">
-            <p>{GetFormattedDate(topic.lastUpdateDate) ?? ''} 最後更新</p>
+            <p>{GetFormattedDate(topic.publishedDate) ?? ''} 最後更新</p>
             {moreComponent}
           </div>
         </div>
@@ -126,13 +128,13 @@ export default async function Topic({
   const featuredTopic = topicMockup[0]
   const featuredTopics = postMockupsMore
 
-  const topicSummaries: any[] = Array.isArray(topics)
+  const topicSummaries: (TopicSummary | undefined)[] = Array.isArray(topics)
     ? topics.map((topic: any) => {
         return topic
           ? {
               image: topic.heroImage?.imageFile?.url
                 ? `${CMS_URL}${topic.heroImage.imageFile.url}`
-                : undefined, // TODO: fallback image
+                : '', // TODO: fallback image
               title: topic.title,
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,
@@ -146,20 +148,24 @@ export default async function Topic({
     <main>
       <div className="content">
         <img className="topic-image" src={'/images/topic_pic.svg'} />
-        <div className="topic-summary">
-          <TopicCard topic={featuredTopic} />
-          <div className="topic-slider">
-            <PostSlider
-              posts={featuredTopics}
-              sliderTheme={Theme.BLUE}
-              showDesc={false}
-            />
+        {featuredTopic && (
+          <div className="topic-summary">
+            <TopicCard topic={featuredTopic} />
+            <div className="topic-slider">
+              <PostSlider
+                posts={featuredTopics}
+                sliderTheme={Theme.BLUE}
+                showDesc={false}
+              />
+            </div>
           </div>
-        </div>
+        )}
         {topicSummaries?.length > 0 && (
           <div className="topic-list">
             {topicSummaries.map((topic, index) => {
-              return <TopicCard key={`topic-card-${index}`} topic={topic} />
+              return (
+                topic && <TopicCard key={`topic-card-${index}`} topic={topic} />
+              )
             })}
           </div>
         )}
