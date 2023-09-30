@@ -126,7 +126,7 @@ const tagsGQL = `
 `
 */
 
-const topicsNum = 5
+const topicsNum = 5 // TODO: check number
 const latestPostsNum = 6
 const sortOrder = {
   publishedDate: 'desc',
