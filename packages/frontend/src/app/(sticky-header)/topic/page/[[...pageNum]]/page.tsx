@@ -208,7 +208,7 @@ export default async function Topic({
         )}
         {topicsForListing.length > 0 && (
           <div className="topic-list">
-            {topicSummaries.map((topic, index) => {
+            {topicsForListing.map((topic, index) => {
               return (
                 topic && <TopicCard key={`topic-card-${index}`} topic={topic} />
               )
