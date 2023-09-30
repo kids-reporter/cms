@@ -37,6 +37,7 @@ export const PostSlider = (props: PostSliderProp) => {
   // https://github.com/nolimits4web/swiper/issues/3855#issuecomment-1287871054
   const swiperRef = useRef<SwiperCore>()
 
+  // TODO: handling for only 1 item
   return (
     postNum > 0 && (
       <div className={`post-slider theme-${props.sliderTheme}`}>
