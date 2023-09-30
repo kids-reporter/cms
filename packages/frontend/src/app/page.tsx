@@ -118,6 +118,31 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 }
 `
 
+const sectionPostsGQL = `
+query($orderBy: [PostOrderByInput!]!, $take: Int) {
+  posts(orderBy: $orderBy, take: $take) {
+    title
+    slug
+    ogDescription
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
+      }
+    }
+    subSubcategories {
+      name
+      subcategory {
+        name
+      }
+    }
+    publishedDate
+  }
+}
+`
+
 /*
 const featuredPostsGQL = `
 `
@@ -128,12 +153,13 @@ const tagsGQL = `
 
 const topicsNum = 5 // TODO: check number
 const latestPostsNum = 6
+const sectionPostsNum = latestPostsNum
 const sortOrder = {
   publishedDate: 'desc',
 }
 
 export default async function Home() {
-  let topicsRes, latestPostsRes
+  let topicsRes, latestPostsRes, sectionPostsRes
   try {
     // TODO: fetch post selection posts/posts of each section/tags
     topicsRes = await axios.post(API_URL, {
@@ -149,6 +175,14 @@ export default async function Home() {
       variables: {
         orderBy: sortOrder,
         take: latestPostsNum,
+      },
+    })
+
+    sectionPostsRes = await axios.post(API_URL, {
+      query: sectionPostsGQL,
+      variables: {
+        orderBy: sortOrder,
+        take: sectionPostsNum,
       },
     })
   } catch (err) {
@@ -177,8 +211,19 @@ export default async function Home() {
       publishedDate: post.publishedDate,
     }
   })
+
+  const sectionPosts = sectionPostsRes?.data?.data?.posts?.map((post: any) => {
+    return {
+      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+      title: post.title,
+      url: `/article/${post.slug}`,
+      desc: post.ogDescription,
+      category: post.subSubcategories?.subcategory?.name,
+      subSubcategory: post.subSubcategories.name,
+      publishedDate: post.publishedDate,
+    }
+  })
   const featuredPosts = postMockupsMore
-  const sectionPosts = postMockupsMore
   const tags = MOCKUP_TAGS
 
   return (
