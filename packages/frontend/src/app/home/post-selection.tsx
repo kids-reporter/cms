@@ -15,7 +15,9 @@ const PostBrick = (props: { post: PostSummary }) => {
     post && (
       <a className="post-brick" href={post.url}>
         <div className="top">
-          <p className="category">{`${post.category}/${post.subSubcategory}`}</p>
+          <p className="category">{`${post.category ?? ''}/${
+            post.subSubcategory ?? ''
+          }`}</p>
           <p className="date">{GetFormattedDate(post.publishedDate)}</p>
         </div>
         <p className="title">{ShortenParagraph(post.title, 20)}</p>
