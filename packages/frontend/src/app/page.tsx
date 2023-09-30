@@ -76,24 +76,49 @@ const sections = [
   },
 ]
 
-/*
-const projectsGQL = `
-  query {
-    projects {
-      slug
-      title
-      heroImage {
-        imageFile {
-          url
-        }
+const topicsGQL = `
+query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
+  projects(orderBy: $orderBy, take: $take) {
+    title
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
       }
     }
+    slug
   }
+}
 `
 
-const lastestPostsGQL = `
+const latestPostsGQL = `
+query($orderBy: [PostOrderByInput!]!, $take: Int) {
+  posts(orderBy: $orderBy, take: $take) {
+    title
+    slug
+    ogDescription
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
+      }
+    }
+    subSubcategories {
+      name
+      subcategory {
+        name
+      }
+    }
+    publishedDate
+  }
+}
 `
 
+/*
 const featuredPostsGQL = `
 `
 
@@ -101,42 +126,57 @@ const tagsGQL = `
 `
 */
 
+const topicsNum = 5
+const latestPostsNum = 6
+const sortOrder = {
+  publishedDate: 'desc',
+}
+
 export default async function Home() {
-  let response
+  let topicsRes, latestPostsRes
   try {
-    // TODO: fetch main slider posts/post selection posts/posts of each section/tags
-    response = await axios.post(API_URL, {
-      query: `
-      query {
-        posts {
-          title
-          slug
-          heroImage {
-            resized {
-              medium
-            }
-            imageFile {
-              url
-            }
-          }
-        }
-      }
-    `,
+    // TODO: fetch post selection posts/posts of each section/tags
+    topicsRes = await axios.post(API_URL, {
+      query: topicsGQL,
+      variables: {
+        orderBy: sortOrder,
+        take: topicsNum,
+      },
+    })
+
+    latestPostsRes = await axios.post(API_URL, {
+      query: latestPostsGQL,
+      variables: {
+        orderBy: sortOrder,
+        take: latestPostsNum,
+      },
     })
   } catch (err) {
     console.error('Fetch home data failed!', err)
     notFound()
   }
-  const topics = response?.data?.data?.posts?.map((post: any) => {
+
+  const topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
     return {
-      url: `/article/${post.slug}`,
-      image: post?.heroImage?.imageFile?.url
-        ? `${CMS_URL}${post.heroImage.imageFile.url}`
-        : undefined,
-      title: post.title,
+      url: `/article/${topic.slug}`,
+      image: topic?.heroImage?.imageFile?.url
+        ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+        : '',
+      title: topic.title,
     }
   })
-  const latestPosts = postMockupsMore
+
+  const latestPosts = latestPostsRes?.data?.data?.posts?.map((post: any) => {
+    return {
+      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+      title: post.title,
+      url: `/article/${post.slug}`,
+      desc: post.ogDescription,
+      category: post.subSubcategories?.subcategory?.name,
+      subSubcategory: post.subSubcategories.name,
+      publishedDate: post.publishedDate,
+    }
+  })
   const featuredPosts = postMockupsMore
   const sectionPosts = postMockupsMore
   const tags = MOCKUP_TAGS
