@@ -7,8 +7,7 @@ import { API_URL } from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
-import { postMockupsMore } from '@/app/mockup'
-import { MOCKUP_TAGS } from '@/app/mockup'
+import { MOCKUP_TAGS, postMockupsMore } from '@/app/mockup'
 
 const categoryGQL = `
 `
