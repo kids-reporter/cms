@@ -130,7 +130,9 @@ export default async function Topic({
     ? topics.map((topic: any) => {
         return topic
           ? {
-              image: `${CMS_URL}${topic.heroImage?.imageFile?.url}`, // TODO: error handling for image
+              image: topic.heroImage?.imageFile?.url
+                ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+                : undefined, // TODO: fallback image
               title: topic.title,
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,
