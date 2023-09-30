@@ -8,41 +8,59 @@ import {
   POST_PER_PAGE,
   TOPIC_PAGE_ROUTE,
   Theme,
+  GetThemeFromCategory,
 } from '@/app/constants'
 import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
 import './page.scss'
 
-// TODO: remove mockup
-import { topicMockup, postMockupsMore } from '@/app/mockup'
-
 const titleLengthLimit = 30
 const descLengthLimit = 110
 
-const topicsGQL = `
-query ($orderBy: [ProjectOrderByInput!]!, $take: Int, $skip: Int!) {
-  projects(orderBy: $orderBy, take: $take, skip: $skip) {
-    title
-    slug
-    ogDescription
-    heroImage {
-      resized {
-        medium
+const genTopicsGQL = (hasRelatedPosts: boolean): string => {
+  const relatedPostsGQL = `
+    relatedPosts {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
       }
-      imageFile {
-        url
+      subSubcategories {
+        name
+        subcategory {
+          name
+        }
       }
+      publishedDate
     }
-    publishedDate
-  }
-  projectsCount
-}
-`
+  `
 
-const moreComponent = (
-  <div className={`rpjr-btn rpjr-btn-theme-outline theme-blue`}>
-    看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
-  </div>
-)
+  return `
+  query ($orderBy: [ProjectOrderByInput!]!, $take: Int, $skip: Int!) {
+    projects(orderBy: $orderBy, take: $take, skip: $skip) {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
+      }
+      publishedDate
+      ${hasRelatedPosts ? relatedPostsGQL : ''}
+    }
+    projectsCount
+  }
+  `
+}
 
 type TopicSummary = {
   image: string
@@ -50,10 +68,17 @@ type TopicSummary = {
   url: string
   desc: string
   publishedDate: string
+  relatedPosts?: any[]
 }
 
 // TODO: integrate 專題 logic
 const TopicCard = (props: { topic: TopicSummary }) => {
+  const moreComponent = (
+    <div className={`rpjr-btn rpjr-btn-theme-outline theme-blue`}>
+      看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
+    </div>
+  )
+
   const topic = props.topic
   return (
     <a href={topic.url}>
@@ -98,7 +123,7 @@ export default async function Topic({
   try {
     // Fetch projects of specific page
     const projectsRes = await axios.post(API_URL, {
-      query: topicsGQL,
+      query: genTopicsGQL(currentPage === 1),
       variables: {
         orderBy: [
           {
@@ -124,10 +149,6 @@ export default async function Topic({
     notFound()
   }
 
-  // TODO: fetch 1st topic
-  const featuredTopic = topicMockup[0]
-  const featuredTopics = postMockupsMore
-
   const topicSummaries: (TopicSummary | undefined)[] = Array.isArray(topics)
     ? topics.map((topic: any) => {
         return topic
@@ -139,10 +160,33 @@ export default async function Topic({
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,
               publishedDate: topic.publishedDate,
+              relatedPosts: topic.relatedPosts,
             }
           : undefined
       })
     : []
+
+  const featuredTopic =
+    currentPage === 1 && topicSummaries?.[0] ? topicSummaries[0] : null
+  const featuredTopicPosts = featuredTopic?.relatedPosts
+    ?.filter((post) => post)
+    ?.map((post) => {
+      return {
+        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+        title: post.title,
+        url: `/article/${post.slug}`,
+        desc: post.ogDescription,
+        category: post.subSubcategories?.subcategory?.name,
+        subSubcategory: post.subSubcategories.name,
+        publishedDate: post.publishedDate,
+        theme: GetThemeFromCategory(post.subSubcategories?.subcategory?.name),
+      }
+    })
+
+  // If has featuredTopic, list topics like [featuredTopic(topicSummaries[0])], topicSummaries[1], topicSummaries[2]...
+  const topicsForListing = featuredTopic
+    ? topicSummaries.slice(1)
+    : topicSummaries
 
   return (
     <main>
@@ -152,15 +196,17 @@ export default async function Topic({
           <div className="topic-summary">
             <TopicCard topic={featuredTopic} />
             <div className="topic-slider">
-              <PostSlider
-                posts={featuredTopics}
-                sliderTheme={Theme.BLUE}
-                showDesc={false}
-              />
+              {featuredTopicPosts && (
+                <PostSlider
+                  posts={featuredTopicPosts}
+                  sliderTheme={Theme.BLUE}
+                  showDesc={false}
+                />
+              )}
             </div>
           </div>
         )}
-        {topicSummaries?.length > 0 && (
+        {topicsForListing.length > 0 && (
           <div className="topic-list">
             {topicSummaries.map((topic, index) => {
               return (
