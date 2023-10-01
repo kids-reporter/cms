@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
-import Tags from '@/app/components/tags'
+import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import { API_URL, POST_PER_PAGE } from '@/app/constants'
 import './page.scss'
@@ -68,13 +68,13 @@ export default async function Category({
         return (
           subcategory && {
             name: subcategory.name,
-            slug: `${category}/${subcategory.slug}`,
+            path: `${category}/${subcategory.slug}`,
           }
         )
       }
     )
 
-  const navigationItems = [{ name: '所有文章', slug: category }]
+  const navigationItems = [{ name: '所有文章', path: category }]
   if (Array.isArray(subcategories)) {
     navigationItems.push(...subcategories)
   }
@@ -98,7 +98,19 @@ export default async function Category({
     <main className="container">
       <div className="content">
         <img src={imageURL} />
-        <Tags tags={navigationItems} />
+        <div className="navigation">
+          {navigationItems?.map(
+            (item, index) =>
+              item && (
+                <Navigator
+                  key={`category-navigation-${index}`}
+                  name={item.name}
+                  path={item.path}
+                  active={item.name === category}
+                />
+              )
+          )}
+        </div>
         <div className="post-list">
           {posts.map((post, index) => {
             return <PostCard key={`author-post-card-${index}`} post={post} />
