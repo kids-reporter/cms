@@ -93,6 +93,7 @@ export default async function Category({
     imageURL = '/images/category_campus.svg'
   }
 
+  // TODO: navigation item style
   return (
     <main className="container">
       <div className="content">
