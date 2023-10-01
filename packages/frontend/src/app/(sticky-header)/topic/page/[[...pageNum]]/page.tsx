@@ -196,7 +196,7 @@ export default async function Topic({
           <div className="topic-summary">
             <TopicCard topic={featuredTopic} />
             <div className="topic-slider">
-              {featuredTopicPosts && (
+              {featuredTopicPosts && featuredTopicPosts?.length > 0 && (
                 <PostSlider
                   posts={featuredTopicPosts}
                   sliderTheme={Theme.BLUE}
