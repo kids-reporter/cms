@@ -31,8 +31,7 @@ export const Section = (props: SectionProp) => {
   )
 
   return (
-    config &&
-    posts?.length > 0 && (
+    config && (
       <div className="section">
         <div className="section-head">
           <div className="image-left">
@@ -43,7 +42,9 @@ export const Section = (props: SectionProp) => {
           </div>
           <div className="more">{moreBtn}</div>
         </div>
-        <PostSlider posts={posts} sliderTheme={config.theme} />
+        {posts?.length > 0 && (
+          <PostSlider posts={posts} sliderTheme={config.theme} />
+        )}
         <div className="more-mobile">{moreBtn}</div>
       </div>
     )

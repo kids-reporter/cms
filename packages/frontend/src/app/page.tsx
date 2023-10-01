@@ -11,6 +11,7 @@ import SearchTags from '@/app/home/search-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
+import { PostSummary } from './components/types'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
@@ -23,7 +24,7 @@ const sections = [
     image: 'topic_pic1.svg',
     titleImg: 'topic_title1.svg',
     link: '/category/news/times/',
-    theme: Theme.BLUE,
+    theme: Theme.BLUE, // TODO: get theme from category
   },
   {
     title: '真的假的',
@@ -144,27 +145,29 @@ query($take: Int) {
 }
 `
 
-const sectionPostsGQL = `
-query($orderBy: [PostOrderByInput!]!, $take: Int) {
-  posts(orderBy: $orderBy, take: $take) {
-    title
-    slug
-    ogDescription
-    heroImage {
-      resized {
-        medium
+const subcategoryPostsGQL = `
+query($where: SubcategoryWhereUniqueInput!, $take: Int) {
+  subcategory(where: $where) {
+    relatedPosts(take: $take) {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
       }
-      imageFile {
-        url
-      }
-    }
-    subSubcategories {
-      name
-      subcategory {
+      subSubcategories {
         name
+        subcategory {
+          name
+        }
       }
+      publishedDate
     }
-    publishedDate
   }
 }
 `
@@ -180,7 +183,10 @@ const sortOrder = {
 }
 
 export default async function Home() {
-  let topicsRes, latestPostsRes, featuredPostsRes, sectionPostsRes
+  let topicsRes,
+    latestPostsRes,
+    featuredPostsRes,
+    sectionPostsArray: PostSummary[][] = []
   try {
     topicsRes = await axios.post(API_URL, {
       query: topicsGQL,
@@ -205,13 +211,34 @@ export default async function Home() {
       },
     })
 
-    sectionPostsRes = await axios.post(API_URL, {
-      query: sectionPostsGQL,
-      variables: {
-        orderBy: sortOrder,
-        take: sectionPostsNum,
-      },
-    })
+    sectionPostsArray = await Promise.all(
+      sections.map(async (section): Promise<any> => {
+        console.log(section)
+        const res = await axios.post(API_URL, {
+          query: subcategoryPostsGQL,
+          variables: {
+            where: {
+              slug: 'times', // TODO: fix section slug
+            },
+            take: sectionPostsNum,
+          },
+        })
+
+        return res?.data?.data?.posts?.subcategory?.relatedPosts?.map(
+          (post: any) => {
+            return {
+              image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+              title: post.title,
+              url: `/article/${post.slug}`,
+              desc: post.ogDescription,
+              category: post.subSubcategories?.subcategory?.name,
+              subSubcategory: post.subSubcategories.name,
+              publishedDate: post.publishedDate,
+            }
+          }
+        )
+      })
+    )
   } catch (err) {
     console.error('Fetch home data failed!', err)
     notFound()
@@ -253,19 +280,6 @@ export default async function Home() {
     }
   )
 
-  // TODO: wire up data of each section
-  const sectionPosts = sectionPostsRes?.data?.data?.posts?.map((post: any) => {
-    return {
-      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-      title: post.title,
-      url: `/article/${post.slug}`,
-      desc: post.ogDescription,
-      category: post.subSubcategories?.subcategory?.name,
-      subSubcategory: post.subSubcategories.name,
-      publishedDate: post.publishedDate,
-    }
-  })
-
   // TODO: wire up tags
   const tags = MOCKUP_TAGS
 
@@ -286,7 +300,7 @@ export default async function Home() {
               <Section
                 key={`section-${index}`}
                 config={sectionConfig}
-                posts={sectionPosts}
+                posts={sectionPostsArray[index]}
               />
               {index < sections.length - 1 ? <Divider /> : null}
             </>
