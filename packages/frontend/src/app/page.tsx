@@ -15,7 +15,7 @@ import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
-import { MOCKUP_TAGS, postMockupsMore } from '@/app/mockup'
+import { MOCKUP_TAGS } from '@/app/mockup'
 
 const sections = [
   {
@@ -118,7 +118,31 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 }
 `
 
-// const featuredPostsGQL = ``
+// TODO: fill up filter condition for featured posts query
+const featuredPostsGQL = `
+query($take: Int) {
+  posts(take: $take) {
+    title
+    slug
+    ogDescription
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
+      }
+    }
+    subSubcategories {
+      name
+      subcategory {
+        name
+      }
+    }
+    publishedDate
+  }
+}
+`
 
 const sectionPostsGQL = `
 query($orderBy: [PostOrderByInput!]!, $take: Int) {
@@ -149,13 +173,14 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 
 const topicsNum = 5 // TODO: check number
 const latestPostsNum = 6
-const sectionPostsNum = latestPostsNum
+const featuredPostsNum = 5
+const sectionPostsNum = 6
 const sortOrder = {
   publishedDate: 'desc',
 }
 
 export default async function Home() {
-  let topicsRes, latestPostsRes, sectionPostsRes
+  let topicsRes, latestPostsRes, featuredPostsRes, sectionPostsRes
   try {
     topicsRes = await axios.post(API_URL, {
       query: topicsGQL,
@@ -170,6 +195,13 @@ export default async function Home() {
       variables: {
         orderBy: sortOrder,
         take: latestPostsNum,
+      },
+    })
+
+    featuredPostsRes = await axios.post(API_URL, {
+      query: featuredPostsGQL,
+      variables: {
+        take: featuredPostsNum,
       },
     })
 
@@ -207,8 +239,19 @@ export default async function Home() {
     }
   })
 
-  // TODO: wire up featured posts
-  const featuredPosts = postMockupsMore
+  const featuredPosts = featuredPostsRes?.data?.data?.posts?.map(
+    (post: any) => {
+      return {
+        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+        title: post.title,
+        url: `/article/${post.slug}`,
+        desc: post.ogDescription,
+        category: post.subSubcategories?.subcategory?.name,
+        subSubcategory: post.subSubcategories.name,
+        publishedDate: post.publishedDate,
+      }
+    }
+  )
 
   // TODO: wire up data of each section
   const sectionPosts = sectionPostsRes?.data?.data?.posts?.map((post: any) => {
