@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Tags from '@/app/components/tags'
 import Pagination from '@/app/components/pagination'
-import { API_URL } from '@/app/constants'
+import { API_URL, POST_PER_PAGE } from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
@@ -62,29 +62,54 @@ export default async function Category({
     notFound()
   }
 
-  const subCategories = [{ name: '所有文章', slug: category }]
-  subCategories.push(
-    ...subcategoriesRes?.data?.data?.category?.subcategories?.map(
+  const subcategories =
+    subcategoriesRes?.data?.data?.category?.subcategories?.map(
       (subcategory: any) => {
-        return {
-          name: subcategory.name,
-          slug: `${category}/${subcategory.slug}`,
-        }
+        return (
+          subcategory && {
+            name: subcategory.name,
+            slug: `${category}/${subcategory.slug}`,
+          }
+        )
       }
     )
-  )
+
+  const navigationItems = [{ name: '所有文章', slug: category }]
+  if (Array.isArray(subcategories)) {
+    navigationItems.push(...subcategories)
+  }
+
+  const posts = postMockupsMore
+  const totalPages = Math.ceil(posts.length / POST_PER_PAGE)
+
+  let imageURL
+  if (category === 'news') {
+    imageURL = '/images/category_news.svg'
+  } else if (category === 'listening-news') {
+    imageURL = '/images/category_listening_news.svg'
+  } else if (category === 'comics') {
+    imageURL = '/images/category_comics.svg'
+  } else {
+    imageURL = '/images/category_campus.svg'
+  }
 
   return (
     <main className="container">
       <div className="content">
-        <img src={'/images/category_news.svg'} />
-        <Tags tags={subCategories} />
+        <img src={imageURL} />
+        <Tags tags={navigationItems} />
         <div className="post-list">
-          {postMockupsMore.map((post, index) => {
+          {posts.map((post, index) => {
             return <PostCard key={`author-post-card-${index}`} post={post} />
           })}
         </div>
-        <Pagination currentPage={1} totalPages={10} routingPrefix={``} />
+        {totalPages && totalPages > 0 && (
+          <Pagination
+            currentPage={1}
+            totalPages={10}
+            routingPrefix={`/category/${category}`}
+          />
+        )}
       </div>
     </main>
   )
