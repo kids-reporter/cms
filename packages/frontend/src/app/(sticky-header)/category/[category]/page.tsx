@@ -22,12 +22,12 @@ query($where: CategoryWhereUniqueInput!) {
 
 // const postQueryGQL = ``
 
-export default async function SubCategory({
+export default async function Category({
   params,
 }: {
-  params: { subcategory: string }
+  params: { category: string }
 }) {
-  const category = params?.subcategory
+  const category = params?.category
 
   if (!category) {
     console.error('Incorrect category!', category)
