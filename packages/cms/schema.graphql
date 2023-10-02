@@ -563,8 +563,8 @@ type Project {
   credits: JSON
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
-  categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
-  categoriesCount(where: CategoryWhereInput! = {}): Int
+  projectCategories(where: ProjectCategoryWhereInput! = {}, orderBy: [ProjectCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectCategoryWhereUniqueInput): [ProjectCategory!]
+  projectCategoriesCount(where: ProjectCategoryWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   ogTitle: String
@@ -591,7 +591,7 @@ input ProjectWhereInput {
   publishedDate: DateTimeNullableFilter
   heroImage: PhotoWhereInput
   relatedPosts: PostManyRelationFilter
-  categories: CategoryManyRelationFilter
+  projectCategories: ProjectCategoryManyRelationFilter
   tags: TagManyRelationFilter
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -600,10 +600,10 @@ input ProjectWhereInput {
   updatedAt: DateTimeNullableFilter
 }
 
-input CategoryManyRelationFilter {
-  every: CategoryWhereInput
-  some: CategoryWhereInput
-  none: CategoryWhereInput
+input ProjectCategoryManyRelationFilter {
+  every: ProjectCategoryWhereInput
+  some: ProjectCategoryWhereInput
+  none: ProjectCategoryWhereInput
 }
 
 input ProjectOrderByInput {
@@ -629,7 +629,7 @@ input ProjectUpdateInput {
   content: JSON
   credits: JSON
   relatedPosts: PostRelateToManyForUpdateInput
-  categories: CategoryRelateToManyForUpdateInput
+  projectCategories: ProjectCategoryRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
   ogTitle: String
   ogDescription: String
@@ -638,11 +638,11 @@ input ProjectUpdateInput {
   updatedAt: DateTime
 }
 
-input CategoryRelateToManyForUpdateInput {
-  disconnect: [CategoryWhereUniqueInput!]
-  set: [CategoryWhereUniqueInput!]
-  create: [CategoryCreateInput!]
-  connect: [CategoryWhereUniqueInput!]
+input ProjectCategoryRelateToManyForUpdateInput {
+  disconnect: [ProjectCategoryWhereUniqueInput!]
+  set: [ProjectCategoryWhereUniqueInput!]
+  create: [ProjectCategoryCreateInput!]
+  connect: [ProjectCategoryWhereUniqueInput!]
 }
 
 input ProjectUpdateArgs {
@@ -660,7 +660,7 @@ input ProjectCreateInput {
   content: JSON
   credits: JSON
   relatedPosts: PostRelateToManyForCreateInput
-  categories: CategoryRelateToManyForCreateInput
+  projectCategories: ProjectCategoryRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
   ogTitle: String
   ogDescription: String
@@ -669,9 +669,84 @@ input ProjectCreateInput {
   updatedAt: DateTime
 }
 
-input CategoryRelateToManyForCreateInput {
-  create: [CategoryCreateInput!]
-  connect: [CategoryWhereUniqueInput!]
+input ProjectCategoryRelateToManyForCreateInput {
+  create: [ProjectCategoryCreateInput!]
+  connect: [ProjectCategoryWhereUniqueInput!]
+}
+
+type ProjectCategory {
+  id: ID!
+  slug: String
+  name: String
+  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
+  projectsCount(where: ProjectWhereInput! = {}): Int
+  heroImage: Photo
+  ogTitle: String
+  ogDescription: String
+  ogImage: Photo
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input ProjectCategoryWhereUniqueInput {
+  id: ID
+  slug: String
+  name: String
+}
+
+input ProjectCategoryWhereInput {
+  AND: [ProjectCategoryWhereInput!]
+  OR: [ProjectCategoryWhereInput!]
+  NOT: [ProjectCategoryWhereInput!]
+  id: IDFilter
+  slug: StringFilter
+  name: StringFilter
+  projects: ProjectManyRelationFilter
+  heroImage: PhotoWhereInput
+  ogTitle: StringFilter
+  ogDescription: StringFilter
+  ogImage: PhotoWhereInput
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input ProjectCategoryOrderByInput {
+  id: OrderDirection
+  slug: OrderDirection
+  name: OrderDirection
+  ogTitle: OrderDirection
+  ogDescription: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input ProjectCategoryUpdateInput {
+  slug: String
+  name: String
+  projects: ProjectRelateToManyForUpdateInput
+  heroImage: PhotoRelateToOneForUpdateInput
+  ogTitle: String
+  ogDescription: String
+  ogImage: PhotoRelateToOneForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input ProjectCategoryUpdateArgs {
+  where: ProjectCategoryWhereUniqueInput!
+  data: ProjectCategoryUpdateInput!
+}
+
+input ProjectCategoryCreateInput {
+  slug: String
+  name: String
+  projects: ProjectRelateToManyForCreateInput
+  heroImage: PhotoRelateToOneForCreateInput
+  ogTitle: String
+  ogDescription: String
+  ogImage: PhotoRelateToOneForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type Category {
@@ -680,8 +755,6 @@ type Category {
   name: String
   subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
   subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
-  projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
-  projectsCount(where: ProjectWhereInput! = {}): Int
   heroImage: Photo
   ogTitle: String
   ogDescription: String
@@ -706,7 +779,6 @@ input CategoryWhereInput {
   slug: StringFilter
   name: StringFilter
   subcategories: SubcategoryManyRelationFilter
-  projects: ProjectManyRelationFilter
   heroImage: PhotoWhereInput
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -735,7 +807,6 @@ input CategoryUpdateInput {
   slug: String
   name: String
   subcategories: SubcategoryRelateToManyForUpdateInput
-  projects: ProjectRelateToManyForUpdateInput
   heroImage: PhotoRelateToOneForUpdateInput
   ogTitle: String
   ogDescription: String
@@ -760,7 +831,6 @@ input CategoryCreateInput {
   slug: String
   name: String
   subcategories: SubcategoryRelateToManyForCreateInput
-  projects: ProjectRelateToManyForCreateInput
   heroImage: PhotoRelateToOneForCreateInput
   ogTitle: String
   ogDescription: String
@@ -1223,6 +1293,12 @@ type Mutation {
   updateProjects(data: [ProjectUpdateArgs!]!): [Project]
   deleteProject(where: ProjectWhereUniqueInput!): Project
   deleteProjects(where: [ProjectWhereUniqueInput!]!): [Project]
+  createProjectCategory(data: ProjectCategoryCreateInput!): ProjectCategory
+  createProjectCategories(data: [ProjectCategoryCreateInput!]!): [ProjectCategory]
+  updateProjectCategory(where: ProjectCategoryWhereUniqueInput!, data: ProjectCategoryUpdateInput!): ProjectCategory
+  updateProjectCategories(data: [ProjectCategoryUpdateArgs!]!): [ProjectCategory]
+  deleteProjectCategory(where: ProjectCategoryWhereUniqueInput!): ProjectCategory
+  deleteProjectCategories(where: [ProjectCategoryWhereUniqueInput!]!): [ProjectCategory]
   createCategory(data: CategoryCreateInput!): Category
   createCategories(data: [CategoryCreateInput!]!): [Category]
   updateCategory(where: CategoryWhereUniqueInput!, data: CategoryUpdateInput!): Category
@@ -1304,6 +1380,9 @@ type Query {
   projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   project(where: ProjectWhereUniqueInput!): Project
   projectsCount(where: ProjectWhereInput! = {}): Int
+  projectCategories(where: ProjectCategoryWhereInput! = {}, orderBy: [ProjectCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectCategoryWhereUniqueInput): [ProjectCategory!]
+  projectCategory(where: ProjectCategoryWhereUniqueInput!): ProjectCategory
+  projectCategoriesCount(where: ProjectCategoryWhereInput! = {}): Int
   categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CategoryWhereUniqueInput): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
   categoriesCount(where: CategoryWhereInput! = {}): Int
