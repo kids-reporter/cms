@@ -79,10 +79,10 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    categories: relationship({
+    projectCategories: relationship({
       many: true,
       label: '分類',
-      ref: 'Category.projects',
+      ref: 'ProjectCategory.projects',
       ui: {
         hideCreate: true,
       },
@@ -117,6 +117,9 @@ const listConfigurations = list({
     }),
   },
   access: () => true,
+  ui: {
+    label: 'Projects（專題）',
+  },
 })
 
 export default listConfigurations
