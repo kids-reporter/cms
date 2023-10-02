@@ -224,19 +224,17 @@ export default async function Home() {
           },
         })
 
-        return res?.data?.data?.posts?.subcategory?.relatedPosts?.map(
-          (post: any) => {
-            return {
-              image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-              title: post.title,
-              url: `/article/${post.slug}`,
-              desc: post.ogDescription,
-              category: post.subSubcategories?.subcategory?.name,
-              subSubcategory: post.subSubcategories.name,
-              publishedDate: post.publishedDate,
-            }
+        return res?.data?.data?.subcategory?.relatedPosts?.map((post: any) => {
+          return {
+            image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+            title: post.title,
+            url: `/article/${post.slug}`,
+            desc: post.ogDescription,
+            category: post.subSubcategories?.subcategory?.name,
+            subSubcategory: post.subSubcategories.name,
+            publishedDate: post.publishedDate,
           }
-        )
+        })
       })
     )
   } catch (err) {
