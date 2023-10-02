@@ -38,6 +38,7 @@ const sections = [
     image: 'topic_pic3.svg',
     titleImg: 'topic_title3.svg',
     link: '/category/listening-news/',
+    category: 'listening-news',
     theme: Theme.BLUE,
   },
   {
@@ -145,6 +146,33 @@ query($take: Int) {
 }
 `
 
+const categoryPostsGQL = `
+query($where: CategoryWhereUniqueInput!, $take: Int) {
+  category(where: $where) {
+    relatedPosts(take: $take) {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
+      }
+      subSubcategories {
+        name
+        subcategory {
+          name
+        }
+      }
+      publishedDate
+    }
+  }
+}
+`
+
 const subcategoryPostsGQL = `
 query($where: SubcategoryWhereUniqueInput!, $take: Int) {
   subcategory(where: $where) {
@@ -213,12 +241,15 @@ export default async function Home() {
 
     sectionPostsArray = await Promise.all(
       sections.map(async (section): Promise<any> => {
-        console.log(section)
+        const targetSlug = section?.category ?? 'times' // TODO: fix subcategory slug
+        const targetGQL = section?.category
+          ? categoryPostsGQL
+          : subcategoryPostsGQL // TODO: fix subcategory slug
         const res = await axios.post(API_URL, {
-          query: subcategoryPostsGQL,
+          query: targetGQL,
           variables: {
             where: {
-              slug: 'times', // TODO: fix section slug
+              slug: targetSlug,
             },
             take: sectionPostsNum,
           },

@@ -3,11 +3,36 @@ import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
-import { API_URL, POST_PER_PAGE } from '@/app/constants'
+import { PostSummary } from '@/app/components/types'
+import { API_URL, CMS_URL, POST_PER_PAGE } from '@/app/constants'
 import './page.scss'
 
-// TODO: remove mockup
-import { postMockupsMore } from '@/app/mockup'
+const categoryPostsGQL = `
+query($where: CategoryWhereUniqueInput!, $take: Int) {
+  category(where: $where) {
+    relatedPosts(take: $take) {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
+      }
+      subSubcategories {
+        name
+        subcategory {
+          name
+        }
+      }
+      publishedDate
+    }
+  }
+}
+`
 
 const subcategoriesGQL = `
 query($where: CategoryWhereUniqueInput!) {
@@ -34,13 +59,22 @@ export default async function Category({
     notFound()
   }
 
-  let subcategoriesRes
+  let subcategoriesRes, postsRes
   try {
     subcategoriesRes = await axios.post(API_URL, {
       query: subcategoriesGQL,
       variables: {
         where: {
           slug: category,
+        },
+      },
+    })
+
+    postsRes = await axios.post(API_URL, {
+      query: categoryPostsGQL,
+      variables: {
+        where: {
+          slug: 'news', // TODO: integrate category name
         },
       },
     })
@@ -79,7 +113,18 @@ export default async function Category({
     navigationItems.push(...subcategories)
   }
 
-  const posts = postMockupsMore
+  const posts: PostSummary[] =
+    postsRes?.data?.data?.category?.relatedPosts?.map((post: any) => {
+      return {
+        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+        title: post.title,
+        url: `/article/${post.slug}`,
+        desc: post.ogDescription,
+        category: post.subSubcategories?.subcategory?.name,
+        subSubcategory: post.subSubcategories.name,
+        publishedDate: post.publishedDate,
+      }
+    })
   const totalPages = Math.ceil(posts.length / POST_PER_PAGE)
 
   let imageURL
