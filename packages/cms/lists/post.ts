@@ -186,6 +186,7 @@ const listConfigurations = list({
     }),
   },
   ui: {
+    label: 'Posts（文章）',
     labelField: 'slug',
     listView: {
       initialColumns: ['slug', 'title', 'status'],

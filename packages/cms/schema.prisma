@@ -57,24 +57,26 @@ model Post {
 }
 
 model Photo {
-  id                      Int        @id @default(autoincrement())
-  name                    String     @default("")
-  imageFile_filesize      Int?
-  imageFile_extension     String?
-  imageFile_width         Int?
-  imageFile_height        Int?
-  imageFile_id            String?
-  authors                 Author[]   @relation("Photo_authors")
-  createdAt               DateTime?  @default(now())
-  updatedAt               DateTime?  @updatedAt
-  from_Post_heroImage     Post[]     @relation("Post_heroImage")
-  from_Post_ogImage       Post[]     @relation("Post_ogImage")
-  from_Author_avatar      Author[]   @relation("Author_avatar")
-  from_Project_heroImage  Project[]  @relation("Project_heroImage")
-  from_Project_ogImage    Project[]  @relation("Project_ogImage")
-  from_Category_heroImage Category[] @relation("Category_heroImage")
-  from_Category_ogImage   Category[] @relation("Category_ogImage")
-  from_Tag_ogImage        Tag[]      @relation("Tag_ogImage")
+  id                             Int               @id @default(autoincrement())
+  name                           String            @default("")
+  imageFile_filesize             Int?
+  imageFile_extension            String?
+  imageFile_width                Int?
+  imageFile_height               Int?
+  imageFile_id                   String?
+  authors                        Author[]          @relation("Photo_authors")
+  createdAt                      DateTime?         @default(now())
+  updatedAt                      DateTime?         @updatedAt
+  from_Post_heroImage            Post[]            @relation("Post_heroImage")
+  from_Post_ogImage              Post[]            @relation("Post_ogImage")
+  from_Author_avatar             Author[]          @relation("Author_avatar")
+  from_Project_heroImage         Project[]         @relation("Project_heroImage")
+  from_Project_ogImage           Project[]         @relation("Project_ogImage")
+  from_ProjectCategory_heroImage ProjectCategory[] @relation("ProjectCategory_heroImage")
+  from_ProjectCategory_ogImage   ProjectCategory[] @relation("ProjectCategory_ogImage")
+  from_Category_heroImage        Category[]        @relation("Category_heroImage")
+  from_Category_ogImage          Category[]        @relation("Category_ogImage")
+  from_Tag_ogImage               Tag[]             @relation("Tag_ogImage")
 }
 
 model Author {
@@ -95,28 +97,46 @@ model Author {
 }
 
 model Project {
-  id            Int        @id @default(autoincrement())
-  slug          String     @unique @default("")
-  title         String     @default("")
-  subtitle      String     @default("")
-  status        String?    @default("draft")
-  publishedDate DateTime?
-  heroImage     Photo?     @relation("Project_heroImage", fields: [heroImageId], references: [id])
-  heroImageId   Int?       @map("heroImage")
-  content       Json?
-  credits       Json?
-  relatedPosts  Post[]     @relation("Post_projects")
-  categories    Category[] @relation("Category_projects")
-  tags          Tag[]      @relation("Project_tags")
-  ogTitle       String     @default("")
-  ogDescription String     @default("")
-  ogImage       Photo?     @relation("Project_ogImage", fields: [ogImageId], references: [id])
-  ogImageId     Int?       @map("ogImage")
-  createdAt     DateTime?  @default(now())
-  updatedAt     DateTime?  @updatedAt
+  id                Int               @id @default(autoincrement())
+  slug              String            @unique @default("")
+  title             String            @default("")
+  subtitle          String            @default("")
+  status            String?           @default("draft")
+  publishedDate     DateTime?
+  heroImage         Photo?            @relation("Project_heroImage", fields: [heroImageId], references: [id])
+  heroImageId       Int?              @map("heroImage")
+  content           Json?
+  credits           Json?
+  relatedPosts      Post[]            @relation("Post_projects")
+  projectCategories ProjectCategory[] @relation("Project_projectCategories")
+  tags              Tag[]             @relation("Project_tags")
+  ogTitle           String            @default("")
+  ogDescription     String            @default("")
+  ogImage           Photo?            @relation("Project_ogImage", fields: [ogImageId], references: [id])
+  ogImageId         Int?              @map("ogImage")
+  createdAt         DateTime?         @default(now())
+  updatedAt         DateTime?         @updatedAt
 
   @@index([status])
   @@index([publishedDate])
+  @@index([heroImageId])
+  @@index([ogImageId])
+}
+
+model ProjectCategory {
+  id            Int       @id @default(autoincrement())
+  slug          String    @unique @default("")
+  name          String    @unique @default("")
+  projects      Project[] @relation("Project_projectCategories")
+  heroImage     Photo?    @relation("ProjectCategory_heroImage", fields: [heroImageId], references: [id])
+  heroImageId   Int?      @map("heroImage")
+  ogTitle       String    @default("")
+  ogDescription String    @default("")
+  ogImage       Photo?    @relation("ProjectCategory_ogImage", fields: [ogImageId], references: [id])
+  ogImageId     Int?      @map("ogImage")
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+
   @@index([heroImageId])
   @@index([ogImageId])
 }
@@ -126,7 +146,6 @@ model Category {
   slug          String        @unique @default("")
   name          String        @unique @default("")
   subcategories Subcategory[] @relation("Subcategory_category")
-  projects      Project[]     @relation("Category_projects")
   heroImage     Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?          @map("heroImage")
   ogTitle       String        @default("")

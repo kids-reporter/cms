@@ -97,6 +97,7 @@ const listConfigurations = list({
     }),
   },
   ui: {
+    label: 'Photos（照片）',
     listView: {
       initialColumns: ['name', 'imageFile'],
       initialSort: { field: 'updatedAt', direction: 'ASC' },
