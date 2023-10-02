@@ -1,12 +1,11 @@
 import { Metadata } from 'next'
-// import Script from 'next/script'
+import Script from 'next/script'
 import BackToTop from '@/app/components/back-to-top'
 import Footer from '@/app/components/footer'
 import StyledComponentsRegistry from './registry'
 import './globals.scss'
 
-// TODO: enable GTM
-// const gtmID = 'GTM-T37WZJ44'
+const gtmID = 'GTM-T37WZJ44'
 
 export const metadata: Metadata = {
   title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
@@ -21,7 +20,6 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      {/*
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -31,19 +29,16 @@ export default function RootLayout({
         })(window,document,'script','dataLayer','${gtmID}');
         `}
       </Script>
-      */}
       <StyledComponentsRegistry>
         <body>
           {children}
           <BackToTop />
           <Footer />
-          {/*
           <noscript
             dangerouslySetInnerHTML={{
-            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmID}" height="0" width="0" style="display: none; visibility: hidden;"></iframe>`,
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmID}" height="0" width="0" style="display: none; visibility: hidden;"></iframe>`,
             }}
           />
-          */}
         </body>
       </StyledComponentsRegistry>
     </html>
