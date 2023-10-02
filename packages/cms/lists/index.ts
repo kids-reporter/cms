@@ -1,5 +1,6 @@
 import Author from './author'
 import Category from './category'
+import EditorPicksSetting from './editor-picks-setting'
 import PDF from './pdf'
 import Photo from './photo'
 import Post from './post'
@@ -36,6 +37,7 @@ export const listDefinition = {
   Tag,
   NewsReadingGroup,
   NewsReadingGroupItem,
+  EditorPicksSetting,
   PDF,
   //EditorChoice,
   //Video,
