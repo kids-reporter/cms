@@ -53,5 +53,8 @@ const listConfigurations = list({
   access: {
     operation: () => true,
   },
+  ui: {
+    label: 'Tags（標籤）',
+  },
 })
 export default listConfigurations

@@ -39,5 +39,8 @@ const listConfigurations = list({
   access: {
     operation: () => true,
   },
+  ui: {
+    label: 'Authors（作者）',
+  },
 })
 export default listConfigurations

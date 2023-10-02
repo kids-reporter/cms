@@ -30,6 +30,12 @@ const listConfigurations = list({
       many: true,
       ui: {
         hideCreate: true,
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
       },
     }),
     createdAt: timestamp({
@@ -42,7 +48,7 @@ const listConfigurations = list({
     }),
   },
   ui: {
-    label: 'Sub-subcategories',
+    label: 'Sub-subcategories（次次分類）',
     labelField: 'nameForCMS',
     singular: 'Sub-subcategory',
     plural: 'Sub-subcategories',
