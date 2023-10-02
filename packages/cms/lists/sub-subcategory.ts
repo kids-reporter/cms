@@ -48,10 +48,10 @@ const listConfigurations = list({
     }),
   },
   ui: {
-    label: 'Sub-subcategories（次次分類）',
+    label: 'Sub Subcategories（次次分類）',
     labelField: 'nameForCMS',
-    singular: 'Sub-subcategory',
-    plural: 'Sub-subcategories',
+    singular: 'Sub Subcategory',
+    plural: 'Sub Subcategories',
     listView: {
       initialColumns: ['slug', 'name'],
     },

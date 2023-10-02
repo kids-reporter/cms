@@ -55,9 +55,9 @@ const NewsReadingGroup = list({
     }),
   },
   ui: {
-    label: 'News-readings-groups（讀報）',
-    singular: 'News-readings-group',
-    plural: 'News-readings-groups',
+    label: 'News Readings Groups（讀報）',
+    singular: 'News Readings Group',
+    plural: 'News Readings Groups',
   },
   access: {
     operation: () => true,
