@@ -1194,6 +1194,72 @@ input NewsReadingGroupItemCreateInput {
   updatedAt: DateTime
 }
 
+type EditorPicksSetting {
+  id: ID!
+  name: String
+  nameForCMS: String
+  editorPicksOfPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
+  editorPicksOfPostsCount(where: PostWhereInput! = {}): Int
+  editorPicksOfProjects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
+  editorPicksOfProjectsCount(where: ProjectWhereInput! = {}): Int
+  editorPicksOfTags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  editorPicksOfTagsCount(where: TagWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input EditorPicksSettingWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+input EditorPicksSettingWhereInput {
+  AND: [EditorPicksSettingWhereInput!]
+  OR: [EditorPicksSettingWhereInput!]
+  NOT: [EditorPicksSettingWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  nameForCMS: StringFilter
+  editorPicksOfPosts: PostManyRelationFilter
+  editorPicksOfProjects: ProjectManyRelationFilter
+  editorPicksOfTags: TagManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input EditorPicksSettingOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  nameForCMS: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input EditorPicksSettingUpdateInput {
+  name: String
+  nameForCMS: String
+  editorPicksOfPosts: PostRelateToManyForUpdateInput
+  editorPicksOfProjects: ProjectRelateToManyForUpdateInput
+  editorPicksOfTags: TagRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input EditorPicksSettingUpdateArgs {
+  where: EditorPicksSettingWhereUniqueInput!
+  data: EditorPicksSettingUpdateInput!
+}
+
+input EditorPicksSettingCreateInput {
+  name: String
+  nameForCMS: String
+  editorPicksOfPosts: PostRelateToManyForCreateInput
+  editorPicksOfProjects: ProjectRelateToManyForCreateInput
+  editorPicksOfTags: TagRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type PDF {
   id: ID!
   name: String
@@ -1335,6 +1401,12 @@ type Mutation {
   updateNewsReadingGroupItems(data: [NewsReadingGroupItemUpdateArgs!]!): [NewsReadingGroupItem]
   deleteNewsReadingGroupItem(where: NewsReadingGroupItemWhereUniqueInput!): NewsReadingGroupItem
   deleteNewsReadingGroupItems(where: [NewsReadingGroupItemWhereUniqueInput!]!): [NewsReadingGroupItem]
+  createEditorPicksSetting(data: EditorPicksSettingCreateInput!): EditorPicksSetting
+  createEditorPicksSettings(data: [EditorPicksSettingCreateInput!]!): [EditorPicksSetting]
+  updateEditorPicksSetting(where: EditorPicksSettingWhereUniqueInput!, data: EditorPicksSettingUpdateInput!): EditorPicksSetting
+  updateEditorPicksSettings(data: [EditorPicksSettingUpdateArgs!]!): [EditorPicksSetting]
+  deleteEditorPicksSetting(where: EditorPicksSettingWhereUniqueInput!): EditorPicksSetting
+  deleteEditorPicksSettings(where: [EditorPicksSettingWhereUniqueInput!]!): [EditorPicksSetting]
   createPDF(data: PDFCreateInput!): PDF
   createPDFS(data: [PDFCreateInput!]!): [PDF]
   updatePDF(where: PDFWhereUniqueInput!, data: PDFUpdateInput!): PDF
@@ -1401,6 +1473,9 @@ type Query {
   newsReadingGroupItems(where: NewsReadingGroupItemWhereInput! = {}, orderBy: [NewsReadingGroupItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NewsReadingGroupItemWhereUniqueInput): [NewsReadingGroupItem!]
   newsReadingGroupItem(where: NewsReadingGroupItemWhereUniqueInput!): NewsReadingGroupItem
   newsReadingGroupItemsCount(where: NewsReadingGroupItemWhereInput! = {}): Int
+  editorPicksSettings(where: EditorPicksSettingWhereInput! = {}, orderBy: [EditorPicksSettingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EditorPicksSettingWhereUniqueInput): [EditorPicksSetting!]
+  editorPicksSetting(where: EditorPicksSettingWhereUniqueInput!): EditorPicksSetting
+  editorPicksSettingsCount(where: EditorPicksSettingWhereInput! = {}): Int
   pDFS(where: PDFWhereInput! = {}, orderBy: [PDFOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PDFWhereUniqueInput): [PDF!]
   pDF(where: PDFWhereUniqueInput!): PDF
   pDFSCount(where: PDFWhereInput! = {}): Int
