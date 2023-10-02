@@ -687,6 +687,7 @@ type Category {
   ogDescription: String
   ogImage: Photo
   relatedPosts(take: Int! = 12, skip: Int! = 0): [Post]
+  relatedPostsCount: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -782,6 +783,7 @@ type Subcategory {
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   relatedPosts(take: Int! = 12, skip: Int! = 0): [Post]
+  relatedPostsCount: Int
   createdAt: DateTime
   updatedAt: DateTime
 }

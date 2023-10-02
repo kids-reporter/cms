@@ -41,6 +41,7 @@ const NewsReadingGroup = list({
       validation: { isRequired: true },
     }),
     items: relationship({
+      label: '語言類別',
       ref: 'NewsReadingGroupItem',
       many: true,
     }),
