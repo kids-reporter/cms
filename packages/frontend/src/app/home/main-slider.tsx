@@ -63,7 +63,10 @@ export const MainSlider = (props: SliderProp) => {
                   className="topic-body"
                   href={topic.url}
                 >
-                  <img src={`${topic.image}`} />
+                  <span className="icon">
+                    <img src={'/images/topic_icon.svg'} />
+                  </span>
+                  <img src={topic.image} />
                   <span className="topic-title">
                     {topic.title}
                     <br />
