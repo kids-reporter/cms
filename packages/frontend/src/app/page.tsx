@@ -203,7 +203,7 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int) {
 }
 `
 
-const topicsNum = 5 // TODO: check number
+const topicsNum = 10 // TODO: check number
 const latestPostsNum = 6
 const featuredPostsNum = 5
 const sectionPostsNum = 6
@@ -242,10 +242,14 @@ export default async function Home() {
 
     sectionPostsArray = await Promise.all(
       sections.map(async (section): Promise<any> => {
-        const targetSlug = section?.category ?? 'times' // TODO: fix subcategory slug
-        const targetGQL = section?.category
-          ? categoryPostsGQL
-          : subcategoryPostsGQL // TODO: fix subcategory slug
+        // Get category/subcategory name from link.
+        // ex: '/category/listening-news/', split to ['category', 'listening-news'], pop 'listening-news'
+        const categoryTokens = section.link
+          .replace(/(^\/)|(\/$)/g, '')
+          .split('/')
+        const targetGQL =
+          categoryTokens.length === 3 ? subcategoryPostsGQL : categoryPostsGQL
+        const targetSlug = categoryTokens.pop()
         const res = await axios.post(API_URL, {
           query: targetGQL,
           variables: {
