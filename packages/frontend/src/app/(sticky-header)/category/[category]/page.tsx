@@ -7,10 +7,21 @@ import { PostSummary } from '@/app/components/types'
 import { API_URL, CMS_URL, POST_PER_PAGE } from '@/app/constants'
 import './page.scss'
 
-const categoryPostsGQL = `
-query($where: CategoryWhereUniqueInput!, $take: Int) {
+const subcategoriesGQL = `
+query($where: CategoryWhereUniqueInput!) {
   category(where: $where) {
-    relatedPosts(take: $take) {
+    subcategories {
+      name
+      slug
+    }
+  }
+}
+`
+
+const categoryPostsGQL = `
+query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
+  category(where: $where) {
+    relatedPosts(take: $take, skip: $skip) {
       title
       slug
       ogDescription
@@ -33,19 +44,6 @@ query($where: CategoryWhereUniqueInput!, $take: Int) {
   }
 }
 `
-
-const subcategoriesGQL = `
-query($where: CategoryWhereUniqueInput!) {
-  category(where: $where) {
-    subcategories {
-      name
-      slug
-    }
-  }
-}
-`
-
-// const postQueryGQL = ``
 
 export default async function Category({
   params,
@@ -74,23 +72,12 @@ export default async function Category({
       query: categoryPostsGQL,
       variables: {
         where: {
-          slug: 'news', // TODO: integrate category name
+          slug: category,
         },
+        take: POST_PER_PAGE,
+        skip: 0, // (currentPage - 1) * POST_PER_PAGE,
       },
     })
-
-    /*
-    postRes = params?.subcategory
-      ? await axios.post(API_URL, {
-          query: postQueryGQL,
-          variables: {
-            where: {
-              slug: params.subcategory,
-            },
-          },
-        })
-      : undefined
-    */
   } catch (err) {
     console.error('Fetch category data failed!', err)
     notFound()
@@ -125,7 +112,7 @@ export default async function Category({
         publishedDate: post.publishedDate,
       }
     })
-  const totalPages = Math.ceil(posts.length / POST_PER_PAGE)
+  const totalPages = Math.ceil(posts?.length / POST_PER_PAGE)
 
   let imageURL
   if (category === 'news') {
@@ -158,7 +145,9 @@ export default async function Category({
         </div>
         <div className="post-list">
           {posts.map((post, index) => {
-            return <PostCard key={`author-post-card-${index}`} post={post} />
+            return (
+              post && <PostCard key={`author-post-card-${index}`} post={post} />
+            )
           })}
         </div>
         {totalPages && totalPages > 0 && (
