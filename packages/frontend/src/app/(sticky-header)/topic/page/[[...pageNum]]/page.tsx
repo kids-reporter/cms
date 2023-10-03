@@ -8,9 +8,12 @@ import {
   POST_PER_PAGE,
   TOPIC_PAGE_ROUTE,
   Theme,
-  GetThemeFromCategory,
 } from '@/app/constants'
-import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
+import {
+  GetFormattedDate,
+  ShortenParagraph,
+  GetPostSummaries,
+} from '@/app/utils'
 import './page.scss'
 
 const titleLengthLimit = 30
@@ -171,20 +174,9 @@ export default async function Topic({
 
   const featuredTopic =
     currentPage === 1 && topicSummaries?.[0] ? topicSummaries[0] : null
-  const featuredTopicPosts = featuredTopic?.relatedPosts
-    ?.filter((post) => post)
-    ?.map((post) => {
-      return {
-        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-        title: post.title,
-        url: `/article/${post.slug}`,
-        desc: post.ogDescription,
-        category: post.subSubcategories?.subcategory?.name,
-        subSubcategory: post.subSubcategories.name,
-        publishedDate: post.publishedDate,
-        theme: GetThemeFromCategory(post.subSubcategories?.subcategory?.name),
-      }
-    })
+  const featuredTopicPosts =
+    featuredTopic?.relatedPosts &&
+    GetPostSummaries(featuredTopic.relatedPosts.filter((post) => post))
 
   // If has featuredTopic, list topics like [featuredTopic(topicSummaries[0])], topicSummaries[1], topicSummaries[2]...
   const topicsForListing = featuredTopic
@@ -199,7 +191,7 @@ export default async function Topic({
           <div className="topic-summary">
             <TopicCard topic={featuredTopic} />
             <div className="topic-slider">
-              {featuredTopicPosts && featuredTopicPosts?.length > 0 && (
+              {featuredTopicPosts && featuredTopicPosts.length > 0 && (
                 <PostSlider
                   posts={featuredTopicPosts}
                   sliderTheme={Theme.BLUE}

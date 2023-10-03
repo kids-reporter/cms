@@ -4,7 +4,8 @@ import PostCard from '@/app/components/post-card'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import { API_URL, CMS_URL, POST_PER_PAGE } from '@/app/constants'
+import { API_URL, POST_PER_PAGE } from '@/app/constants'
+import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 const subcategoriesGQL = `
@@ -100,18 +101,9 @@ export default async function Category({
     navigationItems.push(...subcategories)
   }
 
-  const posts: PostSummary[] =
-    postsRes?.data?.data?.category?.relatedPosts?.map((post: any) => {
-      return {
-        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-        title: post.title,
-        url: `/article/${post.slug}`,
-        desc: post.ogDescription,
-        category: post.subSubcategories?.subcategory?.name,
-        subSubcategory: post.subSubcategories.name,
-        publishedDate: post.publishedDate,
-      }
-    })
+  const posts: PostSummary[] = GetPostSummaries(
+    postsRes?.data?.data?.category?.relatedPosts
+  )
   const totalPages = Math.ceil(posts?.length / POST_PER_PAGE)
 
   let imageURL

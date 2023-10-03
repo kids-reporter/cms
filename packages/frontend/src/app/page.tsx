@@ -12,6 +12,7 @@ import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
+import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 const sections = [
@@ -163,22 +164,6 @@ const sortOrder = {
   publishedDate: 'desc',
 }
 
-const getPostSummaries = (posts: any[]): PostSummary[] => {
-  // TODO: error handling for image
-  return posts?.map((post: any) => {
-    return {
-      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-      title: post.title,
-      url: `/article/${post.slug}`,
-      desc: post.ogDescription,
-      category: post.subSubcategories?.subcategory?.name,
-      subSubcategory: post.subSubcategories.name,
-      publishedDate: post.publishedDate,
-      theme: Theme.BLUE, // TODO: fix theme
-    }
-  })
-}
-
 export default async function Home() {
   let topics,
     latestPosts: PostSummary[] = [],
@@ -218,7 +203,7 @@ export default async function Home() {
         take: latestPostsNum,
       },
     })
-    latestPosts = getPostSummaries(latestPostsRes?.data?.data?.posts)
+    latestPosts = GetPostSummaries(latestPostsRes?.data?.data?.posts)
   } catch (err) {
     console.error('Fetch latest posts failed!', err)
   }
@@ -231,7 +216,7 @@ export default async function Home() {
         take: featuredPostsNum,
       },
     })
-    featuredPosts = getPostSummaries(
+    featuredPosts = GetPostSummaries(
       editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts
     )
     tags =
@@ -261,7 +246,7 @@ export default async function Home() {
             take: sectionPostsNum,
           },
         })
-        return getPostSummaries(res?.data?.data?.subcategory?.relatedPosts)
+        return GetPostSummaries(res?.data?.data?.subcategory?.relatedPosts)
       })
     )
   } catch (err) {

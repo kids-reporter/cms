@@ -13,12 +13,8 @@ import RelatedPosts from './related-posts'
 import Tags from '@/app/components/tags'
 import AuthorCard, { Author } from '@/app/components/author-card'
 import Divider from '@/app/components/divider'
-import {
-  API_URL,
-  AUTHOR_ROLES_IN_ORDER,
-  CMS_URL,
-  GetThemeFromCategory,
-} from '@/app/constants'
+import { API_URL, AUTHOR_ROLES_IN_ORDER, CMS_URL } from '@/app/constants'
+import { GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
 
 const heroImageGQL = `
