@@ -245,7 +245,7 @@ export default async function Home() {
     sectionPostsArray = await Promise.all(
       sections.map(async (section): Promise<any> => {
         // Get category/subcategory name from link.
-        // ex: '/category/listening-news/', split to ['category', 'listening-news'], pop 'listening-news'
+        // ex: '/category/listening-news/' => split to ['category', 'listening-news'] => pop 'listening-news'
         const categoryTokens = section.link
           .replace(/(^\/)|(\/$)/g, '')
           .split('/')
