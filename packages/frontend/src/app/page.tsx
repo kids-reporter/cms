@@ -164,35 +164,73 @@ const sortOrder = {
   publishedDate: 'desc',
 }
 
+const getPostSummaries = (posts: any[]): PostSummary[] => {
+  // TODO: error handling for image
+  return posts?.map((post: any) => {
+    return {
+      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+      title: post.title,
+      url: `/article/${post.slug}`,
+      desc: post.ogDescription,
+      category: post.subSubcategories?.subcategory?.name,
+      subSubcategory: post.subSubcategories.name,
+      publishedDate: post.publishedDate,
+      theme: Theme.BLUE, // TODO: fix theme
+    }
+  })
+}
+
 export default async function Home() {
-  let topicsRes,
-    latestPostsRes,
-    editorPicksRes,
-    sectionPostsArray: PostSummary[][] = []
+  let topics,
+    latestPosts,
+    featuredPosts,
+    sectionPostsArray: PostSummary[][] = [],
+    tags
+
   try {
-    topicsRes = await axios.post(API_URL, {
+    // 1. Fetch topics
+    const topicsRes = await axios.post(API_URL, {
       query: topicsGQL,
       variables: {
         orderBy: sortOrder,
         take: topicsNum,
       },
     })
+    topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
+      return {
+        url: `/topic/${topic.slug}`,
+        image: topic?.heroImage?.imageFile?.url
+          ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+          : '',
+        title: topic.title,
+        subtitle: topic.subtitle,
+      }
+    })
 
-    latestPostsRes = await axios.post(API_URL, {
+    // 2. Fetch latest posts
+    const latestPostsRes = await axios.post(API_URL, {
       query: latestPostsGQL,
       variables: {
         orderBy: sortOrder,
         take: latestPostsNum,
       },
     })
+    latestPosts = getPostSummaries(latestPostsRes?.data?.data?.posts)
 
-    editorPicksRes = await axios.post(API_URL, {
+    // 3. Fetch featured posts & tags
+    const editorPicksRes = await axios.post(API_URL, {
       query: editorPicksGQL,
       variables: {
         take: featuredPostsNum,
       },
     })
+    featuredPosts = getPostSummaries(
+      editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts
+    )
+    tags =
+      editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfTags
 
+    // 4. Fetch posts for each section
     sectionPostsArray = await Promise.all(
       sections.map(async (section): Promise<any> => {
         // Get category/subcategory name from link.
@@ -212,65 +250,13 @@ export default async function Home() {
             take: sectionPostsNum,
           },
         })
-
-        return res?.data?.data?.subcategory?.relatedPosts?.map((post: any) => {
-          return {
-            image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-            title: post.title,
-            url: `/article/${post.slug}`,
-            desc: post.ogDescription,
-            category: post.subSubcategories?.subcategory?.name,
-            subSubcategory: post.subSubcategories.name,
-            publishedDate: post.publishedDate,
-          }
-        })
+        return getPostSummaries(res?.data?.data?.subcategory?.relatedPosts)
       })
     )
   } catch (err) {
     console.error('Fetch home data failed!', err)
     notFound()
   }
-
-  const topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
-    return {
-      url: `/topic/${topic.slug}`,
-      image: topic?.heroImage?.imageFile?.url
-        ? `${CMS_URL}${topic.heroImage.imageFile.url}`
-        : '',
-      title: topic.title,
-      subtitle: topic.subtitle,
-    }
-  })
-
-  const latestPosts = latestPostsRes?.data?.data?.posts?.map((post: any) => {
-    return {
-      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-      title: post.title,
-      url: `/article/${post.slug}`,
-      desc: post.ogDescription,
-      category: post.subSubcategories?.subcategory?.name,
-      subSubcategory: post.subSubcategories.name,
-      publishedDate: post.publishedDate,
-    }
-  })
-
-  const featuredPosts =
-    editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts?.map(
-      (post: any) => {
-        return {
-          image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-          title: post.title,
-          url: `/article/${post.slug}`,
-          desc: post.ogDescription,
-          category: post.subSubcategories?.subcategory?.name,
-          subSubcategory: post.subSubcategories.name,
-          publishedDate: post.publishedDate,
-        }
-      }
-    )
-
-  const tags =
-    editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfTags
 
   return (
     <>
@@ -289,7 +275,7 @@ export default async function Home() {
               <Section
                 key={`section-${index}`}
                 config={sectionConfig}
-                posts={sectionPostsArray[index]}
+                posts={sectionPostsArray?.[index]}
               />
               {index < sections.length - 1 ? <Divider /> : null}
             </>
