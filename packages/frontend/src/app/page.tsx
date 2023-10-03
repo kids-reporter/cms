@@ -80,6 +80,7 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
   projects(orderBy: $orderBy, take: $take) {
     title
     subtitle
+    slug
     heroImage {
       resized {
         medium
@@ -88,7 +89,6 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
         url
       }
     }
-    slug
   }
 }
 `
