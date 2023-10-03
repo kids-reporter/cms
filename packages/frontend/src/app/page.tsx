@@ -121,28 +121,29 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 }
 `
 
-// TODO: fill up filter condition for featured posts query
 const featuredPostsGQL = `
 query($take: Int) {
-  posts(take: $take) {
-    title
-    slug
-    ogDescription
-    heroImage {
-      resized {
-        medium
+  editorPicksSettings {
+    editorPicksOfPosts(take: $take) {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
       }
-      imageFile {
-        url
-      }
-    }
-    subSubcategories {
-      name
-      subcategory {
+      subSubcategories {
         name
+        subcategory {
+          name
+        }
       }
+      publishedDate
     }
-    publishedDate
   }
 }
 `
@@ -297,19 +298,20 @@ export default async function Home() {
     }
   })
 
-  const featuredPosts = featuredPostsRes?.data?.data?.posts?.map(
-    (post: any) => {
-      return {
-        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-        title: post.title,
-        url: `/article/${post.slug}`,
-        desc: post.ogDescription,
-        category: post.subSubcategories?.subcategory?.name,
-        subSubcategory: post.subSubcategories.name,
-        publishedDate: post.publishedDate,
+  const featuredPosts =
+    featuredPostsRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts?.map(
+      (post: any) => {
+        return {
+          image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+          title: post.title,
+          url: `/article/${post.slug}`,
+          desc: post.ogDescription,
+          category: post.subSubcategories?.subcategory?.name,
+          subSubcategory: post.subSubcategories.name,
+          publishedDate: post.publishedDate,
+        }
       }
-    }
-  )
+    )
 
   // TODO: wire up tags
   const tags = MOCKUP_TAGS
