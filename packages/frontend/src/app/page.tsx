@@ -203,8 +203,6 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int) {
 }
 `
 
-// const tagsGQL = ``
-
 const topicsNum = 5 // TODO: check number
 const latestPostsNum = 6
 const featuredPostsNum = 5
