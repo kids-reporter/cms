@@ -6,10 +6,11 @@ import {
   RawDraftContentState,
   convertFromRaw,
 } from 'draft-js'
-import { atomicBlockRenderer } from './block-renderer-fn'
-import { decorator } from './entity-decorators/index'
 import { ThemeColorEnum } from './utils/index'
 import { ThemeProvider } from 'styled-components'
+import { atomicBlockRenderer } from './block-renderer-fn'
+import { customStyleFn } from './custom-style-fn'
+import { decorator } from './entity-decorators/index'
 
 const blockRendererFn = (block: any) => {
   const atomicBlockObj = atomicBlockRenderer(block)
@@ -38,6 +39,7 @@ function DraftRenderer({
         editorState={editorState}
         blockRenderMap={blockRenderMaps.content}
         blockRendererFn={blockRendererFn}
+        customStyleFn={customStyleFn}
         readOnly
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onChange={() => {}}
@@ -64,6 +66,7 @@ function ArticleIntroductionDraftRenderer({
       <Editor
         editorState={editorState}
         blockRenderMap={blockRenderMaps.brief}
+        customStyleFn={customStyleFn}
         readOnly
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onChange={() => {}}
@@ -89,6 +92,7 @@ function ProjectContentDraftRenderer({
         editorState={editorState}
         blockRenderMap={blockRenderMaps.projectContent}
         blockRendererFn={blockRendererFn}
+        customStyleFn={customStyleFn}
         readOnly
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onChange={() => {}}

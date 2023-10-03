@@ -5,6 +5,10 @@ export default {
   underline: 'underline',
   code: 'code',
 
+  // custom inline styles
+  backgroundColor: 'background-color',
+  fontColor: 'font-color',
+
   // block styles
   h2: 'header-two',
   h3: 'header-three',
