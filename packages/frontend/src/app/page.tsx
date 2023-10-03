@@ -93,27 +93,31 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
 }
 `
 
+const postContentGQL = `
+title
+slug
+ogDescription
+heroImage {
+  resized {
+    medium
+  }
+  imageFile {
+    url
+  }
+}
+subSubcategories {
+  name
+  subcategory {
+    name
+  }
+}
+publishedDate
+`
+
 const latestPostsGQL = `
 query($orderBy: [PostOrderByInput!]!, $take: Int) {
   posts(orderBy: $orderBy, take: $take) {
-    title
-    slug
-    ogDescription
-    heroImage {
-      resized {
-        medium
-      }
-      imageFile {
-        url
-      }
-    }
-    subSubcategories {
-      name
-      subcategory {
-        name
-      }
-    }
-    publishedDate
+    ${postContentGQL}
   }
 }
 `
@@ -122,24 +126,7 @@ const editorPicksGQL = `
 query($take: Int) {
   editorPicksSettings {
     editorPicksOfPosts(take: $take) {
-      title
-      slug
-      ogDescription
-      heroImage {
-        resized {
-          medium
-        }
-        imageFile {
-          url
-        }
-      }
-      subSubcategories {
-        name
-        subcategory {
-          name
-        }
-      }
-      publishedDate
+      ${postContentGQL}
     }
     editorPicksOfTags {
       name
@@ -153,24 +140,7 @@ const categoryPostsGQL = `
 query($where: CategoryWhereUniqueInput!, $take: Int) {
   category(where: $where) {
     relatedPosts(take: $take) {
-      title
-      slug
-      ogDescription
-      heroImage {
-        resized {
-          medium
-        }
-        imageFile {
-          url
-        }
-      }
-      subSubcategories {
-        name
-        subcategory {
-          name
-        }
-      }
-      publishedDate
+      ${postContentGQL}
     }
   }
 }
