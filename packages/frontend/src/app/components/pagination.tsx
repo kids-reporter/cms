@@ -7,6 +7,7 @@ import './pagination.scss'
 type PaginationProp = {
   currentPage: number
   totalPages: number
+  routingPrefix: string
 }
 
 const styles = {
@@ -54,8 +55,9 @@ const EllipsisBox = styled(Box)`
 export const Pagination = (props: PaginationProp) => {
   const currentPage = props?.currentPage
   const totalPages = props?.totalPages
+  const routingPrefix = props?.routingPrefix
 
-  if (!totalPages || !currentPage) {
+  if (!totalPages || !currentPage || !routingPrefix) {
     return null
   }
 
@@ -64,7 +66,7 @@ export const Pagination = (props: PaginationProp) => {
       <div key={`pagination-index-${pageIndex}`}>
         <a
           className={`index ${pageIndex === currentPage ? 'active' : ''}`}
-          href={`/all/${pageIndex}`}
+          href={`${routingPrefix}/${pageIndex}`}
         >
           {pageIndex}
         </a>
@@ -163,13 +165,13 @@ export const Pagination = (props: PaginationProp) => {
     totalPages > 0 && (
       <div className="pagination">
         {belowFirstPage ? null : (
-          <a className="prev" href={`/all/${currentPage - 1}`}>
+          <a className="prev" href={`${routingPrefix}/${currentPage - 1}`}>
             {AngleLeft}
           </a>
         )}
         {pagesArrayJSX}
         {aboveFinalPage ? null : (
-          <a className="next" href={`/all/${currentPage + 1}`}>
+          <a className="next" href={`${routingPrefix}/${currentPage + 1}`}>
             {AngleRight}
           </a>
         )}

@@ -8,6 +8,8 @@ export const DONATE_URL = 'https://support.twreporter.org/'
 export const CREDIT_DONATE_URL = 'https://www.twreporter.org/a/credit-donate'
 export const EMAIL = 'kidsnews@twreporter.org'
 
+export const TOPIC_PAGE_ROUTE = '/topic/page/'
+
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
 export enum Theme {
@@ -54,5 +56,4 @@ export const AUTHOR_ROLES_IN_ORDER = [
 
 export const DEFAULT_AVATAR = '/images/avatar_default.png'
 
-// TODO: replace 3 to 9
-export const POST_PER_PAGE = 3
+export const POST_PER_PAGE = 9

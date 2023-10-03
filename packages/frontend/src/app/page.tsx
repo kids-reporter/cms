@@ -11,11 +11,12 @@ import SearchTags from '@/app/home/search-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
+import { PostSummary } from './components/types'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
 // TODO: remove mockup
-import { MOCKUP_TAGS, postMockupsMore } from '@/app/mockup'
+import { MOCKUP_TAGS } from '@/app/mockup'
 
 const sections = [
   {
@@ -23,7 +24,7 @@ const sections = [
     image: 'topic_pic1.svg',
     titleImg: 'topic_title1.svg',
     link: '/category/news/times/',
-    theme: Theme.BLUE,
+    theme: Theme.BLUE, // TODO: get theme from category
   },
   {
     title: '真的假的',
@@ -37,6 +38,7 @@ const sections = [
     image: 'topic_pic3.svg',
     titleImg: 'topic_title3.svg',
     link: '/category/listening-news/',
+    category: 'listening-news',
     theme: Theme.BLUE,
   },
   {
@@ -76,69 +78,238 @@ const sections = [
   },
 ]
 
-/*
-const projectsGQL = `
-  query {
-    projects {
-      slug
+const topicsGQL = `
+query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
+  projects(orderBy: $orderBy, take: $take) {
+    title
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
+      }
+    }
+    slug
+  }
+}
+`
+
+const latestPostsGQL = `
+query($orderBy: [PostOrderByInput!]!, $take: Int) {
+  posts(orderBy: $orderBy, take: $take) {
+    title
+    slug
+    ogDescription
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
+      }
+    }
+    subSubcategories {
+      name
+      subcategory {
+        name
+      }
+    }
+    publishedDate
+  }
+}
+`
+
+// TODO: fill up filter condition for featured posts query
+const featuredPostsGQL = `
+query($take: Int) {
+  posts(take: $take) {
+    title
+    slug
+    ogDescription
+    heroImage {
+      resized {
+        medium
+      }
+      imageFile {
+        url
+      }
+    }
+    subSubcategories {
+      name
+      subcategory {
+        name
+      }
+    }
+    publishedDate
+  }
+}
+`
+
+const categoryPostsGQL = `
+query($where: CategoryWhereUniqueInput!, $take: Int) {
+  category(where: $where) {
+    relatedPosts(take: $take) {
       title
+      slug
+      ogDescription
       heroImage {
+        resized {
+          medium
+        }
         imageFile {
           url
         }
       }
-    }
-  }
-`
-
-const lastestPostsGQL = `
-`
-
-const featuredPostsGQL = `
-`
-
-const tagsGQL = `
-`
-*/
-
-export default async function Home() {
-  let response
-  try {
-    // TODO: fetch main slider posts/post selection posts/posts of each section/tags
-    response = await axios.post(API_URL, {
-      query: `
-      query {
-        posts {
-          title
-          slug
-          heroImage {
-            resized {
-              medium
-            }
-            imageFile {
-              url
-            }
-          }
+      subSubcategories {
+        name
+        subcategory {
+          name
         }
       }
-    `,
+      publishedDate
+    }
+  }
+}
+`
+
+const subcategoryPostsGQL = `
+query($where: SubcategoryWhereUniqueInput!, $take: Int) {
+  subcategory(where: $where) {
+    relatedPosts(take: $take) {
+      title
+      slug
+      ogDescription
+      heroImage {
+        resized {
+          medium
+        }
+        imageFile {
+          url
+        }
+      }
+      subSubcategories {
+        name
+        subcategory {
+          name
+        }
+      }
+      publishedDate
+    }
+  }
+}
+`
+
+// const tagsGQL = ``
+
+const topicsNum = 5 // TODO: check number
+const latestPostsNum = 6
+const featuredPostsNum = 5
+const sectionPostsNum = 6
+const sortOrder = {
+  publishedDate: 'desc',
+}
+
+export default async function Home() {
+  let topicsRes,
+    latestPostsRes,
+    featuredPostsRes,
+    sectionPostsArray: PostSummary[][] = []
+  try {
+    topicsRes = await axios.post(API_URL, {
+      query: topicsGQL,
+      variables: {
+        orderBy: sortOrder,
+        take: topicsNum,
+      },
     })
+
+    latestPostsRes = await axios.post(API_URL, {
+      query: latestPostsGQL,
+      variables: {
+        orderBy: sortOrder,
+        take: latestPostsNum,
+      },
+    })
+
+    featuredPostsRes = await axios.post(API_URL, {
+      query: featuredPostsGQL,
+      variables: {
+        take: featuredPostsNum,
+      },
+    })
+
+    sectionPostsArray = await Promise.all(
+      sections.map(async (section): Promise<any> => {
+        const targetSlug = section?.category ?? 'times' // TODO: fix subcategory slug
+        const targetGQL = section?.category
+          ? categoryPostsGQL
+          : subcategoryPostsGQL // TODO: fix subcategory slug
+        const res = await axios.post(API_URL, {
+          query: targetGQL,
+          variables: {
+            where: {
+              slug: targetSlug,
+            },
+            take: sectionPostsNum,
+          },
+        })
+
+        return res?.data?.data?.subcategory?.relatedPosts?.map((post: any) => {
+          return {
+            image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+            title: post.title,
+            url: `/article/${post.slug}`,
+            desc: post.ogDescription,
+            category: post.subSubcategories?.subcategory?.name,
+            subSubcategory: post.subSubcategories.name,
+            publishedDate: post.publishedDate,
+          }
+        })
+      })
+    )
   } catch (err) {
     console.error('Fetch home data failed!', err)
     notFound()
   }
-  const topics = response?.data?.data?.posts?.map((post: any) => {
+
+  const topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
     return {
-      url: `/article/${post.slug}`,
-      image: post?.heroImage?.imageFile?.url
-        ? `${CMS_URL}${post.heroImage.imageFile.url}`
-        : undefined,
-      title: post.title,
+      url: `/article/${topic.slug}`,
+      image: topic?.heroImage?.imageFile?.url
+        ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+        : '',
+      title: topic.title,
     }
   })
-  const latestPosts = postMockupsMore
-  const featuredPosts = postMockupsMore
-  const sectionPosts = postMockupsMore
+
+  const latestPosts = latestPostsRes?.data?.data?.posts?.map((post: any) => {
+    return {
+      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+      title: post.title,
+      url: `/article/${post.slug}`,
+      desc: post.ogDescription,
+      category: post.subSubcategories?.subcategory?.name,
+      subSubcategory: post.subSubcategories.name,
+      publishedDate: post.publishedDate,
+    }
+  })
+
+  const featuredPosts = featuredPostsRes?.data?.data?.posts?.map(
+    (post: any) => {
+      return {
+        image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+        title: post.title,
+        url: `/article/${post.slug}`,
+        desc: post.ogDescription,
+        category: post.subSubcategories?.subcategory?.name,
+        subSubcategory: post.subSubcategories.name,
+        publishedDate: post.publishedDate,
+      }
+    }
+  )
+
+  // TODO: wire up tags
   const tags = MOCKUP_TAGS
 
   return (
@@ -158,7 +329,7 @@ export default async function Home() {
               <Section
                 key={`section-${index}`}
                 config={sectionConfig}
-                posts={sectionPosts}
+                posts={sectionPostsArray[index]}
               />
               {index < sections.length - 1 ? <Divider /> : null}
             </>

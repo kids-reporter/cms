@@ -17,6 +17,12 @@ main {
       width: 100%;
       max-width: 600px;
     }
+
+    .navigation {
+      display: flex;
+      flex-direction: row;
+      gap : 10px;
+    }
   }
 
   .post-list {

@@ -43,10 +43,11 @@ query($orderBy: [PostOrderByInput!]!, $take: Int, $skip: Int!) {
 `
 
 // TODO: improve posts loading with ajax instead of routing to avoid page reload
+// Latest post page's routing path: /all/[page num], ex: /all/1
 export default async function LatestPosts({
   params,
 }: {
-  params: { page: string }
+  params: { page: any }
 }) {
   const currentPage = !params.page ? 1 : Number(params.page?.[0])
 
@@ -55,14 +56,24 @@ export default async function LatestPosts({
     notFound()
   }
 
-  let postsCount, posts
+  let postsCount, posts, totalPages
   try {
+    // Fetch total posts count
     const postsCountRes = await axios.post(API_URL, {
       query: postsCountGQL,
     })
     postsCount = postsCountRes?.data?.data?.postsCount
 
     if (postsCount > 0) {
+      totalPages = Math.ceil(postsCount / POST_PER_PAGE)
+      if (currentPage > totalPages) {
+        console.error(
+          `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+        )
+        notFound()
+      }
+
+      // Fetch posts of specific page
       const postsRes = await axios.post(API_URL, {
         query: latestPostsGQL,
         variables: {
@@ -99,8 +110,6 @@ export default async function LatestPosts({
       })
     : []
 
-  const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-
   return (
     <main className="container">
       <div className="content">
@@ -115,11 +124,15 @@ export default async function LatestPosts({
               )
             })
           ) : (
-            <p>沒有文章</p>
+            <h1>沒有文章</h1>
           )}
         </div>
-        {totalPages > 0 && (
-          <Pagination currentPage={currentPage} totalPages={totalPages} />
+        {totalPages && totalPages > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            routingPrefix={'/all'}
+          />
         )}
       </div>
     </main>
