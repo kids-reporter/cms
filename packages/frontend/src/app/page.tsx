@@ -82,6 +82,7 @@ const topicsGQL = `
 query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
   projects(orderBy: $orderBy, take: $take) {
     title
+    subtitle
     heroImage {
       resized {
         medium
@@ -280,6 +281,7 @@ export default async function Home() {
         ? `${CMS_URL}${topic.heroImage.imageFile.url}`
         : '',
       title: topic.title,
+      subtitle: topic.subtitle,
     }
   })
 
