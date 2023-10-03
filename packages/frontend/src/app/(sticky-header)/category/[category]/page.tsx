@@ -75,7 +75,7 @@ export default async function Category({
           slug: category,
         },
         take: POST_PER_PAGE,
-        skip: 0, // (currentPage - 1) * POST_PER_PAGE,
+        skip: 0, // TODO: pagination (currentPage - 1) * POST_PER_PAGE,
       },
     })
   } catch (err) {
