@@ -15,9 +15,6 @@ import { PostSummary } from './components/types'
 import { API_URL, CMS_URL, Theme } from '@/app/constants'
 import './page.scss'
 
-// TODO: remove mockup
-import { MOCKUP_TAGS } from '@/app/mockup'
-
 const sections = [
   {
     title: '時時刻刻',
@@ -121,7 +118,7 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 }
 `
 
-const featuredPostsGQL = `
+const editorPicksGQL = `
 query($take: Int) {
   editorPicksSettings {
     editorPicksOfPosts(take: $take) {
@@ -143,6 +140,10 @@ query($take: Int) {
         }
       }
       publishedDate
+    }
+    editorPicksOfTags {
+      name
+      slug
     }
   }
 }
@@ -215,7 +216,7 @@ const sortOrder = {
 export default async function Home() {
   let topicsRes,
     latestPostsRes,
-    featuredPostsRes,
+    editorPicksRes,
     sectionPostsArray: PostSummary[][] = []
   try {
     topicsRes = await axios.post(API_URL, {
@@ -234,8 +235,8 @@ export default async function Home() {
       },
     })
 
-    featuredPostsRes = await axios.post(API_URL, {
-      query: featuredPostsGQL,
+    editorPicksRes = await axios.post(API_URL, {
+      query: editorPicksGQL,
       variables: {
         take: featuredPostsNum,
       },
@@ -299,7 +300,7 @@ export default async function Home() {
   })
 
   const featuredPosts =
-    featuredPostsRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts?.map(
+    editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts?.map(
       (post: any) => {
         return {
           image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
@@ -313,8 +314,8 @@ export default async function Home() {
       }
     )
 
-  // TODO: wire up tags
-  const tags = MOCKUP_TAGS
+  const tags =
+    editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfTags
 
   return (
     <>
