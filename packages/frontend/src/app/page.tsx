@@ -276,7 +276,7 @@ export default async function Home() {
 
   const topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
     return {
-      url: `/article/${topic.slug}`,
+      url: `/topic/${topic.slug}`,
       image: topic?.heroImage?.imageFile?.url
         ? `${CMS_URL}${topic.heroImage.imageFile.url}`
         : '',
