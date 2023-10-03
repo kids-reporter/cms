@@ -20,14 +20,6 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    projects: relationship({
-      label: '專題',
-      ref: 'Project.categories',
-      many: true,
-      ui: {
-        hideCreate: true,
-      },
-    }),
     heroImage: relationship({
       label: '列表頁首圖',
       ref: 'Photo',
@@ -176,6 +168,7 @@ const listConfigurations = list({
     operation: () => true,
   },
   ui: {
+    label: 'Categories（文章分類）',
     listView: {
       initialColumns: ['slug', 'name'],
     },

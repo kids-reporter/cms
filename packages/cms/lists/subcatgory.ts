@@ -163,6 +163,7 @@ const listConfigurations = list({
     operation: () => true,
   },
   ui: {
+    label: 'Subcategories（次分類）',
     listView: {
       initialColumns: ['slug', 'name'],
     },

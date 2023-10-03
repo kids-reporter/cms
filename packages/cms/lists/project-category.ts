@@ -10,36 +10,38 @@ const listConfigurations = list({
     }),
     name: text({
       isIndexed: 'unique',
-      label: '標籤中文名稱',
+      label: '類別中文名稱',
       validation: { isRequired: true },
     }),
     projects: relationship({
       label: '專題',
-      ref: 'Project.tags',
+      ref: 'Project.projectCategories',
       many: true,
       ui: {
         hideCreate: true,
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
       },
+    }),
+    heroImage: relationship({
+      label: '列表頁首圖',
+      ref: 'Photo',
     }),
     ogTitle: text({
-      validation: { isRequired: false },
       label: 'FB分享標題',
+      validation: { isRequired: false },
     }),
     ogDescription: text({
-      validation: { isRequired: false },
       label: 'FB分享說明',
+      validation: { isRequired: false },
     }),
     ogImage: relationship({
-      ref: 'Photo',
       label: 'FB分享縮圖',
-    }),
-    posts: relationship({
-      ref: 'Post.tags',
-      many: true,
-      label: '相關文章',
-      ui: {
-        hideCreate: true,
-      },
+      ref: 'Photo',
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
@@ -54,7 +56,11 @@ const listConfigurations = list({
     operation: () => true,
   },
   ui: {
-    label: 'Tags（標籤）',
+    label: 'Project Categories（專題分類）',
+    listView: {
+      initialColumns: ['slug', 'name'],
+    },
   },
 })
+
 export default listConfigurations

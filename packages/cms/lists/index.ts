@@ -1,9 +1,11 @@
 import Author from './author'
 import Category from './category'
+import EditorPicksSetting from './editor-picks-setting'
 import PDF from './pdf'
 import Photo from './photo'
 import Post from './post'
 import Project from './project'
+import ProjectCategory from './project-category'
 import SubSubcategory from './sub-subcategory'
 import Subcategory from './subcatgory'
 import Tag from './tag'
@@ -28,12 +30,14 @@ export const listDefinition = {
   Photo,
   Author,
   Project,
+  ProjectCategory,
   Category,
   Subcategory,
   SubSubcategory,
   Tag,
   NewsReadingGroup,
   NewsReadingGroupItem,
+  EditorPicksSetting,
   PDF,
   //EditorChoice,
   //Video,
