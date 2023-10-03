@@ -42,48 +42,54 @@ export const PostSlider = (props: PostSliderProp) => {
     postNum > 0 && (
       <div className={`post-slider theme-${props.sliderTheme}`}>
         <div className="cards">
-          <Swiper
-            autoplay={{ delay: autoPlayInterval }}
-            onBeforeInit={(swiper) => {
-              swiperRef.current = swiper
-            }}
-            pagination={{ clickable: true }}
-            modules={[Autoplay, Navigation, Pagination]}
-            loop={isLoopAvailable}
-            rewind={!isLoopAvailable}
-            spaceBetween={20}
-            slidesPerView={1}
-            breakpoints={{
-              1000: {
-                slidesPerView: 3,
-              },
-              730: {
-                slidesPerView: 2,
-              },
-            }}
-          >
-            {posts.map((post, index) => {
-              return (
-                post && (
-                  <SwiperSlide key={`swiper-slide-${index}`}>
-                    <PostCard post={post} showDesc={showDesc} />
-                  </SwiperSlide>
-                )
-              )
-            })}
-          </Swiper>
-          <button
-            className="prev-btn"
-            onClick={() => swiperRef.current?.slidePrev()}
-          >
-            <ArrowLeft color={themeColor} />
-          </button>
-          <button
-            className="next-btn"
-            onClick={() => swiperRef.current?.slideNext()}
-          >
-            <ArrowRight color={themeColor} />
-          </button>
+          {postNum > 1 ? (
+            <>
+              <Swiper
+                autoplay={{ delay: autoPlayInterval }}
+                onBeforeInit={(swiper) => {
+                  swiperRef.current = swiper
+                }}
+                pagination={{ clickable: true }}
+                modules={[Autoplay, Navigation, Pagination]}
+                loop={isLoopAvailable}
+                rewind={!isLoopAvailable}
+                spaceBetween={20}
+                slidesPerView={1}
+                breakpoints={{
+                  1000: {
+                    slidesPerView: 3,
+                  },
+                  730: {
+                    slidesPerView: 2,
+                  },
+                }}
+              >
+                {posts.map((post, index) => {
+                  return (
+                    post && (
+                      <SwiperSlide key={`swiper-slide-${index}`}>
+                        <PostCard post={post} showDesc={showDesc} />
+                      </SwiperSlide>
+                    )
+                  )
+                })}
+              </Swiper>
+              <button
+                className="prev-btn"
+                onClick={() => swiperRef.current?.slidePrev()}
+              >
+                <ArrowLeft color={themeColor} />
+              </button>
+              <button
+                className="next-btn"
+                onClick={() => swiperRef.current?.slideNext()}
+              >
+                <ArrowRight color={themeColor} />
+              </button>
+            </>
+          ) : (
+            <PostCard post={posts[0]} showDesc={showDesc} />
+          )}
         </div>
       </div>
     )
