@@ -6,6 +6,7 @@ import {
   API_URL,
   CMS_URL,
   POST_PER_PAGE,
+  POST_CONTENT_GQL,
   TOPIC_PAGE_ROUTE,
   Theme,
 } from '@/app/constants'
@@ -22,24 +23,7 @@ const descLengthLimit = 110
 const genTopicsGQL = (hasRelatedPosts: boolean): string => {
   const relatedPostsGQL = `
     relatedPosts {
-      title
-      slug
-      ogDescription
-      heroImage {
-        resized {
-          medium
-        }
-        imageFile {
-          url
-        }
-      }
-      subSubcategories {
-        name
-        subcategory {
-          name
-        }
-      }
-      publishedDate
+      ${POST_CONTENT_GQL}
     }
   `
 

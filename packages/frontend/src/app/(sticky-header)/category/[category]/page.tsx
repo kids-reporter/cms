@@ -4,7 +4,7 @@ import PostCard from '@/app/components/post-card'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import { API_URL, POST_PER_PAGE } from '@/app/constants'
+import { API_URL, POST_PER_PAGE, POST_CONTENT_GQL } from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
@@ -19,29 +19,11 @@ query($where: CategoryWhereUniqueInput!) {
 }
 `
 
-// TODO: replace post content GQL
 const categoryPostsGQL = `
 query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
   category(where: $where) {
     relatedPosts(take: $take, skip: $skip) {
-      title
-      slug
-      ogDescription
-      heroImage {
-        resized {
-          medium
-        }
-        imageFile {
-          url
-        }
-      }
-      subSubcategories {
-        name
-        subcategory {
-          name
-        }
-      }
-      publishedDate
+      ${POST_CONTENT_GQL}
     }
   }
 }

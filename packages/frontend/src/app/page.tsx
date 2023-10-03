@@ -11,7 +11,7 @@ import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
-import { API_URL, CMS_URL, Theme } from '@/app/constants'
+import { API_URL, CMS_URL, POST_CONTENT_GQL, Theme } from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
@@ -93,31 +93,10 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
 }
 `
 
-const postContentGQL = `
-title
-slug
-ogDescription
-heroImage {
-  resized {
-    medium
-  }
-  imageFile {
-    url
-  }
-}
-subSubcategories {
-  name
-  subcategory {
-    name
-  }
-}
-publishedDate
-`
-
 const latestPostsGQL = `
 query($orderBy: [PostOrderByInput!]!, $take: Int) {
   posts(orderBy: $orderBy, take: $take) {
-    ${postContentGQL}
+    ${POST_CONTENT_GQL}
   }
 }
 `
@@ -126,7 +105,7 @@ const editorPicksGQL = `
 query($take: Int) {
   editorPicksSettings {
     editorPicksOfPosts(take: $take) {
-      ${postContentGQL}
+      ${POST_CONTENT_GQL}
     }
     editorPicksOfTags {
       name
@@ -140,7 +119,7 @@ const categoryPostsGQL = `
 query($where: CategoryWhereUniqueInput!, $take: Int) {
   category(where: $where) {
     relatedPosts(take: $take) {
-      ${postContentGQL}
+      ${POST_CONTENT_GQL}
     }
   }
 }
@@ -150,7 +129,7 @@ const subcategoryPostsGQL = `
 query($where: SubcategoryWhereUniqueInput!, $take: Int) {
   subcategory(where: $where) {
     relatedPosts(take: $take) {
-      ${postContentGQL}
+      ${POST_CONTENT_GQL}
     }
   }
 }

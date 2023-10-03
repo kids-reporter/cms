@@ -49,3 +49,24 @@ export const AUTHOR_ROLES_IN_ORDER = [
 export const DEFAULT_AVATAR = '/images/avatar_default.png'
 
 export const POST_PER_PAGE = 9
+
+export const POST_CONTENT_GQL = `
+title
+slug
+ogDescription
+heroImage {
+  resized {
+    medium
+  }
+  imageFile {
+    url
+  }
+}
+subSubcategories {
+  name
+  subcategory {
+    name
+  }
+}
+publishedDate
+`

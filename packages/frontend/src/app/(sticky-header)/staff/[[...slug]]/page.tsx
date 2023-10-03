@@ -6,8 +6,9 @@ import { PostSummary } from '@/app/components/types'
 import {
   API_URL,
   CMS_URL,
-  POST_PER_PAGE,
   DEFAULT_AVATAR,
+  POST_PER_PAGE,
+  POST_CONTENT_GQL,
 } from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
@@ -24,24 +25,7 @@ const authorGQL = `
         }
       }
       posts(orderBy: $orderBy, take: $take, skip: $skip) {
-        title
-        slug
-        ogDescription
-        heroImage {
-          resized {
-            medium
-          }
-          imageFile {
-            url
-          }
-        }
-        subSubcategories {
-          name
-          subcategory {
-            name
-          }
-        }
-        publishedDate
+        ${POST_CONTENT_GQL}
       }
       postsCount
     }
