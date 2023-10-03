@@ -150,24 +150,7 @@ const subcategoryPostsGQL = `
 query($where: SubcategoryWhereUniqueInput!, $take: Int) {
   subcategory(where: $where) {
     relatedPosts(take: $take) {
-      title
-      slug
-      ogDescription
-      heroImage {
-        resized {
-          medium
-        }
-        imageFile {
-          url
-        }
-      }
-      subSubcategories {
-        name
-        subcategory {
-          name
-        }
-      }
-      publishedDate
+      ${postContentGQL}
     }
   }
 }
