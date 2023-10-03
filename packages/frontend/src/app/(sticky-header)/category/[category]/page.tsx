@@ -19,6 +19,7 @@ query($where: CategoryWhereUniqueInput!) {
 }
 `
 
+// TODO: replace post content GQL
 const categoryPostsGQL = `
 query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
   category(where: $where) {
