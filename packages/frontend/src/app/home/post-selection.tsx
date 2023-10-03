@@ -58,19 +58,29 @@ export const PostSelection = (props: PostSelectionProp) => {
           <div className="featured-post">
             <div className="cards">
               <div className="card-child-1">
-                <PostCard post={featuredPosts?.[0]} showDesc={false} />
+                {featuredPosts?.[0] && (
+                  <PostCard post={featuredPosts[0]} showDesc={false} />
+                )}
               </div>
               <div className="card-child-2">
-                <PostCard post={featuredPosts?.[1]} showDesc={false} />
+                {featuredPosts?.[1] && (
+                  <PostCard post={featuredPosts[1]} showDesc={false} />
+                )}
               </div>
               <div className="card-child-rest">
-                <PostCard post={featuredPosts?.[2]} showDesc={false} />
+                {featuredPosts?.[2] && (
+                  <PostCard post={featuredPosts[2]} showDesc={false} />
+                )}
               </div>
               <div className="card-child-rest">
-                <PostCard post={featuredPosts?.[3]} showDesc={false} />
+                {featuredPosts?.[3] && (
+                  <PostCard post={featuredPosts[3]} showDesc={false} />
+                )}
               </div>
               <div className="card-child-rest">
-                <PostCard post={featuredPosts?.[4]} showDesc={false} />
+                {featuredPosts?.[4] && (
+                  <PostCard post={featuredPosts[4]} showDesc={false} />
+                )}
               </div>
             </div>
           </div>
