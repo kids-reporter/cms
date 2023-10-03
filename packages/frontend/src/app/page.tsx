@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { notFound } from 'next/navigation'
 import StickyHeader from '@/app/components/header'
 import MainHeader from '@/app/home/main-header'
 import HomeTopDetector from '@/app/home/home-top-detector'
@@ -182,13 +181,13 @@ const getPostSummaries = (posts: any[]): PostSummary[] => {
 
 export default async function Home() {
   let topics,
-    latestPosts,
-    featuredPosts,
+    latestPosts: PostSummary[] = [],
+    featuredPosts: PostSummary[] = [],
     sectionPostsArray: PostSummary[][] = [],
     tags
 
+  // 1. Fetch topics
   try {
-    // 1. Fetch topics
     const topicsRes = await axios.post(API_URL, {
       query: topicsGQL,
       variables: {
@@ -206,8 +205,12 @@ export default async function Home() {
         subtitle: topic.subtitle,
       }
     })
+  } catch (err) {
+    console.error('Fetch topics failed!', err)
+  }
 
-    // 2. Fetch latest posts
+  // 2. Fetch latest posts
+  try {
     const latestPostsRes = await axios.post(API_URL, {
       query: latestPostsGQL,
       variables: {
@@ -216,8 +219,12 @@ export default async function Home() {
       },
     })
     latestPosts = getPostSummaries(latestPostsRes?.data?.data?.posts)
+  } catch (err) {
+    console.error('Fetch latest posts failed!', err)
+  }
 
-    // 3. Fetch featured posts & tags
+  // 3. Fetch featured posts & tags
+  try {
     const editorPicksRes = await axios.post(API_URL, {
       query: editorPicksGQL,
       variables: {
@@ -229,8 +236,12 @@ export default async function Home() {
     )
     tags =
       editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfTags
+  } catch (err) {
+    console.error('Fetch featured posts & tags failed!', err)
+  }
 
-    // 4. Fetch posts for each section
+  // 4. Fetch posts for each section
+  try {
     sectionPostsArray = await Promise.all(
       sections.map(async (section): Promise<any> => {
         // Get category/subcategory name from link.
@@ -254,8 +265,7 @@ export default async function Home() {
       })
     )
   } catch (err) {
-    console.error('Fetch home data failed!', err)
-    notFound()
+    console.error('Fetch posts for each section failed!', err)
   }
 
   return (
