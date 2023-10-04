@@ -17,14 +17,21 @@ const blockRendererFn = (block: any) => {
   return atomicBlockObj
 }
 
+enum FontSizeLevel {
+  NORMAL = 'normal',
+  LARGE = 'large',
+}
+
 type DraftRendererProps = {
   themeColor: ThemeColorEnum
+  fontSizeLevel: FontSizeLevel
   rawContentState: RawDraftContentState
 }
 
 function DraftRenderer({
   rawContentState,
   themeColor = ThemeColorEnum.RED,
+  fontSizeLevel = FontSizeLevel.NORMAL,
 }: DraftRendererProps) {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
@@ -33,6 +40,7 @@ function DraftRenderer({
     <ThemeProvider
       theme={{
         themeColor,
+        fontSizeLevel,
       }}
     >
       <Editor
@@ -53,6 +61,7 @@ const ArticleBodyDraftRenderer = DraftRenderer
 function ArticleIntroductionDraftRenderer({
   rawContentState,
   themeColor = ThemeColorEnum.RED,
+  fontSizeLevel = FontSizeLevel.NORMAL,
 }: DraftRendererProps) {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
@@ -61,6 +70,7 @@ function ArticleIntroductionDraftRenderer({
     <ThemeProvider
       theme={{
         themeColor,
+        fontSizeLevel,
       }}
     >
       <Editor
@@ -78,6 +88,7 @@ function ArticleIntroductionDraftRenderer({
 function ProjectContentDraftRenderer({
   rawContentState,
   themeColor = ThemeColorEnum.BLUE,
+  fontSizeLevel = FontSizeLevel.NORMAL,
 }: DraftRendererProps) {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
@@ -86,6 +97,7 @@ function ProjectContentDraftRenderer({
     <ThemeProvider
       theme={{
         themeColor,
+        fontSizeLevel,
       }}
     >
       <Editor

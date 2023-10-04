@@ -9,7 +9,8 @@ const Figure = styled.figure`
 const FigureCaption = styled.figcaption`
   width: fit-content;
   max-width: 100%;
-  font-size: 14px;
+  font-size: ${({ theme }) =>
+    theme?.fontSizeLevel === 'normal' ? '14px' : '18px'};
   margin-left: auto;
   margin-right: auto;
   margin-top: 0.5em;
