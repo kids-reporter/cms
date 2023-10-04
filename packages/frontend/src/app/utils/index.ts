@@ -28,6 +28,7 @@ export const ShortenParagraph = (paragraph: string, limit: number): string => {
     : paragraph
 }
 
+// TODO: complete theme-color mapping
 export const GetThemeFromCategory = (Category: any): Theme => {
   switch (Category) {
     default:
