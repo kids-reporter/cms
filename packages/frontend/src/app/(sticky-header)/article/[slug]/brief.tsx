@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
-
 import './brief.scss'
 
 export type AuthorGroup = {
@@ -18,7 +17,6 @@ type AuthorsProp = {
   authorGroups: AuthorGroup[]
 }
 
-// TODO: refactor to clear
 const Authors = (props: AuthorsProp) => {
   return (
     <p className="author-list">
