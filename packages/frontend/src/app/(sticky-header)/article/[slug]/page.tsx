@@ -218,6 +218,7 @@ export default async function PostPage({
           <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
         </div>
         <CallToAction />
+        {/* TODO: fix missing bullets */}
         <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
       </main>
     )
