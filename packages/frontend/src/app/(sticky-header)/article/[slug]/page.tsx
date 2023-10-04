@@ -124,13 +124,16 @@ export default async function PostPage({
   // Assemble ordered authors
   const authorsJSON = post?.authorsJSON
   const authors = post?.authors?.map((author: any) => {
-    const authorJSON = authorsJSON.find((a: any) => a.id === author?.id)
-    const avatar = author?.avatar?.imageFile?.url
+    const authorJSON = authorsJSON.find(
+      (authorJSON: any) => authorJSON.id === author?.id
+    )
+    const avatarURL = author?.avatar?.imageFile?.url
+
     return author && authorJSON
       ? {
           slug: author.slug,
           name: author.name,
-          avatar: avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR,
+          avatar: avatarURL ? `${CMS_URL}${avatarURL}` : DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
           link:
