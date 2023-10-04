@@ -128,12 +128,13 @@ export default async function PostPage({
     const avatar = author?.avatar?.imageFile?.url
     return author && authorJSON
       ? {
-          id: author.id,
+          slug: author.slug,
           name: author.name,
           avatar: avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
-          link: authorJSON.type === 'link' ? `/staff/${author.id}` : undefined,
+          link:
+            authorJSON.type === 'link' ? `/staff/${author.slug}` : undefined,
         }
       : undefined
   })
