@@ -12,9 +12,17 @@ import {
   getDefaultKeyBinding,
 } from 'draft-js'
 
+import {
+  BackgroundColorButton,
+  customStylePrefix as bgColorPrefix,
+} from './buttons/bg-color'
 import { BlockquoteButton } from './buttons/blockquote'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
 import { EnlargeButton } from './buttons/enlarge'
+import {
+  FontColorButton,
+  customStylePrefix as fontColorPrefix,
+} from './buttons/font-color'
 import { ImageButton } from './buttons/image'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
@@ -22,7 +30,11 @@ import { ImageSelector } from './buttons/selector/image-selector'
 import { NewsReadingButton } from './buttons/news-reading'
 import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
-import { blockRenderMap, decorator } from '@kids-reporter/draft-renderer'
+import {
+  blockRenderMap,
+  customStyleFn,
+  decorator,
+} from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
 
@@ -114,6 +126,14 @@ const CustomEmbeddedCodeButton = styled(EmbeddedCodeButton)`
 `
 
 const CustomNewsReadingButton = styled(NewsReadingButton)`
+  ${buttonStyle}
+`
+
+const CustomBackgroundColorButton = styled(BackgroundColorButton)`
+  ${buttonStyle}
+`
+
+const CustomFontColorButton = styled(FontColorButton)`
   ${buttonStyle}
 `
 
@@ -449,6 +469,50 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                   this.setState({ readOnly: false })
                 }}
               />
+              <CustomBackgroundColorButton
+                isDisabled={disabledButtons.includes(
+                  buttonNames.backgroundColor
+                )}
+                isActive={
+                  editorState
+                    .getCurrentInlineStyle()
+                    .find(
+                      (styleName) =>
+                        typeof styleName === 'string' &&
+                        styleName.startsWith(bgColorPrefix)
+                    ) !== undefined
+                }
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
+              ></CustomBackgroundColorButton>
+              <CustomFontColorButton
+                isDisabled={disabledButtons.includes(buttonNames.fontColor)}
+                isActive={
+                  editorState
+                    .getCurrentInlineStyle()
+                    .find(
+                      (styleName) =>
+                        typeof styleName === 'string' &&
+                        styleName.startsWith(fontColorPrefix)
+                    ) !== undefined
+                }
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
+              ></CustomFontColorButton>
               <CustomBlockquoteButton
                 isDisabled={disabledButtons.includes(buttonNames.blockquote)}
                 editorState={editorState}
@@ -515,6 +579,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
             <Editor
               blockRenderMap={blockRenderMap}
               blockRendererFn={this.blockRendererFn}
+              customStyleFn={customStyleFn}
               editorState={editorState}
               handleKeyCommand={this.handleKeyCommand}
               handleReturn={this.handleReturn}
