@@ -36,10 +36,13 @@ export const GetThemeFromCategory = (Category: any): Theme => {
 }
 
 export const GetPostSummaries = (posts: any[]): PostSummary[] => {
-  // TODO: error handling for image
+  // TODO: error handling for post
   return posts?.map((post: any) => {
+    const imageURL = post?.heroImage?.imageFile?.url
+    const image = imageURL ? `${CMS_URL}${imageURL}` : ''
+
     return {
-      image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
+      image: image,
       title: post.title,
       url: `/article/${post.slug}`,
       desc: post.ogDescription,
