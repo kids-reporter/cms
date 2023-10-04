@@ -41,11 +41,8 @@ export const PostSlider = (props: PostSliderProp) => {
     postNum > 0 && (
       <div className={`post-slider theme-${props.sliderTheme}`}>
         <div className="cards">
-          {postNum < 3 ? (
-            <>
-              {posts?.[0] && <PostCard post={posts[0]} showDesc={showDesc} />}
-              {posts?.[1] && <PostCard post={posts[1]} showDesc={showDesc} />}
-            </>
+          {postNum === 1 ? (
+            posts[0] && <PostCard post={posts[0]} showDesc={showDesc} />
           ) : (
             <>
               <Swiper
