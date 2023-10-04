@@ -75,6 +75,11 @@
       flex-direction: column;
       cursor: pointer;
 
+      .icon {
+        height: 48px;
+        z-index: 2;
+      }
+
       img {
         max-width: 100%;
         height: auto;

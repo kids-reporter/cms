@@ -18,7 +18,7 @@ import 'swiper/css/pagination'
 import './main-slider.scss'
 
 type SliderProp = {
-  topics: { url: string; image: string; title: string }[]
+  topics: { url: string; image: string; title: string; subtitle: string }[]
 }
 
 const autoPlayInterval = 5000
@@ -63,8 +63,15 @@ export const MainSlider = (props: SliderProp) => {
                   className="topic-body"
                   href={topic.url}
                 >
-                  <img src={`${topic.image}`} />
-                  <span className="topic-title">{topic.title}</span>
+                  <span className="icon">
+                    <img src={'/images/topic_icon.svg'} />
+                  </span>
+                  <img src={topic.image} />
+                  <span className="topic-title">
+                    {topic.title}
+                    <br />
+                    {topic.subtitle}
+                  </span>
                 </a>
               </SwiperSlide>
             )

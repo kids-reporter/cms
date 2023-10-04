@@ -18,14 +18,6 @@ export enum Theme {
   RED = 'red',
 }
 
-// TODO: set category mapping
-export const GetThemeFromCategory = (Category: any): Theme => {
-  switch (Category) {
-    default:
-      return Theme.YELLOW
-  }
-}
-
 export enum ThemeColor {
   YELLOW = '#F8C341',
   BLUE = '#27B5F7',
@@ -57,3 +49,24 @@ export const AUTHOR_ROLES_IN_ORDER = [
 export const DEFAULT_AVATAR = '/images/avatar_default.png'
 
 export const POST_PER_PAGE = 9
+
+export const POST_CONTENT_GQL = `
+title
+slug
+ogDescription
+heroImage {
+  resized {
+    medium
+  }
+  imageFile {
+    url
+  }
+}
+subSubcategories {
+  name
+  subcategory {
+    name
+  }
+}
+publishedDate
+`

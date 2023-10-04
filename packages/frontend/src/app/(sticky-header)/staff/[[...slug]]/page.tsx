@@ -6,10 +6,11 @@ import { PostSummary } from '@/app/components/types'
 import {
   API_URL,
   CMS_URL,
-  POST_PER_PAGE,
   DEFAULT_AVATAR,
-  GetThemeFromCategory,
+  POST_PER_PAGE,
+  POST_CONTENT_GQL,
 } from '@/app/constants'
+import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 const authorGQL = `
@@ -24,24 +25,7 @@ const authorGQL = `
         }
       }
       posts(orderBy: $orderBy, take: $take, skip: $skip) {
-        title
-        slug
-        ogDescription
-        heroImage {
-          resized {
-            medium
-          }
-          imageFile {
-            url
-          }
-        }
-        subSubcategories {
-          name
-          subcategory {
-            name
-          }
-        }
-        publishedDate
+        ${POST_CONTENT_GQL}
       }
       postsCount
     }
@@ -99,24 +83,7 @@ export default async function Staff({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const postSummeries: (PostSummary | undefined)[] = Array.isArray(posts)
-    ? posts.map((post: any) => {
-        return post
-          ? {
-              image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-              title: post.title,
-              url: `/article/${post.slug}`,
-              desc: post.ogDescription,
-              category: post.subSubcategories?.subcategory?.name,
-              subSubcategory: post.subSubcategories.name,
-              publishedDate: post.publishedDate,
-              theme: GetThemeFromCategory(
-                post.subSubcategories?.subcategory?.name
-              ),
-            }
-          : undefined
-      })
-    : []
+  const postSummeries: (PostSummary | undefined)[] = GetPostSummaries(posts)
 
   return (
     <main className="container">

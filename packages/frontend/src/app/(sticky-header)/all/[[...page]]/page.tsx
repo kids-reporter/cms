@@ -3,12 +3,8 @@ import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import {
-  API_URL,
-  CMS_URL,
-  POST_PER_PAGE,
-  GetThemeFromCategory,
-} from '@/app/constants'
+import { API_URL, POST_PER_PAGE, POST_CONTENT_GQL } from '@/app/constants'
+import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 const postsCountGQL = `
@@ -20,24 +16,7 @@ query Query {
 const latestPostsGQL = `
 query($orderBy: [PostOrderByInput!]!, $take: Int, $skip: Int!) {
   posts(orderBy: $orderBy, take: $take, skip: $skip) {
-    title
-    slug
-    ogDescription
-    heroImage {
-      resized {
-        medium
-      }
-      imageFile {
-        url
-      }
-    }
-    subSubcategories {
-      name
-      subcategory {
-        name
-      }
-    }
-    publishedDate
+    ${POST_CONTENT_GQL}
   }
 }
 `
@@ -91,24 +70,7 @@ export default async function LatestPosts({
     notFound()
   }
 
-  const postSummeries: (PostSummary | undefined)[] = Array.isArray(posts)
-    ? posts.map((post: any) => {
-        return post
-          ? {
-              image: `${CMS_URL}${post.heroImage?.imageFile?.url}`,
-              title: post.title,
-              url: `/article/${post.slug}`,
-              desc: post.ogDescription,
-              category: post.subSubcategories?.subcategory?.name,
-              subSubcategory: post.subSubcategories.name,
-              publishedDate: post.publishedDate,
-              theme: GetThemeFromCategory(
-                post.subSubcategories?.subcategory?.name
-              ),
-            }
-          : undefined
-      })
-    : []
+  const postSummeries: (PostSummary | undefined)[] = GetPostSummaries(posts)
 
   return (
     <main className="container">
