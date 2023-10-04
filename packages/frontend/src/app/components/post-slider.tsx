@@ -58,7 +58,7 @@ export const PostSlider = (props: PostSliderProp) => {
                 slidesPerView={1}
                 breakpoints={{
                   1000: {
-                    slidesPerView: 3,
+                    slidesPerView: postNum > 2 ? 3 : 2,
                   },
                   730: {
                     slidesPerView: 2,
