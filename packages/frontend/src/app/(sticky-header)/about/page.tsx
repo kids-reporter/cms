@@ -1,7 +1,11 @@
+import axios from 'axios'
 import AuthorCard from '@/app/components/author-card'
 import {
+  API_URL,
+  CMS_URL,
   CREDIT_DONATE_URL,
   CONTRIBUTE_FORM,
+  DEFAULT_AVATAR,
   DONATE_URL,
   EMAIL,
   MAIN_SITE_URL,
@@ -9,6 +13,18 @@ import {
   AuthorRole,
 } from '@/app/constants'
 import './page.scss'
+
+const authorGQL = `
+query($where: AuthorWhereUniqueInput!) {
+  author(where: $where) {
+    avatar {
+      imageFile {
+        url
+      }
+    }
+  }
+}
+`
 
 const tellYouItems = [
   { image: '/images/about_tell_pic1.svg', desc: '重要的議題' },
@@ -20,7 +36,7 @@ const tellYouItems = [
 
 const teamMemebers = [
   {
-    id: '1',
+    slug: 'jill718',
     name: '楊惠君',
     role: AuthorRole.REVIEWERS,
     roleName: '總監',
@@ -28,7 +44,7 @@ const teamMemebers = [
     bio: '總監工作就是「總兼」，把大家的企畫統合，同時我也是一名記者。我和團隊努力把重要的新聞和事件，轉成豐富的報導，讓大家透過報導，更認識這個世界和自己。',
   },
   {
-    id: '1',
+    slug: 'shaowen',
     name: '邱紹雯',
     role: AuthorRole.AUDITORS,
     roleName: '主編',
@@ -36,7 +52,7 @@ const teamMemebers = [
     bio: '主編就是協助稿件從企劃到編輯完成的主要橋樑。我也負責Podcast聲音平台及教案規劃，和團隊用多元的呈現方式，把重要議題轉成孩子有興趣閱讀、老師家長容易教學應用的素材。',
   },
   {
-    id: '1',
+    slug: 'chen-li-ting',
     name: '陳麗婷',
     role: AuthorRole.AUDITORS,
     roleName: '記者',
@@ -44,7 +60,7 @@ const teamMemebers = [
     bio: '記者的工作是將每位人物的故事、事件歷程，透過每一次的訪問紀錄下來，並將重點寫成大家能夠讀懂的文章，讓讀者看到來自各領域的不同面貌，獲取更多的資訊。',
   },
   {
-    id: '1',
+    slug: 'shakingwave',
     name: '余志偉',
     role: AuthorRole.PHOTOGRAPHERS,
     roleName: '攝影監製',
@@ -52,7 +68,7 @@ const teamMemebers = [
     bio: '我在左腦擅長理性邏輯的學習中，用圖像刺激右腦感性創意的思考，依報導內容開發出兼具資訊事實、引人入勝的圖像，讓報導有趣，豐富閱讀多重體驗。',
   },
   {
-    id: '1',
+    slug: 'hychen',
     name: '黃禹禛',
     role: AuthorRole.DESIGNERS,
     roleName: '設計',
@@ -60,7 +76,7 @@ const teamMemebers = [
     bio: '在這裡，大家所看見的圖表、插畫、圖文故事，大大小小的視覺元素，都是由設計師或插畫家完成。希望透過圖像的力量，幫助讀者理解事件、開啟對世界的想像！',
   },
   {
-    id: '1',
+    slug: 'jheng-han-wun',
     name: '鄭涵文',
     role: AuthorRole.DESIGNERS,
     roleName: '設計',
@@ -68,7 +84,7 @@ const teamMemebers = [
     bio: '在新聞的世界裡，「設計」這個角色就是要發力讓報導變得更好看、更好懂，所以我們把重要的故事情境化成畫作，把複雜的資料轉成圖表，努力吸引你們的眼球！',
   },
   {
-    id: '1',
+    slug: 'yunruchen',
     name: '陳韻如',
     role: AuthorRole.EDITORS,
     roleName: '編輯',
@@ -79,7 +95,7 @@ const teamMemebers = [
 
 const consultants = [
   {
-    id: undefined,
+    slug: '',
     name: '陳明蕾',
     role: AuthorRole.CONSULTANTS,
     roleName: '閱讀素養專家',
@@ -87,7 +103,7 @@ const consultants = [
     bio: '清華大學台灣語言研究與教學研究所副教授，同時亦主持清大柯華葳教授閱讀研究中心。',
   },
   {
-    id: undefined,
+    slug: '',
     name: '林玫伶',
     role: AuthorRole.CONSULTANTS,
     roleName: '教育專家',
@@ -95,7 +111,7 @@ const consultants = [
     bio: '曾任台北市大橋、明德、士東、國語實驗國小校長，現為清華大學竹師教育學院客座助理教授、台灣閱讀文化基金會數位閱讀推廣顧問。',
   },
   {
-    id: undefined,
+    slug: '',
     name: '黃惠鈴',
     role: AuthorRole.CONSULTANTS,
     roleName: '兒童文學家',
@@ -103,7 +119,7 @@ const consultants = [
     bio: '曾在媒體與出版工作，曾獲出版與文學獎，出過一些書與繪本，現勤於創作與企劃、諮商，在大學兼任繪本與兒童文學課程。',
   },
   {
-    id: undefined,
+    slug: '',
     name: '陳榮裕',
     role: AuthorRole.CONSULTANTS,
     roleName: '資深媒體人',
@@ -112,9 +128,24 @@ const consultants = [
   },
 ]
 
-export default function About() {
-  // TODO: fetch members avatar from cms
-  // const memberIDs = teamMemebers.map(member => member.id)
+export default async function About() {
+  // Fetch memeber avatar
+  for (const member of teamMemebers) {
+    try {
+      const res = await axios.post(API_URL, {
+        query: authorGQL,
+        variables: {
+          where: {
+            slug: member.slug,
+          },
+        },
+      })
+      const avatar = res?.data?.data?.author?.avatar?.imageFile?.url
+      member.avatar = avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR
+    } catch (err) {
+      console.error('Fetch member avatar failed!', member.slug, err)
+    }
+  }
 
   const us = (
     <div id="us" className="us">

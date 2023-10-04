@@ -13,7 +13,12 @@ import RelatedPosts from './related-posts'
 import Tags from '@/app/components/tags'
 import AuthorCard, { Author } from '@/app/components/author-card'
 import Divider from '@/app/components/divider'
-import { API_URL, AUTHOR_ROLES_IN_ORDER, CMS_URL } from '@/app/constants'
+import {
+  API_URL,
+  AUTHOR_ROLES_IN_ORDER,
+  CMS_URL,
+  DEFAULT_AVATAR,
+} from '@/app/constants'
 import { GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
 
@@ -42,7 +47,7 @@ const categoryGQL = `
   }
 `
 
-const postQueryGQL = `
+const postGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
       title
@@ -97,7 +102,7 @@ export default async function PostPage({
   try {
     response = params?.slug
       ? await axios.post(API_URL, {
-          query: postQueryGQL,
+          query: postGQL,
           variables: {
             where: {
               slug: params.slug,
@@ -120,11 +125,12 @@ export default async function PostPage({
   const authorsJSON = post?.authorsJSON
   const authors = post?.authors?.map((author: any) => {
     const authorJSON = authorsJSON.find((a: any) => a.id === author?.id)
+    const avatar = author?.avatar?.imageFile?.url
     return author && authorJSON
       ? {
           id: author.id,
           name: author.name,
-          avatar: author.avatar?.imageFile?.url,
+          avatar: avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
           link: authorJSON.type === 'link' ? `/staff/${author.id}` : undefined,
