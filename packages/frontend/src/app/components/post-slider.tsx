@@ -41,7 +41,9 @@ export const PostSlider = (props: PostSliderProp) => {
     postNum > 0 && (
       <div className={`post-slider theme-${props.sliderTheme}`}>
         <div className="cards">
-          {postNum > 1 ? (
+          {postNum === 1 ? (
+            <PostCard post={posts[0]} showDesc={showDesc} />
+          ) : (
             <>
               <Swiper
                 autoplay={{ delay: autoPlayInterval }}
@@ -86,8 +88,6 @@ export const PostSlider = (props: PostSliderProp) => {
                 <ArrowRight color={themeColor} />
               </button>
             </>
-          ) : (
-            <PostCard post={posts[0]} showDesc={showDesc} />
           )}
         </div>
       </div>
