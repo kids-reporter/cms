@@ -77,12 +77,12 @@ export const AuthorCard = (props: AuthorCardProp) => {
             )
           })}
         </div>
-        <button
+        {/* TODO: more button <button
           className="author-section__m-btn rpjr-btn"
           //onclick="document.querySelector('.author-section').classList.add('author-section--show')"
         >
           展開看所有作者
-        </button>
+        </button>*/}
       </div>
     )
   )
