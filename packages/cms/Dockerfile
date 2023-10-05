@@ -5,6 +5,7 @@ RUN set -e; \
     apt-get update -y && apt-get install -y \
     build-essential \
     curl \
+    wget \
     gnupg2 \
     tini \
     openssl \
@@ -14,8 +15,10 @@ RUN set -e; \
     tee /etc/apt/sources.list.d/gcsfuse.list; \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | \
     apt-key add -; \
-    apt-get update; \
-    apt-get install -y gcsfuse \
+    # apt-get update; \
+    # apt-get install -y gcsfuse \
+    # TODO: remove wget workaround for gcsfuse due to missing registry & restore with apt-get
+    wget https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v1.2.0/gcsfuse_1.2.0_amd64.deb -O gcsfuse.deb && apt-get install -y ./gcsfuse.deb && rm -f ./gcsfuse.deb \
     && apt-get clean
 
 ENV APP_DIR /app

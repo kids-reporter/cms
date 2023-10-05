@@ -53,17 +53,21 @@ const Button = styled.div<{ isActive: boolean }>`
   border-radius: 30px;
 
   line-height: 30px;
-  width: 90px;
+  width: 75px;
   text-align: center;
   font-size: 14px;
   font-weight: 500;
 
   cursor: pointer;
+
+  ${mediaQuery.mediumAbove} {
+    width: 90px;
+  }
 `
 
 const Container = styled.div`
   max-width: 600px;
-  width: calc(280 / 320 * 100%);
+  width: 100%;
   border: 1px solid #eaeaea;
   border-radius: 20px;
   margin-left: auto;
