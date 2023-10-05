@@ -152,7 +152,6 @@ export default async function Category({ params }: { params: { path: any } }) {
     theme = Theme.YELLOW
   }
 
-  // TODO: navigation item style
   return (
     <main className="container">
       <div className={`content theme-${theme}`}>
