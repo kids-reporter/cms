@@ -9,6 +9,8 @@ const HeadingForAnnotation = styled(Heading)`
 `
 
 const ListForAnnotation = styled(List)`
+  color: #494949;
+
   li {
     font-size: ${({ theme }) =>
       theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
@@ -21,6 +23,7 @@ const ParagraphForAnnotation = styled(Paragraph)`
     theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
   font-weight: 400;
   margin-bottom: 20px;
+  color: #494949;
 `
 
 const _blockRenderMapForAnnotation = Immutable.Map({

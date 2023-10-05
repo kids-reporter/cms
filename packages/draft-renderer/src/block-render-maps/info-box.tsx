@@ -5,14 +5,23 @@ import { DefaultDraftBlockRenderMap } from 'draft-js'
 import { Paragraph, Heading, List } from './article-content'
 
 const HeadingForInfoBox = styled(Heading)`
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+
+  h4 {
+    font-size: 24px;
+  }
 `
 
 const ListForInfoBox = styled(List)`
+  padding-left: 2rem;
+  margin-bottom: 20px;
+
+  color: #232323;
   li {
     font-size: ${({ theme }) =>
       theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
+    line-height: 1.5;
   }
 `
 
@@ -22,6 +31,8 @@ const ParagraphForInfoBox = styled(Paragraph)`
     theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
   font-weight: 400;
   margin-bottom: 20px;
+  line-height: 1.5;
+  color: #232323;
 `
 
 const Atomic = styled.div`
