@@ -13,14 +13,14 @@ const ListForAnnotation = styled(List)`
 
   li {
     font-size: ${({ theme }) =>
-      theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
+      theme?.fontSizeLevel === 'large' ? '20px' : '16px'};
   }
 `
 
 const ParagraphForAnnotation = styled(Paragraph)`
   /* overwrite css */
   font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
+    theme?.fontSizeLevel === 'large' ? '20px' : '16px'};
   font-weight: 400;
   margin-bottom: 20px;
   color: #494949;

@@ -8,7 +8,7 @@ export const Paragraph = styled.div`
   width: 100%;
   max-width: 700px;
   font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'normal' ? '18px' : '22px'};
+    theme?.fontSizeLevel === 'large' ? '22px' : '18px'};
   font-weight: 400;
   color: #3a4f66;
   letter-spacing: 0.9px;
@@ -42,22 +42,22 @@ export const Heading = styled.div`
 
   h2 {
     font-size: ${({ theme }) =>
-      theme?.fontSizeLevel === 'normal' ? '35px' : '39px'};
+      theme?.fontSizeLevel === 'large' ? '39px' : '35px'};
   }
 
   h3 {
     font-size: ${({ theme }) =>
-      theme?.fontSizeLevel === 'normal' ? '30px' : '34px'};
+      theme?.fontSizeLevel === 'large' ? '34px' : '30px'};
   }
 
   h4 {
     font-size: ${({ theme }) =>
-      theme?.fontSizeLevel === 'normal' ? '25px' : '29px'};
+      theme?.fontSizeLevel === 'large' ? '29px' : '25px'};
   }
 
   h5 {
     font-size: ${({ theme }) =>
-      theme?.fontSizeLevel === 'normal' ? '20px' : '24px'};
+      theme?.fontSizeLevel === 'large' ? '24px' : '20px'};
   }
 
   ${mediaQuery.smallOnly} {
@@ -71,7 +71,7 @@ export const List = styled.ol`
   max-width: 700px;
   margin: 0 auto 27px auto;
   font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'normal' ? '18px' : '22px'};
+    theme?.fontSizeLevel === 'large' ? '22px' : '18px'};
   line-height: 2;
   letter-spacing: 0.9px;
   color: #3a4f66;

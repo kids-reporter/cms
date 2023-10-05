@@ -53,7 +53,7 @@ const Caption = styled.figcaption`
   letter-spacing: 0.5px;
   font-weight: normal;
   font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'normal' ? '14px' : '18px'};
+    theme?.fontSizeLevel === 'large' ? '18px' : '14px'};
   margin-bottom: 30px;
 
   /* border-bottom of caption */

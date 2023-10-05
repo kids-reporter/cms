@@ -33,7 +33,7 @@ const QuoteText = styled.p`
   margin: 0;
   word-break: break-word;
   font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'normal' ? '18px' : '22px'};
+    theme?.fontSizeLevel === 'large' ? '22px' : '18px'};
   font-weight: 500;
   letter-spacing: 0.9px;
   line-height: 2;

@@ -20,7 +20,7 @@ const ListForInfoBox = styled(List)`
   color: #232323;
   li {
     font-size: ${({ theme }) =>
-      theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
+      theme?.fontSizeLevel === 'large' ? '20px' : '16px'};
     line-height: 1.5;
   }
 `
@@ -28,7 +28,7 @@ const ListForInfoBox = styled(List)`
 const ParagraphForInfoBox = styled(Paragraph)`
   /* overwrite css */
   font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
+    theme?.fontSizeLevel === 'large' ? '20px' : '16px'};
   font-weight: 400;
   margin-bottom: 20px;
   line-height: 1.5;
