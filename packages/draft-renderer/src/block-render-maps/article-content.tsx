@@ -7,7 +7,8 @@ import { mediaQuery } from '../utils/media-query'
 export const Paragraph = styled.div`
   width: 100%;
   max-width: 700px;
-  font-size: 18px;
+  font-size: ${({ theme }) =>
+    theme?.fontSizeLevel === 'normal' ? '18px' : '22px'};
   font-weight: 400;
   color: #3a4f66;
   letter-spacing: 0.9px;
@@ -40,19 +41,23 @@ export const Heading = styled.div`
   }
 
   h2 {
-    font-size: 35px;
+    font-size: ${({ theme }) =>
+      theme?.fontSizeLevel === 'normal' ? '35px' : '39px'};
   }
 
   h3 {
-    font-size: 30px;
+    font-size: ${({ theme }) =>
+      theme?.fontSizeLevel === 'normal' ? '30px' : '34px'};
   }
 
   h4 {
-    font-size: 25px;
+    font-size: ${({ theme }) =>
+      theme?.fontSizeLevel === 'normal' ? '25px' : '29px'};
   }
 
   h5 {
-    font-size: 20px;
+    font-size: ${({ theme }) =>
+      theme?.fontSizeLevel === 'normal' ? '20px' : '24px'};
   }
 
   ${mediaQuery.smallOnly} {
@@ -65,7 +70,8 @@ export const List = styled.ol`
   width: 100%;
   max-width: 700px;
   margin: 0 auto 27px auto;
-  font-size: 18px;
+  font-size: ${({ theme }) =>
+    theme?.fontSizeLevel === 'normal' ? '18px' : '22px'};
   line-height: 2;
   letter-spacing: 0.9px;
   color: #3a4f66;

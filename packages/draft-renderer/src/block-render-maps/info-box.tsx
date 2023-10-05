@@ -11,13 +11,15 @@ const HeadingForInfoBox = styled(Heading)`
 
 const ListForInfoBox = styled(List)`
   li {
-    font-size: 16px;
+    font-size: ${({ theme }) =>
+      theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
   }
 `
 
 const ParagraphForInfoBox = styled(Paragraph)`
   /* overwrite css */
-  font-size: 16px;
+  font-size: ${({ theme }) =>
+    theme?.fontSizeLevel === 'normal' ? '16px' : '20px'};
   font-weight: 400;
   margin-bottom: 20px;
 `

@@ -28,7 +28,8 @@ const QuoteLeftContainer = styled.blockquote`
 const QuoteText = styled.p`
   margin: 0;
   word-break: break-word;
-  font-size: 18px;
+  font-size: ${({ theme }) =>
+    theme?.fontSizeLevel === 'normal' ? '18px' : '22px'};
   font-weight: 500;
   letter-spacing: 0.9px;
   line-height: 2;

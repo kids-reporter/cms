@@ -1,7 +1,7 @@
 import { DraftInlineStyle } from 'draft-js'
 
-const bgColorPrefix = 'BACKGROUND_COLOR_'
-const fontColorPrefix = 'FONT_COLOR_'
+export const bgColorPrefix = 'BACKGROUND_COLOR_'
+export const fontColorPrefix = 'FONT_COLOR_'
 
 export const customStyleFn = (style: DraftInlineStyle) => {
   return style.reduce((cssObject: Record<string, string> = {}, styleName) => {

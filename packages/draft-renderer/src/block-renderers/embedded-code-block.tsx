@@ -16,7 +16,8 @@ export const Block = styled.div`
 `
 
 export const Caption = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) =>
+    theme?.fontSizeLevel === 'normal' ? '14px' : '18px'};
   line-height: 1.43;
   letter-spacing: 0.4px;
   color: #808080;
