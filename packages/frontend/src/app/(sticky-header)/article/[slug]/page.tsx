@@ -13,7 +13,12 @@ import RelatedPosts from './related-posts'
 import Tags from '@/app/components/tags'
 import AuthorCard, { Author } from '@/app/components/author-card'
 import Divider from '@/app/components/divider'
-import { API_URL, AUTHOR_ROLES_IN_ORDER, CMS_URL } from '@/app/constants'
+import {
+  API_URL,
+  AUTHOR_ROLES_IN_ORDER,
+  CMS_URL,
+  DEFAULT_AVATAR,
+} from '@/app/constants'
 import { GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
 
@@ -42,7 +47,7 @@ const categoryGQL = `
   }
 `
 
-const postQueryGQL = `
+const postGQL = `
   query($where: PostWhereUniqueInput!) {
     post(where: $where) {
       title
@@ -97,7 +102,7 @@ export default async function PostPage({
   try {
     response = params?.slug
       ? await axios.post(API_URL, {
-          query: postQueryGQL,
+          query: postGQL,
           variables: {
             where: {
               slug: params.slug,
@@ -119,15 +124,20 @@ export default async function PostPage({
   // Assemble ordered authors
   const authorsJSON = post?.authorsJSON
   const authors = post?.authors?.map((author: any) => {
-    const authorJSON = authorsJSON.find((a: any) => a.id === author?.id)
+    const authorJSON = authorsJSON.find(
+      (authorJSON: any) => authorJSON.id === author?.id
+    )
+    const avatarURL = author?.avatar?.imageFile?.url
+
     return author && authorJSON
       ? {
-          id: author.id,
+          slug: author.slug,
           name: author.name,
-          avatar: author.avatar?.imageFile?.url,
+          avatar: avatarURL ? `${CMS_URL}${avatarURL}` : DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
-          link: authorJSON.type === 'link' ? `/staff/${author.id}` : undefined,
+          link:
+            authorJSON.type === 'link' ? `/staff/${author.slug}` : undefined,
         }
       : undefined
   })
@@ -211,6 +221,7 @@ export default async function PostPage({
           <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
         </div>
         <CallToAction />
+        {/* TODO: fix missing bullets */}
         <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
       </main>
     )

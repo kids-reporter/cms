@@ -7,3 +7,18 @@
     margin-bottom: var(--content-spacing);
   }
 }
+
+.author-list {
+  --color: #575757;
+  text-align: center;
+
+  span {
+    color: var(--color);
+    font-size: 14px;
+  }
+
+  a {
+    color: var(--color);
+    text-decoration: underline;
+  }
+}

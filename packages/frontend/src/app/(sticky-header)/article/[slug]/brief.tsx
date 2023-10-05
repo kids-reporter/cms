@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
-
 import './brief.scss'
 
 export type AuthorGroup = {
@@ -18,11 +17,10 @@ type AuthorsProp = {
   authorGroups: AuthorGroup[]
 }
 
-// TODO: refactor to clear
 const Authors = (props: AuthorsProp) => {
   return (
-    <p style={{ textAlign: 'center' }}>
-      <span style={{ color: '#575757', fontSize: '14px' }}>
+    <p className="author-list">
+      <span>
         {'('}
         {props?.authorGroups?.map((authorGroup, authorGroupIndex) => {
           return (
@@ -31,19 +29,9 @@ const Authors = (props: AuthorsProp) => {
               {authorGroup?.authors?.map((author, index) => {
                 return (
                   <span key={`brief-author-${index}`}>
-                    <span style={{ textDecoration: 'underline' }}>
-                      <a
-                        style={{
-                          color: '#575757',
-                          textDecoration: 'underline',
-                        }}
-                        href={author.link}
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        {author.name}
-                      </a>
-                    </span>
+                    <a href={author.link} target="_blank" rel="noopener">
+                      {author.name}
+                    </a>
                     {index + 1 < authorGroup.authors.length ? '、' : ''}
                   </span>
                 )

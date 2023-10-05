@@ -1,5 +1,5 @@
 import { ShortenParagraph } from '@/app/utils'
-import { CMS_URL, DEFAULT_AVATAR, AuthorRole, Theme } from '@/app/constants'
+import { DEFAULT_AVATAR, AuthorRole, Theme } from '@/app/constants'
 import './author-card.scss'
 
 const getTheme = (group: AuthorRole) => {
@@ -19,7 +19,7 @@ const getTheme = (group: AuthorRole) => {
 }
 
 export type Author = {
-  id: string | undefined
+  slug: string | undefined
   name: string
   avatar: string
   role: AuthorRole
@@ -43,9 +43,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
         <h3 className="author-section__title">{props.title}</h3>
         <div className="card-container">
           {authors.map((author, index) => {
-            const avatarURL = author?.avatar
-              ? `${CMS_URL}${author.avatar}`
-              : DEFAULT_AVATAR
+            const avatarURL = author.avatar ?? DEFAULT_AVATAR
             const theme = getTheme(author?.role)
 
             return (
@@ -61,10 +59,10 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   <span className="desc">
                     {ShortenParagraph(author.bio, descLengthLimit) ?? ''}
                   </span>
-                  {author.id && (
+                  {author.slug && (
                     <div className="more">
                       <a
-                        href={`/staff/${author.id}`}
+                        href={`/staff/${author.slug}`}
                         className={`theme-${theme}`}
                       >
                         <span>
@@ -79,12 +77,12 @@ export const AuthorCard = (props: AuthorCardProp) => {
             )
           })}
         </div>
-        <button
+        {/* TODO: more button <button
           className="author-section__m-btn rpjr-btn"
           //onclick="document.querySelector('.author-section').classList.add('author-section--show')"
         >
           展開看所有作者
-        </button>
+        </button>*/}
       </div>
     )
   )

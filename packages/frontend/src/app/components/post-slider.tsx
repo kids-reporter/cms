@@ -42,7 +42,7 @@ export const PostSlider = (props: PostSliderProp) => {
       <div className={`post-slider theme-${props.sliderTheme}`}>
         <div className="cards">
           {postNum === 1 ? (
-            <PostCard post={posts[0]} showDesc={showDesc} />
+            posts[0] && <PostCard post={posts[0]} showDesc={showDesc} />
           ) : (
             <>
               <Swiper
@@ -58,7 +58,7 @@ export const PostSlider = (props: PostSliderProp) => {
                 slidesPerView={1}
                 breakpoints={{
                   1000: {
-                    slidesPerView: 3,
+                    slidesPerView: postNum > 2 ? 3 : 2,
                   },
                   730: {
                     slidesPerView: 2,
