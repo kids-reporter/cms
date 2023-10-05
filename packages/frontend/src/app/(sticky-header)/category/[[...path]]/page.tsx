@@ -90,11 +90,11 @@ export default async function Category({ params }: { params: { path: any } }) {
       },
     })
     subcategories = subcategoriesRes?.data?.data?.category?.subcategories?.map(
-      (subcategory: any) => {
+      (sub: any) => {
         return (
-          subcategory && {
-            name: subcategory.name,
-            path: `${category}/${subcategory.slug}`,
+          sub && {
+            name: sub.name,
+            path: `/category/${category}/${sub.slug}`,
           }
         )
       }
@@ -125,7 +125,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     notFound()
   }
 
-  const navigationItems = [{ name: '所有文章', path: category }]
+  const navigationItems = [{ name: '所有文章', path: `/category/${category}` }]
   if (Array.isArray(subcategories)) {
     navigationItems.push(...subcategories)
   }
