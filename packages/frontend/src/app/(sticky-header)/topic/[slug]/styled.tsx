@@ -70,7 +70,10 @@ export const SubTitle = styled.h2`
   }
 `
 
-export const BackgroundImage = styled.div<{ $imageEntity: Photo }>`
+export const BackgroundImage = styled.div<{
+  $imageEntity: Photo
+  $mobileImageEntity?: Photo
+}>`
   width: 100vw;
   /* 62px is sticky header height */
   height: calc(100vh - 62px);
@@ -94,6 +97,17 @@ export const BackgroundImage = styled.div<{ $imageEntity: Photo }>`
     position: absolute;
     left: 50%;
     bottom: 70px;
+  }
+
+  ${mediaQuery.smallOnly} {
+    ${({ $mobileImageEntity }) => {
+      const url = $mobileImageEntity?.resized?.small
+      if (url) {
+        return `background-image: url(${url})`
+      }
+
+      return ''
+    }}
   }
 `
 
