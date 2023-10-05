@@ -23,6 +23,10 @@ const QuoteLeftContainer = styled.blockquote`
   background-color: #f4f4f4;
   display: flex;
   border-radius: 20px;
+
+  ${mediaQuery.smallOnly} {
+    padding: 20px;
+  }
 `
 
 const QuoteText = styled.p`
@@ -33,7 +37,7 @@ const QuoteText = styled.p`
   font-weight: 500;
   letter-spacing: 0.9px;
   line-height: 2;
-  color: #3a4f66;
+  color: #232323;
 `
 
 const SvgBlock = styled.div`

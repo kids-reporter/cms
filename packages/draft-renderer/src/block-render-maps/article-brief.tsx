@@ -5,6 +5,7 @@ import { DefaultDraftBlockRenderMap } from 'draft-js'
 import { Paragraph, List } from './article-content'
 
 const ParagraphForIntroduction = styled(Paragraph)`
+  font-size: 20px;
   color: #575757;
 `
 

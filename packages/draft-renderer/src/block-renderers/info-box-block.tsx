@@ -29,12 +29,12 @@ type InfoBoxBlockProps = {
 }
 
 const containerStyles = css`
-  padding: 40px;
+  padding: 40px 40px 20px 40px;
   border-radius: 30px;
   position: relative;
 
   ${mediaQuery.smallOnly} {
-    padding: 20px;
+    padding: 20px 20px 0px 20px;
   }
 `
 
