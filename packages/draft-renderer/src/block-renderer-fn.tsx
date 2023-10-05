@@ -2,6 +2,7 @@ import { ContentState, ContentBlock } from 'draft-js'
 import { blockRenderers } from './block-renderers'
 const {
   BlockquoteInArticleBody,
+  Divider,
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
   InfoBoxInArticleBody,
@@ -21,6 +22,9 @@ const AtomicBlock = (props: {
   switch (entityType) {
     case 'BLOCKQUOTE': {
       return BlockquoteInArticleBody({ data: entityData })
+    }
+    case 'DIVIDER': {
+      return Divider()
     }
     case 'IMAGE': {
       return ImageInArticleBody({ data: entityData })
