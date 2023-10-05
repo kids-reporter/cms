@@ -104,6 +104,10 @@
       }
 
       .slide {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
         img {
           max-width: 100%;
           height: auto;
