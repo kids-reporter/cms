@@ -37,6 +37,10 @@ const listConfigurations = list({
       ref: 'Photo',
       label: '首圖',
     }),
+    mobileHeroImage: relationship({
+      ref: 'Photo',
+      label: '手機首圖',
+    }),
     content: customFields.richTextEditor({
       label: '前言',
       disabledButtons: [
