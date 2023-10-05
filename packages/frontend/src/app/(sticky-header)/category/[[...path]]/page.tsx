@@ -59,7 +59,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   } else if (
     path.length === 3 &&
     path[1] === 'page' &&
-    Number.isInteger(path[2]) &&
+    Number.isInteger(Number(path[2])) &&
     Number(path[2]) > 0
   ) {
     category = path[0]
@@ -68,7 +68,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     path.length === 4 &&
     path[1] !== 'page' &&
     path[2] === 'page' &&
-    Number.isInteger(path[3]) &&
+    Number.isInteger(Number(path[3])) &&
     Number(path[3]) > 0
   ) {
     category = path[0]
