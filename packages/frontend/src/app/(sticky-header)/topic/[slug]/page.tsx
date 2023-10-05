@@ -32,6 +32,9 @@ const query = `
       heroImage {
         ...ImageEntity
       }
+      mobileHeroImage {
+        ...ImageEntity
+      }
       relatedPosts {
         title
         slug
@@ -142,7 +145,11 @@ export default async function PostPage({
   return (
     project && (
       <div>
-        <Leading title={project.title} backgroundImage={project.heroImage} />
+        <Leading
+          title={project.title}
+          backgroundImage={project.heroImage}
+          mobileBgImage={project.mobileHeroImage}
+        />
         {project.subtitle ? <SubTitle>{project.subtitle}</SubTitle> : null}
         {project.publishedDate ? (
           <PublishedDate>

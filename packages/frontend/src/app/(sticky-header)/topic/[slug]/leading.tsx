@@ -6,9 +6,11 @@ import { useRef } from 'react'
 export const Leading = ({
   title,
   backgroundImage,
+  mobileBgImage,
 }: {
   title: string
   backgroundImage: Photo
+  mobileBgImage?: Photo
 }) => {
   const ref = useRef(null)
   const onDownButtonClick = () => {
@@ -23,7 +25,11 @@ export const Leading = ({
     }
   }
   return (
-    <BackgroundImage ref={ref} $imageEntity={backgroundImage}>
+    <BackgroundImage
+      ref={ref}
+      $imageEntity={backgroundImage}
+      $mobileImageEntity={mobileBgImage}
+    >
       <Title>{title}</Title>
       <span onClick={onDownButtonClick}>
         <DownButton />
