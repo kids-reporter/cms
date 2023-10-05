@@ -32,7 +32,7 @@ query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
 
 const subcategoryPostsGQL = `
 query($where: SubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
-  category(where: $where) {
+  subcategory(where: $where) {
     relatedPosts(take: $take, skip: $skip) {
       ${POST_CONTENT_GQL}
     }
