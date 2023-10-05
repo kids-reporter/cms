@@ -4,7 +4,12 @@ import PostCard from '@/app/components/post-card'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import { API_URL, POST_PER_PAGE, POST_CONTENT_GQL } from '@/app/constants'
+import {
+  API_URL,
+  POST_PER_PAGE,
+  POST_CONTENT_GQL,
+  Theme,
+} from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
@@ -132,21 +137,25 @@ export default async function Category({ params }: { params: { path: any } }) {
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
 
-  let imageURL
+  let imageURL, theme
   if (category === 'news') {
     imageURL = '/images/category_news.svg'
+    theme = Theme.BLUE
   } else if (category === 'listening-news') {
     imageURL = '/images/category_listening_news.svg'
+    theme = Theme.RED
   } else if (category === 'comics') {
     imageURL = '/images/category_comics.svg'
+    theme = Theme.YELLOW
   } else {
     imageURL = '/images/category_campus.svg'
+    theme = Theme.YELLOW
   }
 
   // TODO: navigation item style
   return (
     <main className="container">
-      <div className="content">
+      <div className={`content theme-${theme}`}>
         <img src={imageURL} />
         <div className="navigation">
           {navigationItems?.map(
@@ -156,7 +165,12 @@ export default async function Category({ params }: { params: { path: any } }) {
                   key={`category-navigation-${index}`}
                   name={item.name}
                   path={item.path}
-                  active={item.name === category}
+                  active={
+                    item.path ===
+                    `/category/${category}${
+                      subcategory ? `/${subcategory}` : ''
+                    }`
+                  }
                 />
               )
           )}

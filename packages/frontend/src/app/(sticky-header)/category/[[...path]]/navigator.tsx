@@ -11,8 +11,8 @@ export const Navigator = (props: NavigatorProp) => {
 
   return (
     <a
-      className={`rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag ${
-        props.active ? 'active' : ''
+      className={`rpjr-btn-ghost rpjr-btn ${
+        props.active ? 'rpjr-btn__current' : ''
       }`}
       href={path}
     >
