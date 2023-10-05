@@ -1,4 +1,5 @@
 import { BlockquoteInArticleBody } from './blockquote'
+import { Divider } from './divider'
 import {
   EmbeddedCodeBlock,
   EmbeddedCodeInArticleBody,
@@ -10,6 +11,7 @@ import { NewsReading } from './news-reading'
 
 export const blockRenderers = {
   BlockquoteInArticleBody,
+  Divider,
   EmbeddedCodeBlock,
   EmbeddedCodeInArticleBody,
   ImageBlock,
