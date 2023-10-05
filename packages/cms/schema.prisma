@@ -72,6 +72,7 @@ model Photo {
   from_Post_ogImage              Post[]            @relation("Post_ogImage")
   from_Author_avatar             Author[]          @relation("Author_avatar")
   from_Project_heroImage         Project[]         @relation("Project_heroImage")
+  from_Project_mobileHeroImage   Project[]         @relation("Project_mobileHeroImage")
   from_Project_ogImage           Project[]         @relation("Project_ogImage")
   from_ProjectCategory_heroImage ProjectCategory[] @relation("ProjectCategory_heroImage")
   from_ProjectCategory_ogImage   ProjectCategory[] @relation("ProjectCategory_ogImage")
@@ -106,6 +107,8 @@ model Project {
   publishedDate                                 DateTime?
   heroImage                                     Photo?               @relation("Project_heroImage", fields: [heroImageId], references: [id])
   heroImageId                                   Int?                 @map("heroImage")
+  mobileHeroImage                               Photo?               @relation("Project_mobileHeroImage", fields: [mobileHeroImageId], references: [id])
+  mobileHeroImageId                             Int?                 @map("mobileHeroImage")
   content                                       Json?
   credits                                       Json?
   relatedPosts                                  Post[]               @relation("Post_projects")
@@ -122,6 +125,7 @@ model Project {
   @@index([status])
   @@index([publishedDate])
   @@index([heroImageId])
+  @@index([mobileHeroImageId])
   @@index([ogImageId])
 }
 
