@@ -27,4 +27,5 @@ export default {
   link: 'link',
   slideshow: 'slideshow',
   newsReading: 'news-reading',
+  divider: 'divider',
 }

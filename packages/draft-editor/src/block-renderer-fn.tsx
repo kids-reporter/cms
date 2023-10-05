@@ -6,7 +6,7 @@ import { EditableImage } from './block-renderers/image'
 import { EditableSlideshow } from './block-renderers/slideshow'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
-const { EmbeddedCodeInArticleBody, NewsReading } = blockRenderers
+const { Divider, EmbeddedCodeInArticleBody, NewsReading } = blockRenderers
 
 const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0))
@@ -17,6 +17,9 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
   switch (entityType) {
     case 'BLOCKQUOTE': {
       return EditableBlockquote(props)
+    }
+    case 'DIVIDER': {
+      return Divider()
     }
     case 'IMAGE': {
       return EditableImage(props)
