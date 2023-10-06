@@ -41,6 +41,7 @@ const containerStyles = css`
 const NewsChargeStationContainer = styled.div`
   ${containerStyles}
 
+  padding-top: 60px;
   background-color: #fffcf4;
 
   &::before {

@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
-import { Paragraph, Heading, List } from './article-content'
+import { Atomic, Paragraph, Heading, List } from './article-content'
 
 const HeadingForInfoBox = styled(Heading)`
   margin-top: 0px;
@@ -33,19 +33,6 @@ const ParagraphForInfoBox = styled(Paragraph)`
   margin-bottom: 20px;
   line-height: 1.5;
   color: #232323;
-`
-
-const Atomic = styled.div`
-  /* reset figure default styles */
-  figure {
-    margin: 0;
-  }
-
-  /* hide last empty block which immediately follows an atomic block */
-  & + ${Paragraph}:last-of-type {
-    line-height: 0;
-    margin-bottom: 0;
-  }
 `
 
 const _blockRenderMapForAnnotation = Immutable.Map({
