@@ -41,16 +41,17 @@ export const GetPostSummaries = (posts: any[]): PostSummary[] => {
   return posts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
     const image = imageURL ? `${CMS_URL}${imageURL}` : ''
+    const subSubcategory = post?.subSubcategories?.[0]
 
     return {
       image: image,
       title: post.title,
       url: `/article/${post.slug}`,
       desc: post.ogDescription,
-      category: post.subSubcategories?.subcategory?.name,
-      subSubcategory: post.subSubcategories.name,
+      category: subSubcategory?.subcategory?.name,
+      subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: GetThemeFromCategory(post.subSubcategories?.subcategory?.name),
+      theme: GetThemeFromCategory(subSubcategory?.subcategory?.name),
     }
   })
 }
