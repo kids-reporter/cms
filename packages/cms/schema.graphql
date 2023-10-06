@@ -573,6 +573,7 @@ type Project {
   ogImage: Photo
   createdAt: DateTime
   updatedAt: DateTime
+  preview: JSON
 }
 
 input ProjectWhereUniqueInput {
