@@ -2,8 +2,14 @@ import {
   customFields,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
-import { list } from '@keystone-6/core'
-import { relationship, text, select, timestamp } from '@keystone-6/core/fields'
+import { graphql, list } from '@keystone-6/core'
+import {
+  virtual,
+  relationship,
+  text,
+  select,
+  timestamp,
+} from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -117,6 +123,31 @@ const listConfigurations = list({
     updatedAt: timestamp({
       db: {
         updatedAt: true,
+      },
+    }),
+    preview: virtual({
+      field: graphql.field({
+        type: graphql.JSON,
+        resolve(item: Record<string, unknown>): Record<string, string> {
+          return {
+            href: `https://dev-kids.twreporter.org/topic/${item.slug}`,
+            label: '專題預覽',
+            buttonLabel: 'Preview',
+          }
+        },
+      }),
+      ui: {
+        // A module path that is resolved from where `keystone start` is run
+        views: './lists/views/link-button',
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
       },
     }),
   },
