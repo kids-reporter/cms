@@ -69,9 +69,11 @@
       }
 
       .latest-post-list {
+        flex: 1;
         @media screen and (min-width: 1000px) {
           display: flex;
           flex-direction: column;
+          justify-content: space-between;
         }
         @media screen and (max-width: 999px) {
           display: grid;
@@ -100,7 +102,7 @@
         display: inline-flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        row-gap: 20px;
+        row-gap: 10px;
 
         @media screen and (min-width: 1000px) {
           .card-child-1, .card-child-2 {
