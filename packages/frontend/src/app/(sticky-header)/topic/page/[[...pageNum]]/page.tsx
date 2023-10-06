@@ -72,10 +72,10 @@ const TopicCard = (props: { topic: TopicSummary }) => {
       <div className="topic-container">
         <img src={topic.image} />
         <div className="topic-info">
-          <span>
+          <div className="icon">
             <img src={'/images/topic_icon.svg'} />
-            專題
-          </span>
+            <span>專題</span>
+          </div>
           <p className="title">
             {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
           </p>

@@ -88,10 +88,23 @@ main {
     border-radius: 0 45px 45px 0;
     padding: 40px;
 
-    img {
+    .icon {
       width: 100%;
-      max-width: 136px;
-      margin-bottom: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+
+      img {
+        max-width: 40px;
+      }
+
+      span {
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 160%;
+        letter-spacing: 0.08em;
+      }
     }
 
     p.title {

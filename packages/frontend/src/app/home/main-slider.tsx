@@ -63,15 +63,18 @@ export const MainSlider = (props: SliderProp) => {
                   className="topic-body"
                   href={topic.url}
                 >
-                  <span className="icon">
+                  <div className="icon">
                     <img src={'/images/topic_icon.svg'} />
-                  </span>
-                  <img src={topic.image} />
-                  <span className="topic-title">
-                    {topic.title}
-                    <br />
-                    {topic.subtitle}
-                  </span>
+                    <span>專題</span>
+                  </div>
+                  <div className="slide">
+                    <img src={topic.image} />
+                    <span className="topic-title">
+                      {topic.title}
+                      <br />
+                      {topic.subtitle}
+                    </span>
+                  </div>
                 </a>
               </SwiperSlide>
             )
