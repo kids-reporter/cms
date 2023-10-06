@@ -12,6 +12,11 @@ export const TOPIC_PAGE_ROUTE = '/topic/page/'
 
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
+export enum FontSizeLevel {
+  NORMAL = 'normal',
+  LARGE = 'large',
+}
+
 export enum Theme {
   YELLOW = 'yellow',
   BLUE = 'blue',

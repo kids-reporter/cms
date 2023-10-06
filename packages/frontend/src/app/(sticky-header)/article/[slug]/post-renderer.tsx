@@ -21,6 +21,7 @@ export const PostRenderer = (props: PostProp) => {
     props?.theme && (
       <ArticleBodyDraftRenderer
         rawContentState={props.post.content}
+        // TODO: change font size fontSizeLevel={FontSizeLevel.LARGE}
         themeColor={props.theme}
       />
     )
