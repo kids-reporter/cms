@@ -37,7 +37,8 @@
     "styled-components": "5.3.5"
   },
   "files": [
-    "lib"
+    "lib",
+    "public"
   ],
   "devDependencies": {
     "react": "18.2.0",

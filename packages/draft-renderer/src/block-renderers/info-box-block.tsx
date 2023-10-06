@@ -40,14 +40,14 @@ const containerStyles = css`
 
 const NewsChargeStationContainer = styled.div`
   ${containerStyles}
+
   background-color: #fffcf4;
 
   &::before {
     content: '';
     width: 300px;
     height: 80px;
-    /* TODO: change image url */
-    background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/newsChargeStation.svg);
+    background-image: url(https://www.unpkg.com/@kids-reporter/draft-renderer/public/images/info-box-news-charge-station.svg);
     position: absolute;
     top: -40px;
     left: 50%;
@@ -84,7 +84,7 @@ const HeaderBorderContainer = styled.div`
     return `
       background-color: ${bgColor};
       &::before {
-        background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_${logoColor}.png);
+        background-image: url(https://www.unpkg.com/@kids-reporter/draft-renderer/public/images/info-box-blocksy-child-1-${logoColor}.png);
       }
       `
   }}
@@ -114,7 +114,7 @@ const BoxBorderContainer = styled.div`
 
   ${({ theme }) => `
     &::before {
-      background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_${theme?.themeColor}-b.png);
+      background-image: url(https://www.unpkg.com/@kids-reporter/draft-renderer/public/images/info-box-blocksy-child-2-${theme?.themeColor}.png);
     }`}
 
   &::before {
