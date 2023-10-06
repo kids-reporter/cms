@@ -135,7 +135,7 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int) {
 }
 `
 
-const topicsNum = 10 // TODO: check number
+const topicsNum = 9
 const latestPostsNum = 6
 const featuredPostsNum = 5
 const sectionPostsNum = 6
