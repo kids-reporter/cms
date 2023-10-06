@@ -17,6 +17,7 @@ import {
   customStylePrefix as bgColorPrefix,
 } from './buttons/bg-color'
 import { BlockquoteButton } from './buttons/blockquote'
+import { DividerButton } from './buttons/divider'
 import { EmbeddedCodeButton } from './buttons/embedded-code'
 import { EnlargeButton } from './buttons/enlarge'
 import {
@@ -134,6 +135,10 @@ const CustomBackgroundColorButton = styled(BackgroundColorButton)`
 `
 
 const CustomFontColorButton = styled(FontColorButton)`
+  ${buttonStyle}
+`
+
+const CustomDividerButton = styled(DividerButton)`
   ${buttonStyle}
 `
 
@@ -566,6 +571,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
               ></CustomNewsReadingButton>
+              <CustomDividerButton
+                isDisabled={disabledButtons.includes(buttonNames.divider)}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+              />
             </DraftEditorControlsWrapper>
           </DraftEditorControls>
           <TextEditorWrapper
