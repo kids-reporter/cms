@@ -18,6 +18,12 @@
 
     .single {
       width: 33%;
+      @media screen and (max-width: 999px) {
+        width: 50%;
+      }
+      @media screen and (max-width: 767px) {
+        width: 100%;
+      }
     }
 
     .swiper {
