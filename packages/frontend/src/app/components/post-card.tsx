@@ -26,15 +26,17 @@ export const PostCard = ({
       >
         <img className={isSimple ? 'simple' : ''} src={post.image} />
         <div className={`card-info ${isSimple ? 'simple' : ''}`}>
-          <span className="card-category">{post.category}</span>
-          <span className="card-title">
-            {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
-          </span>
-          {!isSimple && (
-            <span className="card-desc">
-              {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
+          <div className="card-top">
+            <span className="card-category">{post.category}</span>
+            <span className="card-title">
+              {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
             </span>
-          )}
+            {!isSimple && (
+              <span className="card-desc">
+                {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
+              </span>
+            )}
+          </div>
           <div className="card-bottom">
             {post.subSubcategory && (
               <span className="subSubcategory">{post.subSubcategory}</span>
