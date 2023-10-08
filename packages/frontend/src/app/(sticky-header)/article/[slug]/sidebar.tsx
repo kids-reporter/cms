@@ -59,10 +59,21 @@ const functionIcons = [
   },
 ]
 
-export const Sidebar = () => {
+type SidebarProp = {
+  topicURL?: string
+}
+
+export const Sidebar = ({ topicURL }: SidebarProp) => {
   return (
     <div className="sidebar-container">
       <div className="sidebar">
+        {topicURL && (
+          <div>
+            <a href={topicURL}>
+              <img src="/images/topic-breadcrumb-sidebar-icon.svg" />
+            </a>
+          </div>
+        )}
         <div className="section">
           <span>分享</span>
           {shareIcons.map((icon, index) => {
@@ -87,7 +98,7 @@ export const Sidebar = () => {
   )
 }
 
-export const MobileSidebar = () => {
+export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   const [isShareClicked, setIsShareClicked] = useState(false)
 
   const onShareClick = () => {
@@ -114,6 +125,14 @@ export const MobileSidebar = () => {
           </div>
         )}
         <div className="section">
+          {topicURL && (
+            <div className="button-group">
+              <a href={topicURL}>
+                <img src="/images/topic-breadcrumb-sidebar-mobile-icon.svg" />
+              </a>
+              <span>前往專題</span>
+            </div>
+          )}
           <div className="button-group">
             <button onClick={onShareClick}>
               <img src={`/images/mobile-sidebar-share.svg`} />

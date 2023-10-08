@@ -189,16 +189,17 @@ export default async function PostPage({
       : ''
   const theme = GetThemeFromCategory(subSubcategory?.slug)
   const topic = post?.projects?.[0]
+  const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
 
   return (
     post && (
       <main className="container">
         <div className={`post theme-${theme}`}>
-          <Sidebar />
-          <MobileSidebar />
-          {topic?.slug && (
+          <Sidebar topicURL={topicURL} />
+          <MobileSidebar topicURL={topicURL} />
+          {topicURL && (
             <div className="topic-breadcrumb">
-              <a href={`/topic/${topic.slug}`}>
+              <a href={topicURL}>
                 <img src="/images/topic-breadcrumb-icon.svg" />
                 {topic.title}
               </a>
