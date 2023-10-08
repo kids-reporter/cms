@@ -88,6 +88,10 @@ const postGQL = `
       }
       subtitle
       ${categoryGQL}
+      projects {
+        title
+        slug
+      }
     }
   }
 `
@@ -184,6 +188,7 @@ export default async function PostPage({
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
   const theme = GetThemeFromCategory(subSubcategory?.slug)
+  const topic = post?.projects?.[0]
 
   return (
     post && (
@@ -191,6 +196,14 @@ export default async function PostPage({
         <div className={`post theme-${theme}`}>
           <Sidebar />
           <MobileSidebar />
+          {topic?.slug && (
+            <div className="topic-breadcrumb">
+              <a href={`/topic/${topic.slug}`}>
+                <img src="/images/topic-breadcrumb-icon.svg" />
+                {topic.title}
+              </a>
+            </div>
+          )}
           <HeroImage
             url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
             caption={post.heroCaption}
