@@ -67,7 +67,7 @@ main {
   }
 
   .news {
-    width: 95vw;
+    max-width: var(--normal-container-max-width);
     display: flex;
     flex-direction: column;
     justify-content: center;
