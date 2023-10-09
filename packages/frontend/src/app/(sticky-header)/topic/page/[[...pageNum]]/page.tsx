@@ -179,7 +179,7 @@ export default async function Topic({
                 <PostSlider
                   posts={featuredTopicPosts}
                   sliderTheme={Theme.BLUE}
-                  showDesc={false}
+                  isSimple={true}
                 />
               )}
             </div>
