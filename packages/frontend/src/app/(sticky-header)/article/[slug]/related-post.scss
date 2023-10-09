@@ -1,10 +1,10 @@
 .related-post-container {
+  width: 95vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: var(--padding, 50px) 0;
-  width: 95vw;
 
   h3 {
     width: 100%;
