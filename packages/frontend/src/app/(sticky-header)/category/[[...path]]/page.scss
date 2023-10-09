@@ -13,7 +13,7 @@ main {
     align-items: center;
     gap: 40px;
 
-    img {
+    .title-image  {
       width: 100%;
       max-width: 600px;
     }
@@ -21,15 +21,22 @@ main {
     .navigation {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
       gap : 10px;
     }
   }
 
   .post-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
+    max-width: var(--normal-container-max-width);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    @media screen and (max-width: 999px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+    gap: 30px;
   }
 }

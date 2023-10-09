@@ -75,7 +75,7 @@ export default async function LatestPosts({
   return (
     <main className="container">
       <div className="content">
-        <img src={'/images/new_article.svg'} />
+        <img className="title-image" src={'/images/new_article.svg'} />
         <div className="post-list">
           {postSummeries.length > 0 ? (
             postSummeries.map((post, index) => {

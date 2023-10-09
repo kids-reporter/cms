@@ -155,7 +155,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   return (
     <main className="container">
       <div className={`content theme-${theme}`}>
-        <img src={imageURL} />
+        <img className="title-image" src={imageURL} />
         <div className="navigation">
           {navigationItems?.map(
             (item, index) =>
