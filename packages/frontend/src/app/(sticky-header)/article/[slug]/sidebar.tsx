@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useArticleContext } from './article-context'
 import './sidebar.scss'
 
 const shareIcons = [
@@ -46,24 +47,13 @@ const shareIcons = [
   },
 ]
 
-const functionIcons = [
-  {
-    image: 'rpjr-icon-color-text.svg',
-    onClick: () => {
-      console.log('change font size')
-    }, // TODO: change font handler
-  },
-  {
-    image: 'rpjr-icon-color-print.svg',
-    onClick: () => window.print(),
-  },
-]
-
 type SidebarProp = {
   topicURL?: string
 }
 
 export const Sidebar = ({ topicURL }: SidebarProp) => {
+  const { onFontSizeChange } = useArticleContext()
+
   return (
     <div className="sidebar-container">
       <div className="sidebar">
@@ -85,13 +75,12 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
           })}
         </div>
         <div className="section">
-          {functionIcons.map((icon, index) => {
-            return (
-              <button key={`function-icon-${index}`} onClick={icon.onClick}>
-                <img src={`/images/${icon.image}`} />
-              </button>
-            )
-          })}
+          <button onClick={onFontSizeChange}>
+            <img src={`/images/rpjr-icon-color-text.svg`} />
+          </button>
+          <button onClick={() => window.print()}>
+            <img src={`/images/rpjr-icon-color-print.svg`} />
+          </button>
         </div>
       </div>
     </div>
@@ -100,14 +89,10 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
 
 export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   const [isShareClicked, setIsShareClicked] = useState(false)
+  const { onFontSizeChange } = useArticleContext()
 
   const onShareClick = () => {
     setIsShareClicked(!isShareClicked)
-  }
-
-  const onChangeTextClick = () => {
-    // TODO: change font handler
-    console.log('onChangeTextClick')
   }
 
   return (
@@ -140,7 +125,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
             <span>分享文章</span>
           </div>
           <div className="button-group">
-            <button onClick={onChangeTextClick}>
+            <button onClick={onFontSizeChange}>
               <img src={`/images/mobile-sidebar-change-font.svg`} />
             </button>
             <span>文字大小</span>

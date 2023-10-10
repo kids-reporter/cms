@@ -1,3 +1,6 @@
+'use client'
+import { useState, useEffect } from 'react'
+import { ArticleContext } from './article-context'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import Title from './title'
@@ -18,6 +21,7 @@ import {
   AUTHOR_ROLES_IN_ORDER,
   CMS_URL,
   DEFAULT_AVATAR,
+  FontSizeLevel,
 } from '@/app/constants'
 import { GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
@@ -97,29 +101,44 @@ const postGQL = `
 `
 
 // TODO: add pageMap for google indexing/search
-export default async function PostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  let response
-  try {
-    response = params?.slug
-      ? await axios.post(API_URL, {
-          query: postGQL,
-          variables: {
-            where: {
-              slug: params.slug,
-            },
-          },
-        })
-      : undefined
-  } catch (err) {
-    console.error('Fetch post data failed!', err)
-    notFound()
+export default function PostPage({ params }: { params: { slug: string } }) {
+  const [post, setPost] = useState<any>(null)
+  const [isLoading, setLoading] = useState<boolean>(true)
+  const [fontSize, setFontSize] = useState<FontSizeLevel>(FontSizeLevel.NORMAL)
+  const onFontSizeChange = () => {
+    setFontSize(
+      fontSize === FontSizeLevel.NORMAL
+        ? FontSizeLevel.LARGE
+        : FontSizeLevel.NORMAL
+    )
   }
 
-  const post = response?.data?.data?.post
+  useEffect(() => {
+    axios
+      .post(API_URL, {
+        query: postGQL,
+        variables: {
+          where: {
+            slug: params.slug,
+          },
+        },
+      })
+      .then(
+        (res) => {
+          setPost(res?.data?.data?.post)
+          setLoading(false)
+        },
+        (err) => {
+          console.error('Fetch post data failed!', err)
+          notFound()
+        }
+      )
+  }, [])
+
+  if (isLoading) {
+    // TODO: skeleton
+    return <p>Loading...</p>
+  }
   if (!post) {
     notFound()
   }
@@ -180,6 +199,7 @@ export default async function PostPage({
       : undefined
   })
 
+  // Subcategory related data
   const subSubcategory = post.subSubcategories?.[0]
   const subcategory = subSubcategory?.subcategory
   const category = subcategory?.category
@@ -188,6 +208,8 @@ export default async function PostPage({
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
   const theme = GetThemeFromCategory(subSubcategory?.slug)
+
+  // Topic related data
   const topic = post?.projects?.[0]
   const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
 
@@ -195,44 +217,46 @@ export default async function PostPage({
     post && (
       <main className="container">
         <div className={`post theme-${theme}`}>
-          <Sidebar topicURL={topicURL} />
-          <MobileSidebar topicURL={topicURL} />
-          {topicURL && (
-            <div className="topic-breadcrumb">
-              <a href={topicURL}>
-                <img src="/images/topic-breadcrumb-icon.svg" />
-                {topic.title}
-              </a>
-            </div>
-          )}
-          <HeroImage
-            url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
-            caption={post.heroCaption}
-          />
-          <div className="hero-section">
-            <header className="entry-header">
-              <Title text={post.title} subtitle={post.subtitle} />
-              <div className="post-date-category">
-                <PublishedDate date={post.publishedDate} />
-                <Category
-                  text={subSubcategory?.name}
-                  link={subSubcategoryURL}
-                />
+          <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
+            <Sidebar topicURL={topicURL} />
+            <MobileSidebar topicURL={topicURL} />
+            {topicURL && (
+              <div className="topic-breadcrumb">
+                <a href={topicURL}>
+                  <img src="/images/topic-breadcrumb-icon.svg" />
+                  {topic.title}
+                </a>
               </div>
-            </header>
-          </div>
-          {post.newsReadingGroup && (
-            <NewsReading data={post.newsReadingGroup} />
-          )}
-          <Brief
-            content={post.brief}
-            authors={orderedAuthorsInBrief}
-            theme={theme}
-          />
-          <Divider />
-          <PostRenderer post={post} theme={theme} />
-          <Tags title={'常用關鍵字'} tags={post.tags} />
-          <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
+            )}
+            <HeroImage
+              url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
+              caption={post.heroCaption}
+            />
+            <div className="hero-section">
+              <header className="entry-header">
+                <Title text={post.title} subtitle={post.subtitle} />
+                <div className="post-date-category">
+                  <PublishedDate date={post.publishedDate} />
+                  <Category
+                    text={subSubcategory?.name}
+                    link={subSubcategoryURL}
+                  />
+                </div>
+              </header>
+            </div>
+            {post.newsReadingGroup && (
+              <NewsReading data={post.newsReadingGroup} />
+            )}
+            <Brief
+              content={post.brief}
+              authors={orderedAuthorsInBrief}
+              theme={theme}
+            />
+            <Divider />
+            <PostRenderer post={post} theme={theme} />
+            <Tags title={'常用關鍵字'} tags={post.tags} />
+            <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
+          </ArticleContext.Provider>
         </div>
         <CallToAction />
         <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
