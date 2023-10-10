@@ -143,15 +143,38 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     notFound()
   }
 
-  // TODO: show authors according to json
-  // Assemble ordered authors
+  // Assemble authors for brief
   const authorsJSON = post?.authorsJSON
+  const authorsInBrief: AuthorGroup[] = []
+  let currentAuthorRole = '',
+    currentAuthors: { name: string; link: string }[] = []
+  authorsJSON?.forEach((authorJSON: any, index: number) => {
+    const author = post?.authors?.find((a: any) => a?.id === authorJSON?.id)
+    if (index === 0 || authorJSON.role === authorsJSON[index - 1]?.role) {
+      currentAuthorRole = authorJSON.role
+      currentAuthors.push({
+        name: authorJSON.name,
+        link: author ? `/staff/${author.slug}` : '',
+      })
+    } else {
+      authorsInBrief.push({ title: currentAuthorRole, authors: currentAuthors })
+      currentAuthorRole = authorJSON.role
+      currentAuthors = [
+        { name: authorJSON.name, link: author ? `/staff/${author.slug}` : '' },
+      ]
+    }
+
+    if (index === authorsJSON?.length - 1) {
+      authorsInBrief.push({ title: currentAuthorRole, authors: currentAuthors })
+    }
+  })
+
+  // Assemble ordered authors for AuthorCard
   const authors = post?.authors?.map((author: any) => {
     const authorJSON = authorsJSON.find(
       (authorJSON: any) => authorJSON.id === author?.id
     )
     const avatarURL = author?.avatar?.imageFile?.url
-
     return author && authorJSON
       ? {
           slug: author.slug,
@@ -165,26 +188,20 @@ export default function PostPage({ params }: { params: { slug: string } }) {
       : undefined
   })
   const orderedAuthors: Author[] = []
-  const orderedAuthorsInBrief: AuthorGroup[] = []
   AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
     const authorsOfRole = authors.filter(
       (author: any) => authorRole === author?.role && author?.link
     )
     orderedAuthors.push(...(authorsOfRole ?? []))
-    authorsOfRole?.length > 0 &&
-      orderedAuthorsInBrief.push({
-        title: authorRole,
-        authors: [...(authorsOfRole ?? [])],
-      })
   })
 
+  // Related posts data
   const relatedPosts = post?.relatedPosts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
       ? `${CMS_URL}${post.heroImage.imageFile.url}`
       : undefined
     const subSubcategory = post?.subSubcategories?.[0]
     const category = subSubcategory?.subcategory?.category
-
     return post
       ? {
           title: post.title,
@@ -249,7 +266,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
             )}
             <Brief
               content={post.brief}
-              authors={orderedAuthorsInBrief}
+              authors={authorsInBrief}
               theme={theme}
             />
             <Divider />
