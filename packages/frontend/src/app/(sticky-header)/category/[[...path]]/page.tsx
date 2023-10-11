@@ -84,7 +84,8 @@ export default async function Category({ params }: { params: { path: any } }) {
     notFound()
   }
 
-  let subcategories, posts: PostSummary[], postsCount
+  // Fetch subcategories for navigation
+  const navigationItems = []
   try {
     const subcategoriesRes = await axios.post(API_URL, {
       query: subcategoriesGQL,
@@ -94,17 +95,32 @@ export default async function Category({ params }: { params: { path: any } }) {
         },
       },
     })
-    subcategories = subcategoriesRes?.data?.data?.category?.subcategories?.map(
-      (sub: any) => {
-        return (
-          sub && {
-            name: sub.name,
-            path: `/category/${category}/${sub.slug}`,
-          }
-        )
-      }
-    )
+    const categoryData = subcategoriesRes?.data?.data?.category
+    if (!categoryData) {
+      console.error('Incorrect category!')
+      notFound()
+    }
+    const subcategories = categoryData.subcategories?.map((sub: any) => {
+      return (
+        sub && {
+          name: sub.name,
+          path: `/category/${category}/${sub.slug}`,
+        }
+      )
+    })
 
+    navigationItems.push({ name: '所有文章', path: `/category/${category}` })
+    if (Array.isArray(subcategories) && subcategories.length > 0) {
+      navigationItems.push(...subcategories)
+    }
+  } catch (err) {
+    console.error('Fetch category data failed!', err)
+    notFound()
+  }
+
+  // Fetch related posts of category/subcategory
+  let posts: PostSummary[], postsCount
+  try {
     const query = subcategory ? subcategoryPostsGQL : categoryPostsGQL
     const slug = subcategory ? subcategory : category
     const postsRes = await axios.post(API_URL, {
@@ -126,13 +142,8 @@ export default async function Category({ params }: { params: { path: any } }) {
       ? postsRes?.data?.data?.subcategory?.relatedPostsCount
       : postsRes?.data?.data?.category?.relatedPostsCount
   } catch (err) {
-    console.error('Fetch category data failed!', err)
+    console.error('Fetch posts failed!', err)
     notFound()
-  }
-
-  const navigationItems = [{ name: '所有文章', path: `/category/${category}` }]
-  if (Array.isArray(subcategories)) {
-    navigationItems.push(...subcategories)
   }
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
