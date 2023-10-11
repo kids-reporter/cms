@@ -17,6 +17,7 @@ const AnnotationWrapper = styled.span`
 `
 
 const AnnotationBody = styled.div`
+  color: #494949;
   margin-bottom: 10px;
   border-top: 2px solid #27b5f7;
   background-color: #fff;
