@@ -7,10 +7,6 @@ import { Atomic, Paragraph, Heading, List } from './article-content'
 const HeadingForInfoBox = styled(Heading)`
   margin-top: 0px;
   margin-bottom: 20px;
-
-  h4 {
-    font-size: 24px;
-  }
 `
 
 const ListForInfoBox = styled(List)`
