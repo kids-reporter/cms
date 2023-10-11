@@ -69,14 +69,12 @@ export const Brief = (props: BriefProp) => {
 
   return (
     <div className="post-intro">
-      {isMounted ? (
+      {isMounted && content ? (
         <>
-          {content && (
-            <ArticleIntroductionDraftRenderer
-              rawContentState={content}
-              themeColor={props.theme}
-            />
-          )}
+          <ArticleIntroductionDraftRenderer
+            rawContentState={content}
+            themeColor={props.theme}
+          />
           {authors?.length > 0 && <Authors authorGroups={authors} />}
         </>
       ) : (

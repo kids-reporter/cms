@@ -16,10 +16,10 @@ const SkeletonContainer = styled.div`
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 40px;
+  line-height: 200%;
 `
 
 export const PostRenderer = (props: PostProp) => {
@@ -32,17 +32,15 @@ export const PostRenderer = (props: PostProp) => {
   const theme = props.theme
   const { fontSize } = useArticleContext()
 
-  return isMounted ? (
-    content && theme && (
-      <ArticleBodyDraftRenderer
-        rawContentState={props.post.content}
-        fontSizeLevel={fontSize}
-        themeColor={props.theme}
-      />
-    )
+  return isMounted && content && theme ? (
+    <ArticleBodyDraftRenderer
+      rawContentState={props.post.content}
+      fontSizeLevel={fontSize}
+      themeColor={props.theme}
+    />
   ) : (
     <SkeletonContainer>
-      <Skeleton count={10} />
+      <Skeleton count={5} />
     </SkeletonContainer>
   )
 }
