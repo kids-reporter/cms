@@ -10,7 +10,6 @@ const HeadingForInfoBox = styled(Heading)`
 `
 
 const ListForInfoBox = styled(List)`
-  padding-left: 2rem;
   margin-bottom: 20px;
 
   color: #232323;
