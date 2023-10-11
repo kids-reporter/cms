@@ -41,11 +41,29 @@ const QuoteText = styled.p`
 `
 
 const SvgBlock = styled.div`
-  margin-right: 16px;
-
   svg {
-    width: 36px;
     fill: ${({ theme }) => getColorHex(theme?.themeColor)};
+  }
+
+  ${mediaQuery.smallOnly} {
+    svg {
+      width: 20px;
+      margin-right: 12px;
+    }
+  }
+
+  ${mediaQuery.mediumOnly} {
+    svg {
+      width: 25px;
+      margin-right: 15px;
+    }
+  }
+
+  ${mediaQuery.largeOnly} {
+    svg {
+      width: 30px;
+      margin-right: 18px;
+    }
   }
 `
 
