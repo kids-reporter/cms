@@ -136,14 +136,16 @@ const InfoBoxContainer = styled.div<{ $alignment?: string }>`
     switch (props.$alignment) {
       case 'left': {
         return `
-        width: 200px;
-        margin-right: auto;
+          width: 200px;
+          float: left;
+          margin: 5px 27px 5px 0px;
         `
       }
       case 'right': {
         return `
-        width: 200px;
-        margin-left: auto;
+          width: 200px;
+          float: right;
+          margin: 5px 0px 5px 27px;
         `
       }
       case 'paragraph-width':

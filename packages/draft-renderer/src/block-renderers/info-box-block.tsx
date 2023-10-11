@@ -56,6 +56,10 @@ const NewsChargeStationContainer = styled.div`
   }
 `
 
+const ClearFloat = styled.div`
+  clear: both;
+`
+
 function NewsChargeStation({ children }: { children: React.ReactNode }) {
   return <NewsChargeStationContainer>{children}</NewsChargeStationContainer>
 }
@@ -182,6 +186,7 @@ export function InfoBoxInArticleBody({ className, data }: InfoBoxBlockProps) {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             onChange={() => {}}
           />
+          <ClearFloat />
         </EditorContainer>
       </Component>
     </ArticleBodyContainer>
