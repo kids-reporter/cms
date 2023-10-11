@@ -131,6 +131,10 @@
     }
 
     button {
+      width: 54px;
+      @media screen and (max-width: 999px) {
+        width: 32px;
+      }
       background-color: transparent;
       border: none;
       cursor: pointer;
