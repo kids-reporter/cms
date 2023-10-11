@@ -211,7 +211,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           category: category?.name,
           subSubcategory: subSubcategory?.name,
           publishedDate: post.publishedDate,
-          theme: GetThemeFromCategory(category),
+          theme: GetThemeFromCategory(category?.slug),
         }
       : undefined
   })
@@ -224,7 +224,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = GetThemeFromCategory(subSubcategory?.slug)
+  const theme = GetThemeFromCategory(category?.slug)
 
   // Topic related data
   const topic = post?.projects?.[0]

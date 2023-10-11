@@ -137,7 +137,7 @@ export default async function PostPage({
       category: category?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: GetThemeFromCategory(category),
+      theme: GetThemeFromCategory(category?.slug),
     }
     return postProps
   })

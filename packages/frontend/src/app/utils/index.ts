@@ -29,8 +29,10 @@ export const ShortenParagraph = (paragraph: string, limit: number): string => {
 }
 
 // TODO: complete theme-color mapping
-export const GetThemeFromCategory = (Category: any): Theme => {
+export const GetThemeFromCategory = (Category: string): Theme => {
   switch (Category) {
+    case 'news':
+      return Theme.BLUE
     default:
       return Theme.YELLOW
   }
@@ -51,7 +53,7 @@ export const GetPostSummaries = (posts: any[]): PostSummary[] => {
       category: subSubcategory?.subcategory?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: GetThemeFromCategory(subSubcategory?.subcategory?.name),
+      theme: GetThemeFromCategory(subSubcategory?.subcategory?.slug),
     }
   })
 }
