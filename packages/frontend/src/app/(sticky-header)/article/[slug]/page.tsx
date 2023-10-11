@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { ArticleContext } from './article-context'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import Skeleton from 'react-loading-skeleton'
 import Title from './title'
 import HeroImage from './hero-image'
 import { NewsReading } from './news-reading'
@@ -25,6 +26,7 @@ import {
 } from '@/app/constants'
 import { GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const heroImageGQL = `
   heroImage {
@@ -136,8 +138,12 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   }, [])
 
   if (isLoading) {
-    // TODO: skeleton
-    return <p>Loading...</p>
+    return (
+      <div className="skeleton">
+        <Skeleton height={'100px'} />
+        <Skeleton count={10} />
+      </div>
+    )
   }
   if (!post) {
     notFound()
