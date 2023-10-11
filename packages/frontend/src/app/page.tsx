@@ -21,7 +21,7 @@ const sections = [
     image: 'topic_pic1.svg',
     titleImg: 'topic_title1.svg',
     link: '/category/news/times/',
-    theme: Theme.BLUE, // TODO: get theme from category
+    theme: Theme.BLUE,
   },
   {
     title: '真的假的',
