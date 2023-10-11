@@ -57,7 +57,6 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
         <ImageSelector
           onChange={onChange}
           enableCaption={true}
-          enableUrl={false}
           enableAlignment={true}
           alignment={data.alignment}
           selected={[imageWithMeta]}
