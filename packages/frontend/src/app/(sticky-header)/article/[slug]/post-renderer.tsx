@@ -34,9 +34,9 @@ export const PostRenderer = (props: PostProp) => {
 
   return isMounted && content && theme ? (
     <ArticleBodyDraftRenderer
-      rawContentState={props.post.content}
+      rawContentState={content}
+      themeColor={theme}
       fontSizeLevel={fontSize}
-      themeColor={props.theme}
     />
   ) : (
     <SkeletonContainer>
