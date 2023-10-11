@@ -37,6 +37,7 @@ export const Heading = styled.div`
   h3,
   h4,
   h5 {
+    letter-spacing: 1.5px;
     margin: 0;
   }
 
