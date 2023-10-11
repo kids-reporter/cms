@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useArticleContext } from './article-context'
 import './sidebar.scss'
 
 const shareIcons = [
@@ -46,23 +47,23 @@ const shareIcons = [
   },
 ]
 
-const functionIcons = [
-  {
-    image: 'rpjr-icon-color-text.svg',
-    onClick: () => {
-      console.log('change font size')
-    }, // TODO: change font handler
-  },
-  {
-    image: 'rpjr-icon-color-print.svg',
-    onClick: () => window.print(),
-  },
-]
+type SidebarProp = {
+  topicURL?: string
+}
 
-export const Sidebar = () => {
+export const Sidebar = ({ topicURL }: SidebarProp) => {
+  const { onFontSizeChange } = useArticleContext()
+
   return (
     <div className="sidebar-container">
       <div className="sidebar">
+        {topicURL && (
+          <div>
+            <a href={topicURL}>
+              <img src="/images/topic-breadcrumb-sidebar-icon.svg" />
+            </a>
+          </div>
+        )}
         <div className="section">
           <span>分享</span>
           {shareIcons.map((icon, index) => {
@@ -74,29 +75,24 @@ export const Sidebar = () => {
           })}
         </div>
         <div className="section">
-          {functionIcons.map((icon, index) => {
-            return (
-              <button key={`function-icon-${index}`} onClick={icon.onClick}>
-                <img src={`/images/${icon.image}`} />
-              </button>
-            )
-          })}
+          <button onClick={onFontSizeChange}>
+            <img src={`/images/rpjr-icon-color-text.svg`} />
+          </button>
+          <button onClick={() => window.print()}>
+            <img src={`/images/rpjr-icon-color-print.svg`} />
+          </button>
         </div>
       </div>
     </div>
   )
 }
 
-export const MobileSidebar = () => {
+export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   const [isShareClicked, setIsShareClicked] = useState(false)
+  const { onFontSizeChange } = useArticleContext()
 
   const onShareClick = () => {
     setIsShareClicked(!isShareClicked)
-  }
-
-  const onChangeTextClick = () => {
-    // TODO: change font handler
-    console.log('onChangeTextClick')
   }
 
   return (
@@ -114,6 +110,14 @@ export const MobileSidebar = () => {
           </div>
         )}
         <div className="section">
+          {topicURL && (
+            <div className="button-group">
+              <a href={topicURL}>
+                <img src="/images/topic-breadcrumb-sidebar-mobile-icon.svg" />
+              </a>
+              <span>前往專題</span>
+            </div>
+          )}
           <div className="button-group">
             <button onClick={onShareClick}>
               <img src={`/images/mobile-sidebar-share.svg`} />
@@ -121,7 +125,7 @@ export const MobileSidebar = () => {
             <span>分享文章</span>
           </div>
           <div className="button-group">
-            <button onClick={onChangeTextClick}>
+            <button onClick={onFontSizeChange}>
               <img src={`/images/mobile-sidebar-change-font.svg`} />
             </button>
             <span>文字大小</span>

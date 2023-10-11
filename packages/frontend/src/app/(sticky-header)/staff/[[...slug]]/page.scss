@@ -68,10 +68,14 @@ main {
 
   .post-list {
     max-width: var(--normal-container-max-width);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    @media screen and (max-width: 999px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
+    gap: 30px;
   }
 }

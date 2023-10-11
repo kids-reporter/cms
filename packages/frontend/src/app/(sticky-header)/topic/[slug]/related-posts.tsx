@@ -32,7 +32,7 @@ export const RelatedPosts = ({ posts = [] }: { posts: PostSummary[] }) => {
   }
 
   const postCards = posts.map((post, idx) => (
-    <StyledPostCard key={idx} post={post} showDesc={post.desc !== ''} />
+    <StyledPostCard key={idx} post={post} isSimple={post.desc === ''} />
   ))
 
   return <FlexContainer>{postCards}</FlexContainer>

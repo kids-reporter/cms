@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { useArticleContext } from './article-context'
 import { ArticleBodyDraftRenderer } from '@kids-reporter/draft-renderer'
 import { Theme } from '@/app/constants'
 
@@ -14,6 +15,8 @@ export const PostRenderer = (props: PostProp) => {
     setIsMounted(true)
   }, [])
 
+  const { fontSize } = useArticleContext()
+
   // TODO: render skeleton
   return (
     isMounted &&
@@ -21,6 +24,7 @@ export const PostRenderer = (props: PostProp) => {
     props?.theme && (
       <ArticleBodyDraftRenderer
         rawContentState={props.post.content}
+        fontSizeLevel={fontSize}
         themeColor={props.theme}
       />
     )

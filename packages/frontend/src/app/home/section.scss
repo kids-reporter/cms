@@ -1,17 +1,17 @@
 .section {
-  width: 95%;
+  width: min(var(--normal-container-max-width), 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
 
   .section-head {
+    width: 95%;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 48px;
-    width: 95%;
-    flex-direction: row;
     padding-top: 40px;
 
     .image-left {
@@ -59,8 +59,21 @@
   }
 
   .more-mobile {
+    width: 90%;
+    display: flex;
     @media screen and (min-width: 730px) {
       display: none;
+    }
+    padding: 10px;
+
+    a {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      gap: 5px;
     }
   }
 }

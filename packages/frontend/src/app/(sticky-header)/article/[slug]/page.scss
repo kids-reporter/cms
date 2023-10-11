@@ -38,7 +38,24 @@ body.single-post {
   }
 
 /*.post .entry-content,*/
-.post topic-breadcrumb,
+.post .topic-breadcrumb {
+  a {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 3px solid rgb(234, 234, 234);
+    border-radius: 12px;
+    padding: 5px 14px 8px 14px;
+    font-size: 16px;
+    font-weight: 700;
+
+    img {
+      margin-right: 15px;
+    }
+  }
+}
+.post .topic-breadcrumb,
 .post .hero-section
 {
     max-width: 800px !important;

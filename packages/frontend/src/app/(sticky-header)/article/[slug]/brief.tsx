@@ -29,9 +29,13 @@ const Authors = (props: AuthorsProp) => {
               {authorGroup?.authors?.map((author, index) => {
                 return (
                   <span key={`brief-author-${index}`}>
-                    <a href={author.link} target="_blank" rel="noopener">
-                      {author.name}
-                    </a>
+                    {author.link ? (
+                      <a href={author.link} target="_blank" rel="noopener">
+                        {author.name}
+                      </a>
+                    ) : (
+                      <span>{author.name}</span>
+                    )}
                     {index + 1 < authorGroup.authors.length ? '、' : ''}
                   </span>
                 )

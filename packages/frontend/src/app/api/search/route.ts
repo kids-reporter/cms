@@ -55,7 +55,7 @@ export function transferItemsToPostCards(
         subSubcategory: '',
         theme: Theme.BLUE,
       },
-      showDesc: true,
+      isSimple: false,
     })
   })
 

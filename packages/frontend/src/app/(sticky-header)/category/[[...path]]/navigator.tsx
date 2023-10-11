@@ -4,7 +4,6 @@ type NavigatorProp = {
   active?: boolean
 }
 
-// TODO: fix active style
 export const Navigator = (props: NavigatorProp) => {
   const name = props.name
   const path = props.path
