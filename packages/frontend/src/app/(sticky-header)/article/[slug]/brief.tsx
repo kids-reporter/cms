@@ -1,9 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Skeleton from 'react-loading-skeleton'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
 import './brief.scss'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export type AuthorGroup = {
   title: string
@@ -65,18 +67,22 @@ export const Brief = (props: BriefProp) => {
     setIsMounted(true)
   }, [])
 
-  // TODO: render skeleton
   return (
-    content &&
-    isMounted && (
-      <div className="post-intro">
-        <ArticleIntroductionDraftRenderer
-          rawContentState={content}
-          themeColor={props.theme}
-        />
-        {authors?.length > 0 && <Authors authorGroups={authors} />}
-      </div>
-    )
+    <div className="post-intro">
+      {isMounted ? (
+        <>
+          {content && (
+            <ArticleIntroductionDraftRenderer
+              rawContentState={content}
+              themeColor={props.theme}
+            />
+          )}
+          {authors?.length > 0 && <Authors authorGroups={authors} />}
+        </>
+      ) : (
+        <Skeleton width={'100%'} count={5} />
+      )}
+    </div>
   )
 }
 
