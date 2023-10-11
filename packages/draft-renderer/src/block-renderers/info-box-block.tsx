@@ -119,7 +119,9 @@ const BoxBorderContainer = styled.div`
 
   ${({ theme }) => `
     &::before {
-      background-image: url(https://www.unpkg.com/@kids-reporter/draft-renderer/public/images/info-box-blocksy-child-2-${theme?.themeColor}.png);
+      background-image: url(https://www.unpkg.com/@kids-reporter/draft-renderer/public/images/info-box-blocksy-child-2-${
+        theme?.themeColor || ThemeColorEnum.BLUE
+      }.png);
     }`}
 
   &::before {
