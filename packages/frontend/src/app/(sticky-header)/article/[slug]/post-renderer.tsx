@@ -13,11 +13,8 @@ type PostProp = {
 }
 
 const SkeletonContainer = styled.div`
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  text-align: center;
   margin-bottom: 40px;
   line-height: 200%;
 `
@@ -40,7 +37,7 @@ export const PostRenderer = (props: PostProp) => {
     />
   ) : (
     <SkeletonContainer>
-      <Skeleton count={5} />
+      <Skeleton width={'80%'} count={5} />
     </SkeletonContainer>
   )
 }
