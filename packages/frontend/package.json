@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@googleapis/customsearch": "^1.0.4",
-    "@kids-reporter/draft-renderer": "^0.4.25",
+    "@kids-reporter/draft-renderer": "^0.4.26",
     "@twreporter/errors": "^1.1.2",
     "@types/draft-js": "^0.11.10",
     "@types/node": "20.4.1",
