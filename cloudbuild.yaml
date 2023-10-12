@@ -22,12 +22,18 @@ steps:
 
   # Build image
   - name: gcr.io/cloud-builders/docker
+    env:
+      - 'NEXT_PUBLIC_RELEASE_TARGET=${BRANCH_NAME}'
     args:
       - '-c'
       - >
         cp yarn.lock packages/$_TARGET_PACKAGE
 
         cd packages/$_TARGET_PACKAGE
+
+        echo "print environment variables and output to file"
+
+        printenv | tee .env.local
 
         docker build -t \
 
