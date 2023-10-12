@@ -23,6 +23,7 @@ const listConfigurations = list({
     title: text({
       label: '標題',
       validation: { isRequired: true },
+      isIndexed: true,
     }),
     subtitle: text({
       label: '副標',
@@ -189,7 +190,7 @@ const listConfigurations = list({
   },
   ui: {
     label: 'Posts（文章）',
-    labelField: 'slug',
+    labelField: 'title',
     listView: {
       initialColumns: ['slug', 'title', 'status'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },

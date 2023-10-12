@@ -50,6 +50,7 @@ model Post {
   from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
 
+  @@index([title])
   @@index([status])
   @@index([publishedDate])
   @@index([heroImageId])
@@ -122,6 +123,7 @@ model Project {
   updatedAt                                     DateTime?            @updatedAt
   from_EditorPicksSetting_editorPicksOfProjects EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfProjects")
 
+  @@index([title])
   @@index([status])
   @@index([publishedDate])
   @@index([heroImageId])
