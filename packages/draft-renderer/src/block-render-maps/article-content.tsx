@@ -37,6 +37,7 @@ export const Heading = styled.div`
   h3,
   h4,
   h5 {
+    letter-spacing: 1.5px;
     margin: 0;
   }
 
@@ -75,6 +76,7 @@ export const List = styled.ol`
   line-height: 2;
   letter-spacing: 0.9px;
   color: #3a4f66;
+  padding-left: 2rem;
 
   > li {
     margin-bottom: 6px;

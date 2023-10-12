@@ -9,17 +9,17 @@ import {
 } from 'draft-js'
 import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
-import { getColorHex } from '../utils/index'
 
 const AnnotationWrapper = styled.span`
   display: inline-block;
   cursor: pointer;
-  color: ${({ theme }) => getColorHex(theme?.themeColor)};
+  color: #27b5f7;
 `
 
 const AnnotationBody = styled.div`
+  color: #494949;
   margin-bottom: 10px;
-  border-top: 2px solid ${({ theme }) => getColorHex(theme?.themeColor)};
+  border-top: 2px solid #27b5f7;
   background-color: #fff;
   padding: 25px 25px;
 `
@@ -37,7 +37,7 @@ const ArrowIcon = styled.span<{ $showContent: boolean }>`
   top: -1px;
 
   &::before {
-    background-color: ${({ theme }) => getColorHex(theme?.themeColor)};
+    background-color: #27b5f7;
     content: '';
     width: 2px;
     height: 6.5px;
@@ -51,7 +51,7 @@ const ArrowIcon = styled.span<{ $showContent: boolean }>`
   }
 
   &::after {
-    background-color: ${({ theme }) => getColorHex(theme?.themeColor)};
+    background-color: #27b5f7;
     content: '';
     width: 2px;
     height: 6.5px;

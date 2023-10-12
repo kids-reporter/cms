@@ -40,7 +40,8 @@ export default {
     ? 300
     : Number(MEMORY_CACHE_SIZE),
   accessControlStrategy: ACCESS_CONTROL_STRATEGY || 'cms', // the value could be one of 'cms', 'gql' or 'preview'
-  previewServerOrigin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
+  previewServerOrigin:
+    PREVIEW_SERVER_ORIGIN || 'https://dev-kids.twreporter.org',
   database: {
     provider:
       DATABASE_PROVIDER === 'sqlite'

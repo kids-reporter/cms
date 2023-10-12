@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-renderer",
-  "version": "0.4.25",
+  "version": "0.4.26",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -37,7 +37,8 @@
     "styled-components": "5.3.5"
   },
   "files": [
-    "lib"
+    "lib",
+    "public"
   ],
   "devDependencies": {
     "react": "18.2.0",

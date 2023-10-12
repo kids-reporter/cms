@@ -1,3 +1,4 @@
+import envVars from '../environment-variables'
 import {
   customFields,
   richTextEditorButtonNames,
@@ -130,7 +131,7 @@ const listConfigurations = list({
         type: graphql.JSON,
         resolve(item: Record<string, unknown>): Record<string, string> {
           return {
-            href: `https://dev-kids.twreporter.org/topic/${item.slug}`,
+            href: `${envVars.previewServerOrigin}/topic/${item.slug}`,
             label: '專題預覽',
             buttonLabel: 'Preview',
           }
