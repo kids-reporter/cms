@@ -1,8 +1,7 @@
 export const cmsOrigin =
-  process.env.NEXT_PUBLIC_CMS_ORIGIN || 'https://dev-kids-cms.twreporter.org'
+  process.env.NEXT_PUBLIC_CMS_ORIGIN || 'http://localhost:3001'
 export const gqlEndpoint =
-  process.env.NEXT_PUBLIC_GQL_ENDPOINT ||
-  'https://dev-kids-cms.twreporter.org/api/graphql'
+  process.env.NEXT_PUBLIC_GQL_ENDPOINT || 'http://localhost:3001/api/graphql'
 
 export default {
   cmsOrigin,
