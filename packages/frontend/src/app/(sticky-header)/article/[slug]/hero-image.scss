@@ -19,10 +19,10 @@
 
   figcaption {
     padding: 10px 0 0 0;
-    --fontSize: 14px;
-    font-size: var(--fontSize);
-    text-align: center;
     margin-top: 5px;
+    font-size: 14px;
+    line-height: 28px;
+    text-align: center;
     color: var(--paletteColor3);
   }
 }
