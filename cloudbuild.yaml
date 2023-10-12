@@ -22,8 +22,6 @@ steps:
 
   # Build image
   - name: gcr.io/cloud-builders/docker
-    env:
-      - 'NEXT_PUBLIC_RELEASE_TARGET=${BRANCH_NAME}'
     args:
       - '-c'
       - >
