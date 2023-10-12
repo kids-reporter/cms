@@ -19,7 +19,11 @@ export const CallToAction = () => {
       <div className="bottom">
         <a href={'/about#mail'} className="mail">
           <div>
-            <h3>讀者信箱， 給我們意見</h3>
+            <h3>
+              讀者信箱，
+              <br />
+              給我們意見
+            </h3>
             <p>
               如果想給我們團隊一個鼓勵、一個建議，或是提供我們採訪線索，請寫信給我們，不要猶豫。
             </p>
