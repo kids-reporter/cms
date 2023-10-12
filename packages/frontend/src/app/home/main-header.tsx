@@ -31,12 +31,7 @@ export const MainHeader = () => {
   )
 
   const searchInput = (
-    <form
-      role="search"
-      method="get"
-      action="https://kids.twreporter.org/"
-      aria-haspopup="listbox"
-    >
+    <form role="search" method="get" action="/search" aria-haspopup="listbox">
       <input
         type="search"
         placeholder="搜尋更多新聞、議題"

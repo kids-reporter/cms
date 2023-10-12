@@ -24,7 +24,7 @@ export default function NotFound() {
           role="search"
           method="get"
           className="search-form"
-          action="https://kids.twreporter.org/"
+          action="/search"
           aria-haspopup="listbox"
           data-live-results="thumbs"
         >
