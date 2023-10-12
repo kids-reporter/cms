@@ -14,15 +14,15 @@ import {
 
 const listConfigurations = list({
   fields: {
-    slug: text({
-      isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
-      validation: { isRequired: true },
-    }),
     title: text({
       validation: { isRequired: true },
       label: '專題標題',
       isIndexed: true,
+    }),
+    slug: text({
+      isIndexed: 'unique',
+      label: '英文名稱（用於網址）',
+      validation: { isRequired: true },
     }),
     subtitle: text({
       label: '副標',

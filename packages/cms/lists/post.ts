@@ -15,15 +15,15 @@ import {
 
 const listConfigurations = list({
   fields: {
-    slug: text({
-      validation: { isRequired: true },
-      label: '網址名稱（英文）',
-      isIndexed: 'unique',
-    }),
     title: text({
       label: '標題',
       validation: { isRequired: true },
       isIndexed: true,
+    }),
+    slug: text({
+      validation: { isRequired: true },
+      label: '網址名稱（英文）',
+      isIndexed: 'unique',
     }),
     subtitle: text({
       label: '副標',
@@ -192,7 +192,7 @@ const listConfigurations = list({
     label: 'Posts（文章）',
     labelField: 'title',
     listView: {
-      initialColumns: ['slug', 'title', 'status'],
+      initialColumns: ['title', 'slug', 'status'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },
       pageSize: 50,
     },
