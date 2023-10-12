@@ -1,7 +1,33 @@
-import { cmsOrigin, gqlEndpoint } from '../environment-variables'
+import { releaseTarget } from '../environment-variables'
 
-export const CMS_URL = cmsOrigin
-export const API_URL = gqlEndpoint
+let CMS_URL = ''
+let API_URL = ''
+
+switch (releaseTarget) {
+  case 'local': {
+    CMS_URL = 'http://localhost:3001'
+    API_URL = 'http://localhost:3001/api/graphql'
+    break
+  }
+  case 'dev': {
+    CMS_URL = 'https://dev-kids-cms.twreporter.org'
+    API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+    break
+  }
+  case 'staging': {
+    CMS_URL = 'https://staging-kids-cms.twreporter.org'
+    API_URL = 'https://staging-kids-cms.twreporter.org/api/graphql'
+    break
+  }
+  case 'prod':
+  default: {
+    CMS_URL = 'https://kids-cms.twreporter.org'
+    API_URL = 'https://kids-cms.twreporter.org/api/graphql'
+    break
+  }
+}
+
+export { CMS_URL, API_URL }
 
 export const SUBSCRIBE_URL = 'http://eepurl.com/idk8VH'
 export const CONTRIBUTE_FORM = 'https://forms.gle/7Yh4iPjfq92NDaSm9'
