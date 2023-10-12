@@ -5,8 +5,8 @@ type ArrowProp = {
 export const ArrowLeft = (props: ArrowProp) => {
   return (
     <svg
-      width="54"
-      height="54"
+      width="100%"
+      height="100%"
       viewBox="0 0 54 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -32,8 +32,8 @@ export const ArrowLeft = (props: ArrowProp) => {
 export const ArrowRight = (props: ArrowProp) => {
   return (
     <svg
-      width="54"
-      height="54"
+      width="100%"
+      height="100%"
       viewBox="0 0 54 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

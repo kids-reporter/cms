@@ -100,49 +100,7 @@ const postGQL = `
   }
 `
 
-// TODO: add pageMap for google indexing/search
-export default function PostPage({ params }: { params: { slug: string } }) {
-  const [post, setPost] = useState<any>(null)
-  const [isLoading, setLoading] = useState<boolean>(true)
-  const [fontSize, setFontSize] = useState<FontSizeLevel>(FontSizeLevel.NORMAL)
-  const onFontSizeChange = () => {
-    setFontSize(
-      fontSize === FontSizeLevel.NORMAL
-        ? FontSizeLevel.LARGE
-        : FontSizeLevel.NORMAL
-    )
-  }
-
-  useEffect(() => {
-    axios
-      .post(API_URL, {
-        query: postGQL,
-        variables: {
-          where: {
-            slug: params.slug,
-          },
-        },
-      })
-      .then(
-        (res) => {
-          setPost(res?.data?.data?.post)
-          setLoading(false)
-        },
-        (err) => {
-          console.error('Fetch post data failed!', err)
-          notFound()
-        }
-      )
-  }, [])
-
-  if (isLoading) {
-    // TODO: skeleton
-    return <p>Loading...</p>
-  }
-  if (!post) {
-    notFound()
-  }
-
+const getPostContents = (post: any) => {
   // Assemble authors for brief
   const authorsJSON = post?.authorsJSON
   const authorsInBrief: AuthorGroup[] = []
@@ -189,7 +147,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
   })
   const orderedAuthors: Author[] = []
   AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
-    const authorsOfRole = authors.filter(
+    const authorsOfRole = authors?.filter(
       (author: any) => authorRole === author?.role && author?.link
     )
     orderedAuthors.push(...(authorsOfRole ?? []))
@@ -211,44 +169,105 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           category: category?.name,
           subSubcategory: subSubcategory?.name,
           publishedDate: post.publishedDate,
-          theme: GetThemeFromCategory(category),
+          theme: GetThemeFromCategory(category?.slug),
         }
       : undefined
   })
 
   // Subcategory related data
-  const subSubcategory = post.subSubcategories?.[0]
+  const subSubcategory = post?.subSubcategories?.[0]
   const subcategory = subSubcategory?.subcategory
   const category = subcategory?.category
   const subSubcategoryURL =
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = GetThemeFromCategory(subSubcategory?.slug)
+  const theme = GetThemeFromCategory(category?.slug)
 
   // Topic related data
   const topic = post?.projects?.[0]
   const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
 
+  return {
+    theme,
+    topicURL,
+    topic,
+    subSubcategory,
+    subSubcategoryURL,
+    authorsInBrief,
+    orderedAuthors,
+    relatedPosts,
+  }
+}
+
+// TODO: add pageMap for google indexing/search
+export default function PostPage({ params }: { params: { slug: string } }) {
+  const [post, setPost] = useState<any>(null)
+  const [fontSize, setFontSize] = useState<FontSizeLevel>(FontSizeLevel.NORMAL)
+  const onFontSizeChange = () => {
+    setFontSize(
+      fontSize === FontSizeLevel.NORMAL
+        ? FontSizeLevel.LARGE
+        : FontSizeLevel.NORMAL
+    )
+  }
+
+  useEffect(() => {
+    axios
+      .post(API_URL, {
+        query: postGQL,
+        variables: {
+          where: {
+            slug: params.slug,
+          },
+        },
+      })
+      .then(
+        (res) => {
+          const post = res?.data?.data?.post
+          if (!post) {
+            console.error('Fetch post data failed!')
+            notFound()
+          }
+          setPost(post)
+        },
+        (err) => {
+          console.error('Fetch post data failed!', err)
+          notFound()
+        }
+      )
+  }, [])
+
+  const {
+    theme,
+    topicURL,
+    topic,
+    subSubcategory,
+    subSubcategoryURL,
+    authorsInBrief,
+    orderedAuthors,
+    relatedPosts,
+  } = getPostContents(post)
+
   return (
-    post && (
-      <main className="container">
-        <div className={`post theme-${theme}`}>
-          <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
-            <Sidebar topicURL={topicURL} />
-            <MobileSidebar topicURL={topicURL} />
-            {topicURL && (
-              <div className="topic-breadcrumb">
-                <a href={topicURL}>
-                  <img src="/images/topic-breadcrumb-icon.svg" />
-                  {topic.title}
-                </a>
-              </div>
-            )}
-            <HeroImage
-              url={post.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
-              caption={post.heroCaption}
-            />
+    <main className="container">
+      <div className={`post theme-${theme}`}>
+        <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
+          <Sidebar topicURL={topicURL} />
+          <MobileSidebar topicURL={topicURL} />
+          {topicURL && (
+            <div className="topic-breadcrumb">
+              <a href={topicURL}>
+                <img src="/images/topic-breadcrumb-icon.svg" />
+                {topic?.title}
+              </a>
+            </div>
+          )}
+          <HeroImage
+            url={post?.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
+            caption={post?.heroCaption}
+          />
+          {post && (
             <div className="hero-section">
               <header className="entry-header">
                 <Title text={post.title} subtitle={post.subtitle} />
@@ -261,23 +280,19 @@ export default function PostPage({ params }: { params: { slug: string } }) {
                 </div>
               </header>
             </div>
-            {post.newsReadingGroup && (
-              <NewsReading data={post.newsReadingGroup} />
-            )}
-            <Brief
-              content={post.brief}
-              authors={authorsInBrief}
-              theme={theme}
-            />
-            <Divider />
-            <PostRenderer post={post} theme={theme} />
-            <Tags title={'常用關鍵字'} tags={post.tags} />
-            <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
-          </ArticleContext.Provider>
-        </div>
-        <CallToAction />
-        <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
-      </main>
-    )
+          )}
+          {post?.newsReadingGroup && (
+            <NewsReading data={post.newsReadingGroup} />
+          )}
+          <Brief content={post?.brief} authors={authorsInBrief} theme={theme} />
+          <Divider />
+          <PostRenderer post={post} theme={theme} />
+          {post?.tags && <Tags title={'常用關鍵字'} tags={post.tags} />}
+          <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
+        </ArticleContext.Provider>
+      </div>
+      <CallToAction />
+      <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
+    </main>
   )
 }

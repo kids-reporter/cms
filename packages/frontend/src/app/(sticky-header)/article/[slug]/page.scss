@@ -4,6 +4,14 @@ main {
   align-items: center;
 }
 
+.skeleton {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
 body.single-post {
   --theme-color: #27B5F7;
   .entry-content {

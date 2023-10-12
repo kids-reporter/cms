@@ -1,8 +1,17 @@
 'use client'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import Skeleton from 'react-loading-skeleton'
 import { ProjectContentDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
-import { useEffect, useState } from 'react'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+const SkeletonContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  line-height: 200%;
+`
 
 export type DraftRendererProp = {
   rawContentState: RawDraftContentState
@@ -18,13 +27,16 @@ export const DraftRenderer = ({
     setIsMounted(true)
   }, [])
 
-  // TODO: render skeleton
-  return isMounted ? (
+  return isMounted && rawContentState && theme ? (
     <ProjectContentDraftRenderer
       rawContentState={rawContentState}
       themeColor={theme}
     />
-  ) : null
+  ) : (
+    <SkeletonContainer>
+      <Skeleton width={'80%'} count={5} />
+    </SkeletonContainer>
+  )
 }
 
 export default DraftRenderer

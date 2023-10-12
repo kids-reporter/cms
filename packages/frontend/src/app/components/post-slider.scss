@@ -56,12 +56,16 @@
     }
 
     button {
+      --btn-edge: 15px;
+      width: 54px;
+      @media screen and (max-width: 999px) {
+        width: 32px;
+      }
       background-color: transparent;
       border: none;
       cursor: pointer;
       position: absolute;
       top: 15%;
-      --btn-edge: 15px;
       z-index: 900;
     }
 
