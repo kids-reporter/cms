@@ -31,9 +31,8 @@ steps:
 
         cd packages/$_TARGET_PACKAGE
 
-        echo "print environment variables and output to file"
-
-        printenv | tee .env.local
+        echo "copy .env.${BRANCH_NAME}.public to .env.local"
+        cp .env.${BRANCH_NAME}.public .env.local
 
         docker build -t \
 
