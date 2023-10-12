@@ -22,6 +22,7 @@ const listConfigurations = list({
     title: text({
       validation: { isRequired: true },
       label: '專題標題',
+      isIndexed: true,
     }),
     subtitle: text({
       label: '副標',
@@ -155,6 +156,7 @@ const listConfigurations = list({
   access: () => true,
   ui: {
     label: 'Projects（專題）',
+    labelField: 'title',
   },
 })
 
