@@ -1,5 +1,7 @@
-export const CMS_URL = 'https://dev-kids-cms.twreporter.org'
-export const API_URL = 'https://dev-kids-cms.twreporter.org/api/graphql'
+import { cmsOrigin, gqlEndpoint } from '../environment-variables'
+
+export const CMS_URL = cmsOrigin
+export const API_URL = gqlEndpoint
 
 export const SUBSCRIBE_URL = 'http://eepurl.com/idk8VH'
 export const CONTRIBUTE_FORM = 'https://forms.gle/7Yh4iPjfq92NDaSm9'
