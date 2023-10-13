@@ -178,9 +178,9 @@ const getPostContents = (post: any) => {
   const subSubcategory = post?.subSubcategories?.[0]
   const subcategory = subSubcategory?.subcategory
   const category = subcategory?.category
-  const subcategoryURL =
+  const subSubcategoryURL =
     category?.slug && subcategory?.slug && subSubcategory?.slug
-      ? `/category/${category.slug}/${subcategory.slug}`
+      ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
   const theme = GetThemeFromCategory(category?.slug)
 
@@ -193,7 +193,7 @@ const getPostContents = (post: any) => {
     topicURL,
     topic,
     subSubcategory,
-    subcategoryURL,
+    subSubcategoryURL,
     authorsInBrief,
     orderedAuthors,
     relatedPosts,
@@ -244,7 +244,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     topicURL,
     topic,
     subSubcategory,
-    subcategoryURL,
+    subSubcategoryURL,
     authorsInBrief,
     orderedAuthors,
     relatedPosts,
@@ -274,7 +274,10 @@ export default function PostPage({ params }: { params: { slug: string } }) {
                 <Title text={post.title} subtitle={post.subtitle} />
                 <div className="post-date-category">
                   <PublishedDate date={post.publishedDate} />
-                  <Category text={subSubcategory?.name} link={subcategoryURL} />
+                  <Category
+                    text={subSubcategory?.name}
+                    link={subSubcategoryURL}
+                  />
                 </div>
               </header>
             </div>
