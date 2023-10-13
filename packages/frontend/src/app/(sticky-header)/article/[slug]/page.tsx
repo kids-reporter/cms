@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { ArticleContext } from './article-context'
 import axios from 'axios'
-import { notFound } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import Title from './title'
 import HeroImage from './hero-image'
 import { NewsReading } from './news-reading'
@@ -202,6 +202,7 @@ const getPostContents = (post: any) => {
 
 // TODO: add pageMap for google indexing/search
 export default function PostPage({ params }: { params: { slug: string } }) {
+  const router = useRouter()
   const [post, setPost] = useState<any>(null)
   const [fontSize, setFontSize] = useState<FontSizeLevel>(FontSizeLevel.NORMAL)
   const onFontSizeChange = () => {
@@ -227,13 +228,13 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           const post = res?.data?.data?.post
           if (!post) {
             console.error('Fetch post data failed!')
-            notFound()
+            router.push('/not-found')
           }
           setPost(post)
         },
         (err) => {
           console.error('Fetch post data failed!', err)
-          notFound()
+          router.push('/not-found')
         }
       )
   }, [])
