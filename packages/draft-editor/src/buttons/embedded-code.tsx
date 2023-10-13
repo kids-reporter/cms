@@ -3,24 +3,89 @@ import { AtomicBlockUtils, EditorState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput, TextArea } from '@keystone-ui/fields'
 
-export function EmbeddedCodeButton(props) {
-  const { editorState, onChange, className } = props
+export type EmbeddedCodeInputValue = {
+  caption?: string
+  embeddedCode: string
+}
 
-  const [toShowInput, setToShowInput] = useState(false)
-  const [inputValue, setInputValue] = useState({
-    caption: '',
-    embeddedCode: '',
-  })
-
-  const promptForInput = () => {
-    setToShowInput(true)
-    setInputValue({
-      caption: '',
-      embeddedCode: '',
-    })
-  }
+export function EmbeddedCodeInput({
+  isOpen,
+  onConfirm,
+  onCancel,
+  inputValue,
+}: {
+  isOpen: boolean
+  onConfirm: ({ caption, embeddedCode }: EmbeddedCodeInputValue) => void
+  onCancel: () => void
+  inputValue: EmbeddedCodeInputValue
+}) {
+  const [inputValueState, setInputValue] = useState(inputValue)
 
   const confirmInput = () => {
+    onConfirm(inputValueState)
+  }
+
+  return (
+    <DrawerController isOpen={isOpen}>
+      <Drawer
+        title="鑲嵌程式碼（Embedded Code）"
+        //isOpen={toShowInput}
+        actions={{
+          cancel: {
+            label: 'Cancel',
+            action: onCancel,
+          },
+          confirm: {
+            label: 'Confirm',
+            action: confirmInput,
+          },
+        }}
+      >
+        <TextArea
+          onChange={(e) =>
+            setInputValue({
+              caption: inputValueState.caption,
+              embeddedCode: e.target.value,
+            })
+          }
+          placeholder="Embedded Code"
+          type="text"
+          value={inputValueState.embeddedCode}
+          style={{ marginBottom: '30px' }}
+        />
+        <TextInput
+          onChange={(e) =>
+            setInputValue({
+              caption: e.target.value,
+              embeddedCode: inputValueState.embeddedCode,
+            })
+          }
+          type="text"
+          placeholder="Caption"
+          value={inputValueState.caption}
+          style={{ marginBottom: '10px', marginTop: '30px' }}
+        />
+      </Drawer>
+    </DrawerController>
+  )
+}
+
+type EmbeddedCodeButtonProps = {
+  className?: string
+  editorState: EditorState
+  onChange: (editorState: EditorState) => void
+}
+
+export function EmbeddedCodeButton(props: EmbeddedCodeButtonProps) {
+  const { editorState, onChange, className } = props
+
+  const [isInputOpen, setIsInputOpen] = useState(false)
+
+  const promptForInput = () => {
+    setIsInputOpen(true)
+  }
+
+  const onInputChange = (inputValue: EmbeddedCodeInputValue) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
       'EMBEDDEDCODE',
@@ -36,62 +101,26 @@ export function EmbeddedCodeButton(props) {
     // If you set an empty string, you will get an error: Unknown DraftEntity key: null
     onChange(AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' '))
 
-    setToShowInput(false)
-    setInputValue({
-      caption: '',
-      embeddedCode: '',
-    })
+    setIsInputOpen(false)
   }
 
-  const input = (
-    <DrawerController isOpen={toShowInput}>
-      <Drawer
-        title="鑲嵌程式碼（Embedded Code）"
-        //isOpen={toShowInput}
-        actions={{
-          cancel: {
-            label: 'Cancel',
-            action: () => {
-              setToShowInput(false)
-            },
-          },
-          confirm: {
-            label: 'Confirm',
-            action: confirmInput,
-          },
-        }}
-      >
-        <TextArea
-          onChange={(e) =>
-            setInputValue({
-              caption: inputValue.caption,
-              embeddedCode: e.target.value,
-            })
-          }
-          placeholder="Embedded Code"
-          type="text"
-          value={inputValue.embeddedCode}
-          style={{ marginBottom: '30px' }}
-        />
-        <TextInput
-          onChange={(e) =>
-            setInputValue({
-              caption: e.target.value,
-              embeddedCode: inputValue.embeddedCode,
-            })
-          }
-          type="text"
-          placeholder="Caption"
-          value={inputValue.caption}
-          style={{ marginBottom: '10px', marginTop: '30px' }}
-        />
-      </Drawer>
-    </DrawerController>
-  )
+  const onInputCancel = () => {
+    setIsInputOpen(false)
+  }
 
   return (
     <React.Fragment>
-      {input}
+      {isInputOpen && (
+        <EmbeddedCodeInput
+          isOpen={isInputOpen}
+          onConfirm={onInputChange}
+          onCancel={onInputCancel}
+          inputValue={{
+            caption: '',
+            embeddedCode: '',
+          }}
+        />
+      )}
       <div
         onClick={() => {
           promptForInput()
