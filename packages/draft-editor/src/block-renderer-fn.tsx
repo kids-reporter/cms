@@ -1,12 +1,13 @@
 import { AtomicBlockProps } from './block-renderer-fn.type'
 import { ContentBlock } from 'draft-js'
 import { EditableBlockquote } from './block-renderers/blockquote'
-import { EditableInfoBox } from './block-renderers/info-box'
+import { EditableEmbeddedCode } from './block-renderers/embedded-code'
 import { EditableImage } from './block-renderers/image'
+import { EditableInfoBox } from './block-renderers/info-box'
 import { EditableSlideshow } from './block-renderers/slideshow'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
-const { Divider, EmbeddedCodeInArticleBody, NewsReading } = blockRenderers
+const { Divider, NewsReading } = blockRenderers
 
 const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0))
@@ -28,7 +29,7 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
       return EditableSlideshow(props)
     }
     case 'EMBEDDEDCODE': {
-      return EmbeddedCodeInArticleBody({ data: entityData })
+      return EditableEmbeddedCode(props)
     }
     case 'INFOBOX': {
       return EditableInfoBox(props)
