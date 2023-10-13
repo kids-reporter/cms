@@ -12,19 +12,17 @@
   }
 
   img {
-    aspect-ratio: 16/9;
+    width: inherit;
     height: auto;
-    // max-height: none;
     max-width: 100%;
-    max-height: 100%;
   }
 
   figcaption {
-    padding: 0 10vw 0 10vw;
-    --fontSize: 14px;
-    font-size: var(--fontSize);
-    text-align: center;
+    padding: 10px 0 0 0;
     margin-top: 5px;
+    font-size: 14px;
+    line-height: 28px;
+    text-align: center;
     color: var(--paletteColor3);
   }
 }

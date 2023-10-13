@@ -19,17 +19,12 @@ export const SearchTags = (props: SearchTagsProp) => {
   return (
     <div className={`search-tags theme-${Theme.YELLOW}`}>
       <img decoding="async" src="/images/search_title.svg" />
-      <form
-        role="search"
-        method="get"
-        action="https://kids.twreporter.org/"
-        aria-haspopup="listbox"
-      >
+      <form role="search" method="get" action="/search" aria-haspopup="listbox">
         <input
           type="search"
           placeholder="搜尋更多新聞、議題"
-          value=""
-          name="s"
+          value="hpv"
+          name="q"
           title="Search for..."
           aria-label="Search for..."
           onChange={onHandleSearch}

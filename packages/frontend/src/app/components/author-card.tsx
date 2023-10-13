@@ -40,7 +40,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
   return (
     authors?.length > 0 && (
       <div className="author-section">
-        <h3 className="author-section__title">{props.title}</h3>
+        <h3 className="title">{props.title}</h3>
         <div className="card-container">
           {authors.map((author, index) => {
             const avatarURL = author.avatar ?? DEFAULT_AVATAR

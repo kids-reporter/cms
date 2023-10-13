@@ -132,14 +132,14 @@ export const StickyHeader = () => {
       role="search"
       method="get"
       className="search-form"
-      action="https://kids.twreporter.org/"
+      action="/search"
       aria-haspopup="listbox"
     >
       <input
         type="search"
         placeholder="搜尋更多新聞、議題"
-        value=""
-        name="s"
+        value="hpv" // TODO: handle value
+        name="q"
         title="Search for..."
         aria-label="Search for..."
         onChange={onHandleSearch}
@@ -152,7 +152,6 @@ export const StickyHeader = () => {
           <span></span>
         </span>
       </button>
-      <input type="hidden" name="post_type" value="post" />
     </form>
   )
 
