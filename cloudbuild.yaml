@@ -22,8 +22,6 @@ steps:
 
   # Build image
   - name: gcr.io/cloud-builders/docker
-    env:
-      - 'NEXT_PUBLIC_RELEASE_TARGET=${BRANCH_NAME}'
     args:
       - '-c'
       - >
@@ -32,6 +30,7 @@ steps:
         cd packages/$_TARGET_PACKAGE
 
         echo "copy .env.${BRANCH_NAME}.public to .env.local"
+
         cp .env.${BRANCH_NAME}.public .env.local
 
         docker build -t \

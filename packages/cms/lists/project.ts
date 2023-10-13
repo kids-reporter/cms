@@ -14,14 +14,15 @@ import {
 
 const listConfigurations = list({
   fields: {
+    title: text({
+      validation: { isRequired: true },
+      label: '專題標題',
+      isIndexed: true,
+    }),
     slug: text({
       isIndexed: 'unique',
       label: '英文名稱（用於網址）',
       validation: { isRequired: true },
-    }),
-    title: text({
-      validation: { isRequired: true },
-      label: '專題標題',
     }),
     subtitle: text({
       label: '副標',
@@ -155,6 +156,7 @@ const listConfigurations = list({
   access: () => true,
   ui: {
     label: 'Projects（專題）',
+    labelField: 'title',
   },
 })
 

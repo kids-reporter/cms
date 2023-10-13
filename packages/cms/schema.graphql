@@ -129,8 +129,8 @@ input UserCreateInput {
 
 type Post {
   id: ID!
-  slug: String
   title: String
+  slug: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -168,8 +168,8 @@ input PostWhereInput {
   OR: [PostWhereInput!]
   NOT: [PostWhereInput!]
   id: IDFilter
-  slug: StringFilter
   title: StringFilter
+  slug: StringFilter
   subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
@@ -249,8 +249,8 @@ input PostManyRelationFilter {
 
 input PostOrderByInput {
   id: OrderDirection
-  slug: OrderDirection
   title: OrderDirection
+  slug: OrderDirection
   subtitle: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
@@ -262,8 +262,8 @@ input PostOrderByInput {
 }
 
 input PostUpdateInput {
-  slug: String
   title: String
+  slug: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -338,8 +338,8 @@ input PostUpdateArgs {
 }
 
 input PostCreateInput {
-  slug: String
   title: String
+  slug: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -553,8 +553,8 @@ input AuthorCreateInput {
 
 type Project {
   id: ID!
-  slug: String
   title: String
+  slug: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -586,8 +586,8 @@ input ProjectWhereInput {
   OR: [ProjectWhereInput!]
   NOT: [ProjectWhereInput!]
   id: IDFilter
-  slug: StringFilter
   title: StringFilter
+  slug: StringFilter
   subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
@@ -611,8 +611,8 @@ input ProjectCategoryManyRelationFilter {
 
 input ProjectOrderByInput {
   id: OrderDirection
-  slug: OrderDirection
   title: OrderDirection
+  slug: OrderDirection
   subtitle: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
@@ -623,8 +623,8 @@ input ProjectOrderByInput {
 }
 
 input ProjectUpdateInput {
-  slug: String
   title: String
+  slug: String
   subtitle: String
   status: String
   publishedDate: DateTime
@@ -655,8 +655,8 @@ input ProjectUpdateArgs {
 }
 
 input ProjectCreateInput {
-  slug: String
   title: String
+  slug: String
   subtitle: String
   status: String
   publishedDate: DateTime
