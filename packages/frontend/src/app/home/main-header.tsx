@@ -9,11 +9,6 @@ import StickyHeader, {
 import './main-header.scss'
 
 export const MainHeader = () => {
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
-  }
-
   const navi = (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
@@ -35,11 +30,9 @@ export const MainHeader = () => {
       <input
         type="search"
         placeholder="搜尋更多新聞、議題"
-        value=""
-        name="s"
+        name="q"
         title="Search for..."
         aria-label="Search for..."
-        onChange={onHandleSearch}
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}

@@ -73,11 +73,6 @@ export const StickyHeader = () => {
     setIsHamburgerClicked(false)
   }
 
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
-  }
-
   const brand = (
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
@@ -138,11 +133,9 @@ export const StickyHeader = () => {
       <input
         type="search"
         placeholder="搜尋更多新聞、議題"
-        value="hpv" // TODO: handle value
         name="q"
         title="Search for..."
         aria-label="Search for..."
-        onChange={onHandleSearch}
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}

@@ -11,11 +11,6 @@ type SearchTagsProp = {
 export const SearchTags = (props: SearchTagsProp) => {
   const tags = props?.tags
 
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
-  }
-
   return (
     <div className={`search-tags theme-${Theme.YELLOW}`}>
       <img decoding="async" src="/images/search_title.svg" />
@@ -23,16 +18,13 @@ export const SearchTags = (props: SearchTagsProp) => {
         <input
           type="search"
           placeholder="搜尋更多新聞、議題"
-          value="hpv"
           name="q"
           title="Search for..."
           aria-label="Search for..."
-          onChange={onHandleSearch}
         />
         <button type="submit" className="search-submit" aria-label="搜尋按鈕">
           {SearchIcon}
         </button>
-        <input type="hidden" name="post_type" value="post" />
       </form>
       {tags && (
         <div className="tags">
