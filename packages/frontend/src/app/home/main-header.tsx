@@ -20,7 +20,6 @@ export const MainHeader = () => {
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
       </button>
-      <input type="hidden" name="post_type" value="post" />
     </form>
   )
 
