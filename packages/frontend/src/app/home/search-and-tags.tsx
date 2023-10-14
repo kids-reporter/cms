@@ -1,4 +1,3 @@
-'use client'
 import Tags, { Tag } from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
 import { Theme } from '@/app/constants'
@@ -10,7 +9,6 @@ type SearchAndTagsProp = {
 
 export const SearchAndTags = (props: SearchAndTagsProp) => {
   const tags = props?.tags
-
   return (
     <div className={`search-tags theme-${Theme.YELLOW}`}>
       <img decoding="async" src="/images/search_title.svg" />

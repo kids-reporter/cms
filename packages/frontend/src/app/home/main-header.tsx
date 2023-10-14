@@ -36,11 +36,6 @@ export const MainHeader = () => {
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
-        <span data-loader="circles">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
       </button>
       <input type="hidden" name="post_type" value="post" />
     </form>

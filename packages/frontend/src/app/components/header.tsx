@@ -139,11 +139,6 @@ export const StickyHeader = () => {
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
-        <span data-loader="circles">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
       </button>
     </form>
   )
