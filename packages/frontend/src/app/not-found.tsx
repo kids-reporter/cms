@@ -1,4 +1,3 @@
-'use client'
 import { StickyHeader } from '@/app/components/header'
 import TopDetector from '@/app/components/top-detector'
 import { SearchIcon } from '@/app/icons'
