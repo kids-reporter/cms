@@ -3,27 +3,11 @@ import StickyHeader, {
   SubscribeBtn,
   AboutUsBtn,
 } from '@/app/components/header'
+import { Navigation } from '@/app/components/Navigation'
 import { SearchIcon } from '@/app/icons'
-import { NavigationItems } from '@/app/constants'
 import './main-header.scss'
 
 export const MainHeader = () => {
-  const navi = (
-    <nav aria-label="頁首選單">
-      <ul className="menu" role="menubar">
-        {NavigationItems.map((item, index) => {
-          return (
-            <li key={`header-nav-item-${index}`}>
-              <a href={item.link} className="ct-menu-link" role="menuitem">
-                {item.title}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
-  )
-
   const searchInput = (
     <form role="search" method="get" action="/search" aria-haspopup="listbox">
       <input
@@ -56,7 +40,7 @@ export const MainHeader = () => {
               alt="少年報導者 The Reporter for Kids"
             />
           </a>
-          {navi}
+          <Navigation />
         </div>
         <div className="right">
           <div className="content">

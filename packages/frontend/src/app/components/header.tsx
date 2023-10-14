@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react'
+import { Navigation } from '@/app/components/Navigation'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL, NavigationItems } from '@/app/constants'
+import { SUBSCRIBE_URL } from '@/app/constants'
 import './header.scss'
 
 const slogan = <img src="/images/header-left-slogan.svg" />
@@ -60,22 +61,6 @@ export const StickyHeader = () => {
         />
       </a>
     </div>
-  )
-
-  const navi = (
-    <nav aria-label="頁首選單">
-      <ul className="menu" role="menubar">
-        {NavigationItems.map((item, index) => {
-          return (
-            <li key={`header-nav-item-${index}`}>
-              <a href={item.link} className="ct-menu-link" role="menuitem">
-                {item.title}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
   )
 
   const search = (
@@ -138,7 +123,7 @@ export const StickyHeader = () => {
           {AboutUsBtn}
         </div>
         {searchInput}
-        {navi}
+        <Navigation />
       </div>
     </div>
   )
@@ -154,7 +139,7 @@ export const StickyHeader = () => {
             {slogan}
           </div>
           <div className="others">
-            {navi}
+            <Navigation />
             {search}
             {about}
           </div>

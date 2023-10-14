@@ -12,29 +12,6 @@ export const EMAIL = 'kidsnews@twreporter.org'
 
 export const TOPIC_PAGE_ROUTE = '/topic/page/'
 
-export const NavigationItems = [
-  {
-    title: '專題',
-    link: TOPIC_PAGE_ROUTE,
-  },
-  {
-    title: '新聞',
-    link: '/category/news/',
-  },
-  {
-    title: '讀報',
-    link: '/category/listening-news/',
-  },
-  {
-    title: '漫畫',
-    link: '/category/comics/',
-  },
-  {
-    title: '校園',
-    link: '/category/campus/',
-  },
-]
-
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
 export enum FontSizeLevel {
