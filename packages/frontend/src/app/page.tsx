@@ -6,7 +6,7 @@ import MainSlider from '@/app/home/main-slider'
 import PostSelection from '@/app/home/post-selection'
 import Section from '@/app/home/section'
 import Divider from '@/app/home/divider'
-import SearchTags from '@/app/home/search-tags'
+import SearchAndTags from '@/app/home/search-and-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
@@ -255,7 +255,7 @@ export default async function Home() {
             </>
           )
         })}
-        <SearchTags tags={tags} />
+        <SearchAndTags tags={tags} />
         <MakeFriends />
         <CallToAction />
         <GoToMainSite />

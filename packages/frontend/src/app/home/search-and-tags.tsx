@@ -2,13 +2,13 @@
 import Tags, { Tag } from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
 import { Theme } from '@/app/constants'
-import './search-tags.scss'
+import './search-and-tags.scss'
 
-type SearchTagsProp = {
+type SearchAndTagsProp = {
   tags: Tag[]
 }
 
-export const SearchTags = (props: SearchTagsProp) => {
+export const SearchAndTags = (props: SearchAndTagsProp) => {
   const tags = props?.tags
 
   return (
@@ -35,4 +35,4 @@ export const SearchTags = (props: SearchTagsProp) => {
   )
 }
 
-export default SearchTags
+export default SearchAndTags
