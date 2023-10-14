@@ -1,31 +1,8 @@
 'use client'
 import { useState } from 'react'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL, TOPIC_PAGE_ROUTE } from '@/app/constants'
+import { SUBSCRIBE_URL, NavigationItems } from '@/app/constants'
 import './header.scss'
-
-export const NavItems = [
-  {
-    title: '專題',
-    link: TOPIC_PAGE_ROUTE,
-  },
-  {
-    title: '新聞',
-    link: '/category/news/',
-  },
-  {
-    title: '讀報',
-    link: '/category/listening-news/',
-  },
-  {
-    title: '漫畫',
-    link: '/category/comics/',
-  },
-  {
-    title: '校園',
-    link: '/category/campus/',
-  },
-]
 
 const slogan = <img src="/images/header-left-slogan.svg" />
 
@@ -88,7 +65,7 @@ export const StickyHeader = () => {
   const navi = (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
-        {NavItems.map((item, index) => {
+        {NavigationItems.map((item, index) => {
           return (
             <li key={`header-nav-item-${index}`}>
               <a href={item.link} className="ct-menu-link" role="menuitem">

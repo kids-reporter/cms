@@ -1,18 +1,17 @@
-'use client'
-import { SearchIcon } from '@/app/icons'
 import StickyHeader, {
-  NavItems,
   ContributeBtn,
   SubscribeBtn,
   AboutUsBtn,
 } from '@/app/components/header'
+import { SearchIcon } from '@/app/icons'
+import { NavigationItems } from '@/app/constants'
 import './main-header.scss'
 
 export const MainHeader = () => {
   const navi = (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
-        {NavItems.map((item, index) => {
+        {NavigationItems.map((item, index) => {
           return (
             <li key={`header-nav-item-${index}`}>
               <a href={item.link} className="ct-menu-link" role="menuitem">
