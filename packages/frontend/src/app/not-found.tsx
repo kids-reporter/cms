@@ -23,7 +23,7 @@ export default function NotFound() {
           data-live-results="thumbs"
         >
           <input
-            type="search"
+            type="text"
             placeholder="搜尋"
             name="q"
             title="Search for..."

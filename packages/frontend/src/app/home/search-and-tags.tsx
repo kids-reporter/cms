@@ -14,7 +14,7 @@ export const SearchAndTags = (props: SearchAndTagsProp) => {
       <img decoding="async" src="/images/search_title.svg" />
       <form role="search" method="get" action="/search" aria-haspopup="listbox">
         <input
-          type="search"
+          type="text"
           placeholder="搜尋更多新聞、議題"
           name="q"
           title="Search for..."
