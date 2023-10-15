@@ -42,13 +42,22 @@ export const AboutUsBtn = (
 
 export const StickyHeader = () => {
   const [isHamburgerClicked, setIsHamburgerClicked] = useState(false)
+  const [isSearchClicked, setIsSearchClicked] = useState(false)
 
   const onHamburgerClick = () => {
     setIsHamburgerClicked(!isHamburgerClicked)
   }
 
-  const onOverlayClose = () => {
+  const onSearchClick = () => {
+    setIsSearchClicked(!isSearchClicked)
+  }
+
+  const onHamburgerOverlayClose = () => {
     setIsHamburgerClicked(false)
+  }
+
+  const onSearchOverlayClose = () => {
+    setIsSearchClicked(false)
   }
 
   const brand = (
@@ -64,7 +73,12 @@ export const StickyHeader = () => {
   )
 
   const search = (
-    <button className="search-btn" aria-label="開啟搜尋表單" data-label="right">
+    <button
+      className="search-btn"
+      aria-label="開啟搜尋表單"
+      data-label="right"
+      onClick={onSearchClick}
+    >
       <span>搜尋</span>
       {SearchIcon}
     </button>
@@ -105,10 +119,19 @@ export const StickyHeader = () => {
     </form>
   )
 
-  const overlay = (
-    <div className="overlay-mobile">
+  const searchOverlay = (
+    <div className="search-overlay">
       <div className="control">
-        <button onClick={onOverlayClose}>{CrossIcon}</button>
+        <button onClick={onSearchOverlayClose}>{CrossIcon}</button>
+      </div>
+      <div className="content">{searchInput}</div>
+    </div>
+  )
+
+  const hamburgerOverlay = (
+    <div className="hamburger-overlay-mobile">
+      <div className="control">
+        <button onClick={onHamburgerOverlayClose}>{CrossIcon}</button>
       </div>
       <div className="content">
         <a href="/" className="logo-mobile">
@@ -148,8 +171,9 @@ export const StickyHeader = () => {
           <button className="hamburger" onClick={onHamburgerClick}>
             {HamburgerIcon}
           </button>
-          {isHamburgerClicked && overlay}
+          {isHamburgerClicked && hamburgerOverlay}
         </div>
+        {isSearchClicked && searchOverlay}
       </div>
     </div>
   )
