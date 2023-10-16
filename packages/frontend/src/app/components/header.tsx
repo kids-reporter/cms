@@ -45,12 +45,12 @@ export const StickyHeader = () => {
   const [isSearchClicked, setIsSearchClicked] = useState(false)
 
   const onHamburgerClick = () => {
-    setIsHamburgerClicked(!isHamburgerClicked)
+    setIsHamburgerClicked(true)
     document.body.classList.add('no-scroll')
   }
 
   const onSearchClick = () => {
-    setIsSearchClicked(!isSearchClicked)
+    setIsSearchClicked(true)
     document.body.classList.add('no-scroll')
   }
 
