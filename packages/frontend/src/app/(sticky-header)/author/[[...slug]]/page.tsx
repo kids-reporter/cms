@@ -31,9 +31,9 @@ const authorGQL = `
     }
   }
 `
-// TODO: rename staff to author
-// Author's routing path: /staff/[slug]/[page num], ex: /staff/yunruchen/1
-export default async function Staff({ params }: { params: { slug: any } }) {
+
+// Author's routing path: /author/[slug]/[page num], ex: /author/yunruchen/1
+export default async function Author({ params }: { params: { slug: any } }) {
   const slug = params.slug?.[0]
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 
@@ -92,9 +92,7 @@ export default async function Staff({ params }: { params: { slug: any } }) {
           <img src={avatarURL} alt={author.name} />
         </div>
         <h1>{author.name}</h1>
-        {author.email && (
-          <a href={`mailto://${author.email}`}>{author.email}</a>
-        )}
+        {author.email && <a href={`mailto:${author.email}`}>{author.email}</a>}
         <p className="bio">{author.bio}</p>
       </div>
       <div className="post-list">
@@ -112,7 +110,7 @@ export default async function Staff({ params }: { params: { slug: any } }) {
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          routingPrefix={`/staff/${slug}`}
+          routingPrefix={`/author/${slug}`}
         />
       )}
     </main>

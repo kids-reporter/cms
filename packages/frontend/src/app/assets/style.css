@@ -27,7 +27,7 @@
 
 .icon-rpjr-icon-tag .path1:before {
   content: "\e907";
-  color: rgb(0, 0, 0);
+  color: var(--theme-color);
 }
 .icon-rpjr-icon-tag .path2:before {
   content: "\e908";

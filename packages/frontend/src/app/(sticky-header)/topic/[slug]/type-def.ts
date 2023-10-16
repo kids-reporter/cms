@@ -10,7 +10,6 @@ export type Photo = {
 }
 
 type Category = {
-  // TODO: title -> name
   name: string
   slug: string
 }

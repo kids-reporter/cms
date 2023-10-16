@@ -7,7 +7,7 @@ export const editorsMockup = [
     editors: [
       {
         name: '張恩瑋',
-        link: 'https://kids.twreporter.org/staff/chang-en-wei/',
+        link: 'https://kids.twreporter.org/author/chang-en-wei/',
       },
     ],
   },
@@ -16,11 +16,11 @@ export const editorsMockup = [
     editors: [
       {
         name: '王家琛',
-        link: 'https://kids.twreporter.org/staff/wang-chia-chen/',
+        link: 'https://kids.twreporter.org/author/wang-chia-chen/',
       },
       {
         name: '黃禹禛',
-        link: 'https://kids.twreporter.org/staff/hychen/',
+        link: 'https://kids.twreporter.org/author/hychen/',
       },
     ],
   },
@@ -29,7 +29,7 @@ export const editorsMockup = [
     editors: [
       {
         name: '楊惠君',
-        link: 'https://kids.twreporter.org/staff/jill718/',
+        link: 'https://kids.twreporter.org/author/jill718/',
       },
     ],
   },
@@ -38,7 +38,7 @@ export const editorsMockup = [
     editors: [
       {
         name: '陳韻如',
-        link: 'https://kids.twreporter.org/staff/yunruchen/',
+        link: 'https://kids.twreporter.org/author/yunruchen/',
       },
     ],
   },
@@ -58,7 +58,7 @@ export const authorsMockup = [
     avatar:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/預設頭像_2.png',
     bio: '就讀台大動物科學技術學系並雙主修創新領域學士學位學程。因為高中時期與台大乳牛們的相遇，從此步入動物領域這條不歸路，在大一下藉由探索學習計畫前往六福村及原野馬場實習，並進入分子生物研究室向學長姐學習，重新調整面對動物時的心態。',
-    link: '/staff/chang-en-wei',
+    link: '/author/chang-en-wei',
   },
   {
     id: '1',
@@ -68,7 +68,7 @@ export const authorsMockup = [
     avatar:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/預設頭像_2.png',
     bio: '設計系畢業的插畫及手刺繡工作者，喜歡將生活中的見聞以不同媒材紀錄。理性設計；感性創作。透過雙手把模糊的感知化作具體圖像進行溝通，引導觀者走進故事。',
-    link: '/staff/chang-en-wei',
+    link: '/author/chang-en-wei',
   },
   {
     id: '1',
@@ -78,7 +78,7 @@ export const authorsMockup = [
     avatar:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_4_黃禹禛.png',
     bio: '從新聞系半路出家的設計師，主要任務是把複雜的資訊變成好懂、好讀的圖像。轉化故事不太容易，但我會繼續努力！',
-    link: '/staff/chang-en-wei',
+    link: '/author/chang-en-wei',
   },
   {
     id: '1',
@@ -88,7 +88,7 @@ export const authorsMockup = [
     avatar:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_1_楊惠君.png',
     bio: '從沒有手機和電腦的時代開始當記者。記者是挖礦人、是點燈人、是魔術師──要挖掘世界的不堪，為喪志的人點燈，將悲傷的事幻化成美麗的彩虹⋯⋯常常會失敗，但不能放棄去做到。',
-    link: '/staff/chang-en-wei',
+    link: '/author/chang-en-wei',
   },
   {
     id: '1',
@@ -98,7 +98,7 @@ export const authorsMockup = [
     avatar:
       'https://kids.twreporter.org/wp-content/uploads/2022/10/核心成員_6_陳韻如.png',
     bio: '新聞系畢業後，就投入編輯這份工作，非常努力讓每一篇報導都美美的呈現在讀者面前，希望你也喜歡這篇文章。',
-    link: '/staff/chang-en-wei',
+    link: '/author/chang-en-wei',
   },
 ]
 

@@ -62,7 +62,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   {author.slug && (
                     <div className="more">
                       <a
-                        href={`/staff/${author.slug}`}
+                        href={`/author/${author.slug}`}
                         className={`theme-${theme}`}
                       >
                         <span>
