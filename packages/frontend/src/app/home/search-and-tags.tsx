@@ -25,7 +25,7 @@ export const SearchAndTags = (props: SearchAndTagsProp) => {
         </button>
       </form>
       {tags && (
-        <div className="tags">
+        <div className="tags theme-yellow">
           <Tags title={'常用關鍵字'} tags={tags} fill={true} />
         </div>
       )}
