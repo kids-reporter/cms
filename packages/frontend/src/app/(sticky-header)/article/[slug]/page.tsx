@@ -7,7 +7,7 @@ import Title from './title'
 import HeroImage from './hero-image'
 import { NewsReading } from './news-reading'
 import PublishedDate from './published-date'
-import Category from './category'
+import SubSubCategory from './subSubCategory'
 import { Sidebar, MobileSidebar } from './sidebar'
 import Brief, { AuthorGroup } from './brief'
 import PostRenderer from './post-renderer'
@@ -257,7 +257,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
                 <Title text={post.title} subtitle={post.subtitle} />
                 <div className="post-date-category">
                   <PublishedDate date={post.publishedDate} />
-                  <Category
+                  <SubSubCategory
                     text={subSubcategory?.name}
                     link={subSubcategoryURL}
                   />
