@@ -23,7 +23,7 @@ import {
   DEFAULT_AVATAR,
   FontSizeLevel,
 } from '@/app/constants'
-import { GetThemeFromCategory } from '@/app/utils'
+import { GetPostSummaries, GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
 
 const heroImageGQL = `
@@ -42,6 +42,7 @@ const categoryGQL = `
     name
     slug
     subcategory {
+      name
       slug
       category {
         name
@@ -154,25 +155,7 @@ const getPostContents = (post: any) => {
   })
 
   // Related posts data
-  const relatedPosts = post?.relatedPosts?.map((post: any) => {
-    const imageURL = post?.heroImage?.imageFile?.url
-      ? `${CMS_URL}${post.heroImage.imageFile.url}`
-      : undefined
-    const subSubcategory = post?.subSubcategories?.[0]
-    const category = subSubcategory?.subcategory?.category
-    return post
-      ? {
-          title: post.title,
-          url: `/article/${post.slug}`,
-          image: imageURL,
-          desc: post.ogDescription,
-          category: category?.name,
-          subSubcategory: subSubcategory?.name,
-          publishedDate: post.publishedDate,
-          theme: GetThemeFromCategory(category?.slug),
-        }
-      : undefined
-  })
+  const relatedPosts = GetPostSummaries(post?.relatedPosts)
 
   // Subcategory related data
   const subSubcategory = post?.subSubcategories?.[0]
