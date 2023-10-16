@@ -112,13 +112,13 @@ const getPostContents = (post: any) => {
       currentAuthorRole = authorJSON.role
       currentAuthors.push({
         name: authorJSON.name,
-        link: author ? `/staff/${author.slug}` : '',
+        link: author ? `/author/${author.slug}` : '',
       })
     } else {
       authorsInBrief.push({ title: currentAuthorRole, authors: currentAuthors })
       currentAuthorRole = authorJSON.role
       currentAuthors = [
-        { name: authorJSON.name, link: author ? `/staff/${author.slug}` : '' },
+        { name: authorJSON.name, link: author ? `/author/${author.slug}` : '' },
       ]
     }
 
@@ -141,7 +141,7 @@ const getPostContents = (post: any) => {
           bio: author.bio,
           role: authorJSON.role,
           link:
-            authorJSON.type === 'link' ? `/staff/${author.slug}` : undefined,
+            authorJSON.type === 'link' ? `/author/${author.slug}` : undefined,
         }
       : undefined
   })
