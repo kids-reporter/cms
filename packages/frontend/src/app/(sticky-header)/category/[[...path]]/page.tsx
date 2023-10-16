@@ -75,7 +75,7 @@ const getImageAndThemeFromCategory = (category: string) => {
   return { imageURL, theme }
 }
 
-// TODO: fix bug of /category/news/knowledge/page
+// TODO: fix bug of /category/news/xxx, /category/news/times/xxx
 export default async function Category({ params }: { params: { path: any } }) {
   const path = params.path
   if (!path || !Array.isArray(path) || path.length === 0) {
