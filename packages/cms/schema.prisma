@@ -251,4 +251,6 @@ model PDF {
   description   String    @default("")
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
+
+  @@index([name])
 }
