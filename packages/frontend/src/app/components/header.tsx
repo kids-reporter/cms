@@ -46,18 +46,22 @@ export const StickyHeader = () => {
 
   const onHamburgerClick = () => {
     setIsHamburgerClicked(!isHamburgerClicked)
+    document.body.classList.add('no-scroll')
   }
 
   const onSearchClick = () => {
     setIsSearchClicked(!isSearchClicked)
+    document.body.classList.add('no-scroll')
   }
 
   const onHamburgerOverlayClose = () => {
     setIsHamburgerClicked(false)
+    document.body.classList.remove('no-scroll')
   }
 
   const onSearchOverlayClose = () => {
     setIsSearchClicked(false)
+    document.body.classList.remove('no-scroll')
   }
 
   const brand = (
