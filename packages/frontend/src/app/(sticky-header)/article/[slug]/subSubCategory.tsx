@@ -1,9 +1,9 @@
-type SubSubCategoryProp = {
+type SubSubcategoryProp = {
   text: string
   link: string
 }
 
-export const SubSubCategory = (props: SubSubCategoryProp) => {
+export const SubSubcategory = (props: SubSubcategoryProp) => {
   return (
     props.text &&
     props.link && (
@@ -16,4 +16,4 @@ export const SubSubCategory = (props: SubSubCategoryProp) => {
   )
 }
 
-export default SubSubCategory
+export default SubSubcategory
