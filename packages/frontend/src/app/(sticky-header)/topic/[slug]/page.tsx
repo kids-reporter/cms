@@ -4,10 +4,8 @@ import { API_URL, Theme } from '@/app/constants'
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
-import { GetFormattedDate, GetThemeFromCategory } from '@/app/utils'
+import { GetFormattedDate, GetPostSummaries } from '@/app/utils'
 import { Leading } from './leading'
-import { Post } from './type-def'
-import { PostSummary } from '@/app/components/types'
 import { RelatedPosts } from './related-posts'
 import { notFound } from 'next/navigation'
 
@@ -47,6 +45,7 @@ const query = `
           name
           slug
           subcategory {
+            name
             slug
             category {
               name
@@ -123,24 +122,7 @@ export default async function TopicPage({
     return notFound()
   }
 
-  const relatedPosts = project.relatedPosts?.map((post: Post) => {
-    // @TODO: provide default image
-    const imageURL = post.heroImage?.resized?.small || ''
-    const subSubcategory = post.subSubcategories?.[0]
-    const category = subSubcategory?.subcategory?.category
-
-    const postProps: PostSummary = {
-      title: post.title,
-      url: `/article/${post.slug}`,
-      image: imageURL,
-      desc: post.ogDescription || '',
-      category: category?.name,
-      subSubcategory: subSubcategory?.name,
-      publishedDate: post.publishedDate,
-      theme: GetThemeFromCategory(category?.slug),
-    }
-    return postProps
-  })
+  const relatedPosts = GetPostSummaries(project?.relatedPosts)
 
   return (
     project && (
