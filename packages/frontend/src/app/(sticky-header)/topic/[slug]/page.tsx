@@ -59,7 +59,7 @@ const query = `
   }
 `
 
-export default async function PostPage({
+export default async function TopicPage({
   params,
 }: {
   params: { slug: string }
