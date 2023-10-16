@@ -92,9 +92,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
           <img src={avatarURL} alt={author.name} />
         </div>
         <h1>{author.name}</h1>
-        {author.email && (
-          <a href={`mailto://${author.email}`}>{author.email}</a>
-        )}
+        {author.email && <a href={`mailto:${author.email}`}>{author.email}</a>}
         <p className="bio">{author.bio}</p>
       </div>
       <div className="post-list">
