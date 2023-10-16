@@ -44,12 +44,12 @@ export const StickyHeader = () => {
   const [isHamburgerClicked, setIsHamburgerClicked] = useState(false)
   const [isSearchClicked, setIsSearchClicked] = useState(false)
 
-  const onHamburgerClick = () => {
+  const onHamburgerOverlayOpen = () => {
     setIsHamburgerClicked(true)
     document.body.classList.add('no-scroll')
   }
 
-  const onSearchClick = () => {
+  const onSearchOverlayOpen = () => {
     setIsSearchClicked(true)
     document.body.classList.add('no-scroll')
   }
@@ -81,7 +81,7 @@ export const StickyHeader = () => {
       className="search-btn"
       aria-label="開啟搜尋表單"
       data-label="right"
-      onClick={onSearchClick}
+      onClick={onSearchOverlayOpen}
     >
       <span>搜尋</span>
       {SearchIcon}
@@ -172,7 +172,7 @@ export const StickyHeader = () => {
           </div>
         </div>
         <div className="right-mobile">
-          <button className="hamburger" onClick={onHamburgerClick}>
+          <button className="hamburger" onClick={onHamburgerOverlayOpen}>
             {HamburgerIcon}
           </button>
           {isHamburgerClicked && hamburgerOverlay}
