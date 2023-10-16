@@ -1,55 +1,25 @@
-'use client'
-import { SearchIcon } from '@/app/icons'
 import StickyHeader, {
-  NavItems,
   ContributeBtn,
   SubscribeBtn,
   AboutUsBtn,
 } from '@/app/components/header'
+import { Navigation } from '@/app/components/Navigation'
+import { SearchIcon } from '@/app/icons'
 import './main-header.scss'
 
 export const MainHeader = () => {
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
-  }
-
-  const navi = (
-    <nav aria-label="頁首選單">
-      <ul className="menu" role="menubar">
-        {NavItems.map((item, index) => {
-          return (
-            <li key={`header-nav-item-${index}`}>
-              <a href={item.link} className="ct-menu-link" role="menuitem">
-                {item.title}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
-  )
-
   const searchInput = (
     <form role="search" method="get" action="/search" aria-haspopup="listbox">
       <input
-        type="search"
+        type="text"
         placeholder="搜尋更多新聞、議題"
-        value=""
-        name="s"
+        name="q"
         title="Search for..."
         aria-label="Search for..."
-        onChange={onHandleSearch}
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
-        <span data-loader="circles">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
       </button>
-      <input type="hidden" name="post_type" value="post" />
     </form>
   )
 
@@ -69,7 +39,7 @@ export const MainHeader = () => {
               alt="少年報導者 The Reporter for Kids"
             />
           </a>
-          {navi}
+          <Navigation />
         </div>
         <div className="right">
           <div className="content">

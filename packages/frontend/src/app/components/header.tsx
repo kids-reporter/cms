@@ -1,31 +1,9 @@
 'use client'
 import { useState } from 'react'
+import { Navigation } from '@/app/components/Navigation'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL, TOPIC_PAGE_ROUTE } from '@/app/constants'
+import { SUBSCRIBE_URL } from '@/app/constants'
 import './header.scss'
-
-export const NavItems = [
-  {
-    title: '專題',
-    link: TOPIC_PAGE_ROUTE,
-  },
-  {
-    title: '新聞',
-    link: '/category/news/',
-  },
-  {
-    title: '讀報',
-    link: '/category/listening-news/',
-  },
-  {
-    title: '漫畫',
-    link: '/category/comics/',
-  },
-  {
-    title: '校園',
-    link: '/category/campus/',
-  },
-]
 
 const slogan = <img src="/images/header-left-slogan.svg" />
 
@@ -64,18 +42,26 @@ export const AboutUsBtn = (
 
 export const StickyHeader = () => {
   const [isHamburgerClicked, setIsHamburgerClicked] = useState(false)
+  const [isSearchClicked, setIsSearchClicked] = useState(false)
 
-  const onHamburgerClick = () => {
-    setIsHamburgerClicked(!isHamburgerClicked)
+  const onHamburgerOverlayOpen = () => {
+    setIsHamburgerClicked(true)
+    document.body.classList.add('no-scroll')
   }
 
-  const onOverlayClose = () => {
+  const onSearchOverlayOpen = () => {
+    setIsSearchClicked(true)
+    document.body.classList.add('no-scroll')
+  }
+
+  const onHamburgerOverlayClose = () => {
     setIsHamburgerClicked(false)
+    document.body.classList.remove('no-scroll')
   }
 
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
+  const onSearchOverlayClose = () => {
+    setIsSearchClicked(false)
+    document.body.classList.remove('no-scroll')
   }
 
   const brand = (
@@ -90,24 +76,13 @@ export const StickyHeader = () => {
     </div>
   )
 
-  const navi = (
-    <nav aria-label="頁首選單">
-      <ul className="menu" role="menubar">
-        {NavItems.map((item, index) => {
-          return (
-            <li key={`header-nav-item-${index}`}>
-              <a href={item.link} className="ct-menu-link" role="menuitem">
-                {item.title}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    </nav>
-  )
-
   const search = (
-    <button className="search-btn" aria-label="開啟搜尋表單" data-label="right">
+    <button
+      className="search-btn"
+      aria-label="開啟搜尋表單"
+      data-label="right"
+      onClick={onSearchOverlayOpen}
+    >
       <span>搜尋</span>
       {SearchIcon}
     </button>
@@ -136,29 +111,31 @@ export const StickyHeader = () => {
       aria-haspopup="listbox"
     >
       <input
-        type="search"
+        type="text"
         placeholder="搜尋更多新聞、議題"
-        value="hpv" // TODO: handle value
         name="q"
         title="Search for..."
         aria-label="Search for..."
-        onChange={onHandleSearch}
       />
       <button type="submit" className="search-submit" aria-label="搜尋按鈕">
         {SearchIcon}
-        <span data-loader="circles">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
       </button>
     </form>
   )
 
-  const overlay = (
-    <div className="overlay-mobile">
+  const searchOverlay = (
+    <div className="search-overlay">
       <div className="control">
-        <button onClick={onOverlayClose}>{CrossIcon}</button>
+        <button onClick={onSearchOverlayClose}>{CrossIcon}</button>
+      </div>
+      <div className="content">{searchInput}</div>
+    </div>
+  )
+
+  const hamburgerOverlay = (
+    <div className="hamburger-overlay-mobile">
+      <div className="control">
+        <button onClick={onHamburgerOverlayClose}>{CrossIcon}</button>
       </div>
       <div className="content">
         <a href="/" className="logo-mobile">
@@ -173,7 +150,7 @@ export const StickyHeader = () => {
           {AboutUsBtn}
         </div>
         {searchInput}
-        {navi}
+        <Navigation />
       </div>
     </div>
   )
@@ -189,17 +166,18 @@ export const StickyHeader = () => {
             {slogan}
           </div>
           <div className="others">
-            {navi}
+            <Navigation />
             {search}
             {about}
           </div>
         </div>
         <div className="right-mobile">
-          <button className="hamburger" onClick={onHamburgerClick}>
+          <button className="hamburger" onClick={onHamburgerOverlayOpen}>
             {HamburgerIcon}
           </button>
-          {isHamburgerClicked && overlay}
+          {isHamburgerClicked && hamburgerOverlay}
         </div>
+        {isSearchClicked && searchOverlay}
       </div>
     </div>
   )

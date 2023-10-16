@@ -6,17 +6,19 @@ import { createRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
 
 const FlexContainer = styled(TransitionGroup)`
-  /* flexbox related styles */
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  row-gap: 30px;
-  column-gap: 30px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  @media screen and (max-width: 999px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+  gap: 30px;
   margin: 0 auto 30px auto;
 
   ${mediaQuery.mediumAbove} {
-    max-width: 1440px;
+    max-width: var(--normal-container-max-width);
   }
 
   .item-enter {

@@ -1,15 +1,9 @@
-'use client'
 import { StickyHeader } from '@/app/components/header'
 import TopDetector from '@/app/components/top-detector'
 import { SearchIcon } from '@/app/icons'
 import './not-found.scss'
 
 export default function NotFound() {
-  // TODO: handle search
-  const onHandleSearch = () => {
-    console.log('search')
-  }
-
   return (
     <>
       <StickyHeader />
@@ -29,13 +23,11 @@ export default function NotFound() {
           data-live-results="thumbs"
         >
           <input
-            type="search"
+            type="text"
             placeholder="搜尋"
-            value=""
-            name="s"
+            name="q"
             title="Search for..."
             aria-label="Search for..."
-            onChange={onHandleSearch}
           />
           <button type="submit" className="search-submit" aria-label="搜尋按鈕">
             {SearchIcon}
