@@ -6,6 +6,7 @@ const listConfigurations = list({
     name: text({
       label: '標題',
       validation: { isRequired: true },
+      isIndexed: true,
     }),
     file: file({
       label: '上傳 PDF 檔案',
