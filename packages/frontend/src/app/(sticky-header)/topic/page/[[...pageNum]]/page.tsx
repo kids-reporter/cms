@@ -71,6 +71,10 @@ const TopicCard = (props: { topic: TopicSummary }) => {
     <a href={topic.url}>
       <div className="topic-container">
         <img src={topic.image} />
+        <div className="icon-image">
+          <img src={'/images/topic_icon.svg'} />
+          <span>專題</span>
+        </div>
         <div className="topic-info">
           <div className="icon">
             <img src={'/images/topic_icon.svg'} />
