@@ -38,6 +38,9 @@ query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
 const subcategoryPostsGQL = `
 query($where: SubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
   subcategory(where: $where) {
+    category {
+      slug
+    }
     relatedPosts(take: $take, skip: $skip) {
       ${POST_CONTENT_GQL}
     }
@@ -49,6 +52,12 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
 const subSubcategoryPostsGQL = `
 query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
   subSubcategory(where: $where) {
+    subcategory {
+      slug
+      category {
+        slug
+      }
+    }
     relatedPosts(take: $take, skip: $skip) {
       ${POST_CONTENT_GQL}
     }
@@ -87,19 +96,19 @@ export default async function Category({ params }: { params: { path: any } }) {
   // length = 1(category)               ex: /category/news
   // length = 2(subcategory)            ex: /category/news/times
   // length = 3(subSubcategory)         ex: /category/news/times/medical-news
-  // length = 3(category, page 2)       ex: /category/news/page/2
-  // length = 4(subcategory, page 2)    ex: /category/news/times/page/2
-  // length = 5(subSubcategory, page 2) ex: /category/news/times/medical-news/page/2
+  // length = 3(category, page N)       ex: /category/news/page/2
+  // length = 4(subcategory, page N)    ex: /category/news/times/page/2
+  // length = 5(subSubcategory, page N) ex: /category/news/times/medical-news/page/2
   let category = '',
     subcategory = '',
     subSubcategory = '',
     currentPage = 1
   if (path.length === 1 && path[0]) {
     category = path[0]
-  } else if (path.length === 2 && path[1] && path[1] !== 'page') {
+  } else if (path.length === 2 && path[0] && path[1]) {
     category = path[0]
     subcategory = path[1]
-  } else if (path.length === 3) {
+  } else if (path.length === 3 && path[0] && path[1] && path[2]) {
     if (
       path[1] === 'page' &&
       Number.isInteger(Number(path[2])) &&
@@ -114,7 +123,10 @@ export default async function Category({ params }: { params: { path: any } }) {
     }
   } else if (
     path.length === 4 &&
-    path[1] !== 'page' &&
+    path[0] &&
+    path[1] &&
+    path[2] &&
+    path[3] &&
     path[2] === 'page' &&
     Number.isInteger(Number(path[3])) &&
     Number(path[3]) > 0
@@ -124,6 +136,11 @@ export default async function Category({ params }: { params: { path: any } }) {
     currentPage = Number(path[3])
   } else if (
     path.length === 5 &&
+    path[0] &&
+    path[1] &&
+    path[2] &&
+    path[3] &&
+    path[4] &&
     path[3] === 'page' &&
     Number.isInteger(Number(path[4])) &&
     Number(path[4]) > 0
@@ -200,8 +217,17 @@ export default async function Category({ params }: { params: { path: any } }) {
     let targetCategory
     if (subSubcategory) {
       targetCategory = postsRes?.data?.data?.subSubcategory
+      if (
+        subcategory !== targetCategory?.subcategory?.slug ||
+        category !== targetCategory?.subcategory?.category?.slug
+      ) {
+        throw `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
+      }
     } else if (subcategory) {
       targetCategory = postsRes?.data?.data?.subcategory
+      if (category !== targetCategory?.category?.slug) {
+        throw `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
+      }
     } else {
       targetCategory = postsRes?.data?.data?.category
     }
