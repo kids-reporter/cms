@@ -35,11 +35,12 @@ export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
 
 export enum AuthorRole {
   CONSULTANTS = '諮詢專家',
+  COMIC_CONSULTANTS = '漫畫顧問',
   TEACH_DESIGN = '教學設計',
   DICTATION = '口述',
   AUTHORS = '作者',
-  TRANSLATORS = '翻譯',
   WRITERS = '文字',
+  TRANSLATORS = '翻譯',
   PLANNERS = '企畫',
   INSTRUCTORS = '指導老師',
   PHOTOGRAPHERS = '攝影',
@@ -51,15 +52,17 @@ export enum AuthorRole {
   EDITORS = '責任編輯',
   READERS = '讀報',
   DONATION_CONTACT = '捐書聯繫窗口',
+  MARKETING = '行銷',
 }
 
 export const AUTHOR_ROLES_IN_ORDER = [
   AuthorRole.CONSULTANTS,
+  AuthorRole.COMIC_CONSULTANTS,
   AuthorRole.TEACH_DESIGN,
   AuthorRole.DICTATION,
   AuthorRole.AUTHORS,
-  AuthorRole.TRANSLATORS,
   AuthorRole.WRITERS,
+  AuthorRole.TRANSLATORS,
   AuthorRole.PLANNERS,
   AuthorRole.INSTRUCTORS,
   AuthorRole.PHOTOGRAPHERS,
@@ -71,6 +74,7 @@ export const AUTHOR_ROLES_IN_ORDER = [
   AuthorRole.EDITORS,
   AuthorRole.READERS,
   AuthorRole.DONATION_CONTACT,
+  AuthorRole.MARKETING,
 ]
 
 export const DEFAULT_AVATAR = '/images/avatar_default.png'
