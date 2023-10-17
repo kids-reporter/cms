@@ -91,6 +91,9 @@ main {
     .icon {
       width: 100%;
       display: flex;
+      @media screen and (max-width: 999px) {
+        display: none;
+      }
       flex-direction: row;
       align-items: center;
       gap: 5px;
