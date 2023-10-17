@@ -24,7 +24,8 @@ function EmbeddedCode({
 }
 
 const StyledEmbeddedCode = styled(EmbeddedCode)`
-  margin-bottom: 30px;
+  max-width: 700px;
+  margin: 0 auto 30px auto;
   background-color: #fafbfc;
 `
 
