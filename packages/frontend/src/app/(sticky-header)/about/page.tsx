@@ -296,7 +296,7 @@ export default async function About() {
       <div id="team" className="team">
         <AuthorCard title="誰在為你服務" authors={teamMemebers} />
       </div>
-      <div id="consultor" className="consultor">
+      <div id="consultants" className="consultants">
         <AuthorCard title="我們的顧問" authors={consultants} />
       </div>
       {mainSite}

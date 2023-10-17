@@ -81,7 +81,7 @@ export const Footer = () => {
                 核心團隊
               </a>
               <a
-                href="/about#consultor"
+                href="/about#consultants"
                 className="footer-top__team-box-item __mPS2id"
               >
                 <img src="/images/footer_pic3.svg" alt="我們是誰" />
