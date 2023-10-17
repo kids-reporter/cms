@@ -255,7 +255,11 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           {post && (
             <div className="hero-section">
               <header className="entry-header">
-                <Title text={post.title} subtitle={post.subtitle} />
+                <Title
+                  text={post.title}
+                  subtitle={post.subtitle}
+                  fontSize={fontSize}
+                />
                 <div className="post-date-category">
                   <PublishedDate date={post.publishedDate} />
                   <SubSubcategory

@@ -137,6 +137,16 @@ body.single-post {
     }
 }
 
+.post .title.large {
+  @media screen and (min-width: 768px) {
+    font-size: 36px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    font-size: 38px;
+  }
+}
+
 .post .subtitle {
     color: var(--theme-color);
     font-weight: 500;
