@@ -3,7 +3,7 @@ import {
   GithubIcon,
   IGIcon,
   MediumIcon,
-  RSSIcon,
+  // RSSIcon,
   TwitterIcon,
 } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
@@ -30,10 +30,12 @@ const socialIcons = [
     link: 'https://github.com/twreporter',
     img: GithubIcon,
   },
+  /* TODO: enable RSS
   {
     link: '/feed/',
     img: RSSIcon,
   },
+  */
 ]
 
 export const Footer = () => {
