@@ -1153,6 +1153,7 @@ type NewsReadingGroupItem {
   id: ID!
   name: String
   embedCode: String
+  order: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1168,14 +1169,27 @@ input NewsReadingGroupItemWhereInput {
   id: IDFilter
   name: StringFilter
   embedCode: StringFilter
+  order: IntNullableFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
 }
 
 input NewsReadingGroupItemOrderByInput {
   id: OrderDirection
   name: OrderDirection
   embedCode: OrderDirection
+  order: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -1183,6 +1197,7 @@ input NewsReadingGroupItemOrderByInput {
 input NewsReadingGroupItemUpdateInput {
   name: String
   embedCode: String
+  order: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1195,6 +1210,7 @@ input NewsReadingGroupItemUpdateArgs {
 input NewsReadingGroupItemCreateInput {
   name: String
   embedCode: String
+  order: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
