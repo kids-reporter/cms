@@ -149,7 +149,8 @@ const getPostContents = (post: any) => {
   const orderedAuthors: Author[] = []
   AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
     const authorsOfRole = authors?.filter(
-      (author: any) => authorRole === author?.role && author?.link
+      (author: any) =>
+        author?.role?.match(new RegExp(`^${authorRole}(、)?`)) && author?.link
     )
     orderedAuthors.push(...(authorsOfRole ?? []))
   })
