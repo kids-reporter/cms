@@ -556,6 +556,7 @@ type Project {
   title: String
   slug: String
   subtitle: String
+  titlePosition: String
   status: String
   publishedDate: DateTime
   heroImage: Photo
@@ -589,6 +590,7 @@ input ProjectWhereInput {
   title: StringFilter
   slug: StringFilter
   subtitle: StringFilter
+  titlePosition: StringNullableFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   heroImage: PhotoWhereInput
@@ -614,6 +616,7 @@ input ProjectOrderByInput {
   title: OrderDirection
   slug: OrderDirection
   subtitle: OrderDirection
+  titlePosition: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
   ogTitle: OrderDirection
@@ -626,6 +629,7 @@ input ProjectUpdateInput {
   title: String
   slug: String
   subtitle: String
+  titlePosition: String
   status: String
   publishedDate: DateTime
   heroImage: PhotoRelateToOneForUpdateInput
@@ -658,6 +662,7 @@ input ProjectCreateInput {
   title: String
   slug: String
   subtitle: String
+  titlePosition: String
   status: String
   publishedDate: DateTime
   heroImage: PhotoRelateToOneForCreateInput
