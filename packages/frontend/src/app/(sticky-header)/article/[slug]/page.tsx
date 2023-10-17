@@ -149,7 +149,8 @@ const getPostContents = (post: any) => {
   const orderedAuthors: Author[] = []
   AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
     const authorsOfRole = authors?.filter(
-      (author: any) => authorRole === author?.role && author?.link
+      (author: any) =>
+        author?.role?.match(new RegExp(`^${authorRole}(、)?`)) && author?.link
     )
     orderedAuthors.push(...(authorsOfRole ?? []))
   })
@@ -254,7 +255,11 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           {post && (
             <div className="hero-section">
               <header className="entry-header">
-                <Title text={post.title} subtitle={post.subtitle} />
+                <Title
+                  text={post.title}
+                  subtitle={post.subtitle}
+                  fontSize={fontSize}
+                />
                 <div className="post-date-category">
                   <PublishedDate date={post.publishedDate} />
                   <SubSubcategory

@@ -18,15 +18,20 @@ export type PostSliderProp = {
   posts: PostSummary[]
   sliderTheme: Theme
   isSimple?: boolean
+  enablePagination?: boolean
 }
 
 const slidesPerView = 3
 const autoPlayInterval = 5000
 
-export const PostSlider = (props: PostSliderProp) => {
-  const posts = props?.posts
+export const PostSlider = ({
+  posts,
+  sliderTheme,
+  isSimple = false,
+  enablePagination = true,
+}: PostSliderProp) => {
   const postNum = posts?.length
-  const themeColor = GetThemeColor(props?.sliderTheme) ?? DEFAULT_THEME_COLOR
+  const themeColor = GetThemeColor(sliderTheme) ?? DEFAULT_THEME_COLOR
 
   // Note: swiper loop mode is only available when slideNum >= slidesPerView * 2
   // ref: https://swiperjs.com/swiper-api#param-loop
@@ -38,7 +43,7 @@ export const PostSlider = (props: PostSliderProp) => {
 
   return (
     postNum > 0 && (
-      <div className={`post-slider theme-${props.sliderTheme}`}>
+      <div className={`post-slider theme-${sliderTheme}`}>
         <div className="cards">
           {postNum === 1 ? (
             posts[0] && (
@@ -53,7 +58,7 @@ export const PostSlider = (props: PostSliderProp) => {
                 onBeforeInit={(swiper) => {
                   swiperRef.current = swiper
                 }}
-                pagination={{ clickable: true }}
+                pagination={{ enabled: enablePagination, clickable: true }}
                 modules={[Autoplay, Navigation, Pagination]}
                 loop={isLoopAvailable}
                 rewind={!isLoopAvailable}
@@ -72,7 +77,7 @@ export const PostSlider = (props: PostSliderProp) => {
                   return (
                     post && (
                       <SwiperSlide key={`swiper-slide-${index}`}>
-                        <PostCard post={post} isSimple={props.isSimple} />
+                        <PostCard post={post} isSimple={isSimple} />
                       </SwiperSlide>
                     )
                   )

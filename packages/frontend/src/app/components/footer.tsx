@@ -3,7 +3,7 @@ import {
   GithubIcon,
   IGIcon,
   MediumIcon,
-  RSSIcon,
+  // RSSIcon,
   TwitterIcon,
 } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
@@ -30,10 +30,12 @@ const socialIcons = [
     link: 'https://github.com/twreporter',
     img: GithubIcon,
   },
+  /* TODO: enable RSS
   {
     link: '/feed/',
     img: RSSIcon,
   },
+  */
 ]
 
 export const Footer = () => {
@@ -79,7 +81,7 @@ export const Footer = () => {
                 核心團隊
               </a>
               <a
-                href="/about#consultor"
+                href="/about#consultants"
                 className="footer-top__team-box-item __mPS2id"
               >
                 <img src="/images/footer_pic3.svg" alt="我們是誰" />
