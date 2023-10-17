@@ -53,11 +53,11 @@ const categoryGQL = `
 `
 
 const postGQL = `
-  query($where: PostWhereUniqueInput!) {
+  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!) {
     post(where: $where) {
       title
       newsReadingGroup {
-        items {
+        items (orderBy: $orderBy){
           name
           embedCode
         }
@@ -205,6 +205,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           where: {
             slug: params.slug,
           },
+          orderBy: [{ order: 'asc' }],
         },
       })
       .then(
