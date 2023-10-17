@@ -1269,7 +1269,9 @@ type PDF {
   id: ID!
   name: String
   file: FileFieldOutput
+  googleDrivePreviewLink: String
   description: String
+  embeddedCode: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1290,6 +1292,7 @@ input PDFWhereInput {
   NOT: [PDFWhereInput!]
   id: IDFilter
   name: StringFilter
+  googleDrivePreviewLink: StringFilter
   description: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -1298,6 +1301,7 @@ input PDFWhereInput {
 input PDFOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  googleDrivePreviewLink: OrderDirection
   description: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
@@ -1306,6 +1310,7 @@ input PDFOrderByInput {
 input PDFUpdateInput {
   name: String
   file: FileFieldInput
+  googleDrivePreviewLink: String
   description: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -1323,6 +1328,7 @@ input PDFUpdateArgs {
 input PDFCreateInput {
   name: String
   file: FileFieldInput
+  googleDrivePreviewLink: String
   description: String
   createdAt: DateTime
   updatedAt: DateTime

@@ -244,13 +244,14 @@ model EditorPicksSetting {
 }
 
 model PDF {
-  id            Int       @id @default(autoincrement())
-  name          String    @default("")
-  file_filesize Int?
-  file_filename String?
-  description   String    @default("")
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @updatedAt
+  id                     Int       @id @default(autoincrement())
+  name                   String    @default("")
+  file_filesize          Int?
+  file_filename          String?
+  googleDrivePreviewLink String    @default("")
+  description            String    @default("")
+  createdAt              DateTime? @default(now())
+  updatedAt              DateTime? @updatedAt
 
   @@index([name])
 }
