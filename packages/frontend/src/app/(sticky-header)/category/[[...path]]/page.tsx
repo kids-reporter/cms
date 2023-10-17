@@ -75,7 +75,6 @@ const getImageAndThemeFromCategory = (category: string) => {
   return { imageURL, theme }
 }
 
-// TODO: fix bug of /category/news/xxx, /category/news/times/xxx
 export default async function Category({ params }: { params: { path: any } }) {
   const path = params.path
   if (!path || !Array.isArray(path) || path.length === 0) {
@@ -84,6 +83,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   }
 
   // Category page routing scenarios:   ex: /category/path[0]/path[1]/path[2]...
+  // -------------------------------------------------------------------------------
   // length = 1(category)               ex: /category/news
   // length = 2(subcategory)            ex: /category/news/times
   // length = 3(subSubcategory)         ex: /category/news/times/medical-news
@@ -197,18 +197,22 @@ export default async function Category({ params }: { params: { path: any } }) {
       },
     })
 
+    let targetCategory
     if (subSubcategory) {
-      posts = GetPostSummaries(
-        postsRes?.data?.data?.subSubcategory?.relatedPosts
-      )
-      postsCount = postsRes?.data?.data?.subSubcategory?.relatedPostsCount
+      targetCategory = postsRes?.data?.data?.subSubcategory
     } else if (subcategory) {
-      posts = GetPostSummaries(postsRes?.data?.data?.subcategory?.relatedPosts)
-      postsCount = postsRes?.data?.data?.subcategory?.relatedPostsCount
+      targetCategory = postsRes?.data?.data?.subcategory
     } else {
-      posts = GetPostSummaries(postsRes?.data?.data?.category?.relatedPosts)
-      postsCount = postsRes?.data?.data?.category?.relatedPostsCount
+      targetCategory = postsRes?.data?.data?.category
     }
+
+    if (!targetCategory) {
+      console.error('Fetch targetCategory failed!')
+      notFound()
+    }
+
+    posts = GetPostSummaries(targetCategory.relatedPosts)
+    postsCount = targetCategory.relatedPostsCount
   } catch (err) {
     console.error('Fetch posts failed!', err)
     notFound()
@@ -216,7 +220,9 @@ export default async function Category({ params }: { params: { path: any } }) {
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (currentPage > totalPages) {
-    console.error('Incorrect page!', currentPage)
+    console.error(
+      `Incorrect page! currentPage=${currentPage}, totalPages=${totalPages}`
+    )
     notFound()
   }
 
