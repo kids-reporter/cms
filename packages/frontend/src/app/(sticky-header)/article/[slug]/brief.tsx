@@ -4,6 +4,7 @@ import Skeleton from 'react-loading-skeleton'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
+import { useArticleContext } from './article-context'
 import './brief.scss'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -62,6 +63,7 @@ export const Brief = (props: BriefProp) => {
   const content = props?.content
   const authors = props?.authors
   const [isMounted, setIsMounted] = useState(false)
+  const { fontSize } = useArticleContext()
 
   useEffect(() => {
     setIsMounted(true)
@@ -74,6 +76,7 @@ export const Brief = (props: BriefProp) => {
           <ArticleIntroductionDraftRenderer
             rawContentState={content}
             themeColor={props.theme}
+            fontSizeLevel={fontSize}
           />
           {authors?.length > 0 && <Authors authorGroups={authors} />}
         </>
