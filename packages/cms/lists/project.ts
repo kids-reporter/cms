@@ -28,6 +28,16 @@ const listConfigurations = list({
       label: '副標',
       validation: { isRequired: false },
     }),
+    titlePosition: select({
+      defaultValue: 'center',
+      options: [
+        { label: '正中', value: 'center' },
+        { label: '中下', value: 'center-bottom' },
+        { label: '左中', value: 'left-center' },
+        { label: '左下', value: 'left-bottom' },
+      ],
+      label: '專題標題位置',
+    }),
     status: select({
       isIndexed: true,
       defaultValue: 'draft',
