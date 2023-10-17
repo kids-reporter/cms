@@ -135,16 +135,16 @@ body.single-post {
     @media screen and (min-width: 1440px) {
         font-size: 36px;
     }
-}
 
-.post .title.large {
-  @media screen and (min-width: 768px) {
-    font-size: 36px;
-  }
-
-  @media screen and (min-width: 1440px) {
-    font-size: 38px;
-  }
+    &.large {
+      font-size: 34px;
+      @media screen and (min-width: 768px) {
+        font-size: 34px;
+      }
+      @media screen and (min-width: 1440px) {
+        font-size: 38px;
+      }
+    }
 }
 
 .post .subtitle {
