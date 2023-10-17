@@ -180,6 +180,7 @@ export default async function Topic({
                   posts={featuredTopicPosts}
                   sliderTheme={Theme.BLUE}
                   isSimple={true}
+                  enablePagination={false}
                 />
               )}
             </div>
