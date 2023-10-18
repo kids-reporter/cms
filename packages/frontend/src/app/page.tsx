@@ -12,14 +12,19 @@ import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
-import { API_URL, CMS_URL, POST_CONTENT_GQL, Theme } from '@/app/constants'
+import {
+  API_URL,
+  CMS_URL,
+  GENERAL_DESCRIPTION,
+  POST_CONTENT_GQL,
+  Theme,
+} from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
   title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
-  description:
-    '《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。',
+  description: GENERAL_DESCRIPTION,
 }
 
 const sections = [

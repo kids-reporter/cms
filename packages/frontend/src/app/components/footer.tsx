@@ -6,7 +6,7 @@ import {
   // RSSIcon,
   TwitterIcon,
 } from '@/app/icons'
-import { SUBSCRIBE_URL } from '@/app/constants'
+import { GENERAL_DESCRIPTION, SUBSCRIBE_URL } from '@/app/constants'
 import './footer.scss'
 
 const socialIcons = [
@@ -47,9 +47,7 @@ export const Footer = () => {
             <picture className="footer-top__left-logo">
               <img src="/images/footer-logo.svg" alt="" />
             </picture>
-            <p className="footer-desc">
-              《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。
-            </p>
+            <p className="footer-desc">{GENERAL_DESCRIPTION}</p>
             <div className="footer-top__left-social">
               <div className="footer-top__social-icon-group">
                 {socialIcons.map((icon, index) => {

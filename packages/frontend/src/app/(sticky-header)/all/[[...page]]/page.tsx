@@ -4,14 +4,18 @@ import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import { API_URL, POST_PER_PAGE, POST_CONTENT_GQL } from '@/app/constants'
+import {
+  API_URL,
+  GENERAL_DESCRIPTION,
+  POST_PER_PAGE,
+  POST_CONTENT_GQL,
+} from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
   title: '所有文章 - 少年報導者 The Reporter for Kids',
-  description:
-    '《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。',
+  description: GENERAL_DESCRIPTION,
 }
 
 const postsCountGQL = `
