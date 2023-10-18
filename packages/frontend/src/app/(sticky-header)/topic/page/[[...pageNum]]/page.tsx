@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
@@ -16,6 +17,12 @@ import {
   GetPostSummaries,
 } from '@/app/utils'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '彙整: 專題 - 少年報導者 The Reporter for Kids',
+  description:
+    '《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。',
+}
 
 const titleLengthLimit = 30
 const descLengthLimit = 110
