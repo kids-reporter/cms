@@ -43,10 +43,10 @@ export const MainSlider = (props: SliderProp) => {
           centeredSlides={true}
           coverflowEffect={{
             rotate: 0,
-            stretch: 100,
+            stretch: 0,
             depth: 100,
             modifier: 1,
-            scale: 0.75,
+            scale: 0.8,
             slideShadows: false,
           }}
           breakpoints={{
