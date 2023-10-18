@@ -24,7 +24,9 @@ export const PostCard = ({
           className ? className : ''
         }`}
       >
-        <img className={isSimple ? 'simple' : ''} src={post.image} />
+        <div className="hero-image-container">
+          <img className={isSimple ? 'simple' : ''} src={post.image} />
+        </div>
         <div className={`card-info ${isSimple ? 'simple' : ''}`}>
           <div className="card-top">
             <span className="card-category">{post.category}</span>
