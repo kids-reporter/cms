@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import AuthorCard from '@/app/components/author-card'
 import {
@@ -13,6 +14,12 @@ import {
   AuthorRole,
 } from '@/app/constants'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '關於少年報導者 - 少年報導者 The Reporter for Kids',
+  description:
+    '《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。',
+}
 
 const authorGQL = `
 query($where: AuthorWhereUniqueInput!) {
