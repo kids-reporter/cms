@@ -96,7 +96,27 @@ export const BackgroundImage = styled.div<{
   ${DownButton} {
     position: absolute;
     left: 50%;
-    bottom: 70px;
+  }
+
+  ${mediaQuery.largeOnly} {
+    ${DownButton} {
+      bottom: 50px;
+      width: 60px;
+    }
+  }
+
+  ${mediaQuery.mediumOnly} {
+    ${DownButton} {
+      bottom: 40px;
+      width: 50px;
+    }
+  }
+
+  ${mediaQuery.smallOnly} {
+    ${DownButton} {
+      bottom: 30px;
+      width: 40px;
+    }
   }
 
   ${mediaQuery.smallOnly} {

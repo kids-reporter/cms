@@ -104,6 +104,7 @@ model Project {
   title                                         String               @default("")
   slug                                          String               @unique @default("")
   subtitle                                      String               @default("")
+  titlePosition                                 String?              @default("center")
   status                                        String?              @default("draft")
   publishedDate                                 DateTime?
   heroImage                                     Photo?               @relation("Project_heroImage", fields: [heroImageId], references: [id])
