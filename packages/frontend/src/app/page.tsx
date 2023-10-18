@@ -84,6 +84,13 @@ const sections = [
     link: '/category/comics/comic/',
     theme: Theme.YELLOW,
   },
+  {
+    title: '上課好好玩',
+    image: 'topic_pic10.svg',
+    titleImg: 'topic_title10.svg',
+    link: '/category/campus/teaching/',
+    theme: Theme.YELLOW,
+  },
 ]
 
 const topicsGQL = `
