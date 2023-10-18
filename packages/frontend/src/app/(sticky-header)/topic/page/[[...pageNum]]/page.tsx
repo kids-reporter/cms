@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 }
 
 const titleLengthLimit = 30
-const descLengthLimit = 110
+const descLengthLimit = 60
 
 const genTopicsGQL = (hasRelatedPosts: boolean): string => {
   const relatedPostsGQL = `

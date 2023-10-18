@@ -9,7 +9,7 @@ export type PostCardProp = {
 }
 
 const titleLengthLimit = 30
-const descLengthLimit = 110
+const descLengthLimit = 60
 
 export const PostCard = ({
   className,
