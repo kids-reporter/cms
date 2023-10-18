@@ -54,6 +54,7 @@ main {
 
 .topic-container {
   display: flex;
+  position: relative;
 
   flex-direction: row;
   @media screen and (max-width: 999px) {
@@ -69,6 +70,36 @@ main {
     @media screen and (max-width: 999px) {
       max-width: 100%;
       border-radius: 45px 45px 0 0;
+    }
+  }
+
+  .icon-image {
+    @media screen and (min-width: 1000px) {
+      display: none;
+    }
+    width: fit-content;
+    height: fit-content;
+    top: 20px;
+    left: 20px;
+    position: absolute;
+    background-color: white;
+    border-radius: 25px;
+    padding: 5px 15px;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+    img {
+      width: 40px;
+    }
+
+    span {
+      font-weight: 700;
+      font-size: 22px;
+      line-height: 160%;
+      letter-spacing: 0.08em;
     }
   }
 
@@ -91,6 +122,9 @@ main {
     .icon {
       width: 100%;
       display: flex;
+      @media screen and (max-width: 999px) {
+        display: none;
+      }
       flex-direction: row;
       align-items: center;
       gap: 5px;
