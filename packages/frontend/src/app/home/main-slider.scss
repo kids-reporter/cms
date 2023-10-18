@@ -107,11 +107,17 @@
         flex-direction: column;
         justify-content: center;
 
-        img {
+        .hero-image-container {
           max-width: 100%;
-          height: auto;
-          vertical-align: middle;
-          border-radius: 20px;
+          height: calc(100% / 16 * 9);
+          aspect-ratio: 16/9;
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+          }
         }
 
         .topic-title {

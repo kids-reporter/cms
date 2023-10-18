@@ -68,7 +68,9 @@ export const MainSlider = (props: SliderProp) => {
                     <span>專題</span>
                   </div>
                   <div className="slide">
-                    <img src={topic.image} />
+                    <div className="hero-image-container">
+                      <img src={topic.image} />
+                    </div>
                     <span className="topic-title">
                       {topic.title}
                       <br />
