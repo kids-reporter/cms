@@ -23,6 +23,7 @@ const query = `
   query GetAProject($where: ProjectWhereUniqueInput!) {
     project(where: $where) {
       title
+      titlePosition
       subtitle
       content
       credits
@@ -129,6 +130,7 @@ export default async function TopicPage({
       <div>
         <Leading
           title={project.title}
+          titlePosition={project.titlePosition}
           backgroundImage={project.heroImage}
           mobileBgImage={project.mobileHeroImage}
         />
