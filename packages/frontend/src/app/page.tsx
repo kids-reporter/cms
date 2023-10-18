@@ -47,7 +47,6 @@ const sections = [
     image: 'topic_pic3.svg',
     titleImg: 'topic_title3.svg',
     link: '/category/listening-news/',
-    category: 'listening-news',
     theme: Theme.BLUE,
   },
   {
@@ -225,19 +224,20 @@ export default async function Home() {
         const categoryTokens = section.link
           .replace(/(^\/)|(\/$)/g, '')
           .split('/')
-        const targetGQL =
-          categoryTokens.length === 3 ? subcategoryPostsGQL : categoryPostsGQL
-        const targetSlug = categoryTokens.pop()
+        const isSubcategory = categoryTokens.length === 3
         const res = await axios.post(API_URL, {
-          query: targetGQL,
+          query: isSubcategory ? subcategoryPostsGQL : categoryPostsGQL,
           variables: {
             where: {
-              slug: targetSlug,
+              slug: categoryTokens.pop(),
             },
             take: sectionPostsNum,
           },
         })
-        return GetPostSummaries(res?.data?.data?.subcategory?.relatedPosts)
+        const category = isSubcategory
+          ? res?.data?.data?.subcategory
+          : res?.data?.data?.category
+        return GetPostSummaries(category?.relatedPosts)
       })
     )
   } catch (err) {
