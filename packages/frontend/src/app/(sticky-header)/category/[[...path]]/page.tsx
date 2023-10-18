@@ -252,7 +252,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   }
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-  if (currentPage > totalPages) {
+  if (totalPages > 0 && currentPage > totalPages) {
     console.error(
       `Incorrect page! currentPage=${currentPage}, totalPages=${totalPages}`
     )
@@ -303,12 +303,14 @@ export default async function Category({ params }: { params: { path: any } }) {
             })}
           </div>
         )}
-        {totalPages && totalPages > 0 && (
+        {totalPages > 0 ? (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             routingPrefix={routingPrefix}
           />
+        ) : (
+          <h1>沒有文章</h1>
         )}
       </div>
     </main>
