@@ -1,9 +1,8 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
-import PostCard from '@/app/components/post-card'
+import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
-import { PostSummary } from '@/app/components/types'
 import {
   API_URL,
   GENERAL_DESCRIPTION,
@@ -77,24 +76,14 @@ export default async function Tag({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const postSummeries: (PostSummary | undefined)[] = GetPostSummaries(posts)
+  const postSummeries = GetPostSummaries(posts)
 
   return (
     <main>
       <div className="info">
         <h1>#{tag.name}</h1>
       </div>
-      <div className="post-list">
-        {postSummeries.length > 0 ? (
-          postSummeries.map((post, index) => {
-            return (
-              post && <PostCard key={`author-post-card-${index}`} post={post} />
-            )
-          })
-        ) : (
-          <h1>沒有文章</h1>
-        )}
-      </div>
+      <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (
         <Pagination
           currentPage={currentPage}
