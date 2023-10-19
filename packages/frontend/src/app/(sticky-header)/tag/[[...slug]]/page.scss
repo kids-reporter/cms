@@ -4,7 +4,8 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 120px;
+  margin-bottom: 40px;
+  gap: 40px;
 
   .info {
     width: 100%;
@@ -13,12 +14,10 @@ main {
     justify-content: center;
     align-items: center;
     padding: 40px 35px 0;
-    margin: 0 auto 20px;
     background: #fff;
 
     h1 {
       text-align: center;
-      margin: 12px 0 35px;
       font-size: 30px;
       line-height: 160%;
       letter-spacing: .08em;
