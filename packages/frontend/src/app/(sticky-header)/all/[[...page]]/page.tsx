@@ -1,9 +1,8 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
-import PostCard from '@/app/components/post-card'
+import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
-import { PostSummary } from '@/app/components/types'
 import {
   API_URL,
   GENERAL_DESCRIPTION,
@@ -81,33 +80,19 @@ export default async function LatestPosts({
     notFound()
   }
 
-  const postSummeries: (PostSummary | undefined)[] = GetPostSummaries(posts)
+  const postSummeries = GetPostSummaries(posts)
 
   return (
     <main className="container">
-      <div className="content">
-        <img className="title-image" src={'/images/new_article.svg'} />
-        <div className="post-list">
-          {postSummeries.length > 0 ? (
-            postSummeries.map((post, index) => {
-              return (
-                post && (
-                  <PostCard key={`author-post-card-${index}`} post={post} />
-                )
-              )
-            })
-          ) : (
-            <h1>沒有文章</h1>
-          )}
-        </div>
-        {totalPages && totalPages > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            routingPrefix={'/all'}
-          />
-        )}
-      </div>
+      <img className="title-image" src={'/images/new_article.svg'} />
+      <PostList posts={postSummeries} />
+      {totalPages && totalPages > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          routingPrefix={'/all'}
+        />
+      )}
     </main>
   )
 }

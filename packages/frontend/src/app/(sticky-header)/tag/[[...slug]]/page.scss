@@ -4,7 +4,8 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 120px;
+  margin-bottom: 40px;
+  gap: 40px;
 
   .info {
     width: 100%;
@@ -13,34 +14,15 @@ main {
     justify-content: center;
     align-items: center;
     padding: 40px 35px 0;
-    margin: 0 auto 20px;
     background: #fff;
 
     h1 {
       text-align: center;
-      margin: 12px 0 35px;
       font-size: 30px;
       line-height: 160%;
       letter-spacing: .08em;
       color: #232323;
       font-weight: 700;
     }
-  }
-
-  .post-list {
-    max-width: var(--normal-container-max-width);
-    display: grid;
-    // Avoid grid cell overflow parent, ref: https://datacadamia.com/web/css/grid/overflow#overflow_example
-    &> * {
-      min-width: 0;
-    }
-    grid-template-columns: repeat(3, 1fr);
-    @media screen and (max-width: 999px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media screen and (max-width: 767px) {
-      grid-template-columns: 1fr;
-    }
-    gap: 30px;
   }
 }
