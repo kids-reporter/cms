@@ -27,7 +27,7 @@ const query = `
       subtitle
       content
       credits
-      updatedAt
+      publishedDate
       heroImage {
         ...ImageEntity
       }
@@ -135,9 +135,9 @@ export default async function TopicPage({
           mobileBgImage={project.mobileHeroImage}
         />
         {project.subtitle ? <SubTitle>{project.subtitle}</SubTitle> : null}
-        {project.updatedAt ? (
+        {project.publishedDate ? (
           <PublishedDate>
-            {GetFormattedDate(project.updatedAt)} 最後更新
+            {GetFormattedDate(project.publishedDate)} 最後更新
           </PublishedDate>
         ) : null}
         {project.content ? (
