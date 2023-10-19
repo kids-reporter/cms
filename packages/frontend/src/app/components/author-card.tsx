@@ -32,7 +32,7 @@ type AuthorCardProp = {
   authors: Author[]
 }
 
-const descLengthLimit = 85
+const descLengthLimit = 60
 
 export const AuthorCard = (props: AuthorCardProp) => {
   const authors = props?.authors

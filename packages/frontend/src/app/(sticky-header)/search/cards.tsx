@@ -7,6 +7,10 @@ import { mediaQuery } from '@/app/utils/media-query'
 
 const FlexContainer = styled(TransitionGroup)`
   display: grid;
+  // Avoid grid cell overflow parent, ref: https://datacadamia.com/web/css/grid/overflow#overflow_example
+  & > * {
+    min-width: 0;
+  }
   grid-template-columns: repeat(3, 1fr);
   @media screen and (max-width: 999px) {
     grid-template-columns: repeat(2, 1fr);

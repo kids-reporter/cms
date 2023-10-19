@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
@@ -7,11 +8,17 @@ import {
   API_URL,
   CMS_URL,
   DEFAULT_AVATAR,
+  GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '工作團隊 - 少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
 
 const authorGQL = `
   query($authorWhere2: AuthorWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {

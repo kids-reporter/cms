@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import AuthorCard from '@/app/components/author-card'
 import {
@@ -8,11 +9,17 @@ import {
   DEFAULT_AVATAR,
   DONATE_URL,
   EMAIL,
+  GENERAL_DESCRIPTION,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
   AuthorRole,
 } from '@/app/constants'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '關於少年報導者 - 少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
 
 const authorGQL = `
 query($where: AuthorWhereUniqueInput!) {

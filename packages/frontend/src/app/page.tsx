@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import StickyHeader from '@/app/components/header'
 import MainHeader from '@/app/home/main-header'
@@ -11,9 +12,20 @@ import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
-import { API_URL, CMS_URL, POST_CONTENT_GQL, Theme } from '@/app/constants'
+import {
+  API_URL,
+  CMS_URL,
+  GENERAL_DESCRIPTION,
+  POST_CONTENT_GQL,
+  Theme,
+} from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
+  description: GENERAL_DESCRIPTION,
+}
 
 const sections = [
   {
@@ -35,7 +47,6 @@ const sections = [
     image: 'topic_pic3.svg',
     titleImg: 'topic_title3.svg',
     link: '/category/listening-news/',
-    category: 'listening-news',
     theme: Theme.BLUE,
   },
   {
@@ -71,6 +82,13 @@ const sections = [
     image: 'topic_pic9.svg',
     titleImg: 'topic_title9.svg',
     link: '/category/comics/comic/',
+    theme: Theme.YELLOW,
+  },
+  {
+    title: '上課好好玩',
+    image: 'topic_pic10.svg',
+    titleImg: 'topic_title10.svg',
+    link: '/category/campus/teaching/',
     theme: Theme.YELLOW,
   },
 ]
@@ -213,19 +231,20 @@ export default async function Home() {
         const categoryTokens = section.link
           .replace(/(^\/)|(\/$)/g, '')
           .split('/')
-        const targetGQL =
-          categoryTokens.length === 3 ? subcategoryPostsGQL : categoryPostsGQL
-        const targetSlug = categoryTokens.pop()
+        const isSubcategory = categoryTokens.length === 3
         const res = await axios.post(API_URL, {
-          query: targetGQL,
+          query: isSubcategory ? subcategoryPostsGQL : categoryPostsGQL,
           variables: {
             where: {
-              slug: targetSlug,
+              slug: categoryTokens.pop(),
             },
             take: sectionPostsNum,
           },
         })
-        return GetPostSummaries(res?.data?.data?.subcategory?.relatedPosts)
+        const category = isSubcategory
+          ? res?.data?.data?.subcategory
+          : res?.data?.data?.category
+        return GetPostSummaries(category?.relatedPosts)
       })
     )
   } catch (err) {

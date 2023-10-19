@@ -1,11 +1,22 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostCard from '@/app/components/post-card'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
-import { API_URL, POST_PER_PAGE, POST_CONTENT_GQL } from '@/app/constants'
+import {
+  API_URL,
+  GENERAL_DESCRIPTION,
+  POST_PER_PAGE,
+  POST_CONTENT_GQL,
+} from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '所有文章 - 少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
 
 const postsCountGQL = `
 query Query {

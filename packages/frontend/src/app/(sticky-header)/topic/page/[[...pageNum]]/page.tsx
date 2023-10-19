@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
@@ -5,6 +6,7 @@ import Pagination from '@/app/components/pagination'
 import {
   API_URL,
   CMS_URL,
+  GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
   TOPIC_PAGE_ROUTE,
@@ -17,8 +19,13 @@ import {
 } from '@/app/utils'
 import './page.scss'
 
+export const metadata: Metadata = {
+  title: '彙整: 專題 - 少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
+
 const titleLengthLimit = 30
-const descLengthLimit = 110
+const descLengthLimit = 60
 
 const genTopicsGQL = (hasRelatedPosts: boolean): string => {
   const relatedPostsGQL = `

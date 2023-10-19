@@ -69,6 +69,10 @@ main {
   .post-list {
     max-width: var(--normal-container-max-width);
     display: grid;
+    // Avoid grid cell overflow parent, ref: https://datacadamia.com/web/css/grid/overflow#overflow_example
+    &> * {
+      min-width: 0;
+    }
     grid-template-columns: repeat(3, 1fr);
     @media screen and (max-width: 999px) {
       grid-template-columns: repeat(2, 1fr);
