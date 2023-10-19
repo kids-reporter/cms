@@ -65,7 +65,6 @@ type TopicSummary = {
   relatedPosts?: any[]
 }
 
-// TODO: integrate 專題 logic
 const TopicCard = (props: { topic: TopicSummary }) => {
   const moreComponent = (
     <div className={`rpjr-btn rpjr-btn-theme-outline theme-blue`}>
@@ -77,7 +76,9 @@ const TopicCard = (props: { topic: TopicSummary }) => {
   return (
     <a href={topic.url}>
       <div className="topic-container">
-        <img src={topic.image} />
+        <div className="hero-image-container">
+          <img src={topic.image} />
+        </div>
         <div className="icon-image">
           <img src={'/images/topic_icon.svg'} />
           <span>專題</span>
