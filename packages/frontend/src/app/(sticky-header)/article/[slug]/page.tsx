@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Helmet } from 'react-helmet'
 import { ArticleContext } from './article-context'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
@@ -98,13 +97,6 @@ const postGQL = `
         title
         slug
       }
-      ogDescription
-      ogTitle
-      ogImage {
-        resized {
-          small
-        }
-      }
     }
   }
 `
@@ -180,11 +172,6 @@ const getPostContents = (post: any) => {
   const topic = post?.projects?.[0]
   const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
 
-  // OG related data
-  const ogTitle = post?.ogTitle ?? ''
-  const ogDescription = post?.ogDescription ?? ''
-  const ogImage = post?.ogImage?.resized?.small ?? ''
-
   return {
     theme,
     topicURL,
@@ -194,9 +181,6 @@ const getPostContents = (post: any) => {
     authorsInBrief,
     orderedAuthors,
     relatedPosts,
-    ogTitle,
-    ogDescription,
-    ogImage,
   }
 }
 
@@ -249,18 +233,10 @@ export default function PostPage({ params }: { params: { slug: string } }) {
     authorsInBrief,
     orderedAuthors,
     relatedPosts,
-    ogTitle,
-    ogDescription,
-    ogImage,
   } = getPostContents(post)
 
   return (
     <main className="container">
-      <Helmet>
-        <meta property="og:title" content={ogTitle} />
-        <meta property="og:description" content={ogDescription} />
-        <meta property="og:image" content={ogImage} />
-      </Helmet>
       <div className={`post theme-${theme}`}>
         <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
           <Sidebar topicURL={topicURL} />
