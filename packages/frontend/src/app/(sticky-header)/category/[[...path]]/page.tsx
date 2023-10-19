@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
-import PostCard from '@/app/components/post-card'
+import PostList from '@/app/components/post-list'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import { PostSummary } from '@/app/components/types'
@@ -292,25 +292,13 @@ export default async function Category({ params }: { params: { path: any } }) {
               )
           )}
         </div>
-        {posts?.length > 0 && (
-          <div className="post-list">
-            {posts.map((post, index) => {
-              return (
-                post && (
-                  <PostCard key={`author-post-card-${index}`} post={post} />
-                )
-              )
-            })}
-          </div>
-        )}
-        {totalPages > 0 ? (
+        <PostList posts={posts} />
+        {totalPages > 0 && (
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             routingPrefix={routingPrefix}
           />
-        ) : (
-          <h1>沒有文章</h1>
         )}
       </div>
     </main>
