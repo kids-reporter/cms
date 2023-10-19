@@ -22,6 +22,7 @@ import {
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
+export const revalidate = 300
 export const metadata: Metadata = {
   title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
   description: GENERAL_DESCRIPTION,
