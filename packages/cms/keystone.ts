@@ -2,9 +2,9 @@ import cors from 'cors'
 import { config } from '@keystone-6/core'
 import { listDefinition as lists } from './lists'
 import appConfig from './config'
-// import { createProxyMiddleware } from 'http-proxy-middleware'
 import envVar from './environment-variables'
-// import express, { Request, Response, NextFunction } from 'express'
+import express, { Request, Response, NextFunction } from 'express'
+import gqlTag from 'graphql-tag'
 import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
@@ -75,7 +75,7 @@ export default withAuth(
         path: '/health_check',
         data: { status: 'healthy' },
       },
-      extendExpressApp: (app /*commonContext*/) => {
+      extendExpressApp: (app, commonContext) => {
         const corsOpts = {
           origin: envVar.cors.allowOrigins,
         }
@@ -92,59 +92,81 @@ export default withAuth(
 
         const corsMiddleware = cors(corsOpts)
 
-        app.options('/api/graphql', corsMiddleware)
+        // Check if the request is sent by an authenticated user
+        const authenticationMw = async (
+          req: Request,
+          res: Response,
+          next: NextFunction
+        ) => {
+          const context = await commonContext.withRequest(req, res)
 
-        app.post('/api/graphql', corsMiddleware)
+          // User has been logged in
+          if (context?.session?.data?.role) {
+            return next()
+          }
 
-        //// This middleware is available in Express v4.16.0 onwards
-        //// Set to 50mb because DraftJS Editor playload could be really large
-        //const jsonBodyParser = express.json({ limit: '50mb' })
-        //app.use(jsonBodyParser)
+          res.status(401).json({
+            status: 'fail',
+            data: 'Authentication fails due to session cookie is not valid.',
+          })
+        }
 
-        //// Check if the request is sent by an authenticated user
-        //const authenticationMw = async (
-        //  req: Request,
-        //  res: Response,
-        //  next: NextFunction
-        //) => {
-        //  const context = await commonContext.withRequest(req, res)
-        //  // User has been logged in
-        //  if (context?.session?.data?.role) {
-        //    return next()
-        //  }
+        // enable cors and authentication middlewares
+        app.options('/api/graphql', authenticationMw, corsMiddleware)
+        app.post('/api/graphql', authenticationMw, corsMiddleware)
 
-        //  // Otherwise, redirect them to login page
-        //  res.redirect('/signin')
-        //}
+        // This middleware is available in Express v4.16.0 onwards
+        const jsonBodyParser = express.json()
 
-        //const previewProxyMiddleware = createProxyMiddleware({
-        //  target: envVar.previewServerOrigin,
-        //  changeOrigin: true,
-        //  onProxyRes: (proxyRes) => {
-        //    // The response from preview nuxt server might be with Cache-Control header.
-        //    // However, we don't want to get cached responses for `draft` posts.
-        //    // Therefore, we do not cache html response intentionlly by overwritting the Cache-Control header.
-        //    proxyRes.headers['cache-control'] = 'no-store'
-        //  },
-        //})
+        // The above `/api/graphql` endpoint only accepts authenticated requets,
+        // which means those requests are along with session cookie.
+        //
+        // But the client has to request `authenticateUserWithPassword` mutation
+        // to get the session cookie.
+        //
+        // Therefore, we provide another endpoint `/api/authenticate-user` for anonymous requests.
+        // But, this endpoint only accepts `authenticateUserWithPassword` mutation.
+        app.post('/api/authenticate-user', jsonBodyParser, async (req, res) => {
+          let gqlQuery
 
-        //// Proxy requests with `/story/id` url path to preview nuxt server
-        //app.get('/story/:id', authenticationMw, previewProxyMiddleware)
+          try {
+            gqlQuery = gqlTag`
+                ${req.body?.query}
+              `
+          } catch (err) {
+            console.log(
+              JSON.stringify({
+                severity: 'INFO',
+                message:
+                  '(express/endpoint): `/api/authenticate-user` can not parse the graphql query/mutation',
+              })
+            )
+            return res.status(400).json({
+              status: 'fail',
+              data: 'Can not parse graphql query/mutation',
+            })
+          }
 
-        //// Proxy requests with `/event/:slug` url path to preview nuxt server
-        //app.get('/event/:slug', authenticationMw, previewProxyMiddleware)
-
-        //// Proxy requests with `/news/:id` url path to preview nuxt server
-        //app.get('/news/:id', authenticationMw, previewProxyMiddleware)
-
-        //// Proxy requests with `/_nuxt/*` url path to preview nuxt server
-        //app.use(
-        //  '/_nuxt/*',
-        //  createProxyMiddleware({
-        //    target: envVar.previewServerOrigin,
-        //    changeOrigin: true,
-        //  })
-        //)
+          const def = gqlQuery?.definitions?.[0]
+          if (
+            def?.kind === 'OperationDefinition' &&
+            def?.operation === 'mutation' &&
+            def?.selectionSet.selections?.[0]?.kind === 'Field' &&
+            def?.selectionSet.selections?.[0]?.name?.value ===
+              'authenticateUserWithPassword'
+          ) {
+            const context = await commonContext.withRequest(req, res)
+            const result = await context.graphql.raw({
+              query: req.body?.query,
+              variables: req.body?.variables,
+            })
+            return res.status(200).json(result)
+          }
+          return res.status(400).json({
+            status: 'fail',
+            data: 'Only accept mutation field authenticateUserWithPassword',
+          })
+        })
       },
     },
   })
