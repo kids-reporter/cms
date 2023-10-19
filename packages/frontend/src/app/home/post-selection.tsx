@@ -9,8 +9,7 @@ type PostSelectionProp = {
   featuredPosts: PostSummary[]
 }
 
-const PostBrick = (props: { post: PostSummary }) => {
-  const post = props?.post
+const PostBrick = ({ post }: { post: PostSummary }) => {
   return (
     post && (
       <a className="post-brick" href={post.url}>
@@ -18,7 +17,9 @@ const PostBrick = (props: { post: PostSummary }) => {
           <p className="category">{`${post.category ?? ''}/${
             post.subSubcategory ?? ''
           }`}</p>
-          <p className="date">{GetFormattedDate(post.publishedDate)}</p>
+          <p className="date">
+            {post.publishedDate ? GetFormattedDate(post.publishedDate) : ''}
+          </p>
         </div>
         <p className="title">{ShortenParagraph(post.title, 20)}</p>
       </a>
