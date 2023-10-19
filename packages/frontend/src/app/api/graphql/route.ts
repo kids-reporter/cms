@@ -32,6 +32,8 @@ export async function POST(request: Request) {
   // request body
   const body = await request.json()
 
+  const tokenManager = new TokenManager(accoutEmail, accountPassword)
+
   // session token, used to pass GQL server authentication
   let token = ''
   try {
@@ -39,7 +41,6 @@ export async function POST(request: Request) {
     // Therefore, for different requests, they all got the same instance of `TokenManager`,
     // and use the same session token.
     // Hence, we could reduce the original GQL server workloads.
-    const tokenManager = new TokenManager(accoutEmail, accountPassword)
     token = await tokenManager.getToken()
   } catch (err) {
     console.log(
@@ -82,6 +83,14 @@ export async function POST(request: Request) {
     })
     return NextResponse.json(axiosRes.data)
   } catch (err) {
+    const errorStatusCode =
+      (err as { response: { status: number } })?.response?.status || 500
+
+    // renew token if request failure is due to authentication
+    if (errorStatusCode == 401) {
+      tokenManager.renewToken()
+    }
+
     const annotatedErr = errors.helpers.annotateAxiosError(err)
     console.log(
       JSON.stringify({
@@ -106,7 +115,7 @@ export async function POST(request: Request) {
         }),
       },
       {
-        status: 500,
+        status: errorStatusCode,
       }
     )
   }
