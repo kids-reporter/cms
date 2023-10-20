@@ -13,7 +13,7 @@ export const GetThemeColor = (theme: Theme) => {
 
 export const GetFormattedDate = (date: string): string => {
   const dateObj = new Date(date)
-  if (!dateObj) {
+  if (!date || !dateObj) {
     return ''
   }
   const year = dateObj.getFullYear()
