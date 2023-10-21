@@ -57,10 +57,17 @@
       align-items: flex-end;
       position: relative;
       margin-bottom: 100px;
+      @media screen and (max-width: 767px) {
+        margin-bottom: 60px;
+      }
 
       .swiper-pagination-bullet {
         width: 13px;
         height: 13px;
+        @media screen and (max-width: 767px) {
+          width: 9px;
+          height: 9px;
+        }
         margin: 50px 10px 0;
       }
 
@@ -72,6 +79,9 @@
     .topic-body {
       max-width: 800px;
       margin-bottom: 60px;
+      @media screen and (max-width: 767px) {
+        margin-bottom: 0px;
+      }
       display: flex;
       position: relative;
       justify-content: center;
