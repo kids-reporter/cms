@@ -47,6 +47,10 @@
       .swiper-pagination-bullet {
         width: 13px;
         height: 13px;
+        @media screen and (max-width: 767px) {
+          width: 9px;
+          height: 9px;
+        }
         margin: 50px 10px 0;
       }
 
