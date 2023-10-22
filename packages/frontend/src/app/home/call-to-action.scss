@@ -16,9 +16,13 @@
     border-radius: 30px;
     padding: 40px 30px 38px 40px;
     background-image: url(/images/Home-CTA-subscribe.svg);
+    background-size: 340px;
+    @media screen and (max-width: 999px) {
+      background-image: url(/images/Home-CTA-subscribe-mobile.svg);
+      background-size: 150px;
+    }
     background-position: bottom right;
     background-repeat: no-repeat;
-    background-size: 340px;
 
     &:hover {
       background-image: url(/images/Home-CTA-subscribe-hover.svg);
@@ -42,6 +46,9 @@
       flex-direction: column;
       justify-content: space-between;
       flex: 2;
+      @media screen and (max-width: 999px) {
+        flex: 1;
+      }
       background-color: var(--paletteColor5);
       border-radius: 30px;
       padding: 40px 30px 38px 40px;
@@ -60,13 +67,20 @@
       flex-direction: column;
       justify-content: space-between;
       flex-grow: 2;
+      @media screen and (max-width: 999px) {
+        flex: 1;
+      }
       background-color: var(--paletteColor1);
       border-radius: 30px;
       padding: 40px 30px 38px 40px;
       background-image: url(/images/Home-CTA-contribute.svg);
+      background-size: 300px;
+      @media screen and (max-width: 999px) {
+        background-image: url(/images/Home-CTA-contribute-mobile.svg);
+        background-size: 150px;
+      }
       background-position: bottom right;
       background-repeat: no-repeat;
-      background-size: 300px;
 
       &:hover {
         background-image: url(/images/Home-CTA-contribute-hover.svg);
@@ -79,6 +93,9 @@
     font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
     font-weight: 700;
     font-size: 34px;
+    @media screen and (max-width: 999px) {
+      font-size: 20px;
+    }
     line-height: 160%;
     letter-spacing: .08em;
     margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
@@ -87,7 +104,12 @@
   p {
     max-width: 350px;
     font-size: 18px;
-    padding-bottom: 40px;
+    @media screen and (max-width: 999px) {
+      font-size: 14px;
+      padding-bottom: 110px;
+      max-width: 100%;
+    }
+    padding-bottom: 50px;
     letter-spacing: .08em;
     line-height: 160%;
   }
@@ -97,5 +119,8 @@
     background-color: white;
     width: fit-content;
     padding: 8px 18px;
+    @media screen and (max-width: 999px) {
+      font-size: 14px;
+    }
   }
 }
