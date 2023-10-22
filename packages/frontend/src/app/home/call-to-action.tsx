@@ -2,7 +2,6 @@ import { SUBSCRIBE_URL } from '@/app/constants'
 
 import './call-to-action.scss'
 
-// TODO: rwd fonts
 export const CallToAction = () => {
   return (
     <div className="cta-container">
