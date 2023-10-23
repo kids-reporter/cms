@@ -135,6 +135,7 @@ type Post {
   status: String
   publishedDate: DateTime
   themeColor: String
+  mainProject: Project
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
@@ -175,6 +176,7 @@ input PostWhereInput {
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   themeColor: StringNullableFilter
+  mainProject: ProjectWhereInput
   subSubcategories: SubSubcategoryManyRelationFilter
   authors: AuthorManyRelationFilter
   heroImage: PhotoWhereInput
@@ -271,6 +273,7 @@ input PostUpdateInput {
   status: String
   publishedDate: DateTime
   themeColor: String
+  mainProject: ProjectRelateToOneForUpdateInput
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   authors: AuthorRelateToManyForUpdateInput
   authorsJSON: JSON
@@ -287,6 +290,12 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input ProjectRelateToOneForUpdateInput {
+  create: ProjectCreateInput
+  connect: ProjectWhereUniqueInput
+  disconnect: Boolean
 }
 
 input SubSubcategoryRelateToManyForUpdateInput {
@@ -348,6 +357,7 @@ input PostCreateInput {
   status: String
   publishedDate: DateTime
   themeColor: String
+  mainProject: ProjectRelateToOneForCreateInput
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
   authors: AuthorRelateToManyForCreateInput
   authorsJSON: JSON
@@ -364,6 +374,11 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input ProjectRelateToOneForCreateInput {
+  create: ProjectCreateInput
+  connect: ProjectWhereUniqueInput
 }
 
 input SubSubcategoryRelateToManyForCreateInput {
