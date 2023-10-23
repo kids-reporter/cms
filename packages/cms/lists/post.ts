@@ -54,6 +54,14 @@ const listConfigurations = list({
       ],
       defaultValue: 'blue',
     }),
+    mainProject: relationship({
+      label: '文章所屬的主要專題（選擇後，文章最頂端會有該專題的按鈕）',
+      ref: 'Project',
+      many: false,
+      ui: {
+        hideCreate: true,
+      },
+    }),
     subSubcategories: relationship({
       ref: 'SubSubcategory.relatedPosts',
       label: '次次分類',
