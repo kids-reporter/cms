@@ -23,7 +23,10 @@ main {
   h3 {
     font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
     font-weight: 700;
-    font-size: 34px;
+    font-size: 28px;
+    @media screen and (max-width: 767px) {
+      font-size: 20px;
+    }
     line-height: 160%;
     letter-spacing: .08em;
     margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
