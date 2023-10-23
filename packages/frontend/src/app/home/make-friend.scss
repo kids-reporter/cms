@@ -22,13 +22,16 @@
     .content {
       max-width: 500px;
       padding-top: 30px !important;
-      padding-bottom: 40px !important;
+      padding-bottom: 20px !important;
       padding-right: 30px !important;
-      padding-left: 10px !important;
+      padding-left: 30px !important;
 
       h3 {
-        text-align: center;
-        font-size: 32px !important;
+        @media screen and (max-width: 767px) {
+          text-align: center;
+          font-size: 24px;
+        }
+        font-size: 32px;
         font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
         margin-bottom: 30px;
       }

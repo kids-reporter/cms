@@ -15,10 +15,16 @@
     background-image: url(/images/G文章頁_CTA.png) !important;
     background-position: bottom right !important;
     background-repeat: no-repeat !important;
-    background-size: 327px !important;
+    background-size: 327px;
+    @media screen and (max-width: 999px) {
+      background-size: 250px;
+    }
 
     .cta-content {
-      max-width: 580px !important;
+      max-width: 580px;
+      @media screen and (max-width: 999px) {
+        max-width: 500px;
+      }
       min-width: auto !important;
       padding-top: 30px !important;
       padding-right: 40px !important;
@@ -31,13 +37,20 @@
       }
 
       h3 {
-        font-size: 28px !important;
+        font-size: 28px;
+        @media screen and (max-width: 999px) {
+          font-size: 20px;
+        }
         font-family: SweiMarkerSansCJKtc-Regular,Sans-serif !important;
         color: var(--paletteColor4, #232323) !important;
       }
 
       p {
-        font-size: 16px !important;
+        font-size: 16px;
+        @media screen and (max-width: 999px) {
+          font-size: 14px;
+          padding-bottom: 80px;
+        }
         letter-spacing: var(--letterSpacing);
         line-height: 32px;
         color: var(--paletteColor4, #232323) !important;
