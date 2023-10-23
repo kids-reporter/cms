@@ -134,6 +134,7 @@ type Post {
   subtitle: String
   status: String
   publishedDate: DateTime
+  themeColor: String
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
   authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
@@ -173,6 +174,7 @@ input PostWhereInput {
   subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
+  themeColor: StringNullableFilter
   subSubcategories: SubSubcategoryManyRelationFilter
   authors: AuthorManyRelationFilter
   heroImage: PhotoWhereInput
@@ -254,6 +256,7 @@ input PostOrderByInput {
   subtitle: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
+  themeColor: OrderDirection
   heroCaption: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
@@ -267,6 +270,7 @@ input PostUpdateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
+  themeColor: String
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   authors: AuthorRelateToManyForUpdateInput
   authorsJSON: JSON
@@ -343,6 +347,7 @@ input PostCreateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
+  themeColor: String
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
   authors: AuthorRelateToManyForCreateInput
   authorsJSON: JSON

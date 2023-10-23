@@ -28,6 +28,7 @@ model Post {
   subtitle                                   String               @default("")
   status                                     String?              @default("draft")
   publishedDate                              DateTime?
+  themeColor                                 String?              @default("blue")
   subSubcategories                           SubSubcategory[]     @relation("Post_subSubcategories")
   authors                                    Author[]             @relation("Author_posts")
   authorsJSON                                Json?                @default("[]")
