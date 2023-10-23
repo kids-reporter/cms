@@ -134,6 +134,9 @@ main {
 
       p {
         font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
         padding-bottom: 40px;
         letter-spacing: .08em;
         line-height: 160%;
@@ -144,6 +147,10 @@ main {
         background-color: white;
         width: fit-content;
         padding: 8px 18px;
+        font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
       }
     }
 
@@ -177,6 +184,9 @@ main {
     p {
       max-width: 600px;
       font-size: 18px;
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+      }
       padding-bottom: 40px;
       letter-spacing: .08em;
       line-height: 36px;
@@ -203,6 +213,9 @@ main {
       span {
         max-width: 300px;
         font-size: 22px;
+        @media screen and (max-width: 767px) {
+          font-size: 18px;
+        }
         color: var(--paletteColor8,#ffffff);
         font-weight: 400;
         letter-spacing: 1.08px;
@@ -219,6 +232,10 @@ main {
       background-color: white;
       width: fit-content;
       padding: 8px 18px;
+      font-size: 18px;
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+      }
     }
   }
 
@@ -259,6 +276,9 @@ main {
       p {
         max-width: 350px;
         font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
         padding-bottom: 40px;
         letter-spacing: .08em;
         line-height: 160%;
@@ -267,6 +287,9 @@ main {
       span {
         color: white;
         font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
         letter-spacing: .08em;
         line-height: 160%;
       }
