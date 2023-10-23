@@ -18,7 +18,6 @@ const disabledButtons = [
   buttonNames.code,
   buttonNames.codeBlock,
   buttonNames.blockquote,
-  buttonNames.embed,
   buttonNames.infoBox,
   buttonNames.slideshow,
   buttonNames.newsReading,
