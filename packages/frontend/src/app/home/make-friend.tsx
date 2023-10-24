@@ -15,7 +15,7 @@ export const MakeFriends = () => {
             歡迎大家和我交朋友，一起探索世界。有任何想法或觀察請投稿給我，也可以寫信和我分享心得！
           </p>
         </div>
-        <img src={'/images/reporter_pic.svg'} />
+        <img src={'/assets/images/reporter_pic.svg'} />
       </div>
     </div>
   )

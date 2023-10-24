@@ -5,7 +5,7 @@ import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
 import './header.scss'
 
-const slogan = <img src="/images/header-left-slogan.svg" />
+const slogan = <img src="/assets/images/header-left-slogan.svg" />
 
 export const ContributeBtn = (
   <a
@@ -68,7 +68,7 @@ export const StickyHeader = () => {
     <div className="site-branding">
       <a href="/" className="site-logo-container" rel="home">
         <img
-          src="/images/LOGO.svg"
+          src="/assets/images/LOGO.svg"
           className="default-logo"
           alt="少年報導者 The Reporter for Kids"
         />
@@ -140,7 +140,7 @@ export const StickyHeader = () => {
       <div className="content">
         <a href="/" className="logo-mobile">
           <img
-            src="/images/logo-full.svg"
+            src="/assets/images/logo-full.svg"
             alt="少年報導者 The Reporter for Kids"
           />
         </a>

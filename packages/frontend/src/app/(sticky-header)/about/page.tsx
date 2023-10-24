@@ -34,11 +34,11 @@ query($where: AuthorWhereUniqueInput!) {
 `
 
 const tellYouItems = [
-  { image: '/images/about_tell_pic1.svg', desc: '重要的議題' },
-  { image: '/images/about_tell_pic2.svg', desc: '多元的社會' },
-  { image: '/images/about_tell_pic3.svg', desc: '國際的動態' },
-  { image: '/images/about_tell_pic4.svg', desc: '豐富的知識' },
-  { image: '/images/about_tell_pic5.svg', desc: '開放的思辨' },
+  { image: '/assets/images/about_tell_pic1.svg', desc: '重要的議題' },
+  { image: '/assets/images/about_tell_pic2.svg', desc: '多元的社會' },
+  { image: '/assets/images/about_tell_pic3.svg', desc: '國際的動態' },
+  { image: '/assets/images/about_tell_pic4.svg', desc: '豐富的知識' },
+  { image: '/assets/images/about_tell_pic5.svg', desc: '開放的思辨' },
 ]
 
 const teamMemebers = [
@@ -106,7 +106,7 @@ const consultants = [
     name: '陳明蕾',
     role: AuthorRole.CONSULTANTS,
     roleName: '閱讀素養專家',
-    avatar: '/images/consultant_陳明蕾.png',
+    avatar: '/assets/images/consultant_陳明蕾.png',
     bio: '清華大學台灣語言研究與教學研究所副教授，同時亦主持清大柯華葳教授閱讀研究中心。',
   },
   {
@@ -114,7 +114,7 @@ const consultants = [
     name: '林玫伶',
     role: AuthorRole.CONSULTANTS,
     roleName: '教育專家',
-    avatar: '/images/consultant_林玫伶.png',
+    avatar: '/assets/images/consultant_林玫伶.png',
     bio: '曾任台北市大橋、明德、士東、國語實驗國小校長，現為清華大學竹師教育學院客座助理教授、台灣閱讀文化基金會數位閱讀推廣顧問。',
   },
   {
@@ -122,7 +122,7 @@ const consultants = [
     name: '黃惠鈴',
     role: AuthorRole.CONSULTANTS,
     roleName: '兒童文學家',
-    avatar: '/images/consultant_黃惠鈴.png',
+    avatar: '/assets/images/consultant_黃惠鈴.png',
     bio: '曾在媒體與出版工作，曾獲出版與文學獎，出過一些書與繪本，現勤於創作與企劃、諮商，在大學兼任繪本與兒童文學課程。',
   },
   {
@@ -130,7 +130,7 @@ const consultants = [
     name: '陳榮裕',
     role: AuthorRole.CONSULTANTS,
     roleName: '資深媒體人',
-    avatar: '/images/consultant_陳榮裕.png',
+    avatar: '/assets/images/consultant_陳榮裕.png',
     bio: '曾任中學及大專教職，並為資深教育路線記者。現為紀錄片工作者，兼任佛光大學傳播學系助理教授。',
   },
 ]
@@ -156,7 +156,7 @@ export default async function About() {
 
   const us = (
     <div id="us" className="us">
-      <img src={'/images/about_who_we_are.svg'} />
+      <img src={'/assets/images/about_who_we_are.svg'} />
       <p>
         《少年報導者》是由非營利媒體《報導者》孕生出的「孩子」，我們對10～15歲的同學提供深度的新聞報導，每一篇文章都是記者獨立採訪、專家審核把關下完成。我們把每個兒童和少年當成獨立的大人，你們將是改變世界的起點。
       </p>
@@ -183,11 +183,11 @@ export default async function About() {
     <div className="news">
       <span className="title">在這裡，你們可以這樣看新聞：</span>
       <div className="pics">
-        <img src={'/images/about_news_pic1.svg'} />
-        <img src={'/images/about_news_pic2.svg'} />
-        <img src={'/images/about_news_pic3.svg'} />
-        <img src={'/images/about_news_pic4.svg'} />
-        <img src={'/images/about_news_pic5.svg'} />
+        <img src={'/assets/images/about_news_pic1.svg'} />
+        <img src={'/assets/images/about_news_pic2.svg'} />
+        <img src={'/assets/images/about_news_pic3.svg'} />
+        <img src={'/assets/images/about_news_pic4.svg'} />
+        <img src={'/assets/images/about_news_pic5.svg'} />
       </div>
     </div>
   )
@@ -205,7 +205,7 @@ export default async function About() {
           歡迎訂閱
         </a>
       </div>
-      <img src="/images/about_CTA_subscribe.svg" />
+      <img src="/assets/images/about_CTA_subscribe.svg" />
     </div>
   )
 
@@ -215,7 +215,7 @@ export default async function About() {
       <p>
         《少年報導者》是一個開放的公共平台，報導仔希望聽見大家的看法和心聲，歡迎10～15歲的同學投稿給報導仔，針對新聞時事、國家政策、校園生活，或是藝術文化、運動體育，都可以寫下你的觀點、評論，讓報導仔協助你成為我們的評論員。
       </p>
-      <img className="road" src={'/images/about_road.svg'} />
+      <img className="road" src={'/assets/images/about_road.svg'} />
       <div className="desc">
         <span>
           投稿都會刊登嗎？
@@ -240,7 +240,7 @@ export default async function About() {
       </div>
       <img
         className="certification"
-        src={'/images/about_certification_template.jpg'}
+        src={'/assets/images/about_certification_template.jpg'}
       />
       <p>少年報導者評論員證書範例</p>
       <div className="btn-like">
@@ -264,13 +264,13 @@ export default async function About() {
           <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
         </span>
       </div>
-      <img src="/images/about_CTA_mail.svg" />
+      <img src="/assets/images/about_CTA_mail.svg" />
     </div>
   )
 
   const mainSite = (
     <div className="main-site">
-      <img src={'/images/about_go_to_main_site.png'} />
+      <img src={'/assets/images/about_go_to_main_site.png'} />
       <h3>大人通道，了解更多的《報導者》</h3>
       <p>
         如果您是家長、老師或是關注台灣媒體環境的大人們，我們邀請您進一步認識《報導者》。《報導者》以及《少年報導者》都是由非營利的報導者文化基金會支持，我們不靠商業廣告，是由讀者直接資助的獨立媒體，屢獲國內、外重要新聞獎項。我們致力開創媒體公共服務的精神，文章皆全文開放免費閱讀。

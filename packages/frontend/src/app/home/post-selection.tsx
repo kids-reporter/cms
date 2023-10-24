@@ -35,14 +35,14 @@ export const PostSelection = (props: PostSelectionProp) => {
     <div className="post-selection">
       <img
         className="title-img"
-        src={'/images/selected_news.png'}
+        src={'/assets/images/selected_news.png'}
         alt="精選文章"
       />
       <div className="featured-post-container">
         <div className="lastest-post">
           <div className="more">
             <span>
-              <img src={'/images/home-icon-clock.svg'} />
+              <img src={'/assets/images/home-icon-clock.svg'} />
               最新文章
             </span>
             <a href={'/all'}>

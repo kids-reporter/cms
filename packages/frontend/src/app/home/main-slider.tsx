@@ -64,7 +64,7 @@ export const MainSlider = (props: SliderProp) => {
                   href={topic.url}
                 >
                   <div className="icon">
-                    <img src={'/images/topic_icon.svg'} />
+                    <img src={'/assets/images/topic_icon.svg'} />
                     <span>專題</span>
                   </div>
                   <div className="slide">

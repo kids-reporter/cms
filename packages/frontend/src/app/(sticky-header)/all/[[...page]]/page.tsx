@@ -84,7 +84,7 @@ export default async function LatestPosts({
 
   return (
     <main className="container">
-      <img className="title-image" src={'/images/new_article.svg'} />
+      <img className="title-image" src={'/assets/images/new_article.svg'} />
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (
         <Pagination

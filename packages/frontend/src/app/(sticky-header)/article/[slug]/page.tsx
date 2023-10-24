@@ -23,7 +23,7 @@ import {
   DEFAULT_AVATAR,
   FontSizeLevel,
 } from '@/app/constants'
-import { GetPostSummaries, GetThemeFromCategory } from '@/app/utils'
+import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
 const heroImageGQL = `
@@ -56,6 +56,7 @@ const postGQL = `
   query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!) {
     post(where: $where) {
       title
+      themeColor
       newsReadingGroup {
         items (orderBy: $orderBy){
           name
@@ -85,6 +86,7 @@ const postGQL = `
       }
       relatedPosts {
         title
+        themeColor
         slug
         publishedDate
         ${heroImageGQL}
@@ -166,7 +168,7 @@ const getPostContents = (post: any) => {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = GetThemeFromCategory(category?.slug)
+  const theme = post?.themeColor
 
   // Topic related data
   const topic = post?.projects?.[0]
@@ -237,14 +239,14 @@ export default function PostPage({ params }: { params: { slug: string } }) {
 
   return (
     <main className="container">
-      <div className={`post theme-${theme}`}>
+      <div className={`post${theme ? ` theme-${theme}` : ''}`}>
         <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
           <Sidebar topicURL={topicURL} />
           <MobileSidebar topicURL={topicURL} />
           {topicURL && (
             <div className="topic-breadcrumb">
               <a href={topicURL}>
-                <img src="/images/topic-breadcrumb-icon.svg" />
+                <img src="/assets/images/topic-breadcrumb-icon.svg" />
                 {topic?.title}
               </a>
             </div>

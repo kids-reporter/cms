@@ -45,7 +45,7 @@ export const Footer = () => {
         <div className="footer-top">
           <div className="footer-top__left">
             <picture className="footer-top__left-logo">
-              <img src="/images/footer-logo.svg" alt="" />
+              <img src="/assets/images/footer-logo.svg" alt="" />
             </picture>
             <p className="footer-desc">{GENERAL_DESCRIPTION}</p>
             <div className="footer-top__left-social">
@@ -68,28 +68,28 @@ export const Footer = () => {
           <div className="footer-top__middle">
             <div className="footer-top__team-box">
               <a href="/about" className="footer-top__team-box-item">
-                <img src="/images/footer_pic1.svg" alt="我們是誰" />
+                <img src="/assets/images/footer_pic1.svg" alt="我們是誰" />
                 我們是誰
               </a>
               <a
                 href="/about#team"
                 className="footer-top__team-box-item __mPS2id"
               >
-                <img src="/images/footer_pic2.svg" alt="我們是誰" />
+                <img src="/assets/images/footer_pic2.svg" alt="我們是誰" />
                 核心團隊
               </a>
               <a
                 href="/about#consultants"
                 className="footer-top__team-box-item __mPS2id"
               >
-                <img src="/images/footer_pic3.svg" alt="我們是誰" />
+                <img src="/assets/images/footer_pic3.svg" alt="我們是誰" />
                 顧問群
               </a>
               <a
                 href="/about#mail"
                 className="footer-top__team-box-item __mPS2id"
               >
-                <img src="/images/footer_pic4.svg" alt="我們是誰" />
+                <img src="/assets/images/footer_pic4.svg" alt="我們是誰" />
                 聯絡我們
               </a>
             </div>
@@ -118,7 +118,10 @@ export const Footer = () => {
             </div>
           </div>
           <div className="footer-top__right">
-            <img src="/images/footer_pic5.svg" className="footer-top__fig" />
+            <img
+              src="/assets/images/footer_pic5.svg"
+              className="footer-top__fig"
+            />
           </div>
         </div>
       </div>

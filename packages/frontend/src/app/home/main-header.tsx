@@ -30,12 +30,12 @@ export const MainHeader = () => {
       </div>
       <div className="main-header">
         <div className="left">
-          <img src="/images/navbar_pic.svg" width="291" />
+          <img src="/assets/images/navbar_pic.svg" width="291" />
         </div>
         <div className="center">
           <a href="/">
             <img
-              src="/images/logo-full.svg"
+              src="/assets/images/logo-full.svg"
               alt="少年報導者 The Reporter for Kids"
             />
           </a>

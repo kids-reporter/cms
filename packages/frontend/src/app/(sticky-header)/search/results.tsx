@@ -80,7 +80,7 @@ export const LoadMoreResults = ({
       {nextQuery && !isLoading ? (
         <LoadMoreBt onClick={loadMore}>載入更多</LoadMoreBt>
       ) : null}
-      {isLoading ? <LoadingGif src="/images/loading.gif" /> : null}
+      {isLoading ? <LoadingGif src="/assets/images/loading.gif" /> : null}
     </Container>
   )
 }
