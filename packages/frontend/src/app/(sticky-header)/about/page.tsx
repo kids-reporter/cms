@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description: GENERAL_DESCRIPTION,
 }
 
-// export const revalidate = 86400
+export const revalidate = 86400
 
 const authorGQL = `
 query($where: AuthorWhereUniqueInput!) {
