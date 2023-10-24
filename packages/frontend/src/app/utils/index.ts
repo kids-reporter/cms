@@ -53,7 +53,7 @@ export const GetPostSummaries = (posts: any[]): PostSummary[] => {
       category: subSubcategory?.subcategory?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: post?.themeColor,
+      theme: GetThemeFromCategory(subSubcategory?.subcategory?.slug),
     }
   })
 }

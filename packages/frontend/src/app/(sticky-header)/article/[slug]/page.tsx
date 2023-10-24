@@ -23,7 +23,7 @@ import {
   DEFAULT_AVATAR,
   FontSizeLevel,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { GetPostSummaries, GetThemeFromCategory } from '@/app/utils'
 import './page.scss'
 
 const heroImageGQL = `
@@ -56,7 +56,6 @@ const postGQL = `
   query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!) {
     post(where: $where) {
       title
-      themeColor
       newsReadingGroup {
         items (orderBy: $orderBy){
           name
@@ -168,7 +167,7 @@ const getPostContents = (post: any) => {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = post?.themeColor
+  const theme = GetThemeFromCategory(category?.slug)
 
   // Topic related data
   const topic = post?.projects?.[0]
