@@ -29,9 +29,12 @@ steps:
 
         cd packages/$_TARGET_PACKAGE
 
-        echo "copy .env.${BRANCH_NAME}.public to .env.local"
-
-        cp .env.${BRANCH_NAME}.public .env.local
+        if [ -z "$_ENV_FILE" ] \
+        then \
+          echo "_ENV_FILE environment variable is not set" \
+        else \
+          echo "copy _ENV_FILE to .env.local" \
+          cp $_ENV_FILE .env.local
 
         docker build -t \
 
@@ -83,3 +86,4 @@ substitutions:
   _TARGET_PACKAGE: '' # default value
   _IMAGE_NAME: '' # default value
   _CLOUD_RUN_SERVICE_NAMES: '' # default value
+  _ENV_FILE: '' # default value
