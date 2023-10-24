@@ -28,6 +28,7 @@ export const ShortenParagraph = (paragraph: string, limit: number): string => {
     : paragraph
 }
 
+// TODO: fetch theme from cms
 export const GetThemeFromCategory = (Category: string): Theme => {
   switch (Category) {
     case 'news':
