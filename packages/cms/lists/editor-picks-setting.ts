@@ -1,3 +1,8 @@
+import {
+  allowAllRoles,
+  allowRoles,
+  RoleEnum,
+} from './utils/access-control-list'
 import { list } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
 
@@ -40,7 +45,12 @@ const listConfigurations = list({
     }),
   },
   access: {
-    operation: () => true,
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+    },
   },
   ui: {
     label: 'Editor Picks（精選設定）',

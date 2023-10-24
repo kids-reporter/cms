@@ -3,8 +3,7 @@ import { config } from '@keystone-6/core'
 import { listDefinition as lists } from './lists'
 import appConfig from './config'
 import envVar from './environment-variables'
-import express, { Request, Response, NextFunction } from 'express'
-import gqlTag from 'graphql-tag'
+import { Request, Response, NextFunction } from 'express'
 import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
@@ -119,59 +118,6 @@ export default withAuth(
         // enable cors and authentication middlewares
         app.options('/api/graphql', authenticationMw, corsMiddleware)
         app.post('/api/graphql', authenticationMw, corsMiddleware)
-
-        // This middleware is available in Express v4.16.0 onwards
-        const jsonBodyParser = express.json()
-
-        // The above `/api/graphql` endpoint only accepts authenticated requets,
-        // which means those requests are along with session cookie.
-        //
-        // But the client has to request `authenticateUserWithPassword` mutation
-        // to get the session cookie.
-        //
-        // Therefore, we provide another endpoint `/api/authenticate-user` for anonymous requests.
-        // But, this endpoint only accepts `authenticateUserWithPassword` mutation.
-        app.post('/api/authenticate-user', jsonBodyParser, async (req, res) => {
-          let gqlQuery
-
-          try {
-            gqlQuery = gqlTag`
-                ${req.body?.query}
-              `
-          } catch (err) {
-            console.log(
-              JSON.stringify({
-                severity: 'INFO',
-                message:
-                  '(express/endpoint): `/api/authenticate-user` can not parse the graphql query/mutation',
-              })
-            )
-            return res.status(400).json({
-              status: 'fail',
-              data: 'Can not parse graphql query/mutation',
-            })
-          }
-
-          const def = gqlQuery?.definitions?.[0]
-          if (
-            def?.kind === 'OperationDefinition' &&
-            def?.operation === 'mutation' &&
-            def?.selectionSet.selections?.[0]?.kind === 'Field' &&
-            def?.selectionSet.selections?.[0]?.name?.value ===
-              'authenticateUserWithPassword'
-          ) {
-            const context = await commonContext.withRequest(req, res)
-            const result = await context.graphql.raw({
-              query: req.body?.query,
-              variables: req.body?.variables,
-            })
-            return res.status(200).json(result)
-          }
-          return res.status(400).json({
-            status: 'fail',
-            data: 'Only accept mutation field authenticateUserWithPassword',
-          })
-        })
       },
     },
   })

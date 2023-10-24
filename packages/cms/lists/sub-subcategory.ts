@@ -1,5 +1,10 @@
 import { list } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
+import {
+  allowAllRoles,
+  allowRoles,
+  RoleEnum,
+} from './utils/access-control-list'
 
 const listConfigurations = list({
   fields: {
@@ -57,7 +62,17 @@ const listConfigurations = list({
     },
   },
   access: {
-    operation: () => true,
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Editor,
+        RoleEnum.Contributor,
+      ]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+    },
   },
 })
 
