@@ -80,7 +80,7 @@ export const AUTHOR_ROLES_IN_ORDER = [
   AuthorRole.MARKETING,
 ]
 
-export const DEFAULT_AVATAR = '/images/avatar_default.png'
+export const DEFAULT_AVATAR = '/assets/images/avatar_default.png'
 
 export const POST_PER_PAGE = 9
 

@@ -76,16 +76,16 @@ query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
 const getImageAndThemeFromCategory = (category: string) => {
   let imageURL, theme
   if (category === 'news') {
-    imageURL = '/images/category_news.svg'
+    imageURL = '/assets/images/category_news.svg'
     theme = Theme.BLUE
   } else if (category === 'listening-news') {
-    imageURL = '/images/category_listening_news.svg'
+    imageURL = '/assets/images/category_listening_news.svg'
     theme = Theme.RED
   } else if (category === 'comics') {
-    imageURL = '/images/category_comics.svg'
+    imageURL = '/assets/images/category_comics.svg'
     theme = Theme.YELLOW
   } else {
-    imageURL = '/images/category_campus.svg'
+    imageURL = '/assets/images/category_campus.svg'
     theme = Theme.YELLOW
   }
   return { imageURL, theme }

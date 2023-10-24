@@ -15,17 +15,17 @@
     background-color: var(--paletteColor6);
     border-radius: 30px;
     padding: 40px 30px 38px 40px;
-    background-image: url(/images/Home-CTA-subscribe.svg);
+    background-image: url(/assets/images/Home-CTA-subscribe.svg);
     background-size: 340px;
     @media screen and (max-width: 999px) {
-      background-image: url(/images/Home-CTA-subscribe-mobile.svg);
+      background-image: url(/assets/images/Home-CTA-subscribe-mobile.svg);
       background-size: 150px;
     }
     background-position: bottom right;
     background-repeat: no-repeat;
 
     &:hover {
-      background-image: url(/images/Home-CTA-subscribe-hover.svg);
+      background-image: url(/assets/images/Home-CTA-subscribe-hover.svg);
     }
   }
 
@@ -52,13 +52,13 @@
       background-color: var(--paletteColor5);
       border-radius: 30px;
       padding: 40px 30px 38px 40px;
-      background-image: url(/images/Home-CTA-mail.svg);
+      background-image: url(/assets/images/Home-CTA-mail.svg);
       background-position: bottom right;
       background-repeat: no-repeat;
       background-size: 150px;
 
       &:hover {
-        background-image: url(/images/Home-CTA-mail-hover.svg);
+        background-image: url(/assets/images/Home-CTA-mail-hover.svg);
       }
     }
 
@@ -73,17 +73,17 @@
       background-color: var(--paletteColor1);
       border-radius: 30px;
       padding: 40px 30px 38px 40px;
-      background-image: url(/images/Home-CTA-contribute.svg);
+      background-image: url(/assets/images/Home-CTA-contribute.svg);
       background-size: 300px;
       @media screen and (max-width: 999px) {
-        background-image: url(/images/Home-CTA-contribute-mobile.svg);
+        background-image: url(/assets/images/Home-CTA-contribute-mobile.svg);
         background-size: 150px;
       }
       background-position: bottom right;
       background-repeat: no-repeat;
 
       &:hover {
-        background-image: url(/images/Home-CTA-contribute-hover.svg);
+        background-image: url(/assets/images/Home-CTA-contribute-hover.svg);
       }
     }
   }

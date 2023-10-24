@@ -35,10 +35,10 @@ export const Section = (props: SectionProp) => {
       <div className="section">
         <div className="section-head">
           <div className="image-left">
-            <img src={`/images/${config.image}`} />
+            <img src={`/assets/images/${config.image}`} />
           </div>
           <div className="image-title">
-            <img src={`/images/${config.titleImg}`} alt={config.title} />
+            <img src={`/assets/images/${config.titleImg}`} alt={config.title} />
           </div>
           <div className="more">{moreBtn}</div>
         </div>

@@ -246,7 +246,7 @@ export default function PostPage({ params }: { params: { slug: string } }) {
           {topicURL && (
             <div className="topic-breadcrumb">
               <a href={topicURL}>
-                <img src="/images/topic-breadcrumb-icon.svg" />
+                <img src="/assets/images/topic-breadcrumb-icon.svg" />
                 {topic?.title}
               </a>
             </div>

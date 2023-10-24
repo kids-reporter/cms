@@ -9,7 +9,7 @@ export const GoToMainSite = () => {
         decoding="async"
         loading="lazy"
         className="stk-img wp-image-6055"
-        src="/images/main_site_logo.svg"
+        src="/assets/images/main_site_logo.svg"
       />
       <div className="desc">
         <h2 className="stk-block-heading__text has-text-align-center-mobile stk-block-heading--use-theme-margins">

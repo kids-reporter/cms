@@ -60,7 +60,7 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
         {topicURL && (
           <div>
             <a href={topicURL}>
-              <img src="/images/topic-breadcrumb-sidebar-icon.svg" />
+              <img src="/assets/images/topic-breadcrumb-sidebar-icon.svg" />
             </a>
           </div>
         )}
@@ -69,17 +69,17 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
           {shareIcons.map((icon, index) => {
             return (
               <button key={`share-icon-${index}`} onClick={icon.onClick}>
-                <img src={`/images/${icon.image}`} />
+                <img src={`/assets/images/${icon.image}`} />
               </button>
             )
           })}
         </div>
         <div className="section">
           <button onClick={onFontSizeChange}>
-            <img src={`/images/rpjr-icon-color-text.svg`} />
+            <img src={`/assets/images/rpjr-icon-color-text.svg`} />
           </button>
           <button onClick={() => window.print()}>
-            <img src={`/images/rpjr-icon-color-print.svg`} />
+            <img src={`/assets/images/rpjr-icon-color-print.svg`} />
           </button>
         </div>
       </div>
@@ -103,7 +103,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
             {shareIcons.map((icon, index) => {
               return (
                 <button key={`share-icon-${index}`} onClick={icon.onClick}>
-                  <img src={`/images/${icon.image}`} />
+                  <img src={`/assets/images/${icon.image}`} />
                 </button>
               )
             })}
@@ -113,20 +113,20 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
           {topicURL && (
             <div className="button-group">
               <a href={topicURL}>
-                <img src="/images/topic-breadcrumb-sidebar-mobile-icon.svg" />
+                <img src="/assets/images/topic-breadcrumb-sidebar-mobile-icon.svg" />
               </a>
               <span>前往專題</span>
             </div>
           )}
           <div className="button-group">
             <button onClick={onShareClick}>
-              <img src={`/images/mobile-sidebar-share.svg`} />
+              <img src={`/assets/images/mobile-sidebar-share.svg`} />
             </button>
             <span>分享文章</span>
           </div>
           <div className="button-group">
             <button onClick={onFontSizeChange}>
-              <img src={`/images/mobile-sidebar-change-font.svg`} />
+              <img src={`/assets/images/mobile-sidebar-change-font.svg`} />
             </button>
             <span>文字大小</span>
           </div>

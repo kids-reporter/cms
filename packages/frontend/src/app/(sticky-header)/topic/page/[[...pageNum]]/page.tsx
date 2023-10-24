@@ -80,12 +80,12 @@ const TopicCard = (props: { topic: TopicSummary }) => {
           <img src={topic.image} />
         </div>
         <div className="icon-image">
-          <img src={'/images/topic_icon.svg'} />
+          <img src={'/assets/images/topic_icon.svg'} />
           <span>專題</span>
         </div>
         <div className="topic-info">
           <div className="icon">
-            <img src={'/images/topic_icon.svg'} />
+            <img src={'/assets/images/topic_icon.svg'} />
             <span>專題</span>
           </div>
           <p className="title">
@@ -182,7 +182,7 @@ export default async function Topic({
   return (
     <main>
       <div className="content">
-        <img className="topic-image" src={'/images/topic_pic.svg'} />
+        <img className="topic-image" src={'/assets/images/topic_pic.svg'} />
         {featuredTopic && (
           <div className="topic-summary">
             <TopicCard topic={featuredTopic} />

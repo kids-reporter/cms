@@ -11,7 +11,7 @@ export const SearchAndTags = (props: SearchAndTagsProp) => {
   const tags = props?.tags
   return (
     <div className={`search-tags theme-${Theme.YELLOW}`}>
-      <img decoding="async" src="/images/search_title.svg" />
+      <img decoding="async" src="/assets/images/search_title.svg" />
       <form role="search" method="get" action="/search" aria-haspopup="listbox">
         <input
           type="text"
