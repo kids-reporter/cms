@@ -249,6 +249,9 @@
         background-repeat: no-repeat;
         background-position: bottom left 20%;
         background-size: 317px;
+        @media screen and (max-width: 767px) {
+          background-size: 230px;
+        }
 
         .control {
           width: 100%;
@@ -270,6 +273,9 @@
 
           .logo-mobile {
             --logo-max-height: 92px;
+            @media screen and (max-width: 767px) {
+              --logo-max-height: 60px;
+            }
             height: var(--logo-shrink-height, var(--logo-max-height, 50px));
 
             img {
