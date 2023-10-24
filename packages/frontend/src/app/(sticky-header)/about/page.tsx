@@ -212,7 +212,7 @@ export default async function About() {
   )
 
   const contribute = (
-    <div className="contribute">
+    <div id="post" className="contribute">
       <h3>投稿給報導仔，成為小評論員</h3>
       <p>
         《少年報導者》是一個開放的公共平台，報導仔希望聽見大家的看法和心聲，歡迎10～15歲的同學投稿給報導仔，針對新聞時事、國家政策、校園生活，或是藝術文化、運動體育，都可以寫下你的觀點、評論，讓報導仔協助你成為我們的評論員。
