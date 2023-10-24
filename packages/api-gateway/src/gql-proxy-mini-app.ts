@@ -22,7 +22,7 @@ class TokenManager {
   constructor(
     email: string,
     password: string,
-    apiEndpoint = 'http://localhost:3000/api/authenticate-user'
+    apiEndpoint = 'http://localhost:3000/api/graphql'
   ) {
     this.email = email
     this.password = password
@@ -175,7 +175,7 @@ export function createGraphQLProxy({
         const tokenManager = new TokenManager(
           headlessAccount.email,
           headlessAccount.password,
-          apiOrigin + '/api/authenticate-user'
+          apiOrigin + '/api/graphql'
         )
         const token = await tokenManager.getToken()
         res.locals.sessionToken = token
@@ -243,7 +243,7 @@ export function createGraphQLProxy({
             const tokenManager = new TokenManager(
               headlessAccount.email,
               headlessAccount.password,
-              apiOrigin + '/api/authenticate-user'
+              apiOrigin + '/api/graphql'
             )
             await tokenManager.renewToken()
           } catch (err) {
