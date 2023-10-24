@@ -99,16 +99,21 @@ export default withAuth(
           next: NextFunction
         ) => {
           const context = await commonContext.withRequest(req, res)
+          const token = req?.cookies?.['keystonejs-session']
 
           // User has been logged in
           if (context?.session?.data?.role) {
             return next()
           }
 
-          res.status(401).json({
-            status: 'fail',
-            data: 'Authentication fails due to session cookie is not valid.',
-          })
+          if (token) {
+            res.status(401).json({
+              status: 'fail',
+              data: 'Authentication fails due to session cookie is not valid.',
+            })
+          }
+
+          return next()
         }
 
         // enable cors and authentication middlewares
