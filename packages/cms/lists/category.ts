@@ -1,3 +1,8 @@
+import {
+  allowAllRoles,
+  allowRoles,
+  RoleEnum,
+} from './utils/access-control-list'
 import { graphql, list } from '@keystone-6/core'
 import { virtual, relationship, text, timestamp } from '@keystone-6/core/fields'
 
@@ -165,7 +170,17 @@ const listConfigurations = list({
     }),
   },
   access: {
-    operation: () => true,
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Editor,
+        RoleEnum.Contributor,
+      ]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+    },
   },
   ui: {
     label: 'Categories（文章分類）',
