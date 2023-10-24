@@ -128,6 +128,12 @@ class TokenManager {
     }
 
     const sessionToken = authenticationResult?.sessionToken
+    if (!sessionToken) {
+      throw new Error(
+        'Session token "' + sessionToken + '" is not a valid string'
+      )
+    }
+
     return sessionToken
   }
 }
