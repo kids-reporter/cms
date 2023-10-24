@@ -1,0 +1,23 @@
+{
+  "name": "@kids-reporter/api-gateway",
+  "type": "module",
+  "version": "0.4.30",
+  "scripts": {
+    "dev": "make dev",
+    "build": "make build",
+    "start": "make start",
+    "lint": "make lint",
+    "clean": "make clean",
+    "build-lib": "make build-lib"
+  },
+  "dependencies": {
+    "@twreporter/errors": "^1.1.2",
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
