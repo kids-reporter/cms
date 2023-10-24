@@ -100,6 +100,9 @@ subSubcategories {
   name
   subcategory {
     name
+    category {
+      slug
+    }
   }
 }
 publishedDate
