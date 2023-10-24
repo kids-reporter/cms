@@ -86,6 +86,7 @@ export const POST_PER_PAGE = 9
 
 export const POST_CONTENT_GQL = `
 title
+themeColor
 slug
 ogDescription
 heroImage {
