@@ -1,5 +1,10 @@
 import { list } from '@keystone-6/core'
 import { text, password, select, timestamp } from '@keystone-6/core/fields'
+import {
+  allowAllRoles,
+  allowRoles,
+  RoleEnum,
+} from './utils/access-control-list'
 
 const listConfigurations = list({
   fields: {
@@ -22,24 +27,32 @@ const listConfigurations = list({
       type: 'string',
       options: [
         {
-          label: 'owner',
-          value: 'owner',
+          label: RoleEnum.Owner,
+          value: RoleEnum.Owner,
         },
         {
-          label: 'admin',
-          value: 'admin',
+          label: RoleEnum.Admin,
+          value: RoleEnum.Admin,
         },
         {
-          label: 'developer',
-          value: 'developer',
+          label: RoleEnum.Developer,
+          value: RoleEnum.Developer,
         },
         {
-          label: 'editor',
-          value: 'editor',
+          label: RoleEnum.Editor,
+          value: RoleEnum.Editor,
         },
         {
-          label: 'contributor',
-          value: 'contributor',
+          label: RoleEnum.Contributor,
+          value: RoleEnum.Contributor,
+        },
+        {
+          label: RoleEnum.FrontendHeadlessAccount,
+          value: RoleEnum.FrontendHeadlessAccount,
+        },
+        {
+          label: RoleEnum.PreviewHeadlessAccount,
+          value: RoleEnum.PreviewHeadlessAccount,
         },
       ],
       validation: { isRequired: true },
@@ -60,7 +73,12 @@ const listConfigurations = list({
     },
   },
   access: {
-    operation: () => true,
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([RoleEnum.Owner, RoleEnum.Admin]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin]),
+    },
   },
   hooks: {},
 })

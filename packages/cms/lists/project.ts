@@ -11,6 +11,11 @@ import {
   select,
   timestamp,
 } from '@keystone-6/core/fields'
+import {
+  allowAllRoles,
+  allowRoles,
+  RoleEnum,
+} from './utils/access-control-list'
 
 const listConfigurations = list({
   fields: {
@@ -163,7 +168,27 @@ const listConfigurations = list({
       },
     }),
   },
-  access: () => true,
+  access: {
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Editor,
+        RoleEnum.Contributor,
+      ]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+    },
+    filter: {
+      query: ({ session }) => {
+        if (session?.data?.role === RoleEnum.FrontendHeadlessAccount) {
+          return { status: { equals: 'published' } }
+        }
+        return {}
+      },
+    },
+  },
   ui: {
     label: 'Projects（專題）',
     labelField: 'title',

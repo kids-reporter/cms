@@ -1,5 +1,10 @@
 import { list } from '@keystone-6/core'
 import { integer, relationship, text, timestamp } from '@keystone-6/core/fields'
+import {
+  allowAllRoles,
+  allowRoles,
+  RoleEnum,
+} from './utils/access-control-list'
 
 const NewsReadingGroupItem = list({
   fields: {
@@ -64,7 +69,17 @@ const NewsReadingGroupItem = list({
     plural: 'News-reading-group-items',
   },
   access: {
-    operation: () => true,
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Editor,
+        RoleEnum.Contributor,
+      ]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+    },
   },
 })
 
@@ -95,7 +110,17 @@ const NewsReadingGroup = list({
     plural: 'News Readings Groups',
   },
   access: {
-    operation: () => true,
+    operation: {
+      query: allowAllRoles(),
+      create: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Editor,
+        RoleEnum.Contributor,
+      ]),
+      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+    },
   },
 })
 
