@@ -9,14 +9,24 @@ main {
     margin-top: 40px;
     margin-bottom: 40px;
     font-size: 32px;
+    @media screen and (max-width: 999px) {
+      font-size: 26px;
+    }
+    @media screen and (max-width: 767px) {
+      font-size: 20px;
+    }
     font-weight: 700;
+    text-align: center;
     letter-spacing: 1.08px;
   }
 
   h3 {
     font-family: SweiMarkerSansCJKtc-Regular,noto sans tc, Sans-Serif, serif;
     font-weight: 700;
-    font-size: 34px;
+    font-size: 28px;
+    @media screen and (max-width: 767px) {
+      font-size: 20px;
+    }
     line-height: 160%;
     letter-spacing: .08em;
     margin-bottom: calc(var(--has-content-spacing, 1)*(0.3em + 10px));
@@ -124,6 +134,9 @@ main {
 
       p {
         font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
         padding-bottom: 40px;
         letter-spacing: .08em;
         line-height: 160%;
@@ -134,6 +147,10 @@ main {
         background-color: white;
         width: fit-content;
         padding: 8px 18px;
+        font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
       }
     }
 
@@ -167,6 +184,9 @@ main {
     p {
       max-width: 600px;
       font-size: 18px;
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+      }
       padding-bottom: 40px;
       letter-spacing: .08em;
       line-height: 36px;
@@ -193,6 +213,9 @@ main {
       span {
         max-width: 300px;
         font-size: 22px;
+        @media screen and (max-width: 767px) {
+          font-size: 18px;
+        }
         color: var(--paletteColor8,#ffffff);
         font-weight: 400;
         letter-spacing: 1.08px;
@@ -209,6 +232,10 @@ main {
       background-color: white;
       width: fit-content;
       padding: 8px 18px;
+      font-size: 18px;
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+      }
     }
   }
 
@@ -249,6 +276,9 @@ main {
       p {
         max-width: 350px;
         font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
         padding-bottom: 40px;
         letter-spacing: .08em;
         line-height: 160%;
@@ -257,6 +287,9 @@ main {
       span {
         color: white;
         font-size: 18px;
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+        }
         letter-spacing: .08em;
         line-height: 160%;
       }
