@@ -40,6 +40,7 @@ main {
     justify-content: center;
     align-items: center;
     gap: 40px;
+    scroll-margin-top: 62px;
 
     p {
       color: var(--paletteColor4, #232323);
@@ -176,6 +177,7 @@ main {
     padding: 40px 30px 38px 40px;
     background-color: var(--paletteColor1);
     border-radius: 30px;
+    scroll-margin-top: 62px;
 
     h3 {
       color: white;
@@ -243,6 +245,7 @@ main {
     width: 95vw;
     max-width: 1000px;
     display: flex;
+    scroll-margin-top: 62px;
 
     flex-direction: row;
     justify-content: space-between;
@@ -309,6 +312,7 @@ main {
 
   .team, .consultants {
     width: 95vw;
+    scroll-margin-top: 62px;
   }
 
   .main-site {
