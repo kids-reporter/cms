@@ -5,7 +5,8 @@
     "packages/draft-editor",
     "packages/draft-renderer",
     "packages/cms",
-    "packages/frontend"
+    "packages/frontend",
+    "packages/api-gateway"
   ],
   "scripts": {
     "prepare": "husky install"
