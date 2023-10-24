@@ -50,7 +50,7 @@ export function createApp({
   /**
    *  Application level error handler
    */
-  const errorHandler: express.ErrorRequestHandler = (err, req, res) => {
+  const errorHandler: express.ErrorRequestHandler = (err, req, res, /* eslint-disable-line */ next) => {
     const annotatingError = errors.helpers.wrap(
       err,
       'UnknownError',
