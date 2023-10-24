@@ -251,8 +251,15 @@ export async function GET(request: Request) {
         }),
       })
     )
-    return new Response(errors.helper.printOne(err), {
-      status: 500,
-    })
+
+    return NextResponse.json(
+      {
+        status: 'error',
+        message: errors.helper.printOne(err),
+      },
+      {
+        status: 500,
+      }
+    )
   }
 }

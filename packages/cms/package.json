@@ -19,12 +19,13 @@
     "@keystone-6/auth": "7.0.0",
     "@keystone-6/core": "5.2.0",
     "@kids-reporter/cms-core": "^0.4.31",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "graphql-tag": "^2.12.6",
     "http-proxy-middleware": "^2.0.3",
     "patch-package": "^6.4.7",
-    "react-beautiful-dnd": "^13.1.1",
-    "@types/react-beautiful-dnd": "^13.1.4"
+    "react-beautiful-dnd": "^13.1.1"
   },
   "resolutions": {
     "**/next": "13.3.4",
