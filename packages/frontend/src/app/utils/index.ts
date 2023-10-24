@@ -28,11 +28,14 @@ export const ShortenParagraph = (paragraph: string, limit: number): string => {
     : paragraph
 }
 
-// TODO: complete theme-color mapping
+// TODO: fetch theme from cms
 export const GetThemeFromCategory = (Category: string): Theme => {
   switch (Category) {
     case 'news':
+    case 'listening-news':
       return Theme.BLUE
+    case 'comics':
+    case 'campus':
     default:
       return Theme.YELLOW
   }
@@ -53,7 +56,7 @@ export const GetPostSummaries = (posts: any[]): PostSummary[] => {
       category: subSubcategory?.subcategory?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: post?.themeColor,
+      theme: GetThemeFromCategory(subSubcategory?.subcategory?.category?.slug),
     }
   })
 }
