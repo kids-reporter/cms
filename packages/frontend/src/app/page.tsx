@@ -1,8 +1,6 @@
 import { Metadata } from 'next'
 import axios from 'axios'
-import StickyHeader from '@/app/components/header'
 import MainHeader from '@/app/home/main-header'
-import HomeTopDetector from '@/app/home/home-top-detector'
 import MainSlider from '@/app/home/main-slider'
 import PostSelection from '@/app/home/post-selection'
 import Section from '@/app/home/section'
@@ -254,10 +252,8 @@ export default async function Home() {
 
   return (
     <>
-      <StickyHeader />
       <main>
         <MainHeader />
-        <HomeTopDetector />
         {topics?.length > 0 && <MainSlider topics={topics} />}
         <PostSelection
           latestPosts={latestPosts}

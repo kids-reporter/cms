@@ -1,8 +1,5 @@
 .main-header-mobile {
-  width: var(--container-width);
-  @media screen and (min-width: 1000px) {
-    display: none;
-  }
+  width: 100vw;
 }
 
 .main-header {

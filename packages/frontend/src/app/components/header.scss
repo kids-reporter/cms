@@ -1,8 +1,12 @@
 .sticky-header {
-  width: 100%;
+  &.hidden {
+    display: none;
+  }
+
+  width: 100vw;
   display: flex;
   justify-content: space-between;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 999;
   background-color: white;
@@ -106,7 +110,6 @@
         .site-logo-container {
           max-height: 100%;
           img {
-            width: 100%;
             height: 30px;
             object-fit: contain;
           }
@@ -366,8 +369,4 @@
       }
     }
   }
-}
-
-.sticky-header.hidden {
-  display: none;
 }
