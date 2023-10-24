@@ -3,6 +3,7 @@ import StickyHeader, {
   SubscribeBtn,
   AboutUsBtn,
 } from '@/app/components/header'
+import HomeTopDetector from './home-top-detector'
 import { Navigation } from '@/app/components/Navigation'
 import { SearchIcon } from '@/app/icons'
 import './main-header.scss'
@@ -28,28 +29,31 @@ export const MainHeader = () => {
       <div className="main-header-mobile">
         <StickyHeader />
       </div>
-      <div className="main-header">
-        <div className="left">
-          <img src="/assets/images/navbar_pic.svg" width="291" />
-        </div>
-        <div className="center">
-          <a href="/">
-            <img
-              src="/assets/images/logo-full.svg"
-              alt="少年報導者 The Reporter for Kids"
-            />
-          </a>
-          <Navigation />
-        </div>
-        <div className="right">
-          <div className="content">
-            {searchInput}
-            <div className="btn-group">
-              {ContributeBtn}
-              {SubscribeBtn}
-              {AboutUsBtn}
+      <div>
+        <div className="main-header">
+          <div className="left">
+            <img src="/assets/images/navbar_pic.svg" width="291" />
+          </div>
+          <div className="center">
+            <a href="/">
+              <img
+                src="/assets/images/logo-full.svg"
+                alt="少年報導者 The Reporter for Kids"
+              />
+            </a>
+            <Navigation />
+          </div>
+          <div className="right">
+            <div className="content">
+              {searchInput}
+              <div className="btn-group">
+                {ContributeBtn}
+                {SubscribeBtn}
+                {AboutUsBtn}
+              </div>
             </div>
           </div>
+          <HomeTopDetector />
         </div>
       </div>
     </>
