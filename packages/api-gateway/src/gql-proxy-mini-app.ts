@@ -151,10 +151,10 @@ export function createGraphQLProxy({
   const router = express.Router()
 
   // enable pre-flight request
-  router.options('/graphql')
+  router.options('/api/graphql')
 
   router.post(
-    '/graphql',
+    '/api/graphql',
     async (req, res, next) => {
       console.log(
         JSON.stringify({
@@ -193,9 +193,6 @@ export function createGraphQLProxy({
     createProxyMiddleware({
       target: apiOrigin,
       changeOrigin: true,
-      pathRewrite: {
-        '/graphql': '/api/graphql',
-      },
       onProxyReq: (proxyReq, req, res) => {
         const token = res.locals.sessionToken
         const originalCookie = req.get('Cookie')
