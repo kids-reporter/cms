@@ -7,6 +7,7 @@ import { Request, Response, NextFunction } from 'express'
 import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
+import { createPreviewMiniApp } from './express-mini-apps/preview/app'
 
 const { withAuth } = createAuth({
   listKey: 'User',
@@ -118,6 +119,14 @@ export default withAuth(
         // enable cors and authentication middlewares
         app.options('/api/graphql', authenticationMw, corsMiddleware)
         app.post('/api/graphql', authenticationMw, corsMiddleware)
+
+        // proxy authenticated requests to preview server
+        app.use(
+          createPreviewMiniApp({
+            previewServer: envVar.previewServer,
+            keystoneContext: commonContext,
+          })
+        )
       },
     },
   })
