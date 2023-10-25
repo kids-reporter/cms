@@ -29,12 +29,9 @@ steps:
 
         cd packages/$_TARGET_PACKAGE
 
-        if [ -z "$_ENV_FILE" ] \
-        then \
-          echo "_ENV_FILE environment variable is not set" \
-        else \
-          echo "copy _ENV_FILE to .env.local" \
-          cp $_ENV_FILE .env.local
+        echo "copy $_ENV_FILE to .env.local"
+
+        cp $_ENV_FILE .env.local
 
         docker build -t \
 
