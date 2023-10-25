@@ -88,6 +88,7 @@ export default async function PostPage({
 }) {
   if (!params.slug) {
     console.error('Invalid post slug!')
+    notFound()
   }
 
   let post
@@ -111,9 +112,5 @@ export default async function PostPage({
     notFound()
   }
 
-  return (
-    <main className="container">
-      <Article post={post} />
-    </main>
-  )
+  return <main className="container">{post && <Article post={post} />}</main>
 }
