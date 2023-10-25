@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 
+const basePath = process.env.NEXT_BASE_PATH || ''
+
 const nextConfig = {
+  basePath,
   output: 'standalone',
   compiler: {
     styledComponents: true,
