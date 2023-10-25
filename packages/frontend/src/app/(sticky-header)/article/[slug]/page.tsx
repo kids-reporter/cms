@@ -5,10 +5,7 @@ import Article from './article'
 import { API_URL, GENERAL_DESCRIPTION } from '@/app/constants'
 import './page.scss'
 
-export const metadata: Metadata = {
-  title: '少年報導者 The Reporter for Kids',
-  description: GENERAL_DESCRIPTION,
-}
+const ogSuffix = '少年報導者 The Reporter for Kids'
 
 const heroImageGQL = `
   heroImage {
@@ -85,6 +82,57 @@ const postGQL = `
     }
   }
 `
+
+const ogGQL = `
+query($where: PostWhereUniqueInput!) {
+  post(where: $where) {
+    ogDescription
+    ogTitle
+    ogImage {
+      resized {
+        small
+      }
+    }
+  }
+}
+`
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const slug = params.slug
+
+  let postOG
+  try {
+    const postOGRes = await axios.post(API_URL, {
+      query: ogGQL,
+      variables: {
+        where: {
+          slug: slug,
+        },
+      },
+    })
+    postOG = postOGRes?.data?.data?.post
+    if (!postOG) {
+      console.error('Post not found!', params.slug)
+    }
+  } catch (err) {
+    console.error('Fetch post failed!', err)
+  }
+
+  return {
+    title: `${postOG?.ogTitle ? postOG.ogTitle + ' - ' : ''}${ogSuffix}`,
+    openGraph: {
+      title: postOG?.ogTitle ?? ogSuffix,
+      description: postOG?.ogDescription ?? GENERAL_DESCRIPTION,
+      images: postOG?.ogImage?.resized?.small
+        ? [postOG.ogImage.resized.small]
+        : [],
+    },
+  }
+}
 
 // TODO: add pageMap for google indexing/search
 export default async function PostPage({
