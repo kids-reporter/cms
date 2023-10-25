@@ -29,7 +29,7 @@ export const richTextEditor = <ListTypeInfo extends BaseListTypeInfo>({
   }
 
   const resolve = (val: JSONValue | undefined) =>
-    val === null && meta.provider === 'postgresql' ? 'DbNull' : val
+    val === undefined ? defaultValue : val
 
   return jsonFieldTypePolyfilledForSQLite(
     meta.provider,
@@ -39,7 +39,7 @@ export const richTextEditor = <ListTypeInfo extends BaseListTypeInfo>({
         create: {
           arg: graphql.arg({ type: graphql.JSON }),
           resolve(val) {
-            return resolve(val === undefined ? defaultValue : val)
+            return resolve(val)
           },
         },
         update: { arg: graphql.arg({ type: graphql.JSON }), resolve },
