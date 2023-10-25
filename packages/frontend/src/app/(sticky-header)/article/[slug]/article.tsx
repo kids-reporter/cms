@@ -128,7 +128,7 @@ export const Article = ({ post }: { post: any }) => {
   }
 
   return (
-    <main className="container">
+    <>
       <div className={`post${theme ? ` theme-${theme}` : ''}`}>
         <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
           <Sidebar topicURL={topicURL} />
@@ -175,7 +175,7 @@ export const Article = ({ post }: { post: any }) => {
       </div>
       <CallToAction />
       <RelatedPosts posts={relatedPosts ?? []} sliderTheme={theme} />
-    </main>
+    </>
   )
 }
 

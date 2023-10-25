@@ -63,7 +63,12 @@ body.single-post {
     }
   }
 }
-.post .topic-breadcrumb,
+.post .topic-breadcrumb
+{
+    max-width: 800px !important;
+    margin-right: auto;
+    margin-left: auto;
+}
 .post .hero-section
 {
     max-width: 800px !important;

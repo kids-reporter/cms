@@ -166,5 +166,5 @@ export default async function PostPage({
     notFound()
   }
 
-  return <main className="container">{post && <Article post={post} />}</main>
+  return <main>{post && <Article post={post} />}</main>
 }
