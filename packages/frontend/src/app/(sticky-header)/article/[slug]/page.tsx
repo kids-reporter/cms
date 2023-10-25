@@ -1,8 +1,14 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import Article from './article'
-import { API_URL } from '@/app/constants'
+import { API_URL, GENERAL_DESCRIPTION } from '@/app/constants'
 import './page.scss'
+
+export const metadata: Metadata = {
+  title: '少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
 
 const heroImageGQL = `
   heroImage {
