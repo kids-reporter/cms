@@ -19,11 +19,18 @@
     @media screen and (max-width: 999px) {
       background-size: 250px;
     }
+    @media screen and (max-width: 767px) {
+      background-position: bottom center !important;
+      background-size: 200px;
+    }
 
     .cta-content {
       max-width: 580px;
       @media screen and (max-width: 999px) {
         max-width: 500px;
+      }
+      @media screen and (max-width: 767px) {
+        max-width: 100%;
       }
       min-width: auto !important;
       padding-top: 30px !important;
@@ -51,6 +58,10 @@
           font-size: 14px;
           padding-bottom: 80px;
         }
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+          padding-bottom: 20px;
+        }
         letter-spacing: var(--letterSpacing);
         line-height: 32px;
         color: var(--paletteColor4, #232323) !important;
@@ -58,6 +69,11 @@
 
       .action-container {
         display: flex;
+        @media screen and (max-width: 767px) {
+          flex-direction: row;
+          justify-content: center;
+          padding-bottom: 200px;
+        }
 
         a {
           display: flex;
