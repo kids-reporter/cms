@@ -251,31 +251,26 @@ export default async function Home() {
   }
 
   return (
-    <>
-      <main>
-        <MainHeader />
-        {topics?.length > 0 && <MainSlider topics={topics} />}
-        <PostSelection
-          latestPosts={latestPosts}
-          featuredPosts={featuredPosts}
-        />
-        {sections.map((sectionConfig, index) => {
-          return (
-            <>
-              <Section
-                key={`section-${index}`}
-                config={sectionConfig}
-                posts={sectionPostsArray?.[index]}
-              />
-              {index < sections.length - 1 ? <Divider /> : null}
-            </>
-          )
-        })}
-        <SearchAndTags tags={tags} />
-        <MakeFriends />
-        <CallToAction />
-        <GoToMainSite />
-      </main>
-    </>
+    <main>
+      <MainHeader />
+      {topics?.length > 0 && <MainSlider topics={topics} />}
+      <PostSelection latestPosts={latestPosts} featuredPosts={featuredPosts} />
+      {sections.map((sectionConfig, index) => {
+        return (
+          <>
+            <Section
+              key={`section-${index}`}
+              config={sectionConfig}
+              posts={sectionPostsArray?.[index]}
+            />
+            {index < sections.length - 1 ? <Divider /> : null}
+          </>
+        )
+      })}
+      <SearchAndTags tags={tags} />
+      <MakeFriends />
+      <CallToAction />
+      <GoToMainSite />
+    </main>
   )
 }

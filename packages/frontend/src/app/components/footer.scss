@@ -20,8 +20,6 @@
 }
 
 .footer-copyright {
-  --fontSize: 15px;
-
   width: 100%;
   display: flex;
   align-items: center;
@@ -32,6 +30,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+    padding-bottom: 60px;
   }
 
   background-color: var(--paletteColor6);
@@ -45,7 +44,10 @@
 
   p {
     letter-spacing: var(--letterSpacing);
-    font-size: var(--fontSize);
+    font-size: 15px;
+    @media screen and (max-width: 767px) {
+      font-size: 12px;
+    }
     color: var(--paletteColor4);
   }
 
