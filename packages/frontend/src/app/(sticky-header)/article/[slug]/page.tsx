@@ -2,10 +2,14 @@ import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import Article from './article'
-import { API_URL, GENERAL_DESCRIPTION, POST_CONTENT_GQL } from '@/app/constants'
+import {
+  API_URL,
+  GENERAL_DESCRIPTION,
+  POST_CONTENT_GQL,
+  OG_SUFFIX,
+} from '@/app/constants'
 import './page.scss'
 
-const ogSuffix = '少年報導者 The Reporter for Kids'
 const topicRelatedPostsNum = 5
 
 const heroImageGQL = `
@@ -127,9 +131,9 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${postOG?.ogTitle ? postOG.ogTitle + ' - ' : ''}${ogSuffix}`,
+    title: `${postOG?.ogTitle ? postOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
     openGraph: {
-      title: postOG?.ogTitle ?? ogSuffix,
+      title: postOG?.ogTitle ?? OG_SUFFIX,
       description: postOG?.ogDescription ?? GENERAL_DESCRIPTION,
       images: postOG?.ogImage?.resized?.small
         ? [postOG.ogImage.resized.small]

@@ -14,6 +14,8 @@ export const TOPIC_PAGE_ROUTE = '/topic/page/'
 
 export const BACK_TO_TOP_ELEMENT_ID = 'back-to-top'
 
+export const OG_SUFFIX = '少年報導者 The Reporter for Kids'
+
 export const GENERAL_DESCRIPTION =
   '《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。'
 

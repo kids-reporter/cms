@@ -1,6 +1,7 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import errors from '@twreporter/errors'
-import { API_URL, Theme } from '@/app/constants'
+import { API_URL, Theme, GENERAL_DESCRIPTION, OG_SUFFIX } from '@/app/constants'
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
@@ -58,6 +59,57 @@ const query = `
     }
   }
 `
+
+const ogGQL = `
+query($where: ProjectWhereUniqueInput!) {
+  project(where: $where) {
+    ogDescription
+    ogTitle
+    ogImage {
+      resized {
+        small
+      }
+    }
+  }
+}
+`
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const slug = params.slug
+
+  let topicOG
+  try {
+    const topicOGRes = await axios.post(API_URL, {
+      query: ogGQL,
+      variables: {
+        where: {
+          slug: slug,
+        },
+      },
+    })
+    topicOG = topicOGRes?.data?.data?.project
+    if (!topicOG) {
+      console.error('Post not found!', params.slug)
+    }
+  } catch (err) {
+    console.error('Fetch post failed!', err)
+  }
+
+  return {
+    title: `${topicOG?.ogTitle ? topicOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
+    openGraph: {
+      title: topicOG?.ogTitle ?? OG_SUFFIX,
+      description: topicOG?.ogDescription ?? GENERAL_DESCRIPTION,
+      images: topicOG?.ogImage?.resized?.small
+        ? [topicOG.ogImage.resized.small]
+        : [],
+    },
+  }
+}
 
 export default async function TopicPage({
   params,
