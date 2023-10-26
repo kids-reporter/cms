@@ -1,4 +1,4 @@
-import { cmsOrigin, gqlEndpoint } from '../environment-variables'
+import { cmsOrigin, gqlEndpoint } from '@/environment-variables'
 
 export const CMS_URL = cmsOrigin
 export const API_URL = gqlEndpoint

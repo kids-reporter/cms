@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 
-const basePath = process.env.NEXT_BASE_PATH || ''
+const isPreviewMode = process.env.NEXT_PUBLIC_IS_PREVIEW_MODE === 'true'
 
 const nextConfig = {
-  basePath,
+  basePath: isPreviewMode ? '/preview-server' : '',
   output: 'standalone',
   compiler: {
     styledComponents: true,
