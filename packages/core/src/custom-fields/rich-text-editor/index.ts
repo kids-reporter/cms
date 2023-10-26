@@ -27,9 +27,6 @@ export const richTextEditor =
       )
     }
 
-    const resolve = (val: JSONValue | undefined) =>
-      val === undefined ? defaultValue : val
-
     return jsonFieldTypePolyfilledForSQLite(
       meta.provider,
       {
@@ -38,10 +35,10 @@ export const richTextEditor =
           create: {
             arg: graphql.arg({ type: graphql.JSON }),
             resolve(val) {
-              return resolve(val)
+              return val === undefined ? defaultValue : val
             },
           },
-          update: { arg: graphql.arg({ type: graphql.JSON }), resolve },
+          update: { arg: graphql.arg({ type: graphql.JSON }) },
         },
         output: graphql.field({ type: graphql.JSON }),
         views: `@kids-reporter/cms-core/lib/custom-fields/rich-text-editor/views/index`,
