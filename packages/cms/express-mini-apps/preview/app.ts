@@ -45,6 +45,9 @@ export function createPreviewMiniApp({
     createProxyMiddleware({
       target: previewServer.origin,
       changeOrigin: true,
+      pathRewrite: {
+        '/assets/images/': `${previewServer.path}/assets/images/`,
+      },
     })
   )
 
