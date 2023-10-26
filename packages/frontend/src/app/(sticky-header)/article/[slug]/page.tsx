@@ -2,10 +2,11 @@ import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import Article from './article'
-import { API_URL, GENERAL_DESCRIPTION } from '@/app/constants'
+import { API_URL, GENERAL_DESCRIPTION, POST_CONTENT_GQL } from '@/app/constants'
 import './page.scss'
 
 const ogSuffix = '少年報導者 The Reporter for Kids'
+const topicRelatedPostsNum = 5
 
 const heroImageGQL = `
   heroImage {
@@ -34,7 +35,7 @@ const categoryGQL = `
 `
 
 const postGQL = `
-  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!) {
+  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!, $take: Int) {
     post(where: $where) {
       title
       newsReadingGroup {
@@ -78,6 +79,9 @@ const postGQL = `
       projects {
         title
         slug
+        relatedPosts(take: $take) {
+          ${POST_CONTENT_GQL}
+        }
       }
     }
   }
@@ -154,6 +158,7 @@ export default async function PostPage({
           slug: params.slug,
         },
         orderBy: [{ order: 'asc' }],
+        take: topicRelatedPostsNum,
       },
     })
     post = postRes?.data?.data?.post

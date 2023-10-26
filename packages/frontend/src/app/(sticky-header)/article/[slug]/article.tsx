@@ -77,8 +77,17 @@ const getPostContents = (post: any) => {
     orderedAuthors.push(...(authorsOfRole ?? []))
   })
 
-  // Related posts data
-  const relatedPosts = GetPostSummaries(post?.relatedPosts)
+  // Topic related data
+  const topic = post?.projects?.[0]
+  const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
+
+  // Related posts data: related posts or topic's related post
+  let relatedPosts: any[] = []
+  if (post?.relatedPosts?.length > 0) {
+    relatedPosts = GetPostSummaries(post.relatedPosts)
+  } else if (topic?.relatedPosts?.length > 0) {
+    relatedPosts = GetPostSummaries(topic.relatedPosts)
+  }
 
   // Subcategory related data
   const subSubcategory = post?.subSubcategories?.[0]
@@ -89,10 +98,6 @@ const getPostContents = (post: any) => {
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
   const theme = GetThemeFromCategory(category?.slug)
-
-  // Topic related data
-  const topic = post?.projects?.[0]
-  const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
 
   return {
     theme,
