@@ -119,9 +119,9 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 `
 
 const editorPicksGQL = `
-query($take: Int) {
+query($orderBy: [PostOrderByInput!]!, $take: Int) {
   editorPicksSettings {
-    editorPicksOfPosts(take: $take) {
+    editorPicksOfPosts(orderBy: $orderBy, take: $take) {
       ${POST_CONTENT_GQL}
     }
     editorPicksOfTags {
@@ -209,6 +209,7 @@ export default async function Home() {
     const editorPicksRes = await axios.post(API_URL, {
       query: editorPicksGQL,
       variables: {
+        orderBy: sortOrder,
         take: featuredPostsNum,
       },
     })
