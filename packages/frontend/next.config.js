@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const isPreviewMode = process.env.IS_PREVIEW_MODE === 'true'
+const isPreviewMode = process.env.NEXT_PUBLIC_IS_PREVIEW_MODE === 'true'
 
 const nextConfig = {
   basePath: isPreviewMode ? '/preview-server' : '',
