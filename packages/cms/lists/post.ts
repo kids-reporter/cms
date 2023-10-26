@@ -189,7 +189,7 @@ const listConfigurations = list({
         type: graphql.JSON,
         resolve(item: Record<string, unknown>): Record<string, string> {
           return {
-            href: `${envVars.previewServerOrigin}/article/${item.slug}`,
+            href: `${envVars.previewServer.origin}${envVars.previewServer.path}/article/${item.slug}`,
             label: '文章預覽',
             buttonLabel: 'Preview',
           }
