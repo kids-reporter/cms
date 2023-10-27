@@ -44,6 +44,10 @@ const NewsChargeStationContainer = styled.div`
   padding-top: 60px;
   background-color: #fffcf4;
 
+  ${mediaQuery.smallOnly} {
+    padding-top: 60px;
+  }
+
   &::before {
     content: '';
     width: 300px;

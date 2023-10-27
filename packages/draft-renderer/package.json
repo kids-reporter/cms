@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-renderer",
-  "version": "0.4.33",
+  "version": "0.4.34",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
