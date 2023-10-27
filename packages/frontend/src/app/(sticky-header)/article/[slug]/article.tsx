@@ -72,14 +72,13 @@ const getPostContents = (post: any) => {
   AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
     const authorsOfRole = authors?.filter(
       (author: any) =>
-        author?.role?.match(new RegExp(`^${authorRole}(、)?`)) && author?.link
+        author?.role?.split('、')?.includes(authorRole) && author?.link
     )
     orderedAuthors.push(...(authorsOfRole ?? []))
   })
 
   // Topic related data
   const topic = post?.projects?.[0]
-  const topicURL = topic?.slug ? `/topic/${topic.slug}` : undefined
 
   // Related posts data: related posts or topic's related post
   let relatedPosts: any[] = []
@@ -88,6 +87,11 @@ const getPostContents = (post: any) => {
   } else if (topic?.relatedPosts?.length > 0) {
     relatedPosts = GetPostSummaries(topic.relatedPosts)
   }
+
+  // Main project data
+  // TODO: project/main project are duplicate data, should be refactored
+  const mainTopic = post?.mainProject
+  const topicURL = mainTopic?.slug ? `/topic/${mainTopic.slug}` : undefined
 
   // Subcategory related data
   const subSubcategory = post?.subSubcategories?.[0]
@@ -102,7 +106,7 @@ const getPostContents = (post: any) => {
   return {
     theme,
     topicURL,
-    topic,
+    mainTopic,
     subSubcategory,
     subSubcategoryURL,
     authorsInBrief,
@@ -115,7 +119,7 @@ export const Article = ({ post }: { post: any }) => {
   const {
     theme,
     topicURL,
-    topic,
+    mainTopic,
     subSubcategory,
     subSubcategoryURL,
     authorsInBrief,
@@ -142,7 +146,7 @@ export const Article = ({ post }: { post: any }) => {
             <div className="topic-breadcrumb">
               <a href={topicURL}>
                 <img src="/assets/images/topic-breadcrumb-icon.svg" />
-                {topic?.title}
+                {mainTopic?.title}
               </a>
             </div>
           )}

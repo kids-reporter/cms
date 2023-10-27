@@ -80,6 +80,10 @@ const postGQL = `
       }
       subtitle
       ${categoryGQL}
+      mainProject {
+        title
+        slug
+      }
       projects {
         title
         slug
