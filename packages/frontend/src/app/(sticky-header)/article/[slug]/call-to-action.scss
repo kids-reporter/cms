@@ -73,13 +73,14 @@
           flex-direction: row;
           justify-content: center;
           padding-bottom: 200px;
+          flex-wrap: wrap;
         }
+        gap: 20px;
 
         a {
           display: flex;
           align-items: center;
           min-height: 49px !important;
-          margin-right: 20px;
           padding-top: 9px !important;
           padding-right: 18px !important;
           padding-bottom: 11px !important;
@@ -88,6 +89,7 @@
 
           span {
             color: var(--paletteColor8,#ffffff) !important;
+            text-wrap: nowrap;
           }
         }
 
