@@ -1,6 +1,7 @@
 import { StickyHeader } from '@/app/components/header'
 import TopDetector from '@/app/components/top-detector'
 import { SearchIcon } from '@/app/icons'
+import { SEARCH_FEATURE_TOGGLE } from '@/app/constants'
 import './not-found.scss'
 
 export default function NotFound() {
@@ -23,13 +24,19 @@ export default function NotFound() {
           data-live-results="thumbs"
         >
           <input
+            disabled={!SEARCH_FEATURE_TOGGLE}
             type="text"
             placeholder="搜尋"
             name="q"
             title="Search for..."
             aria-label="Search for..."
           />
-          <button type="submit" className="search-submit" aria-label="搜尋按鈕">
+          <button
+            disabled={!SEARCH_FEATURE_TOGGLE}
+            type="submit"
+            className="search-submit"
+            aria-label="搜尋按鈕"
+          >
             {SearchIcon}
           </button>
         </form>
