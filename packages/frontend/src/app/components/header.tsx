@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { Navigation } from '@/app/components/Navigation'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL } from '@/app/constants'
+import { SUBSCRIBE_URL, SEARCH_FEATURE_TOGGLE } from '@/app/constants'
 import './header.scss'
 
 const slogan = <img src="/assets/images/header-left-slogan.svg" />
@@ -82,6 +82,7 @@ export const StickyHeader = () => {
       aria-label="開啟搜尋表單"
       data-label="right"
       onClick={onSearchOverlayOpen}
+      disabled={!SEARCH_FEATURE_TOGGLE}
     >
       <span>搜尋</span>
       {SearchIcon}
@@ -111,13 +112,19 @@ export const StickyHeader = () => {
       aria-haspopup="listbox"
     >
       <input
+        disabled={!SEARCH_FEATURE_TOGGLE}
         type="text"
         placeholder="搜尋更多新聞、議題"
         name="q"
         title="Search for..."
         aria-label="Search for..."
       />
-      <button type="submit" className="search-submit" aria-label="搜尋按鈕">
+      <button
+        disabled={!SEARCH_FEATURE_TOGGLE}
+        type="submit"
+        className="search-submit"
+        aria-label="搜尋按鈕"
+      >
         {SearchIcon}
       </button>
     </form>
