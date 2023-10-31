@@ -6,19 +6,26 @@ import StickyHeader, {
 import HomeTopDetector from './home-top-detector'
 import { Navigation } from '@/app/components/Navigation'
 import { SearchIcon } from '@/app/icons'
+import { SEARCH_FEATURE_TOGGLE } from '@/app/constants'
 import './main-header.scss'
 
 export const MainHeader = () => {
   const searchInput = (
     <form role="search" method="get" action="/search" aria-haspopup="listbox">
       <input
+        disabled={!SEARCH_FEATURE_TOGGLE}
         type="text"
         placeholder="搜尋更多新聞、議題"
         name="q"
         title="Search for..."
         aria-label="Search for..."
       />
-      <button type="submit" className="search-submit" aria-label="搜尋按鈕">
+      <button
+        disabled={!SEARCH_FEATURE_TOGGLE}
+        type="submit"
+        className="search-submit"
+        aria-label="搜尋按鈕"
+      >
         {SearchIcon}
       </button>
     </form>

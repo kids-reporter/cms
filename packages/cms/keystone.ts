@@ -12,7 +12,7 @@ import { createPreviewMiniApp } from './express-mini-apps/preview/app'
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
-  sessionData: 'name role',
+  sessionData: 'name role email',
   secretField: 'password',
   initFirstItem: {
     // If there are no items in the database, keystone will ask you to create
