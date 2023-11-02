@@ -1,5 +1,9 @@
 .main-header-mobile {
   width: 100vw;
+
+  @media screen and (min-width: 998px) {
+    display: none;
+  }
 }
 
 .main-header {
@@ -87,11 +91,11 @@
 
         input {
           --form-text-initial-color: #A3A3A3;
+          color: var(--form-text-initial-color, var(--color));
           width: 100%;
           height: 100%;
           border: none;
           border-radius: 30px;
-          color: var(--form-text-initial-color, var(--color));
           background-color: rgb(245, 245, 245);
           font-size: var(--form-font-size, 16px);
           padding-left: 12px;
