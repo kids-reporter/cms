@@ -2,6 +2,7 @@
 
 ### Monorepo setup
 This is a monorepo containing sub-packages:
+- [@kids-reporter/api-gateway](./packages/api-gateway): see `packages/api-gateway`
 - [@kids-reporter/draft-renderer](./packages/draft-renderer): see `packages/draft-renderer`
 - [@kids-reporter/draft-editor](./packages/draft-editor): see `packages/draft-editor`
 - [@kids-reporter/cms-core](./packages/core): see `packages/core`
