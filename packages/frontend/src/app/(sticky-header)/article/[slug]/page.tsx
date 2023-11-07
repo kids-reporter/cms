@@ -142,6 +142,7 @@ export async function generateMetadata({
       images: postOG?.ogImage?.resized?.small
         ? [postOG.ogImage.resized.small]
         : [],
+      type: 'article',
     },
   }
 }
