@@ -12,7 +12,7 @@ import PostRenderer from './post-renderer'
 import CallToAction from './call-to-action'
 import RelatedPosts from './related-posts'
 import Tags from '@/app/components/tags'
-import AuthorCard, { Author } from '@/app/components/author-card'
+import AuthorCard from '@/app/components/author-card'
 import Divider from '@/app/components/divider'
 import {
   AUTHOR_ROLES_IN_ORDER,
@@ -68,14 +68,30 @@ const getPostContents = (post: any) => {
         }
       : undefined
   })
-  const orderedAuthors: Author[] = []
-  AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
-    const authorsOfRole = authors?.filter(
-      (author: any) =>
-        author?.role?.split('、')?.includes(authorRole) && author?.link
-    )
-    orderedAuthors.push(...(authorsOfRole ?? []))
-  })
+
+  // Sort authors by AUTHOR_ROLES_IN_ORDER
+  const orderedAuthors = authors
+    ?.filter((author: any) => author?.link)
+    ?.map((author: any) => {
+      const roles = author?.role?.split('、')
+      const priority = AUTHOR_ROLES_IN_ORDER.indexOf(roles?.[0])
+      return { ...author, priority }
+    })
+    ?.sort((a: any, b: any) => {
+      const priorityA = a?.priority
+      const priorityB = b?.priority
+      if (priorityA >= 0 && priorityB >= 0) {
+        return priorityA - priorityB
+      } else if (priorityA === -1 && priorityB === -1) {
+        return 0
+      } else {
+        if (priorityA === -1) {
+          return 1
+        } else {
+          return -1
+        }
+      }
+    })
 
   // Topic related data
   const topic = post?.projects?.[0]
