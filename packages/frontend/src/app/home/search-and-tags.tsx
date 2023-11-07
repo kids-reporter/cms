@@ -1,6 +1,6 @@
 import Tags, { Tag } from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
-import { Theme, SEARCH_FEATURE_TOGGLE } from '@/app/constants'
+import { Theme } from '@/app/constants'
 import './search-and-tags.scss'
 
 type SearchAndTagsProp = {
@@ -14,19 +14,13 @@ export const SearchAndTags = (props: SearchAndTagsProp) => {
       <img decoding="async" src="/assets/images/search_title.svg" />
       <form role="search" method="get" action="/search" aria-haspopup="listbox">
         <input
-          disabled={!SEARCH_FEATURE_TOGGLE}
           type="text"
           placeholder="搜尋更多新聞、議題"
           name="q"
           title="Search for..."
           aria-label="Search for..."
         />
-        <button
-          disabled={!SEARCH_FEATURE_TOGGLE}
-          type="submit"
-          className="search-submit"
-          aria-label="搜尋按鈕"
-        >
+        <button type="submit" className="search-submit" aria-label="搜尋按鈕">
           {SearchIcon}
         </button>
       </form>
