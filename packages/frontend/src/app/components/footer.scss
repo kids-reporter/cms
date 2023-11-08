@@ -1,10 +1,25 @@
-.footer-container {
+.footer {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 40px;
-
-.footer {
+.footer-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--container-width);
+  max-width: var(--normal-container-max-width);
+  min-height: var(--shrink-height, var(--height));
+  margin-left: auto;
+  margin-right: auto;
+  @media screen and (max-width: 999px) {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 60px;
+  }
+}
+.footer-action {
   display: flex;
   width: 100%;
   background-color: #fafafa !important;
@@ -23,16 +38,8 @@
   width: 100%;
   display: flex;
   align-items: center;
-
   flex-direction: row;
   justify-content: space-between;
-  @media screen and (max-width: 999px) {
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    padding-bottom: 60px;
-  }
-
   background-color: var(--paletteColor6);
   padding: 40px;
 
