@@ -255,7 +255,7 @@
         background-position: bottom left 20%;
         background-size: 317px;
         @media screen and (max-width: 767px) {
-          background-size: 230px;
+          background-size: 200px;
         }
 
         .control {
@@ -279,7 +279,7 @@
           .logo-mobile {
             --logo-max-height: 92px;
             @media screen and (max-width: 767px) {
-              --logo-max-height: 60px;
+              --logo-max-height: 0px;
             }
             height: var(--logo-shrink-height, var(--logo-max-height, 50px));
 
@@ -291,6 +291,13 @@
               vertical-align: initial;
             }
           }
+          @media screen and (max-width: 767px) {
+            .logo-mobile::before{
+              content:"理解世界 參與未來";
+              color: #232323;
+              letter-spacing: .3em;
+            }
+          }
 
           .btn-group {
             display: flex;
@@ -299,10 +306,13 @@
             justify-content: center;
             margin-top: 60px;
             margin-bottom: 40px;
+            @media screen and (max-width: 767px) {
+              margin-top: 40px;
+            }
           }
 
           form {
-            --max-width: 50%;
+            --max-width: 70%;
             width: 100%;
             height: 50px;
             max-width: var(--max-width, 250px);
