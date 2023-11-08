@@ -16,6 +16,7 @@ import AuthorCard, { Author } from '@/app/components/author-card'
 import Divider from '@/app/components/divider'
 import {
   AUTHOR_ROLES_IN_ORDER,
+  AuthorRole,
   CMS_URL,
   DEFAULT_AVATAR,
   FontSizeLevel,
@@ -51,7 +52,8 @@ const getPostContents = (post: any) => {
   })
 
   // Assemble ordered authors for AuthorCard
-  const authors = post?.authors?.map((author: any) => {
+  type AuthorWithLink = Author & { link: string }
+  const authors: AuthorWithLink[] = post?.authors?.map((author: any) => {
     const authorJSON = authorsJSON.find(
       (authorJSON: any) => authorJSON.id === author?.id
     )
@@ -68,14 +70,21 @@ const getPostContents = (post: any) => {
         }
       : undefined
   })
-  const orderedAuthors: Author[] = []
-  AUTHOR_ROLES_IN_ORDER.forEach((authorRole) => {
-    const authorsOfRole = authors?.filter(
-      (author: any) =>
-        author?.role?.split('、')?.includes(authorRole) && author?.link
-    )
-    orderedAuthors.push(...(authorsOfRole ?? []))
-  })
+
+  // Sort authors by AUTHOR_ROLES_IN_ORDER
+  const orderedAuthors = authors
+    ?.filter((author: AuthorWithLink) => author?.link)
+    ?.map((author: AuthorWithLink) => {
+      const roles = author?.role?.split('、')
+      const priority = AUTHOR_ROLES_IN_ORDER.indexOf(roles?.[0] as AuthorRole)
+      return {
+        ...author,
+        priority: priority === -1 ? AUTHOR_ROLES_IN_ORDER.length : priority,
+      }
+    })
+    ?.sort((a, b) => {
+      return a.priority - b.priority
+    })
 
   // Topic related data
   const topic = post?.projects?.[0]
