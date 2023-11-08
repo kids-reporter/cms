@@ -40,8 +40,10 @@ const socialIcons = [
 
 export const Footer = () => {
   return (
-    <div className="footer-container">
-      <div className="footer">
+    <div className="footer">
+      <div className="footer-action">
+      <div className="footer-container">
+      
         <div className="footer-top">
           <div className="footer-top__left">
             <picture className="footer-top__left-logo">
@@ -125,8 +127,10 @@ export const Footer = () => {
           </div>
         </div>
       </div>
+      </div>
 
       <div className="footer-copyright">
+      <div className="footer-container">
         <div className="footer-copyright-left">
           <p className="footer-number">
             公益勸募許可字號｜衛部救字第 1101363853 號{' '}
@@ -149,6 +153,7 @@ export const Footer = () => {
           </div>
         </div>
         <p>Copyright © 2023 The Reporter</p>
+      </div>
       </div>
     </div>
   )
