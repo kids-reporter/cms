@@ -43,7 +43,6 @@ export const Footer = () => {
     <div className="footer">
       <div className="footer-action">
         <div className="footer-container">
-        
           <div className="footer-top">
             <div className="footer-top__left">
               <picture className="footer-top__left-logo">
@@ -128,7 +127,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-
       <div className="footer-copyright">
         <div className="footer-container">
           <div className="footer-copyright-left">
