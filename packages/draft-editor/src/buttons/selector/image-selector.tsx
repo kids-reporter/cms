@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import debounce from 'lodash/debounce'
 import styled from 'styled-components'
-import { TextInput } from '@keystone-ui/fields'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { gql, useLazyQuery } from '@keystone-6/core/admin-ui/apollo'
 import { AlignSelector } from './align-selector'
@@ -136,9 +135,8 @@ function ImageMetaGrids(props: {
             {enableCaption && (
               <React.Fragment>
                 <Label htmlFor="caption">Image Caption:</Label>
-                <TextInput
+                <textarea
                   id="caption"
-                  type="text"
                   placeholder={imageMeta?.name}
                   defaultValue={desc}
                   onChange={_.debounce((e) => {
