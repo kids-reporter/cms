@@ -18,7 +18,7 @@
   display: grid;
   grid-template-columns: 1fr var(--middle-column-width, auto) 1fr;
   padding: var(--padding, 0 35px);
-  margin: var(--content-margin-top) auto 62px;
+  margin: 0 auto 62px;
   align-items: flex-end;
 
   .left {
