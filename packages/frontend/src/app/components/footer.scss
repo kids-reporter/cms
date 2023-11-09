@@ -67,7 +67,8 @@
       }
     }
   }
-  .footer-action .footer-container,.footer-copyright .footer-container {
+
+  .footer-action .footer-container, .footer-copyright .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -83,6 +84,7 @@
       padding-bottom: 60px;
     }
   }
+
   .footer-top {
     width: 100%;
     display: flex;
