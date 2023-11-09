@@ -14,6 +14,7 @@ import {
   SUBSCRIBE_URL,
   AuthorRole,
 } from '@/app/constants'
+import { LogError } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -152,7 +153,7 @@ export default async function About() {
       const avatar = res?.data?.data?.author?.avatar?.imageFile?.url
       member.avatar = avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR
     } catch (err) {
-      console.error('Fetch member avatar failed!', member.slug, err)
+      LogError(err, `Fetch member avatar failed: ${member.slug}`)
     }
   }
 

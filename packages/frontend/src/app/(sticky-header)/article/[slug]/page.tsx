@@ -8,6 +8,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
 } from '@/app/constants'
+import { LogError } from '@/app/utils'
 import './page.scss'
 
 const topicRelatedPostsNum = 5
@@ -131,7 +132,7 @@ export async function generateMetadata({
       console.error('Post not found!', params.slug)
     }
   } catch (err) {
-    console.error('Fetch post failed!', err)
+    LogError(err)
   }
 
   return {
@@ -176,7 +177,7 @@ export default async function PostPage({
       notFound()
     }
   } catch (err) {
-    console.error('Fetch post failed!', err)
+    LogError(err)
     notFound()
   }
 

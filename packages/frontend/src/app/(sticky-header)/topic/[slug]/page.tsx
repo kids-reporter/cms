@@ -5,7 +5,7 @@ import { API_URL, Theme, GENERAL_DESCRIPTION, OG_SUFFIX } from '@/app/constants'
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
-import { GetFormattedDate, GetPostSummaries } from '@/app/utils'
+import { GetFormattedDate, GetPostSummaries, LogError } from '@/app/utils'
 import { Leading } from './leading'
 import { RelatedPosts } from './related-posts'
 import { notFound } from 'next/navigation'
@@ -96,7 +96,7 @@ export async function generateMetadata({
       console.error('Post not found!', params.slug)
     }
   } catch (err) {
-    console.error('Fetch post failed!', err)
+    LogError(err)
   }
 
   return {
@@ -135,16 +135,7 @@ export default async function TopicPage({
       },
     })
   } catch (err) {
-    const annotatedErr = errors.helpers.annotateAxiosError(err)
-    console.log(
-      JSON.stringify({
-        severity: 'ERROR',
-        message: errors.helpers.printAll(annotatedErr, {
-          withStack: true,
-          withPayload: true,
-        }),
-      })
-    )
+    LogError(err)
     // TODO: return 500 error page
     return notFound()
   }

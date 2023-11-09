@@ -12,7 +12,7 @@ import {
   POST_CONTENT_GQL,
   Theme,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { GetPostSummaries, LogError } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -191,7 +191,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       navigationItems.push(...subcategories)
     }
   } catch (err) {
-    console.error('Fetch category data failed!', err)
+    LogError(err)
     notFound()
   }
 
@@ -247,7 +247,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     posts = GetPostSummaries(targetCategory.relatedPosts)
     postsCount = targetCategory.relatedPostsCount
   } catch (err) {
-    console.error('Fetch posts failed!', err)
+    LogError(err)
     notFound()
   }
 

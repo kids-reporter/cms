@@ -60,3 +60,30 @@ export const GetPostSummaries = (posts: any[]): PostSummary[] => {
     }
   })
 }
+
+export enum LogLevel {
+  INFO = 'INFO',
+  WARN = 'WARNING',
+  ERROR = 'ERROR',
+}
+
+export const Log = (level: LogLevel = LogLevel.INFO, msg: string) => {
+  const structuredMsg = JSON.stringify({
+    severity: level,
+    timestamp: new Date().toString(),
+    message: msg,
+  })
+
+  switch (level) {
+    case LogLevel.ERROR:
+      console.error(structuredMsg)
+      return
+    case LogLevel.WARN:
+      console.warn(structuredMsg)
+      return
+    case LogLevel.INFO:
+    default:
+      console.log(structuredMsg)
+      return
+  }
+}

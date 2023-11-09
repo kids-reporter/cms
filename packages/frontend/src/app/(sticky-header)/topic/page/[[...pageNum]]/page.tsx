@@ -16,6 +16,7 @@ import {
   GetFormattedDate,
   ShortenParagraph,
   GetPostSummaries,
+  LogError,
 } from '@/app/utils'
 import './page.scss'
 
@@ -147,7 +148,7 @@ export default async function Topic({
       notFound()
     }
   } catch (err) {
-    console.error('Fetch project data failed!', err)
+    LogError(err)
     notFound()
   }
 
