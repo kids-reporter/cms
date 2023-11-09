@@ -5,17 +5,22 @@ import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
+  KIDS_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  OG_SUFFIX,
 } from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
-export const metadata: Metadata = {
-  title: '標籤 - 少年報導者 The Reporter for Kids',
-  description: GENERAL_DESCRIPTION,
+const tagMetaGQL = `
+query($where: TagWhereUniqueInput!) {
+  tag(where: $where) {
+    name
+  }
 }
+`
 
 const tagGQL = `
 query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
@@ -28,6 +33,45 @@ query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrde
   }
 }
 `
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: any }
+}): Promise<Metadata> {
+  const slug = params.slug?.[0]
+  if (!slug) {
+    console.error('Incorrect tag routing!')
+    notFound()
+  }
+
+  let tagName
+  try {
+    const tagRes = await axios.post(API_URL, {
+      query: tagMetaGQL,
+      variables: {
+        where: {
+          slug: slug,
+        },
+      },
+    })
+    tagName = tagRes?.data?.data?.tag?.name
+    if (!tagName) {
+      console.error('Tag not found!', params.slug)
+    }
+  } catch (err) {
+    console.error('Fetch tag failed!', err)
+  }
+
+  return {
+    title: `標籤: ${tagName} - ${OG_SUFFIX}`,
+    description: GENERAL_DESCRIPTION,
+    alternates: {
+      canonical: `${KIDS_URL}/tag/${slug}`,
+    },
+  }
+}
+
 // Tag's routing path: /tag/[slug]/[page num], ex: /tag/life/1
 export default async function Tag({ params }: { params: { slug: any } }) {
   const slug = params.slug?.[0]
