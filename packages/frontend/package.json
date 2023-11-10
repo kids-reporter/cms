@@ -1,5 +1,5 @@
 {
-  "name": "kids-reporter-frontend",
+  "name": "@kids-reporter/frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
