@@ -67,7 +67,9 @@ export async function generateMetadata({
     title: `標籤: ${tagName} - ${OG_SUFFIX}`,
     description: GENERAL_DESCRIPTION,
     alternates: {
-      canonical: `${KIDS_URL}/tag/${slug}`,
+      canonical: `${KIDS_URL}/tag/${slug}${
+        params.slug?.[1] ? `/${params.slug[1]}` : ''
+      }`,
     },
   }
 }
