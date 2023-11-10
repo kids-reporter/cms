@@ -33,12 +33,12 @@ We need `husky` and `lint-staged` installed first.
 // in packages/cms/package.json
 
 "dependencies": {
-  "@kids-reporter/cms-core": "^0.4.34",
+  "@kids-reporter/cms-core": "^0.4.35",
 }
 
 // in packages/core/package.json
 "name": "@kids-reporter/cms-core",
-"version": "0.4.34"
+"version": "0.4.35"
 
 ```
 
