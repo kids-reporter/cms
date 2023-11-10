@@ -1,6 +1,6 @@
 .back-to-top {
   --back-top-side-offset: 25px;
-  --back-top-bottom-offset: 25px;
+  --back-top-bottom-offset: 50px;
   right: calc(var(--frame-size, 0px) + var(--back-top-side-offset, 25px));
   --border-radius: 100%;
 
@@ -22,6 +22,10 @@
     width: var(--icon-size, 15px);
     height: var(--icon-size, 15px);
     fill: white;
+  }
+   @media screen and (max-width: 999px) {
+    --back-top-side-offset: 10px;
+    --back-top-bottom-offset: 75px;
   }
 }
 
