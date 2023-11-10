@@ -12,6 +12,11 @@ import {
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
+export const metadata: Metadata = {
+  title: '標籤 - 少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
+
 const tagGQL = `
 query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
   tag(where: $where) {
@@ -23,11 +28,6 @@ query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrde
   }
 }
 `
-
-export const metadata: Metadata = {
-  title: '標籤 - 少年報導者 The Reporter for Kids',
-  description: GENERAL_DESCRIPTION,
-}
 
 // Tag's routing path: /tag/[slug]/[page num], ex: /tag/life/1
 export default async function Tag({ params }: { params: { slug: any } }) {
