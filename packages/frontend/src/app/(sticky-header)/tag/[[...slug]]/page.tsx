@@ -5,7 +5,7 @@ import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  KIDS_URL,
+  KIDS_URL_ORIGIN,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -67,7 +67,7 @@ export async function generateMetadata({
     title: `標籤: ${tagName} - ${OG_SUFFIX}`,
     description: GENERAL_DESCRIPTION,
     alternates: {
-      canonical: `${KIDS_URL}/tag/${slug}${
+      canonical: `${KIDS_URL_ORIGIN}/tag/${slug}${
         params.slug?.[1] ? `/${params.slug[1]}` : ''
       }`,
     },

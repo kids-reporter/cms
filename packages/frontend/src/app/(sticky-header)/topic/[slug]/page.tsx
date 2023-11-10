@@ -3,7 +3,7 @@ import axios from 'axios'
 import errors from '@twreporter/errors'
 import {
   API_URL,
-  KIDS_URL,
+  KIDS_URL_ORIGIN,
   Theme,
   GENERAL_DESCRIPTION,
   OG_SUFFIX,
@@ -108,7 +108,7 @@ export async function generateMetadata({
   return {
     title: `${topicOG?.ogTitle ? topicOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
     alternates: {
-      canonical: `${KIDS_URL}/topic/${slug}`,
+      canonical: `${KIDS_URL_ORIGIN}/topic/${slug}`,
     },
     openGraph: {
       title: topicOG?.ogTitle ?? OG_SUFFIX,
