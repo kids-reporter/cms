@@ -1,8 +1,14 @@
+import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
-import { API_URL, POST_PER_PAGE, POST_CONTENT_GQL } from '@/app/constants'
+import {
+  API_URL,
+  GENERAL_DESCRIPTION,
+  POST_PER_PAGE,
+  POST_CONTENT_GQL,
+} from '@/app/constants'
 import { GetPostSummaries } from '@/app/utils'
 import './page.scss'
 
@@ -17,6 +23,11 @@ query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrde
   }
 }
 `
+
+export const metadata: Metadata = {
+  title: '標籤 - 少年報導者 The Reporter for Kids',
+  description: GENERAL_DESCRIPTION,
+}
 
 // Tag's routing path: /tag/[slug]/[page num], ex: /tag/life/1
 export default async function Tag({ params }: { params: { slug: any } }) {
