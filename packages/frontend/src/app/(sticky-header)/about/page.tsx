@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import axios from 'axios'
+import errors from '@twreporter/errors'
 import AuthorCard from '@/app/components/author-card'
 import {
   API_URL,
@@ -14,7 +15,7 @@ import {
   SUBSCRIBE_URL,
   AuthorRole,
 } from '@/app/constants'
-import { log } from '@/app/utils'
+import { LogLevel, log } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -153,7 +154,12 @@ export default async function About() {
       const avatar = res?.data?.data?.author?.avatar?.imageFile?.url
       member.avatar = avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR
     } catch (err) {
-      log(err, `Fetch member avatar failed: ${member.slug}`)
+      const annotatedErr = errors.helpers.annotateAxiosError(err)
+      const msg = errors.helpers.printAll(annotatedErr, {
+        withStack: true,
+        withPayload: true,
+      })
+      log(LogLevel.ERROR, msg)
     }
   }
 
