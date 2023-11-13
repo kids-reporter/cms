@@ -13,9 +13,9 @@ import {
   Theme,
 } from '@/app/constants'
 import {
-  GetFormattedDate,
-  ShortenParagraph,
-  GetPostSummaries,
+  getFormattedDate,
+  shortenParagraph,
+  getPostSummaries,
   LogError,
 } from '@/app/utils'
 import './page.scss'
@@ -90,13 +90,13 @@ const TopicCard = (props: { topic: TopicSummary }) => {
             <span>專題</span>
           </div>
           <p className="title">
-            {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
+            {shortenParagraph(topic.title, titleLengthLimit) ?? ''}
           </p>
           <p className="desc">
-            {ShortenParagraph(topic.desc, descLengthLimit) ?? ''}
+            {shortenParagraph(topic.desc, descLengthLimit) ?? ''}
           </p>
           <div className="bottom">
-            <p>{GetFormattedDate(topic.publishedDate) ?? ''} 最後更新</p>
+            <p>{getFormattedDate(topic.publishedDate) ?? ''} 最後更新</p>
             {moreComponent}
           </div>
         </div>
@@ -173,7 +173,7 @@ export default async function Topic({
     currentPage === 1 && topicSummaries?.[0] ? topicSummaries[0] : null
   const featuredTopicPosts =
     featuredTopic?.relatedPosts &&
-    GetPostSummaries(featuredTopic.relatedPosts.filter((post) => post))
+    getPostSummaries(featuredTopic.relatedPosts.filter((post) => post))
 
   // If has featuredTopic, list topics like [featuredTopic(topicSummaries[0])], topicSummaries[1], topicSummaries[2]...
   const topicsForListing = featuredTopic

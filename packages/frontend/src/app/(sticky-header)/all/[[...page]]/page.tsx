@@ -9,7 +9,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
-import { GetPostSummaries, LogError } from '@/app/utils'
+import { getPostSummaries, LogError } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -80,7 +80,7 @@ export default async function LatestPosts({
     notFound()
   }
 
-  const postSummeries = GetPostSummaries(posts)
+  const postSummeries = getPostSummaries(posts)
 
   return (
     <main className="container">

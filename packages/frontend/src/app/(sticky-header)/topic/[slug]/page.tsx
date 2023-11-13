@@ -11,7 +11,7 @@ import {
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
-import { GetFormattedDate, GetPostSummaries, LogError } from '@/app/utils'
+import { getFormattedDate, getPostSummaries, LogError } from '@/app/utils'
 import { Leading } from './leading'
 import { RelatedPosts } from './related-posts'
 import { notFound } from 'next/navigation'
@@ -178,7 +178,7 @@ export default async function TopicPage({
     return notFound()
   }
 
-  const relatedPosts = GetPostSummaries(project?.relatedPosts)
+  const relatedPosts = getPostSummaries(project?.relatedPosts)
 
   return (
     project && (
@@ -192,7 +192,7 @@ export default async function TopicPage({
         {project.subtitle ? <SubTitle>{project.subtitle}</SubTitle> : null}
         {project.publishedDate ? (
           <PublishedDate>
-            {GetFormattedDate(project.publishedDate)} 最後更新
+            {getFormattedDate(project.publishedDate)} 最後更新
           </PublishedDate>
         ) : null}
         {project.content ? (

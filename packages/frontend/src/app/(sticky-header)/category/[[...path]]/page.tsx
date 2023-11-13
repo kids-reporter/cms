@@ -12,7 +12,7 @@ import {
   POST_CONTENT_GQL,
   Theme,
 } from '@/app/constants'
-import { GetPostSummaries, LogError } from '@/app/utils'
+import { getPostSummaries, LogError } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -244,7 +244,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       notFound()
     }
 
-    posts = GetPostSummaries(targetCategory.relatedPosts)
+    posts = getPostSummaries(targetCategory.relatedPosts)
     postsCount = targetCategory.relatedPostsCount
   } catch (err) {
     LogError(err)

@@ -18,7 +18,7 @@ import {
   POST_CONTENT_GQL,
   Theme,
 } from '@/app/constants'
-import { GetPostSummaries, log, LogLevel } from '@/app/utils'
+import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const revalidate = 300
@@ -205,7 +205,7 @@ export default async function Home() {
         take: latestPostsNum,
       },
     })
-    latestPosts = GetPostSummaries(latestPostsRes?.data?.data?.posts)
+    latestPosts = getPostSummaries(latestPostsRes?.data?.data?.posts)
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
     const msg = errors.helpers.printAll(annotatedErr, {
@@ -224,7 +224,7 @@ export default async function Home() {
         take: featuredPostsNum,
       },
     })
-    featuredPosts = GetPostSummaries(
+    featuredPosts = getPostSummaries(
       editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts
     )
     tags =
@@ -260,7 +260,7 @@ export default async function Home() {
         const category = isSubcategory
           ? res?.data?.data?.subcategory
           : res?.data?.data?.category
-        return GetPostSummaries(category?.relatedPosts)
+        return getPostSummaries(category?.relatedPosts)
       })
     )
   } catch (err) {
