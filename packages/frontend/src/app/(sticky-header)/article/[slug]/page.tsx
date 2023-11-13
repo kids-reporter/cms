@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import Article from './article'
 import {
   API_URL,
@@ -9,7 +10,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
 } from '@/app/constants'
-import { log } from '@/app/utils'
+import { log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 const topicRelatedPostsNum = 5
@@ -133,7 +134,12 @@ export async function generateMetadata({
       console.error('Post not found!', params.slug)
     }
   } catch (err) {
-    log(err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   return {
