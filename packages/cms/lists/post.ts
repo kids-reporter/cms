@@ -12,11 +12,7 @@ import {
   text,
   select,
 } from '@keystone-6/core/fields'
-import {
-  allowAllRoles,
-  allowRoles,
-  RoleEnum,
-} from './utils/access-control-list'
+import { allowRoles, RoleEnum } from './utils/access-control-list'
 
 const listConfigurations = list({
   fields: {
@@ -221,7 +217,16 @@ const listConfigurations = list({
   },
   access: {
     operation: {
-      query: allowAllRoles(),
+      query: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Developer,
+        RoleEnum.Editor,
+        RoleEnum.Contributor,
+        RoleEnum.Preview,
+        RoleEnum.FrontendHeadlessAccount,
+        RoleEnum.PreviewHeadlessAccount,
+      ]),
       create: allowRoles([
         RoleEnum.Owner,
         RoleEnum.Admin,

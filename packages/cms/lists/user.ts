@@ -47,6 +47,10 @@ const listConfigurations = list({
           value: RoleEnum.Contributor,
         },
         {
+          label: RoleEnum.Preview,
+          value: RoleEnum.Preview,
+        },
+        {
           label: RoleEnum.FrontendHeadlessAccount,
           value: RoleEnum.FrontendHeadlessAccount,
         },
