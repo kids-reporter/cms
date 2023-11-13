@@ -187,7 +187,12 @@ export default async function PostPage({
       notFound()
     }
   } catch (err) {
-    log(err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
