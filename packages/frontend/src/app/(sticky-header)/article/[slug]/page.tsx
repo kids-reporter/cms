@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Article from './article'
 import {
   API_URL,
+  KIDS_URL_ORIGIN,
   GENERAL_DESCRIPTION,
   POST_CONTENT_GQL,
   OG_SUFFIX,
@@ -137,6 +138,9 @@ export async function generateMetadata({
 
   return {
     title: `${postOG?.ogTitle ? postOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
+    alternates: {
+      canonical: `${KIDS_URL_ORIGIN}/article/${slug}`,
+    },
     openGraph: {
       title: postOG?.ogTitle ?? OG_SUFFIX,
       description: postOG?.ogDescription ?? GENERAL_DESCRIPTION,

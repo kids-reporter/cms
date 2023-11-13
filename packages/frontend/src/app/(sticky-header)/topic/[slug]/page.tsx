@@ -1,7 +1,13 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import errors from '@twreporter/errors'
-import { API_URL, Theme, GENERAL_DESCRIPTION, OG_SUFFIX } from '@/app/constants'
+import {
+  API_URL,
+  KIDS_URL_ORIGIN,
+  Theme,
+  GENERAL_DESCRIPTION,
+  OG_SUFFIX,
+} from '@/app/constants'
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
@@ -101,6 +107,9 @@ export async function generateMetadata({
 
   return {
     title: `${topicOG?.ogTitle ? topicOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
+    alternates: {
+      canonical: `${KIDS_URL_ORIGIN}/topic/${slug}`,
+    },
     openGraph: {
       title: topicOG?.ogTitle ?? OG_SUFFIX,
       description: topicOG?.ogDescription ?? GENERAL_DESCRIPTION,
