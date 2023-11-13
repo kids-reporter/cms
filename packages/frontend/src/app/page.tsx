@@ -18,7 +18,7 @@ import {
   POST_CONTENT_GQL,
   Theme,
 } from '@/app/constants'
-import { GetPostSummaries, Log, LogLevel } from '@/app/utils'
+import { GetPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const revalidate = 300
@@ -193,7 +193,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    Log(LogLevel.ERROR, msg)
+    log(LogLevel.ERROR, msg)
   }
 
   // 2. Fetch latest posts
@@ -212,7 +212,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    Log(LogLevel.ERROR, msg)
+    log(LogLevel.ERROR, msg)
   }
 
   // 3. Fetch featured posts & tags
@@ -235,7 +235,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    Log(LogLevel.ERROR, msg)
+    log(LogLevel.ERROR, msg)
   }
 
   // 4. Fetch posts for each section
@@ -269,7 +269,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    Log(LogLevel.ERROR, msg)
+    log(LogLevel.ERROR, msg)
   }
 
   return (
