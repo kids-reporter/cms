@@ -5,7 +5,6 @@ import errors from '@twreporter/errors'
 import PostList from '@/app/components/post-list'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
-import { PostSummary } from '@/app/components/types'
 import {
   API_URL,
   GENERAL_DESCRIPTION,
@@ -202,21 +201,22 @@ export default async function Category({ params }: { params: { path: any } }) {
   }
 
   // Fetch related posts of subSubcategory/subcategory/category
-  let posts: PostSummary[], postsCount
-  try {
-    let query, slug
-    if (subSubcategory) {
-      query = subSubcategoryPostsGQL
-      slug = subSubcategory
-    } else if (subcategory) {
-      query = subcategoryPostsGQL
-      slug = subcategory
-    } else {
-      query = categoryPostsGQL
-      slug = category
-    }
 
-    const postsRes = await axios.post(API_URL, {
+  let query, slug
+  if (subSubcategory) {
+    query = subSubcategoryPostsGQL
+    slug = subSubcategory
+  } else if (subcategory) {
+    query = subcategoryPostsGQL
+    slug = subcategory
+  } else {
+    query = categoryPostsGQL
+    slug = category
+  }
+
+  let postsRes
+  try {
+    postsRes = await axios.post(API_URL, {
       query: query,
       variables: {
         where: {
@@ -226,36 +226,49 @@ export default async function Category({ params }: { params: { path: any } }) {
         skip: (currentPage - 1) * POST_PER_PAGE,
       },
     })
-
-    let targetCategory
-    if (subSubcategory) {
-      targetCategory = postsRes?.data?.data?.subSubcategory
-      if (
-        subcategory !== targetCategory?.subcategory?.slug ||
-        category !== targetCategory?.subcategory?.category?.slug
-      ) {
-        throw `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
-      }
-    } else if (subcategory) {
-      targetCategory = postsRes?.data?.data?.subcategory
-      if (category !== targetCategory?.category?.slug) {
-        throw `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
-      }
-    } else {
-      targetCategory = postsRes?.data?.data?.category
-    }
-
-    if (!targetCategory) {
-      log(LogLevel.ERROR, 'Fetch targetCategory failed!')
-      notFound()
-    }
-
-    posts = getPostSummaries(targetCategory.relatedPosts)
-    postsCount = targetCategory.relatedPostsCount
   } catch (err) {
-    log(err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
+
+  let targetCategory
+  if (subSubcategory) {
+    targetCategory = postsRes?.data?.data?.subSubcategory
+    if (
+      subcategory !== targetCategory?.subcategory?.slug ||
+      category !== targetCategory?.subcategory?.category?.slug
+    ) {
+      log(
+        LogLevel.ERROR,
+        `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
+      )
+      notFound()
+    }
+  } else if (subcategory) {
+    targetCategory = postsRes?.data?.data?.subcategory
+    if (category !== targetCategory?.category?.slug) {
+      log(
+        LogLevel.ERROR,
+        `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
+      )
+      notFound()
+    }
+  } else {
+    targetCategory = postsRes?.data?.data?.category
+  }
+
+  if (!targetCategory) {
+    log(LogLevel.ERROR, 'Fetch targetCategory failed!')
+    notFound()
+  }
+
+  const posts = getPostSummaries(targetCategory.relatedPosts)
+  const postsCount = targetCategory.relatedPostsCount
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (totalPages > 0 && currentPage > totalPages) {
