@@ -131,7 +131,7 @@ export async function generateMetadata({
     })
     postOG = postOGRes?.data?.data?.post
     if (!postOG) {
-      console.error('Post not found!', params.slug)
+      log(LogLevel.ERROR, `Post not found! ${params.slug}`)
     }
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
@@ -165,7 +165,7 @@ export default async function PostPage({
   params: { slug: string }
 }) {
   if (!params.slug) {
-    console.error('Invalid post slug!')
+    log(LogLevel.ERROR, 'Invalid post slug!')
     notFound()
   }
 
@@ -183,7 +183,7 @@ export default async function PostPage({
     })
     post = postRes?.data?.data?.post
     if (!post) {
-      console.error('Post not found!', params.slug)
+      log(LogLevel.ERROR, `Post not found! ${params.slug}`)
       notFound()
     }
   } catch (err) {

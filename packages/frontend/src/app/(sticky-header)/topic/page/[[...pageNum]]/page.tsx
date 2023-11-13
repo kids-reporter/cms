@@ -114,13 +114,13 @@ export default async function Topic({
   params: { pageNum: string }
 }) {
   if (params.pageNum?.length > 1) {
-    console.error('Incorrect routing path!', params.pageNum)
+    log(LogLevel.ERROR, `Incorrect routing path! ${params.pageNum}`)
     notFound()
   }
 
   const currentPage = !params.pageNum ? 1 : Number(params.pageNum)
   if (!(currentPage > 0)) {
-    console.error('Incorrect page!', currentPage)
+    log(LogLevel.ERROR, `Incorrect page! ${currentPage}`)
     notFound()
   }
 
@@ -144,7 +144,8 @@ export default async function Topic({
     topicsCount = projectsRes?.data?.data?.projectsCount
     totalPages = Math.ceil(topicsCount / POST_PER_PAGE)
     if (currentPage > totalPages) {
-      console.error(
+      log(
+        LogLevel.ERROR,
         `Request page(${currentPage}) exceeds total pages(${totalPages}!`
       )
       notFound()

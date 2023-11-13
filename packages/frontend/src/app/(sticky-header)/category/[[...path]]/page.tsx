@@ -95,7 +95,7 @@ const getImageAndThemeFromCategory = (category: string) => {
 export default async function Category({ params }: { params: { path: any } }) {
   const path = params.path
   if (!path || !Array.isArray(path) || path.length === 0) {
-    console.error('Incorrect category path!', path)
+    log(LogLevel.ERROR, `Incorrect category path! ${path}`)
     notFound()
   }
 
@@ -158,7 +158,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     subSubcategory = path[2]
     currentPage = Number(path[4])
   } else {
-    console.error('Incorrect category path!', path)
+    log(LogLevel.ERROR, `Incorrect category path! ${path}`)
     notFound()
   }
 
@@ -175,7 +175,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     })
     const categoryData = subcategoriesRes?.data?.data?.category
     if (!categoryData) {
-      console.error('Incorrect category!')
+      log(LogLevel.ERROR, 'Incorrect category!')
       notFound()
     }
     const subcategories = categoryData.subcategories?.map((sub: any) => {
@@ -246,7 +246,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     }
 
     if (!targetCategory) {
-      console.error('Fetch targetCategory failed!')
+      log(LogLevel.ERROR, 'Fetch targetCategory failed!')
       notFound()
     }
 
@@ -259,7 +259,8 @@ export default async function Category({ params }: { params: { path: any } }) {
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (totalPages > 0 && currentPage > totalPages) {
-    console.error(
+    log(
+      LogLevel.ERROR,
       `Incorrect page! currentPage=${currentPage}, totalPages=${totalPages}`
     )
     notFound()

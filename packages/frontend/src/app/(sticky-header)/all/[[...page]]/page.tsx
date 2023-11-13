@@ -42,7 +42,7 @@ export default async function LatestPosts({
   const currentPage = !params.page ? 1 : Number(params.page?.[0])
 
   if (params.page?.length > 1 || !(currentPage > 0)) {
-    console.error('Incorrect page!', params.page, currentPage)
+    log(LogLevel.ERROR, `Incorrect page!: ${params.page}, ${currentPage}`)
     notFound()
   }
 
@@ -57,7 +57,8 @@ export default async function LatestPosts({
     if (postsCount > 0) {
       totalPages = Math.ceil(postsCount / POST_PER_PAGE)
       if (currentPage > totalPages) {
-        console.error(
+        log(
+          LogLevel.ERROR,
           `Request page(${currentPage}) exceeds total pages(${totalPages}!`
         )
         notFound()
