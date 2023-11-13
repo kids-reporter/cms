@@ -11,7 +11,7 @@ import {
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
-import { getFormattedDate, getPostSummaries, log } from '@/app/utils'
+import { getFormattedDate, getPostSummaries, log, LogLevel } from '@/app/utils'
 import { Leading } from './leading'
 import { RelatedPosts } from './related-posts'
 import { notFound } from 'next/navigation'
@@ -102,7 +102,12 @@ export async function generateMetadata({
       console.error('Post not found!', params.slug)
     }
   } catch (err) {
-    log(err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   return {
@@ -144,8 +149,13 @@ export default async function TopicPage({
       },
     })
   } catch (err) {
-    log(err)
     // TODO: return 500 error page
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     return notFound()
   }
 
@@ -158,15 +168,11 @@ export default async function TopicPage({
       'Errors occured in rendering Project page',
       { errors: gqlErrors, slug: params.slug }
     )
-    console.log(
-      JSON.stringify({
-        severity: 'ERROR',
-        message: errors.helpers.printAll(annotatedErr, {
-          withStack: true,
-          withPayload: true,
-        }),
-      })
-    )
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
 
     // TODO: return 500 error page
     return notFound()
