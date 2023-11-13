@@ -11,7 +11,7 @@ import {
 import { PublishedDate, SubTitle } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
-import { getFormattedDate, getPostSummaries, LogError } from '@/app/utils'
+import { getFormattedDate, getPostSummaries, log } from '@/app/utils'
 import { Leading } from './leading'
 import { RelatedPosts } from './related-posts'
 import { notFound } from 'next/navigation'
@@ -102,7 +102,7 @@ export async function generateMetadata({
       console.error('Post not found!', params.slug)
     }
   } catch (err) {
-    LogError(err)
+    log(err)
   }
 
   return {
@@ -144,7 +144,7 @@ export default async function TopicPage({
       },
     })
   } catch (err) {
-    LogError(err)
+    log(err)
     // TODO: return 500 error page
     return notFound()
   }

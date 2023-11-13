@@ -16,7 +16,7 @@ import {
   getFormattedDate,
   shortenParagraph,
   getPostSummaries,
-  LogError,
+  log,
 } from '@/app/utils'
 import './page.scss'
 
@@ -148,7 +148,7 @@ export default async function Topic({
       notFound()
     }
   } catch (err) {
-    LogError(err)
+    log(err)
     notFound()
   }
 

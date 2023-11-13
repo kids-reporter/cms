@@ -11,7 +11,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
-import { getPostSummaries, LogError } from '@/app/utils'
+import { getPostSummaries, log } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -73,7 +73,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
     posts = author.posts
     postsCount = author.postsCount
   } catch (err) {
-    LogError(err)
+    log(err)
     notFound()
   }
 
