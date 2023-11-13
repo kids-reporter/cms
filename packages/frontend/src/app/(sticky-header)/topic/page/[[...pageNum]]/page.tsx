@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
 import {
@@ -17,6 +18,7 @@ import {
   shortenParagraph,
   getPostSummaries,
   log,
+  LogLevel,
 } from '@/app/utils'
 import './page.scss'
 
@@ -148,7 +150,12 @@ export default async function Topic({
       notFound()
     }
   } catch (err) {
-    log(err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
