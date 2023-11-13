@@ -163,7 +163,7 @@ export async function getPostOnlySearchResults({
       0,
       0
     )
-    log(LogLevel.WARN, msg)
+    log(LogLevel.WARNING, msg)
 
     // Return accumulated items for workaround.
     // Google Custom Search JSON API sometimes returns different results,

@@ -63,7 +63,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
 
 export enum LogLevel {
   INFO = 'INFO',
-  WARN = 'WARNING',
+  WARNING = 'WARNING',
   ERROR = 'ERROR',
 }
 
@@ -78,7 +78,7 @@ export const log = (level: LogLevel = LogLevel.INFO, msg: string) => {
     case LogLevel.ERROR:
       console.error(structuredMsg)
       return
-    case LogLevel.WARN:
+    case LogLevel.WARNING:
       console.warn(structuredMsg)
       return
     case LogLevel.INFO:
