@@ -201,21 +201,19 @@ export default async function Category({ params }: { params: { path: any } }) {
   }
 
   // Fetch related posts of subSubcategory/subcategory/category
-
-  let query, slug
-  if (subSubcategory) {
-    query = subSubcategoryPostsGQL
-    slug = subSubcategory
-  } else if (subcategory) {
-    query = subcategoryPostsGQL
-    slug = subcategory
-  } else {
-    query = categoryPostsGQL
-    slug = category
-  }
-
   let postsRes
   try {
+    let query, slug
+    if (subSubcategory) {
+      query = subSubcategoryPostsGQL
+      slug = subSubcategory
+    } else if (subcategory) {
+      query = subcategoryPostsGQL
+      slug = subcategory
+    } else {
+      query = categoryPostsGQL
+      slug = category
+    }
     postsRes = await axios.post(API_URL, {
       query: query,
       variables: {
