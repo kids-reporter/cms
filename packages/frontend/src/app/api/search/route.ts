@@ -238,15 +238,11 @@ export async function GET(request: Request) {
       data: searchResults,
     })
   } catch (err) {
-    console.log(
-      JSON.stringify({
-        severity: 'ERROR',
-        message: errors.helpers.printAll(err, {
-          withPayload: true,
-          withStack: true,
-        }),
-      })
-    )
+    const msg = errors.helpers.printAll(err, {
+      withPayload: true,
+      withStack: true,
+    })
+    log(LogLevel.ERROR, msg)
 
     return NextResponse.json(
       {
