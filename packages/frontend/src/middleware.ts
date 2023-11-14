@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { LogLevel, log } from '@/app/utils'
 
 export const config = {
   matcher: [
@@ -21,7 +22,7 @@ export const config = {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  console.log('pathname in the middleware:', pathname)
+  log(LogLevel.INFO, `pathname in the middleware: ${pathname}`)
 
   if (oldArticleSlugs.indexOf(pathname) > -1) {
     return NextResponse.redirect(

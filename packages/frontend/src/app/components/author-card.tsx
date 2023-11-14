@@ -1,4 +1,4 @@
-import { ShortenParagraph } from '@/app/utils'
+import { shortenParagraph } from '@/app/utils'
 import { DEFAULT_AVATAR, AuthorRole, Theme } from '@/app/constants'
 import './author-card.scss'
 
@@ -57,7 +57,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                     {author.roleName ? author.roleName : author.role}
                   </div>
                   <span className="desc">
-                    {ShortenParagraph(author.bio, descLengthLimit) ?? ''}
+                    {shortenParagraph(author.bio, descLengthLimit) ?? ''}
                   </span>
                   {author.slug && (
                     <div className="more">
