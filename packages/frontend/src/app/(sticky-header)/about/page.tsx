@@ -45,7 +45,7 @@ const tellYouItems = [
   { image: '/assets/images/about_tell_pic5.svg', desc: '開放的思辨' },
 ]
 
-const teamMemebers = [
+const teamMembers = [
   {
     slug: 'jill718',
     name: '楊惠君',
@@ -141,7 +141,7 @@ const consultants = [
 
 export default async function About() {
   // Fetch memeber avatar
-  for (const member of teamMemebers) {
+  for (const member of teamMembers) {
     try {
       const res = await axios.post(API_URL, {
         query: authorGQL,
@@ -310,7 +310,7 @@ export default async function About() {
       {contribute}
       {mail}
       <div id="team" className="team">
-        <AuthorCard title="誰在為你服務" authors={teamMemebers} />
+        <AuthorCard title="誰在為你服務" authors={teamMembers} />
       </div>
       <div id="consultants" className="consultants">
         <AuthorCard title="我們的顧問" authors={consultants} />
