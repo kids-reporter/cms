@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import Article from './article'
 import {
   API_URL,
@@ -9,6 +10,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
 } from '@/app/constants'
+import { log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 const topicRelatedPostsNum = 5
@@ -129,10 +131,15 @@ export async function generateMetadata({
     })
     postOG = postOGRes?.data?.data?.post
     if (!postOG) {
-      console.error('Post not found!', params.slug)
+      log(LogLevel.INFO, `Post not found! ${params.slug}`)
     }
   } catch (err) {
-    console.error('Fetch post failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   return {
@@ -158,7 +165,7 @@ export default async function PostPage({
   params: { slug: string }
 }) {
   if (!params.slug) {
-    console.error('Invalid post slug!')
+    log(LogLevel.INFO, 'Invalid post slug!')
     notFound()
   }
 
@@ -176,11 +183,16 @@ export default async function PostPage({
     })
     post = postRes?.data?.data?.post
     if (!post) {
-      console.error('Post not found!', params.slug)
+      log(LogLevel.INFO, `Post not found! ${params.slug}`)
       notFound()
     }
   } catch (err) {
-    console.error('Fetch post failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 

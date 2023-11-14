@@ -4,6 +4,7 @@ import { PostCardProp } from '@/app/components/post-card'
 import { Theme } from '@/app/constants'
 import { customsearch } from '@googleapis/customsearch'
 import { customsearch_v1 } from '@googleapis/customsearch/v1'
+import { log, LogLevel } from '@/app/utils'
 
 const client = customsearch('v1')
 const apiKey = process.env.SEARCH_API_KEY || ''
@@ -156,18 +157,13 @@ export async function getPostOnlySearchResults({
       count,
     })
   } catch (err) {
-    // @TODO print structured logs
-    console.log(
-      JSON.stringify({
-        severity: 'WARNING',
-        message: errors.helpers.printAll(
-          err,
-          { withStack: true, withPayload: true },
-          0,
-          0
-        ),
-      })
+    const msg = errors.helpers.printAll(
+      err,
+      { withStack: true, withPayload: true },
+      0,
+      0
     )
+    log(LogLevel.WARNING, msg)
 
     // Return accumulated items for workaround.
     // Google Custom Search JSON API sometimes returns different results,
@@ -242,15 +238,11 @@ export async function GET(request: Request) {
       data: searchResults,
     })
   } catch (err) {
-    console.log(
-      JSON.stringify({
-        severity: 'ERROR',
-        message: errors.helpers.printAll(err, {
-          withPayload: true,
-          withStack: true,
-        }),
-      })
-    )
+    const msg = errors.helpers.printAll(err, {
+      withPayload: true,
+      withStack: true,
+    })
+    log(LogLevel.ERROR, msg)
 
     return NextResponse.json(
       {
