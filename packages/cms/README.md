@@ -56,6 +56,45 @@ DATABASE_URL=postgres://anotherAccount:anotherPasswd@localhost:5433/anotherDatab
 ### GraphQL playground
 起 CMS 服務後，我們可以透過 [http://localhost:3000/api/graphql](http://localhost:3000/api/graphql) 來使用 GraphQL playground。
 
+### Database Migration （建議同步參考 [Keystone 文件](https://keystonejs.com/docs/guides/database-migration#title)）
+Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資料庫（Postgres）。
+當我們更動 Keystone List，例如：`lists/post.ts`，Keystone 會根據改動調整 `schema.grahpql` 和 `schema.prisma` 兩個檔案。
+`schema.graphql` 會影響 GraphQL API 的 schema，而 `schema.prisma` 則會影響與資料庫的串接。
+
+在 `migrations/` 資料夾底下，存放所有 migration 的歷史紀錄。
+在部署 CMS 服務到 Cloud Run 上時，Keystone 會逐一執行 `migrations/` 底下的檔案，確保資料庫現有的 schema 與要部署的程式碼相符。
+因此，當 `schema.prisma` 檔案有所更動時，我們就需要執行 database migration，並將改動的內容寫進 `migrations/` 資料夾底下。
+
+#### 1. 產生新的 `schema.prisma` 和 database schema
+上述有說到，當有新的 `schema.prisma` 時，要產生新的 migration 檔案。
+但是，我們要怎麼根據修改的 list 去產生新的 `schema.prisma` 呢？
+我們需要在 local 端跑 `yarn dev` 。
+`yarn dev` 會預設會執行 auto migration，所以會將新的 list 所產生的 schema 直接覆蓋 database 的 schema，
+也會修改 `schema.prisma`。
+
+#### 2. 產生 migration 檔案
+當 database 的 schema 有所改動，其 databsase schema 就會與 `migrations/` 底下的檔案產生差異，
+我們會需要為這些差異產生新的 migration 檔案。
+以下是推薦的做法：
+```
+// docker stop database instance if needed 
+docker stop kids-cms;
+
+// docker run a new database for migration
+// the reason we add new instance is because prisma migration will clean up all data before generating migration files
+docker run -p 5432:5432 --name kids-cms-migration -e POSTGRES_PASSWORD=password -e POSTGRES_USER=user -e POSTGRES_DB=kids -d postgres;
+
+// Auto migrate new list schemas
+yarn dev; // You can enter CTRL+c to stop Keystone server after auto migration done
+
+// Generate new migration file for schema changes
+yarn keystone prisma migrate dev --name 'update_post_list' // 'update_post_list' will be part of the file name
+```
+
+#### 3. 上傳 migration 檔案和新的 schema.prisma 到 repo
+Database migration 執行的時機點是在部署的時候，
+因此，新產生的 `shema.prisma` 和 `migrations/update_post_list` 檔案都需要進到 GitHub Repo 當中。
+如果忘記上傳，則可能會遇到 Keystone server 跑不起來的狀況。
 
 ### Troubleshootings
 #### Q1: 我在 `packages/cms` 資料夾底下跑 `yarn install` 時，在 `yarn postinstall` 階段發生錯誤。
