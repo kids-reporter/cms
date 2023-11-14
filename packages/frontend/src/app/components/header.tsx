@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Navigation } from '@/app/components/Navigation'
+import { Navigation } from '@/app/components/navigation2'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
 import './header.scss'
