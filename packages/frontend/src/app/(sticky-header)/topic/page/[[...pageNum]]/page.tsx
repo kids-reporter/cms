@@ -114,13 +114,13 @@ export default async function Topic({
   params: { pageNum: string }
 }) {
   if (params.pageNum?.length > 1) {
-    log(LogLevel.WARNING, `Incorrect routing path! ${params.pageNum}`)
+    log(LogLevel.INFO, `Incorrect routing path! ${params.pageNum}`)
     notFound()
   }
 
   const currentPage = !params.pageNum ? 1 : Number(params.pageNum)
   if (!(currentPage > 0)) {
-    log(LogLevel.WARNING, `Incorrect page! ${currentPage}`)
+    log(LogLevel.INFO, `Incorrect page! ${currentPage}`)
     notFound()
   }
 

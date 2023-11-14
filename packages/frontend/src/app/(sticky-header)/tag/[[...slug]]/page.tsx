@@ -36,7 +36,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 
   if (params.slug?.length > 2 || !slug || !(currentPage > 0)) {
-    log(LogLevel.WARNING, 'Incorrect tag routing!')
+    log(LogLevel.INFO, 'Incorrect tag routing!')
     notFound()
   }
 
@@ -60,7 +60,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
 
     tag = response?.data?.data?.tag
     if (!tag) {
-      log(LogLevel.WARNING, 'Tag not found!')
+      log(LogLevel.INFO, 'Tag not found!')
       notFound()
     }
     posts = tag.posts
