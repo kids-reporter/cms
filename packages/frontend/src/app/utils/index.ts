@@ -70,7 +70,6 @@ export enum LogLevel {
 export const log = (level: LogLevel = LogLevel.INFO, msg: string) => {
   const structuredMsg = JSON.stringify({
     severity: level,
-    timestamp: new Date().toString(),
     message: msg,
   })
 
