@@ -99,7 +99,7 @@ export async function generateMetadata({
     })
     topicOG = topicOGRes?.data?.data?.project
     if (!topicOG) {
-      log(LogLevel.ERROR, `Post not found! ${params.slug}`)
+      log(LogLevel.WARNING, `Post not found! ${params.slug}`)
     }
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)

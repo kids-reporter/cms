@@ -45,7 +45,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 
   if (params.slug?.length > 2 || !slug || !(currentPage > 0)) {
-    log(LogLevel.ERROR, 'Incorrect author routing!')
+    log(LogLevel.WARNING, 'Incorrect author routing!')
     notFound()
   }
 
@@ -68,7 +68,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
     })
     author = response?.data?.data?.author
     if (!author) {
-      log(LogLevel.ERROR, 'Author not found!')
+      log(LogLevel.WARNING, 'Author not found!')
       notFound()
     }
     posts = author.posts

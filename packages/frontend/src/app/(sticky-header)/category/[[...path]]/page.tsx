@@ -94,7 +94,7 @@ const getImageAndThemeFromCategory = (category: string) => {
 export default async function Category({ params }: { params: { path: any } }) {
   const path = params.path
   if (!path || !Array.isArray(path) || path.length === 0) {
-    log(LogLevel.ERROR, `Incorrect category path! ${path}`)
+    log(LogLevel.WARNING, `Incorrect category path! ${path}`)
     notFound()
   }
 
@@ -157,7 +157,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     subSubcategory = path[2]
     currentPage = Number(path[4])
   } else {
-    log(LogLevel.ERROR, `Incorrect category path! ${path}`)
+    log(LogLevel.WARNING, `Incorrect category path! ${path}`)
     notFound()
   }
 
@@ -174,7 +174,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     })
     const categoryData = subcategoriesRes?.data?.data?.category
     if (!categoryData) {
-      log(LogLevel.ERROR, 'Incorrect category!')
+      log(LogLevel.WARNING, 'Incorrect category!')
       notFound()
     }
     const subcategories = categoryData.subcategories?.map((sub: any) => {
@@ -261,7 +261,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   }
 
   if (!targetCategory) {
-    log(LogLevel.ERROR, 'Fetch targetCategory failed!')
+    log(LogLevel.WARNING, 'Fetch targetCategory failed!')
     notFound()
   }
 
