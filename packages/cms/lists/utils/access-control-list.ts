@@ -31,6 +31,7 @@ export const allowRoles = (roles: string[]) => {
 }
 
 export const allowAllRoles = () => {
+  // Preview is not included in the list because it should not have access to the CMS
   const roles = [
     RoleEnum.Owner,
     RoleEnum.Admin,
