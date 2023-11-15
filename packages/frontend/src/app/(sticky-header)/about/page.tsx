@@ -4,7 +4,7 @@ import errors from '@twreporter/errors'
 import AuthorCard from '@/app/components/author-card'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   CREDIT_DONATE_URL,
   CONTRIBUTE_FORM,
   DEFAULT_AVATAR,
@@ -152,7 +152,7 @@ export default async function About() {
         },
       })
       const avatar = res?.data?.data?.author?.avatar?.imageFile?.url
-      member.avatar = avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR
+      member.avatar = avatar ? `${STORAGE_URL}${avatar}` : DEFAULT_AVATAR
     } catch (err) {
       const annotatedErr = errors.helpers.annotateAxiosError(err)
       const msg = errors.helpers.printAll(annotatedErr, {

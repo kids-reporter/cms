@@ -1,4 +1,4 @@
-import { CMS_URL, Theme, ThemeColor } from '@/app/constants'
+import { STORAGE_URL, Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
 
 export const getThemeColor = (theme: Theme) => {
@@ -22,12 +22,6 @@ export const getFormattedDate = (date: string): string => {
   return [year, month, day].join('.')
 }
 
-export const shortenParagraph = (paragraph: string, limit: number): string => {
-  return paragraph?.length > 0 && limit > 0 && paragraph.length > limit
-    ? paragraph.substring(0, limit).concat('', '...')
-    : paragraph
-}
-
 // TODO: fetch theme from cms
 export const getThemeFromCategory = (Category: string): Theme => {
   switch (Category) {
@@ -45,7 +39,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
-    const image = imageURL ? `${CMS_URL}${imageURL}` : ''
+    const image = imageURL ? `${STORAGE_URL}${imageURL}` : ''
     const subSubcategory = post?.subSubcategories?.[0]
 
     return {

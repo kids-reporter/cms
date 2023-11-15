@@ -6,7 +6,7 @@ import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   DEFAULT_AVATAR,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
@@ -84,7 +84,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
   }
 
   const avatarURL = author.avatar?.imageFile?.url
-    ? `${CMS_URL}${author.avatar.imageFile.url}`
+    ? `${STORAGE_URL}${author.avatar.imageFile.url}`
     : DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
