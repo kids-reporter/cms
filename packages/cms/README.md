@@ -56,6 +56,7 @@ DATABASE_URL=postgres://anotherAccount:anotherPasswd@localhost:5433/anotherDatab
 ### GraphQL playground
 起 CMS 服務後，我們可以透過 [http://localhost:3000/api/graphql](http://localhost:3000/api/graphql) 來使用 GraphQL playground。
 
+
 ### Database Migration （建議同步參考 [Keystone 文件](https://keystonejs.com/docs/guides/database-migration#title)）
 Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資料庫（Postgres）。
 當我們更動 Keystone List，例如：`lists/post.ts`，Keystone 會根據改動調整 `schema.grahpql` 和 `schema.prisma` 兩個檔案。
@@ -95,6 +96,34 @@ yarn keystone prisma migrate dev --name 'update_post_list' // 'update_post_list'
 Database migration 執行的時機點是在部署的時候，
 因此，新產生的 `shema.prisma` 和 `migrations/update_post_list` 檔案都需要進到 GitHub Repo 當中。
 如果忘記上傳，則可能會遇到 Keystone server 跑不起來的狀況。
+
+
+### Preview Server（預覽文章）
+在 CMS 裡，post（文章） list 和 project（專題） list 有分 `draft` 和 `published` 狀態，
+使用者必須是特定的角色（role），才能讀取 `draft` 的文章和專題。
+
+因為 Keystone 本身就提供 Role-based Authentication 的功能，所以當使用者想要讀取文章／專題時，
+系統會判斷該使用者的角色是否符合權限，如果不符合權限設定，則無法拿到資料。
+更多實作方式，請見[程式碼](https://github.com/kids-reporter/kids-reporter-monorepo/blob/dev/packages/cms/lists/post.ts#L239-L241)。
+
+系統為了讓使用者可以看到完整的文章預覽頁，有為預覽模式建立了兩個「只接受內部網路需求的 Cloud Runs」，分別是
+- [prod-frontend-for-preview](https://console.cloud.google.com/run/detail/asia-east1/prod-frontend-for-preview?project=kids-reporter)
+- [prod-api-gateway-for-preview](https://console.cloud.google.com/run/detail/asia-east1/prod-api-gateway-for-preview?project=kids-reporter)
+以上兩個 Cloud Runs 與 `prod-frontend` 和 `prod-api-gateway` 的程式碼相同，僅使用的環境變數不同。
+
+`prod-frontend-for-preview` 使用 `prod-api-gateway-for-preview` 當作 API server，而 `prod-api-gateway-for-preview` 發送 request 到 CMS GraphQL 時，使用的角色是 `preview_headless_account`；`preview_headless_account` 在 CMS 角色權限設定上，有權限可以讀取 `draft` 的內容。
+
+註：
+1. `prod-frontend` 使用 `prod-api-gateway` 當作 API server。
+2. `prod-api-gateway` 發送 request CMS GraphQL 時，使用的角色是 `frontend_headless_account`，而 `frontend_headless_account` 並沒有權限讀取 `draft` 內容。
+
+因此，`prod-frontend-for-preview` 起來的前端網站，是可以預覽 `draft` 的內容的。
+
+為了避免「外部使用者讀取預覽文章」，`prod-frontend-for-preview` 在 Cloud Run 設定上，將 `Ingress Control` 設定成 `internal`，不讓外部網路的需求造訪。然而，此設定同樣會將「內部使用者拒於門外」。
+
+為了讓「內部使用者」可以造訪「預覽模式的前端網站」，所以我們在 Keystone 起的 express server 上，新增了一個 proxy route，讓網址帶有 `/preview-server/` 的需求，可以被 proxy 到 `prod-frontend-for-preview` 上。請見相關[程式碼](https://github.com/kids-reporter/kids-reporter-monorepo/blob/dev/packages/cms/keystone.ts#L123-L129)。
+
+當有使用者想要造訪 `/preview-server/` route 來讀取 `draft` 文章時，Keystone server 會驗證該 request 是否符合某個角色，若 request 能夠通過驗證，則代表該「該使用者是內部使用者」，Keystone 就會將 request proxy 到 preview server 上，否則，會將使用者導到 `/signin` 頁面，進行身份驗證。請見相關[程式碼](https://github.com/kids-reporter/kids-reporter-monorepo/blob/dev/packages/cms/express-mini-apps/preview/app.ts#L54-L58)。
 
 ### Troubleshootings
 #### Q1: 我在 `packages/cms` 資料夾底下跑 `yarn install` 時，在 `yarn postinstall` 階段發生錯誤。
