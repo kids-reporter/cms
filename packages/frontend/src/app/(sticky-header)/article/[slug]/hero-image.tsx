@@ -1,4 +1,4 @@
-import { CMS_URL } from '@/app/constants'
+import { STORAGE_URL } from '@/app/constants'
 import './hero-image.scss'
 
 type HeroImageProp = {
@@ -7,7 +7,7 @@ type HeroImageProp = {
 }
 
 export const HeroImage = (props: HeroImageProp) => {
-  const url = props?.url ? `${CMS_URL}${props.url}` : '' // TODO: placeholder for missing image
+  const url = props?.url ? `${STORAGE_URL}${props.url}` : '' // TODO: placeholder for missing image
   const caption = props?.caption ?? ''
   return (
     <figure className="hero-image">
