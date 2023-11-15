@@ -13,22 +13,13 @@ import {
   TOPIC_PAGE_ROUTE,
   Theme,
 } from '@/app/constants'
-import {
-  getFormattedDate,
-  shortenParagraph,
-  getPostSummaries,
-  log,
-  LogLevel,
-} from '@/app/utils'
+import { getFormattedDate, getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
   title: '彙整: 專題 - 少年報導者 The Reporter for Kids',
   description: GENERAL_DESCRIPTION,
 }
-
-const titleLengthLimit = 30
-const descLengthLimit = 60
 
 const genTopicsGQL = (hasRelatedPosts: boolean): string => {
   const relatedPostsGQL = `
@@ -91,12 +82,8 @@ const TopicCard = (props: { topic: TopicSummary }) => {
             <img src={'/assets/images/topic_icon.svg'} />
             <span>專題</span>
           </div>
-          <p className="title">
-            {shortenParagraph(topic.title, titleLengthLimit) ?? ''}
-          </p>
-          <p className="desc">
-            {shortenParagraph(topic.desc, descLengthLimit) ?? ''}
-          </p>
+          <p className="title">{topic.title}</p>
+          <p className="desc">{topic.desc}</p>
           <div className="bottom">
             <p>{getFormattedDate(topic.publishedDate) ?? ''} 最後更新</p>
             {moreComponent}

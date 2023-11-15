@@ -165,6 +165,10 @@ main {
     }
 
     p.title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
       font-weight: 700;
       font-size: 26px;
       line-height: 160%;
@@ -173,6 +177,10 @@ main {
     }
 
     p.desc {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
       font-weight: 500;
       font-size: 16px;
       line-height: 160%;
