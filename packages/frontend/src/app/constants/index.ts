@@ -1,6 +1,6 @@
-import { cmsOrigin, gqlEndpoint } from '@/environment-variables'
+import { storageOrigin, gqlEndpoint } from '@/environment-variables'
 
-export const CMS_URL = cmsOrigin
+export const CMS_URL = storageOrigin
 export const API_URL = gqlEndpoint
 
 export const KIDS_URL_ORIGIN = 'https://kids.twreporter.org'
