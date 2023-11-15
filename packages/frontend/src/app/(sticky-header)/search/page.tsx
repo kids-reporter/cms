@@ -6,6 +6,7 @@ import {
   transferItemsToPostCards,
   defaultCount,
 } from '@/app/api/search/route'
+import { LogLevel, log } from '@/app/utils'
 
 const apiKey = process.env.SEARCH_API_KEY || ''
 const cx = process.env.SEARCH_ENGINE_ID || ''
@@ -31,17 +32,13 @@ export default async function SearchPage({
       count: defaultCount,
     })
   } catch (err) {
-    console.log(
-      JSON.stringify({
-        severity: 'ERROR',
-        message: errors.helpers.printAll(
-          err,
-          { withStack: true, withPayload: true },
-          0,
-          0
-        ),
-      })
+    const msg = errors.helpers.printAll(
+      err,
+      { withStack: true, withPayload: true },
+      0,
+      0
     )
+    log(LogLevel.ERROR, msg)
     return (
       <SearchTitle>
         搜尋結果服務異常，請稍候再試。 若持續發生，煩請來信至
