@@ -1,5 +1,5 @@
 import { PostSummary } from '@/app/components/types'
-import { GetFormattedDate, ShortenParagraph } from '@/app/utils'
+import { getFormattedDate, shortenParagraph } from '@/app/utils'
 import './post-card.scss'
 
 export type PostCardProp = {
@@ -31,11 +31,11 @@ export const PostCard = ({
           <div className="card-top">
             <span className="card-category">{post.category}</span>
             <span className="card-title">
-              {ShortenParagraph(post.title, titleLengthLimit) ?? ''}
+              {shortenParagraph(post.title, titleLengthLimit) ?? ''}
             </span>
             {!isSimple && (
               <span className="card-desc">
-                {ShortenParagraph(post.desc, descLengthLimit) ?? ''}
+                {shortenParagraph(post.desc, descLengthLimit) ?? ''}
               </span>
             )}
           </div>
@@ -44,7 +44,7 @@ export const PostCard = ({
               <span className="subSubcategory">{post.subSubcategory}</span>
             )}
             <span className="published-date">
-              {(post.publishedDate && GetFormattedDate(post.publishedDate)) ??
+              {(post.publishedDate && getFormattedDate(post.publishedDate)) ??
                 ''}
             </span>
           </div>

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
@@ -9,7 +10,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ export default async function LatestPosts({
   const currentPage = !params.page ? 1 : Number(params.page?.[0])
 
   if (params.page?.length > 1 || !(currentPage > 0)) {
-    console.error('Incorrect page!', params.page, currentPage)
+    log(LogLevel.INFO, `Incorrect page!: ${params.page}, ${currentPage}`)
     notFound()
   }
 
@@ -56,7 +57,8 @@ export default async function LatestPosts({
     if (postsCount > 0) {
       totalPages = Math.ceil(postsCount / POST_PER_PAGE)
       if (currentPage > totalPages) {
-        console.error(
+        log(
+          LogLevel.ERROR,
           `Request page(${currentPage}) exceeds total pages(${totalPages}!`
         )
         notFound()
@@ -76,11 +78,16 @@ export default async function LatestPosts({
       posts = postsRes?.data?.data?.posts
     }
   } catch (err) {
-    console.error('Fetch post data failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
-  const postSummeries = GetPostSummaries(posts)
+  const postSummeries = getPostSummaries(posts)
 
   return (
     <main className="container">

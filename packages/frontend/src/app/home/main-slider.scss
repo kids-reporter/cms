@@ -1,8 +1,6 @@
 .main-slider {
-  width: 95vw;
-  @media screen and (max-width: 767px) {
-    width: 100vw;
-  }
+  max-width: 1500px;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,8 +8,10 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
-  padding-top: 80px;
-
+  padding-top: 40px;
+  @media screen and (max-width: 999px) {
+    padding-top: 80px;
+  }
   background-image: url(/assets/images/navbar_pic2.svg);
   @media screen and (max-width: 999px) {
     background-image: none;
@@ -97,14 +97,21 @@
         background-color: white;
         border-radius: 25px;
         padding: 5px 15px;
+        @media screen and (max-width: 767px) {
+          padding: 3px 12px;
+        }
         z-index: 2;
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 5px;
+        
 
         img {
           width: 40px;
+          @media screen and (max-width: 767px) {
+            width: 30px;
+          }
         }
 
         span {
@@ -112,6 +119,9 @@
           font-size: 22px;
           line-height: 160%;
           letter-spacing: 0.08em;
+          @media screen and (max-width: 767px) {
+            font-size: 16px;
+          }
         }
       }
 
@@ -165,12 +175,15 @@
       position: absolute;
       top: 25%;
       z-index: 900;
+      @media screen and (max-width: 767px) {
+        top: 25vw;
+      }
     }
 
     button.prev-btn {
       left: -5px;
       @media screen and (min-width: 1000px) {
-        left: calc(50% - 400px - 50px);
+        left: calc(50% - 400px - 25px);
       }
       @media screen and (max-width: 767px) {
         left: 15px;
@@ -180,7 +193,7 @@
     button.next-btn {
       right: -5px;
       @media screen and (min-width: 1000px) {
-        right: calc(50% - 400px - 50px);
+        right: calc(50% - 400px - 25px);
       }
       @media screen and (max-width: 767px) {
         right: 15px;

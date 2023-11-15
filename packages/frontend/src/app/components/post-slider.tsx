@@ -6,7 +6,7 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import PostCard from '@/app/components/post-card'
 import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
-import { GetThemeColor } from '@/app/utils'
+import { getThemeColor } from '@/app/utils'
 import { PostSummary } from '@/app/components/types'
 
 import 'swiper/css'
@@ -31,7 +31,7 @@ export const PostSlider = ({
   enablePagination = true,
 }: PostSliderProp) => {
   const postNum = posts?.length
-  const themeColor = GetThemeColor(sliderTheme) ?? DEFAULT_THEME_COLOR
+  const themeColor = getThemeColor(sliderTheme) ?? DEFAULT_THEME_COLOR
 
   // Note: swiper loop mode is only available when slideNum >= slidesPerView * 2
   // ref: https://swiperjs.com/swiper-api#param-loop

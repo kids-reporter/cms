@@ -4,7 +4,7 @@ import StickyHeader, {
   AboutUsBtn,
 } from '@/app/components/header'
 import HomeTopDetector from './home-top-detector'
-import { Navigation } from '@/app/components/Navigation'
+import { Navigation } from '@/app/components/navigation'
 import { SearchIcon } from '@/app/icons'
 import './main-header.scss'
 
