@@ -22,12 +22,6 @@ export const getFormattedDate = (date: string): string => {
   return [year, month, day].join('.')
 }
 
-export const shortenParagraph = (paragraph: string, limit: number): string => {
-  return paragraph?.length > 0 && limit > 0 && paragraph.length > limit
-    ? paragraph.substring(0, limit).concat('', '...')
-    : paragraph
-}
-
 // TODO: fetch theme from cms
 export const getThemeFromCategory = (Category: string): Theme => {
   switch (Category) {
