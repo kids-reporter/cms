@@ -1,4 +1,4 @@
-import { CMS_URL, Theme, ThemeColor } from '@/app/constants'
+import { STORAGE_URL, Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
 
 export const getThemeColor = (theme: Theme) => {
@@ -39,7 +39,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
     const imageURL = post?.heroImage?.imageFile?.url
-    const image = imageURL ? `${CMS_URL}${imageURL}` : ''
+    const image = imageURL ? `${STORAGE_URL}${imageURL}` : ''
     const subSubcategory = post?.subSubcategories?.[0]
 
     return {

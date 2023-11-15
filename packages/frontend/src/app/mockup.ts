@@ -1,5 +1,5 @@
 // TODO: keep mockups below for writing tests
-import { CMS_URL, Theme, AuthorRole } from '@/app/constants'
+import { STORAGE_URL, Theme, AuthorRole } from '@/app/constants'
 
 export const editorsMockup = [
   {
@@ -117,7 +117,7 @@ export const tagsMockup = [
 
 export const relatedPostMockup = [
   {
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -128,7 +128,7 @@ export const relatedPostMockup = [
     theme: Theme.BLUE,
   },
   {
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -139,7 +139,7 @@ export const relatedPostMockup = [
     theme: Theme.YELLOW,
   },
   {
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -150,7 +150,7 @@ export const relatedPostMockup = [
     theme: Theme.RED,
   },
   {
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -161,7 +161,7 @@ export const relatedPostMockup = [
     theme: Theme.BLUE,
   },
   {
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -172,7 +172,7 @@ export const relatedPostMockup = [
     theme: Theme.BLUE,
   },
   {
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     categoryName: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -186,7 +186,7 @@ export const relatedPostMockup = [
 
 export const topicMockup = [
   {
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     type: '國內專題',
     url: 'https://kids.twreporter.org/category/campus',
     title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -194,7 +194,7 @@ export const topicMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     type: '國外專題',
     url: 'https://kids.twreporter.org/category/campus',
     title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -202,7 +202,7 @@ export const topicMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     type: '國內專題',
     url: 'https://kids.twreporter.org/category/campus',
     title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -210,7 +210,7 @@ export const topicMockup = [
     publishedDate: '2023-07-06T16:00:00.000Z',
   },
   {
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     type: '國外專題',
     url: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -261,7 +261,7 @@ export const MOCKUP_TAGS = [
 export const postMockups = [
   {
     url: '',
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -272,7 +272,7 @@ export const postMockups = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -283,7 +283,7 @@ export const postMockups = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -294,7 +294,7 @@ export const postMockups = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -308,7 +308,7 @@ export const postMockups = [
 export const postMockupsMore = [
   {
     url: '',
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '1我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -319,7 +319,7 @@ export const postMockupsMore = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '2我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -330,7 +330,7 @@ export const postMockupsMore = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
+    image: `${STORAGE_URL}/assets/images/112526a8-9bae-4985-9d37-ec67705bd706.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '3我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -341,7 +341,7 @@ export const postMockupsMore = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -352,7 +352,7 @@ export const postMockupsMore = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',
@@ -363,7 +363,7 @@ export const postMockupsMore = [
   },
   {
     url: '',
-    image: `${CMS_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
+    image: `${STORAGE_URL}/assets/images/d98c9c2b-13e6-4923-8aa7-275e7362a292.jpg`,
     category: '校園寶可夢',
     categoryURL: 'https://kids.twreporter.org/category/campus',
     title: '4我在動物園上課的3個月，讓我立志想成為設計動物園展場的人',

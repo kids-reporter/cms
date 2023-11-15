@@ -6,7 +6,7 @@ import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -152,7 +152,7 @@ export default async function Topic({
         return topic
           ? {
               image: topic.heroImage?.imageFile?.url
-                ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+                ? `${STORAGE_URL}${topic.heroImage.imageFile.url}`
                 : '', // TODO: fallback image
               title: topic.title,
               url: `/topic/${topic.slug}`,
