@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
 import errors from '@twreporter/errors'
@@ -68,7 +69,7 @@ const TopicCard = (props: { topic: TopicSummary }) => {
 
   const topic = props.topic
   return (
-    <a href={topic.url}>
+    <Link href={topic.url}>
       <div className="topic-container">
         <div className="hero-image-container">
           <img src={topic.image} />
@@ -90,7 +91,7 @@ const TopicCard = (props: { topic: TopicSummary }) => {
           </div>
         </div>
       </div>
-    </a>
+    </Link>
   )
 }
 

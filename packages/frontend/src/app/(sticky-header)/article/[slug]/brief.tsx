@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
+import Link from 'next/link'
 import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
@@ -33,9 +34,9 @@ const Authors = (props: AuthorsProp) => {
                 return (
                   <span key={`brief-author-${index}`}>
                     {author.link ? (
-                      <a href={author.link} target="_blank" rel="noopener">
+                      <Link href={author.link} target="_blank" rel="noopener">
                         {author.name}
-                      </a>
+                      </Link>
                     ) : (
                       <span>{author.name}</span>
                     )}
