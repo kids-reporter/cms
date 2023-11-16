@@ -17,11 +17,11 @@ import Divider from '@/app/components/divider'
 import {
   AUTHOR_ROLES_IN_ORDER,
   AuthorRole,
-  CMS_URL,
+  STORAGE_URL,
   DEFAULT_AVATAR,
   FontSizeLevel,
 } from '@/app/constants'
-import { GetPostSummaries, GetThemeFromCategory } from '@/app/utils'
+import { getPostSummaries, getThemeFromCategory } from '@/app/utils'
 import './article.scss'
 
 const getPostContents = (post: any) => {
@@ -62,7 +62,7 @@ const getPostContents = (post: any) => {
       ? {
           slug: author.slug,
           name: author.name,
-          avatar: avatarURL ? `${CMS_URL}${avatarURL}` : DEFAULT_AVATAR,
+          avatar: avatarURL ? `${STORAGE_URL}${avatarURL}` : DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
           link:
@@ -92,9 +92,9 @@ const getPostContents = (post: any) => {
   // Related posts data: related posts or topic's related post
   let relatedPosts: any[] = []
   if (post?.relatedPosts?.length > 0) {
-    relatedPosts = GetPostSummaries(post.relatedPosts)
+    relatedPosts = getPostSummaries(post.relatedPosts)
   } else if (topic?.relatedPosts?.length > 0) {
-    relatedPosts = GetPostSummaries(topic.relatedPosts)
+    relatedPosts = getPostSummaries(topic.relatedPosts)
   }
 
   // Main project data
@@ -110,7 +110,7 @@ const getPostContents = (post: any) => {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = GetThemeFromCategory(category?.slug)
+  const theme = getThemeFromCategory(category?.slug)
 
   return {
     theme,

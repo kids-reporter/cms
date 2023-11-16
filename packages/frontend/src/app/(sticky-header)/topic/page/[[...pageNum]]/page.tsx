@@ -1,31 +1,25 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
   TOPIC_PAGE_ROUTE,
   Theme,
 } from '@/app/constants'
-import {
-  GetFormattedDate,
-  ShortenParagraph,
-  GetPostSummaries,
-} from '@/app/utils'
+import { getFormattedDate, getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
   title: '彙整: 專題 - 少年報導者 The Reporter for Kids',
   description: GENERAL_DESCRIPTION,
 }
-
-const titleLengthLimit = 30
-const descLengthLimit = 60
 
 const genTopicsGQL = (hasRelatedPosts: boolean): string => {
   const relatedPostsGQL = `
@@ -88,14 +82,10 @@ const TopicCard = (props: { topic: TopicSummary }) => {
             <img src={'/assets/images/topic_icon.svg'} />
             <span>專題</span>
           </div>
-          <p className="title">
-            {ShortenParagraph(topic.title, titleLengthLimit) ?? ''}
-          </p>
-          <p className="desc">
-            {ShortenParagraph(topic.desc, descLengthLimit) ?? ''}
-          </p>
+          <p className="title">{topic.title}</p>
+          <p className="desc">{topic.desc}</p>
           <div className="bottom">
-            <p>{GetFormattedDate(topic.publishedDate) ?? ''} 最後更新</p>
+            <p>{getFormattedDate(topic.publishedDate) ?? ''} 最後更新</p>
             {moreComponent}
           </div>
         </div>
@@ -111,13 +101,13 @@ export default async function Topic({
   params: { pageNum: string }
 }) {
   if (params.pageNum?.length > 1) {
-    console.error('Incorrect routing path!', params.pageNum)
+    log(LogLevel.INFO, `Incorrect routing path! ${params.pageNum}`)
     notFound()
   }
 
   const currentPage = !params.pageNum ? 1 : Number(params.pageNum)
   if (!(currentPage > 0)) {
-    console.error('Incorrect page!', currentPage)
+    log(LogLevel.INFO, `Incorrect page! ${currentPage}`)
     notFound()
   }
 
@@ -141,13 +131,19 @@ export default async function Topic({
     topicsCount = projectsRes?.data?.data?.projectsCount
     totalPages = Math.ceil(topicsCount / POST_PER_PAGE)
     if (currentPage > totalPages) {
-      console.error(
+      log(
+        LogLevel.ERROR,
         `Request page(${currentPage}) exceeds total pages(${totalPages}!`
       )
       notFound()
     }
   } catch (err) {
-    console.error('Fetch project data failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
@@ -156,7 +152,7 @@ export default async function Topic({
         return topic
           ? {
               image: topic.heroImage?.imageFile?.url
-                ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+                ? `${STORAGE_URL}${topic.heroImage.imageFile.url}`
                 : '', // TODO: fallback image
               title: topic.title,
               url: `/topic/${topic.slug}`,
@@ -172,7 +168,7 @@ export default async function Topic({
     currentPage === 1 && topicSummaries?.[0] ? topicSummaries[0] : null
   const featuredTopicPosts =
     featuredTopic?.relatedPosts &&
-    GetPostSummaries(featuredTopic.relatedPosts.filter((post) => post))
+    getPostSummaries(featuredTopic.relatedPosts.filter((post) => post))
 
   // If has featuredTopic, list topics like [featuredTopic(topicSummaries[0])], topicSummaries[1], topicSummaries[2]...
   const topicsForListing = featuredTopic

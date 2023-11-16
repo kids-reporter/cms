@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
@@ -9,7 +10,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 
   if (params.slug?.length > 2 || !slug || !(currentPage > 0)) {
-    console.error('Incorrect tag routing!')
+    log(LogLevel.INFO, 'Incorrect tag routing!')
     notFound()
   }
 
@@ -59,25 +60,31 @@ export default async function Tag({ params }: { params: { slug: any } }) {
 
     tag = response?.data?.data?.tag
     if (!tag) {
-      console.error('Tag not found!')
+      log(LogLevel.INFO, 'Tag not found!')
       notFound()
     }
     posts = tag.posts
     postsCount = tag.postsCount
   } catch (err) {
-    console.error('Fetch post data failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (currentPage > totalPages) {
-    console.error(
+    log(
+      LogLevel.ERROR,
       `Request page(${currentPage}) exceeds total pages(${totalPages}!`
     )
     notFound()
   }
 
-  const postSummeries = GetPostSummaries(posts)
+  const postSummeries = getPostSummaries(posts)
 
   return (
     <main>

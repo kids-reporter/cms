@@ -1,17 +1,18 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   DEFAULT_AVATAR,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -44,7 +45,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
   const currentPage = !params.slug?.[1] ? 1 : Number(params.slug[1])
 
   if (params.slug?.length > 2 || !slug || !(currentPage > 0)) {
-    console.error('Incorrect author routing!')
+    log(LogLevel.INFO, 'Incorrect author routing!')
     notFound()
   }
 
@@ -67,29 +68,35 @@ export default async function Author({ params }: { params: { slug: any } }) {
     })
     author = response?.data?.data?.author
     if (!author) {
-      console.error('Author not found!')
+      log(LogLevel.INFO, 'Author not found!')
       notFound()
     }
     posts = author.posts
     postsCount = author.postsCount
   } catch (err) {
-    console.error('Fetch post data failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
   const avatarURL = author.avatar?.imageFile?.url
-    ? `${CMS_URL}${author.avatar.imageFile.url}`
+    ? `${STORAGE_URL}${author.avatar.imageFile.url}`
     : DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (currentPage > totalPages) {
-    console.error(
+    log(
+      LogLevel.ERROR,
       `Request page(${currentPage}) exceeds total pages(${totalPages}!`
     )
     notFound()
   }
 
-  const postSummeries = GetPostSummaries(posts)
+  const postSummeries = getPostSummaries(posts)
 
   return (
     <main className="container">

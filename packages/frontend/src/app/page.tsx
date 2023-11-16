@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import axios from 'axios'
+import errors from '@twreporter/errors'
 import MainHeader from '@/app/home/main-header'
 import MainSlider from '@/app/home/main-slider'
 import PostSelection from '@/app/home/post-selection'
@@ -12,12 +13,12 @@ import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   GENERAL_DESCRIPTION,
   POST_CONTENT_GQL,
   Theme,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const revalidate = 300
@@ -180,14 +181,19 @@ export default async function Home() {
       return {
         url: `/topic/${topic.slug}`,
         image: topic?.heroImage?.imageFile?.url
-          ? `${CMS_URL}${topic.heroImage.imageFile.url}`
+          ? `${STORAGE_URL}${topic.heroImage.imageFile.url}`
           : '',
         title: topic.title,
         subtitle: topic.subtitle,
       }
     })
   } catch (err) {
-    console.error('Fetch topics failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   // 2. Fetch latest posts
@@ -199,9 +205,14 @@ export default async function Home() {
         take: latestPostsNum,
       },
     })
-    latestPosts = GetPostSummaries(latestPostsRes?.data?.data?.posts)
+    latestPosts = getPostSummaries(latestPostsRes?.data?.data?.posts)
   } catch (err) {
-    console.error('Fetch latest posts failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   // 3. Fetch featured posts & tags
@@ -213,13 +224,18 @@ export default async function Home() {
         take: featuredPostsNum,
       },
     })
-    featuredPosts = GetPostSummaries(
+    featuredPosts = getPostSummaries(
       editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts
     )
     tags =
       editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfTags
   } catch (err) {
-    console.error('Fetch featured posts & tags failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   // 4. Fetch posts for each section
@@ -244,11 +260,16 @@ export default async function Home() {
         const category = isSubcategory
           ? res?.data?.data?.subcategory
           : res?.data?.data?.category
-        return GetPostSummaries(category?.relatedPosts)
+        return getPostSummaries(category?.relatedPosts)
       })
     )
   } catch (err) {
-    console.error('Fetch posts for each section failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
   }
 
   return (

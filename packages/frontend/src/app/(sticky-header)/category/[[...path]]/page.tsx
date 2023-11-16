@@ -1,10 +1,10 @@
 import { Metadata } from 'next'
 import axios from 'axios'
 import { notFound } from 'next/navigation'
+import errors from '@twreporter/errors'
 import PostList from '@/app/components/post-list'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
-import { PostSummary } from '@/app/components/types'
 import {
   API_URL,
   GENERAL_DESCRIPTION,
@@ -12,7 +12,7 @@ import {
   POST_CONTENT_GQL,
   Theme,
 } from '@/app/constants'
-import { GetPostSummaries } from '@/app/utils'
+import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -94,7 +94,7 @@ const getImageAndThemeFromCategory = (category: string) => {
 export default async function Category({ params }: { params: { path: any } }) {
   const path = params.path
   if (!path || !Array.isArray(path) || path.length === 0) {
-    console.error('Incorrect category path!', path)
+    log(LogLevel.INFO, `Incorrect category path! ${path}`)
     notFound()
   }
 
@@ -157,7 +157,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     subSubcategory = path[2]
     currentPage = Number(path[4])
   } else {
-    console.error('Incorrect category path!', path)
+    log(LogLevel.INFO, `Incorrect category path! ${path}`)
     notFound()
   }
 
@@ -174,7 +174,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     })
     const categoryData = subcategoriesRes?.data?.data?.category
     if (!categoryData) {
-      console.error('Incorrect category!')
+      log(LogLevel.INFO, 'Incorrect category!')
       notFound()
     }
     const subcategories = categoryData.subcategories?.map((sub: any) => {
@@ -191,12 +191,17 @@ export default async function Category({ params }: { params: { path: any } }) {
       navigationItems.push(...subcategories)
     }
   } catch (err) {
-    console.error('Fetch category data failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
   // Fetch related posts of subSubcategory/subcategory/category
-  let posts: PostSummary[], postsCount
+  let postsRes
   try {
     let query, slug
     if (subSubcategory) {
@@ -209,8 +214,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       query = categoryPostsGQL
       slug = category
     }
-
-    const postsRes = await axios.post(API_URL, {
+    postsRes = await axios.post(API_URL, {
       query: query,
       variables: {
         where: {
@@ -220,40 +224,54 @@ export default async function Category({ params }: { params: { path: any } }) {
         skip: (currentPage - 1) * POST_PER_PAGE,
       },
     })
-
-    let targetCategory
-    if (subSubcategory) {
-      targetCategory = postsRes?.data?.data?.subSubcategory
-      if (
-        subcategory !== targetCategory?.subcategory?.slug ||
-        category !== targetCategory?.subcategory?.category?.slug
-      ) {
-        throw `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
-      }
-    } else if (subcategory) {
-      targetCategory = postsRes?.data?.data?.subcategory
-      if (category !== targetCategory?.category?.slug) {
-        throw `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
-      }
-    } else {
-      targetCategory = postsRes?.data?.data?.category
-    }
-
-    if (!targetCategory) {
-      console.error('Fetch targetCategory failed!')
-      notFound()
-    }
-
-    posts = GetPostSummaries(targetCategory.relatedPosts)
-    postsCount = targetCategory.relatedPostsCount
   } catch (err) {
-    console.error('Fetch posts failed!', err)
+    const annotatedErr = errors.helpers.annotateAxiosError(err)
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
     notFound()
   }
 
+  let targetCategory
+  if (subSubcategory) {
+    targetCategory = postsRes?.data?.data?.subSubcategory
+    if (
+      subcategory !== targetCategory?.subcategory?.slug ||
+      category !== targetCategory?.subcategory?.category?.slug
+    ) {
+      log(
+        LogLevel.ERROR,
+        `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
+      )
+      notFound()
+    }
+  } else if (subcategory) {
+    targetCategory = postsRes?.data?.data?.subcategory
+    if (category !== targetCategory?.category?.slug) {
+      log(
+        LogLevel.ERROR,
+        `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
+      )
+      notFound()
+    }
+  } else {
+    targetCategory = postsRes?.data?.data?.category
+  }
+
+  if (!targetCategory) {
+    log(LogLevel.INFO, 'Fetch targetCategory failed!')
+    notFound()
+  }
+
+  const posts = getPostSummaries(targetCategory.relatedPosts)
+  const postsCount = targetCategory.relatedPostsCount
+
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (totalPages > 0 && currentPage > totalPages) {
-    console.error(
+    log(
+      LogLevel.ERROR,
       `Incorrect page! currentPage=${currentPage}, totalPages=${totalPages}`
     )
     notFound()
