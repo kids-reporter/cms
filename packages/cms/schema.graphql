@@ -134,7 +134,6 @@ type Post {
   subtitle: String
   status: String
   publishedDate: DateTime
-  themeColor: String
   mainProject: Project
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
@@ -175,7 +174,6 @@ input PostWhereInput {
   subtitle: StringFilter
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
-  themeColor: StringNullableFilter
   mainProject: ProjectWhereInput
   subSubcategories: SubSubcategoryManyRelationFilter
   authors: AuthorManyRelationFilter
@@ -258,7 +256,6 @@ input PostOrderByInput {
   subtitle: OrderDirection
   status: OrderDirection
   publishedDate: OrderDirection
-  themeColor: OrderDirection
   heroCaption: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
@@ -272,7 +269,6 @@ input PostUpdateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
-  themeColor: String
   mainProject: ProjectRelateToOneForUpdateInput
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
   authors: AuthorRelateToManyForUpdateInput
@@ -356,7 +352,6 @@ input PostCreateInput {
   subtitle: String
   status: String
   publishedDate: DateTime
-  themeColor: String
   mainProject: ProjectRelateToOneForCreateInput
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
   authors: AuthorRelateToManyForCreateInput
@@ -785,6 +780,7 @@ type Category {
   name: String
   subcategories(where: SubcategoryWhereInput! = {}, orderBy: [SubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubcategoryWhereUniqueInput): [Subcategory!]
   subcategoriesCount(where: SubcategoryWhereInput! = {}): Int
+  themeColor: String
   heroImage: Photo
   ogTitle: String
   ogDescription: String
@@ -809,6 +805,7 @@ input CategoryWhereInput {
   slug: StringFilter
   name: StringFilter
   subcategories: SubcategoryManyRelationFilter
+  themeColor: StringNullableFilter
   heroImage: PhotoWhereInput
   ogTitle: StringFilter
   ogDescription: StringFilter
@@ -827,6 +824,7 @@ input CategoryOrderByInput {
   id: OrderDirection
   slug: OrderDirection
   name: OrderDirection
+  themeColor: OrderDirection
   ogTitle: OrderDirection
   ogDescription: OrderDirection
   createdAt: OrderDirection
@@ -837,6 +835,7 @@ input CategoryUpdateInput {
   slug: String
   name: String
   subcategories: SubcategoryRelateToManyForUpdateInput
+  themeColor: String
   heroImage: PhotoRelateToOneForUpdateInput
   ogTitle: String
   ogDescription: String
@@ -861,6 +860,7 @@ input CategoryCreateInput {
   slug: String
   name: String
   subcategories: SubcategoryRelateToManyForCreateInput
+  themeColor: String
   heroImage: PhotoRelateToOneForCreateInput
   ogTitle: String
   ogDescription: String
