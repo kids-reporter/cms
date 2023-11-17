@@ -4,7 +4,13 @@ import {
   RoleEnum,
 } from './utils/access-control-list'
 import { graphql, list } from '@keystone-6/core'
-import { virtual, relationship, text, timestamp } from '@keystone-6/core/fields'
+import {
+  virtual,
+  relationship,
+  text,
+  timestamp,
+  select,
+} from '@keystone-6/core/fields'
 
 const listConfigurations = list({
   fields: {
@@ -24,6 +30,15 @@ const listConfigurations = list({
       ui: {
         hideCreate: true,
       },
+    }),
+    themeColor: select({
+      label: '主題色',
+      options: [
+        { label: '藍色', value: 'blue' },
+        { label: '紅色', value: 'red' },
+        { label: '黃色', value: 'yellow' },
+      ],
+      defaultValue: 'blue',
     }),
     heroImage: relationship({
       label: '列表頁首圖',
