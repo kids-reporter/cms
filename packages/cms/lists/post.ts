@@ -50,15 +50,6 @@ const listConfigurations = list({
       isIndexed: true,
       label: '發布時間',
     }),
-    themeColor: select({
-      label: '主題色',
-      options: [
-        { label: '藍色', value: 'blue' },
-        { label: '紅色', value: 'red' },
-        { label: '黃色', value: 'yellow' },
-      ],
-      defaultValue: 'blue',
-    }),
     mainProject: relationship({
       label: '文章所屬的主要專題（選擇後，文章最頂端會有該專題的按鈕）',
       ref: 'Project',
