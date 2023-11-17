@@ -74,7 +74,6 @@ const postGQL = `
       }
       relatedPosts {
         title
-        themeColor
         slug
         publishedDate
         ${heroImageGQL}
