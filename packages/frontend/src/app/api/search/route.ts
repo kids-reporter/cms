@@ -38,10 +38,10 @@ export function transferItemsToPostCards(
     const publishedDate = metaTag?.['publishedDate'] ?? ''
     const category = metaTag?.['category'] ?? ''
     const subSubcategory = metaTag?.['subSubcategory'] ?? ''
-    // const contentType = metaTag?.['contentType']
     const url = item?.link || metaTag?.['og:url']
 
     // @TODO: enable contentType filter when google crawler fetched new meta
+    // const contentType = metaTag?.['contentType']
     // if (contentType === 'article' || 'topic') {
     cardItems.push({
       post: {
@@ -50,7 +50,7 @@ export function transferItemsToPostCards(
         desc,
         publishedDate,
         url,
-        category,
+        category, // category: contentType === 'topic' ? '專題' : category
         subSubcategory,
         theme: Theme.BLUE,
       },
