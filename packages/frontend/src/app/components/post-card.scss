@@ -61,6 +61,10 @@
       }
 
       .card-title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
         font-style: normal;
         font-weight: 700;
         font-size: 20px;
@@ -76,6 +80,10 @@
       }
 
       .card-desc {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
         text-align: left;
         font-style: normal;
         font-weight: 500;

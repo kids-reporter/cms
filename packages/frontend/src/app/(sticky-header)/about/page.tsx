@@ -1,9 +1,10 @@
 import { Metadata } from 'next'
 import axios from 'axios'
+import errors from '@twreporter/errors'
 import AuthorCard from '@/app/components/author-card'
 import {
   API_URL,
-  CMS_URL,
+  STORAGE_URL,
   CREDIT_DONATE_URL,
   CONTRIBUTE_FORM,
   DEFAULT_AVATAR,
@@ -14,6 +15,7 @@ import {
   SUBSCRIBE_URL,
   AuthorRole,
 } from '@/app/constants'
+import { LogLevel, log } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -43,7 +45,7 @@ const tellYouItems = [
   { image: '/assets/images/about_tell_pic5.svg', desc: '開放的思辨' },
 ]
 
-const teamMemebers = [
+const teamMembers = [
   {
     slug: 'jill718',
     name: '楊惠君',
@@ -139,7 +141,7 @@ const consultants = [
 
 export default async function About() {
   // Fetch memeber avatar
-  for (const member of teamMemebers) {
+  for (const member of teamMembers) {
     try {
       const res = await axios.post(API_URL, {
         query: authorGQL,
@@ -150,9 +152,14 @@ export default async function About() {
         },
       })
       const avatar = res?.data?.data?.author?.avatar?.imageFile?.url
-      member.avatar = avatar ? `${CMS_URL}${avatar}` : DEFAULT_AVATAR
+      member.avatar = avatar ? `${STORAGE_URL}${avatar}` : DEFAULT_AVATAR
     } catch (err) {
-      console.error('Fetch member avatar failed!', member.slug, err)
+      const annotatedErr = errors.helpers.annotateAxiosError(err)
+      const msg = errors.helpers.printAll(annotatedErr, {
+        withStack: true,
+        withPayload: true,
+      })
+      log(LogLevel.ERROR, msg)
     }
   }
 
@@ -303,7 +310,7 @@ export default async function About() {
       {contribute}
       {mail}
       <div id="team" className="team">
-        <AuthorCard title="誰在為你服務" authors={teamMemebers} />
+        <AuthorCard title="誰在為你服務" authors={teamMembers} />
       </div>
       <div id="consultants" className="consultants">
         <AuthorCard title="我們的顧問" authors={consultants} />

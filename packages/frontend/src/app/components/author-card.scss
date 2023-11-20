@@ -67,8 +67,10 @@
       }
 
       .desc {
-        display: inline-block;
-        height: 154px; // var(--eqhminh-2);
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
         font-style: normal;
         font-weight: 500;
         font-size: 16px;

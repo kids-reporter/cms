@@ -1,4 +1,3 @@
-import { ShortenParagraph } from '@/app/utils'
 import { DEFAULT_AVATAR, AuthorRole, Theme } from '@/app/constants'
 import './author-card.scss'
 
@@ -32,8 +31,6 @@ type AuthorCardProp = {
   authors: Author[]
 }
 
-const descLengthLimit = 60
-
 export const AuthorCard = (props: AuthorCardProp) => {
   const authors = props?.authors
 
@@ -56,9 +53,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   <div className={`group theme-${theme}`}>
                     {author.roleName ? author.roleName : author.role}
                   </div>
-                  <span className="desc">
-                    {ShortenParagraph(author.bio, descLengthLimit) ?? ''}
-                  </span>
+                  <span className="desc">{author.bio}</span>
                   {author.slug && (
                     <div className="more">
                       <a

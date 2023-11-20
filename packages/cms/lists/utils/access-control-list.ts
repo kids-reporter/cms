@@ -12,6 +12,7 @@ export const RoleEnum = {
   Developer: 'developer',
   Editor: 'editor',
   Contributor: 'contributor',
+  Preview: 'preview',
   FrontendHeadlessAccount: 'frontend_headless_account',
   PreviewHeadlessAccount: 'preview_headless_account',
 }
@@ -30,6 +31,7 @@ export const allowRoles = (roles: string[]) => {
 }
 
 export const allowAllRoles = () => {
+  // Preview is not included in the list because it should not have access to the CMS
   const roles = [
     RoleEnum.Owner,
     RoleEnum.Admin,

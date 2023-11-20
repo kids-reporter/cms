@@ -28,7 +28,6 @@ model Post {
   subtitle                                   String               @default("")
   status                                     String?              @default("draft")
   publishedDate                              DateTime?
-  themeColor                                 String?              @default("blue")
   mainProject                                Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
   mainProjectId                              Int?                 @map("mainProject")
   subSubcategories                           SubSubcategory[]     @relation("Post_subSubcategories")
@@ -160,6 +159,7 @@ model Category {
   slug          String        @unique @default("")
   name          String        @unique @default("")
   subcategories Subcategory[] @relation("Subcategory_category")
+  themeColor    String?       @default("blue")
   heroImage     Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?          @map("heroImage")
   ogTitle       String        @default("")
