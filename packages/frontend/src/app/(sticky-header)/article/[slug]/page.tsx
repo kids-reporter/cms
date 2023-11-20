@@ -157,7 +157,6 @@ export async function generateMetadata({
   }
 }
 
-// TODO: add pageMap for google indexing/search
 export default async function PostPage({
   params,
 }: {
