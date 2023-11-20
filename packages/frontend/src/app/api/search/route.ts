@@ -35,11 +35,14 @@ export function transferItemsToPostCards(
     const image = creativeWork?.image || metaTag?.['og:image']
     const title = creativeWork?.headline || metaTag?.['og:title']
     const desc = metaTag?.['og:description']
-    const publishedDate = metaTag?.['publishedDate']
-    const category = metaTag?.['category']
-    const subSubcategory = metaTag?.['subSubcategory']
+    const publishedDate = metaTag?.['publishedDate'] ?? ''
+    const category = metaTag?.['category'] ?? ''
+    const subSubcategory = metaTag?.['subSubcategory'] ?? ''
+    // const contentType = metaTag?.['contentType']
     const url = item?.link || metaTag?.['og:url']
 
+    // @TODO: enable contentType filter when google crawler fetched new meta
+    // if (contentType === 'article' || 'topic') {
     cardItems.push({
       post: {
         image,
@@ -47,12 +50,13 @@ export function transferItemsToPostCards(
         desc,
         publishedDate,
         url,
-        category: category,
-        subSubcategory: subSubcategory,
+        category,
+        subSubcategory,
         theme: Theme.BLUE,
       },
       isSimple: false,
     })
+    // }
   })
 
   return cardItems
