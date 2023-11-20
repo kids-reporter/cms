@@ -29,6 +29,9 @@ main {
       flex-direction: column;
       justify-content: center;
       border-radius: 45px;
+      .topic-info{
+        border: 0px;
+      }
       @media screen and (max-width: 999px) {
         background-color: white;
         padding: 0px;
@@ -181,7 +184,7 @@ main {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 5;
       overflow: hidden;
-      font-weight: 500;
+      font-weight: 400;
       font-size: 16px;
       line-height: 160%;
       letter-spacing: 0.08em;
