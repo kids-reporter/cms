@@ -66,9 +66,10 @@ const query = `
   }
 `
 
-const ogGQL = `
+const metaGQL = `
 query($where: ProjectWhereUniqueInput!) {
   project(where: $where) {
+    publishedDate
     ogDescription
     ogTitle
     ogImage {
@@ -87,18 +88,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug
 
-  let topicOG
+  let topicMeta
   try {
     const topicOGRes = await axios.post(API_URL, {
-      query: ogGQL,
+      query: metaGQL,
       variables: {
         where: {
           slug: slug,
         },
       },
     })
-    topicOG = topicOGRes?.data?.data?.project
-    if (!topicOG) {
+    topicMeta = topicOGRes?.data?.data?.project
+    if (!topicMeta) {
       log(LogLevel.INFO, `Post not found! ${params.slug}`)
     }
   } catch (err) {
@@ -111,16 +112,20 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${topicOG?.ogTitle ? topicOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
+    title: `${topicMeta?.ogTitle ? topicMeta.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
     alternates: {
       canonical: `${KIDS_URL_ORIGIN}/topic/${slug}`,
     },
     openGraph: {
-      title: topicOG?.ogTitle ?? OG_SUFFIX,
-      description: topicOG?.ogDescription ?? GENERAL_DESCRIPTION,
-      images: topicOG?.ogImage?.resized?.small
-        ? [topicOG.ogImage.resized.small]
+      title: topicMeta?.ogTitle ?? OG_SUFFIX,
+      description: topicMeta?.ogDescription ?? GENERAL_DESCRIPTION,
+      images: topicMeta?.ogImage?.resized?.small
+        ? [topicMeta.ogImage.resized.small]
         : [],
+    },
+    other: {
+      publishedDate: topicMeta?.publishedDate ?? '',
+      contentType: 'topic',
     },
   }
 }
