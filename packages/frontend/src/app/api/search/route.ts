@@ -35,15 +35,10 @@ export function transferItemsToPostCards(
     const image = creativeWork?.image || metaTag?.['og:image']
     const title = creativeWork?.headline || metaTag?.['og:title']
     const desc = metaTag?.['og:description']
-    const publishedDate = metaTag?.['article:published_time']
+    const publishedDate = metaTag?.['publishedDate']
+    const category = metaTag?.['category']
+    const subSubcategory = metaTag?.['subSubcategory']
     const url = item?.link || metaTag?.['og:url']
-
-    // @TODO: add `subcategory` and `subSubcategory`
-    // Currently, we don't have `subcategory` and `subSubcategory`
-    // data in Google Custom Search Engine
-    // since we don't provide those information in the webpage.
-    // We need to either provide those information by
-    // `PageMap` data (see https://developers.google.com/custom-search/docs/structured_data#addtopage)
 
     cardItems.push({
       post: {
@@ -52,8 +47,8 @@ export function transferItemsToPostCards(
         desc,
         publishedDate,
         url,
-        category: '',
-        subSubcategory: '',
+        category: category,
+        subSubcategory: subSubcategory,
         theme: Theme.BLUE,
       },
       isSimple: false,
