@@ -97,9 +97,10 @@ const postGQL = `
   }
 `
 
-const ogGQL = `
+const metaGQL = `
 query($where: PostWhereUniqueInput!) {
   post(where: $where) {
+    publishedDate
     ogDescription
     ogTitle
     ogImage {
@@ -107,6 +108,7 @@ query($where: PostWhereUniqueInput!) {
         small
       }
     }
+    ${categoryGQL}
   }
 }
 `
@@ -118,19 +120,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug
 
-  let postOG
+  let postMeta
   try {
-    const postOGRes = await axios.post(API_URL, {
-      query: ogGQL,
+    const postMetaRes = await axios.post(API_URL, {
+      query: metaGQL,
       variables: {
         where: {
           slug: slug,
         },
       },
     })
-    postOG = postOGRes?.data?.data?.post
-    if (!postOG) {
-      log(LogLevel.INFO, `Post not found! ${params.slug}`)
+    postMeta = postMetaRes?.data?.data?.post
+    if (!postMeta) {
+      log(LogLevel.INFO, `Post meta not found! ${params.slug}`)
     }
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
@@ -142,22 +144,32 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${postOG?.ogTitle ? postOG.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
+    title: `${postMeta?.ogTitle ? postMeta.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
     alternates: {
       canonical: `${KIDS_URL_ORIGIN}/article/${slug}`,
     },
     openGraph: {
-      title: postOG?.ogTitle ?? OG_SUFFIX,
-      description: postOG?.ogDescription ?? GENERAL_DESCRIPTION,
-      images: postOG?.ogImage?.resized?.small
-        ? [postOG.ogImage.resized.small]
+      title: postMeta?.ogTitle ?? OG_SUFFIX,
+      description: postMeta?.ogDescription ?? GENERAL_DESCRIPTION,
+      images: postMeta?.ogImage?.resized?.small
+        ? [postMeta.ogImage.resized.small]
         : [],
       type: 'article',
+    },
+    other: {
+      // Since we can't inject <!-- <PageMap>...</PageMap> --> to <head> section with Next metadata API,
+      // so handle google seo with extra <meta> tag here, but be awared there are limitations(maximum 50 tags):
+      // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
+      publishedDate: postMeta?.publishedDate ?? '',
+      category:
+        postMeta?.subSubcategories?.[0]?.subcategory?.category?.name ?? '',
+      subcategory: postMeta?.subSubcategories?.[0]?.subcategory?.name ?? '',
+      subSubcategory: postMeta?.subSubcategories?.[0]?.name ?? '',
+      contentType: 'article',
     },
   }
 }
 
-// TODO: add pageMap for google indexing/search
 export default async function PostPage({
   params,
 }: {
