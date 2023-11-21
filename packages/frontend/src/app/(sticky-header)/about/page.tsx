@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import axios from 'axios'
 import errors from '@twreporter/errors'
 import AuthorCard from '@/app/components/author-card'
@@ -210,9 +211,9 @@ export default async function About() {
             不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
           </p>
         </div>
-        <a className="btn-like" href={SUBSCRIBE_URL}>
+        <Link className="btn-like" href={SUBSCRIBE_URL}>
           歡迎訂閱
-        </a>
+        </Link>
       </div>
       <img src="/assets/images/about_CTA_subscribe.svg" />
     </div>
@@ -253,7 +254,7 @@ export default async function About() {
       />
       <p>少年報導者評論員證書範例</p>
       <div className="btn-like">
-        <a href={CONTRIBUTE_FORM}>我要投稿！</a>
+        <Link href={CONTRIBUTE_FORM}>我要投稿！</Link>
       </div>
     </div>
   )
@@ -270,7 +271,7 @@ export default async function About() {
         <span>
           聯絡信箱
           <br />
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+          <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link>
         </span>
       </div>
       <img src="/assets/images/about_CTA_mail.svg" />
@@ -289,13 +290,13 @@ export default async function About() {
       </p>
       <div className="btns">
         <div className="btn-like">
-          <a href={MAIN_SITE_URL}>報導者官網</a>
+          <Link href={MAIN_SITE_URL}>報導者官網</Link>
         </div>
         <div className="btn-like">
-          <a href={DONATE_URL}>贊助報導者</a>
+          <Link href={DONATE_URL}>贊助報導者</Link>
         </div>
         <div className="btn-like">
-          <a href={CREDIT_DONATE_URL}>了解捐款徵信</a>
+          <Link href={CREDIT_DONATE_URL}>了解捐款徵信</Link>
         </div>
       </div>
     </div>

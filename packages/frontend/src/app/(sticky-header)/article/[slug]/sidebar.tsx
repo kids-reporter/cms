@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { useArticleContext } from './article-context'
 import './sidebar.scss'
 
@@ -59,9 +60,9 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
       <div className="sidebar">
         {topicURL && (
           <div>
-            <a href={topicURL}>
+            <Link href={topicURL}>
               <img src="/assets/images/topic-breadcrumb-sidebar-icon.svg" />
-            </a>
+            </Link>
           </div>
         )}
         <div className="section">
@@ -112,9 +113,9 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
         <div className="section">
           {topicURL && (
             <div className="button-group">
-              <a href={topicURL}>
+              <Link href={topicURL}>
                 <img src="/assets/images/topic-breadcrumb-sidebar-mobile-icon.svg" />
-              </a>
+              </Link>
               <span>前往專題</span>
             </div>
           )}

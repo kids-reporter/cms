@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import PostSlider from '@/app/components/post-slider'
 import { PostSummary } from '@/app/components/types'
 import { Theme } from '@/app/constants'
@@ -22,12 +23,12 @@ export const Section = (props: SectionProp) => {
   const posts = props?.posts
 
   const moreBtn = config && (
-    <a
+    <Link
       href={config.link}
       className={`rpjr-btn rpjr-btn-theme-outline theme-${config.theme}`}
     >
       看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
-    </a>
+    </Link>
   )
 
   return (

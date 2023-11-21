@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import StickyHeader, {
   ContributeBtn,
   SubscribeBtn,
@@ -35,12 +36,12 @@ export const MainHeader = () => {
             <img src="/assets/images/navbar_pic.svg" width="291" />
           </div>
           <div className="center">
-            <a href="/">
+            <Link href="/">
               <img
                 src="/assets/images/logo-full.svg"
                 alt="少年報導者 The Reporter for Kids"
               />
-            </a>
+            </Link>
             <Navigation />
           </div>
           <div className="right">

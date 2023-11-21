@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { SUBSCRIBE_URL } from '@/app/constants'
 
 import './call-to-action.scss'
@@ -5,7 +6,7 @@ import './call-to-action.scss'
 export const CallToAction = () => {
   return (
     <div className="cta-container">
-      <a href={SUBSCRIBE_URL} className="top">
+      <Link href={SUBSCRIBE_URL} className="top">
         <div>
           <h3>訂閱《少年報導者》</h3>
           <p>
@@ -14,9 +15,9 @@ export const CallToAction = () => {
           </p>
         </div>
         <div className="btn-like">歡迎訂閱</div>
-      </a>
+      </Link>
       <div className="bottom">
-        <a href={'/about#mail'} className="mail">
+        <Link href={'/about#mail'} className="mail">
           <div>
             <h3>
               讀者信箱，
@@ -28,8 +29,8 @@ export const CallToAction = () => {
             </p>
           </div>
           <div className="btn-like">歡迎來信</div>
-        </a>
-        <a href={'/about#post'} className="contribute">
+        </Link>
+        <Link href={'/about#post'} className="contribute">
           <div>
             <h3>投稿給報導仔</h3>
             <p>
@@ -37,7 +38,7 @@ export const CallToAction = () => {
             </p>
           </div>
           <div className="btn-like">歡迎投稿</div>
-        </a>
+        </Link>
       </div>
     </div>
   )
