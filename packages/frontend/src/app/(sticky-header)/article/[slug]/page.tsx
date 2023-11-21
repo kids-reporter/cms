@@ -163,6 +163,7 @@ export async function generateMetadata({
       publishedDate: postMeta?.publishedDate ?? '',
       category:
         postMeta?.subSubcategories?.[0]?.subcategory?.category?.name ?? '',
+      subcategory: postMeta?.subSubcategories?.[0]?.subcategory?.name,
       subSubcategory: postMeta?.subSubcategories?.[0]?.name ?? '',
       contentType: 'article',
     },
