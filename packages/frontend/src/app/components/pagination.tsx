@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
 import { AngleLeft, AngleRight } from '@/app/icons'
@@ -64,12 +65,12 @@ export const Pagination = (props: PaginationProp) => {
   const buildPageBox = (pageIndex: number) => {
     return (
       <div key={`pagination-index-${pageIndex}`}>
-        <a
+        <Link
           className={`index ${pageIndex === currentPage ? 'active' : ''}`}
           href={`${routingPrefix}/${pageIndex}`}
         >
           {pageIndex}
-        </a>
+        </Link>
       </div>
     )
   }
@@ -165,15 +166,15 @@ export const Pagination = (props: PaginationProp) => {
     totalPages > 0 && (
       <div className="pagination">
         {belowFirstPage ? null : (
-          <a className="prev" href={`${routingPrefix}/${currentPage - 1}`}>
+          <Link className="prev" href={`${routingPrefix}/${currentPage - 1}`}>
             {AngleLeft}
-          </a>
+          </Link>
         )}
         {pagesArrayJSX}
         {aboveFinalPage ? null : (
-          <a className="next" href={`${routingPrefix}/${currentPage + 1}`}>
+          <Link className="next" href={`${routingPrefix}/${currentPage + 1}`}>
             {AngleRight}
-          </a>
+          </Link>
         )}
       </div>
     )
