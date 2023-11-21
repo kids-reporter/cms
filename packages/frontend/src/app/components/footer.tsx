@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import {
   FBIcon,
   GithubIcon,
@@ -53,14 +54,14 @@ export const Footer = () => {
                 <div className="footer-top__social-icon-group">
                   {socialIcons.map((icon, index) => {
                     return (
-                      <a
+                      <Link
                         key={`social-icon-${index}`}
                         href={icon.link}
                         className="footer-top__social-icon-item"
                         target="_blank"
                       >
                         {icon.img}
-                      </a>
+                      </Link>
                     )
                   })}
                 </div>{' '}
@@ -68,54 +69,54 @@ export const Footer = () => {
             </div>
             <div className="footer-top__middle">
               <div className="footer-top__team-box">
-                <a href="/about" className="footer-top__team-box-item">
+                <Link href="/about" className="footer-top__team-box-item">
                   <img src="/assets/images/footer_pic1.svg" alt="我們是誰" />
                   我們是誰
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/about#team"
                   className="footer-top__team-box-item __mPS2id"
                 >
                   <img src="/assets/images/footer_pic2.svg" alt="我們是誰" />
                   核心團隊
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/about#consultants"
                   className="footer-top__team-box-item __mPS2id"
                 >
                   <img src="/assets/images/footer_pic3.svg" alt="我們是誰" />
                   顧問群
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/about#mail"
                   className="footer-top__team-box-item __mPS2id"
                 >
                   <img src="/assets/images/footer_pic4.svg" alt="我們是誰" />
                   聯絡我們
-                </a>
+                </Link>
               </div>
               <div className="footer-top__button-group">
-                <a
+                <Link
                   href="https://support.twreporter.org/"
                   className="header-left__btn-1 rpjr-btn rpjr-btn-big"
                   target="_blank"
                 >
                   贊助我們
-                </a>
-                <a
+                </Link>
+                <Link
                   href={SUBSCRIBE_URL}
                   target="_blank"
                   className="header-left__btn-1 rpjr-btn rpjr-btn-orange rpjr-btn-big"
                 >
                   訂閱我們
-                </a>
-                <a
+                </Link>
+                <Link
                   href="https://www.twreporter.org/"
                   className="header-left__btn-1 rpjr-btn rpjr-btn-red rpjr-btn-big"
                   target="_blank"
                 >
                   前往報導者
-                </a>
+                </Link>
               </div>
             </div>
             <div className="footer-top__right">
@@ -134,20 +135,20 @@ export const Footer = () => {
               公益勸募許可字號｜衛部救字第 1101363853 號{' '}
             </p>
             <div className="footer-policy">
-              <a
+              <Link
                 href="https://www.twreporter.org/a/privacy-footer"
                 target="_blank"
                 className="footer-link"
               >
                 <strong>隱私政策</strong>
-              </a>{' '}
-              <a
+              </Link>{' '}
+              <Link
                 href="https://www.twreporter.org/a/license-footer"
                 target="_blank"
                 className="footer-link"
               >
                 <strong>許可協議</strong>
-              </a>{' '}
+              </Link>{' '}
             </div>
           </div>
           <p>Copyright © 2023 The Reporter</p>

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import './tags.scss'
 
 export type Tag = {
@@ -31,7 +32,7 @@ export const Tags = (props: TagsProp) => {
           {tags.map((tag, index) => {
             return (
               tag && (
-                <a
+                <Link
                   key={`post-tag-${index}`}
                   className={`rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag ${
                     props?.fill ? 'fill' : ''
@@ -39,7 +40,7 @@ export const Tags = (props: TagsProp) => {
                   href={`/tag/${tag.slug}`}
                 >
                   #&nbsp;{tag.name}
-                </a>
+                </Link>
               )
             )
           })}
