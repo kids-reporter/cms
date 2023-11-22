@@ -20,7 +20,8 @@ const listConfigurations = list({
       validation: { isRequired: true },
     }),
     svgFile: file({
-      storage: 'svgImages',
+      label: '上傳 SVG 檔案',
+      storage: 'files',
     }),
     authors: relationship({
       label: '作者',

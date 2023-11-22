@@ -59,15 +59,6 @@ export default withAuth(
         },
         generateUrl: (path) => `/images${path}`,
       },
-      svgImages: {
-        kind: 'local',
-        type: 'file',
-        storagePath: appConfig.images.storagePath,
-        serverRoute: {
-          path: '/images',
-        },
-        generateUrl: (path) => `/images${path}`,
-      },
     },
     graphql: {
       apolloConfig: {
