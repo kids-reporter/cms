@@ -1,5 +1,6 @@
 'use client'
 import { useRef } from 'react'
+import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Swiper as SwiperCore } from 'swiper/types'
 import {
@@ -58,7 +59,7 @@ export const MainSlider = (props: SliderProp) => {
           {topics.map((topic, index) => {
             return (
               <SwiperSlide key={`swiper-main-slide-${index}`}>
-                <a
+                <Link
                   key={`topic-${index}`}
                   className="topic-body"
                   href={topic.url}
@@ -77,7 +78,7 @@ export const MainSlider = (props: SliderProp) => {
                       {topic.subtitle}
                     </span>
                   </div>
-                </a>
+                </Link>
               </SwiperSlide>
             )
           })}

@@ -45,7 +45,7 @@ main {
     p {
       color: var(--paletteColor4, #232323);
       font-size: 18px;
-      font-weight: 500;
+      font-weight: 400;
       letter-spacing: 0.9px;
       line-height: 36px;
     }
@@ -64,7 +64,7 @@ main {
       max-width: 650px;
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
       flex-wrap: wrap;
       gap: 40px;
@@ -144,10 +144,10 @@ main {
       }
 
       .btn-like {
-        border-radius: 20px;
+        border-radius: 30px;
         background-color: white;
         width: fit-content;
-        padding: 8px 18px;
+        padding: 15px 15px;
         font-size: 18px;
         @media screen and (max-width: 767px) {
           font-size: 14px;
@@ -230,10 +230,10 @@ main {
     }
 
     .btn-like {
-      border-radius: 20px;
+      border-radius: 30px;
       background-color: white;
       width: fit-content;
-      padding: 8px 18px;
+      padding: 15px 15px;
       font-size: 18px;
       @media screen and (max-width: 767px) {
         font-size: 14px;
@@ -277,7 +277,6 @@ main {
       }
 
       p {
-        max-width: 350px;
         font-size: 18px;
         @media screen and (max-width: 767px) {
           font-size: 14px;
@@ -354,10 +353,10 @@ main {
       align-items: center;
 
       .btn-like {
-        border-radius: 20px;
+        border-radius: 30px;
         background-color: white;
         width: fit-content;
-        padding: 8px 18px;
+        padding: 15px 15px;
         margin-bottom: 10px;
       }
     }

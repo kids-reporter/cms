@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 type NavigatorProp = {
   name: string
   path: string
@@ -9,14 +11,14 @@ export const Navigator = (props: NavigatorProp) => {
   const path = props.path
 
   return (
-    <a
+    <Link
       className={`rpjr-btn-ghost rpjr-btn ${
         props.active ? 'rpjr-btn__current' : ''
       }`}
       href={path}
     >
       &nbsp;{name}
-    </a>
+    </Link>
   )
 }
 

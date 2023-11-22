@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { TOPIC_PAGE_ROUTE } from '@/app/constants'
 
 const NavigationItems = [
@@ -30,9 +31,9 @@ export const Navigation = () => {
         {NavigationItems.map((item, index) => {
           return (
             <li key={`header-nav-item-${index}`}>
-              <a href={item.link} className="ct-menu-link" role="menuitem">
+              <Link href={item.link} className="ct-menu-link" role="menuitem">
                 {item.title}
-              </a>
+              </Link>
             </li>
           )
         })}

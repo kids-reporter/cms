@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { DEFAULT_AVATAR, AuthorRole, Theme } from '@/app/constants'
 import './author-card.scss'
 
@@ -56,7 +57,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                   <span className="desc">{author.bio}</span>
                   {author.slug && (
                     <div className="more">
-                      <a
+                      <Link
                         href={`/author/${author.slug}`}
                         className={`theme-${theme}`}
                       >
@@ -64,7 +65,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                           了解更多{' '}
                           <i className="icon-rpjr-icon-arrow-right"></i>
                         </span>
-                      </a>
+                      </Link>
                     </div>
                   )}
                 </div>

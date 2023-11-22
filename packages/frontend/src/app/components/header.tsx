@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { Navigation } from '@/app/components/navigation'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
 import { SUBSCRIBE_URL } from '@/app/constants'
@@ -8,28 +9,28 @@ import './header.scss'
 const slogan = <img src="/assets/images/header-left-slogan.svg" />
 
 export const ContributeBtn = (
-  <a
+  <Link
     href="/about#post"
     className="header-left__btn-1 rpjr-btn"
     style={{ marginRight: '14px' }}
   >
     投稿
-  </a>
+  </Link>
 )
 
 export const SubscribeBtn = (
-  <a
+  <Link
     href={SUBSCRIBE_URL}
     target="_blank"
     className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
     style={{ marginRight: '15px' }}
   >
     訂閱
-  </a>
+  </Link>
 )
 
 export const AboutUsBtn = (
-  <a
+  <Link
     href="/about#us"
     className="rpjr-btn rpjr-btn-red"
     aria-label="我們是誰"
@@ -37,7 +38,7 @@ export const AboutUsBtn = (
     rel="noopener noreferrer"
   >
     我們是誰
-  </a>
+  </Link>
 )
 
 export const StickyHeader = () => {
@@ -66,13 +67,13 @@ export const StickyHeader = () => {
 
   const brand = (
     <div className="site-branding">
-      <a href="/" className="site-logo-container" rel="home">
+      <Link href="/" className="site-logo-container" rel="home">
         <img
           src="/assets/images/LOGO.svg"
           className="default-logo"
           alt="少年報導者 The Reporter for Kids"
         />
-      </a>
+      </Link>
     </div>
   )
 
@@ -90,7 +91,7 @@ export const StickyHeader = () => {
 
   const about = (
     <div className="about-us">
-      <a
+      <Link
         href="/about#us"
         className="rpjr-btn rpjr-btn-red"
         aria-label="我們是誰"
@@ -98,7 +99,7 @@ export const StickyHeader = () => {
         rel="noopener noreferrer"
       >
         我們是誰
-      </a>
+      </Link>
     </div>
   )
 
@@ -138,12 +139,12 @@ export const StickyHeader = () => {
         <button onClick={onHamburgerOverlayClose}>{CrossIcon}</button>
       </div>
       <div className="content">
-        <a href="/" className="logo-mobile">
+        <Link href="/" className="logo-mobile">
           <img
             src="/assets/images/logo-full.svg"
             alt="少年報導者 The Reporter for Kids"
           />
-        </a>
+        </Link>
         <div className="btn-group">
           {ContributeBtn}
           {SubscribeBtn}
