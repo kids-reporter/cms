@@ -15,6 +15,13 @@ cloud runs:
 - [staging-cms](https://console.cloud.google.com/run/detail/asia-east1/staging-cms?project=kids-reporter)
 - [prod-cms](https://console.cloud.google.com/run/detail/asia-east1/prod-cms?project=kids-reporter)
 
+## Environment Variables
+相關環境變數可以參考 [`environment-variables.ts`](https://github.com/kids-reporter/kids-reporter-monorepo/blob/dev/packages/cms/environment-variables.ts) 檔案。
+
+其中值得注意的是，`NODE_ENV` 除了 convention 的 `development` 和 `production` 之外，亦有 `test`的選項。當 `NODE_ENV=test` 時，Keystone server 會關閉 Role-based Authentication，不再檢查 request 是否可以 Query/Create/Update/Delete Keystone 的資源。
+
+若你想要在 local 端開發 frontend，而 frontend 需要 GQL server 來測試，那你可以嘗試 `NODE_ENV=test yarn dev` 來起 server。
+
 ## Getting started on local environment
 ### Start postgres instance
 在起 CMS 服務前，需要在 local 端先起 postgres database。
