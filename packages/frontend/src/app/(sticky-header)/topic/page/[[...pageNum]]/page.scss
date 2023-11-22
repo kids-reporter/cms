@@ -181,7 +181,7 @@ main {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 5;
       overflow: hidden;
-      font-weight: 500;
+      font-weight: 400;
       font-size: 16px;
       line-height: 160%;
       letter-spacing: 0.08em;
@@ -203,4 +203,8 @@ main {
       }
     }
   }
+}
+
+.topic-summary .topic-info {
+  border: 0px;
 }
