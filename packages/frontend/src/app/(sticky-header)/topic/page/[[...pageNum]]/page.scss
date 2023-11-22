@@ -29,9 +29,6 @@ main {
       flex-direction: column;
       justify-content: center;
       border-radius: 45px;
-      .topic-info{
-        border: 0px;
-      }
       @media screen and (max-width: 999px) {
         background-color: white;
         padding: 0px;
@@ -206,4 +203,8 @@ main {
       }
     }
   }
+}
+
+.topic-summary .topic-info {
+  border: 0px;
 }
