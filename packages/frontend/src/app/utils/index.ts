@@ -22,19 +22,6 @@ export const getFormattedDate = (date: string): string => {
   return [year, month, day].join('.')
 }
 
-// TODO: fetch theme from cms
-export const getThemeFromCategory = (Category: string): Theme => {
-  switch (Category) {
-    case 'news':
-    case 'listening-news':
-      return Theme.BLUE
-    case 'comics':
-    case 'campus':
-    default:
-      return Theme.YELLOW
-  }
-}
-
 export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
@@ -50,7 +37,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
       category: subSubcategory?.subcategory?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: getThemeFromCategory(subSubcategory?.subcategory?.category?.slug),
+      theme: subSubcategory?.subcategory?.category?.themeColor,
     }
   })
 }

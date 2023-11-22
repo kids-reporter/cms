@@ -10,7 +10,6 @@ import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
-  Theme,
 } from '@/app/constants'
 import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
@@ -27,6 +26,7 @@ query($where: CategoryWhereUniqueInput!) {
       name
       slug
     }
+    themeColor
   }
 }
 `
@@ -38,6 +38,7 @@ query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
       ${POST_CONTENT_GQL}
     }
     relatedPostsCount
+    themeColor
   }
 }
 `
@@ -47,6 +48,7 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
   subcategory(where: $where) {
     category {
       slug
+      themeColor
     }
     relatedPosts(take: $take, skip: $skip) {
       ${POST_CONTENT_GQL}
@@ -63,6 +65,7 @@ query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
       slug
       category {
         slug
+        themeColor
       }
     }
     relatedPosts(take: $take, skip: $skip) {
@@ -73,22 +76,18 @@ query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
 }
 `
 
-const getImageAndThemeFromCategory = (category: string) => {
-  let imageURL, theme
+const getImageFromCategory = (category: string) => {
+  let imageURL
   if (category === 'news') {
     imageURL = '/assets/images/category_news.svg'
-    theme = Theme.BLUE
   } else if (category === 'listening-news') {
     imageURL = '/assets/images/category_listening_news.svg'
-    theme = Theme.RED
   } else if (category === 'comics') {
     imageURL = '/assets/images/category_comics.svg'
-    theme = Theme.YELLOW
   } else {
     imageURL = '/assets/images/category_campus.svg'
-    theme = Theme.YELLOW
   }
-  return { imageURL, theme }
+  return imageURL
 }
 
 export default async function Category({ params }: { params: { path: any } }) {
@@ -109,6 +108,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   let category = '',
     subcategory = '',
     subSubcategory = '',
+    themeColor = '',
     currentPage = 1
   if (path.length === 1 && path[0]) {
     category = path[0]
@@ -177,6 +177,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       log(LogLevel.INFO, 'Incorrect category!')
       notFound()
     }
+    themeColor = categoryData.themeColor
     const subcategories = categoryData.subcategories?.map((sub: any) => {
       return (
         sub && {
@@ -286,11 +287,11 @@ export default async function Category({ params }: { params: { path: any } }) {
     routingPrefix = `/category/${category}/page`
   }
 
-  const { imageURL, theme } = getImageAndThemeFromCategory(category)
+  const imageURL = getImageFromCategory(category)
 
   return (
     <main className="container">
-      <div className={`content theme-${theme}`}>
+      <div className={`content theme-${themeColor}`}>
         <img className="title-image" src={imageURL} />
         <div className="navigation">
           {navigationItems?.map(

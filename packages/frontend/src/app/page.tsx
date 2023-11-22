@@ -139,6 +139,7 @@ query($where: CategoryWhereUniqueInput!, $take: Int) {
     relatedPosts(take: $take) {
       ${POST_CONTENT_GQL}
     }
+    themeColor
   }
 }
 `
