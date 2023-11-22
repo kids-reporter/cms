@@ -108,7 +108,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   let category = '',
     subcategory = '',
     subSubcategory = '',
-    themeColor = '',
+    theme = '',
     currentPage = 1
   if (path.length === 1 && path[0]) {
     category = path[0]
@@ -177,7 +177,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       log(LogLevel.INFO, 'Incorrect category!')
       notFound()
     }
-    themeColor = categoryData.themeColor
+    theme = categoryData.themeColor
     const subcategories = categoryData.subcategories?.map((sub: any) => {
       return (
         sub && {
@@ -291,7 +291,7 @@ export default async function Category({ params }: { params: { path: any } }) {
 
   return (
     <main className="container">
-      <div className={`content theme-${themeColor}`}>
+      <div className={`content theme-${theme}`}>
         <img className="title-image" src={imageURL} />
         <div className="navigation">
           {navigationItems?.map(
