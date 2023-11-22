@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 import './post-card.scss'
@@ -15,7 +16,7 @@ export const PostCard = ({
 }: PostCardProp) => {
   return (
     post && (
-      <a
+      <Link
         href={post.url}
         className={`post-body theme-${post.theme} ${
           className ? className : ''
@@ -40,7 +41,7 @@ export const PostCard = ({
             </span>
           </div>
         </div>
-      </a>
+      </Link>
     )
   )
 }

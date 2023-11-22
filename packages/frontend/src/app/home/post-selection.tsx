@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import PostCard from '@/app/components/post-card'
 import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
@@ -12,7 +13,7 @@ type PostSelectionProp = {
 const PostBrick = ({ post }: { post: PostSummary }) => {
   return (
     post && (
-      <a className="post-brick" href={post.url}>
+      <Link className="post-brick" href={post.url}>
         <div className="top">
           <p className="category">{`${post.category ?? ''}/${
             post.subSubcategory ?? ''
@@ -22,7 +23,7 @@ const PostBrick = ({ post }: { post: PostSummary }) => {
           </p>
         </div>
         <p className="title">{post.title}</p>
-      </a>
+      </Link>
     )
   )
 }
@@ -45,9 +46,9 @@ export const PostSelection = (props: PostSelectionProp) => {
               <img src={'/assets/images/home-icon-clock.svg'} />
               最新文章
             </span>
-            <a href={'/all'}>
+            <Link href={'/all'}>
               更多<i className="icon-rpjr-icon-arrow-right"></i>
-            </a>
+            </Link>
           </div>
           <div className="latest-post-list">
             {latestPosts?.map((post, index) => {

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { SUBSCRIBE_URL } from '@/app/constants'
 import './call-to-action.scss'
 
@@ -18,17 +19,17 @@ export const CallToAction = () => {
               </p>
             </div>
             <div className="action-container">
-              <a
+              <Link
                 className="subscribe-btn"
                 href={SUBSCRIBE_URL}
                 target="_blank"
                 rel="noreferrer noopener"
               >
                 <span>歡迎訂閱</span>
-              </a>
-              <a className="contribute-btn" href={contributeURL}>
+              </Link>
+              <Link className="contribute-btn" href={contributeURL}>
                 <span>歡迎投稿</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { ArticleContext } from './article-context'
 import Title from './title'
 import HeroImage from './hero-image'
@@ -153,10 +154,10 @@ export const Article = ({ post }: { post: any }) => {
           <MobileSidebar topicURL={topicURL} />
           {topicURL && (
             <div className="topic-breadcrumb">
-              <a href={topicURL}>
+              <Link href={topicURL}>
                 <img src="/assets/images/topic-breadcrumb-icon.svg" />
                 {mainTopic?.title}
-              </a>
+              </Link>
             </div>
           )}
           <HeroImage
