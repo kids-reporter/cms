@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import { FieldLabel, FieldContainer } from '@keystone-ui/fields'
-import { controller } from '@keystone-6/core/fields/types/json/views'
+import { controller } from '@keystone-6/core/fields/types/virtual/views'
+import { TextArea } from '@keystone-ui/fields'
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const DEFAULT_BUTTON_TEXT = 'Copy to Clipboard'
@@ -19,20 +20,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   return (
     <FieldContainer>
       <FieldLabel>Embedded Code</FieldLabel>
-      <textarea
-        readOnly
-        value={value}
-        style={{
-          resize: 'vertical',
-          width: '100%',
-          minHeight: '80px',
-          maxHeight: '160px',
-          padding: '20px 30px',
-          borderRadius: '6px',
-          backgroundColor: '#fafbfc',
-        }}
-      />
-      <br />
+      <TextArea readOnly value={value} />
       <Button onClick={copyToClipboard}>{buttonText}</Button>
     </FieldContainer>
   )
