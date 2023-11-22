@@ -21,7 +21,7 @@ type SectionProp = {
 export const Section = (props: SectionProp) => {
   const config = props?.config
   const posts = props?.posts
-  const theme = props?.config.theme || posts[0]?.theme || DEFAULT_THEME_COLOR
+  const theme = props?.config.theme || DEFAULT_THEME_COLOR
 
   const moreBtn = config && (
     <Link
