@@ -34,6 +34,15 @@ const listConfigurations = list({
       label: '副標',
       validation: { isRequired: false },
     }),
+    onlineUsers: relationship({
+      label: 'online user',
+      ref: 'User',
+      ui: {
+        views: './lists/views/online-users',
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+      }
+    }), 
     status: select({
       label: '狀態',
       options: [
