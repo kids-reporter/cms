@@ -1375,6 +1375,60 @@ input PDFCreateInput {
   updatedAt: DateTime
 }
 
+type SVG {
+  id: ID!
+  name: String
+  svgFile: FileFieldOutput
+  authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
+  authorsCount(where: AuthorWhereInput! = {}): Int
+  embeddedCode: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SVGWhereUniqueInput {
+  id: ID
+}
+
+input SVGWhereInput {
+  AND: [SVGWhereInput!]
+  OR: [SVGWhereInput!]
+  NOT: [SVGWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  authors: AuthorManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input SVGOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input SVGUpdateInput {
+  name: String
+  svgFile: FileFieldInput
+  authors: AuthorRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input SVGUpdateArgs {
+  where: SVGWhereUniqueInput!
+  data: SVGUpdateInput!
+}
+
+input SVGCreateInput {
+  name: String
+  svgFile: FileFieldInput
+  authors: AuthorRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1465,6 +1519,12 @@ type Mutation {
   updatePDFS(data: [PDFUpdateArgs!]!): [PDF]
   deletePDF(where: PDFWhereUniqueInput!): PDF
   deletePDFS(where: [PDFWhereUniqueInput!]!): [PDF]
+  createSVG(data: SVGCreateInput!): SVG
+  createSVGS(data: [SVGCreateInput!]!): [SVG]
+  updateSVG(where: SVGWhereUniqueInput!, data: SVGUpdateInput!): SVG
+  updateSVGS(data: [SVGUpdateArgs!]!): [SVG]
+  deleteSVG(where: SVGWhereUniqueInput!): SVG
+  deleteSVGS(where: [SVGWhereUniqueInput!]!): [SVG]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1531,6 +1591,9 @@ type Query {
   pDFS(where: PDFWhereInput! = {}, orderBy: [PDFOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PDFWhereUniqueInput): [PDF!]
   pDF(where: PDFWhereUniqueInput!): PDF
   pDFSCount(where: PDFWhereInput! = {}): Int
+  sVGS(where: SVGWhereInput! = {}, orderBy: [SVGOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SVGWhereUniqueInput): [SVG!]
+  sVG(where: SVGWhereUniqueInput!): SVG
+  sVGSCount(where: SVGWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
