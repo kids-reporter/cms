@@ -17,5 +17,5 @@ const prodConfig = {
 }
 
 export default function robots(): MetadataRoute.Robots {
-  return process.env.NEXT_PUBLIC_IS_PRODUCTION ? prodConfig : devConfig
+  return process.env.NEXT_PUBLIC_RELEASE_ENV === 'prod' ? prodConfig : devConfig
 }
