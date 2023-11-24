@@ -5,7 +5,6 @@ import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer } from '@keystone-ui/fields'
 import { controller } from '@keystone-6/core/fields/types/json/views'
 
-/*
 const addUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
@@ -18,6 +17,7 @@ mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
 }
 `
 
+/*
 const removeUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
@@ -69,17 +69,24 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
   const [users, setUsers] = useState<User[]>([])
 
-  // const users = ['jason', 'howar', 'nick'] //JSON.parse(value) // ['1', '2']
-
   // Update onlineUsers after join
   useEffect(() => {
-    const fetchCurrentUser = async () => {
+    const updateUser = async () => {
       try {
-        const userRes = await axios.post('/api/graphql', {
+        const currentUserRes = await axios.post('/api/graphql', {
           query: currentUserGql,
         })
-        const authenticatedItem = userRes?.data?.data?.authenticatedItem
+        const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
         if (authenticatedItem?.email && authenticatedItem?.name) {
+          await axios.post('/api/graphql', {
+            query: addUserGql,
+            variables: {
+              where: {
+                id: postID,
+              },
+              data: {},
+            },
+          })
           setUsers([
             ...users,
             { email: authenticatedItem.email, name: authenticatedItem.name },
@@ -89,7 +96,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         console.log(err)
       }
     }
-    fetchCurrentUser()
+    updateUser()
   }, [])
 
   // Update onlineUsers before leave
