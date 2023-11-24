@@ -91,27 +91,46 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   return (
     <FieldContainer>
-      {users.map((user, index) => {
-        return <Avatar key={`online-user-${index}`} user={user} />
-      })}
+      <Avatars users={users} />
     </FieldContainer>
   )
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
 const AvatarContainer = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 20px;
   overflow: hidden;
-  margin: 0px auto;
-  background: red;
+  margin: 0px 2px;
+  background: ${(props) => props.color};
 `
 
-const Avatar = (props: { user: string }) => {
+// TODO: get light color only
+const getColor = () => {
+  const letters = '0123456789ABCDEF'
+  let color = '#'
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
+const Avatars = (props: { users: string[] }) => {
   return (
-    <AvatarContainer>
-      {/*<img src={avatarURL} alt={author.name} />*/}
-      <p>{props.user}</p>
-    </AvatarContainer>
+    <Container>
+      {props?.users?.map((user, index) => {
+        return (
+          <AvatarContainer key={`online-user-${index}`} color={getColor()}>
+            {/*<img src={avatarURL} alt={author.name} />*/}
+            <p>{user}</p>
+          </AvatarContainer>
+        )
+      })}
+    </Container>
   )
 }
