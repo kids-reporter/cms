@@ -10,6 +10,7 @@ import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  DEFAULT_THEME_COLOR,
 } from '@/app/constants'
 import { getPostSummaries, log, LogLevel } from '@/app/utils'
 import './page.scss'
@@ -38,7 +39,6 @@ query($where: CategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
       ${POST_CONTENT_GQL}
     }
     relatedPostsCount
-    themeColor
   }
 }
 `
@@ -48,7 +48,6 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
   subcategory(where: $where) {
     category {
       slug
-      themeColor
     }
     relatedPosts(take: $take, skip: $skip) {
       ${POST_CONTENT_GQL}
@@ -65,7 +64,6 @@ query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
       slug
       category {
         slug
-        themeColor
       }
     }
     relatedPosts(take: $take, skip: $skip) {
@@ -177,7 +175,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       log(LogLevel.INFO, 'Incorrect category!')
       notFound()
     }
-    theme = categoryData.themeColor
+    theme = categoryData.themeColor || DEFAULT_THEME_COLOR
     const subcategories = categoryData.subcategories?.map((sub: any) => {
       return (
         sub && {

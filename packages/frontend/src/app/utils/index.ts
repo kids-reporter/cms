@@ -1,5 +1,6 @@
 import { STORAGE_URL, Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
+import { DEFAULT_THEME_COLOR } from '@/app/constants'
 
 export const getThemeColor = (theme: Theme) => {
   if (theme === Theme.YELLOW) {
@@ -37,7 +38,9 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
       category: subSubcategory?.subcategory?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: subSubcategory?.subcategory?.category?.themeColor,
+      theme:
+        subSubcategory?.subcategory?.category?.themeColor ||
+        DEFAULT_THEME_COLOR,
     }
   })
 }

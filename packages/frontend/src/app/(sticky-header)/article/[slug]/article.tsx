@@ -112,7 +112,7 @@ const getPostContents = (post: any) => {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = subcategory?.category?.themeColor || DEFAULT_THEME_COLOR
+  const theme = category?.themeColor || DEFAULT_THEME_COLOR
 
   return {
     theme,
