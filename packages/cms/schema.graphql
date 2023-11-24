@@ -132,7 +132,6 @@ type Post {
   title: String
   slug: String
   subtitle: String
-  onlineUsers: User
   status: String
   publishedDate: DateTime
   mainProject: Project
@@ -158,6 +157,7 @@ type Post {
   createdAt: DateTime
   updatedAt: DateTime
   preview: JSON
+  onlineUsers: User
 }
 
 input PostWhereUniqueInput {
@@ -173,7 +173,6 @@ input PostWhereInput {
   title: StringFilter
   slug: StringFilter
   subtitle: StringFilter
-  onlineUsers: UserWhereInput
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   mainProject: ProjectWhereInput
@@ -190,6 +189,7 @@ input PostWhereInput {
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  onlineUsers: UserWhereInput
 }
 
 input StringNullableFilter {
@@ -269,7 +269,6 @@ input PostUpdateInput {
   title: String
   slug: String
   subtitle: String
-  onlineUsers: UserRelateToOneForUpdateInput
   status: String
   publishedDate: DateTime
   mainProject: ProjectRelateToOneForUpdateInput
@@ -289,12 +288,7 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
+  onlineUsers: UserRelateToOneForUpdateInput
 }
 
 input ProjectRelateToOneForUpdateInput {
@@ -350,6 +344,12 @@ input PostRelateToManyForUpdateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
 input PostUpdateArgs {
   where: PostWhereUniqueInput!
   data: PostUpdateInput!
@@ -359,7 +359,6 @@ input PostCreateInput {
   title: String
   slug: String
   subtitle: String
-  onlineUsers: UserRelateToOneForCreateInput
   status: String
   publishedDate: DateTime
   mainProject: ProjectRelateToOneForCreateInput
@@ -379,11 +378,7 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
+  onlineUsers: UserRelateToOneForCreateInput
 }
 
 input ProjectRelateToOneForCreateInput {
@@ -424,6 +419,11 @@ input TagRelateToManyForCreateInput {
 input PostRelateToManyForCreateInput {
   create: [PostCreateInput!]
   connect: [PostWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 type Photo {

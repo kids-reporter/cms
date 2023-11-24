@@ -27,8 +27,6 @@ model Post {
   title                                      String               @default("")
   slug                                       String               @unique @default("")
   subtitle                                   String               @default("")
-  onlineUsers                                User?                @relation("Post_onlineUsers", fields: [onlineUsersId], references: [id])
-  onlineUsersId                              Int?                 @map("onlineUsers")
   status                                     String?              @default("draft")
   publishedDate                              DateTime?
   mainProject                                Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
@@ -52,17 +50,19 @@ model Post {
   ogImageId                                  Int?                 @map("ogImage")
   createdAt                                  DateTime?            @default(now())
   updatedAt                                  DateTime?            @updatedAt
+  onlineUsers                                User?                @relation("Post_onlineUsers", fields: [onlineUsersId], references: [id])
+  onlineUsersId                              Int?                 @map("onlineUsers")
   from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
 
   @@index([title])
-  @@index([onlineUsersId])
   @@index([status])
   @@index([publishedDate])
   @@index([mainProjectId])
   @@index([heroImageId])
   @@index([newsReadingGroupId])
   @@index([ogImageId])
+  @@index([onlineUsersId])
 }
 
 model Photo {
