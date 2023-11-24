@@ -1,4 +1,4 @@
-import React, { useEffect /*useState*/ } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { FieldProps } from '@keystone-6/core/types'
@@ -35,18 +35,30 @@ const queryUserGql = `
 query($where: PostWhereUniqueInput!) {
   post(where: $where) {
     onlineUsers {
-      id
+      name
       email
     }
   }
 }
 `
 
+const mockups = [
+  { name: 'jason', email: '001@gmail.com' },
+  { name: 'howar', email: '002@gmail.com' },
+  { name: 'nick', email: '003@gmail.com' },
+]
+
+type User = {
+  name: string
+  email: string
+}
+
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
-  // const  [ userState, setUserState ] = useState([])
+  const [users, setUsers] = useState<User[]>(mockups)
+
   // TODO: check relationship value
-  const users = ['jason', 'howar', 'nick'] //JSON.parse(value) // ['1', '2']
+  // const users = ['jason', 'howar', 'nick'] //JSON.parse(value) // ['1', '2']
 
   useEffect(() => {
     // update onlineUsers after join
@@ -88,7 +100,9 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             },
           },
         })
-        console.log('onlineUsers', usersRes?.data?.data?.post?.onlineUsers)
+        const currentUsers = usersRes?.data?.data?.post?.onlineUsers
+        console.log('onlineUsers', currentUsers)
+        setUsers(mockups)
       } catch (err) {
         console.log(err)
       }
@@ -97,7 +111,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   })
 
   // TODO: get myself id, name
-  users.push('nick') // ['jason', 'howar', 'nick']
 
   return (
     <FieldContainer>
@@ -111,13 +124,27 @@ const Container = styled.div`
   flex-direction: row;
 `
 
-const AvatarContainer = styled.div`
+const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  overflow: hidden;
   margin: 0px 2px;
   background: ${(props) => props.color};
+`
+
+const Tooltip = styled.span`
+  visibility: visible;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
 `
 
 // TODO: get light color only
@@ -130,15 +157,15 @@ const getColor = () => {
   return color
 }
 
-const Avatars = (props: { users: string[] }) => {
+const Avatars = (props: { users: User[] }) => {
   return (
     <Container>
       {props?.users?.map((user, index) => {
         return (
-          <AvatarContainer key={`online-user-${index}`} color={getColor()}>
-            {/*<img src={avatarURL} alt={author.name} />*/}
-            <p>{user}</p>
-          </AvatarContainer>
+          <Avatar key={`online-user-${index}`} color={getColor()}>
+            {user.name}
+            <Tooltip>{user.email}</Tooltip>
+          </Avatar>
         )
       })}
     </Container>
