@@ -58,6 +58,7 @@ const query = `
             category {
               name
               slug
+              themeColor
             }
           }
         }
