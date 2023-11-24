@@ -36,6 +36,7 @@ const categoryGQL = `
       category {
         name
         slug
+        themeColor
       }
     }
   }

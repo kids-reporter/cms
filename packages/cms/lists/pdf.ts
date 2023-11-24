@@ -51,6 +51,9 @@ const listConfigurations = list({
           return code
         },
       }),
+      ui: {
+        views: './lists/views/embedded-code',
+      },
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },

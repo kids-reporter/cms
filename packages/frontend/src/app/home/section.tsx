@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import PostSlider from '@/app/components/post-slider'
 import { PostSummary } from '@/app/components/types'
-import { Theme } from '@/app/constants'
+import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
 
 import './section.scss'
 
@@ -21,11 +21,12 @@ type SectionProp = {
 export const Section = (props: SectionProp) => {
   const config = props?.config
   const posts = props?.posts
+  const theme = props?.config.theme || DEFAULT_THEME_COLOR
 
   const moreBtn = config && (
     <Link
       href={config.link}
-      className={`rpjr-btn rpjr-btn-theme-outline theme-${config.theme}`}
+      className={`rpjr-btn rpjr-btn-theme-outline theme-${theme}`}
     >
       看更多文章 <i className="icon-rpjr-icon-arrow-right"></i>
     </Link>
@@ -43,9 +44,7 @@ export const Section = (props: SectionProp) => {
           </div>
           <div className="more">{moreBtn}</div>
         </div>
-        {posts?.length > 0 && (
-          <PostSlider posts={posts} sliderTheme={config.theme} />
-        )}
+        {posts?.length > 0 && <PostSlider posts={posts} sliderTheme={theme} />}
         <div className="more-mobile">{moreBtn}</div>
       </div>
     )

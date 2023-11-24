@@ -8,6 +8,7 @@ import Project from './project'
 import ProjectCategory from './project-category'
 import SubSubcategory from './sub-subcategory'
 import Subcategory from './subcatgory'
+import SVG from './svg'
 import Tag from './tag'
 import User from './user'
 import { NewsReadingGroup, NewsReadingGroupItem } from './news-reading'
@@ -39,6 +40,7 @@ export const listDefinition = {
   NewsReadingGroupItem,
   EditorPicksSetting,
   PDF,
+  SVG,
   //EditorChoice,
   //Video,
   //AudioFile: Audio,

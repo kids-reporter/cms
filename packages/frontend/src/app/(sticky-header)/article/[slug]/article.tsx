@@ -21,8 +21,9 @@ import {
   STORAGE_URL,
   DEFAULT_AVATAR,
   FontSizeLevel,
+  DEFAULT_THEME_COLOR,
 } from '@/app/constants'
-import { getPostSummaries, getThemeFromCategory } from '@/app/utils'
+import { getPostSummaries } from '@/app/utils'
 import './article.scss'
 
 const getPostContents = (post: any) => {
@@ -111,7 +112,7 @@ const getPostContents = (post: any) => {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = getThemeFromCategory(category?.slug)
+  const theme = category?.themeColor || DEFAULT_THEME_COLOR
 
   return {
     theme,
