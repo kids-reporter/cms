@@ -105,7 +105,7 @@ Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資�
 我們會需要為這些差異產生新的 migration 檔案。
 以下是推薦的做法：
 
-1. Stop the Docker database instance if necessary.
+1. (optional) Stop the Docker database instance if necessary.
 
     ```bash
     docker stop kids-cms;
@@ -135,17 +135,25 @@ Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資�
 
     `example_migration_name` will be part of the file name of the migration file.
 
-5. Stop the Docker container for the database migration.
+5. (optional) Stop the Docker container for the database migration.
 
     ```bash
     docker stop kids-cms-migration;
     ```
 
-6. Start the Docker container for the database.
+6. (optional) Start the Docker container for the database.
 
     ```bash
     docker start kids-cms;
     ```
+
+7. (optional) Remove the Docker container for the database migration.
+
+    ```bash
+    docker rm kids-cms-migration;
+    ```
+
+    you may check if the container is removed by running `docker ps -a`.
 
 #### 3. 上傳 migration 檔案和新的 schema.prisma 到 repo
 
