@@ -40,9 +40,9 @@ const listConfigurations = list({
       ui: {
         views: './lists/views/online-users',
         createView: { fieldMode: 'hidden' },
-        listView: { fieldMode: 'hidden' },
-      }
-    }), 
+        listView: { fieldMode: 'read' },
+      },
+    }),
     status: select({
       label: '狀態',
       options: [

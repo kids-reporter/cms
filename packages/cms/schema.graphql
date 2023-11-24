@@ -132,6 +132,7 @@ type Post {
   title: String
   slug: String
   subtitle: String
+  onlineUsers: User
   status: String
   publishedDate: DateTime
   mainProject: Project
@@ -172,6 +173,7 @@ input PostWhereInput {
   title: StringFilter
   slug: StringFilter
   subtitle: StringFilter
+  onlineUsers: UserWhereInput
   status: StringNullableFilter
   publishedDate: DateTimeNullableFilter
   mainProject: ProjectWhereInput
@@ -267,6 +269,7 @@ input PostUpdateInput {
   title: String
   slug: String
   subtitle: String
+  onlineUsers: UserRelateToOneForUpdateInput
   status: String
   publishedDate: DateTime
   mainProject: ProjectRelateToOneForUpdateInput
@@ -286,6 +289,12 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ProjectRelateToOneForUpdateInput {
@@ -350,6 +359,7 @@ input PostCreateInput {
   title: String
   slug: String
   subtitle: String
+  onlineUsers: UserRelateToOneForCreateInput
   status: String
   publishedDate: DateTime
   mainProject: ProjectRelateToOneForCreateInput
@@ -369,6 +379,11 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input ProjectRelateToOneForCreateInput {

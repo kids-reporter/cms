@@ -12,13 +12,14 @@ generator client {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String    @default("")
-  email     String    @unique @default("")
-  password  String
-  role      String
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id                    Int       @id @default(autoincrement())
+  name                  String    @default("")
+  email                 String    @unique @default("")
+  password              String
+  role                  String
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @updatedAt
+  from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
 }
 
 model Post {
@@ -26,6 +27,8 @@ model Post {
   title                                      String               @default("")
   slug                                       String               @unique @default("")
   subtitle                                   String               @default("")
+  onlineUsers                                User?                @relation("Post_onlineUsers", fields: [onlineUsersId], references: [id])
+  onlineUsersId                              Int?                 @map("onlineUsers")
   status                                     String?              @default("draft")
   publishedDate                              DateTime?
   mainProject                                Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
@@ -53,6 +56,7 @@ model Post {
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
 
   @@index([title])
+  @@index([onlineUsersId])
   @@index([status])
   @@index([publishedDate])
   @@index([mainProjectId])
