@@ -182,7 +182,7 @@ const listConfigurations = list({
     },
     filter: {
       query: ({ session }) => {
-        if (process.env.NODE_ENV === 'test') {
+        if (envVars.nodeEnv === 'test') {
           return {}
         }
 

@@ -1,3 +1,5 @@
+import envVars from '../../environment-variables'
+
 type Session = {
   data: {
     name: string
@@ -18,7 +20,7 @@ export const RoleEnum = {
 
 export const allowRoles = (roles: string[]) => {
   return ({ session }: { session: Session }) => {
-    if (process.env.NODE_ENV === 'test') {
+    if (envVars.nodeEnv === 'test') {
       return true
     }
 
