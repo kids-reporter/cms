@@ -66,7 +66,6 @@ type User = {
 }
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
-  console.log(value)
   const postID = value?.id
   const [users, setUsers] = useState<User[]>([])
 
