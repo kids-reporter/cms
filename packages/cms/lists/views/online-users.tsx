@@ -54,26 +54,35 @@ type User = {
 }
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
+  console.log(value)
   const postID = value?.id
   const [users, setUsers] = useState<User[]>(mockups)
 
-  // TODO: check relationship value
   // const users = ['jason', 'howar', 'nick'] //JSON.parse(value) // ['1', '2']
 
+  // Update onlineUsers after join
   useEffect(() => {
-    // update onlineUsers after join
-    /*
-    axios.post('api host', addUserGql, {
-      where: { slug: ...},
-      data: {
-        userId: userId,
-      }
-    })
-    */
+    try {
+      /*
+      axios.post('/api/graphql',{
+        query: addUserGql, 
+        variables: {
+          where: { 
+            id: postID
+          },
+          data: {
+            userId: userId,
+          }
+        }
+      })
+      */
+    } catch (err) {
+      console.log(err)
+    }
   }, [])
 
+  // Update onlineUsers before leave
   useEffect(() => {
-    // update onlineUsers before leave
     window.addEventListener('beforeunload', () => {
       /*
       axios.post('api host', removeUserGql, {
@@ -89,6 +98,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     }
   }, [])
 
+  // Polling to fetch online users
   useEffect(() => {
     setInterval(async () => {
       try {
@@ -127,6 +137,10 @@ const Container = styled.div`
 const Avatar = styled.div`
   width: 40px;
   height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 20px;
   margin: 0px 2px;
   background: ${(props) => props.color};
@@ -163,7 +177,7 @@ const Avatars = (props: { users: User[] }) => {
       {props?.users?.map((user, index) => {
         return (
           <Avatar key={`online-user-${index}`} color={getColor()}>
-            {user.name}
+            <span>{user.name?.[0]}</span>
             <Tooltip>{user.email}</Tooltip>
           </Avatar>
         )
