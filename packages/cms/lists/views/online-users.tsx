@@ -32,18 +32,18 @@ mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
 */
 
 const queryUserGql = `
-query {
+query($where: PostWhereUniqueInput!) {
   post(where: $where) {
     onlineUsers {
       id
-      name
+      email
     }
   }
 }
 `
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
-  console.log(value)
+  const postID = value?.id
   // const  [ userState, setUserState ] = useState([])
   // TODO: check relationship value
   const users = ['jason', 'howar', 'nick'] //JSON.parse(value) // ['1', '2']
@@ -78,10 +78,20 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   }, [])
 
   useEffect(() => {
-    // polling user data
     setInterval(async () => {
-      const users = await axios.post('api host', queryUserGql)
-      console.log(users)
+      try {
+        const usersRes = await axios.post('/api/graphql', {
+          query: queryUserGql,
+          variables: {
+            where: {
+              id: postID,
+            },
+          },
+        })
+        console.log('onlineUsers', usersRes?.data?.data?.post?.onlineUsers)
+      } catch (err) {
+        console.log(err)
+      }
       // setUserState(users)
     }, 3000)
   })
