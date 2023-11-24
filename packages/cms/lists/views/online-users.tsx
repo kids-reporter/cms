@@ -91,7 +91,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       }
     }
     fetchCurrentUser()
-  }, [users])
+  }, [])
 
   // Update onlineUsers before leave
   // TODO: remove setinterval
