@@ -31,7 +31,17 @@ mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
 `
 */
 
-const queryUserGql = `
+const currentUserGql = `
+query User {
+  authenticatedItem {
+    ... on User {
+      email
+      name
+    }
+  }
+}`
+
+const onlineUsersGql = `
 query($where: PostWhereUniqueInput!) {
   post(where: $where) {
     onlineUsers {
@@ -42,11 +52,13 @@ query($where: PostWhereUniqueInput!) {
 }
 `
 
+/*
 const mockups = [
   { name: 'jason', email: '001@gmail.com' },
   { name: 'howar', email: '002@gmail.com' },
   { name: 'nick', email: '003@gmail.com' },
 ]
+*/
 
 type User = {
   name: string
@@ -56,32 +68,33 @@ type User = {
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   console.log(value)
   const postID = value?.id
-  const [users, setUsers] = useState<User[]>(mockups)
+  const [users, setUsers] = useState<User[]>([])
 
   // const users = ['jason', 'howar', 'nick'] //JSON.parse(value) // ['1', '2']
 
   // Update onlineUsers after join
   useEffect(() => {
-    try {
-      /*
-      axios.post('/api/graphql',{
-        query: addUserGql, 
-        variables: {
-          where: { 
-            id: postID
-          },
-          data: {
-            userId: userId,
-          }
+    const fetchCurrentUser = async () => {
+      try {
+        const userRes = await axios.post('/api/graphql', {
+          query: currentUserGql,
+        })
+        const authenticatedItem = userRes?.data?.data?.authenticatedItem
+        if (authenticatedItem?.email && authenticatedItem?.name) {
+          setUsers([
+            ...users,
+            { email: authenticatedItem.email, name: authenticatedItem.name },
+          ])
         }
-      })
-      */
-    } catch (err) {
-      console.log(err)
+      } catch (err) {
+        console.log(err)
+      }
     }
-  }, [])
+    fetchCurrentUser()
+  }, [users])
 
   // Update onlineUsers before leave
+  // TODO: remove setinterval
   useEffect(() => {
     window.addEventListener('beforeunload', () => {
       /*
@@ -103,7 +116,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     setInterval(async () => {
       try {
         const usersRes = await axios.post('/api/graphql', {
-          query: queryUserGql,
+          query: onlineUsersGql,
           variables: {
             where: {
               id: postID,
@@ -112,15 +125,12 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         })
         const currentUsers = usersRes?.data?.data?.post?.onlineUsers
         console.log('onlineUsers', currentUsers)
-        setUsers(mockups)
+        // setUsers(mockups)
       } catch (err) {
         console.log(err)
       }
-      // setUserState(users)
     }, 3000)
   })
-
-  // TODO: get myself id, name
 
   return (
     <FieldContainer>
