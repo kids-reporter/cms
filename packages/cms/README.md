@@ -140,6 +140,14 @@ Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資�
     docker start kids-cms;
     ```
 
+7. (optional) Remove the Docker container for the database migration.
+
+    ```bash
+    docker rm kids-cms-migration;
+    ```
+
+    you may check if the container is removed by running `docker ps -a`.
+
 #### 3. 上傳 migration 檔案和新的 schema.prisma 到 repo
 
 Database migration 執行的時機點是在部署的時候，
