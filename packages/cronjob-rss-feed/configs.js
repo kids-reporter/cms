@@ -11,4 +11,8 @@ export const config = {
     language: 'zh-tw',
     image_url: 'https://kids.twreporter.org/favicon.ico',
   },
+  gcs: {
+    projectId: process.env.PROJECT_ID || 'kids-reporter',
+    keyFilename: process.env.KEY_FILENAME || '/path/to/your/keyfile.json',
+  },
 }
