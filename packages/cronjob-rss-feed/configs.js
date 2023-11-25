@@ -1,9 +1,9 @@
 export const config = {
-  apiUrl: 'https://kids-cms.twreporter.org/api/graphql',
-  baseUrl: 'https://kids.twreporter.org/',
-  bucketName: 'dev-kids-storage.twreporter.org',
-  rssFileName: 'rss.xml',
-  slackWebhook: 'SLACK_WEBHOOK_URL',
+  apiUrl: process.env.API_URL || 'https://kids-cms.twreporter.org/api/graphql',
+  baseUrl: process.env.BASE_URL || 'https://kids.twreporter.org/',
+  bucketName: process.env.BUCKET_NAME || 'kids-storage.twreporter.org',
+  slackWebhook: process.env.SLACK_WEBHOOK || 'SLACK_WEBHOOK_URL',
+  rssFileName: process.env.RSS_FILE_NAME || 'rss.xml',
   rss: {
     title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
     description:
