@@ -97,9 +97,7 @@ const sendSlackNotification = async (message) => {
 
 const main = async () => {
   const posts = await fetchPosts()
-  console.log(posts)
   const rss = generateRSS(posts)
-  console.log(rss)
   await uploadToGCS(rss)
   await sendSlackNotification(
     `RSS feed uploaded to GCS bucket: ${config.bucketName}/rss/${config.rssFileName}`
