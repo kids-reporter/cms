@@ -78,7 +78,7 @@ query($where: PostWhereUniqueInput!) {
 }
 `
 
-const Container = styled.div`
+const Container = styled(FieldContainer)`
   display: flex;
   flex-direction: row;
 `
@@ -113,21 +113,6 @@ const Tooltip = styled.span`
 type User = {
   name: string
   email: string
-}
-
-const Avatars = (props: { users: User[] }) => {
-  return (
-    <Container>
-      {props?.users?.map((user, index) => {
-        return (
-          <Avatar key={`online-user-${index}`} color={getColor()}>
-            <span>{user.name?.[0]}</span>
-            <Tooltip>{`${user.name} ${user.email}`}</Tooltip>
-          </Avatar>
-        )
-      })}
-    </Container>
-  )
 }
 
 const mockups = [
@@ -222,8 +207,15 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   })
 
   return (
-    <FieldContainer>
-      <Avatars users={users} />
-    </FieldContainer>
+    <Container>
+      {users?.map((user, index) => {
+        return (
+          <Avatar key={`online-user-${index}`} color={getColor()}>
+            <span>{user.name?.[0]}</span>
+            <Tooltip>{`${user.name}: ${user.email}`}</Tooltip>
+          </Avatar>
+        )
+      })}
+    </Container>
   )
 }
