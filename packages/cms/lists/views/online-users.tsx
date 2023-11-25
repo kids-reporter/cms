@@ -5,6 +5,23 @@ import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer } from '@keystone-ui/fields'
 import { controller } from '@keystone-6/core/fields/types/json/views'
 
+const colors = [
+  '#C0C0C0',
+  '#87CEEB',
+  '#F5DEB3',
+  '#90EE90',
+  '#FFB6C1',
+  '#FF8C00',
+  '#FFD700',
+  '#66CDAA',
+  '#FFE4B5',
+  '#EEE8AA',
+]
+
+const getColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)]
+}
+
 const addUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
@@ -61,16 +78,63 @@ query($where: PostWhereUniqueInput!) {
 }
 `
 
-const mockups = [
-  { name: 'jason', email: '001@gmail.com' },
-  { name: 'howar', email: '002@gmail.com' },
-  { name: 'nick', email: '003@gmail.com' },
-]
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const Avatar = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin: 0px 2px;
+  background: ${(props) => props.color};
+`
+
+const Tooltip = styled.span`
+  visibility: visible;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+`
 
 type User = {
   name: string
   email: string
 }
+
+const Avatars = (props: { users: User[] }) => {
+  return (
+    <Container>
+      {props?.users?.map((user, index) => {
+        return (
+          <Avatar key={`online-user-${index}`} color={getColor()}>
+            <span>{user.name?.[0]}</span>
+            <Tooltip>{`${user.name} ${user.email}`}</Tooltip>
+          </Avatar>
+        )
+      })}
+    </Container>
+  )
+}
+
+const mockups = [
+  { name: 'jason', email: '001@gmail.com' },
+  { name: 'howar', email: '002@gmail.com' },
+  { name: 'nick', email: '003@gmail.com' },
+]
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
@@ -161,68 +225,5 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     <FieldContainer>
       <Avatars users={users} />
     </FieldContainer>
-  )
-}
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  margin: 0px 2px;
-  background: ${(props) => props.color};
-`
-
-const Tooltip = styled.span`
-  visibility: visible;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -60px;
-`
-
-const colors = [
-  '#C0C0C0',
-  '#87CEEB',
-  '#F5DEB3',
-  '#90EE90',
-  '#FFB6C1',
-  '#FF8C00',
-  '#FFD700',
-  '#66CDAA',
-  '#FFE4B5',
-  '#EEE8AA',
-]
-const getColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)]
-}
-
-const Avatars = (props: { users: User[] }) => {
-  return (
-    <Container>
-      {props?.users?.map((user, index) => {
-        return (
-          <Avatar key={`online-user-${index}`} color={getColor()}>
-            <span>{user.name?.[0]}</span>
-            <Tooltip>{`${user.name} ${user.email}`}</Tooltip>
-          </Avatar>
-        )
-      })}
-    </Container>
   )
 }
