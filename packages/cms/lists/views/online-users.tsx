@@ -16,6 +16,15 @@ mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   }
 }
 `
+/*
+mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
+  updatePost(where: $where, data: $data) {
+    onlineUsers {
+      id
+    }
+  }
+}
+*/
 
 /*
 const removeUserGql = `
@@ -52,13 +61,11 @@ query($where: PostWhereUniqueInput!) {
 }
 `
 
-/*
 const mockups = [
   { name: 'jason', email: '001@gmail.com' },
   { name: 'howar', email: '002@gmail.com' },
   { name: 'nick', email: '003@gmail.com' },
 ]
-*/
 
 type User = {
   name: string
@@ -67,7 +74,7 @@ type User = {
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
-  const [users, setUsers] = useState<User[]>([])
+  const [users, setUsers] = useState<User[]>(mockups)
 
   // Update onlineUsers after join
   useEffect(() => {
@@ -85,6 +92,18 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                 id: postID,
               },
               data: {},
+              /*
+              "where": {
+                "id": "18"
+              },
+              "data": {
+                "onlineUsers": {
+                  "connect": {
+                    "email": "schsu@twreporter.org"
+                  }
+                }
+              }
+              */
             },
           })
           setUsers([
@@ -135,7 +154,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       } catch (err) {
         console.log(err)
       }
-    }, 3000)
+    }, 5000)
   })
 
   return (
@@ -177,14 +196,20 @@ const Tooltip = styled.span`
   margin-left: -60px;
 `
 
-// TODO: get light color only
+const colors = [
+  '#C0C0C0',
+  '#87CEEB',
+  '#F5DEB3',
+  '#90EE90',
+  '#FFB6C1',
+  '#FF8C00',
+  '#FFD700',
+  '#66CDAA',
+  '#FFE4B5',
+  '#EEE8AA',
+]
 const getColor = () => {
-  const letters = '0123456789ABCDEF'
-  let color = '#'
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)]
-  }
-  return color
+  return colors[Math.floor(Math.random() * colors.length)]
 }
 
 const Avatars = (props: { users: User[] }) => {
@@ -194,7 +219,7 @@ const Avatars = (props: { users: User[] }) => {
         return (
           <Avatar key={`online-user-${index}`} color={getColor()}>
             <span>{user.name?.[0]}</span>
-            <Tooltip>{user.email}</Tooltip>
+            <Tooltip>{`${user.name} ${user.email}`}</Tooltip>
           </Avatar>
         )
       })}
