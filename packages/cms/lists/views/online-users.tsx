@@ -21,19 +21,18 @@ const colors = [
 const getColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
 }
-/*
+
 const addUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
     onlineUsers {
-      connect: {
-        id: $data.id
-      }
+      email
     }
   }
 }
 `
 
+/*
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
     onlineUsers {
@@ -115,15 +114,9 @@ type User = {
   email: string
 }
 
-const mockups = [
-  { name: 'jason', email: '001@gmail.com' },
-  { name: 'howar', email: '002@gmail.com' },
-  { name: 'nick', email: '003@gmail.com' },
-]
-
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
-  const [users, setUsers] = useState<User[]>(mockups)
+  const [users, setUsers] = useState<User[]>([])
 
   // Update onlineUsers after join
   useEffect(() => {
@@ -134,28 +127,23 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         })
         const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
         if (authenticatedItem?.email && authenticatedItem?.name) {
-          /*
           await axios.post('/api/graphql', {
             query: addUserGql,
             variables: {
               where: {
                 id: postID,
               },
-              data: {},
-              "where": {
-                "id": "18"
+              data: {
+                onlineUsers: {
+                  connect: [
+                    {
+                      email: authenticatedItem.email,
+                    },
+                  ],
+                },
               },
-              "data": {
-                "onlineUsers": {
-                  "connect": {
-                    "email": "schsu@twreporter.org"
-                  }
-                }
-              }
-              
             },
           })
-          */
           setUsers([
             ...users,
             { email: authenticatedItem.email, name: authenticatedItem.name },
@@ -199,8 +187,8 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           },
         })
         const currentUsers = usersRes?.data?.data?.post?.onlineUsers
+        setUsers(currentUsers ?? [])
         console.log('onlineUsers', currentUsers)
-        // setUsers(mockups)
       } catch (err) {
         console.log(err)
       }

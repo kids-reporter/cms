@@ -203,6 +203,7 @@ const listConfigurations = list({
     onlineUsers: relationship({
       label: 'online user',
       ref: 'User',
+      many: true,
       ui: {
         views: './lists/views/online-users',
         createView: { fieldMode: 'hidden' },
