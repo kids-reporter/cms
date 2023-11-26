@@ -12,7 +12,7 @@ export const config = {
     image_url: 'https://kids.twreporter.org/favicon.ico',
   },
   gcs: {
-    projectId: process.env.PROJECT_ID || 'kids-reporter',
-    keyFilename: process.env.KEY_FILENAME || '/path/to/your/keyfile.json',
+    projectId: process.env.PROJECT_ID || '',
+    keyFilename: process.env.KEY_FILENAME || '',
   },
 }
