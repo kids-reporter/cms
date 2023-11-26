@@ -1,5 +1,5 @@
 export const config = {
-  apiUrl: process.env.API_URL || 'https://kids-cms.twreporter.org/api/graphql',
+  apiUrl: process.env.API_URL || 'https://kids-api.twreporter.org/api/graphql',
   baseUrl: process.env.BASE_URL || 'https://kids.twreporter.org/',
   bucketName: process.env.BUCKET_NAME || 'kids-storage.twreporter.org',
   slackWebhook: process.env.SLACK_WEBHOOK || 'SLACK_WEBHOOK_URL',
