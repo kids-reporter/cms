@@ -18,10 +18,6 @@ const colors = [
   '#EEE8AA',
 ]
 
-const getColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)]
-}
-
 const upateUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
@@ -132,6 +128,9 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       }
     }
     updateUser()
+  }, [])
+
+  useEffect(() => {
     const polling = setInterval(async () => {
       try {
         const usersRes = await axios.post('/api/graphql', {
@@ -149,6 +148,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         console.log(err)
       }
     }, 5000)
+
     return async () => {
       clearInterval(polling)
       if (currentUserEmail) {
@@ -177,7 +177,10 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     <Container>
       {users?.map((user, index) => {
         return (
-          <Avatar key={`online-user-${index}`} color={getColor()}>
+          <Avatar
+            key={`online-user-${index}`}
+            color={colors[index % colors.length]}
+          >
             <span>{user.name?.[0]}</span>
             <Tooltip>{`${user.name}: ${user.email}`}</Tooltip>
           </Avatar>
