@@ -4,10 +4,13 @@ import { Storage } from '@google-cloud/storage'
 import { IncomingWebhook } from '@slack/webhook'
 import { config } from './configs.js'
 
-const storage = new Storage({
-  projectId: config.gcs.projectId,
-  keyFilename: config.gcs.keyFilename,
-})
+const storage =
+  config.gcs.projectId && config.gcs.keyFilename
+    ? new Storage({
+        projectId: config.gcs.projectId,
+        keyFilename: config.gcs.keyFilename,
+      })
+    : new Storage()
 const webhook = new IncomingWebhook(config.slackWebhook)
 
 const fetchPosts = async () => {
