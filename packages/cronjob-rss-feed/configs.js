@@ -9,7 +9,7 @@ export const config = {
     description:
       '《少年報導者》是由非營利媒體《報導者》針對兒少打造的深度新聞報導品牌，與兒童和少年一起理解世界，參與未來。',
     language: 'zh-tw',
-    image_url: 'https://kids.twreporter.org/favicon.ico',
+    image_url: 'https://kids-storage.twreporter.org/logo.png',
   },
   gcs: {
     projectId: process.env.PROJECT_ID || '',
