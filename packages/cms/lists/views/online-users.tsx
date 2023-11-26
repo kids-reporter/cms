@@ -22,7 +22,7 @@ const getColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
 }
 
-const addUserGql = `
+const upateUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
     onlineUsers {
@@ -31,30 +31,6 @@ mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   }
 }
 `
-
-/*
-mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
-  updatePost(where: $where, data: $data) {
-    onlineUsers {
-      id
-    }
-  }
-}
-*/
-
-/*
-const removeUserGql = `
-mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
-  updatePost(where: $where, data: $data) {
-    onlineUsers {
-      disconect: {
-        id: $data.id
-      }
-    }
-  }
-}
-`
-*/
 
 const currentUserGql = `
 query User {
@@ -117,6 +93,7 @@ type User = {
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
   const [users, setUsers] = useState<User[]>([])
+  let currentUserEmail = ''
 
   // Update onlineUsers after join
   useEffect(() => {
@@ -127,8 +104,9 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         })
         const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
         if (authenticatedItem?.email && authenticatedItem?.name) {
+          currentUserEmail = authenticatedItem.email
           await axios.post('/api/graphql', {
-            query: addUserGql,
+            query: upateUserGql,
             variables: {
               where: {
                 id: postID,
@@ -154,29 +132,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       }
     }
     updateUser()
-  }, [])
-
-  // Update onlineUsers before leave
-  // TODO: remove setinterval
-  useEffect(() => {
-    window.addEventListener('beforeunload', () => {
-      /*
-      axios.post('api host', removeUserGql, {
-        where: { slug: ...},
-        data: {
-          userId: userId,
-        }
-      })
-      */
-    })
-    return () => {
-      // window.removeEventListener('beforeunload')
-    }
-  }, [])
-
-  // Polling to fetch online users
-  useEffect(() => {
-    setInterval(async () => {
+    const polling = setInterval(async () => {
       try {
         const usersRes = await axios.post('/api/graphql', {
           query: onlineUsersGql,
@@ -193,7 +149,29 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         console.log(err)
       }
     }, 5000)
-  })
+    return async () => {
+      clearInterval(polling)
+      if (currentUserEmail) {
+        await axios.post('/api/graphql', {
+          query: upateUserGql,
+          variables: {
+            where: {
+              id: postID,
+            },
+            data: {
+              onlineUsers: {
+                disconnect: [
+                  {
+                    email: currentUserEmail,
+                  },
+                ],
+              },
+            },
+          },
+        })
+      }
+    }
+  }, [])
 
   return (
     <Container>
