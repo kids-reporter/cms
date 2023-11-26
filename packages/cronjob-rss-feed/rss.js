@@ -76,10 +76,10 @@ const generateRSS = (posts) => {
 const uploadToGCS = async (data) => {
   try {
     const bucket = storage.bucket(config.bucketName)
-    const file = bucket.file(`rss/${config.rssFileName}`)
+    const file = bucket.file(config.rssFileName)
     await file.save(data, { contentType: 'application/xml' })
     await log(
-      `RSS feed uploaded to GCS bucket: ${config.bucketName}/rss/${config.rssFileName}`
+      `RSS feed uploaded to GCS bucket: ${config.bucketName}/${config.rssFileName}`
     )
   } catch (error) {
     await log('Error uploading RSS to GCS', error)
