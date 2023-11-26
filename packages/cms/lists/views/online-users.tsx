@@ -21,7 +21,7 @@ const colors = [
 const getColor = () => {
   return colors[Math.floor(Math.random() * colors.length)]
 }
-
+/*
 const addUserGql = `
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
@@ -33,7 +33,7 @@ mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   }
 }
 `
-/*
+
 mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
   updatePost(where: $where, data: $data) {
     onlineUsers {
@@ -134,6 +134,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         })
         const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
         if (authenticatedItem?.email && authenticatedItem?.name) {
+          /*
           await axios.post('/api/graphql', {
             query: addUserGql,
             variables: {
@@ -141,7 +142,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                 id: postID,
               },
               data: {},
-              /*
               "where": {
                 "id": "18"
               },
@@ -152,9 +152,10 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                   }
                 }
               }
-              */
+              
             },
           })
+          */
           setUsers([
             ...users,
             { email: authenticatedItem.email, name: authenticatedItem.name },
