@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { MAIN_SITE_URL } from '@/app/constants'
 import './go-to-main-site.scss'
 
@@ -24,9 +25,9 @@ export const GoToMainSite = () => {
           </span>
         </p>
       </div>
-      <a href={MAIN_SITE_URL} target="_blank" rel="noreferrer noopener">
+      <Link href={MAIN_SITE_URL} target="_blank" rel="noreferrer noopener">
         前往報導者
-      </a>
+      </Link>
     </div>
   )
 }

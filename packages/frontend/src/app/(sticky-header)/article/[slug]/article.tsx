@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Link from 'next/link'
 import { ArticleContext } from './article-context'
 import Title from './title'
 import HeroImage from './hero-image'
@@ -20,8 +21,9 @@ import {
   STORAGE_URL,
   DEFAULT_AVATAR,
   FontSizeLevel,
+  DEFAULT_THEME_COLOR,
 } from '@/app/constants'
-import { getPostSummaries, getThemeFromCategory } from '@/app/utils'
+import { getPostSummaries } from '@/app/utils'
 import './article.scss'
 
 const getPostContents = (post: any) => {
@@ -110,7 +112,7 @@ const getPostContents = (post: any) => {
     category?.slug && subcategory?.slug && subSubcategory?.slug
       ? `/category/${category.slug}/${subcategory.slug}/${subSubcategory.slug}`
       : ''
-  const theme = getThemeFromCategory(category?.slug)
+  const theme = category?.themeColor || DEFAULT_THEME_COLOR
 
   return {
     theme,
@@ -153,10 +155,10 @@ export const Article = ({ post }: { post: any }) => {
           <MobileSidebar topicURL={topicURL} />
           {topicURL && (
             <div className="topic-breadcrumb">
-              <a href={topicURL}>
+              <Link href={topicURL}>
                 <img src="/assets/images/topic-breadcrumb-icon.svg" />
                 {mainTopic?.title}
-              </a>
+              </Link>
             </div>
           )}
           <HeroImage

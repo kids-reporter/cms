@@ -6,7 +6,7 @@ import { Button } from '@keystone-ui/button'
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields'
 import { PlusCircleIcon, TrashIcon } from '@keystone-ui/icons'
 import { Divider } from '@keystone-ui/core'
-import { controller } from '@keystone-6/core/fields/types/json/views'
+import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Author = {
   id: string | undefined

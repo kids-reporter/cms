@@ -61,8 +61,7 @@
         font-size: 15px;
         line-height: 160%;
         letter-spacing: 0.08em;
-        color: rgb(255, 255, 255);
-        background-color: var(--theme-color, #27B5F7);
+        color: var(--theme-color, #27B5F7);
         border-radius: 30px;
       }
 
@@ -72,7 +71,7 @@
         -webkit-line-clamp: 5;
         overflow: hidden;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
         font-size: 16px;
         line-height: 160%;
         letter-spacing: 0.05em;

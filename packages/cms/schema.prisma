@@ -28,7 +28,6 @@ model Post {
   subtitle                                   String               @default("")
   status                                     String?              @default("draft")
   publishedDate                              DateTime?
-  themeColor                                 String?              @default("blue")
   mainProject                                Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
   mainProjectId                              Int?                 @map("mainProject")
   subSubcategories                           SubSubcategory[]     @relation("Post_subSubcategories")
@@ -98,6 +97,7 @@ model Author {
   createdAt          DateTime? @default(now())
   updatedAt          DateTime? @updatedAt
   from_Photo_authors Photo[]   @relation("Photo_authors")
+  from_SVG_authors   SVG[]     @relation("SVG_authors")
 
   @@index([name])
   @@index([avatarId])
@@ -160,6 +160,7 @@ model Category {
   slug          String        @unique @default("")
   name          String        @unique @default("")
   subcategories Subcategory[] @relation("Subcategory_category")
+  themeColor    String?       @default("blue")
   heroImage     Photo?        @relation("Category_heroImage", fields: [heroImageId], references: [id])
   heroImageId   Int?          @map("heroImage")
   ogTitle       String        @default("")
@@ -261,4 +262,14 @@ model PDF {
   updatedAt              DateTime? @updatedAt
 
   @@index([name])
+}
+
+model SVG {
+  id               Int       @id @default(autoincrement())
+  name             String    @default("")
+  svgFile_filesize Int?
+  svgFile_filename String?
+  authors          Author[]  @relation("SVG_authors")
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @updatedAt
 }

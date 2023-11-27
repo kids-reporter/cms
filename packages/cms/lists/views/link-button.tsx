@@ -2,7 +2,7 @@ import React from 'react'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import { FieldLabel, FieldContainer } from '@keystone-ui/fields'
-import { controller } from '@keystone-6/core/fields/types/json/views'
+import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   let href = ''
