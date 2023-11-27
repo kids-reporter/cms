@@ -24,7 +24,9 @@ query {
 }
 `
 
-const fetchURL = async (): Promise<{ url: string; lastModified: Date }[]> => {
+const fetchSitemaps = async (): Promise<
+  { url: string; lastModified: Date }[]
+> => {
   let sitemaps: { url: string; lastModified: Date }[] = []
   try {
     const postsRes = await axios.post(API_URL, {
@@ -74,7 +76,7 @@ const fetchURL = async (): Promise<{ url: string; lastModified: Date }[]> => {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const sitemaps = await fetchURL()
+  const sitemaps = await fetchSitemaps()
   return sitemaps?.map((sitemap) => {
     return {
       url: sitemap.url,
