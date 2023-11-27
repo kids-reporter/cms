@@ -87,13 +87,30 @@ type User = {
 }
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
+  let currentUserEmail = ''
   const postID = value?.id
   const [users, setUsers] = useState<User[]>([])
-  let currentUserEmail = ''
+
+  const handleQueryUsers = async (): Promise<User[]> => {
+    const users: User[] = []
+    try {
+      const usersRes = await axios.post('/api/graphql', {
+        query: onlineUsersGql,
+        variables: {
+          where: {
+            id: postID,
+          },
+        },
+      })
+      return usersRes?.data?.data?.post?.onlineUsers
+    } catch (err) {
+      console.log(err)
+    }
+    return users
+  }
 
   const handleRemoveUser = async () => {
     if (currentUserEmail) {
-      console.log(`remove ${currentUserEmail}`)
       await axios.post('/api/graphql', {
         query: upateUserGql,
         variables: {
@@ -156,21 +173,8 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   useEffect(() => {
     const polling = setInterval(async () => {
-      try {
-        const usersRes = await axios.post('/api/graphql', {
-          query: onlineUsersGql,
-          variables: {
-            where: {
-              id: postID,
-            },
-          },
-        })
-        const currentUsers = usersRes?.data?.data?.post?.onlineUsers
-        setUsers(currentUsers ?? [])
-        console.log('onlineUsers', currentUsers)
-      } catch (err) {
-        console.log(err)
-      }
+      const users = await handleQueryUsers()
+      setUsers(users ?? [])
     }, 5000)
 
     return () => {
