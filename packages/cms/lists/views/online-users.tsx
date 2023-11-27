@@ -155,17 +155,23 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                 onlineUsers: {
                   connect: [
                     {
-                      email: authenticatedItem.email,
+                      email: currentUserEmail,
                     },
                   ],
                 },
               },
             },
           })
-          setUsers([
-            ...users,
-            { email: authenticatedItem.email, name: authenticatedItem.name },
-          ])
+          const users = await handleQueryUsers()
+          const updatedUsers = users?.find(
+            (user) => user?.email === currentUserEmail
+          )
+            ? [...users]
+            : [
+                ...users,
+                { email: currentUserEmail, name: authenticatedItem.name },
+              ]
+          setUsers(updatedUsers)
         }
       } catch (err) {
         console.log(err)
