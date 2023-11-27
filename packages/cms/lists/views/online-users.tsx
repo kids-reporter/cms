@@ -111,23 +111,27 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   const handleRemoveUser = async () => {
     if (currentUserEmail) {
-      await axios.post('/api/graphql', {
-        query: upateUserGql,
-        variables: {
-          where: {
-            id: postID,
-          },
-          data: {
-            onlineUsers: {
-              disconnect: [
-                {
-                  email: currentUserEmail,
-                },
-              ],
+      try {
+        await axios.post('/api/graphql', {
+          query: upateUserGql,
+          variables: {
+            where: {
+              id: postID,
+            },
+            data: {
+              onlineUsers: {
+                disconnect: [
+                  {
+                    email: currentUserEmail,
+                  },
+                ],
+              },
             },
           },
-        },
-      })
+        })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
