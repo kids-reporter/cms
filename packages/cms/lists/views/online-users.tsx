@@ -56,6 +56,21 @@ const Container = styled(FieldContainer)`
   flex-direction: row;
 `
 
+const Tooltip = styled.span`
+  visibility: hidden;
+  width: fit-content;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: -150%;
+  left: 0%;
+  margin-left: -60px;
+`
+
 const Avatar = styled.div`
   width: 40px;
   height: 40px;
@@ -66,6 +81,11 @@ const Avatar = styled.div`
   border-radius: 20px;
   margin: 0px 2px;
   background: ${(props) => props.color};
+  position: relative;
+
+  &:hover ${Tooltip} {
+    visibility: visible;
+  }
 `
 
 type User = {
@@ -199,9 +219,11 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             <Avatar
               key={`online-user-${index}`}
               color={colors[Number(user.id) % colors.length]}
-              title={`${user.name}: ${user.email}`}
             >
               <span>{user.name?.[0]}</span>
+              <Tooltip>
+                {user.name}: {user.email}
+              </Tooltip>
             </Avatar>
           )
         )
