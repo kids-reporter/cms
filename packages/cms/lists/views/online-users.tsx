@@ -91,6 +91,29 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [users, setUsers] = useState<User[]>([])
   let currentUserEmail = ''
 
+  const handleRemoveUser = async () => {
+    if (currentUserEmail) {
+      console.log(`remove ${currentUserEmail}`)
+      await axios.post('/api/graphql', {
+        query: upateUserGql,
+        variables: {
+          where: {
+            id: postID,
+          },
+          data: {
+            onlineUsers: {
+              disconnect: [
+                {
+                  email: currentUserEmail,
+                },
+              ],
+            },
+          },
+        },
+      })
+    }
+  }
+
   // Update onlineUsers after join
   useEffect(() => {
     const updateUser = async () => {
@@ -128,6 +151,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       }
     }
     updateUser()
+    window.addEventListener('beforeunload', handleRemoveUser)
   }, [])
 
   useEffect(() => {
@@ -149,27 +173,10 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       }
     }, 5000)
 
-    return async () => {
+    return () => {
       clearInterval(polling)
-      if (currentUserEmail) {
-        await axios.post('/api/graphql', {
-          query: upateUserGql,
-          variables: {
-            where: {
-              id: postID,
-            },
-            data: {
-              onlineUsers: {
-                disconnect: [
-                  {
-                    email: currentUserEmail,
-                  },
-                ],
-              },
-            },
-          },
-        })
-      }
+      handleRemoveUser()
+      window.removeEventListener('beforeunload', handleRemoveUser)
     }
   }, [])
 
