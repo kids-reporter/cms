@@ -200,6 +200,27 @@ const listConfigurations = list({
         },
       },
     }),
+    listPreview: virtual({
+      label: '預覽',
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item: Record<string, unknown>) {
+          return `${envVars.previewServer.path}/article/${item.slug}`
+        },
+      }),
+      ui: {
+        views: './lists/views/cell-button',
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'read',
+        },
+      },
+    }),
     onlineUsers: relationship({
       label: 'online user',
       ref: 'User',
@@ -218,7 +239,7 @@ const listConfigurations = list({
     label: 'Posts（文章）',
     labelField: 'title',
     listView: {
-      initialColumns: ['title', 'slug', 'status'],
+      initialColumns: ['title', 'slug', 'status', 'listPreview'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },
       pageSize: 50,
     },

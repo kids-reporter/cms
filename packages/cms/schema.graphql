@@ -157,6 +157,7 @@ type Post {
   createdAt: DateTime
   updatedAt: DateTime
   preview: JSON
+  listPreview: String
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   onlineUsersCount(where: UserWhereInput! = {}): Int
 }
