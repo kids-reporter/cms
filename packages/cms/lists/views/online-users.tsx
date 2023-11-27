@@ -6,6 +6,7 @@ import { FieldContainer } from '@keystone-ui/fields'
 import { controller } from '@keystone-6/core/fields/types/json/views'
 
 const colors = [
+  '#EEE8AA',
   '#C0C0C0',
   '#87CEEB',
   '#F5DEB3',
@@ -15,7 +16,6 @@ const colors = [
   '#FFD700',
   '#66CDAA',
   '#FFE4B5',
-  '#EEE8AA',
 ]
 
 const upateUserGql = `
