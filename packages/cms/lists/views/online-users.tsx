@@ -171,6 +171,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     window.addEventListener('beforeunload', handleRemoveUser)
   }, [])
 
+  // Polling & clear polling/current user field when leaving
   useEffect(() => {
     const polling = setInterval(async () => {
       const users = await handleQueryUsers()
