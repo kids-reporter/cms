@@ -105,6 +105,7 @@ subSubcategories {
     name
     category {
       slug
+      themeColor
     }
   }
 }

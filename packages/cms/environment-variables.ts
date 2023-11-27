@@ -15,6 +15,7 @@ const {
   MEMORY_CACHE_TTL,
   MEMORY_CACHE_SIZE,
   CORS_ALLOW_ORIGINS,
+  NODE_ENV,
 } = process.env
 
 enum DatabaseProvider {
@@ -74,4 +75,5 @@ export default {
     origin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
     path: PREVIEW_SERVER_PATH || '/preview-server',
   },
+  nodeEnv: NODE_ENV || 'development', // value could be 'development', 'production' or 'test'
 }

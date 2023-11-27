@@ -1,5 +1,6 @@
 import { STORAGE_URL, Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
+import { DEFAULT_THEME_COLOR } from '@/app/constants'
 
 export const getThemeColor = (theme: Theme) => {
   if (theme === Theme.YELLOW) {
@@ -22,19 +23,6 @@ export const getFormattedDate = (date: string): string => {
   return [year, month, day].join('.')
 }
 
-// TODO: fetch theme from cms
-export const getThemeFromCategory = (Category: string): Theme => {
-  switch (Category) {
-    case 'news':
-    case 'listening-news':
-      return Theme.BLUE
-    case 'comics':
-    case 'campus':
-    default:
-      return Theme.YELLOW
-  }
-}
-
 export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
@@ -50,7 +38,9 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
       category: subSubcategory?.subcategory?.name,
       subSubcategory: subSubcategory?.name,
       publishedDate: post.publishedDate,
-      theme: getThemeFromCategory(subSubcategory?.subcategory?.category?.slug),
+      theme:
+        subSubcategory?.subcategory?.category?.themeColor ||
+        DEFAULT_THEME_COLOR,
     }
   })
 }
