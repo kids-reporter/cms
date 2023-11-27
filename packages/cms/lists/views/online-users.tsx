@@ -124,39 +124,43 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   useEffect(() => {
     const updateUser = async () => {
       try {
+        const users = await handleQueryUsers()
         const currentUserRes = await axios.post('/api/graphql', {
           query: currentUserGql,
         })
         const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
         if (authenticatedItem?.email && authenticatedItem?.name) {
           currentUserEmail = authenticatedItem.email
-          await axios.post('/api/graphql', {
-            query: upateUserGql,
-            variables: {
-              where: {
-                id: postID,
-              },
-              data: {
-                onlineUsers: {
-                  connect: [
-                    {
-                      email: currentUserEmail,
-                    },
-                  ],
-                },
-              },
-            },
-          })
-          const users = await handleQueryUsers()
-          const updatedUsers = users?.find(
+          const isCurrentUserExisting = users?.find(
             (user) => user?.email === currentUserEmail
           )
-            ? [...users]
-            : [
-                ...users,
-                { email: currentUserEmail, name: authenticatedItem.name },
-              ]
-          setUsers(updatedUsers)
+          if (!isCurrentUserExisting) {
+            await axios.post('/api/graphql', {
+              query: upateUserGql,
+              variables: {
+                where: {
+                  id: postID,
+                },
+                data: {
+                  onlineUsers: {
+                    connect: [
+                      {
+                        email: currentUserEmail,
+                      },
+                    ],
+                  },
+                },
+              },
+            })
+          }
+          setUsers(
+            isCurrentUserExisting
+              ? [...users]
+              : [
+                  ...users,
+                  { email: currentUserEmail, name: authenticatedItem.name },
+                ]
+          )
         }
       } catch (err) {
         console.log(err)
