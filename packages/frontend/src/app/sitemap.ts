@@ -1,20 +1,23 @@
 import { MetadataRoute } from 'next'
 import axios from 'axios'
 import errors from '@twreporter/errors'
-import { API_URL } from '@/app/constants'
+import { API_URL, KIDS_URL_ORIGIN } from '@/app/constants'
 import { log, LogLevel } from '@/app/utils'
 
+export const revalidate = 86400
+
 const postsGQL = `
-query() {
-  posts() {
+query {
+  posts {
     slug
     publishedDate
   }
 }
 `
+
 const topicsGQL = `
-query() {
-  projects() {
+query {
+  projects {
     slug
     publishedDate
   }
@@ -22,12 +25,20 @@ query() {
 `
 
 const fetchURL = async (): Promise<{ url: string; lastModified: Date }[]> => {
-  const urls: { url: string; lastModified: Date }[] = []
+  let sitemaps: { url: string; lastModified: Date }[] = []
   try {
     const postsRes = await axios.post(API_URL, {
       query: postsGQL,
     })
-    console.log(postsRes)
+    const posts = postsRes?.data?.data?.posts?.map((post: any) => {
+      return {
+        url: `${KIDS_URL_ORIGIN}/article/${post.slug}`,
+        lastModified: post.publishedDate,
+      }
+    })
+    if (posts) {
+      sitemaps = [...posts]
+    }
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
     const msg = errors.helpers.printAll(annotatedErr, {
@@ -38,10 +49,18 @@ const fetchURL = async (): Promise<{ url: string; lastModified: Date }[]> => {
   }
 
   try {
-    const postsRes = await axios.post(API_URL, {
+    const topicsRes = await axios.post(API_URL, {
       query: topicsGQL,
     })
-    console.log(postsRes)
+    const topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
+      return {
+        url: `${KIDS_URL_ORIGIN}/topic/${topic.slug}`,
+        lastModified: topic.publishedDate,
+      }
+    })
+    if (topics) {
+      sitemaps = [...sitemaps, ...topics]
+    }
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
     const msg = errors.helpers.printAll(annotatedErr, {
@@ -51,29 +70,15 @@ const fetchURL = async (): Promise<{ url: string; lastModified: Date }[]> => {
     log(LogLevel.ERROR, msg)
   }
 
-  return urls
+  return sitemaps
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  false && fetchURL()
-  return [
-    {
-      url: 'https://acme.com',
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 1,
-    },
-    {
-      url: 'https://acme.com/about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://acme.com/blog',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.5,
-    },
-  ]
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const sitemaps = await fetchURL()
+  return sitemaps?.map((sitemap) => {
+    return {
+      url: sitemap.url,
+      lastModified: sitemap.lastModified,
+    }
+  })
 }
