@@ -13,7 +13,7 @@ const prodConfig = {
     userAgent: '*',
     allow: '/',
   },
-  sitemap: `${KIDS_URL_ORIGIN}/sitemaps/all.xml`,
+  sitemap: `${KIDS_URL_ORIGIN}/sitemap.xml`,
 }
 
 export default function robots(): MetadataRoute.Robots {
