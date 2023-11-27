@@ -32,8 +32,9 @@ const currentUserGql = `
 query User {
   authenticatedItem {
     ... on User {
-      email
+      id
       name
+      email
     }
   }
 }`
@@ -42,6 +43,7 @@ const onlineUsersGql = `
 query($where: PostWhereUniqueInput!) {
   post(where: $where) {
     onlineUsers {
+      id
       name
       email
     }
@@ -67,6 +69,7 @@ const Avatar = styled.div`
 `
 
 type User = {
+  id: string
   name: string
   email: string
 }
@@ -158,7 +161,11 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
               ? [...users]
               : [
                   ...users,
-                  { email: currentUserEmail, name: authenticatedItem.name },
+                  {
+                    email: currentUserEmail,
+                    name: authenticatedItem.name,
+                    id: authenticatedItem.id,
+                  },
                 ]
           )
         }
@@ -188,13 +195,15 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     <Container>
       {users?.map((user, index) => {
         return (
-          <Avatar
-            key={`online-user-${index}`}
-            color={colors[index % colors.length]}
-            title={`${user.name}: ${user.email}`}
-          >
-            <span>{user.name?.[0]}</span>
-          </Avatar>
+          user && (
+            <Avatar
+              key={`online-user-${index}`}
+              color={colors[Number(user.id) % colors.length]}
+              title={`${user.name}: ${user.email}`}
+            >
+              <span>{user.name?.[0]}</span>
+            </Avatar>
+          )
         )
       })}
     </Container>
