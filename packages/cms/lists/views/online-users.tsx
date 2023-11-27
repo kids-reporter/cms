@@ -66,21 +66,6 @@ const Avatar = styled.div`
   background: ${(props) => props.color};
 `
 
-const Tooltip = styled.span`
-  visibility: visible;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -60px;
-`
-
 type User = {
   name: string
   email: string
@@ -202,9 +187,9 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           <Avatar
             key={`online-user-${index}`}
             color={colors[index % colors.length]}
+            title={`${user.name}: ${user.email}`}
           >
             <span>{user.name?.[0]}</span>
-            <Tooltip>{`${user.name}: ${user.email}`}</Tooltip>
           </Avatar>
         )
       })}
