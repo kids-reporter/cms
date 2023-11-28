@@ -12,12 +12,25 @@ const storage =
       })
     : new Storage()
 
-const fetchPosts = async () => {
+const fetchData = async () => {
   try {
+    const where = {
+      status: {
+        equals: 'published',
+      },
+      publishedDate: {
+        gte: new Date(
+          new Date().setHours(0, 0, 0, 0) - 2 * 24 * 60 * 60 * 1000 // 2 days ago
+        ),
+      },
+    }
     const payload = {
       query: `
-        query Posts($orderBy: [PostOrderByInput!]!, $take: Int, $where: PostWhereInput!) {
-          posts(orderBy: $orderBy, take: $take, where: $where) {
+        query Data(
+          $postWhere: PostWhereInput!,
+          $projectWhere: ProjectWhereInput!,
+        ) {
+          posts(where: $postWhere) {
             title
             publishedDate
             slug
@@ -26,36 +39,39 @@ const fetchPosts = async () => {
                 small
               }
             }
+            __typename
+          }
+          projects(where: $projectWhere) {
+            title
+            publishedDate
+            slug
+            heroImage {
+              resized {
+                small
+              }
+            }
+            __typename
           }
         }
       `,
       variables: {
-        orderBy: [
-          {
-            publishedDate: 'desc',
-          },
-        ],
-        where: {
-          status: {
-            equals: 'published',
-          },
-          publishedDate: {
-            gte: new Date(
-              new Date().setHours(0, 0, 0, 0) - 2 * 24 * 60 * 60 * 1000 // 2 days ago
-            ),
-          },
-        },
+        postWhere: where,
+        projectWhere: where,
       },
     }
-    const postRes = await axios.post(config.apiUrl, payload)
-    return postRes?.data?.data?.posts
+    const dataRes = await axios.post(config.apiUrl, payload)
+    const data = [...dataRes?.data?.data.posts, ...dataRes?.data?.data.projects]
+    data.sort((a, b) => {
+      return new Date(b.publishedDate) - new Date(a.publishedDate)
+    })
+    return data
   } catch (error) {
-    await log('Error fetching posts', error)
+    await log('Error fetching data', error)
     return []
   }
 }
 
-const generateRSS = (posts) => {
+const generateRSS = (data) => {
   const feed = new RSS({
     site_url: config.baseUrl,
     feed_url: `${config.baseUrl}rss.xml`,
@@ -66,12 +82,18 @@ const generateRSS = (posts) => {
     copyright: 'CC BY-NC-ND 3.0',
   })
 
-  posts.forEach((post) => {
+  data.forEach((entry) => {
+    let url = ''
+    if (entry.__typename === 'Post') {
+      url = `${config.baseUrl}/article/${entry.slug}`
+    } else if (entry.__typename === 'Project') {
+      url = `${config.baseUrl}/topic/${entry.slug}`
+    }
     feed.item({
-      title: post.title,
-      description: post.description,
-      url: `${config.baseUrl}/article/${post.slug}`,
-      date: post.createdAt,
+      title: entry.title,
+      description: entry.description,
+      url: url,
+      date: entry.publishedDate,
     })
   })
 
@@ -92,8 +114,8 @@ const uploadToGCS = async (data) => {
 }
 
 const main = async () => {
-  const posts = await fetchPosts()
-  const rss = generateRSS(posts)
+  const data = await fetchData()
+  const rss = generateRSS(data)
   await uploadToGCS(rss)
   log(`Cronjob RSS feed completed.`)
 }
