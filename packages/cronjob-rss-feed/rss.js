@@ -14,12 +14,12 @@ const storage =
 
 const fetchPosts = async () => {
   try {
-    const postRes = await axios.post(config.apiUrl, {
+    const payload = {
       query: `
         query Posts($orderBy: [PostOrderByInput!]!, $take: Int, $where: PostWhereInput!) {
           posts(orderBy: $orderBy, take: $take, where: $where) {
             title
-            createdAt
+            publishedDate
             slug
             heroImage {
               resized {
@@ -32,17 +32,22 @@ const fetchPosts = async () => {
       variables: {
         orderBy: [
           {
-            createdAt: 'desc',
+            publishedDate: 'desc',
           },
         ],
-        take: 10,
         where: {
           status: {
             equals: 'published',
           },
+          publishedDate: {
+            gte: new Date(
+              new Date().setHours(0, 0, 0, 0) - 2 * 24 * 60 * 60 * 1000 // 2 days ago
+            ),
+          },
         },
       },
-    })
+    }
+    const postRes = await axios.post(config.apiUrl, payload)
     return postRes?.data?.data?.posts
   } catch (error) {
     await log('Error fetching posts', error)
