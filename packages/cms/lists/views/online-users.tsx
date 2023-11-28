@@ -95,8 +95,8 @@ type User = {
 }
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
-  const currentUserEmail = useRef('')
   const postID = value?.id
+  const currentUserEmail = useRef('')
   const [users, setUsers] = useState<User[]>([])
 
   const handleQueryUsers = async (): Promise<User[]> => {
