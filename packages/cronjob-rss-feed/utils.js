@@ -1,12 +1,11 @@
 import { config } from './configs.js'
 import { IncomingWebhook } from '@slack/webhook'
 
-const logHook = new IncomingWebhook(config.slackLogHook)
-const errorHook = new IncomingWebhook(config.slackErrorHook)
-
 const sendSlackNotification = async (message, type = 'log') => {
   try {
-    const webhook = type === 'error' ? errorHook : logHook
+    const webhook = new IncomingWebhook(
+      type === 'error' ? config.slackErrorHook : config.slackLogHook
+    )
     await webhook.send({
       blocks: [
         {
