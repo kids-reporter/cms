@@ -49,7 +49,7 @@ const sendSlackNotification = async (message) => {
     })
     console.log('Slack notification sent')
   } catch (error) {
-    await log('Error sending Slack notification', error)
+    console.error('Error sending Slack notification', error)
   }
 }
 
