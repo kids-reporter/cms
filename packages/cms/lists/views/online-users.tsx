@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { FieldProps } from '@keystone-6/core/types'
@@ -95,7 +95,7 @@ type User = {
 }
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
-  let currentUserEmail = ''
+  const currentUserEmail = useRef('')
   const postID = value?.id
   const [users, setUsers] = useState<User[]>([])
 
@@ -118,7 +118,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   }
 
   const handleRemoveUser = async () => {
-    if (currentUserEmail) {
+    if (currentUserEmail.current) {
       try {
         await axios.post('/api/graphql', {
           query: upateUserGql,
@@ -130,7 +130,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
               onlineUsers: {
                 disconnect: [
                   {
-                    email: currentUserEmail,
+                    email: currentUserEmail.current,
                   },
                 ],
               },
@@ -153,9 +153,9 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         })
         const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
         if (authenticatedItem?.email && authenticatedItem?.name) {
-          currentUserEmail = authenticatedItem.email
+          currentUserEmail.current = authenticatedItem.email
           const isCurrentUserExisting = users?.find(
-            (user) => user?.email === currentUserEmail
+            (user) => user?.email === currentUserEmail.current
           )
           if (!isCurrentUserExisting) {
             await axios.post('/api/graphql', {
@@ -168,7 +168,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                   onlineUsers: {
                     connect: [
                       {
-                        email: currentUserEmail,
+                        email: currentUserEmail.current,
                       },
                     ],
                   },
@@ -182,7 +182,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
               : [
                   ...users,
                   {
-                    email: currentUserEmail,
+                    email: currentUserEmail.current,
                     name: authenticatedItem.name,
                     id: authenticatedItem.id,
                   },
