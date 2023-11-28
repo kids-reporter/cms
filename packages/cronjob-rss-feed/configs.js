@@ -2,7 +2,8 @@ export const config = {
   apiUrl: process.env.API_URL || 'https://kids-api.twreporter.org/api/graphql',
   baseUrl: process.env.BASE_URL || 'https://kids.twreporter.org/',
   bucketName: process.env.BUCKET_NAME || 'kids-storage.twreporter.org',
-  slackWebhook: process.env.SLACK_WEBHOOK || 'SLACK_WEBHOOK_URL',
+  slackLogHook: process.env.SLACK_LOG_HOOK || 'SLACK_LOG_HOOK',
+  slackErrorHook: process.env.SLACK_ERROR_HOOK || 'SLACK_ERROR_HOOK',
   rssFileName: process.env.RSS_FILE_NAME || 'rss/rss.xml',
   rss: {
     title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
