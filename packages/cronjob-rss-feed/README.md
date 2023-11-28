@@ -58,5 +58,5 @@ This will execute the script, fetching posts data, generating an RSS feed, uploa
 
 ## RSS Feed Configs
 
-- Update frequency:  `0 17 * * *` (every day at 17:00 UTC)
-- Fetch criteria: latest 10 published posts
+- Update frequency:  `0 1 * * *` (every day at 01:00 UTC+8)
+- Fetch criteria: posts and projects published in last 2 days
