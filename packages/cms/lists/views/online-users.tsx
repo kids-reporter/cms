@@ -96,6 +96,7 @@ type User = {
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const postID = value?.id
+  const isCurrentUserWritable = useRef(true)
   const currentUserEmail = useRef('')
   const [users, setUsers] = useState<User[]>([])
 
@@ -118,7 +119,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   }
 
   const handleRemoveUser = async () => {
-    if (currentUserEmail.current) {
+    if (isCurrentUserWritable.current && currentUserEmail.current) {
       try {
         await axios.post('/api/graphql', {
           query: upateUserGql,
@@ -158,7 +159,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             (user) => user?.email === currentUserEmail.current
           )
           if (!isCurrentUserExisting) {
-            await axios.post('/api/graphql', {
+            const updateResults = await axios.post('/api/graphql', {
               query: upateUserGql,
               variables: {
                 where: {
@@ -175,11 +176,14 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                 },
               },
             })
+            if (updateResults?.data?.errors) {
+              isCurrentUserWritable.current = false
+            }
           }
+
           setUsers(
-            isCurrentUserExisting
-              ? [...users]
-              : [
+            isCurrentUserWritable.current && !isCurrentUserExisting
+              ? [
                   ...users,
                   {
                     email: currentUserEmail.current,
@@ -187,6 +191,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
                     id: authenticatedItem.id,
                   },
                 ]
+              : [...users]
           )
         }
       } catch (err) {
