@@ -1,0 +1,21 @@
+{
+  "name": "cronjob-rss-feed",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Script to fetch posts data, generate RSS feed, and upload to GCS with Slack notification",
+  "main": "rss.js",
+  "repository": "https://github.com/kids-reporter/kids-reporter-monorepo",
+  "license": "MIT",
+  "scripts": {
+    "start": "node rss"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.6.0",
+    "@slack/webhook": "^7.0.1",
+    "axios": "^1.6.2",
+    "rss": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/rss": "^0.0.32"
+  }
+}
