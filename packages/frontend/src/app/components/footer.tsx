@@ -32,7 +32,7 @@ const socialIcons = [
     img: GithubIcon,
   },
   {
-    link: '/feed/',
+    link: '/feed',
     img: RSSIcon,
   },
 ]
