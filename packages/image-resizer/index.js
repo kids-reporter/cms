@@ -5,6 +5,8 @@ import sharp from 'sharp'
 import { join, basename, extname } from 'path'
 import { tmpdir } from 'os'
 import { promises as fs } from 'fs'
+import express from 'express'
+import bodyParser from 'body-parser'
 
 const storage =
   config.gcs.projectId && config.gcs.keyFilename
@@ -14,15 +16,28 @@ const storage =
       })
     : new Storage()
 
-export async function resizeImages(event) {
-  // Accepts triggers from desinated bucket folder
-  if (!event.name.startsWith(`${config.sourceFolder}/`)) {
+const app = express()
+
+app.use(bodyParser.json())
+app.post('/', async (req, res) => {
+  const event = req.body
+
+  // Extract bucket and file name from protoPayload.resourceName
+  const resourceName = event.protoPayload.resourceName
+  const bucket = resourceName.split('/')[3]
+  const name = resourceName.split('/').slice(5).join('/')
+
+  log(`Processing file ${name} in bucket ${bucket}`)
+
+  const file = storage.bucket(bucket).file(name)
+
+  // Check if the file exists in GCS
+  const [exists] = await file.exists()
+  if (!exists) {
+    log(`File ${name} does not exist in bucket ${bucket}`)
+    res.status(404).send(`File ${name} does not exist`)
     return
   }
-
-  log(`Processing file: ${event.name}`)
-
-  const file = storage.bucket(event.bucket).file(event.name)
   const tempFilePath = join(tmpdir(), 'tempImage')
 
   // Skip unsupported file types, sharp only accepts jpeg, png, gif, webp
@@ -33,8 +48,9 @@ export async function resizeImages(event) {
       contentType
     )
   ) {
-    log(`Skipping unsupported file: ${event.name} (${contentType})`)
+    log(`Skipping unsupported file: ${name} (${contentType})`)
     await fs.unlink(tempFilePath)
+    res.status(400).send('Unsupported file type')
     return
   }
 
@@ -43,17 +59,16 @@ export async function resizeImages(event) {
   // Resize the image and upload to the target folder
   const sizes = config.targetSizes
   const uploadPromises = sizes.map((size) => {
-    const newFileName = `${basename(
-      event.name,
-      extname(event.name)
-    )}-${size}${extname(event.name)}`
+    const newFileName = `${basename(name, extname(name))}-${size}${extname(
+      name
+    )}`
     const newFilePath = join(tmpdir(), newFileName)
 
     return sharp(tempFilePath)
       .resize(size)
       .toFile(newFilePath)
       .then(() => {
-        return storage.bucket(event.bucket).upload(newFilePath, {
+        return storage.bucket(bucket).upload(newFilePath, {
           destination: `${config.targetFolder}/${newFileName}`,
         })
       })
@@ -62,5 +77,12 @@ export async function resizeImages(event) {
   await Promise.all(uploadPromises)
 
   await fs.unlink(tempFilePath)
-  log(`Resized ${event.name} to ${sizes.join(', ')}`)
-}
+
+  log(`Resized ${name} to ${sizes.join(', ')}`)
+  res.status(200).send(`Resized ${name} to ${sizes.join(', ')}`)
+})
+
+const port = config.port
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+})

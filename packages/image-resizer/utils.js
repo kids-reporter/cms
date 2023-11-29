@@ -3,6 +3,10 @@ import { IncomingWebhook } from '@slack/webhook'
 
 const sendSlackNotification = async (message) => {
   try {
+    if (!config.slackLogHook) {
+      console.log('Slack log hook is empty. Skipping notification.')
+      return
+    }
     const webhook = new IncomingWebhook(config.slackLogHook)
     await webhook.send({
       blocks: [

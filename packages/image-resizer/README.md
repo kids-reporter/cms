@@ -1,22 +1,100 @@
 # image-resizer
 
+This is a Cloud Run service that resizes images uploaded to a Cloud Storage bucket.
+
 ## Environment Variables
 
-- `SOURCE_FOLDER`: The folder name of the source images
-- `TARGET_FOLDER`: The folder name of the resized images
-- `TARGET_SIZES`: The sizes of the resized images, separated by comma
+- `PORT`: The port number of the server, default to `8080`
+- `TARGET_FOLDER`: The folder name of the resized images, default to `images`
+- `TARGET_SIZES`: The sizes of the resized images, separated by comma, default to `2000,1200,800,400`
 - `SLACK_LOG_HOOK`: The Slack webhook URL for logging
-- `PROJECT_ID`: The GCP project ID
-- `KEY_FILENAME`: The path to the GCP service account key file
+- `PROJECT_ID`: The GCP project ID (unnessecary if running on Cloud Run with correct service account)
+- `KEY_FILENAME`: The path to the GCP service account key file (unnessecary if running on Cloud Run with correct service account)
 
 ## Deploy
 
-Deploy on GCP Cloud Functions 2nd gen
+### Docker
 
-- Envrionment: 2nd gen
-- Region: asia-east1 (Taiwan)
-- Cloud Storage Trigger
-  - Event: google.cloud.storage.object.v1.finalize
-- Runtime Memory: 512MB
-- Runtime: Node.js 18
-- Entry Point: resizeImage
+Build image
+
+```bash
+docker build --platform linux/amd64 --no-cache --tag gcr.io/kids-reporter/image-resizer:v1.0 .
+```
+
+Push image
+
+```bash
+docker push gcr.io/kids-reporter/image-resizer:v1.0
+```
+
+### Cloud Run
+
+```bash
+gcloud run deploy image-resizer \
+--image=gcr.io/kids-reporter/image-resizer \
+--region=asia-east1 \
+--project=kids-reporter \
+ && gcloud run services update-traffic image-resizer --to-latest
+```
+
+Note: select correct image tag
+
+### Eventarc
+
+Cloud Audit Logs
+
+```bash
+gcloud eventarc triggers create imageresizer-cal \
+--location=asia-east1 \
+--service-account=496849015885-compute@developer.gserviceaccount.com \
+--destination-run-service=image-resizer \
+--destination-run-region=asia-east1 \
+--destination-run-path="/" \
+--event-filters="type=google.cloud.audit.log.v1.written" \
+--event-filters="serviceName=storage.googleapis.com" \
+--event-filters="methodName=storage.objects.create" \
+--event-filters-path-pattern="resourceName=projects/_/buckets/kids-storage.twreporter.org/objects/images/*"
+```
+
+The source folder is set here in Eventarc filter.  The target folder is set in the environment variable `TARGET_FOLDER`.
+
+Example event payload:
+
+```json
+{
+    "@type": "type.googleapis.com/google.events.cloud.audit.v1.LogEntryData",
+    "protoPayload": {
+        "status": {},
+        "authenticationInfo": {
+            "principalEmail": "EXAMPLE_EMAIL"
+        },
+        "requestMetadata": {
+            "callerIp": "EXAMPLE_IP",
+            "callerSuppliedUserAgent": "EXAMPLE_USER_AGENT",
+            "requestAttributes": {},
+            "destinationAttributes": {}
+        },
+        "serviceName": "storage.googleapis.com",
+        "methodName": "storage.objects.create",
+        "authorizationInfo": [],
+        "resourceName": "projects/_/buckets/BUCKET_NAME/objects/SOURCE_FOLDER/IMAGEFILE.jpg",
+        "serviceData": {},
+        "resourceLocation": {
+            "currentLocations": []
+        }
+    },
+    "insertId": "EXAMPLE_ID",
+    "resource": {
+        "type": "gcs_bucket",
+        "labels": {
+            "bucket_name": "BUCKET_NAME",
+            "project_id": "PROJECT_ID",
+            "location": "asia-east1"
+        }
+    },
+    "timestamp": "2023-11-29T10:26:41.688857652Z",
+    "severity": "INFO",
+    "logName": "projects/PROJECT_ID/logs/cloudaudit.googleapis.com%2Fdata_access",
+    "receiveTimestamp": "2023-11-29T10:26:42.596060Z"
+}
+```

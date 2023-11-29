@@ -4,7 +4,14 @@
   "version": "1.0.0",
   "description": "Image resizer for GCS bucket",
   "main": "index.js",
+  "repository": "https://github.com/kids-reporter/kids-reporter-monorepo",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "local": "SLACK_LOG_HOOK= yarn start",
+    "dev": "SLACK_LOG_HOOK= yarn start",
+    "prod": "SLACK_LOG_HOOK= yarn start"
+  },
   "dependencies": {
     "@google-cloud/storage": "^7.6.0",
     "@slack/webhook": "^7.0.1",
