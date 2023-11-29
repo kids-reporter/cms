@@ -200,12 +200,46 @@ const listConfigurations = list({
         },
       },
     }),
+    listPreview: virtual({
+      label: '預覽',
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item: Record<string, unknown>) {
+          return `${envVars.previewServer.path}/article/${item.slug}`
+        },
+      }),
+      ui: {
+        views: './lists/views/cell-button',
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'read',
+        },
+      },
+    }),
+    onlineUsers: relationship({
+      label: 'online user',
+      ref: 'User',
+      many: true,
+      ui: {
+        views: './lists/views/online-users',
+        createView: { fieldMode: 'hidden' },
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        listView: { fieldMode: 'hidden' },
+      },
+    }),
   },
   ui: {
     label: 'Posts（文章）',
     labelField: 'title',
     listView: {
-      initialColumns: ['title', 'slug', 'status'],
+      initialColumns: ['title', 'slug', 'status', 'listPreview'],
       initialSort: { field: 'publishedDate', direction: 'DESC' },
       pageSize: 50,
     },
@@ -224,7 +258,7 @@ const listConfigurations = list({
     },
     filter: {
       query: ({ session }) => {
-        if (process.env.NODE_ENV === 'test') {
+        if (envVars.nodeEnv === 'test') {
           return {}
         }
         if (session?.data?.role === RoleEnum.FrontendHeadlessAccount) {

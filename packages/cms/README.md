@@ -19,6 +19,13 @@ cloud runs:
 - [staging-cms](https://console.cloud.google.com/run/detail/asia-east1/staging-cms?project=kids-reporter)
 - [prod-cms](https://console.cloud.google.com/run/detail/asia-east1/prod-cms?project=kids-reporter)
 
+## Environment Variables
+相關環境變數可以參考 [`environment-variables.ts`](https://github.com/kids-reporter/kids-reporter-monorepo/blob/dev/packages/cms/environment-variables.ts) 檔案。 
+
+其中值得注意的是，`NODE_ENV` 除了 convention 的 `development` 和 `production` 之外，亦有 `test`的選項。當 `NODE_ENV=test` 時，Keystone server 會關閉 Role-based Authentication，不再檢查 request 是否可以 Query/Create/Update/Delete Keystone 的資源，[請見相關程式碼](https://github.com/kids-reporter/kids-reporter-monorepo/blob/dev/packages/cms/lists/utils/access-control-list.ts#L22-L24)。
+
+若你想要在 local 端開發 frontend，而 frontend 需要 GQL server 來測試，那你可以嘗試 `NODE_ENV=test yarn dev` 來起 server。
+
 ## Getting started on local environment
 
 ### Start postgres instance
@@ -98,7 +105,7 @@ Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資�
 我們會需要為這些差異產生新的 migration 檔案。
 以下是推薦的做法：
 
-1. Stop the Docker database instance if necessary.
+1. (optional) Stop the Docker database instance if necessary.
 
     ```bash
     docker stop kids-cms;
@@ -128,17 +135,25 @@ Keystone 底層是透過 [Prisma](https://github.com/prisma/prisma)來管理資�
 
     `example_migration_name` will be part of the file name of the migration file.
 
-5. Stop the Docker container for the database migration.
+5. (optional) Stop the Docker container for the database migration.
 
     ```bash
     docker stop kids-cms-migration;
     ```
 
-6. Start the Docker container for the database.
+6. (optional) Start the Docker container for the database.
 
     ```bash
     docker start kids-cms;
     ```
+
+7. (optional) Remove the Docker container for the database migration.
+
+    ```bash
+    docker rm kids-cms-migration;
+    ```
+
+    you may check if the container is removed by running `docker ps -a`.
 
 #### 3. 上傳 migration 檔案和新的 schema.prisma 到 repo
 
