@@ -12,13 +12,14 @@ generator client {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String    @default("")
-  email     String    @unique @default("")
-  password  String
-  role      String
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id                    Int       @id @default(autoincrement())
+  name                  String    @default("")
+  email                 String    @unique @default("")
+  password              String
+  role                  String
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @updatedAt
+  from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
 }
 
 model Post {
@@ -49,6 +50,7 @@ model Post {
   ogImageId                                  Int?                 @map("ogImage")
   createdAt                                  DateTime?            @default(now())
   updatedAt                                  DateTime?            @updatedAt
+  onlineUsers                                User[]               @relation("Post_onlineUsers")
   from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
 

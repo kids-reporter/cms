@@ -8,6 +8,7 @@ This is a monorepo containing sub-packages:
 - [@kids-reporter/cms-core](./packages/core): see `packages/core`
 - [@kids-reporter/cms](./packages/cms): see `packages/cms`
 - [@kids-reporter/frontend](./packages/frontend): see `packages/frontend`
+- [@kids-reporter/cronjob-rss-feed](./packages/cronjob-rss-feed): see `packages/cronjob-rss-feed`
 
 This monorepo adopts `husky`, `lint-staged` and `yarn workspaces`. 
 `husky` and `lint-staged` will 

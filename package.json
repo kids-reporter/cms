@@ -6,7 +6,8 @@
     "packages/draft-renderer",
     "packages/cms",
     "packages/frontend",
-    "packages/api-gateway"
+    "packages/api-gateway",
+    "packages/cronjob-rss-feed"
   ],
   "scripts": {
     "prepare": "husky install"

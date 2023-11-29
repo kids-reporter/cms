@@ -157,6 +157,9 @@ type Post {
   createdAt: DateTime
   updatedAt: DateTime
   preview: JSON
+  listPreview: String
+  onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
+  onlineUsersCount(where: UserWhereInput! = {}): Int
 }
 
 input PostWhereUniqueInput {
@@ -188,6 +191,7 @@ input PostWhereInput {
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  onlineUsers: UserManyRelationFilter
 }
 
 input StringNullableFilter {
@@ -249,6 +253,12 @@ input PostManyRelationFilter {
   none: PostWhereInput
 }
 
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
 input PostOrderByInput {
   id: OrderDirection
   title: OrderDirection
@@ -286,6 +296,7 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  onlineUsers: UserRelateToManyForUpdateInput
 }
 
 input ProjectRelateToOneForUpdateInput {
@@ -341,6 +352,13 @@ input PostRelateToManyForUpdateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
 input PostUpdateArgs {
   where: PostWhereUniqueInput!
   data: PostUpdateInput!
@@ -369,6 +387,7 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  onlineUsers: UserRelateToManyForCreateInput
 }
 
 input ProjectRelateToOneForCreateInput {
@@ -409,6 +428,11 @@ input TagRelateToManyForCreateInput {
 input PostRelateToManyForCreateInput {
   create: [PostCreateInput!]
   connect: [PostWhereUniqueInput!]
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 type Photo {
