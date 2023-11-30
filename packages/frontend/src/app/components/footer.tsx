@@ -32,7 +32,7 @@ const socialIcons = [
     img: GithubIcon,
   },
   {
-    link: '/feed',
+    link: 'https://kids-storage.twreporter.org/rss/rss.xml',
     img: RSSIcon,
   },
 ]
