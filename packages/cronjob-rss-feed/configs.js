@@ -5,7 +5,7 @@ export const config = {
   slackLogHook: process.env.SLACK_LOG_HOOK || 'SLACK_LOG_HOOK',
   slackErrorHook: process.env.SLACK_ERROR_HOOK || 'SLACK_ERROR_HOOK',
   rssFileName: process.env.RSS_FILE_NAME || 'rss/rss.xml',
-  rssFetchDays: process.env.RSS_FETCH_DAYS || 2,
+  rssFetchDays: process.env.RSS_FETCH_DAYS || 7,
   rss: {
     title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
     description:
