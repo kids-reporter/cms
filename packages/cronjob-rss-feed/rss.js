@@ -14,14 +14,19 @@ const storage =
 
 const fetchData = async () => {
   try {
+    const fetchAfter = new Date(
+      new Date().setHours(0, 0, 0, 0) -
+        parseInt(config.rssFetchDays) * 24 * 60 * 60 * 1000 // 2 days ago
+    )
+    await log(
+      `Fetching data in last ${config.rssFetchDays} days (${fetchAfter})...`
+    )
     const where = {
       status: {
         equals: 'published',
       },
       publishedDate: {
-        gte: new Date(
-          new Date().setHours(0, 0, 0, 0) - 2 * 24 * 60 * 60 * 1000 // 2 days ago
-        ),
+        gte: fetchAfter,
       },
     }
     const payload = {
@@ -74,7 +79,7 @@ const fetchData = async () => {
 const generateRSS = (data) => {
   const feed = new RSS({
     site_url: config.baseUrl,
-    feed_url: `${config.baseUrl}rss.xml`,
+    feed_url: `https://${config.bucketName}/${config.rssFileName}`,
     title: config.rss.title,
     description: config.rss.description,
     language: config.rss.language,
@@ -85,9 +90,9 @@ const generateRSS = (data) => {
   data.forEach((entry) => {
     let url = ''
     if (entry.__typename === 'Post') {
-      url = `${config.baseUrl}/article/${entry.slug}`
+      url = `${config.baseUrl}article/${entry.slug}`
     } else if (entry.__typename === 'Project') {
-      url = `${config.baseUrl}/topic/${entry.slug}`
+      url = `${config.baseUrl}topic/${entry.slug}`
     }
     feed.item({
       title: entry.title,
