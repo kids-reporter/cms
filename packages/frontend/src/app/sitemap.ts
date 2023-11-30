@@ -4,7 +4,7 @@ import errors from '@twreporter/errors'
 import { API_URL, KIDS_URL_ORIGIN } from '@/app/constants'
 import { log, LogLevel } from '@/app/utils'
 
-export const revalidate = 86400 // 1 days
+export const revalidate = 86400 // 1 day
 
 const postsGQL = `
 query($where: PostWhereInput!) {
