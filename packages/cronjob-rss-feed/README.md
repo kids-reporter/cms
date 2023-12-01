@@ -21,13 +21,15 @@ This Node.js script fetches posts data from a RESTful server, generates an RSS f
 
 Set up `configs.js` with envs, accepted envs:
 
-- API_URL
-- BASE_URL
-- BUCKET_NAME
-- SLACK_WEBHOOK
-- RSS_FILE_NAME
-- PROJECT_ID
-- KEY_FILENAME
+- `API_URL`: the RESTful server URL
+- `BASE_URL`: the base URL of the website
+- `BUCKET_NAME`: the GCS bucket name
+- `SLACK_LOG_HOOK`: the Slack webhook URL for logging
+- `SLACK_ERROR_HOOK`: the Slack webhook URL for error notification
+- `RSS_FILE_NAME`: the name of the RSS file
+- `RSS_FETCH_DAYS`: the number of days to fetch posts data
+- `PROJECT_ID`: (optional) the GCP project ID
+- `KEY_FILENAME`: (optional) the path to the GCP service account key file
 
 ## Usage
 
