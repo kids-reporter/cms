@@ -16,7 +16,7 @@ const fetchData = async () => {
   try {
     const fetchAfter = new Date(
       new Date().setHours(0, 0, 0, 0) -
-        parseInt(config.rssFetchDays) * 24 * 60 * 60 * 1000 // 2 days ago
+        parseInt(config.rssFetchDays) * 24 * 60 * 60 * 1000
     )
     await log(
       `Fetching data in last ${config.rssFetchDays} days (${fetchAfter})...`
@@ -122,7 +122,7 @@ const main = async () => {
   const data = await fetchData()
   const rss = generateRSS(data)
   await uploadToGCS(rss)
-  log(`Cronjob RSS feed completed.`)
+  console.log(`Cronjob RSS feed completed.`)
 }
 
 main()

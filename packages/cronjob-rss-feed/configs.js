@@ -2,8 +2,8 @@ export const config = {
   apiUrl: process.env.API_URL || 'https://kids-api.twreporter.org/api/graphql',
   baseUrl: process.env.BASE_URL || 'https://kids.twreporter.org/',
   bucketName: process.env.BUCKET_NAME || 'kids-storage.twreporter.org',
-  slackLogHook: process.env.SLACK_LOG_HOOK || 'SLACK_LOG_HOOK',
-  slackErrorHook: process.env.SLACK_ERROR_HOOK || 'SLACK_ERROR_HOOK',
+  slackLogHook: process.env.SLACK_LOG_HOOK,
+  slackErrorHook: process.env.SLACK_ERROR_HOOK,
   rssFileName: process.env.RSS_FILE_NAME || 'rss/rss.xml',
   rssFetchDays: process.env.RSS_FETCH_DAYS || 7,
   rss: {
