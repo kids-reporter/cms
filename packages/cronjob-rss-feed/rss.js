@@ -122,7 +122,7 @@ const main = async () => {
   const data = await fetchData()
   const rss = generateRSS(data)
   await uploadToGCS(rss)
-  log(`Cronjob RSS feed completed.`)
+  console.log(`Cronjob RSS feed completed.`)
 }
 
 main()
