@@ -1,11 +1,6 @@
 import { config } from './configs.js'
 import { IncomingWebhook } from '@slack/webhook'
 import { Logging } from '@google-cloud/logging'
-// @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
-import _errors from '@twreporter/errors'
-
-// @twreporter/errors is a cjs module, therefore, we need to use its default property
-const errors = _errors.default
 const logging = new Logging()
 
 const sendSlackNotification = async (message, type = 'info') => {
@@ -70,28 +65,24 @@ export const log = async (message, error = '', type = '') => {
     type = error === '' ? 'info' : 'error'
   }
 
-  const logName = 'cronjob-rss-feed'
+  const logName = 'TEST-cronjob-rss-feed'
   const log = logging.log(logName)
+  const severity = type.toUpperCase()
   const metadata = {
     resource: { type: 'global' },
+    severity: severity,
   }
-
-  const severity = type.toUpperCase()
 
   let data
   if (type === 'error') {
     data = {
-      message: errors.helpers.printAll(error, {
-        withStack: true,
-        withPayload: true,
-      }),
-      severity: severity,
+      message: message,
+      error: error,
     }
     console.error(message, error)
   } else {
     data = {
       message: message,
-      severity: severity,
     }
     if (config.slackLogHook) {
       await sendSlackNotification(message, type)
