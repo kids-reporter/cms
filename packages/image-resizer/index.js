@@ -19,9 +19,18 @@ const app = express()
 
 app.use(express.json())
 app.post('/', async (req, res) => {
-  try {
-    const event = req.body
+  const event = req.body
+  res.status(200).send('ack')
+  await resizeImage(event)
+})
 
+const port = config.port
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`)
+})
+
+const resizeImage = async (event) => {
+  try {
     // Extract bucket and file name from protoPayload.resourceName
     const resourceName = event?.protoPayload?.resourceName
     if (!resourceName || typeof resourceName !== 'string') {
@@ -62,8 +71,12 @@ app.post('/', async (req, res) => {
 
     const tempFilePath = join(
       tmpdir(),
-      `tempImage-${basename(name, extname(name))}`
+      `tempImage-${basename(
+        name,
+        extname(name)
+      )}-${Date.now()}-${generateRandomString()}`
     )
+    console.log(`Downloading to temp file: ${tempFilePath}`)
     await file.download({ destination: tempFilePath })
 
     // Resize the image and upload to the target folder
@@ -106,13 +119,18 @@ app.post('/', async (req, res) => {
     console.log(
       `Resized ${name} to ${sizes.join(', ')} ${toWebp ? '(webp)' : ''}`
     )
-    res.status(200).send('ack')
   } catch (err) {
     errorHandling(err)
   }
-})
+}
 
-const port = config.port
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
+const generateRandomString = (length = 10) => {
+  const characters =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let randomString = ''
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length)
+    randomString += characters[randomIndex]
+  }
+  return randomString
+}
