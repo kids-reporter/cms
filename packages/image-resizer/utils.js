@@ -1,5 +1,10 @@
 import { config } from './configs.js'
 import { IncomingWebhook } from '@slack/webhook'
+// @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
+import _errors from '@twreporter/errors'
+
+// @twreporter/errors is a cjs module, therefore, we need to use its default property
+export const errors = _errors.default
 
 const sendSlackNotification = async (message) => {
   try {
@@ -11,20 +16,17 @@ const sendSlackNotification = async (message) => {
           text: {
             type: 'plain_text',
             emoji: true,
-            text: ':information_source:  KidsReporter Image Resizer',
+            text: ':information_source:  RSS Cronjob',
           },
         },
         {
           type: 'context',
           elements: [
             {
-              text: `LOG  |  *${new Date().toISOString()}*`,
+              text: `*${new Date().toISOString()}*`,
               type: 'mrkdwn',
             },
           ],
-        },
-        {
-          type: 'divider',
         },
         {
           type: 'section',
@@ -33,29 +35,31 @@ const sendSlackNotification = async (message) => {
             text: message,
           },
         },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'context',
-          elements: [
-            {
-              type: 'mrkdwn',
-              text: 'Sent from kids-reporter/kids-reporter-monorepo/packages/image-resizer',
-            },
-          ],
-        },
       ],
     })
-    console.log('Slack notification sent')
-  } catch (error) {
-    console.error('Error sending Slack notification', error)
+    console.log(`Slack notification sent: ${message}`)
+  } catch (err) {
+    errorHandling(err)
   }
 }
 
-export const log = async (message) => {
-  console.log(message)
-  if (config.slackLogHook && config.slackLogHook !== 'SLACK_LOG_HOOK') {
+export const logWithSlack = async (message) => {
+  if (config.slackLogHook) {
     await sendSlackNotification(message)
   }
+  console.log(message)
+}
+
+export const errorHandling = (err) => {
+  console.error(
+    JSON.stringify({
+      severity: 'ERROR',
+      message: errors.helpers.printAll(
+        err,
+        { withStack: true, withPayload: true },
+        0,
+        0
+      ),
+    })
+  )
 }
