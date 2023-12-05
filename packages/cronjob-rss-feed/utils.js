@@ -65,7 +65,7 @@ export const log = async (message, error = '', type = '') => {
     type = error === '' ? 'info' : 'error'
   }
 
-  const logName = 'TEST-cronjob-rss-feed'
+  const logName = 'cronjob-rss-feed'
   const log = logging.log(logName)
   const severity = type.toUpperCase()
   const metadata = {
