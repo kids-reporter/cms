@@ -19,15 +19,15 @@ const app = express()
 
 app.use(express.json())
 app.post('/', async (req, res) => {
+  res.status(200).send('Processing')
+
   try {
     const event = req.body
 
     // Extract bucket and file name from protoPayload.resourceName
     const resourceName = event?.protoPayload?.resourceName
     if (!resourceName || typeof resourceName !== 'string') {
-      const msg = `Invalid resourceName: ${resourceName}`
-      console.warn(msg)
-      res.status(400).send(msg)
+      console.warn(`Invalid resourceName: ${resourceName}`)
       return
     }
     const bucket = resourceName.split('/')[3]
@@ -40,9 +40,7 @@ app.post('/', async (req, res) => {
     // Check if the file exists in GCS
     const [exists] = await file.exists()
     if (!exists) {
-      const msg = `File ${name} does not exist in bucket ${bucket}`
-      console.warn(msg)
-      res.status(404).send(msg)
+      console.warn(`File ${name} does not exist in bucket ${bucket}`)
       return
     }
     // Skip unsupported file types, sharp only accepts jpeg, png, gif, webp
@@ -53,9 +51,7 @@ app.post('/', async (req, res) => {
         contentType
       )
     ) {
-      const msg = `Unsupported file: ${name} (${contentType})`
-      console.warn(msg)
-      res.status(400).send(msg)
+      console.warn(`Unsupported file: ${name} (${contentType})`)
       return
     }
 
@@ -104,14 +100,11 @@ app.post('/', async (req, res) => {
 
     await fs.unlink(tempFilePath)
 
-    const msg = `Resized ${name} to ${sizes.join(', ')} ${
-      toWebp ? '(webp)' : ''
-    }`
-    console.log(msg)
-    res.status(200).send(msg)
+    console.log(
+      `Resized ${name} to ${sizes.join(', ')} ${toWebp ? '(webp)' : ''}`
+    )
   } catch (err) {
     errorHandling(err)
-    res.status(500).send('Internal Server Error')
   }
 })
 
