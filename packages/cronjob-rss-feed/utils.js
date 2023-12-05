@@ -8,7 +8,7 @@ export const errors = _errors.default
 
 const sendSlackNotification = async (message) => {
   try {
-    const webhook = new IncomingWebhook()
+    const webhook = new IncomingWebhook(config.slackLogHook)
     await webhook.send({
       blocks: [
         {
@@ -20,19 +20,6 @@ const sendSlackNotification = async (message) => {
           },
         },
         {
-          type: 'divider',
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: message,
-          },
-        },
-        {
-          type: 'divider',
-        },
-        {
           type: 'context',
           elements: [
             {
@@ -40,6 +27,13 @@ const sendSlackNotification = async (message) => {
               type: 'mrkdwn',
             },
           ],
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: message,
+          },
         },
       ],
     })
