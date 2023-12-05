@@ -10,7 +10,6 @@
     "start": "node rss"
   },
   "dependencies": {
-    "@google-cloud/logging": "^11.0.0",
     "@google-cloud/storage": "^7.6.0",
     "@slack/webhook": "^7.0.1",
     "@twreporter/errors": "^1.1.2",

@@ -1,13 +1,8 @@
 import { config } from './configs.js'
-import { log } from './utils.js'
+import { logWithSlack, errorHandling, errors } from './utils.js'
 import axios from 'axios'
 import RSS from 'rss'
 import { Storage } from '@google-cloud/storage'
-// @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
-import _errors from '@twreporter/errors'
-
-// @twreporter/errors is a cjs module, therefore, we need to use its default property
-const errors = _errors.default
 
 const storage =
   config.gcs.projectId && config.gcs.keyFilename
@@ -22,7 +17,7 @@ const fetchData = async () => {
     new Date().setHours(0, 0, 0, 0) -
       parseInt(config.rssFetchDays) * 24 * 60 * 60 * 1000
   )
-  await log(
+  await logWithSlack(
     `Fetching data in last ${config.rssFetchDays} days (${fetchAfter})...`
   )
   const where = {
@@ -114,18 +109,31 @@ const uploadToGCS = async (data) => {
     const bucket = storage.bucket(config.bucketName)
     const file = bucket.file(config.rssFileName)
     await file.save(data, { contentType: 'application/xml' })
-    await log(
+    await logWithSlack(
       `RSS feed uploaded to GCS bucket: ${config.bucketName}/${config.rssFileName}`
     )
   } catch (error) {
-    await log('Error uploading RSS to GCS', error)
+    const annotatedErr = errors.helpers.wrap(
+      error,
+      'uploadToGcsError',
+      'Error uploading RSS to GCS',
+      {
+        bucket: config.bucketName,
+        file: config.rssFileName,
+      }
+    )
+    throw annotatedErr
   }
 }
 
 const main = async () => {
-  const data = await fetchData()
-  const rss = generateRSS(data)
-  await uploadToGCS(rss)
+  try {
+    const data = await fetchData()
+    const rss = generateRSS(data)
+    await uploadToGCS(rss)
+  } catch (err) {
+    errorHandling(err)
+  }
   console.log(`Cronjob RSS feed completed.`)
 }
 

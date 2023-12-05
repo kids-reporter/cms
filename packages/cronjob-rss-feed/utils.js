@@ -1,13 +1,14 @@
 import { config } from './configs.js'
 import { IncomingWebhook } from '@slack/webhook'
-import { Logging } from '@google-cloud/logging'
-const logging = new Logging()
+// @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
+import _errors from '@twreporter/errors'
 
-const sendSlackNotification = async (message, type = 'info') => {
+// @twreporter/errors is a cjs module, therefore, we need to use its default property
+export const errors = _errors.default
+
+const sendSlackNotification = async (message) => {
   try {
-    const webhook = new IncomingWebhook(
-      type === 'error' ? config.slackErrorHook || '' : config.slackLogHook || ''
-    )
+    const webhook = new IncomingWebhook()
     await webhook.send({
       blocks: [
         {
@@ -15,20 +16,8 @@ const sendSlackNotification = async (message, type = 'info') => {
           text: {
             type: 'plain_text',
             emoji: true,
-            text:
-              type === 'error'
-                ? ':warning:  KidsReporter Cronjob'
-                : ':information_source:  KidsReporter Cronjob',
+            text: ':information_source:  RSS Cronjob',
           },
-        },
-        {
-          type: 'context',
-          elements: [
-            {
-              text: `${type.toUpperCase()}  |  *${new Date().toISOString()}*`,
-              type: 'mrkdwn',
-            },
-          ],
         },
         {
           type: 'divider',
@@ -47,49 +36,37 @@ const sendSlackNotification = async (message, type = 'info') => {
           type: 'context',
           elements: [
             {
+              text: `*${new Date().toISOString()}*`,
               type: 'mrkdwn',
-              text: 'Sent from kids-reporter/kids-reporter-monorepo/packages/cronjob-rss-feed',
             },
           ],
         },
       ],
     })
-    console.log('Slack notification sent')
-  } catch (error) {
-    console.error('Error sending Slack notification', error)
+    console.log(`Slack notification sent: ${message}`)
+  } catch (err) {
+    errorHandling(err)
   }
 }
 
-export const log = async (message, error = '', type = '') => {
-  if (type === '') {
-    type = error === '' ? 'info' : 'error'
+export const logWithSlack = async (message) => {
+  if (config.slackLogHook) {
+    await sendSlackNotification(message)
   }
+  console.log(message)
+}
 
-  const logName = 'cronjob-rss-feed'
-  const log = logging.log(logName)
-  const severity = type.toUpperCase()
-  const metadata = {
-    resource: { type: 'global' },
-    severity: severity,
-  }
-
-  let data
-  if (type === 'error') {
-    data = {
-      message: message,
-      error: error,
-    }
-    console.error(message, error)
-  } else {
-    data = {
-      message: message,
-    }
-    if (config.slackLogHook) {
-      await sendSlackNotification(message, type)
-    }
-    console.log(message)
-  }
-
-  const entry = log.entry(metadata, data)
-  await log.write(entry)
+export const errorHandling = (err) => {
+  console.error(
+    JSON.stringify({
+      severity: 'ERROR',
+      message: errors.helpers.printAll(
+        err,
+        { withStack: true, withPayload: true },
+        0,
+        0
+      ),
+    })
+  )
+  process.exit(1)
 }
