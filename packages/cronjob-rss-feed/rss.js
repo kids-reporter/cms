@@ -65,7 +65,13 @@ const fetchData = async () => {
   }
   try {
     const dataRes = await axios.post(config.apiUrl, payload)
-    const data = [...dataRes?.data?.data.posts, ...dataRes?.data?.data.projects]
+    const data = [
+      ...(dataRes?.data?.data?.posts || []),
+      ...(dataRes?.data?.data?.projects || []),
+    ]
+    if (data.length === 0) {
+      throw new Error('Empty or invalid response while fetching data.')
+    }
     data.sort((a, b) => {
       return new Date(b.publishedDate) - new Date(a.publishedDate)
     })
