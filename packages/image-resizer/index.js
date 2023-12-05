@@ -94,9 +94,6 @@ app.post('/', async (req, res) => {
         .then(() => {
           return storage.bucket(bucket).upload(newFilePath, {
             destination: `${config.targetFolder}/${newFileName}`,
-            metadata: {
-              contentType: 'image/webp',
-            },
           })
         })
 
