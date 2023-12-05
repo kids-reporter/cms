@@ -19,8 +19,6 @@ const app = express()
 
 app.use(express.json())
 app.post('/', async (req, res) => {
-  res.status(200).send('Processing')
-
   try {
     const event = req.body
 
@@ -62,7 +60,10 @@ app.post('/', async (req, res) => {
     )
     const animated = ['image/gif', 'image/webp'].includes(contentType)
 
-    const tempFilePath = join(tmpdir(), 'tempImage')
+    const tempFilePath = join(
+      tmpdir(),
+      `tempImage-${basename(name, extname(name))}`
+    )
     await file.download({ destination: tempFilePath })
 
     // Resize the image and upload to the target folder
@@ -105,6 +106,7 @@ app.post('/', async (req, res) => {
     console.log(
       `Resized ${name} to ${sizes.join(', ')} ${toWebp ? '(webp)' : ''}`
     )
+    res.status(200).send('ack')
   } catch (err) {
     errorHandling(err)
   }
