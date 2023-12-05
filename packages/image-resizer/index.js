@@ -33,7 +33,9 @@ app.post('/', async (req, res) => {
     const bucket = resourceName.split('/')[3]
     const name = resourceName.split('/').slice(5).join('/')
 
-    logWithSlack(`Processing file ${name} in bucket ${bucket}`)
+    logWithSlack(
+      `Processing file ${name} in bucket ${bucket} (ID: ${event?.insertId}))`
+    )
 
     const file = storage.bucket(bucket).file(name)
 
