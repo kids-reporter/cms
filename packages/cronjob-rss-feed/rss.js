@@ -69,9 +69,6 @@ const fetchData = async () => {
       ...(dataRes?.data?.data?.posts || []),
       ...(dataRes?.data?.data?.projects || []),
     ]
-    if (data.length === 0) {
-      throw new Error('Empty or invalid response while fetching data.')
-    }
     data.sort((a, b) => {
       return new Date(b.publishedDate) - new Date(a.publishedDate)
     })
