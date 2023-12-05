@@ -59,32 +59,57 @@ app.post('/', async (req, res) => {
       return
     }
 
+    const toWebp = ['image/jpeg', 'image/png', 'image/gif'].includes(
+      contentType
+    )
+    const animated = ['image/gif', 'image/webp'].includes(contentType)
+
     const tempFilePath = join(tmpdir(), 'tempImage')
     await file.download({ destination: tempFilePath })
 
     // Resize the image and upload to the target folder
     const sizes = config.targetSizes
     const uploadPromises = sizes.map((size) => {
-      const newFileName = `${basename(name, extname(name))}-${size}${extname(
-        name
-      )}`
+      const newFileName = toWebp
+        ? `${basename(name, extname(name))}-${size}.webp`
+        : `${basename(name, extname(name))}-${size}${extname(name)}`
       const newFilePath = join(tmpdir(), newFileName)
 
-      return sharp(tempFilePath)
+      let sharpPromise
+
+      if (animated) {
+        sharpPromise = sharp(tempFilePath, {
+          animated: true,
+        })
+      } else {
+        sharpPromise = sharp(tempFilePath)
+      }
+      if (toWebp) {
+        sharpPromise = sharpPromise.toFormat('webp')
+      }
+
+      sharpPromise = sharpPromise
         .resize(size)
         .toFile(newFilePath)
         .then(() => {
           return storage.bucket(bucket).upload(newFilePath, {
             destination: `${config.targetFolder}/${newFileName}`,
+            metadata: {
+              contentType: 'image/webp',
+            },
           })
         })
+
+      return sharpPromise
     })
 
     await Promise.all(uploadPromises)
 
     await fs.unlink(tempFilePath)
 
-    const msg = `Resized ${name} to ${sizes.join(', ')}`
+    const msg = `Resized ${name} to ${sizes.join(', ')} ${
+      toWebp ? '(webp)' : ''
+    }`
     console.log(msg)
     res.status(200).send(msg)
   } catch (err) {
