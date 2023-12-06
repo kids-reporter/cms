@@ -25,6 +25,7 @@ const listConfigurations = list({
       name: 'editorPicksOfPosts2',
       ref: 'Post',
       label: '精選文章',
+      many: true,
     }),
     editorPicksOfPosts: relationship({
       label: '精選文章',
