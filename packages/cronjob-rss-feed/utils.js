@@ -64,9 +64,13 @@ export const log = async (message, error = '', type = '') => {
   }
   if (type === 'error') {
     console.error(message, error)
-    await sendSlackNotification(`${message}: ${error.toString()}`, type)
+    if (config.slackErrorHook) {
+      await sendSlackNotification(`${message}: ${error.toString()}`, type)
+    }
   } else if (type === 'log') {
     console.log(message, error)
-    await sendSlackNotification(message, type)
+    if (config.slackLogHook) {
+      await sendSlackNotification(message, type)
+    }
   }
 }
