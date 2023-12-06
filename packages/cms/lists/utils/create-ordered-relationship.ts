@@ -28,6 +28,11 @@ export const createOrderedRelationship = (config: {
           listView: { fieldMode: 'hidden' },
           hideCreate: true,
         },
+        /*
+        hooks: {
+            // TODO: add hook to modify order field when add/delete
+        }
+        */
       }),
       [orderField]: text({
         label: '排序',
