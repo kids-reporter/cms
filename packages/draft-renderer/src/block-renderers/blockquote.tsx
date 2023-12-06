@@ -95,9 +95,7 @@ const ArticleBodyContainer = styled.div`
   margin: 0 auto 27px auto;
 
   ${mediaQuery.smallOnly} {
-    width: calc(100vw - 30px);
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
   }
 `
 
