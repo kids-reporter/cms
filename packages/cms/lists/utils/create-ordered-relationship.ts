@@ -1,3 +1,4 @@
+import { group } from '@keystone-6/core'
 import { virtual, relationship, text } from '@keystone-6/core/fields'
 import { graphql } from '@keystone-6/core'
 
@@ -13,32 +14,36 @@ export const createOrderedRelationship = (config: {
   const targetType = config.ref // TODO: handle 2-sided ref
 
   return {
-    [relationshipField]: relationship({
-      ref: targetType,
-      many: true,
+    ...group({
       label: config.label,
-      ui: {
-        // views: './lists/views/ordered-relationship',
-        createView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'edit' },
-        listView: { fieldMode: 'hidden' },
-        hideCreate: true,
-      },
-    }),
-    [orderField]: text({
-      label: orderField,
-      ui: {
-        createView: {
-          fieldMode: 'hidden',
-        },
-        itemView: {
-          fieldMode: 'edit',
-        },
-        listView: {
-          fieldMode: 'hidden',
-        },
-      },
-      /* TODO: hide this field from api if possible
+      description: '選取與排序',
+      fields: {
+        [relationshipField]: relationship({
+          ref: targetType,
+          many: true,
+          label: '選取',
+          ui: {
+            // views: './lists/views/ordered-relationship',
+            createView: { fieldMode: 'hidden' },
+            itemView: { fieldMode: 'edit' },
+            listView: { fieldMode: 'hidden' },
+            hideCreate: true,
+          },
+        }),
+        [orderField]: text({
+          label: '排序',
+          ui: {
+            createView: {
+              fieldMode: 'hidden',
+            },
+            itemView: {
+              fieldMode: 'edit',
+            },
+            listView: {
+              fieldMode: 'hidden',
+            },
+          },
+          /* TODO: hide this field from api if possible
         graphql: {
           omit: {
             read: true,
@@ -47,57 +52,61 @@ export const createOrderedRelationship = (config: {
           },
         },
         */
-    }),
-    [orderedRelationshipField]: virtual({
-      field: (lists) =>
-        graphql.field({
-          type: graphql.list(graphql.nonNull(lists[targetType].types.output)),
-          async resolve(item, args, context, info) {
-            const sourceType = info.parentType?.name
+        }),
+        [orderedRelationshipField]: virtual({
+          field: (lists) =>
+            graphql.field({
+              type: graphql.list(
+                graphql.nonNull(lists[targetType].types.output)
+              ),
+              async resolve(item, args, context, info) {
+                const sourceType = info.parentType?.name
 
-            // Query relationship & order to find target ids/ordered ids
-            let targetIds, orderedIds
-            try {
-              const source = await context.query[sourceType].findOne({
-                where: { id: item.id.toString() },
-                query: `${orderField} ${relationshipField} { id }`,
-              })
-              const order = source?.[orderField]
-              const relationships = source?.[relationshipField]
-              orderedIds = order ? order?.split(',') : [] // TODO: error handling for empty orderFieldName
-              targetIds = relationships?.map((relationship) => {
-                return relationship.id
-              })
-            } catch (err) {
-              console.error(err)
-            }
-
-            // Query targets by ids
-            let targets
-            try {
-              targets = await context.query[targetType].findMany({
-                where: { id: { in: targetIds } },
-                query: 'id', // TODO: handle arguments
-              })
-            } catch (err) {
-              console.error(err)
-            }
-
-            // Order targets
-            const orderedTargets =
-              orderedIds?.length > 0
-                ? orderedIds.map((id: string) => {
-                    return targets?.find((target) => target.id === id)
+                // Query relationship & order to find target ids/ordered ids
+                let targetIds, orderedIds
+                try {
+                  const source = await context.query[sourceType].findOne({
+                    where: { id: item.id.toString() },
+                    query: `${orderField} ${relationshipField} { id }`,
                   })
-                : targets
+                  const order = source?.[orderField]
+                  const relationships = source?.[relationshipField]
+                  orderedIds = order ? order?.split(',') : [] // TODO: error handling for empty orderFieldName
+                  targetIds = relationships?.map((relationship) => {
+                    return relationship.id
+                  })
+                } catch (err) {
+                  console.error(err)
+                }
 
-            return orderedTargets
+                // Query targets by ids
+                let targets
+                try {
+                  targets = await context.query[targetType].findMany({
+                    where: { id: { in: targetIds } },
+                    query: 'id', // TODO: handle arguments
+                  })
+                } catch (err) {
+                  console.error(err)
+                }
+
+                // Order targets
+                const orderedTargets =
+                  orderedIds?.length > 0
+                    ? orderedIds.map((id: string) => {
+                        return targets?.find((target) => target.id === id)
+                      })
+                    : targets
+
+                return orderedTargets
+              },
+            }),
+          ui: {
+            createView: { fieldMode: 'hidden' },
+            itemView: { fieldMode: 'hidden' },
+            listView: { fieldMode: 'hidden' },
           },
         }),
-      ui: {
-        createView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'hidden' },
-        listView: { fieldMode: 'hidden' },
       },
     }),
   }

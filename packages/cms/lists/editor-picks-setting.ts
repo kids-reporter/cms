@@ -24,7 +24,7 @@ const listConfigurations = list({
     ...createOrderedRelationship({
       name: 'editorPicksOfPosts2',
       ref: 'Post',
-      label: '精選文章(可排序)',
+      label: '精選文章',
     }),
     editorPicksOfPosts: relationship({
       label: '精選文章',
