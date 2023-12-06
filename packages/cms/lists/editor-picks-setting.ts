@@ -5,6 +5,7 @@ import {
 } from './utils/access-control-list'
 import { list } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
+import { createOrderedRelationship } from './utils/create-ordered-relationship'
 
 const listConfigurations = list({
   fields: {
@@ -19,6 +20,11 @@ const listConfigurations = list({
     nameForCMS: text({
       label: '設定適用範圍（中文）',
       validation: { isRequired: true },
+    }),
+    ...createOrderedRelationship({
+      name: 'editorPicksOfPosts2',
+      ref: 'Post',
+      label: '精選文章(可排序)',
     }),
     editorPicksOfPosts: relationship({
       label: '精選文章',

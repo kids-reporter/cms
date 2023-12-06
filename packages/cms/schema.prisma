@@ -23,36 +23,37 @@ model User {
 }
 
 model Post {
-  id                                         Int                  @id @default(autoincrement())
-  title                                      String               @default("")
-  slug                                       String               @unique @default("")
-  subtitle                                   String               @default("")
-  status                                     String?              @default("draft")
-  publishedDate                              DateTime?
-  mainProject                                Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
-  mainProjectId                              Int?                 @map("mainProject")
-  subSubcategories                           SubSubcategory[]     @relation("Post_subSubcategories")
-  authors                                    Author[]             @relation("Author_posts")
-  authorsJSON                                Json?                @default("[]")
-  heroImage                                  Photo?               @relation("Post_heroImage", fields: [heroImageId], references: [id])
-  heroImageId                                Int?                 @map("heroImage")
-  heroCaption                                String               @default("")
-  newsReadingGroup                           NewsReadingGroup?    @relation("Post_newsReadingGroup", fields: [newsReadingGroupId], references: [id])
-  newsReadingGroupId                         Int?                 @map("newsReadingGroup")
-  brief                                      Json?
-  content                                    Json?
-  projects                                   Project[]            @relation("Post_projects")
-  tags                                       Tag[]                @relation("Post_tags")
-  relatedPosts                               Post[]               @relation("Post_relatedPosts")
-  ogTitle                                    String               @default("")
-  ogDescription                              String               @default("")
-  ogImage                                    Photo?               @relation("Post_ogImage", fields: [ogImageId], references: [id])
-  ogImageId                                  Int?                 @map("ogImage")
-  createdAt                                  DateTime?            @default(now())
-  updatedAt                                  DateTime?            @updatedAt
-  onlineUsers                                User[]               @relation("Post_onlineUsers")
-  from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
-  from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
+  id                                          Int                  @id @default(autoincrement())
+  title                                       String               @default("")
+  slug                                        String               @unique @default("")
+  subtitle                                    String               @default("")
+  status                                      String?              @default("draft")
+  publishedDate                               DateTime?
+  mainProject                                 Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
+  mainProjectId                               Int?                 @map("mainProject")
+  subSubcategories                            SubSubcategory[]     @relation("Post_subSubcategories")
+  authors                                     Author[]             @relation("Author_posts")
+  authorsJSON                                 Json?                @default("[]")
+  heroImage                                   Photo?               @relation("Post_heroImage", fields: [heroImageId], references: [id])
+  heroImageId                                 Int?                 @map("heroImage")
+  heroCaption                                 String               @default("")
+  newsReadingGroup                            NewsReadingGroup?    @relation("Post_newsReadingGroup", fields: [newsReadingGroupId], references: [id])
+  newsReadingGroupId                          Int?                 @map("newsReadingGroup")
+  brief                                       Json?
+  content                                     Json?
+  projects                                    Project[]            @relation("Post_projects")
+  tags                                        Tag[]                @relation("Post_tags")
+  relatedPosts                                Post[]               @relation("Post_relatedPosts")
+  ogTitle                                     String               @default("")
+  ogDescription                               String               @default("")
+  ogImage                                     Photo?               @relation("Post_ogImage", fields: [ogImageId], references: [id])
+  ogImageId                                   Int?                 @map("ogImage")
+  createdAt                                   DateTime?            @default(now())
+  updatedAt                                   DateTime?            @updatedAt
+  onlineUsers                                 User[]               @relation("Post_onlineUsers")
+  from_Post_relatedPosts                      Post[]               @relation("Post_relatedPosts")
+  from_EditorPicksSetting_editorPicksOfPosts2 EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts2")
+  from_EditorPicksSetting_editorPicksOfPosts  EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
 
   @@index([title])
   @@index([status])
@@ -243,14 +244,16 @@ model NewsReadingGroupItem {
 }
 
 model EditorPicksSetting {
-  id                    Int       @id @default(autoincrement())
-  name                  String    @unique @default("")
-  nameForCMS            String    @default("")
-  editorPicksOfPosts    Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
-  editorPicksOfProjects Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
-  editorPicksOfTags     Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
-  createdAt             DateTime? @default(now())
-  updatedAt             DateTime? @updatedAt
+  id                        Int       @id @default(autoincrement())
+  name                      String    @unique @default("")
+  nameForCMS                String    @default("")
+  editorPicksOfPosts2       Post[]    @relation("EditorPicksSetting_editorPicksOfPosts2")
+  editorPicksOfPosts2_order String    @default("")
+  editorPicksOfPosts        Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
+  editorPicksOfProjects     Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
+  editorPicksOfTags         Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
+  createdAt                 DateTime? @default(now())
+  updatedAt                 DateTime? @updatedAt
 }
 
 model PDF {

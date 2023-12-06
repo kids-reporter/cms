@@ -1,18 +1,20 @@
 import { virtual, relationship, text } from '@keystone-6/core/fields'
 import { graphql } from '@keystone-6/core'
 
+// TODO: change parameter to relationship type
 export const createOrderedRelationship = (config: {
   name: string
   ref: string
   label: string
 }) => {
-  const fieldName = config.name
-  const relationshipFieldName = `${fieldName}`
-  const orderFieldName = `${fieldName}_orderedRelationship_order`
-  const orderedRelationshipField = `${fieldName}_ordered`
+  const relationshipField = config.name
+  const orderField = `${relationshipField}_order`
+  const orderedRelationshipField = `${relationshipField}_ordered`
+  const targetType = config.ref // TODO: handle 2-sided ref
+
   return {
-    [relationshipFieldName]: relationship({
-      ref: config.ref,
+    [relationshipField]: relationship({
+      ref: targetType,
       many: true,
       label: config.label,
       ui: {
@@ -23,8 +25,8 @@ export const createOrderedRelationship = (config: {
         hideCreate: true,
       },
     }),
-    [orderFieldName]: text({
-      label: orderFieldName,
+    [orderField]: text({
+      label: orderField,
       ui: {
         createView: {
           fieldMode: 'hidden',
@@ -51,30 +53,28 @@ export const createOrderedRelationship = (config: {
         graphql.field({
           type: graphql.list(graphql.nonNull(lists.Author.types.output)),
           async resolve(item, args, context, info) {
-            console.log(info.parentType?.name)
-            // console.log(item, args, context, info)
-            const source = await context.query.Post.findOne({
-              // TODO: replace Post
+            const sourceType = info.parentType?.name
+            const source = await context.query[sourceType].findOne({
               where: { id: item.id.toString() },
-              query: `${orderFieldName} ${relationshipFieldName} { id name }`,
+              query: `${orderField} ${relationshipField} { id }`,
             })
-            const relationships = source[relationshipFieldName]
+            const relationships = source[relationshipField]
             const ids = relationships.map((relationship) => {
               return relationship.id
             })
-            const targets = await context.query.Author.findMany({
-              // TODO: replace Author
+            const targets = await context.query[targetType].findMany({
               where: { id: { in: ids } },
-              query: 'id name email', // TODO: handle arguments
+              query: 'id', // TODO: handle arguments
             })
-            const orderedIds = source[orderFieldName]
-              ? source[orderFieldName]?.split(',')
+            const orderedIds = source[orderField]
+              ? source[orderField]?.split(',')
               : [] // TODO: error handling for empty orderFieldName
-            const orderedTargets = orderedIds
-              ? orderedIds.map((id: string) => {
-                  return targets.find((target) => target.id === id)
-                })
-              : targets
+            const orderedTargets =
+              orderedIds?.length > 0
+                ? orderedIds.map((id: string) => {
+                    return targets.find((target) => target.id === id)
+                  })
+                : targets
             return orderedTargets
           },
         }),
