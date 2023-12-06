@@ -103,9 +103,6 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
       resized {
         medium
       }
-      imageFile {
-        url
-      }
     }
   }
 }
