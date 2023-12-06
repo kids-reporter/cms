@@ -98,3 +98,9 @@ Example event payload:
     "receiveTimestamp": "2023-11-29T10:26:42.596060Z"
 }
 ```
+
+Eventarc will automatically create a Pub/Sub topic and a subscription for the trigger.  To ensure the large images are processed:
+
+- `Acknowledgement deadline` must be set to a large number, e.g. 200 seconds.  (default 10)
+- Enable `Dead lettering` for failed messages
+- In Retry policy, `Minimum backoff` must be set to a large number, e.g. 100 seconds.  (default 10)
