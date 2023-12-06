@@ -51,7 +51,7 @@ export const createOrderedRelationship = (config: {
     [orderedRelationshipField]: virtual({
       field: (lists) =>
         graphql.field({
-          type: graphql.list(graphql.nonNull(lists.Author.types.output)),
+          type: graphql.list(graphql.nonNull(lists[targetType].types.output)),
           async resolve(item, args, context, info) {
             const sourceType = info.parentType?.name
             const source = await context.query[sourceType].findOne({

@@ -1271,7 +1271,7 @@ type EditorPicksSetting {
   editorPicksOfPosts2(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   editorPicksOfPosts2Count(where: PostWhereInput! = {}): Int
   editorPicksOfPosts2_order: String
-  editorPicksOfPosts2_ordered: [Author!]
+  editorPicksOfPosts2_ordered: [Post!]
   editorPicksOfPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   editorPicksOfPostsCount(where: PostWhereInput! = {}): Int
   editorPicksOfProjects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
