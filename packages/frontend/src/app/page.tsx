@@ -180,8 +180,8 @@ export default async function Home() {
     topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
       return {
         url: `/topic/${topic.slug}`,
-        image: topic?.heroImage?.imageFile?.url
-          ? `${STORAGE_URL}${topic.heroImage.imageFile.url}`
+        image: topic?.heroImage?.resized?.medium
+          ? `${STORAGE_URL}${topic.heroImage.resized.medium}`
           : '',
         title: topic.title,
         subtitle: topic.subtitle,
