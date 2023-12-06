@@ -30,6 +30,8 @@ app.listen(port, () => {
 })
 
 const resizeImage = async (event) => {
+  const startTime = new Date().getTime() // Get the start time
+
   try {
     // Extract bucket and file name from protoPayload.resourceName
     const resourceName = event?.protoPayload?.resourceName
@@ -116,8 +118,13 @@ const resizeImage = async (event) => {
 
     await fs.unlink(tempFilePath)
 
+    const endTime = new Date().getTime() // Get the end time
+    const elapsedTime = ((endTime - startTime) / 1000).toFixed(2) // Calculate the elapsed time in seconds with 2 digits after the dot
+
     console.log(
-      `Resized ${name} to ${sizes.join(', ')} ${toWebp ? '(webp)' : ''}`
+      `Resized ${name} to ${sizes.join(', ')}${
+        toWebp ? ' (webp)' : ''
+      } (${elapsedTime}s)`
     )
   } catch (err) {
     errorHandling(err)
