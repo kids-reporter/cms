@@ -20,8 +20,8 @@ const app = express()
 app.use(express.json())
 app.post('/', async (req, res) => {
   const event = req.body
-  res.status(200).send('ack')
   await resizeImage(event)
+  res.status(200).send('ack')
 })
 
 const port = config.port
