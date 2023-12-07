@@ -160,10 +160,7 @@ export const Article = ({ post }: { post: any }) => {
               </Link>
             </div>
           )}
-          <HeroImage
-            url={post?.heroImage?.resized?.medium} // TODO: fetch image according to RWD
-            caption={post?.heroCaption}
-          />
+          <HeroImage image={post?.heroImage} caption={post?.heroCaption} />
           {post && (
             <div className="hero-section">
               <header className="entry-header">

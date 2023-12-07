@@ -77,7 +77,7 @@ export const BackgroundImage = styled.div<{
   width: 100vw;
   /* 62px is sticky header height */
   height: calc(100vh - 62px);
-  background-image: url(${({ $imageEntity }) => $imageEntity?.resized?.small});
+  background-image: url(${({ $imageEntity }) => $imageEntity?.resized?.medium});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -99,6 +99,8 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.largeOnly} {
+    background-image: url(${({ $imageEntity }) =>
+      $imageEntity?.resized?.large});
     ${DownButton} {
       bottom: 50px;
       width: 60px;
@@ -106,6 +108,8 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.mediumOnly} {
+    background-image: url(${({ $imageEntity }) =>
+      $imageEntity?.resized?.medium});
     ${DownButton} {
       bottom: 40px;
       width: 50px;
@@ -113,6 +117,8 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.smallOnly} {
+    background-image: url(${({ $imageEntity }) =>
+      $imageEntity?.resized?.small});
     ${DownButton} {
       bottom: 30px;
       width: 40px;
