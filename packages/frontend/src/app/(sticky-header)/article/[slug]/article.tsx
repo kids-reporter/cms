@@ -18,7 +18,6 @@ import Divider from '@/app/components/divider'
 import {
   AUTHOR_ROLES_IN_ORDER,
   AuthorRole,
-  STORAGE_URL,
   DEFAULT_AVATAR,
   FontSizeLevel,
   DEFAULT_THEME_COLOR,
@@ -64,7 +63,7 @@ const getPostContents = (post: any) => {
       ? {
           slug: author.slug,
           name: author.name,
-          avatar: avatarURL ? `${STORAGE_URL}${avatarURL}` : DEFAULT_AVATAR,
+          avatar: avatarURL ?? DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
           link:

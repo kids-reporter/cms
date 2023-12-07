@@ -13,7 +13,6 @@ import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
 import {
   API_URL,
-  STORAGE_URL,
   GENERAL_DESCRIPTION,
   POST_CONTENT_GQL,
   Theme,
@@ -178,7 +177,7 @@ export default async function Home() {
       return {
         url: `/topic/${topic.slug}`,
         image: topic?.heroImage?.resized?.medium
-          ? `${STORAGE_URL}${topic.heroImage.resized.medium}`
+          ? topic.heroImage.resized.medium
           : '',
         title: topic.title,
         subtitle: topic.subtitle,

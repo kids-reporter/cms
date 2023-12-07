@@ -95,9 +95,6 @@ heroImage {
   resized {
     medium
   }
-  resized {
-    medium
-  }
 }
 subSubcategories {
   name

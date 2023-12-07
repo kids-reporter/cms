@@ -1,4 +1,4 @@
-import { STORAGE_URL, Theme, ThemeColor } from '@/app/constants'
+import { Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
 import { DEFAULT_THEME_COLOR } from '@/app/constants'
 
@@ -27,7 +27,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
     const imageURL = post?.heroImage?.resized?.medium
-    const image = imageURL ? `${STORAGE_URL}${imageURL}` : ''
+    const image = imageURL ?? ''
     const subSubcategory = post?.subSubcategories?.[0]
 
     return {

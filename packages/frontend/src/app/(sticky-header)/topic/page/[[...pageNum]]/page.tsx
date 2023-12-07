@@ -7,7 +7,6 @@ import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  STORAGE_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -152,9 +151,7 @@ export default async function Topic({
     ? topics.map((topic: any) => {
         return topic
           ? {
-              image: topic.heroImage?.resized?.medium
-                ? `${STORAGE_URL}${topic.heroImage.resized.medium}`
-                : '', // TODO: fallback image
+              image: topic.heroImage?.resized?.medium ?? '', // TODO: fallback image
               title: topic.title,
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,

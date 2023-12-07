@@ -7,7 +7,6 @@ import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
   API_URL,
-  STORAGE_URL,
   DEFAULT_AVATAR,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
@@ -84,9 +83,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const avatarURL = author.avatar?.resized?.medium
-    ? `${STORAGE_URL}${author.avatar.resized.medium}`
-    : DEFAULT_AVATAR
+  const avatarURL = author.avatar?.resized?.medium ?? DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (currentPage > totalPages) {
