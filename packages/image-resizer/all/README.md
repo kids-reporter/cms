@@ -8,6 +8,20 @@ This is a Cloud Run Job which will fetch images from a Cloud Storage bucket, and
 node index.js
 ```
 
+## Deploy
+
+Build image
+
+```bash
+docker build --platform linux/amd64 --no-cache --tag gcr.io/kids-reporter/image-resizer-all:v1.0 . 
+```
+
+Push image
+
+```bash
+docker push gcr.io/kids-reporter/image-resizer-all:v1.0
+```
+
 ## Environment Variables
 
 LIMIT: The maximum number of images to be resized.  `0` will not run, `-1` will run all images.  Default to `-1`.
