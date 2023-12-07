@@ -23,9 +23,6 @@ const query = `
       medium
       large
     }
-    resized {
-      medium
-    }
   }
   query GetAProject($where: ProjectWhereUniqueInput!, $orderBy: [PostOrderByInput!]!) {
     project(where: $where) {
