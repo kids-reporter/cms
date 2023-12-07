@@ -176,9 +176,7 @@ export default async function Home() {
     topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
       return {
         url: `/topic/${topic.slug}`,
-        image: topic?.heroImage?.resized?.medium
-          ? topic.heroImage.resized.medium
-          : '',
+        image: topic?.heroImage?.resized?.medium ?? '',
         title: topic.title,
         subtitle: topic.subtitle,
       }
