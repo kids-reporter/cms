@@ -1,5 +1,10 @@
 import { Storage } from '@google-cloud/storage'
 import fetch from 'node-fetch'
+// @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
+import _errors from '@twreporter/errors'
+
+// @twreporter/errors is a cjs module, therefore, we need to use its default property
+const errors = _errors.default
 
 const storage = new Storage()
 const limit = process.env.LIMIT || '-1'
@@ -54,4 +59,16 @@ async function runJob() {
   }
 }
 
-runJob().catch(console.error)
+runJob().catch((err) => {
+  console.error(
+    JSON.stringify({
+      severity: 'ERROR',
+      message: errors.helpers.printAll(
+        err,
+        { withStack: true, withPayload: true },
+        0,
+        0
+      ),
+    })
+  )
+})

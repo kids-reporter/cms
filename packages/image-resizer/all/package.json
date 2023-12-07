@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^7.6.0",
+    "@twreporter/errors": "^1.1.2",
     "node-fetch": "^3.3.2"
   }
 }
