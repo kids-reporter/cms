@@ -23,6 +23,7 @@ async function runJob() {
   let successCount = 0
   let failCount = 0
   let somethingWrong = false
+  const totalMsg = `${parseInt(limit)} (${totalCount})`
 
   for (const file of files) {
     if (limitCount >= 0 && limitCount < 1) {
@@ -51,13 +52,13 @@ async function runJob() {
       console.warn(
         JSON.stringify({
           severity: 'WARNING',
-          message: `[+${successCount}-${failCount}/${totalCount}] Failed to process ${file.name}: ${response.statusText}`,
+          message: `[+${successCount}-${failCount} / ${totalMsg}] Failed to process ${file.name}: ${response.statusText}`,
         })
       )
     } else {
       successCount++
       console.log(
-        `[+${successCount}-${failCount}/${totalCount}] Successfully processed ${file.name}`
+        `[+${successCount}-${failCount} / ${totalMsg}] Successfully processed ${file.name}`
       )
     }
     limitCount--
