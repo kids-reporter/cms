@@ -63,7 +63,7 @@ async function runJob() {
     limitCount--
   }
   if (somethingWrong) {
-    throw new Error('Some files failed to process')
+    throw new Error(`${failCount} files were failed to process`)
   }
 }
 
@@ -79,4 +79,5 @@ runJob().catch((err) => {
       ),
     })
   )
+  process.exit(1)
 })
