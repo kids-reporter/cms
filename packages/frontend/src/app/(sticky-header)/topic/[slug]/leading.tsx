@@ -1,7 +1,7 @@
 'use client'
 import styled from 'styled-components'
 import { BackgroundImage, DownButton, Title } from './styled'
-import { Photo } from './type-def'
+import { Photo } from '@/app/types'
 import { useRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
 
