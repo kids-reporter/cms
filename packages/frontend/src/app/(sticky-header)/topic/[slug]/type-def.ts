@@ -1,7 +1,4 @@
 export type Photo = {
-  imageFile?: {
-    url: string
-  }
   resized?: {
     small: string
     medium: string
