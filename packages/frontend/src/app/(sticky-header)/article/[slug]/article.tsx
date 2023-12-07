@@ -59,7 +59,7 @@ const getPostContents = (post: any) => {
     const authorJSON = authorsJSON.find(
       (authorJSON: any) => authorJSON.id === author?.id
     )
-    const avatarURL = author?.avatar?.imageFile?.url
+    const avatarURL = author?.avatar?.resized?.medium
     return author && authorJSON
       ? {
           slug: author.slug,
@@ -162,7 +162,7 @@ export const Article = ({ post }: { post: any }) => {
             </div>
           )}
           <HeroImage
-            url={post?.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
+            url={post?.heroImage?.resized?.medium} // TODO: fetch image according to RWD
             caption={post?.heroCaption}
           />
           {post && (

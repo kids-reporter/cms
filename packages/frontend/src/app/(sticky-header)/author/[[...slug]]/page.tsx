@@ -28,8 +28,8 @@ const authorGQL = `
       name
       email
       avatar {
-        imageFile {
-          url
+        resized {
+          medium
         }
       }
       posts(orderBy: $orderBy, take: $take, skip: $skip) {
@@ -84,8 +84,8 @@ export default async function Author({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const avatarURL = author.avatar?.imageFile?.url
-    ? `${STORAGE_URL}${author.avatar.imageFile.url}`
+  const avatarURL = author.avatar?.resized?.medium
+    ? `${STORAGE_URL}${author.avatar.resized.medium}`
     : DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)

@@ -39,8 +39,8 @@ const genTopicsGQL = (hasRelatedPosts: boolean): string => {
         resized {
           medium
         }
-        imageFile {
-          url
+        resized {
+          medium
         }
       }
       publishedDate
@@ -152,8 +152,8 @@ export default async function Topic({
     ? topics.map((topic: any) => {
         return topic
           ? {
-              image: topic.heroImage?.imageFile?.url
-                ? `${STORAGE_URL}${topic.heroImage.imageFile.url}`
+              image: topic.heroImage?.resized?.medium
+                ? `${STORAGE_URL}${topic.heroImage.resized.medium}`
                 : '', // TODO: fallback image
               title: topic.title,
               url: `/topic/${topic.slug}`,

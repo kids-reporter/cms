@@ -20,9 +20,6 @@ const heroImageGQL = `
     resized {
       medium
     }
-    imageFile {
-      url
-    }
   }
 `
 
@@ -59,8 +56,8 @@ const postGQL = `
       heroCaption
       authors {
         avatar {
-          imageFile {
-            url
+          resized {
+            medium
           }
         }
         bio

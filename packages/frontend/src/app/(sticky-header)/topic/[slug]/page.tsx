@@ -23,8 +23,8 @@ const query = `
       medium
       large
     }
-    imageFile {
-      url
+    resized {
+      medium
     }
   }
   query GetAProject($where: ProjectWhereUniqueInput!, $orderBy: [PostOrderByInput!]!) {

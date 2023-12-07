@@ -30,8 +30,8 @@ const authorGQL = `
 query($where: AuthorWhereUniqueInput!) {
   author(where: $where) {
     avatar {
-      imageFile {
-        url
+      resized {
+        medium
       }
     }
   }
@@ -152,7 +152,7 @@ export default async function About() {
           },
         },
       })
-      const avatar = res?.data?.data?.author?.avatar?.imageFile?.url
+      const avatar = res?.data?.data?.author?.avatar?.resized?.medium
       member.avatar = avatar ? `${STORAGE_URL}${avatar}` : DEFAULT_AVATAR
     } catch (err) {
       const annotatedErr = errors.helpers.annotateAxiosError(err)

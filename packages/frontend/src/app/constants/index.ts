@@ -95,8 +95,8 @@ heroImage {
   resized {
     medium
   }
-  imageFile {
-    url
+  resized {
+    medium
   }
 }
 subSubcategories {
