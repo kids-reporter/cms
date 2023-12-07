@@ -46,8 +46,11 @@ async function runJob() {
 
     if (!response.ok) {
       failCount++
-      console.error(
-        `[+${successCount}-${failCount}/${totalCount}] Failed to process ${file.name}: ${response.statusText}`
+      console.warn(
+        JSON.stringify({
+          severity: 'WARNING',
+          message: `[+${successCount}-${failCount}/${totalCount}] Failed to process ${file.name}: ${response.statusText}`,
+        })
       )
     } else {
       successCount++
