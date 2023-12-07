@@ -22,6 +22,7 @@ async function runJob() {
   const totalCount = files.length - 1
   let successCount = 0
   let failCount = 0
+  let somethingWrong = false
 
   for (const file of files) {
     if (limitCount >= 0 && limitCount < 1) {
@@ -45,6 +46,7 @@ async function runJob() {
     })
 
     if (!response.ok) {
+      somethingWrong = true
       failCount++
       console.warn(
         JSON.stringify({
@@ -59,6 +61,9 @@ async function runJob() {
       )
     }
     limitCount--
+  }
+  if (somethingWrong) {
+    throw new Error('Some files failed to process')
   }
 }
 
