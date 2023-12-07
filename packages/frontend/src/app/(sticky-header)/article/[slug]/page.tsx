@@ -18,7 +18,9 @@ const topicRelatedPostsNum = 5
 const heroImageGQL = `
   heroImage {
     resized {
+      small
       medium
+      large
     }
   }
 `
