@@ -1,6 +1,6 @@
 'use client'
 import styled from 'styled-components'
-import { Photo } from './type-def'
+import { Photo } from '@/app/types'
 import { mediaQuery } from '@/app/utils/media-query'
 
 const _DownButton = ({ className }: { className?: string }) => {
