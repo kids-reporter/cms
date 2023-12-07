@@ -38,9 +38,6 @@ const genTopicsGQL = (hasRelatedPosts: boolean): string => {
         resized {
           medium
         }
-        resized {
-          medium
-        }
       }
       publishedDate
       ${hasRelatedPosts ? relatedPostsGQL : ''}
