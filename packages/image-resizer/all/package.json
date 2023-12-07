@@ -1,0 +1,16 @@
+{
+  "name": "image-resizer-all",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Image resizer for GCS bucket",
+  "main": "index.js",
+  "repository": "https://github.com/kids-reporter/kids-reporter-monorepo",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.6.0",
+    "node-fetch": "^3.3.2"
+  }
+}
