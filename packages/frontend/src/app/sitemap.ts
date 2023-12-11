@@ -1,3 +1,15 @@
+/*
+NOTE:
+There is a bug of sitemap regeneration in Next.js below v13.5.4
+https://github.com/vercel/next.js/issues/54057
+
+BUT there is also a bug of non-conditional request above v13.5.4
+(cdn caches 304 response & make blank pages)
+https://github.com/vercel/next.js/issues/56018
+
+Therefore, so far we can't upgrade to v13.5.4 due to #56018 & #54057 remains.
+*/
+
 import { MetadataRoute } from 'next'
 import axios from 'axios'
 import errors from '@twreporter/errors'
