@@ -30,7 +30,7 @@ app.listen(port, () => {
 })
 
 const resizeImage = async (event) => {
-  const startTime = new Date().getTime() // Get the start time
+  console.time('Resized time') // Start timer
 
   try {
     // Extract bucket and file name from protoPayload.resourceName
@@ -89,20 +89,20 @@ const resizeImage = async (event) => {
         : `${basename(name, extname(name))}-${size}${extname(name)}`
       const newFilePath = join(tmpdir(), newFileName)
 
-      let sharpPromise
+      let sharpInstance
 
       if (animated) {
-        sharpPromise = sharp(tempFilePath, {
+        sharpInstance = sharp(tempFilePath, {
           animated: true,
         })
       } else {
-        sharpPromise = sharp(tempFilePath)
+        sharpInstance = sharp(tempFilePath)
       }
       if (toWebp) {
-        sharpPromise = sharpPromise.toFormat('webp')
+        sharpInstance = sharpInstance.toFormat('webp')
       }
 
-      sharpPromise = sharpPromise
+      sharpInstance = sharpInstance
         .resize(size)
         .toFile(newFilePath)
         .then(() => {
@@ -111,21 +111,17 @@ const resizeImage = async (event) => {
           })
         })
 
-      return sharpPromise
+      return sharpInstance
     })
 
     await Promise.all(uploadPromises)
 
     await fs.unlink(tempFilePath)
 
-    const endTime = new Date().getTime() // Get the end time
-    const elapsedTime = ((endTime - startTime) / 1000).toFixed(2) // Calculate the elapsed time in seconds with 2 digits after the dot
-
     console.log(
-      `Resized ${name} to ${sizes.join(', ')}${
-        toWebp ? ' (webp)' : ''
-      } (${elapsedTime}s)`
+      `Resized ${name} to ${sizes.join(', ')}${toWebp ? ' (webp)' : ''}`
     )
+    console.timeEnd('Resized time') // End timer
   } catch (err) {
     errorHandling(err)
   }
