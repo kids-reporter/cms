@@ -130,7 +130,7 @@ export const Footer = () => {
         <div className="footer-container">
           <div className="footer-copyright-left">
             <p className="footer-number">
-              公益勸募許可字號｜衛部救字第 1101363853 號{' '}
+              公益勸募許可字號｜衛部救字第1121364182號{' '}
             </p>
             <div className="footer-policy">
               <Link
@@ -149,7 +149,7 @@ export const Footer = () => {
               </Link>{' '}
             </div>
           </div>
-          <p>Copyright © 2023 The Reporter</p>
+          <p>Copyright © 2024 The Reporter</p>
         </div>
       </div>
     </div>
