@@ -58,7 +58,7 @@ const getPostContents = (post: any) => {
     const authorJSON = authorsJSON.find(
       (authorJSON: any) => authorJSON.id === author?.id
     )
-    const avatarURL = author?.avatar?.resized?.medium
+    const avatarURL = author?.avatar?.resized?.tiny
     return author && authorJSON
       ? {
           slug: author.slug,

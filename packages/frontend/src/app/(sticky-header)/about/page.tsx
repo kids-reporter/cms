@@ -30,7 +30,7 @@ query($where: AuthorWhereUniqueInput!) {
   author(where: $where) {
     avatar {
       resized {
-        medium
+        tiny
       }
     }
   }
@@ -151,7 +151,7 @@ export default async function About() {
           },
         },
       })
-      const avatar = res?.data?.data?.author?.avatar?.resized?.medium
+      const avatar = res?.data?.data?.author?.avatar?.resized?.tiny
       member.avatar = avatar ?? DEFAULT_AVATAR
     } catch (err) {
       const annotatedErr = errors.helpers.annotateAxiosError(err)

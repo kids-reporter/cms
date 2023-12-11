@@ -59,7 +59,7 @@ const postGQL = `
       authors {
         avatar {
           resized {
-            medium
+            tiny
           }
         }
         bio

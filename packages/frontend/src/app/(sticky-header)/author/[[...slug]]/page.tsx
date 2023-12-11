@@ -28,7 +28,7 @@ const authorGQL = `
       email
       avatar {
         resized {
-          medium
+          tiny
         }
       }
       posts(orderBy: $orderBy, take: $take, skip: $skip) {
@@ -83,7 +83,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const avatarURL = author.avatar?.resized?.medium ?? DEFAULT_AVATAR
+  const avatarURL = author.avatar?.resized?.tiny ?? DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (currentPage > totalPages) {
