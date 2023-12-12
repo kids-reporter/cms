@@ -12,6 +12,7 @@
   "dependencies": {
     "@google-cloud/storage": "^7.6.0",
     "@slack/webhook": "^7.0.1",
+    "@twreporter/errors": "^1.1.2",
     "axios": "^1.6.2",
     "rss": "^1.2.2"
   },

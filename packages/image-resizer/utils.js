@@ -62,5 +62,4 @@ export const errorHandling = (err) => {
       ),
     })
   )
-  process.exit(1)
 }

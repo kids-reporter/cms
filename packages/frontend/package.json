@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@googleapis/customsearch": "^1.0.4",
-    "@kids-reporter/draft-renderer": "0.4.37",
+    "@kids-reporter/draft-renderer": "0.4.38",
     "@twreporter/errors": "^1.1.2",
     "@types/draft-js": "^0.11.10",
     "@types/node": "20.4.1",
@@ -26,7 +26,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
-    "next": "13.5.4",
+    "next": "13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet": "^6.1.0",
