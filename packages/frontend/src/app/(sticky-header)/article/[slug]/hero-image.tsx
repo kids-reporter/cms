@@ -1,4 +1,3 @@
-import { mediaFeature } from '@/app/utils/media-query'
 import { Photo } from '@/app/types'
 import './hero-image.scss'
 
@@ -13,17 +12,11 @@ export const HeroImage = (props: HeroImageProp) => {
   return (
     <figure className="hero-image">
       <div className="image-container">
-        <picture>
-          <source
-            media={mediaFeature.largeOnly}
-            srcSet={image?.resized?.large}
-          />
-          <source
-            media={mediaFeature.smallOnly}
-            srcSet={image?.resized?.small}
-          />
-          <img src={image?.resized?.medium} />
-        </picture>
+        <img
+          srcSet={`${image?.resized?.small} 800w, ${image?.resized?.medium} 1200w, ${image?.resized?.large} 2000w"`}
+          sizes="(min-width: 1100px) 1000px, 90vw"
+          src={image?.resized?.medium}
+        />
       </div>
       <figcaption>{caption}</figcaption>
     </figure>
