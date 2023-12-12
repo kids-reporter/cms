@@ -104,10 +104,10 @@ export const createOrderedRelationship = (config: {
             },
           }),
         ui: {
-          createView: { fieldMode: 'hidden' },
           itemView: { fieldMode: 'hidden' },
           listView: { fieldMode: 'hidden' },
         },
+        // ui: { query: '{ id, title }' },
       }),
     },
   })
