@@ -110,6 +110,10 @@ const resizeImage = async (event) => {
             destination: `${config.targetFolder}/${newFileName}`,
           })
         })
+        .then(() => {
+          // Delete the resized image file after it's uploaded
+          return fs.unlink(newFilePath)
+        })
 
       return sharpInstance
     })
