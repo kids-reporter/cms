@@ -11,7 +11,7 @@ const mediaQuery = {
   }px)`,
   mediumAbove: `@media (min-width: ${breakpoints.medium}px)`,
   largeBelow: `@media (max-width: ${breakpoints.large - 1}px)`,
-  largeOnly: `@media (min-width: ${breakpoints.large}px)}`,
+  largeOnly: `@media (min-width: ${breakpoints.large}px)`,
 }
 
 export { breakpoints, mediaQuery }
