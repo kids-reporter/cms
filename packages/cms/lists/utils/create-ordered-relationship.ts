@@ -84,9 +84,8 @@ export const createOrderedRelationship = (config: {
               // Query targets by ids
               let targets
               try {
-                targets = await context.query[targetType].findMany({
+                targets = await context.db?.[targetType]?.findMany({
                   where: { id: { in: targetIds } },
-                  query: 'id', // TODO: handle arguments
                 })
               } catch (err) {
                 console.error(err)
@@ -96,7 +95,9 @@ export const createOrderedRelationship = (config: {
               const orderedTargets =
                 orderedIds?.length > 0
                   ? orderedIds.map((id: string) => {
-                      return targets?.find((target) => target.id === id)
+                      return targets?.find(
+                        (target) => `${target.id}` === `${id}`
+                      )
                     })
                   : targets
 
