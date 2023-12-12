@@ -66,7 +66,7 @@ const dividerStyles = css`
   width: 100%;
   height: 12px;
   display: block;
-  background-image: url(https://kids.twreporter.org/wp-content/themes/blocksy-child/assets/js/components/rpjr-box/box2_768.png);
+  background-image: url(https://www.unpkg.com/@kids-reporter/draft-renderer/public/images/info-box-border.svg);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

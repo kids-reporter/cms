@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-renderer",
-  "version": "0.4.37",
+  "version": "0.4.38",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/@kids-reporter/cms.git",
+    "url": "git@github.com:kids-reporter/kids-reporter-monorepo.git",
     "directory": "packages/draft-renderer"
   },
   "keywords": [
@@ -22,7 +22,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@readr-media/react-image": "1.6.0",
     "babel-loader": "^8.2.5",
     "body-scroll-lock": "3.1.5",
     "html-webpack-plugin": "^5.5.0",

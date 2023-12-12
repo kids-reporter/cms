@@ -1,5 +1,5 @@
 import { config } from './configs.js'
-import { log } from './utils.js'
+import { logWithSlack, errorHandling, errors } from './utils.js'
 import axios from 'axios'
 import RSS from 'rss'
 import { Storage } from '@google-cloud/storage'
@@ -13,24 +13,23 @@ const storage =
     : new Storage()
 
 const fetchData = async () => {
-  try {
-    const fetchAfter = new Date(
-      new Date().setHours(0, 0, 0, 0) -
-        parseInt(config.rssFetchDays) * 24 * 60 * 60 * 1000
-    )
-    await log(
-      `Fetching data in last ${config.rssFetchDays} days (${fetchAfter})...`
-    )
-    const where = {
-      status: {
-        equals: 'published',
-      },
-      publishedDate: {
-        gte: fetchAfter,
-      },
-    }
-    const payload = {
-      query: `
+  const fetchAfter = new Date(
+    new Date().setHours(0, 0, 0, 0) -
+      parseInt(config.rssFetchDays) * 24 * 60 * 60 * 1000
+  )
+  await logWithSlack(
+    `Fetching data in last ${config.rssFetchDays} days (${fetchAfter})...`
+  )
+  const where = {
+    status: {
+      equals: 'published',
+    },
+    publishedDate: {
+      gte: fetchAfter,
+    },
+  }
+  const payload = {
+    query: `
         query Data(
           $postWhere: PostWhereInput!,
           $projectWhere: ProjectWhereInput!,
@@ -59,20 +58,23 @@ const fetchData = async () => {
           }
         }
       `,
-      variables: {
-        postWhere: where,
-        projectWhere: where,
-      },
-    }
+    variables: {
+      postWhere: where,
+      projectWhere: where,
+    },
+  }
+  try {
     const dataRes = await axios.post(config.apiUrl, payload)
-    const data = [...dataRes?.data?.data.posts, ...dataRes?.data?.data.projects]
+    const data = [
+      ...(dataRes?.data?.data?.posts || []),
+      ...(dataRes?.data?.data?.projects || []),
+    ]
     data.sort((a, b) => {
       return new Date(b.publishedDate) - new Date(a.publishedDate)
     })
     return data
-  } catch (error) {
-    await log('Error fetching data', error)
-    return []
+  } catch (err) {
+    throw errors.helpers.annotateAxiosError(err)
   }
 }
 
@@ -110,18 +112,31 @@ const uploadToGCS = async (data) => {
     const bucket = storage.bucket(config.bucketName)
     const file = bucket.file(config.rssFileName)
     await file.save(data, { contentType: 'application/xml' })
-    await log(
+    await logWithSlack(
       `RSS feed uploaded to GCS bucket: ${config.bucketName}/${config.rssFileName}`
     )
   } catch (error) {
-    await log('Error uploading RSS to GCS', error)
+    const annotatedErr = errors.helpers.wrap(
+      error,
+      'uploadToGcsError',
+      'Error uploading RSS to GCS',
+      {
+        bucket: config.bucketName,
+        file: config.rssFileName,
+      }
+    )
+    throw annotatedErr
   }
 }
 
 const main = async () => {
-  const data = await fetchData()
-  const rss = generateRSS(data)
-  await uploadToGCS(rss)
+  try {
+    const data = await fetchData()
+    const rss = generateRSS(data)
+    await uploadToGCS(rss)
+  } catch (err) {
+    errorHandling(err)
+  }
   console.log(`Cronjob RSS feed completed.`)
 }
 
