@@ -62,6 +62,7 @@ export const createOrderedRelationship = (config: {
           graphql.field({
             type: graphql.list(graphql.nonNull(lists[targetType].types.output)),
             async resolve(item, args, context, info) {
+              // TODO: error handling
               const sourceType = info.parentType?.name
 
               // Query relationship & order to find target ids/ordered ids
@@ -93,13 +94,13 @@ export const createOrderedRelationship = (config: {
 
               // Order targets
               const orderedTargets =
-                orderedIds?.length > 0
+                orderedIds?.length > 0 && targets?.length > 0
                   ? orderedIds.map((id: string) => {
-                      return targets?.find(
+                      return targets.find(
                         (target) => `${target.id}` === `${id}`
                       )
                     })
-                  : targets
+                  : []
 
               return orderedTargets
             },
