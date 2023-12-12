@@ -4,19 +4,14 @@ const breakpoints = {
   large: 1440,
 }
 
-const mediaFeature = {
-  smallOnly: `(max-width: ${breakpoints.medium - 1}px)`,
-  largeOnly: `(min-width: ${breakpoints.large}px)`,
-}
-
 const mediaQuery = {
-  smallOnly: `@media ${mediaFeature.smallOnly}`,
+  smallOnly: `@media (max-width: ${breakpoints.medium - 1}px)`,
   mediumOnly: `@media (min-width: ${breakpoints.medium}px) and (max-width: ${
     breakpoints.large - 1
   }px)`,
   mediumAbove: `@media (min-width: ${breakpoints.medium}px)`,
   largeBelow: `@media (max-width: ${breakpoints.large - 1}px)`,
-  largeOnly: `@media ${mediaFeature.largeOnly}`,
+  largeOnly: `@media (min-width: ${breakpoints.large}px)}`,
 }
 
-export { breakpoints, mediaFeature, mediaQuery }
+export { breakpoints, mediaQuery }
