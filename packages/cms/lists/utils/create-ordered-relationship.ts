@@ -1,6 +1,5 @@
-import { group } from '@keystone-6/core'
+import { group, graphql } from '@keystone-6/core'
 import { virtual, relationship, text } from '@keystone-6/core/fields'
-import { graphql } from '@keystone-6/core'
 
 // TODO: change parameter to relationship type for type check
 export const createOrderedRelationship = (config: {
