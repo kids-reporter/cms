@@ -22,7 +22,7 @@ export const createOrderedRelationship = (config: {
         many: true,
         label: '選取',
         ui: {
-          // views: './lists/views/ordered-relationship',
+          views: './lists/views/ordered-relationship',
           createView: { fieldMode: 'hidden' },
           itemView: { fieldMode: 'edit' },
           listView: { fieldMode: 'hidden' },

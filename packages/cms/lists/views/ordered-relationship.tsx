@@ -19,6 +19,10 @@ const IconButton = styled(Button)`
 `
 
 const DndItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   userselect: 'none';
   padding: 5px;
   margin: 0 0 5px 0;
@@ -26,20 +30,24 @@ const DndItem = styled.div`
   border-radius: 5px;
 `
 
+const apiEndpoint = '/api/graphql'
+
 export const Field = ({
   field,
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
-  const postID = value?.id
+  const listName = field.listKey
+  const listNameLowercase = listName.charAt(0).toLowerCase() + listName.slice(1)
+  const targetListName = field.refListKey
+  const targetListNameLowercase =
+    targetListName.charAt(0).toLowerCase() + targetListName.slice(1)
+  const listID = value?.id
   const relationshipFieldName = field?.path
-  const orderFieldName = relationshipFieldName?.replace(
-    /relationship$/,
-    'order'
-  )
-  const orderGql = `
-    query($where: PostWhereUniqueInput!) {
-      post(where: $where) {
+  const orderFieldName = `${relationshipFieldName}_order`
+  const orderGQL = `
+    query($where: ${listName}WhereUniqueInput!) {
+      ${listNameLowercase}(where: $where) {
         ${orderFieldName}
       }
     }
@@ -50,21 +58,22 @@ export const Field = ({
   const [order, setOrder] = useState('')
   const [options, setOptions] = useState([])
 
-  // console.log(field, value)
+  // console.log(field, value, listName)
   // console.log('fieldNames', relationshipFieldName, orderFieldName)
   // console.log(relationships)
 
   const handleQueryOrder = async () => {
     try {
-      const orderRes = await axios.post('/api/graphql', {
-        query: orderGql,
+      const orderRes = await axios.post(apiEndpoint, {
+        query: orderGQL,
         variables: {
           where: {
-            id: postID,
+            id: listID,
           },
         },
       })
-      const orderResult = orderRes?.data?.data?.post?.[`${orderFieldName}`]
+      const orderResult =
+        orderRes?.data?.data?.[listNameLowercase]?.[`${orderFieldName}`]
       if (orderResult) {
         const orderedIDs = orderResult.split(',')
         const orderedRelationships = orderedIDs.map((id: string) => {
@@ -74,19 +83,21 @@ export const Field = ({
         setRelationships(orderedRelationships)
       }
 
-      // TODO: make it general
-      const optionsRes = await axios.post('/api/graphql', {
-        query: `query{
-          authors {
-            name
-            id
-          }
-        }`,
+      const listGQL = `query {
+        ${targetListNameLowercase}s {
+          id
+          title
+        }
+      }`
+      const optionsRes = await axios.post(apiEndpoint, {
+        query: listGQL,
       })
-      const optionsData = optionsRes?.data?.data?.authors?.map((author) => {
+      const optionsData = optionsRes?.data?.data?.[
+        `${targetListNameLowercase}s`
+      ]?.map((list) => {
         return {
-          label: author.name,
-          id: author.id,
+          label: list.title, // TODO: handle label, make it general
+          id: list.id,
         }
       })
       setOptions(optionsData)
@@ -187,6 +198,7 @@ export const Field = ({
       <FieldLabel>{field.label}</FieldLabel>
       <Select options={options} />
       {relationshipsDndComponent}
+      {relationships.map((relationship) => relationship.id).join(',')}
       {order}
     </FieldContainer>
   )
