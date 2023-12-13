@@ -3,10 +3,14 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
-import { FieldContainer, Select } from '@keystone-ui/fields'
+import {
+  FieldContainer,
+  FieldLabel,
+  FieldDescription,
+} from '@keystone-ui/fields'
+import { useList } from '@keystone-6/core/admin-ui/context'
 import { controller } from '@keystone-6/core/fields/types/relationship/views'
-import { Button } from '@keystone-ui/button'
-import { TrashIcon } from '@keystone-ui/icons'
+import { RelationshipSelect } from '@keystone-6/core/fields/types/relationship/views/RelationshipSelect'
 
 const apiEndpoint = '/api/graphql'
 
@@ -15,11 +19,6 @@ type Relationship = {
   value: string
   label: string
 }
-
-const IconButton = styled(Button)`
-  background-color: transparent;
-  margin: 0 0 0 0.5rem;
-`
 
 const DndItem = styled.div`
   display: flex;
@@ -36,24 +35,11 @@ const DndItem = styled.div`
 export const Field = ({
   field,
   value,
+  autoFocus,
   onChange,
 }: FieldProps<typeof controller>) => {
-  const listName = field.listKey
-  const listNameLowercase = listName.charAt(0).toLowerCase() + listName.slice(1)
-  const targetListName = field.refListKey
-  const targetListNameLowercase =
-    targetListName.charAt(0).toLowerCase() + targetListName.slice(1)
-  const listID = value?.id
-  const relationshipFieldName = field?.path
-  const orderFieldName = `${relationshipFieldName}_order`
-  const orderGQL = `
-    query($where: ${listName}WhereUniqueInput!) {
-      ${listNameLowercase}(where: $where) {
-        ${orderFieldName}
-      }
-    }
-  `
-  const [relationships, setRelationships] = useState<Relationship[]>(
+  const foreignList = useList(field.refListKey)
+  const [relationships, setRelationships] = useState<any[]>(
     value?.value?.map((relationship) => {
       return {
         id: relationship?.id,
@@ -62,13 +48,28 @@ export const Field = ({
       }
     })
   )
-  const [options, setOptions] = useState([])
 
-  // console.log(field, value, listName)
-  // console.log('fieldNames', relationshipFieldName, orderFieldName)
-  console.log(relationships)
+  useEffect(() => {
+    const getOrder = async () => {
+      await handleQueryOrder()
+    }
+    getOrder()
+  }, [])
 
   const handleQueryOrder = async () => {
+    const listName = field.listKey
+    const listNameLowercase =
+      listName.charAt(0).toLowerCase() + listName.slice(1)
+    const listID = value?.id
+    const relationshipFieldName = field?.path
+    const orderFieldName = `${relationshipFieldName}_order`
+    const orderGQL = `
+      query($where: ${listName}WhereUniqueInput!) {
+        ${listNameLowercase}(where: $where) {
+          ${orderFieldName}
+        }
+      }
+    `
     try {
       const orderRes = await axios.post(apiEndpoint, {
         query: orderGQL,
@@ -85,41 +86,13 @@ export const Field = ({
         const orderedRelationships = orderedIDs.map((id: string) => {
           return relationships.find((relationship) => relationship.id === id)
         })
-        setRelationships(orderedRelationships)
+        console.log(orderedRelationships)
+        // setRelationships(orderedRelationships)
       }
-
-      const listGQL = `query {
-        ${targetListNameLowercase}s {
-          id
-          title
-        }
-      }`
-      const optionsRes = await axios.post(apiEndpoint, {
-        query: listGQL,
-      })
-      const optionsData = optionsRes?.data?.data?.[
-        `${targetListNameLowercase}s`
-      ]?.map((list) => {
-        return {
-          label: list.title, // TODO: handle label, make it general
-          value: list.id,
-          id: list.id,
-        }
-      })
-      setOptions(optionsData)
     } catch (err) {
       console.log(err)
     }
   }
-
-  const onSelectChange = (value) => {
-    setRelationships([...relationships, { id: value, ...value }])
-    console.log(value)
-  }
-
-  // TODO:
-  // 2. render single select for adding item
-  // 4. wire up handlers: save relationship/order
 
   const reorderRelationships = (
     relationships: Relationship[],
@@ -130,15 +103,6 @@ export const Field = ({
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)
     return result
-  }
-
-  const onDeleteRelationship = (index: number) => {
-    if (onChange && index >= 0 && index < relationships.length) {
-      const newRelationships = [...relationships]
-      newRelationships.splice(index, 1)
-      setRelationships(newRelationships)
-      // onChange(JSON.stringify(newAuthors))
-    }
   }
 
   const onDragEnd = (result: any) => {
@@ -175,12 +139,6 @@ export const Field = ({
                       <span>{`${index + 1}: ${relationship.label}(id=${
                         relationship.id
                       })`}</span>
-                      <IconButton
-                        size="small"
-                        onClick={() => onDeleteRelationship(index)}
-                      >
-                        <TrashIcon size="small" />
-                      </IconButton>
                     </DndItem>
                   )}
                 </Draggable>
@@ -193,18 +151,43 @@ export const Field = ({
     </DragDropContext>
   )
 
-  useEffect(() => {
-    const getOrder = async () => {
-      await handleQueryOrder()
-    }
-    getOrder()
-  }, [])
-
-  return (
-    <FieldContainer>
-      <Select options={options} onChange={onSelectChange} />
+  return value.kind === 'many' ? (
+    <FieldContainer as="fieldset">
+      <FieldLabel as="legend">{field.label}</FieldLabel>
+      <FieldDescription id={`${field.path}-description`}>
+        {field.description}
+      </FieldDescription>
+      <RelationshipSelect
+        controlShouldRenderValue
+        aria-describedby={
+          field.description === null ? undefined : `${field.path}-description`
+        }
+        autoFocus={autoFocus}
+        isDisabled={onChange === undefined}
+        labelField={field.refLabelField}
+        searchFields={field.refSearchFields}
+        list={foreignList}
+        portalMenu
+        state={{
+          kind: 'many',
+          value: value.value,
+          onChange(newItems) {
+            setRelationships(
+              newItems.map((item) => {
+                return { id: item.id, label: item.label }
+              })
+            )
+            onChange?.({
+              ...value,
+              value: newItems,
+            })
+          },
+        }}
+      />
       {relationshipsDndComponent}
       {relationships.map((relationship) => relationship.id).join(',')}
     </FieldContainer>
+  ) : (
+    <span>Unsupported kind -- support many-relationship only.</span>
   )
 }
