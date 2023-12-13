@@ -83,8 +83,12 @@ const resizeImage = async (event) => {
     await file.download({ destination: tempFilePath })
 
     // Resize the image and upload to the target folder
-    const sizes = config.targetSizes
-    const uploadPromises = sizes.map(async (size) => {
+    /**
+     * @type {number[]}
+     */
+    let resizedSizes = []
+    let targetSizes = config.targetSizes
+    const uploadPromises = targetSizes.map(async (size) => {
       const newFileName = toWebp
         ? `${basename(name, extname(name))}-${size}.webp`
         : `${basename(name, extname(name))}-${size}${extname(name)}`
@@ -100,43 +104,44 @@ const resizeImage = async (event) => {
         sharpInstance = sharp(tempFilePath)
       }
 
-      // Get the metadata of the image
-      const metadata = await sharpInstance.metadata()
-      if (!metadata.width || !metadata.height) {
-        throw new Error('Unable to retrieve image dimensions')
+      if (toWebp) {
+        sharpInstance = sharpInstance.toFormat('webp')
       }
 
       // If the image's width is smaller than the target size, skip the resize
-      if (metadata.width <= size) {
-        console.log(
-          `Width (${metadata.width} < ${size}), skipping resize and uploading original file`
-        )
-        await storage.bucket(bucket).upload(tempFilePath, {
+      const metadata = await sharpInstance.metadata()
+      if (!metadata.width || metadata.width > size) {
+        sharpInstance = sharpInstance.resize(size)
+        targetSizes = targetSizes.filter((a) => {
+          if (a === size) {
+            resizedSizes.push(a)
+            return false
+          }
+          return true
+        })
+      }
+
+      sharpInstance = sharpInstance.toFile(newFilePath).then(() => {
+        return storage.bucket(bucket).upload(newFilePath, {
           destination: `${config.targetFolder}/${newFileName}`,
         })
-      } else {
-        if (toWebp) {
-          sharpInstance = sharpInstance.toFormat('webp')
-        }
-
-        sharpInstance = sharpInstance
-          .resize(size)
-          .toFile(newFilePath)
-          .then(() => {
-            return storage.bucket(bucket).upload(newFilePath, {
-              destination: `${config.targetFolder}/${newFileName}`,
-            })
-          })
-      }
+      })
     })
 
     await Promise.all(uploadPromises)
 
     await fs.unlink(tempFilePath)
 
-    console.log(
-      `Resized ${name} to ${sizes.join(', ')}${toWebp ? ' (webp)' : ''}`
-    )
+    let resultMsg = ''
+    if (resizedSizes.length > 0) {
+      resultMsg += `Resized ${name} to ${resizedSizes.join(', ')}${
+        toWebp ? ' (webp)' : ''
+      }`
+    }
+    if (targetSizes.length > 0) {
+      resultMsg += ` (skipped ${targetSizes.join(', ')})`
+    }
+    console.log(resultMsg)
     console.timeEnd('Resized time') // End timer
   } catch (err) {
     errorHandling(err)
