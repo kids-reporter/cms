@@ -113,7 +113,7 @@ const resizeImage = async (event) => {
 
       // If the image's width is smaller than the target size, skip the resize
       const metadata = await sharpInstance.metadata()
-      if (metadata.width ? metadata.width > size : false) {
+      if (metadata.width && metadata.width > size) {
         sharpInstance = sharpInstance.resize(size)
         targetSizes = targetSizes.filter((a) => {
           if (a === size) {
