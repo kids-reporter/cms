@@ -8,8 +8,8 @@ import {
   FieldLabel,
   FieldDescription,
 } from '@keystone-ui/fields'
-import { controller } from '@keystone-6/core/fields/types/relationship/views'
 import { useList } from '@keystone-6/core/admin-ui/context'
+import { controller } from '@keystone-6/core/fields/types/relationship/views'
 import { RelationshipSelect } from '@keystone-6/core/fields/types/relationship/views/RelationshipSelect'
 
 const apiEndpoint = '/api/graphql'
