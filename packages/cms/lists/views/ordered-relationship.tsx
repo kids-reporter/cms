@@ -50,62 +50,58 @@ export const Field = ({
   )
 
   useEffect(() => {
-    const getOrder = async () => {
-      await handleQueryOrder()
-    }
-    getOrder()
-  }, [])
-
-  const handleQueryOrder = async () => {
-    const listName = field.listKey
-    const listNameLowercase =
-      listName.charAt(0).toLowerCase() + listName.slice(1)
-    const listID = value?.id
-    const relationshipFieldName = field?.path
-    const orderFieldName = `${relationshipFieldName}_order`
-    const orderGQL = `
+    const handleQueryOrder = async () => {
+      const listName = field.listKey
+      const listNameLowercase =
+        listName.charAt(0).toLowerCase() + listName.slice(1)
+      const listID = value?.id
+      const relationshipFieldName = field?.path
+      const orderFieldName = `${relationshipFieldName}_order`
+      const orderGQL = `
       query($where: ${listName}WhereUniqueInput!) {
         ${listNameLowercase}(where: $where) {
           ${orderFieldName}
         }
       }
     `
-    try {
-      const orderRes = await axios.post(apiEndpoint, {
-        query: orderGQL,
-        variables: {
-          where: {
-            id: listID,
+      try {
+        const orderRes = await axios.post(apiEndpoint, {
+          query: orderGQL,
+          variables: {
+            where: {
+              id: listID,
+            },
           },
-        },
-      })
-      const orderResult =
-        orderRes?.data?.data?.[listNameLowercase]?.[`${orderFieldName}`]
-      if (orderResult) {
-        const orderedIDs = orderResult.split(',')
-        const orderedRelationships = orderedIDs.map((id: string) => {
-          return relationships.find((relationship) => relationship.id === id)
         })
-        console.log(orderedRelationships)
-        // setRelationships(orderedRelationships)
+        const orderResult =
+          orderRes?.data?.data?.[listNameLowercase]?.[`${orderFieldName}`]
+        if (orderResult) {
+          const orderedIDs = orderResult.split(',')
+          const orderedRelationships = orderedIDs.map((id: string) => {
+            return relationships.find((relationship) => relationship.id === id)
+          })
+          console.log(orderedRelationships)
+          // setRelationships(orderedRelationships)
+        }
+      } catch (err) {
+        console.log(err)
       }
-    } catch (err) {
-      console.log(err)
     }
-  }
-
-  const reorderRelationships = (
-    relationships: Relationship[],
-    startIndex: number,
-    endIndex: number
-  ) => {
-    const result = Array.from(relationships)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
-    return result
-  }
+    handleQueryOrder()
+  }, [])
 
   const onDragEnd = (result: any) => {
+    const reorderRelationships = (
+      relationships: Relationship[],
+      startIndex: number,
+      endIndex: number
+    ) => {
+      const result = Array.from(relationships)
+      const [removed] = result.splice(startIndex, 1)
+      result.splice(endIndex, 0, removed)
+      return result
+    }
+
     if (!result.destination) {
       return
     }
