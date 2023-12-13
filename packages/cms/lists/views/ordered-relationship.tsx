@@ -4,14 +4,15 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer, Select } from '@keystone-ui/fields'
+import { controller } from '@keystone-6/core/fields/types/relationship/views'
 import { Button } from '@keystone-ui/button'
 import { TrashIcon } from '@keystone-ui/icons'
-import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 const apiEndpoint = '/api/graphql'
 
 type Relationship = {
   id: string
+  value: string
   label: string
 }
 
