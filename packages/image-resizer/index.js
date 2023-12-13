@@ -71,6 +71,7 @@ const resizeImage = async (event) => {
     )
     const animated = ['image/gif', 'image/webp'].includes(contentType)
 
+    // Download the file from GCS to a temp folder
     const tempFilePath = join(
       tmpdir(),
       `tempImage-${basename(
@@ -83,7 +84,7 @@ const resizeImage = async (event) => {
 
     // Resize the image and upload to the target folder
     const sizes = config.targetSizes
-    const uploadPromises = sizes.map((size) => {
+    const uploadPromises = sizes.map(async (size) => {
       const newFileName = toWebp
         ? `${basename(name, extname(name))}-${size}.webp`
         : `${basename(name, extname(name))}-${size}${extname(name)}`
@@ -98,24 +99,35 @@ const resizeImage = async (event) => {
       } else {
         sharpInstance = sharp(tempFilePath)
       }
-      if (toWebp) {
-        sharpInstance = sharpInstance.toFormat('webp')
+
+      // Get the metadata of the image
+      const metadata = await sharpInstance.metadata()
+      if (!metadata.width || !metadata.height) {
+        throw new Error('Unable to retrieve image dimensions')
       }
 
-      sharpInstance = sharpInstance
-        .resize(size)
-        .toFile(newFilePath)
-        .then(() => {
-          return storage.bucket(bucket).upload(newFilePath, {
-            destination: `${config.targetFolder}/${newFileName}`,
-          })
+      // If the image's width is smaller than the target size, skip the resize
+      if (metadata.width <= size) {
+        console.log(
+          `Width (${metadata.width} < ${size}), skipping resize and uploading original file`
+        )
+        await storage.bucket(bucket).upload(tempFilePath, {
+          destination: `${config.targetFolder}/${newFileName}`,
         })
-        .then(() => {
-          // Delete the resized image file after it's uploaded
-          return fs.unlink(newFilePath)
-        })
+      } else {
+        if (toWebp) {
+          sharpInstance = sharpInstance.toFormat('webp')
+        }
 
-      return sharpInstance
+        sharpInstance = sharpInstance
+          .resize(size)
+          .toFile(newFilePath)
+          .then(() => {
+            return storage.bucket(bucket).upload(newFilePath, {
+              destination: `${config.targetFolder}/${newFileName}`,
+            })
+          })
+      }
     })
 
     await Promise.all(uploadPromises)
