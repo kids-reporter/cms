@@ -3,10 +3,12 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
-import { FieldContainer, FieldLabel, Select } from '@keystone-ui/fields'
+import { FieldContainer, Select } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
 import { TrashIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
+
+const apiEndpoint = '/api/graphql'
 
 type Relationship = {
   id: string
@@ -25,12 +27,10 @@ const DndItem = styled.div`
   justify-content: space-between;
   userselect: 'none';
   padding: 5px;
-  margin: 0 0 5px 0;
+  margin: 5px 0 5px 0;
   border: 1px solid lightgrey;
   border-radius: 5px;
 `
-
-const apiEndpoint = '/api/graphql'
 
 export const Field = ({
   field,
@@ -201,7 +201,6 @@ export const Field = ({
 
   return (
     <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
       <Select options={options} onChange={onSelectChange} />
       {relationshipsDndComponent}
       {relationships.map((relationship) => relationship.id).join(',')}
