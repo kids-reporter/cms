@@ -22,13 +22,14 @@ app.listen(port, () => {
 })
 
 const resizeImage = async (event) => {
-  console.time('Resized time') // Start timer
+  console.time('Processed time') // Start timer
 
   try {
     // Extract bucket and file name from protoPayload.resourceName
     const resourceName = event?.protoPayload?.resourceName
     if (!resourceName || typeof resourceName !== 'string') {
       console.warn(`Invalid resourceName: ${resourceName}`)
+      console.timeEnd('Processed time') // End timer
       return
     }
     const bucket = resourceName.split('/')[3]
@@ -52,6 +53,7 @@ const resizeImage = async (event) => {
     const [exists] = await file.exists()
     if (!exists) {
       console.warn(`File ${name} does not exist in bucket ${bucket}`)
+      console.timeEnd('Processed time') // End timer
       return
     }
     // Skip unsupported file types, sharp only accepts jpeg, png, gif, webp
@@ -63,6 +65,7 @@ const resizeImage = async (event) => {
       )
     ) {
       console.warn(`Unsupported file: ${name} (${contentType})`)
+      console.timeEnd('Processed time') // End timer
       return
     }
 
@@ -134,7 +137,7 @@ const resizeImage = async (event) => {
 
     let resultMsg = `File ${name}`
     if (toWebp) {
-      resultMsg += ` converted to webp and`
+      resultMsg += ` converted to${animated ? ' animated' : ''} webp and`
     }
     if (resizedSizes.length > 0) {
       resultMsg += ` resized to ${resizedSizes.join(', ')}`
@@ -143,10 +146,12 @@ const resizeImage = async (event) => {
       resultMsg += ` skipped ${targetSizes.join(', ')}`
     }
     console.log(resultMsg)
-    console.timeEnd('Resized time') // End timer
   } catch (err) {
+    console.timeEnd('Processed time') // End timer
     errorHandling(err)
   }
+
+  console.timeEnd('Processed time') // End timer
 }
 
 const generateRandomString = (length = 10) => {
