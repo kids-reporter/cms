@@ -7,14 +7,6 @@ import { tmpdir } from 'os'
 import { promises as fs } from 'fs'
 import express from 'express'
 
-const storage =
-  config.gcs.projectId && config.gcs.keyFilename
-    ? new Storage({
-        projectId: config.gcs.projectId,
-        keyFilename: config.gcs.keyFilename,
-      })
-    : new Storage()
-
 const app = express()
 
 app.use(express.json())
@@ -45,6 +37,14 @@ const resizeImage = async (event) => {
     logWithSlack(
       `Processing file ${name} in bucket ${bucket} (ID: ${event?.insertId}))`
     )
+
+    const storage =
+      config.gcs.projectId && config.gcs.keyFilename
+        ? new Storage({
+            projectId: config.gcs.projectId,
+            keyFilename: config.gcs.keyFilename,
+          })
+        : new Storage()
 
     const file = storage.bucket(bucket).file(name)
 
