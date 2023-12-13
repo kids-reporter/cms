@@ -102,6 +102,7 @@ const listConfigurations = list({
       }),
       ui: {
         query: '{ original tiny small medium large }',
+        views: './lists/views/resized-image',
       },
     }),
   },
