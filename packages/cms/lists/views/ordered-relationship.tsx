@@ -53,14 +53,19 @@ export const Field = ({
     }
   `
   const [relationships, setRelationships] = useState<Relationship[]>(
-    value?.value
+    value?.value?.map((relationship) => {
+      return {
+        id: relationship?.id,
+        value: relationship.id,
+        label: relationship.label,
+      }
+    })
   )
-  const [order, setOrder] = useState('')
   const [options, setOptions] = useState([])
 
   // console.log(field, value, listName)
   // console.log('fieldNames', relationshipFieldName, orderFieldName)
-  // console.log(relationships)
+  console.log(relationships)
 
   const handleQueryOrder = async () => {
     try {
@@ -79,7 +84,6 @@ export const Field = ({
         const orderedRelationships = orderedIDs.map((id: string) => {
           return relationships.find((relationship) => relationship.id === id)
         })
-        setOrder(orderResult)
         setRelationships(orderedRelationships)
       }
 
@@ -97,6 +101,7 @@ export const Field = ({
       ]?.map((list) => {
         return {
           label: list.title, // TODO: handle label, make it general
+          value: list.id,
           id: list.id,
         }
       })
@@ -104,6 +109,11 @@ export const Field = ({
     } catch (err) {
       console.log(err)
     }
+  }
+
+  const onSelectChange = (value) => {
+    setRelationships([...relationships, { id: value, ...value }])
+    console.log(value)
   }
 
   // TODO:
@@ -141,10 +151,6 @@ export const Field = ({
         result.source.index,
         result.destination.index
       )
-      const newOrder = newRelationships
-        .map((relationship) => relationship.id)
-        .join(',')
-      setOrder(newOrder)
       setRelationships(newRelationships)
       //onChange(JSON.stringify(newAuthors))
     }
@@ -196,10 +202,9 @@ export const Field = ({
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
-      <Select options={options} />
+      <Select options={options} onChange={onSelectChange} />
       {relationshipsDndComponent}
       {relationships.map((relationship) => relationship.id).join(',')}
-      {order}
     </FieldContainer>
   )
 }
