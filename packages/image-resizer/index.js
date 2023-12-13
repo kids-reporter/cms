@@ -132,14 +132,15 @@ const resizeImage = async (event) => {
 
     await fs.unlink(tempFilePath)
 
-    let resultMsg = `Image ${name} `
+    let resultMsg = `File ${name}`
+    if (toWebp) {
+      resultMsg += ` converted to webp and`
+    }
     if (resizedSizes.length > 0) {
-      resultMsg += `resized to ${resizedSizes.join(', ')}${
-        toWebp ? ' (webp)' : ''
-      }`
+      resultMsg += ` resized to ${resizedSizes.join(', ')}`
     }
     if (targetSizes.length > 0) {
-      resultMsg += ` (skipped ${targetSizes.join(', ')})`
+      resultMsg += ` skipped ${targetSizes.join(', ')}`
     }
     console.log(resultMsg)
     console.timeEnd('Resized time') // End timer
