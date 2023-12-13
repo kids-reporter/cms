@@ -20,9 +20,9 @@ export const createOrderedRelationship = (config: {
       [relationshipField]: relationship({
         ref: targetType,
         many: true,
-        label: '選取',
+        label: '',
         ui: {
-          views: './lists/views/ordered-relationship',
+          views: './lists/views/ordered-relationship2',
           createView: { fieldMode: 'hidden' },
           itemView: { fieldMode: 'edit' },
           listView: { fieldMode: 'hidden' },
@@ -35,7 +35,7 @@ export const createOrderedRelationship = (config: {
         */
       }),
       [orderField]: text({
-        label: '排序',
+        label: '',
         ui: {
           createView: {
             fieldMode: 'hidden',
