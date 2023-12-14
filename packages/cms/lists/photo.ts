@@ -81,13 +81,17 @@ const listConfigurations = list({
             ? '.' + item.imageFile_extension
             : ''
 
-          const resizedTargets = ['tiny', 'small', 'medium', 'large']
+          const resizedTargets = {
+            tiny: 400,
+            small: 800,
+            medium: 1200,
+            large: 2000,
+          }
 
-          resizedTargets.forEach((target) => {
-            rtn[target] =
-              // TODO: adjust urls after resizing images function is ready
-              // `${config.googleCloudStorage.origin}/images/${filename}-${target}${extension}`
-              `${config.googleCloudStorage.origin}/images/${filename}${extension}`
+          Object.entries(resizedTargets).forEach(([key, value]) => {
+            rtn[
+              key
+            ] = `${config.googleCloudStorage.origin}/resized/${filename}-${value}.webp`
           })
 
           rtn[
@@ -98,6 +102,7 @@ const listConfigurations = list({
       }),
       ui: {
         query: '{ original tiny small medium large }',
+        views: './lists/views/resized-image',
       },
     }),
   },
