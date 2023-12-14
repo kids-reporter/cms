@@ -18,10 +18,9 @@ const topicRelatedPostsNum = 5
 const heroImageGQL = `
   heroImage {
     resized {
+      small
       medium
-    }
-    imageFile {
-      url
+      large
     }
   }
 `
@@ -59,8 +58,8 @@ const postGQL = `
       heroCaption
       authors {
         avatar {
-          imageFile {
-            url
+          resized {
+            tiny
           }
         }
         bio
