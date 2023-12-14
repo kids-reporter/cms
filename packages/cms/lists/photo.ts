@@ -91,7 +91,7 @@ const listConfigurations = list({
           Object.entries(resizedTargets).forEach(([key, value]) => {
             rtn[
               key
-            ] = `${config.googleCloudStorage.origin}/images/${filename}-${value}${extension}`
+            ] = `${config.googleCloudStorage.origin}/resized/${filename}-${value}.webp`
           })
 
           rtn[
@@ -102,6 +102,7 @@ const listConfigurations = list({
       }),
       ui: {
         query: '{ original tiny small medium large }',
+        views: './lists/views/resized-image',
       },
     }),
   },
