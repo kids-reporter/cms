@@ -90,6 +90,10 @@ const resizeImage = async (event) => {
      * @type {number[]}
      */
     let resizedSizes = []
+    /**
+     * @type {number[]}
+     */
+    let skippedSizes = []
     let targetSizes = config.targetSizes
     const uploadPromises = targetSizes.map(async (size) => {
       const newFileName = toWebp
@@ -115,13 +119,9 @@ const resizeImage = async (event) => {
       const metadata = await sharpInstance.metadata()
       if (metadata.width && metadata.width > size) {
         sharpInstance = sharpInstance.resize(size)
-        targetSizes = targetSizes.filter((a) => {
-          if (a === size) {
-            resizedSizes.push(a)
-            return false
-          }
-          return true
-        })
+        resizedSizes.push(size)
+      } else {
+        skippedSizes.push(size)
       }
 
       sharpInstance = sharpInstance.toFile(newFilePath).then(() => {
@@ -144,8 +144,8 @@ const resizeImage = async (event) => {
     if (resizedSizes.length > 0) {
       resultMsg += ` resized to ${resizedSizes.join(', ')}`
     }
-    if (targetSizes.length > 0) {
-      resultMsg += ` skipped ${targetSizes.join(', ')}`
+    if (skippedSizes.length > 0) {
+      resultMsg += ` skipped ${skippedSizes.join(', ')}`
     }
     console.log(resultMsg)
   } catch (err) {
