@@ -18,7 +18,6 @@ import Divider from '@/app/components/divider'
 import {
   AUTHOR_ROLES_IN_ORDER,
   AuthorRole,
-  STORAGE_URL,
   DEFAULT_AVATAR,
   FontSizeLevel,
   DEFAULT_THEME_COLOR,
@@ -59,12 +58,12 @@ const getPostContents = (post: any) => {
     const authorJSON = authorsJSON.find(
       (authorJSON: any) => authorJSON.id === author?.id
     )
-    const avatarURL = author?.avatar?.imageFile?.url
+    const avatarURL = author?.avatar?.resized?.tiny
     return author && authorJSON
       ? {
           slug: author.slug,
           name: author.name,
-          avatar: avatarURL ? `${STORAGE_URL}${avatarURL}` : DEFAULT_AVATAR,
+          avatar: avatarURL ?? DEFAULT_AVATAR,
           bio: author.bio,
           role: authorJSON.role,
           link:
@@ -161,10 +160,7 @@ export const Article = ({ post }: { post: any }) => {
               </Link>
             </div>
           )}
-          <HeroImage
-            url={post?.heroImage?.imageFile?.url} // TODO: fetch image according to RWD
-            caption={post?.heroCaption}
-          />
+          <HeroImage image={post?.heroImage} caption={post?.heroCaption} />
           {post && (
             <div className="hero-section">
               <header className="entry-header">

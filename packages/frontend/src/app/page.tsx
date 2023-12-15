@@ -13,7 +13,6 @@ import GoToMainSite from '@/app/home/go-to-main-site'
 import { PostSummary } from './components/types'
 import {
   API_URL,
-  STORAGE_URL,
   GENERAL_DESCRIPTION,
   POST_CONTENT_GQL,
   Theme,
@@ -103,9 +102,6 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
       resized {
         medium
       }
-      imageFile {
-        url
-      }
     }
   }
 }
@@ -180,9 +176,7 @@ export default async function Home() {
     topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
       return {
         url: `/topic/${topic.slug}`,
-        image: topic?.heroImage?.imageFile?.url
-          ? `${STORAGE_URL}${topic.heroImage.imageFile.url}`
-          : '',
+        image: topic?.heroImage?.resized?.medium ?? '',
         title: topic.title,
         subtitle: topic.subtitle,
       }
