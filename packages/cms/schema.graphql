@@ -1270,7 +1270,7 @@ type EditorPicksSetting {
   nameForCMS: String
   editorPicksOfPosts2(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   editorPicksOfPosts2Count(where: PostWhereInput! = {}): Int
-  editorPicksOfPosts2_order: String
+  editorPicksOfPosts2_order: JSON
   editorPicksOfPosts2_ordered: [Post!]
   editorPicksOfPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   editorPicksOfPostsCount(where: PostWhereInput! = {}): Int
@@ -1295,7 +1295,6 @@ input EditorPicksSettingWhereInput {
   name: StringFilter
   nameForCMS: StringFilter
   editorPicksOfPosts2: PostManyRelationFilter
-  editorPicksOfPosts2_order: StringFilter
   editorPicksOfPosts: PostManyRelationFilter
   editorPicksOfProjects: ProjectManyRelationFilter
   editorPicksOfTags: TagManyRelationFilter
@@ -1307,7 +1306,6 @@ input EditorPicksSettingOrderByInput {
   id: OrderDirection
   name: OrderDirection
   nameForCMS: OrderDirection
-  editorPicksOfPosts2_order: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -1316,7 +1314,7 @@ input EditorPicksSettingUpdateInput {
   name: String
   nameForCMS: String
   editorPicksOfPosts2: PostRelateToManyForUpdateInput
-  editorPicksOfPosts2_order: String
+  editorPicksOfPosts2_order: JSON
   editorPicksOfPosts: PostRelateToManyForUpdateInput
   editorPicksOfProjects: ProjectRelateToManyForUpdateInput
   editorPicksOfTags: TagRelateToManyForUpdateInput
@@ -1333,7 +1331,7 @@ input EditorPicksSettingCreateInput {
   name: String
   nameForCMS: String
   editorPicksOfPosts2: PostRelateToManyForCreateInput
-  editorPicksOfPosts2_order: String
+  editorPicksOfPosts2_order: JSON
   editorPicksOfPosts: PostRelateToManyForCreateInput
   editorPicksOfProjects: ProjectRelateToManyForCreateInput
   editorPicksOfTags: TagRelateToManyForCreateInput

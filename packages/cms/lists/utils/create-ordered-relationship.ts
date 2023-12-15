@@ -1,5 +1,30 @@
 import { group, graphql } from '@keystone-6/core'
-import { virtual, relationship, text } from '@keystone-6/core/fields'
+import { relationship, json, virtual } from '@keystone-6/core/fields'
+
+/*
+type RelationshipJSON = {
+  id?: string
+  name: string
+  title: string
+  slug: string
+}[]
+
+type RelationshipInput =
+  | {
+      disconnect?: { id: string }[]
+      connect?: { id: string }[]
+    }
+  | undefined
+
+  function resolveAuthorsJSON(relationshipJSON: RelationshipJSON): RelationshipJSON {
+    return relationshipJSON
+      .filter(
+        (item) =>
+          typeof item === 'object' &&
+          typeof item.name === 'string'
+      )
+  }
+*/
 
 // TODO: change parameter to relationship type for type check
 export const createOrderedRelationship = (config: {
@@ -22,7 +47,6 @@ export const createOrderedRelationship = (config: {
         many: true,
         label: '',
         ui: {
-          views: './lists/views/ordered-relationship',
           createView: { fieldMode: 'hidden' },
           itemView: { fieldMode: 'edit' },
           listView: { fieldMode: 'hidden' },
@@ -30,13 +54,61 @@ export const createOrderedRelationship = (config: {
         },
         /*
         hooks: {
-            // TODO: add hook to modify order field when add/delete
-        }
+          resolveInput: async ({ inputData, item, resolvedData, context }) => {
+            let authorsJSON: RelationshipJSON =
+              inputData?.authorsJSON || item?.authorsJSON || []
+            authorsJSON = resolveAuthorsJSON(authorsJSON)
+
+            const relationshipAuthors: RelationshipInput = inputData?.authors
+            if (relationshipAuthors) {
+              const disconnect = relationshipAuthors?.disconnect
+              // delete disconnected authors from `authorsJSON`
+              if (Array.isArray(disconnect) && disconnect.length > 0) {
+                disconnect.forEach(({ id }) => {
+                  authorsJSON = authorsJSON.filter((item) => {
+                    // if `item.id` is not existed,
+                    // which means it is manually added by users,
+                    // and then we don't filter this item out.
+                    if (!item.id) {
+                      return true
+                    }
+                    // filter out disconnected item
+                    return item.id !== id
+                  })
+                })
+              }
+
+              // add new connected authors into `authorsJSON`
+              const connect = relationshipAuthors?.connect
+              if (Array.isArray(connect) && connect.length > 0) {
+                const ids = connect.map(({ id }) => id)
+                // find author items via gql query
+                const items = await context.query.Author.findMany({
+                  where: { id: { in: ids } },
+                  query: 'id name',
+                })
+                items.forEach((item) => {
+                  authorsJSON.push({
+                    id: item.id,
+                    name: item.name,
+                    type: 'link',
+                    role: heuristicallyPickRole(item.name),
+                  })
+                })
+              }
+            }
+
+            resolvedData.authorsJSON = authorsJSON
+            return resolvedData
+          },
+        },
         */
       }),
-      [orderField]: text({
+      [orderField]: json({
         label: '',
+        defaultValue: [],
         ui: {
+          views: './lists/views/ordered-relationship',
           createView: {
             fieldMode: 'hidden',
           },
@@ -47,15 +119,6 @@ export const createOrderedRelationship = (config: {
             fieldMode: 'hidden',
           },
         },
-        /* TODO: hide this field from api if possible
-        graphql: {
-          omit: {
-            read: true,
-            create: true,
-            update: true,
-          },
-        },
-        */
       }),
       [orderedRelationshipField]: virtual({
         field: (lists) =>
@@ -109,7 +172,6 @@ export const createOrderedRelationship = (config: {
           itemView: { fieldMode: 'hidden' },
           listView: { fieldMode: 'hidden' },
         },
-        // ui: { query: '{ id, title }' },
       }),
     },
   })

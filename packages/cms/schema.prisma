@@ -248,7 +248,7 @@ model EditorPicksSetting {
   name                      String    @unique @default("")
   nameForCMS                String    @default("")
   editorPicksOfPosts2       Post[]    @relation("EditorPicksSetting_editorPicksOfPosts2")
-  editorPicksOfPosts2_order String    @default("")
+  editorPicksOfPosts2_order Json?     @default("[]")
   editorPicksOfPosts        Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
   editorPicksOfProjects     Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
   editorPicksOfTags         Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
