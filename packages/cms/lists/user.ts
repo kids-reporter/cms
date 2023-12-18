@@ -1,5 +1,11 @@
 import { list } from '@keystone-6/core'
-import { text, password, select, timestamp } from '@keystone-6/core/fields'
+import {
+  text,
+  password,
+  select,
+  timestamp,
+  relationship,
+} from '@keystone-6/core/fields'
 import {
   allowAllRoles,
   allowRoles,
@@ -69,6 +75,8 @@ const listConfigurations = list({
         updatedAt: true,
       },
     }),
+    createdPosts: relationship({ ref: 'Post.createdBy', many: true }),
+    updatedPosts: relationship({ ref: 'Post.updatedBy', many: true }),
   },
 
   ui: {

@@ -19,6 +19,8 @@ model User {
   role                  String
   createdAt             DateTime? @default(now())
   updatedAt             DateTime? @updatedAt
+  createdPosts          Post[]    @relation("Post_createdBy")
+  updatedPosts          Post[]    @relation("Post_updatedBy")
   from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
 }
 
@@ -50,6 +52,10 @@ model Post {
   ogImageId                                  Int?                 @map("ogImage")
   createdAt                                  DateTime?            @default(now())
   updatedAt                                  DateTime?            @updatedAt
+  createdBy                                  User?                @relation("Post_createdBy", fields: [createdById], references: [id])
+  createdById                                Int?                 @map("createdBy")
+  updatedBy                                  User?                @relation("Post_updatedBy", fields: [updatedById], references: [id])
+  updatedById                                Int?                 @map("updatedBy")
   onlineUsers                                User[]               @relation("Post_onlineUsers")
   from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
@@ -61,6 +67,8 @@ model Post {
   @@index([heroImageId])
   @@index([newsReadingGroupId])
   @@index([ogImageId])
+  @@index([createdById])
+  @@index([updatedById])
 }
 
 model Photo {

@@ -9,6 +9,10 @@ type User {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
+  createdPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
+  createdPostsCount(where: PostWhereInput! = {}): Int
+  updatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
+  updatedPostsCount(where: PostWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -32,6 +36,8 @@ input UserWhereInput {
   role: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  createdPosts: PostManyRelationFilter
+  updatedPosts: PostManyRelationFilter
 }
 
 input IDFilter {
@@ -90,6 +96,12 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input PostManyRelationFilter {
+  every: PostWhereInput
+  some: PostWhereInput
+  none: PostWhereInput
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -111,6 +123,15 @@ input UserUpdateInput {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
+  createdPosts: PostRelateToManyForUpdateInput
+  updatedPosts: PostRelateToManyForUpdateInput
+}
+
+input PostRelateToManyForUpdateInput {
+  disconnect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -125,6 +146,13 @@ input UserCreateInput {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
+  createdPosts: PostRelateToManyForCreateInput
+  updatedPosts: PostRelateToManyForCreateInput
+}
+
+input PostRelateToManyForCreateInput {
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 type Post {
@@ -156,6 +184,10 @@ type Post {
   ogImage: Photo
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: User
+  updatedBy: User
+  createdLog: JSON
+  updatedLog: JSON
   preview: JSON
   listPreview: String
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
@@ -191,6 +223,8 @@ input PostWhereInput {
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  createdBy: UserWhereInput
+  updatedBy: UserWhereInput
   onlineUsers: UserManyRelationFilter
 }
 
@@ -247,12 +281,6 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
-input PostManyRelationFilter {
-  every: PostWhereInput
-  some: PostWhereInput
-  none: PostWhereInput
-}
-
 input UserManyRelationFilter {
   every: UserWhereInput
   some: UserWhereInput
@@ -296,6 +324,8 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: UserRelateToOneForUpdateInput
+  updatedBy: UserRelateToOneForUpdateInput
   onlineUsers: UserRelateToManyForUpdateInput
 }
 
@@ -345,11 +375,10 @@ input TagRelateToManyForUpdateInput {
   connect: [TagWhereUniqueInput!]
 }
 
-input PostRelateToManyForUpdateInput {
-  disconnect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input UserRelateToManyForUpdateInput {
@@ -387,6 +416,8 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: UserRelateToOneForCreateInput
+  updatedBy: UserRelateToOneForCreateInput
   onlineUsers: UserRelateToManyForCreateInput
 }
 
@@ -425,9 +456,9 @@ input TagRelateToManyForCreateInput {
   connect: [TagWhereUniqueInput!]
 }
 
-input PostRelateToManyForCreateInput {
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserRelateToManyForCreateInput {
