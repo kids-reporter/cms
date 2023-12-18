@@ -37,11 +37,10 @@ const listConfigurations = list({
     status: select({
       label: '狀態',
       options: [
-        { label: 'draft', value: 'draft' },
-        { label: 'published', value: 'published' },
-        { label: 'scheduled', value: 'scheduled' },
-        { label: 'archived', value: 'archived' },
-        { label: 'invisible', value: 'invisible' },
+        { label: '草稿 Draft', value: 'draft' },
+        { label: '已發布 Published', value: 'published' },
+        { label: '已排程 Scheduled', value: 'scheduled' },
+        { label: '隱藏 Invisible', value: 'invisible' },
       ],
       defaultValue: 'draft',
       isIndexed: true,
@@ -262,7 +261,21 @@ const listConfigurations = list({
           return {}
         }
         if (session?.data?.role === RoleEnum.FrontendHeadlessAccount) {
-          return { status: { equals: 'published' } }
+          return {
+            OR: [
+              { status: { equals: 'published' } },
+              {
+                AND: [
+                  { status: { equals: 'scheduled' } },
+                  {
+                    publishedDate: {
+                      lt: `${new Date().toISOString()}`,
+                    },
+                  },
+                ],
+              },
+            ],
+          }
         }
         return {}
       },
