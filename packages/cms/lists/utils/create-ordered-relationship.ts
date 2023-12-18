@@ -105,7 +105,7 @@ export const createOrderedRelationship = (config: {
         */
       }),
       [orderField]: json({
-        label: '',
+        label: '順序',
         defaultValue: [],
         ui: {
           views: './lists/views/ordered-relationship',
