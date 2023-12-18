@@ -56,6 +56,7 @@ export const Field = ({
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {relationships.map((relationship: any, index: number) => {
               const id = `relationship-component-${index}`
+              console.log(relationship)
               return (
                 <Draggable key={id} draggableId={id} index={index}>
                   {(provided) => (
@@ -64,8 +65,10 @@ export const Field = ({
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <span>{relationship.id}</span>
-                      <span>{relationship.label}</span>
+                      <div>
+                        <span>{relationship.value}</span>
+                        <span>{relationship.label}</span>
+                      </div>
                     </DndItem>
                   )}
                 </Draggable>

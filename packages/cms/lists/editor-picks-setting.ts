@@ -7,6 +7,13 @@ import { list } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
 import { createOrderedRelationship } from './utils/create-ordered-relationship'
 
+const orderedEditorPicksOfPosts = createOrderedRelationship({
+  name: 'editorPicksOfPosts2',
+  ref: 'Post',
+  label: '精選文章(5篇)',
+  many: true,
+})
+
 const listConfigurations = list({
   fields: {
     name: text({
@@ -21,12 +28,7 @@ const listConfigurations = list({
       label: '設定適用範圍（中文）',
       validation: { isRequired: true },
     }),
-    ...createOrderedRelationship({
-      name: 'editorPicksOfPosts2',
-      ref: 'Post',
-      label: '精選文章(5篇)',
-      many: true,
-    }),
+    ...orderedEditorPicksOfPosts.fields,
     editorPicksOfPosts: relationship({
       label: '精選文章',
       ref: 'Post',
@@ -66,6 +68,9 @@ const listConfigurations = list({
     listView: {
       initialColumns: ['nameForCMS', 'name'],
     },
+  },
+  hooks: {
+    resolveInput: orderedEditorPicksOfPosts.hook,
   },
 })
 
