@@ -424,7 +424,14 @@ const listConfigurations = list({
         resolvedData.createdBy = { connect: { id: session.itemId } }
       }
       if (operation === 'update') {
-        resolvedData.updatedBy = { connect: { id: session.itemId } }
+        if (!inputData?.onlineUsers) {
+          resolvedData.updatedBy = { connect: { id: session.itemId } }
+          if (!item?.createdById) {
+            resolvedData.createdBy = { connect: { id: session.itemId } }
+          }
+        } else {
+          resolvedData.updatedAt = item.updatedAt
+        }
       }
 
       resolvedData.authorsJSON = authorsJSON
