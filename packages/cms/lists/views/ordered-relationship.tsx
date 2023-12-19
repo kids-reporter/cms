@@ -66,8 +66,10 @@ export const Field = ({
                       {...provided.dragHandleProps}
                     >
                       <div>
-                        <span>{relationship.value}</span>
-                        <span>{relationship.label}</span>
+                        <span>
+                          {index + 1}. {relationship.label} (id=
+                          {relationship.value})
+                        </span>
                       </div>
                     </DndItem>
                   )}
