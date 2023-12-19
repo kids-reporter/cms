@@ -2,10 +2,8 @@ import { group, graphql } from '@keystone-6/core'
 import { relationship, json, virtual } from '@keystone-6/core/fields'
 
 type RelationshipJSON = {
-  id?: string
-  name: string
-  title: string
-  slug: string
+  label: string
+  value: string
 }[]
 
 type RelationshipInput =
@@ -14,14 +12,6 @@ type RelationshipInput =
       connect?: { id: string }[]
     }
   | undefined
-
-function resolveRelationshipJSON(
-  relationshipJSON: RelationshipJSON
-): RelationshipJSON {
-  return relationshipJSON.filter(
-    (item) => typeof item === 'object' && typeof item.name === 'string'
-  )
-}
 
 // TODO: change parameter to relationship type for type check
 export const createOrderedRelationship = (config: {
@@ -128,46 +118,37 @@ export const createOrderedRelationship = (config: {
       },
     }),
     hook: async ({ inputData, item, resolvedData, context }) => {
+      const relationships: RelationshipInput = inputData?.[relationshipField]
       let relationshipJSON: RelationshipJSON =
         inputData?.[orderField] || item?.[orderField] || []
-      relationshipJSON = resolveRelationshipJSON(relationshipJSON)
 
-      const relationships: RelationshipInput = inputData?.[relationshipField]
-      if (relationships) {
-        const disconnect = relationships?.disconnect
-        if (Array.isArray(disconnect) && disconnect.length > 0) {
-          disconnect.forEach(({ id }) => {
-            relationshipJSON = relationshipJSON.filter((item) => {
-              if (!item.id) {
-                return true
-              }
-              return item.id !== id
-            })
-          })
-        }
+      // Remove disconnected relationships from json
+      const disconnect = relationships?.disconnect
+      if (Array.isArray(disconnect) && disconnect.length > 0) {
+        const ids = disconnect.map(({ id }) => id)
+        relationshipJSON = relationshipJSON.filter(
+          (item) => !ids.includes(item.value)
+        )
+      }
 
-        const connect = relationships?.connect
-        if (Array.isArray(connect) && connect.length > 0) {
-          const ids = connect.map(({ id }) => id)
-          const items = await context.query[targetType].findMany({
-            where: { id: { in: ids } },
-            query: 'id title', // TODO: title fields
-          })
-          console.log(items)
-          relationshipJSON = [
-            ...relationshipJSON,
-            ...items.map((item) => {
-              return {
-                value: item.id,
-                label: item.title,
-              }
-            }),
-          ]
-        }
+      // Append connected relationships to end of json
+      const connect = relationships?.connect
+      if (Array.isArray(connect) && connect.length > 0) {
+        const ids = connect.map(({ id }) => id)
+        const items = await context.query[targetType].findMany({
+          where: { id: { in: ids } },
+          query: 'id title', // TODO: title fields
+        })
+        const newRelationships = items.map((item) => {
+          return {
+            value: item.id,
+            label: item.title,
+          }
+        })
+        relationshipJSON = [...relationshipJSON, ...newRelationships]
       }
 
       resolvedData[orderField] = relationshipJSON
-      // console.log(relationshipJSON)
       return resolvedData
     },
   }
