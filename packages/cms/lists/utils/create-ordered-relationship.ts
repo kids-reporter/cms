@@ -79,7 +79,7 @@ export const createOrderedRelationship = (config: {
                   })
                   const order = source?.[orderField]
                   const relationships = source?.[relationshipField]
-                  orderedIds = order ? order?.split(',') : [] // TODO: error handling for empty orderFieldName
+                  orderedIds = order?.map((item) => item.value) ?? [] // TODO: error handling for empty orderFieldName
                   targetIds = relationships?.map((relationship) => {
                     return relationship.id
                   })
