@@ -1,5 +1,6 @@
 import { group, graphql } from '@keystone-6/core'
 import { relationship, json, virtual } from '@keystone-6/core/fields'
+import { BaseFields, BaseListTypeInfo } from '@keystone-6/core/types'
 
 type RelationshipJSON = {
   label: string
@@ -20,8 +21,8 @@ export const createOrderedRelationship = (config: {
   label: string
   many: boolean
 }): {
-  fields: any
-  hook: any
+  fields: BaseFields<BaseListTypeInfo>
+  resolveInputHook: any
 } => {
   const relationshipField = config.fieldName
   const orderField = `${relationshipField}_order`
@@ -117,7 +118,7 @@ export const createOrderedRelationship = (config: {
         }),
       },
     }),
-    hook: async ({ inputData, item, resolvedData, context }) => {
+    resolveInputHook: async ({ inputData, item, resolvedData, context }) => {
       const relationships: RelationshipInput = inputData?.[relationshipField]
       let relationshipJSON: RelationshipJSON =
         inputData?.[orderField] || item?.[orderField] || []
@@ -148,8 +149,8 @@ export const createOrderedRelationship = (config: {
         relationshipJSON = [...relationshipJSON, ...newRelationships]
       }
 
+      // Mutate order json field
       resolvedData[orderField] = relationshipJSON
-      return resolvedData
     },
   }
 }

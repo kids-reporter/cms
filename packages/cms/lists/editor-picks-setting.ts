@@ -65,7 +65,15 @@ const listConfigurations = list({
     },
   },
   hooks: {
-    resolveInput: orderedEditorPicksOfPosts.hook,
+    resolveInput: async ({ inputData, item, resolvedData, context }) => {
+      await orderedEditorPicksOfPosts.resolveInputHook({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      return resolvedData
+    },
   },
 })
 
