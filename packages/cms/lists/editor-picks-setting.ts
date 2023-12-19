@@ -8,7 +8,7 @@ import { relationship, text, timestamp } from '@keystone-6/core/fields'
 import { createOrderedRelationship } from './utils/create-ordered-relationship'
 
 const orderedEditorPicksOfPosts = createOrderedRelationship({
-  name: 'editorPicksOfPosts2',
+  fieldName: 'editorPicksOfPosts',
   ref: 'Post',
   label: '精選文章(5篇)',
   many: true,
@@ -29,11 +29,6 @@ const listConfigurations = list({
       validation: { isRequired: true },
     }),
     ...orderedEditorPicksOfPosts.fields,
-    editorPicksOfPosts: relationship({
-      label: '精選文章',
-      ref: 'Post',
-      many: true,
-    }),
     editorPicksOfProjects: relationship({
       label: '精選專題',
       ref: 'Project',

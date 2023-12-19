@@ -1268,12 +1268,10 @@ type EditorPicksSetting {
   id: ID!
   name: String
   nameForCMS: String
-  editorPicksOfPosts2(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  editorPicksOfPosts2Count(where: PostWhereInput! = {}): Int
-  editorPicksOfPosts2_order: JSON
-  editorPicksOfPosts2_ordered: [Post!]
   editorPicksOfPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   editorPicksOfPostsCount(where: PostWhereInput! = {}): Int
+  editorPicksOfPosts_order: JSON
+  editorPicksOfPosts_ordered: [Post!]
   editorPicksOfProjects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   editorPicksOfProjectsCount(where: ProjectWhereInput! = {}): Int
   editorPicksOfTags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -1294,7 +1292,6 @@ input EditorPicksSettingWhereInput {
   id: IDFilter
   name: StringFilter
   nameForCMS: StringFilter
-  editorPicksOfPosts2: PostManyRelationFilter
   editorPicksOfPosts: PostManyRelationFilter
   editorPicksOfProjects: ProjectManyRelationFilter
   editorPicksOfTags: TagManyRelationFilter
@@ -1313,9 +1310,8 @@ input EditorPicksSettingOrderByInput {
 input EditorPicksSettingUpdateInput {
   name: String
   nameForCMS: String
-  editorPicksOfPosts2: PostRelateToManyForUpdateInput
-  editorPicksOfPosts2_order: JSON
   editorPicksOfPosts: PostRelateToManyForUpdateInput
+  editorPicksOfPosts_order: JSON
   editorPicksOfProjects: ProjectRelateToManyForUpdateInput
   editorPicksOfTags: TagRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1330,9 +1326,8 @@ input EditorPicksSettingUpdateArgs {
 input EditorPicksSettingCreateInput {
   name: String
   nameForCMS: String
-  editorPicksOfPosts2: PostRelateToManyForCreateInput
-  editorPicksOfPosts2_order: JSON
   editorPicksOfPosts: PostRelateToManyForCreateInput
+  editorPicksOfPosts_order: JSON
   editorPicksOfProjects: ProjectRelateToManyForCreateInput
   editorPicksOfTags: TagRelateToManyForCreateInput
   createdAt: DateTime

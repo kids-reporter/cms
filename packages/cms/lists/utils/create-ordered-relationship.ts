@@ -15,7 +15,7 @@ type RelationshipInput =
 
 // TODO: change parameter to relationship type for type check
 export const createOrderedRelationship = (config: {
-  name: string
+  fieldName: string
   ref: string
   label: string
   many: boolean
@@ -23,7 +23,7 @@ export const createOrderedRelationship = (config: {
   fields: any
   hook: any
 } => {
-  const relationshipField = config.name
+  const relationshipField = config.fieldName
   const orderField = `${relationshipField}_order`
   const orderedRelationshipField = `${relationshipField}_ordered`
   const targetType = config.ref // TODO: handle 2-sided ref
@@ -38,7 +38,7 @@ export const createOrderedRelationship = (config: {
           many: true,
           label: '選取(選完按Save changes才會出現在下方排序列)',
           ui: {
-            createView: { fieldMode: 'hidden' },
+            createView: { fieldMode: 'edit' },
             itemView: { fieldMode: 'edit' },
             listView: { fieldMode: 'hidden' },
             hideCreate: true,
@@ -50,7 +50,7 @@ export const createOrderedRelationship = (config: {
           ui: {
             views: './lists/views/ordered-relationship',
             createView: {
-              fieldMode: 'hidden',
+              fieldMode: 'edit',
             },
             itemView: {
               fieldMode: 'edit',
