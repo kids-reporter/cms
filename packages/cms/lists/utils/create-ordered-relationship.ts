@@ -36,7 +36,7 @@ export const createOrderedRelationship = (config: {
         [relationshipField]: relationship({
           ref: targetType,
           many: true,
-          label: '',
+          label: '選取(選完按Save changes才會出現在下方排序列)',
           ui: {
             createView: { fieldMode: 'hidden' },
             itemView: { fieldMode: 'edit' },
@@ -45,7 +45,7 @@ export const createOrderedRelationship = (config: {
           },
         }),
         [orderField]: json({
-          label: '順序',
+          label: '排序',
           defaultValue: [],
           ui: {
             views: './lists/views/ordered-relationship',
