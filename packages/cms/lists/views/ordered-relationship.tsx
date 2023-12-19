@@ -18,9 +18,17 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
+  const [prevValue, setPrevValue] = useState(value)
   const [relationships, setRelationships] = useState<any[]>(
     value ? JSON.parse(value) : []
   )
+
+  // Pattern for monitoring props change:
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  if (value !== prevValue) {
+    setPrevValue(value)
+    setRelationships(value ? JSON.parse(value) : [])
+  }
 
   const reorderRelationship = (
     relationships: any[],
@@ -56,7 +64,6 @@ export const Field = ({
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {relationships.map((relationship: any, index: number) => {
               const id = `relationship-component-${index}`
-              console.log(relationship)
               return (
                 <Draggable key={id} draggableId={id} index={index}>
                   {(provided) => (
