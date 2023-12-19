@@ -108,6 +108,13 @@ export const Field = ({
   )
   const [newAuthor, setNewAuthor] = useState<Author>({ ...authorTemplate })
 
+  const [prevValue, setPrevValue] = useState(value)
+
+  if (value !== prevValue) {
+    setPrevValue(value)
+    setAuthors(value ? JSON.parse(value) : [])
+  }
+
   const onAddNewAuthor = () => {
     if (onChange) {
       const newAuthors = [...authors, newAuthor]
