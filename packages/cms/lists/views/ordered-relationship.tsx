@@ -74,8 +74,7 @@ export const Field = ({
                     >
                       <div>
                         <span>
-                          {index + 1}. {relationship.label} (id=
-                          {relationship.value})
+                          {index + 1}. {relationship.label}
                         </span>
                       </div>
                     </DndItem>
