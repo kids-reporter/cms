@@ -9,10 +9,6 @@ type User {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
-  createdPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  createdPostsCount(where: PostWhereInput! = {}): Int
-  updatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
-  updatedPostsCount(where: PostWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -36,8 +32,6 @@ input UserWhereInput {
   role: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  createdPosts: PostManyRelationFilter
-  updatedPosts: PostManyRelationFilter
 }
 
 input IDFilter {
@@ -96,12 +90,6 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
-input PostManyRelationFilter {
-  every: PostWhereInput
-  some: PostWhereInput
-  none: PostWhereInput
-}
-
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -123,15 +111,6 @@ input UserUpdateInput {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
-  createdPosts: PostRelateToManyForUpdateInput
-  updatedPosts: PostRelateToManyForUpdateInput
-}
-
-input PostRelateToManyForUpdateInput {
-  disconnect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -146,13 +125,6 @@ input UserCreateInput {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
-  createdPosts: PostRelateToManyForCreateInput
-  updatedPosts: PostRelateToManyForCreateInput
-}
-
-input PostRelateToManyForCreateInput {
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
 }
 
 type Post {
@@ -281,6 +253,12 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
+input PostManyRelationFilter {
+  every: PostWhereInput
+  some: PostWhereInput
+  none: PostWhereInput
+}
+
 input UserManyRelationFilter {
   every: UserWhereInput
   some: UserWhereInput
@@ -375,6 +353,13 @@ input TagRelateToManyForUpdateInput {
   connect: [TagWhereUniqueInput!]
 }
 
+input PostRelateToManyForUpdateInput {
+  disconnect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
 input UserRelateToOneForUpdateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
@@ -454,6 +439,11 @@ input ProjectRelateToManyForCreateInput {
 input TagRelateToManyForCreateInput {
   create: [TagCreateInput!]
   connect: [TagWhereUniqueInput!]
+}
+
+input PostRelateToManyForCreateInput {
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 input UserRelateToOneForCreateInput {

@@ -186,7 +186,7 @@ const listConfigurations = list({
       },
     }),
     createdBy: relationship({
-      ref: 'User.createdPosts',
+      ref: 'User',
       many: false,
       ui: {
         createView: { fieldMode: 'hidden' },
@@ -195,7 +195,7 @@ const listConfigurations = list({
       },
     }),
     updatedBy: relationship({
-      ref: 'User.updatedPosts',
+      ref: 'User',
       many: false,
       ui: {
         createView: { fieldMode: 'hidden' },

@@ -19,8 +19,8 @@ model User {
   role                  String
   createdAt             DateTime? @default(now())
   updatedAt             DateTime? @updatedAt
-  createdPosts          Post[]    @relation("Post_createdBy")
-  updatedPosts          Post[]    @relation("Post_updatedBy")
+  from_Post_createdBy   Post[]    @relation("Post_createdBy")
+  from_Post_updatedBy   Post[]    @relation("Post_updatedBy")
   from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
 }
 

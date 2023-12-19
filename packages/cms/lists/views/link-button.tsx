@@ -5,20 +5,17 @@ import { FieldLabel, FieldContainer } from '@keystone-ui/fields'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
-  let href = ''
-  let label = ''
-  let buttonLabel = 'Preview'
   if (typeof value === 'object' && value !== null) {
-    href = value['href']
-    label = value['label']
-    buttonLabel = value['buttonLabel']
+    const href = value['href']
+    const label = value['label']
+    const buttonLabel = value['buttonLabel']
+    return (
+      <FieldContainer>
+        <FieldLabel>{label}</FieldLabel>
+        <a href={href} target="_blank" style={{ textDecoration: 'none' }}>
+          <Button>{buttonLabel}</Button>
+        </a>
+      </FieldContainer>
+    )
   }
-  return (
-    <FieldContainer>
-      <FieldLabel>{label}</FieldLabel>
-      <a href={href} target="_blank" style={{ textDecoration: 'none' }}>
-        <Button>{buttonLabel}</Button>
-      </a>
-    </FieldContainer>
-  )
 }
