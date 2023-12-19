@@ -72,11 +72,9 @@ export const Field = ({
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <div>
-                        <span>
-                          {index + 1}. {relationship.label}
-                        </span>
-                      </div>
+                      <span>
+                        {index + 1}. {relationship.label}
+                      </span>
                     </DndItem>
                   )}
                 </Draggable>
