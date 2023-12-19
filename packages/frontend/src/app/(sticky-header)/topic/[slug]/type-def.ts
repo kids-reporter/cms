@@ -1,13 +1,4 @@
-export type Photo = {
-  imageFile?: {
-    url: string
-  }
-  resized?: {
-    small: string
-    medium: string
-    large: string
-  }
-}
+import { Photo } from '@/app/types'
 
 type Category = {
   name: string

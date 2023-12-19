@@ -1,6 +1,6 @@
 'use client'
 import styled from 'styled-components'
-import { Photo } from './type-def'
+import { Photo } from '@/app/types'
 import { mediaQuery } from '@/app/utils/media-query'
 
 const _DownButton = ({ className }: { className?: string }) => {
@@ -77,7 +77,10 @@ export const BackgroundImage = styled.div<{
   width: 100vw;
   /* 62px is sticky header height */
   height: calc(100vh - 62px);
-  background-image: url(${({ $imageEntity }) => $imageEntity?.resized?.small});
+  background-image: image-set(
+    url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 1x,
+    url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 2x
+  );
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -99,6 +102,9 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.largeOnly} {
+    background-image: image-set(
+      url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 1x
+    );
     ${DownButton} {
       bottom: 50px;
       width: 60px;
@@ -113,6 +119,10 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.smallOnly} {
+    background-image: image-set(
+      url(${({ $imageEntity }) => $imageEntity?.resized?.small}) 1x,
+      url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 2x
+    );
     ${DownButton} {
       bottom: 30px;
       width: 40px;
