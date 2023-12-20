@@ -3,7 +3,7 @@ import {
   customFields,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
-import { graphql, list } from '@keystone-6/core'
+import { graphql, list /* group */ } from '@keystone-6/core'
 import {
   json,
   virtual,
@@ -17,6 +17,44 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
+/*
+import relationshipUtil, {
+  OrderedRelationshipConfig,
+} from './utils/manual-order-relationship'
+
+const subSubcategories: OrderedRelationshipConfig = {
+  fieldName: 'subSubcategories',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'SubSubcategory.relatedPosts',
+    many: true,
+    ui: {
+      hideCreate: true,
+    },
+  },
+  refLabelField: 'name',
+}
+
+const tags: OrderedRelationshipConfig = {
+  fieldName: 'tags',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'Tag.posts',
+    many: true,
+  },
+  refLabelField: 'name',
+}
+
+const relatedPosts: OrderedRelationshipConfig = {
+  fieldName: 'relatedPosts',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'Post',
+    many: true,
+  },
+  refLabelField: 'title',
+}
+*/
 
 const listConfigurations = list({
   fields: {
@@ -57,6 +95,14 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
+    /*
+    ...group({
+      label: '次次分類',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(subSubcategories),
+      },
+    }),
+    */
     subSubcategories: relationship({
       ref: 'SubSubcategory.relatedPosts',
       label: '次次分類',
@@ -141,11 +187,27 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
+    /*
+    ...group({
+      label: '標籤',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(tags),
+      },
+    }),
+    */
     tags: relationship({
       ref: 'Tag.posts',
       many: true,
       label: '標籤',
     }),
+    /*
+    ...group({
+      label: '相關文章',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
+      },
+    }),
+    */
     relatedPosts: relationship({
       ref: 'Post',
       many: true,
@@ -329,6 +391,27 @@ const listConfigurations = list({
       }
 
       resolvedData.authorsJSON = authorsJSON
+
+      /*
+      await relationshipUtil.mutateOrderFieldHook(subSubcategories)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      await relationshipUtil.mutateOrderFieldHook(tags)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      await relationshipUtil.mutateOrderFieldHook(relatedPosts)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      */
       return resolvedData
     },
   },
