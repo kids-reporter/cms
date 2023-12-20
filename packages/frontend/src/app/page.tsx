@@ -118,7 +118,7 @@ query($orderBy: [PostOrderByInput!]!, $take: Int) {
 const editorPicksGQL = `
 query($orderBy: [PostOrderByInput!]!, $take: Int) {
   editorPicksSettings {
-    editorPicksOfPosts(orderBy: $orderBy, take: $take) {
+    editorPicksOfPosts_ordered(orderBy: $orderBy, take: $take) {
       ${POST_CONTENT_GQL}
     }
     editorPicksOfTags {
