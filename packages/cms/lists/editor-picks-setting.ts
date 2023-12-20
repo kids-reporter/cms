@@ -10,8 +10,9 @@ import { createOrderedRelationship } from './utils/create-ordered-relationship'
 const orderedEditorPicksOfPosts = createOrderedRelationship({
   fieldName: 'editorPicksOfPosts',
   ref: 'Post',
-  label: '精選文章(5篇)',
+  refField: 'title',
   many: true,
+  label: '精選文章(5篇)',
 })
 
 const listConfigurations = list({

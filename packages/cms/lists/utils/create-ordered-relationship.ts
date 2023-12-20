@@ -14,12 +14,20 @@ type RelationshipInput =
     }
   | undefined
 
-// TODO: change parameter to relationship type for type check
+// createOrderedRelationship function takes configs like:
+// {
+//    fieldName,
+//    refField,
+//    normal relationship config,
+// }
+//
+// 'fieldName' represents the field name of that relationship, and 'refField' could be name/title of that ref list for query
 export const createOrderedRelationship = (config: {
   fieldName: string
   ref: string
-  label: string
+  refField: string
   many: boolean
+  label: string
 }): {
   fields: BaseFields<BaseListTypeInfo>
   resolveInputHook: any
@@ -138,7 +146,7 @@ export const createOrderedRelationship = (config: {
         const ids = connect.map(({ id }) => id)
         const items = await context.query[targetType].findMany({
           where: { id: { in: ids } },
-          query: 'id title', // TODO: title fields
+          query: `id ${config.refField}`,
         })
         const newRelationships = items.map((item) => {
           return {
