@@ -77,7 +77,7 @@ const listConfigurations = list({
   },
   hooks: {
     resolveInput: async ({ inputData, item, resolvedData, context }) => {
-      await relationshipUtil.relationshipMutationHook(editorPicksOfPosts)({
+      await relationshipUtil.mutateOrderFieldHook(editorPicksOfPosts)({
         inputData,
         item,
         resolvedData,

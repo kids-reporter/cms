@@ -13,7 +13,7 @@ export type OrderedRelationshipConfig = {
   refLabelField: string
 }
 
-export const relationshipAndExtendedFields = ({
+const relationshipAndExtendedFields = ({
   fieldName,
   relationshipConfig,
 }: {
@@ -110,7 +110,7 @@ type RelationshipInput =
     }
   | undefined
 
-export const relationshipMutationHook = ({
+const mutateOrderFieldHook = ({
   fieldName,
   relationshipConfig,
   refLabelField,
@@ -153,4 +153,4 @@ export const relationshipMutationHook = ({
   }
 }
 
-export default { relationshipAndExtendedFields, relationshipMutationHook }
+export default { relationshipAndExtendedFields, mutateOrderFieldHook }
