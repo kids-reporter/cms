@@ -26,6 +26,9 @@ const relatedPosts: OrderedRelationshipConfig = {
     label: '選取',
     ref: 'Post.projects',
     many: true,
+    ui: {
+      hideCreate: true,
+    },
   },
   refLabelField: 'title',
 }
