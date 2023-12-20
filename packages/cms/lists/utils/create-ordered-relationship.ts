@@ -146,3 +146,5 @@ export const relationshipMutationHook = ({
     resolvedData[orderJSONField] = orderJSON
   }
 }
+
+export default { relationshipExtendedFields, relationshipMutationHook }
