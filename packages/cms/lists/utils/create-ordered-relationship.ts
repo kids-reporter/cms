@@ -8,7 +8,7 @@ export type OrderedRelationshipConfig = {
   refLabelField: string
 }
 
-export const orderedRelationshipExtendedFields = ({
+export const relationshipExtendedFields = ({
   fieldName,
   relationshipConfig,
 }: {
@@ -104,15 +104,11 @@ type RelationshipInput =
     }
   | undefined
 
-export const orderedRelationshipMutationHook = ({
+export const relationshipMutationHook = ({
   fieldName,
   relationshipConfig,
   refLabelField,
-}: {
-  fieldName: string
-  relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
-  refLabelField: string
-}) => {
+}: OrderedRelationshipConfig) => {
   const relationshipField = fieldName
   const orderJSONField = `${relationshipField}_order_json`
   const refList = relationshipConfig.ref

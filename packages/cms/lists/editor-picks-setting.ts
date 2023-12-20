@@ -6,8 +6,8 @@ import {
 import { list, group } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
 import {
-  orderedRelationshipExtendedFields,
-  orderedRelationshipMutationHook,
+  relationshipExtendedFields,
+  relationshipMutationHook,
   OrderedRelationshipConfig,
 } from './utils/create-ordered-relationship'
 
@@ -41,7 +41,7 @@ const listConfigurations = list({
         [editorPicksOfPosts.fieldName]: relationship(
           editorPicksOfPosts.relationshipConfig
         ),
-        ...orderedRelationshipExtendedFields(editorPicksOfPosts),
+        ...relationshipExtendedFields(editorPicksOfPosts),
       },
     }),
     editorPicksOfProjects: relationship({
@@ -81,7 +81,7 @@ const listConfigurations = list({
   },
   hooks: {
     resolveInput: async ({ inputData, item, resolvedData, context }) => {
-      await orderedRelationshipMutationHook(editorPicksOfPosts)({
+      await relationshipMutationHook(editorPicksOfPosts)({
         inputData,
         item,
         resolvedData,
