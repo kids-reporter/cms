@@ -13,6 +13,10 @@ export type OrderedRelationshipConfig = {
   refLabelField: string
 }
 
+// Create 3 fields for manual ordered relationship:
+// 1. relationship field - for saving relationship
+// 2. json field - for saving manual order
+// 3. virtual field - for api query
 const relationshipAndExtendedFields = ({
   fieldName,
   relationshipConfig,
@@ -23,7 +27,7 @@ const relationshipAndExtendedFields = ({
   const relationshipField = fieldName
   const orderJSONField = `${relationshipField}_order_json`
   const orderedRelationshipField = `${relationshipField}_ordered`
-  const targetType = relationshipConfig.ref.split('.')[0]
+  const refList = relationshipConfig.ref.split('.')[0]
 
   return {
     [relationshipField]: relationship(relationshipConfig),
@@ -46,7 +50,7 @@ const relationshipAndExtendedFields = ({
     [orderedRelationshipField]: virtual({
       field: (lists) =>
         graphql.field({
-          type: graphql.list(graphql.nonNull(lists[targetType].types.output)),
+          type: graphql.list(graphql.nonNull(lists[refList].types.output)),
           async resolve(item, args, context, info) {
             // TODO: error handling
             const sourceType = info.parentType?.name
@@ -71,7 +75,7 @@ const relationshipAndExtendedFields = ({
             // Query targets by ids
             let targets
             try {
-              targets = await context.db?.[targetType]?.findMany({
+              targets = await context.db?.[refList]?.findMany({
                 where: { id: { in: targetIds } },
               })
             } catch (err) {
