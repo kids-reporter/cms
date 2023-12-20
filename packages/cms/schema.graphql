@@ -156,6 +156,10 @@ type Post {
   ogImage: Photo
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: User
+  updatedBy: User
+  createdLog: JSON
+  updatedLog: JSON
   preview: JSON
   listPreview: String
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
@@ -191,6 +195,8 @@ input PostWhereInput {
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  createdBy: UserWhereInput
+  updatedBy: UserWhereInput
   onlineUsers: UserManyRelationFilter
 }
 
@@ -296,6 +302,8 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: UserRelateToOneForUpdateInput
+  updatedBy: UserRelateToOneForUpdateInput
   onlineUsers: UserRelateToManyForUpdateInput
 }
 
@@ -352,6 +360,12 @@ input PostRelateToManyForUpdateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
 input UserRelateToManyForUpdateInput {
   disconnect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
@@ -387,6 +401,8 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: UserRelateToOneForCreateInput
+  updatedBy: UserRelateToOneForCreateInput
   onlineUsers: UserRelateToManyForCreateInput
 }
 
@@ -428,6 +444,11 @@ input TagRelateToManyForCreateInput {
 input PostRelateToManyForCreateInput {
   create: [PostCreateInput!]
   connect: [PostWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserRelateToManyForCreateInput {

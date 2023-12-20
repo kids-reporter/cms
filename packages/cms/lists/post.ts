@@ -233,10 +233,108 @@ const listConfigurations = list({
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
     }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    createdBy: relationship({
+      ref: 'User',
+      many: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    updatedBy: relationship({
+      ref: 'User',
+      many: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    createdLog: virtual({
+      field: () =>
+        graphql.field({
+          type: graphql.JSON,
+          async resolve(item: Record<string, any>, args, context) {
+            const userId = item?.createdById
+            const user = await context.query.User.findOne({
+              where: { id: userId },
+              query: 'id, name, email',
+            })
+
+            return {
+              href: `/users/${user.id}`,
+              label: '最初建立',
+              buttonLabel: `${user.name} (${
+                user.email
+              }) @ ${item.createdAt.toLocaleString('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                hour12: false,
+                minute: '2-digit',
+                second: '2-digit',
+              })}`,
+            }
+          },
+        }),
+      ui: {
+        views: './lists/views/link-button',
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+        itemView: { fieldMode: 'read' },
+      },
+    }),
+    updatedLog: virtual({
+      field: () =>
+        graphql.field({
+          type: graphql.JSON,
+          async resolve(item: Record<string, any>, args, context) {
+            const userId = item?.updatedById
+            const user = await context.query.User.findOne({
+              where: { id: userId },
+              query: 'id, name, email',
+            })
+
+            return {
+              href: `/users/${user.id}`,
+              label: '最後更新',
+              buttonLabel: `${user.name} (${
+                user.email
+              }) @ ${item.updatedAt.toLocaleString('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                hour12: false,
+                minute: '2-digit',
+                second: '2-digit',
+              })}`,
+            }
+          },
+        }),
+      ui: {
+        views: './lists/views/link-button',
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+        itemView: { fieldMode: 'read' },
       },
     }),
     preview: virtual({
@@ -347,7 +445,13 @@ const listConfigurations = list({
     },
   },
   hooks: {
-    resolveInput: async ({ inputData, item, resolvedData, context }) => {
+    resolveInput: async ({
+      inputData,
+      item,
+      resolvedData,
+      context,
+      operation,
+    }) => {
       let authorsJSON: AuthorsJSON =
         inputData?.authorsJSON || item?.authorsJSON || []
       authorsJSON = resolveAuthorsJSON(authorsJSON)
@@ -390,6 +494,18 @@ const listConfigurations = list({
               role: heuristicallyPickRole(item.name),
             })
           })
+        }
+      }
+
+      const session = context.session
+      if (operation === 'create') {
+        resolvedData.createdBy = { connect: { id: session.itemId } }
+      }
+      if (operation === 'update') {
+        if (inputData?.onlineUsers) {
+          resolvedData.updatedAt = item.updatedAt
+        } else {
+          resolvedData.updatedBy = { connect: { id: session.itemId } }
         }
       }
 
