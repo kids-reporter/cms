@@ -44,8 +44,8 @@ const listConfigurations = list({
       validation: { isRequired: true },
     }),
     ...group({
-      label: '精選文章(5篇)',
-      description: '選取與排序',
+      label: '精選文章',
+      description: '首頁按順序呈現精選文章5篇',
       fields: {
         [orderedRelationship.fieldName]: relationship(
           orderedRelationship.relationshipConfig
