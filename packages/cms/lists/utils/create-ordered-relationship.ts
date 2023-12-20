@@ -2,10 +2,11 @@ import { group, graphql } from '@keystone-6/core'
 import { relationship, json, virtual } from '@keystone-6/core/fields'
 import { BaseFields, BaseListTypeInfo } from '@keystone-6/core/types'
 
-type RelationshipJSON = {
+type ListInfo = {
+  id: string
   label: string
-  value: string
-}[]
+}
+type OrderJSON = ListInfo[]
 
 type RelationshipInput =
   | {
@@ -21,7 +22,8 @@ type RelationshipInput =
 //    normal relationship config,
 // }
 //
-// 'fieldName' represents the field name of that relationship, and 'refField' could be name/title of that ref list for query
+// 'fieldName' represents the field name of that relationship,
+// 'refField' could be name/title of that ref list for query
 export const createOrderedRelationship = (config: {
   fieldName: string
   ref: string
@@ -33,7 +35,7 @@ export const createOrderedRelationship = (config: {
   resolveInputHook: any
 } => {
   const relationshipField = config.fieldName
-  const orderField = `${relationshipField}_order`
+  const orderJSONField = `${relationshipField}_order_json`
   const orderedRelationshipField = `${relationshipField}_ordered`
   const targetType = config.ref // TODO: handle 2-sided ref
 
@@ -53,7 +55,7 @@ export const createOrderedRelationship = (config: {
             hideCreate: true,
           },
         }),
-        [orderField]: json({
+        [orderJSONField]: json({
           label: '排序',
           defaultValue: [],
           ui: {
@@ -84,11 +86,11 @@ export const createOrderedRelationship = (config: {
                 try {
                   const source = await context.query[sourceType].findOne({
                     where: { id: item.id.toString() },
-                    query: `${orderField} ${relationshipField} { id }`,
+                    query: `${orderJSONField} ${relationshipField} { id }`,
                   })
-                  const order = source?.[orderField]
+                  const order = source?.[orderJSONField]
                   const relationships = source?.[relationshipField]
-                  orderedIds = order?.map((item) => item.value) ?? [] // TODO: error handling for empty orderFieldName
+                  orderedIds = order?.map((item) => item.id) ?? []
                   targetIds = relationships?.map((relationship) => {
                     return relationship.id
                   })
@@ -128,16 +130,14 @@ export const createOrderedRelationship = (config: {
     }),
     resolveInputHook: async ({ inputData, item, resolvedData, context }) => {
       const relationships: RelationshipInput = inputData?.[relationshipField]
-      let relationshipJSON: RelationshipJSON =
-        inputData?.[orderField] || item?.[orderField] || []
+      let orderJSON: OrderJSON =
+        inputData?.[orderJSONField] || item?.[orderJSONField] || []
 
       // Remove disconnected relationships from json
       const disconnect = relationships?.disconnect
       if (Array.isArray(disconnect) && disconnect.length > 0) {
         const ids = disconnect.map(({ id }) => id)
-        relationshipJSON = relationshipJSON.filter(
-          (item) => !ids.includes(item.value)
-        )
+        orderJSON = orderJSON.filter((item) => !ids.includes(item.id))
       }
 
       // Append connected relationships to end of json
@@ -150,15 +150,15 @@ export const createOrderedRelationship = (config: {
         })
         const newRelationships = items.map((item) => {
           return {
-            value: item.id,
+            id: item.id,
             label: item.title,
           }
         })
-        relationshipJSON = [...relationshipJSON, ...newRelationships]
+        orderJSON = [...orderJSON, ...newRelationships]
       }
 
       // Mutate order json field
-      resolvedData[orderField] = relationshipJSON
+      resolvedData[orderJSONField] = orderJSON
     },
   }
 }
