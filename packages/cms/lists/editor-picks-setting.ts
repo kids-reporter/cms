@@ -3,17 +3,31 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
-import { list } from '@keystone-6/core'
-import { relationship, text, timestamp } from '@keystone-6/core/fields'
-import { createOrderedRelationship } from './utils/create-ordered-relationship'
+import { list, group } from '@keystone-6/core'
+import {
+  relationship,
+  text,
+  timestamp,
+  RelationshipFieldConfig,
+} from '@keystone-6/core/fields'
+import { BaseListTypeInfo } from '@keystone-6/core/types'
+import {
+  orderedRelationshipExtendedFields,
+  orderedRelationshipMutationHook,
+} from './utils/create-ordered-relationship'
 
-const orderedEditorPicksOfPosts = createOrderedRelationship({
+const orderedRelationship: {
+  fieldName: string
+  relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
+  refLabelField: string
+} = {
   fieldName: 'editorPicksOfPosts',
-  ref: 'Post',
-  refField: 'title',
-  many: true,
-  label: '精選文章(5篇)',
-})
+  relationshipConfig: {
+    ref: 'Post',
+    many: true,
+  },
+  refLabelField: 'title',
+}
 
 const listConfigurations = list({
   fields: {
@@ -29,7 +43,16 @@ const listConfigurations = list({
       label: '設定適用範圍（中文）',
       validation: { isRequired: true },
     }),
-    ...orderedEditorPicksOfPosts.fields,
+    ...group({
+      label: '精選文章(5篇)',
+      description: '選取與排序',
+      fields: {
+        [orderedRelationship.fieldName]: relationship(
+          orderedRelationship.relationshipConfig
+        ),
+        ...orderedRelationshipExtendedFields(orderedRelationship),
+      },
+    }),
     editorPicksOfProjects: relationship({
       label: '精選專題',
       ref: 'Project',
@@ -67,7 +90,7 @@ const listConfigurations = list({
   },
   hooks: {
     resolveInput: async ({ inputData, item, resolvedData, context }) => {
-      await orderedEditorPicksOfPosts.resolveInputHook({
+      await orderedRelationshipMutationHook(orderedRelationship)({
         inputData,
         item,
         resolvedData,
