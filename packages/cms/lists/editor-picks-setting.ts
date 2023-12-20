@@ -7,7 +7,7 @@ import { list, group } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
 import relationshipUtil, {
   OrderedRelationshipConfig,
-} from './utils/create-ordered-relationship'
+} from './utils/manual-order-relationship'
 
 const editorPicksOfPosts: OrderedRelationshipConfig = {
   fieldName: 'editorPicksOfPosts',
