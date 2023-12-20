@@ -51,6 +51,9 @@ const relatedPosts: OrderedRelationshipConfig = {
     label: '選取',
     ref: 'Post',
     many: true,
+    ui: {
+      hideCreate: true,
+    },
   },
   refLabelField: 'title',
 }
