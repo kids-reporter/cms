@@ -1,5 +1,10 @@
 import { graphql } from '@keystone-6/core'
-import { json, virtual, RelationshipFieldConfig } from '@keystone-6/core/fields'
+import {
+  json,
+  virtual,
+  relationship,
+  RelationshipFieldConfig,
+} from '@keystone-6/core/fields'
 import { BaseListTypeInfo } from '@keystone-6/core/types'
 
 export type OrderedRelationshipConfig = {
@@ -8,7 +13,7 @@ export type OrderedRelationshipConfig = {
   refLabelField: string
 }
 
-export const relationshipExtendedFields = ({
+export const relationshipAndExtendedFields = ({
   fieldName,
   relationshipConfig,
 }: {
@@ -21,6 +26,7 @@ export const relationshipExtendedFields = ({
   const targetType = relationshipConfig.ref.split('.')[0]
 
   return {
+    [relationshipField]: relationship(relationshipConfig),
     [orderJSONField]: json({
       label: '排序',
       defaultValue: [],
@@ -147,4 +153,4 @@ export const relationshipMutationHook = ({
   }
 }
 
-export default { relationshipExtendedFields, relationshipMutationHook }
+export default { relationshipAndExtendedFields, relationshipMutationHook }

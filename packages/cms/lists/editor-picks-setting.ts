@@ -12,6 +12,7 @@ import relationshipUtil, {
 const editorPicksOfPosts: OrderedRelationshipConfig = {
   fieldName: 'editorPicksOfPosts',
   relationshipConfig: {
+    label: '選取',
     ref: 'Post',
     many: true,
   },
@@ -36,10 +37,7 @@ const listConfigurations = list({
       label: '精選文章',
       description: '首頁按順序呈現精選文章5篇',
       fields: {
-        [editorPicksOfPosts.fieldName]: relationship(
-          editorPicksOfPosts.relationshipConfig
-        ),
-        ...relationshipUtil.relationshipExtendedFields(editorPicksOfPosts),
+        ...relationshipUtil.relationshipAndExtendedFields(editorPicksOfPosts),
       },
     }),
     editorPicksOfProjects: relationship({
