@@ -37,7 +37,7 @@ const relationshipAndExtendedFields = ({
       label: '排序',
       defaultValue: [],
       ui: {
-        views: './lists/views/ordered-relationship',
+        views: './lists/views/relationship-order-editor',
         createView: {
           fieldMode: 'edit',
         },
