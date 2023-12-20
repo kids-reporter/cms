@@ -10,6 +10,8 @@ import { BaseListTypeInfo } from '@keystone-6/core/types'
 export type OrderedRelationshipConfig = {
   fieldName: string
   relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
+  // refLabelField must be specified because it varies in difference lists,
+  // ex: 'title' in Post list/'name' in Tag list
   refLabelField: string
 }
 
@@ -52,13 +54,12 @@ const relationshipAndExtendedFields = ({
         graphql.field({
           type: graphql.list(graphql.nonNull(lists[refList].types.output)),
           async resolve(item, args, context, info) {
-            // TODO: error handling
-            const sourceType = info.parentType?.name
+            const list = info.parentType?.name
 
             // Query relationship & order to find target ids/ordered ids
             let targetIds, orderedIds
             try {
-              const source = await context.query[sourceType].findOne({
+              const source = await context.query[list].findOne({
                 where: { id: item.id.toString() },
                 query: `${orderJSONField} ${relationshipField} { id }`,
               })
@@ -114,6 +115,7 @@ type RelationshipInput =
     }
   | undefined
 
+// Mutate order field when relationships change in list hook
 const mutateOrderFieldHook = ({
   fieldName,
   relationshipConfig,
