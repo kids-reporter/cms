@@ -424,14 +424,10 @@ const listConfigurations = list({
         resolvedData.createdBy = { connect: { id: session.itemId } }
       }
       if (operation === 'update') {
-        if (!inputData?.onlineUsers) {
-          resolvedData.updatedBy = { connect: { id: session.itemId } }
-          // to prevent update error message if `createdBy` is null in old posts
-          if (!item?.createdById) {
-            resolvedData.createdBy = { connect: { id: session.itemId } }
-          }
-        } else {
+        if (inputData?.onlineUsers) {
           resolvedData.updatedAt = item.updatedAt
+        } else {
+          resolvedData.updatedBy = { connect: { id: session.itemId } }
         }
       }
 
