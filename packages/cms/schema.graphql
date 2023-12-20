@@ -604,6 +604,8 @@ type Project {
   credits: JSON
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
+  relatedPosts_order_json: JSON
+  relatedPosts_ordered: [Post!]
   projectCategories(where: ProjectCategoryWhereInput! = {}, orderBy: [ProjectCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectCategoryWhereUniqueInput): [ProjectCategory!]
   projectCategoriesCount(where: ProjectCategoryWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -676,6 +678,7 @@ input ProjectUpdateInput {
   content: JSON
   credits: JSON
   relatedPosts: PostRelateToManyForUpdateInput
+  relatedPosts_order_json: JSON
   projectCategories: ProjectCategoryRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
   ogTitle: String
@@ -709,6 +712,7 @@ input ProjectCreateInput {
   content: JSON
   credits: JSON
   relatedPosts: PostRelateToManyForCreateInput
+  relatedPosts_order_json: JSON
   projectCategories: ProjectCategoryRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
   ogTitle: String

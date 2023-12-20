@@ -117,7 +117,7 @@ const mutateOrderFieldHook = ({
 }: OrderedRelationshipConfig) => {
   const relationshipField = fieldName
   const orderJSONField = `${relationshipField}_order_json`
-  const refList = relationshipConfig.ref
+  const refList = relationshipConfig.ref.split('.')[0]
 
   return async ({ inputData, item, resolvedData, context }) => {
     const relationships: RelationshipInput = inputData?.[relationshipField]

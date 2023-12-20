@@ -3,7 +3,7 @@ import {
   customFields,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
-import { graphql, list } from '@keystone-6/core'
+import { graphql, list, group } from '@keystone-6/core'
 import {
   virtual,
   relationship,
@@ -16,6 +16,19 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
+import relationshipUtil, {
+  OrderedRelationshipConfig,
+} from './utils/manual-order-relationship'
+
+const relatedPosts: OrderedRelationshipConfig = {
+  fieldName: 'relatedPosts',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'Post.projects',
+    many: true,
+  },
+  refLabelField: 'title',
+}
 
 const listConfigurations = list({
   fields: {
@@ -98,12 +111,10 @@ const listConfigurations = list({
         },
       },
     }),
-    relatedPosts: relationship({
-      ref: 'Post.projects',
+    ...group({
       label: '相關文章',
-      many: true,
-      ui: {
-        hideCreate: true,
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
       },
     }),
     projectCategories: relationship({
@@ -196,6 +207,17 @@ const listConfigurations = list({
   ui: {
     label: 'Projects（專題）',
     labelField: 'title',
+  },
+  hooks: {
+    resolveInput: async ({ inputData, item, resolvedData, context }) => {
+      await relationshipUtil.mutateOrderFieldHook(relatedPosts)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      return resolvedData
+    },
   },
 })
 

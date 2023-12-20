@@ -120,6 +120,7 @@ model Project {
   content                                       Json?
   credits                                       Json?
   relatedPosts                                  Post[]               @relation("Post_projects")
+  relatedPosts_order_json                       Json?                @default("[]")
   projectCategories                             ProjectCategory[]    @relation("Project_projectCategories")
   tags                                          Tag[]                @relation("Project_tags")
   ogTitle                                       String               @default("")
