@@ -2,6 +2,12 @@ import { graphql } from '@keystone-6/core'
 import { json, virtual, RelationshipFieldConfig } from '@keystone-6/core/fields'
 import { BaseListTypeInfo } from '@keystone-6/core/types'
 
+export type OrderedRelationshipConfig = {
+  fieldName: string
+  relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
+  refLabelField: string
+}
+
 export const orderedRelationshipExtendedFields = ({
   fieldName,
   relationshipConfig,

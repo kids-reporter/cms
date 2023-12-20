@@ -4,23 +4,14 @@ import {
   RoleEnum,
 } from './utils/access-control-list'
 import { list, group } from '@keystone-6/core'
-import {
-  relationship,
-  text,
-  timestamp,
-  RelationshipFieldConfig,
-} from '@keystone-6/core/fields'
-import { BaseListTypeInfo } from '@keystone-6/core/types'
+import { relationship, text, timestamp } from '@keystone-6/core/fields'
 import {
   orderedRelationshipExtendedFields,
   orderedRelationshipMutationHook,
+  OrderedRelationshipConfig,
 } from './utils/create-ordered-relationship'
 
-const orderedRelationship: {
-  fieldName: string
-  relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
-  refLabelField: string
-} = {
+const editorPicksOfPosts: OrderedRelationshipConfig = {
   fieldName: 'editorPicksOfPosts',
   relationshipConfig: {
     ref: 'Post',
@@ -47,10 +38,10 @@ const listConfigurations = list({
       label: '精選文章',
       description: '首頁按順序呈現精選文章5篇',
       fields: {
-        [orderedRelationship.fieldName]: relationship(
-          orderedRelationship.relationshipConfig
+        [editorPicksOfPosts.fieldName]: relationship(
+          editorPicksOfPosts.relationshipConfig
         ),
-        ...orderedRelationshipExtendedFields(orderedRelationship),
+        ...orderedRelationshipExtendedFields(editorPicksOfPosts),
       },
     }),
     editorPicksOfProjects: relationship({
@@ -90,7 +81,7 @@ const listConfigurations = list({
   },
   hooks: {
     resolveInput: async ({ inputData, item, resolvedData, context }) => {
-      await orderedRelationshipMutationHook(orderedRelationship)({
+      await orderedRelationshipMutationHook(editorPicksOfPosts)({
         inputData,
         item,
         resolvedData,
