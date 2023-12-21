@@ -32,6 +32,11 @@ const relationshipAndExtendedFields = ({
   const orderedRelationshipField = `${relationshipField}_ordered`
   const refList = relationshipConfig?.ref?.split('.')?.[0]
 
+  if (!fieldName || !refList) {
+    console.error('Invalid arguments!', fieldName, refList)
+    return {}
+  }
+
   return {
     [relationshipField]: relationship(relationshipConfig),
     [orderJSONField]: json({
@@ -123,6 +128,11 @@ const mutateOrderFieldHook = ({
   const refList = relationshipConfig?.ref?.split('.')?.[0]
 
   return async ({ inputData, item, resolvedData, context }) => {
+    if (!refList) {
+      console.error('Invalid ref list!')
+      return
+    }
+
     const relationships: RelationshipInput = inputData?.[relationshipField]
     let orderJSON: RelationshipInfo[] =
       inputData?.[orderJSONField] || item?.[orderJSONField] || []
