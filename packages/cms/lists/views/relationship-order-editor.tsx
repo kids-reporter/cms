@@ -13,13 +13,18 @@ const DndItem = styled.div`
   border-radius: 5px;
 `
 
+export type RelationshipInfo = {
+  id: string
+  label: string
+}
+
 export const Field = ({
   field,
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
   const [prevValue, setPrevValue] = useState(value)
-  const [relationships, setRelationships] = useState<any[]>(
+  const [relationships, setRelationships] = useState<RelationshipInfo[]>(
     value ? JSON.parse(value) : []
   )
 
@@ -31,7 +36,7 @@ export const Field = ({
   }
 
   const reorderRelationship = (
-    relationships: any[],
+    relationships: RelationshipInfo[],
     startIndex: number,
     endIndex: number
   ) => {
@@ -62,7 +67,7 @@ export const Field = ({
       <Droppable droppableId="droppable">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {relationships.map((relationship: any, index: number) => {
+            {relationships.map((relationship, index) => {
               const id = `relationship-component-${index}`
               return (
                 <Draggable key={id} draggableId={id} index={index}>
