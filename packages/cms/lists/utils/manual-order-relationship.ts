@@ -6,6 +6,7 @@ import {
   RelationshipFieldConfig,
 } from '@keystone-6/core/fields'
 import { BaseListTypeInfo } from '@keystone-6/core/types'
+import { RelationshipInfo } from '../views/relationship-order-editor'
 
 export type OrderedRelationshipConfig = {
   fieldName: string
@@ -102,12 +103,6 @@ const relationshipAndExtendedFields = ({
   }
 }
 
-type ListInfo = {
-  id: string
-  label: string
-}
-type OrderJSON = ListInfo[]
-
 type RelationshipInput =
   | {
       disconnect?: { id: string }[]
@@ -127,7 +122,7 @@ const mutateOrderFieldHook = ({
 
   return async ({ inputData, item, resolvedData, context }) => {
     const relationships: RelationshipInput = inputData?.[relationshipField]
-    let orderJSON: OrderJSON =
+    let orderJSON: RelationshipInfo[] =
       inputData?.[orderJSONField] || item?.[orderJSONField] || []
 
     // Remove disconnected relationships from json
