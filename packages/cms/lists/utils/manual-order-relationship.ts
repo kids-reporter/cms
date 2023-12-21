@@ -30,7 +30,7 @@ const relationshipAndExtendedFields = ({
   const relationshipField = fieldName
   const orderJSONField = `${relationshipField}_order_json`
   const orderedRelationshipField = `${relationshipField}_ordered`
-  const refList = relationshipConfig.ref.split('.')[0]
+  const refList = relationshipConfig?.ref?.split('.')?.[0]
 
   return {
     [relationshipField]: relationship(relationshipConfig),
@@ -61,21 +61,21 @@ const relationshipAndExtendedFields = ({
             let targetIds, orderedIds
             try {
               const source = await context.query[list].findOne({
-                where: { id: item.id.toString() },
+                where: { id: item?.id?.toString() },
                 query: `${orderJSONField} ${relationshipField} { id }`,
               })
               const order = source?.[orderJSONField]
               const relationships = source?.[relationshipField]
-              orderedIds = order?.map((item) => item.id) ?? []
-              targetIds = relationships?.map((relationship) => {
-                return relationship.id
+              orderedIds = order?.map((item) => item?.id) ?? []
+              targetIds = relationships?.map((relationship: any) => {
+                return relationship?.id
               })
             } catch (err) {
               console.error(err)
             }
 
             // Query targets by ids
-            let targets
+            let targets: any
             try {
               targets = await context.db?.[refList]?.findMany({
                 where: { id: { in: targetIds } },
@@ -88,7 +88,9 @@ const relationshipAndExtendedFields = ({
             const orderedTargets =
               orderedIds?.length > 0 && targets?.length > 0
                 ? orderedIds.map((id: string) => {
-                    return targets.find((target) => `${target.id}` === `${id}`)
+                    return targets.find(
+                      (target: any) => `${target?.id}` === `${id}`
+                    )
                   })
                 : []
 
@@ -118,7 +120,7 @@ const mutateOrderFieldHook = ({
 }: OrderedRelationshipConfig) => {
   const relationshipField = fieldName
   const orderJSONField = `${relationshipField}_order_json`
-  const refList = relationshipConfig.ref.split('.')[0]
+  const refList = relationshipConfig?.ref?.split('.')?.[0]
 
   return async ({ inputData, item, resolvedData, context }) => {
     const relationships: RelationshipInput = inputData?.[relationshipField]
@@ -129,7 +131,7 @@ const mutateOrderFieldHook = ({
     const disconnect = relationships?.disconnect
     if (Array.isArray(disconnect) && disconnect.length > 0) {
       const ids = disconnect.map(({ id }) => id)
-      orderJSON = orderJSON.filter((item) => !ids.includes(item.id))
+      orderJSON = orderJSON.filter((item) => !ids.includes(item?.id))
     }
 
     // Append connected relationships to end of json
