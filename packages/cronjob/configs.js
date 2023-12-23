@@ -1,4 +1,5 @@
 export const config = {
+  // rss
   apiUrl: process.env.API_URL || 'https://kids-api.twreporter.org/api/graphql',
   baseUrl: process.env.BASE_URL || 'https://kids.twreporter.org/',
   bucketName: process.env.BUCKET_NAME || 'kids-storage.twreporter.org',
@@ -15,5 +16,14 @@ export const config = {
   gcs: {
     projectId: process.env.PROJECT_ID || '',
     keyFilename: process.env.KEY_FILENAME || '',
+  },
+
+  // scheduled-post
+  db: {
+    host: process.env.DB_HOST || '',
+    port: process.env.DB_PORT || 5432,
+    database: process.env.DB_NAME || '',
+    user: process.env.DB_USER || '',
+    password: process.env.DB_PASSWORD || '',
   },
 }
