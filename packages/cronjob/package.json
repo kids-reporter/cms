@@ -9,9 +9,7 @@
   "scripts": {
     "start": "node index",
     "rss": "node rss",
-    "scheduled-post": "node scheduled-post",
-    "devr": "API_URL=https://dev-kids-api.twreporter.org/api/graphql BASE_URL=https://dev-kids.twreporter.org/ BUCKET_NAME=dev-kids-storage.twreporter.org SLACK_LOG_HOOK=https://hooks.slack.com/services/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 yarn rss",
-    "devp": "DB_HOST=localhost DB_NAME=kids DB_USER=user DB_PASSWORD=password yarn scheduled-post"
+    "scheduled-post": "node scheduled-post"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.6.0",
