@@ -13,6 +13,7 @@ import {
   GENERAL_DESCRIPTION,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
+  SUBSCRIBE_TITLE,
   AuthorRole,
 } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
@@ -213,7 +214,7 @@ export default async function About() {
     <div className="subscribe">
       <div className="subscribe-desc">
         <div>
-          <h3>訂閱《少年報導者》</h3>
+          <h3>{SUBSCRIBE_TITLE}</h3>
           <p>
             不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
           </p>
