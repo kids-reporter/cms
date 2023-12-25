@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { TOPIC_PAGE_ROUTE } from '@/app/constants'
 
