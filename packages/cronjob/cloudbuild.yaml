@@ -57,7 +57,7 @@ steps:
       - |
 
         # read cloud run service names from substitution variable
-        IFS=',' read -r -a entrypoints <<< "$_ENTRYPOINTS"
+        IFS=',' read -r -a entrypoints <<< "$_CMD"
 
         for ep in "${entrypoints[@]}"
         do
@@ -88,6 +88,6 @@ substitutions:
   _TARGET_PACKAGE: '' # default value
   _IMAGE_NAME: '' # default value
   _CLOUD_RUN_JOB_PREFIX: 'cronjob-' # default value
-  _ENTRYPOINTS: 'start' # default value
+  _CMD: 'start' # default value
   _ENV_FILE: '' # default value
   _DEPLOYMENT_TYPE: 'service' # default value
