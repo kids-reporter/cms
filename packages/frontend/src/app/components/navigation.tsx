@@ -24,7 +24,7 @@ const NavigationItems = [
   },
 ]
 
-export const Navigation = () => {
+export const Navigation = (props: { onClick?: () => void }) => {
   return (
     <nav aria-label="頁首選單">
       <ul className="menu" role="menubar">
@@ -32,7 +32,13 @@ export const Navigation = () => {
           return (
             <li key={`header-nav-item-${index}`}>
               <Link href={item.link} className="ct-menu-link" role="menuitem">
-                {item.title}
+                <button
+                  onClick={() => {
+                    props.onClick?.()
+                  }}
+                >
+                  {item.title}
+                </button>
               </Link>
             </li>
           )

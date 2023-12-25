@@ -151,7 +151,7 @@ export const StickyHeader = () => {
           {AboutUsBtn}
         </div>
         {searchInput}
-        <Navigation />
+        <Navigation onClick={onHamburgerOverlayClose} />
       </div>
     </div>
   )
