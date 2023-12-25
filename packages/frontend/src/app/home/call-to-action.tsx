@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { SUBSCRIBE_URL } from '@/app/constants'
+import { SUBSCRIBE_URL, SUBSCRIBE_TITLE } from '@/app/constants'
 
 import './call-to-action.scss'
 
@@ -8,7 +8,7 @@ export const CallToAction = () => {
     <div className="cta-container">
       <Link href={SUBSCRIBE_URL} className="top">
         <div>
-          <h3>訂閱《少年報導者》</h3>
+          <h3>{SUBSCRIBE_TITLE}</h3>
           <p>
             訂閱我們，第一時間接收《少年報導者》
             最新文章和專題，不會錯過精彩新聞。
