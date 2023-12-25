@@ -31,14 +31,15 @@ export const Navigation = (props: { onClick?: () => void }) => {
         {NavigationItems.map((item, index) => {
           return (
             <li key={`header-nav-item-${index}`}>
-              <Link href={item.link} className="ct-menu-link" role="menuitem">
-                <button
-                  onClick={() => {
-                    props.onClick?.()
-                  }}
-                >
-                  {item.title}
-                </button>
+              <Link
+                href={item.link}
+                onClick={() => {
+                  props.onClick?.()
+                }}
+                className="ct-menu-link"
+                role="menuitem"
+              >
+                {item.title}
               </Link>
             </li>
           )

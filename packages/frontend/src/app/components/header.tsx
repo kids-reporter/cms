@@ -146,7 +146,14 @@ export const StickyHeader = () => {
           />
         </Link>
         <div className="btn-group">
-          {ContributeBtn}
+          <Link
+            href="/about#post"
+            className="header-left__btn-1 rpjr-btn"
+            style={{ marginRight: '14px' }}
+            onClick={onHamburgerOverlayClose}
+          >
+            投稿
+          </Link>
           {SubscribeBtn}
           {AboutUsBtn}
         </div>
