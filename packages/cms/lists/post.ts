@@ -3,7 +3,7 @@ import {
   customFields,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
-import { graphql, list /* group */ } from '@keystone-6/core'
+import { graphql, list, group } from '@keystone-6/core'
 import {
   json,
   virtual,
@@ -17,7 +17,6 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
-/*
 import relationshipUtil, {
   OrderedRelationshipConfig,
 } from './utils/manual-order-relationship'
@@ -57,7 +56,6 @@ const relatedPosts: OrderedRelationshipConfig = {
   },
   refLabelField: 'title',
 }
-*/
 
 const listConfigurations = list({
   fields: {
@@ -98,20 +96,10 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    /*
     ...group({
       label: '次次分類',
       fields: {
         ...relationshipUtil.relationshipAndExtendedFields(subSubcategories),
-      },
-    }),
-    */
-    subSubcategories: relationship({
-      ref: 'SubSubcategory.relatedPosts',
-      label: '次次分類',
-      many: true,
-      ui: {
-        hideCreate: true,
       },
     }),
     authors: relationship({
@@ -190,33 +178,16 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
-    /*
     ...group({
       label: '標籤',
       fields: {
         ...relationshipUtil.relationshipAndExtendedFields(tags),
       },
     }),
-    */
-    tags: relationship({
-      ref: 'Tag.posts',
-      many: true,
-      label: '標籤',
-    }),
-    /*
     ...group({
       label: '相關文章',
       fields: {
         ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
-      },
-    }),
-    */
-    relatedPosts: relationship({
-      ref: 'Post',
-      many: true,
-      label: '相關文章',
-      ui: {
-        hideCreate: true,
       },
     }),
     ogTitle: text({

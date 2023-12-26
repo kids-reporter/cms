@@ -34,6 +34,7 @@ model Post {
   mainProject                                Project?             @relation("Post_mainProject", fields: [mainProjectId], references: [id])
   mainProjectId                              Int?                 @map("mainProject")
   subSubcategories                           SubSubcategory[]     @relation("Post_subSubcategories")
+  subSubcategoriesOrderJson                  Json?                @default("[]")
   authors                                    Author[]             @relation("Author_posts")
   authorsJSON                                Json?                @default("[]")
   heroImage                                  Photo?               @relation("Post_heroImage", fields: [heroImageId], references: [id])
@@ -45,7 +46,9 @@ model Post {
   content                                    Json?
   projects                                   Project[]            @relation("Post_projects")
   tags                                       Tag[]                @relation("Post_tags")
+  tagsOrderJson                              Json?                @default("[]")
   relatedPosts                               Post[]               @relation("Post_relatedPosts")
+  relatedPostsOrderJson                      Json?                @default("[]")
   ogTitle                                    String               @default("")
   ogDescription                              String               @default("")
   ogImage                                    Photo?               @relation("Post_ogImage", fields: [ogImageId], references: [id])
