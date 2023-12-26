@@ -24,7 +24,7 @@ const query = `
       large
     }
   }
-  query GetAProject($where: ProjectWhereUniqueInput!, $orderBy: [PostOrderByInput!]!) {
+  query GetAProject($where: ProjectWhereUniqueInput!) {
     project(where: $where) {
       title
       titlePosition
@@ -38,7 +38,7 @@ const query = `
       mobileHeroImage {
         ...ImageEntity
       }
-      relatedPosts(orderBy: $orderBy) {
+      relatedPostsOrdered {
         title
         slug
         publishedDate
@@ -149,9 +149,6 @@ export default async function TopicPage({
         where: {
           slug: params.slug,
         },
-        orderBy: {
-          publishedDate: 'desc',
-        },
       },
     })
   } catch (err) {
@@ -190,7 +187,7 @@ export default async function TopicPage({
     return notFound()
   }
 
-  const relatedPosts = getPostSummaries(project?.relatedPosts)
+  const relatedPosts = getPostSummaries(project?.relatedPostsOrdered)
 
   return (
     project && (
