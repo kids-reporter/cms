@@ -38,7 +38,7 @@ const query = `
       mobileHeroImage {
         ...ImageEntity
       }
-      relatedPosts_ordered(orderBy: $orderBy) {
+      relatedPostsOrdered(orderBy: $orderBy) {
         title
         slug
         publishedDate
