@@ -24,7 +24,7 @@ const query = `
       large
     }
   }
-  query GetAProject($where: ProjectWhereUniqueInput!, $orderBy: [PostOrderByInput!]!) {
+  query GetAProject($where: ProjectWhereUniqueInput!) {
     project(where: $where) {
       title
       titlePosition
@@ -38,7 +38,7 @@ const query = `
       mobileHeroImage {
         ...ImageEntity
       }
-      relatedPostsOrdered(orderBy: $orderBy) {
+      relatedPostsOrdered {
         title
         slug
         publishedDate
@@ -148,9 +148,6 @@ export default async function TopicPage({
       variables: {
         where: {
           slug: params.slug,
-        },
-        orderBy: {
-          publishedDate: 'desc',
         },
       },
     })
