@@ -11,7 +11,7 @@ BEGIN
 for postRec in SELECT id FROM "Post" loop
   -- subSubcategory
   for rec in SELECT "B" FROM "_Post_subSubcategories" WHERE "A"=postRec.id loop
-    SELECT name into recName FROM "SubSubcategory" WHERE id=rec."B";
+    SELECT "nameForCMS" into recName FROM "SubSubcategory" WHERE id=rec."B";
     recJsonText := format('{"id": "%s", "label": "%s"}', rec."B", recName);
     -- raise notice '% % %', rec."B", recName, recJsonText;
     UPDATE "Post" SET "subSubcategoriesOrderJson" = "subSubcategoriesOrderJson" || recJsonText::jsonb WHERE id = postRec.id;

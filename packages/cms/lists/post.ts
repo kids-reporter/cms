@@ -31,7 +31,7 @@ const subSubcategories: OrderedRelationshipConfig = {
       hideCreate: true,
     },
   },
-  refLabelField: 'name',
+  refLabelField: 'nameForCMS',
 }
 
 const tags: OrderedRelationshipConfig = {
