@@ -64,31 +64,22 @@ const relationshipAndExtendedFields = ({
             const list = info.parentType?.name
 
             // Query relationship & order to find target ids/ordered ids
-            let targetIds, orderedIds
-            try {
-              const source = await context.query[list].findOne({
-                where: { id: item?.id?.toString() },
-                query: `${orderJSONField} ${relationshipField} { id }`,
-              })
-              const order = source?.[orderJSONField]
-              const relationships = source?.[relationshipField]
-              orderedIds = order?.map((item) => item?.id) ?? []
-              targetIds = relationships?.map((relationship: any) => {
+            const source = await context.query[list].findOne({
+              where: { id: item?.id?.toString() },
+              query: `${orderJSONField} ${relationshipField} { id }`,
+            })
+            const order = source?.[orderJSONField]
+            const relationships = source?.[relationshipField]
+            const orderedIds = order?.map((item) => item?.id) ?? []
+            const targetIds =
+              relationships?.map((relationship: any) => {
                 return relationship?.id
-              })
-            } catch (err) {
-              console.error(err)
-            }
+              }) ?? []
 
             // Query targets by ids
-            let targets: any
-            try {
-              targets = await context.db?.[refList]?.findMany({
-                where: { id: { in: targetIds } },
-              })
-            } catch (err) {
-              console.error(err)
-            }
+            const targets = await context.db?.[refList]?.findMany({
+              where: { id: { in: targetIds } },
+            })
 
             // Order targets
             const orderedTargets =
