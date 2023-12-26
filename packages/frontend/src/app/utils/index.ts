@@ -26,7 +26,7 @@ export const getFormattedDate = (date: string): string => {
 export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
-    const subSubcategory = post?.subSubcategories?.[0]
+    const subSubcategory = post?.subSubcategoriesOrdered?.[0]
 
     return {
       image: post?.heroImage?.resized?.medium ?? '',
