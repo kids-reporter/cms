@@ -482,26 +482,27 @@ const listConfigurations = list({
 
       resolvedData.authorsJSON = authorsJSON
 
-      /*
       await relationshipUtil.mutateOrderFieldHook(subSubcategories)({
         inputData,
         item,
         resolvedData,
         context,
       })
+
       await relationshipUtil.mutateOrderFieldHook(tags)({
         inputData,
         item,
         resolvedData,
         context,
       })
+
       await relationshipUtil.mutateOrderFieldHook(relatedPosts)({
         inputData,
         item,
         resolvedData,
         context,
       })
-      */
+
       return resolvedData
     },
   },
