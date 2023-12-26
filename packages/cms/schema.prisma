@@ -128,7 +128,7 @@ model Project {
   content                                       Json?
   credits                                       Json?
   relatedPosts                                  Post[]               @relation("Post_projects")
-  relatedPosts_order_json                       Json?                @default("[]")
+  relatedPostsOrderJson                         Json?                @default("[]")
   projectCategories                             ProjectCategory[]    @relation("Project_projectCategories")
   tags                                          Tag[]                @relation("Project_tags")
   ogTitle                                       String               @default("")
@@ -252,15 +252,15 @@ model NewsReadingGroupItem {
 }
 
 model EditorPicksSetting {
-  id                            Int       @id @default(autoincrement())
-  name                          String    @unique @default("")
-  nameForCMS                    String    @default("")
-  editorPicksOfPosts            Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
-  editorPicksOfPosts_order_json Json?     @default("[]")
-  editorPicksOfProjects         Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
-  editorPicksOfTags             Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
-  createdAt                     DateTime? @default(now())
-  updatedAt                     DateTime? @updatedAt
+  id                          Int       @id @default(autoincrement())
+  name                        String    @unique @default("")
+  nameForCMS                  String    @default("")
+  editorPicksOfPosts          Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
+  editorPicksOfPostsOrderJson Json?     @default("[]")
+  editorPicksOfProjects       Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
+  editorPicksOfTags           Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
+  createdAt                   DateTime? @default(now())
+  updatedAt                   DateTime? @updatedAt
 }
 
 model PDF {

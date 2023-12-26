@@ -8,6 +8,8 @@ import {
 import { BaseListTypeInfo } from '@keystone-6/core/types'
 import { RelationshipInfo } from '../views/relationship-order-editor'
 
+const orderJsonSuffix = 'OrderJson'
+
 export type OrderedRelationshipConfig = {
   fieldName: string
   relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
@@ -28,13 +30,12 @@ const relationshipAndExtendedFields = ({
   relationshipConfig: RelationshipFieldConfig<BaseListTypeInfo>
 }) => {
   const relationshipField = fieldName
-  const orderJSONField = `${relationshipField}_order_json`
-  const orderedRelationshipField = `${relationshipField}_ordered`
+  const orderJSONField = `${relationshipField}${orderJsonSuffix}`
+  const orderedRelationshipField = `${relationshipField}Ordered`
   const refList = relationshipConfig?.ref?.split('.')?.[0]
 
   if (!fieldName || !refList) {
-    console.error('Invalid arguments!', fieldName, refList)
-    return {}
+    throw Error(`Invalid arguments! ${fieldName} ${refList}`)
   }
 
   return {
@@ -124,7 +125,7 @@ const mutateOrderFieldHook = ({
   refLabelField,
 }: OrderedRelationshipConfig) => {
   const relationshipField = fieldName
-  const orderJSONField = `${relationshipField}_order_json`
+  const orderJSONField = `${relationshipField}${orderJsonSuffix}`
   const refList = relationshipConfig?.ref?.split('.')?.[0]
 
   return async ({ inputData, item, resolvedData, context }) => {
