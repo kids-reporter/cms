@@ -60,6 +60,16 @@ const relationshipAndExtendedFields = ({
       field: (lists) =>
         graphql.field({
           type: graphql.list(graphql.nonNull(lists[refList].types.output)),
+          args: {
+            take: graphql.arg({
+              type: graphql.nonNull(graphql.Int),
+              defaultValue: 12,
+            }),
+            skip: graphql.arg({
+              type: graphql.nonNull(graphql.Int),
+              defaultValue: 0,
+            }),
+          },
           async resolve(item, args, context, info) {
             const list = info.parentType?.name
 
@@ -79,6 +89,11 @@ const relationshipAndExtendedFields = ({
             // Query targets by ids
             const targets = await context.db?.[refList]?.findMany({
               where: { id: { in: targetIds } },
+              take: args.take,
+              skip: args.skip,
+              orderBy: {
+                publishedDate: 'desc',
+              },
             })
 
             // Order targets
