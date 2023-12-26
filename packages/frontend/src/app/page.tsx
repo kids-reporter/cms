@@ -218,7 +218,8 @@ export default async function Home() {
       },
     })
     featuredPosts = getPostSummaries(
-      editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfPosts
+      editorPicksRes?.data?.data?.editorPicksSettings?.[0]
+        ?.editorPicksOfPostsOrdered
     )
     tags =
       editorPicksRes?.data?.data?.editorPicksSettings?.[0]?.editorPicksOfTags
