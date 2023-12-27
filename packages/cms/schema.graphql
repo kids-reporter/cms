@@ -137,6 +137,8 @@ type Post {
   mainProject: Project
   subSubcategories(where: SubSubcategoryWhereInput! = {}, orderBy: [SubSubcategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubSubcategoryWhereUniqueInput): [SubSubcategory!]
   subSubcategoriesCount(where: SubSubcategoryWhereInput! = {}): Int
+  subSubcategoriesOrderJson: JSON
+  subSubcategoriesOrdered(take: Int! = 12, skip: Int! = 0): [SubSubcategory!]
   authors(where: AuthorWhereInput! = {}, orderBy: [AuthorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthorWhereUniqueInput): [Author!]
   authorsCount(where: AuthorWhereInput! = {}): Int
   authorsJSON: JSON
@@ -149,8 +151,12 @@ type Post {
   projectsCount(where: ProjectWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  tagsOrderJson: JSON
+  tagsOrdered(take: Int! = 12, skip: Int! = 0): [Tag!]
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
+  relatedPostsOrderJson: JSON
+  relatedPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
   ogTitle: String
   ogDescription: String
   ogImage: Photo
@@ -287,6 +293,7 @@ input PostUpdateInput {
   publishedDate: DateTime
   mainProject: ProjectRelateToOneForUpdateInput
   subSubcategories: SubSubcategoryRelateToManyForUpdateInput
+  subSubcategoriesOrderJson: JSON
   authors: AuthorRelateToManyForUpdateInput
   authorsJSON: JSON
   heroImage: PhotoRelateToOneForUpdateInput
@@ -296,7 +303,9 @@ input PostUpdateInput {
   content: JSON
   projects: ProjectRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
+  tagsOrderJson: JSON
   relatedPosts: PostRelateToManyForUpdateInput
+  relatedPostsOrderJson: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
@@ -386,6 +395,7 @@ input PostCreateInput {
   publishedDate: DateTime
   mainProject: ProjectRelateToOneForCreateInput
   subSubcategories: SubSubcategoryRelateToManyForCreateInput
+  subSubcategoriesOrderJson: JSON
   authors: AuthorRelateToManyForCreateInput
   authorsJSON: JSON
   heroImage: PhotoRelateToOneForCreateInput
@@ -395,7 +405,9 @@ input PostCreateInput {
   content: JSON
   projects: ProjectRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
+  tagsOrderJson: JSON
   relatedPosts: PostRelateToManyForCreateInput
+  relatedPostsOrderJson: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
