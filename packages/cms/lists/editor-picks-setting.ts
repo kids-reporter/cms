@@ -3,8 +3,21 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
-import { list } from '@keystone-6/core'
+import { list, group } from '@keystone-6/core'
 import { relationship, text, timestamp } from '@keystone-6/core/fields'
+import relationshipUtil, {
+  OrderedRelationshipConfig,
+} from './utils/manual-order-relationship'
+
+const editorPicksOfPosts: OrderedRelationshipConfig = {
+  fieldName: 'editorPicksOfPosts',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'Post',
+    many: true,
+  },
+  refLabelField: 'title',
+}
 
 const listConfigurations = list({
   fields: {
@@ -20,10 +33,12 @@ const listConfigurations = list({
       label: '設定適用範圍（中文）',
       validation: { isRequired: true },
     }),
-    editorPicksOfPosts: relationship({
+    ...group({
       label: '精選文章',
-      ref: 'Post',
-      many: true,
+      description: '首頁按順序呈現精選文章5篇',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(editorPicksOfPosts),
+      },
     }),
     editorPicksOfProjects: relationship({
       label: '精選專題',
@@ -58,6 +73,17 @@ const listConfigurations = list({
     plural: 'Editor Picks',
     listView: {
       initialColumns: ['nameForCMS', 'name'],
+    },
+  },
+  hooks: {
+    resolveInput: async ({ inputData, item, resolvedData, context }) => {
+      await relationshipUtil.mutateOrderFieldHook(editorPicksOfPosts)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      return resolvedData
     },
   },
 })

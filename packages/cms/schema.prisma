@@ -19,6 +19,8 @@ model User {
   role                  String
   createdAt             DateTime? @default(now())
   updatedAt             DateTime? @updatedAt
+  from_Post_createdBy   Post[]    @relation("Post_createdBy")
+  from_Post_updatedBy   Post[]    @relation("Post_updatedBy")
   from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
 }
 
@@ -50,6 +52,10 @@ model Post {
   ogImageId                                  Int?                 @map("ogImage")
   createdAt                                  DateTime?            @default(now())
   updatedAt                                  DateTime?            @updatedAt
+  createdBy                                  User?                @relation("Post_createdBy", fields: [createdById], references: [id])
+  createdById                                Int?                 @map("createdBy")
+  updatedBy                                  User?                @relation("Post_updatedBy", fields: [updatedById], references: [id])
+  updatedById                                Int?                 @map("updatedBy")
   onlineUsers                                User[]               @relation("Post_onlineUsers")
   from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
@@ -61,6 +67,8 @@ model Post {
   @@index([heroImageId])
   @@index([newsReadingGroupId])
   @@index([ogImageId])
+  @@index([createdById])
+  @@index([updatedById])
 }
 
 model Photo {
@@ -120,6 +128,7 @@ model Project {
   content                                       Json?
   credits                                       Json?
   relatedPosts                                  Post[]               @relation("Post_projects")
+  relatedPostsOrderJson                         Json?                @default("[]")
   projectCategories                             ProjectCategory[]    @relation("Project_projectCategories")
   tags                                          Tag[]                @relation("Project_tags")
   ogTitle                                       String               @default("")
@@ -243,14 +252,15 @@ model NewsReadingGroupItem {
 }
 
 model EditorPicksSetting {
-  id                    Int       @id @default(autoincrement())
-  name                  String    @unique @default("")
-  nameForCMS            String    @default("")
-  editorPicksOfPosts    Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
-  editorPicksOfProjects Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
-  editorPicksOfTags     Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
-  createdAt             DateTime? @default(now())
-  updatedAt             DateTime? @updatedAt
+  id                          Int       @id @default(autoincrement())
+  name                        String    @unique @default("")
+  nameForCMS                  String    @default("")
+  editorPicksOfPosts          Post[]    @relation("EditorPicksSetting_editorPicksOfPosts")
+  editorPicksOfPostsOrderJson Json?     @default("[]")
+  editorPicksOfProjects       Project[] @relation("EditorPicksSetting_editorPicksOfProjects")
+  editorPicksOfTags           Tag[]     @relation("EditorPicksSetting_editorPicksOfTags")
+  createdAt                   DateTime? @default(now())
+  updatedAt                   DateTime? @updatedAt
 }
 
 model PDF {

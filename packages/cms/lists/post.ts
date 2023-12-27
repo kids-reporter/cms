@@ -3,7 +3,7 @@ import {
   customFields,
   richTextEditorButtonNames,
 } from '@kids-reporter/cms-core'
-import { graphql, list } from '@keystone-6/core'
+import { graphql, list /* group */ } from '@keystone-6/core'
 import {
   json,
   virtual,
@@ -17,6 +17,47 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
+/*
+import relationshipUtil, {
+  OrderedRelationshipConfig,
+} from './utils/manual-order-relationship'
+
+const subSubcategories: OrderedRelationshipConfig = {
+  fieldName: 'subSubcategories',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'SubSubcategory.relatedPosts',
+    many: true,
+    ui: {
+      hideCreate: true,
+    },
+  },
+  refLabelField: 'name',
+}
+
+const tags: OrderedRelationshipConfig = {
+  fieldName: 'tags',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'Tag.posts',
+    many: true,
+  },
+  refLabelField: 'name',
+}
+
+const relatedPosts: OrderedRelationshipConfig = {
+  fieldName: 'relatedPosts',
+  relationshipConfig: {
+    label: '選取',
+    ref: 'Post',
+    many: true,
+    ui: {
+      hideCreate: true,
+    },
+  },
+  refLabelField: 'title',
+}
+*/
 
 const listConfigurations = list({
   fields: {
@@ -37,11 +78,10 @@ const listConfigurations = list({
     status: select({
       label: '狀態',
       options: [
-        { label: 'draft', value: 'draft' },
-        { label: 'published', value: 'published' },
-        { label: 'scheduled', value: 'scheduled' },
-        { label: 'archived', value: 'archived' },
-        { label: 'invisible', value: 'invisible' },
+        { label: '草稿 Draft', value: 'draft' },
+        { label: '已發布 Published', value: 'published' },
+        { label: '已排程 Scheduled', value: 'scheduled' },
+        { label: '隱藏 Invisible', value: 'invisible' },
       ],
       defaultValue: 'draft',
       isIndexed: true,
@@ -58,6 +98,14 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
+    /*
+    ...group({
+      label: '次次分類',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(subSubcategories),
+      },
+    }),
+    */
     subSubcategories: relationship({
       ref: 'SubSubcategory.relatedPosts',
       label: '次次分類',
@@ -142,11 +190,27 @@ const listConfigurations = list({
         hideCreate: true,
       },
     }),
+    /*
+    ...group({
+      label: '標籤',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(tags),
+      },
+    }),
+    */
     tags: relationship({
       ref: 'Tag.posts',
       many: true,
       label: '標籤',
     }),
+    /*
+    ...group({
+      label: '相關文章',
+      fields: {
+        ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
+      },
+    }),
+    */
     relatedPosts: relationship({
       ref: 'Post',
       many: true,
@@ -169,10 +233,108 @@ const listConfigurations = list({
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
     }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    createdBy: relationship({
+      ref: 'User',
+      many: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    updatedBy: relationship({
+      ref: 'User',
+      many: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    createdLog: virtual({
+      field: () =>
+        graphql.field({
+          type: graphql.JSON,
+          async resolve(item: Record<string, any>, args, context) {
+            const userId = item?.createdById
+            const user = await context.query.User.findOne({
+              where: { id: userId },
+              query: 'id, name, email',
+            })
+
+            return {
+              href: `/users/${user.id}`,
+              label: '最初建立',
+              buttonLabel: `${user.name} (${
+                user.email
+              }) @ ${item.createdAt.toLocaleString('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                hour12: false,
+                minute: '2-digit',
+                second: '2-digit',
+              })}`,
+            }
+          },
+        }),
+      ui: {
+        views: './lists/views/link-button',
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+        itemView: { fieldMode: 'read' },
+      },
+    }),
+    updatedLog: virtual({
+      field: () =>
+        graphql.field({
+          type: graphql.JSON,
+          async resolve(item: Record<string, any>, args, context) {
+            const userId = item?.updatedById
+            const user = await context.query.User.findOne({
+              where: { id: userId },
+              query: 'id, name, email',
+            })
+
+            return {
+              href: `/users/${user.id}`,
+              label: '最後更新',
+              buttonLabel: `${user.name} (${
+                user.email
+              }) @ ${item.updatedAt.toLocaleString('zh-TW', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                hour12: false,
+                minute: '2-digit',
+                second: '2-digit',
+              })}`,
+            }
+          },
+        }),
+      ui: {
+        views: './lists/views/link-button',
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+        itemView: { fieldMode: 'read' },
       },
     }),
     preview: virtual({
@@ -262,14 +424,34 @@ const listConfigurations = list({
           return {}
         }
         if (session?.data?.role === RoleEnum.FrontendHeadlessAccount) {
-          return { status: { equals: 'published' } }
+          return {
+            OR: [
+              { status: { equals: 'published' } },
+              {
+                AND: [
+                  { status: { equals: 'scheduled' } },
+                  {
+                    publishedDate: {
+                      lt: `${new Date().toISOString()}`,
+                    },
+                  },
+                ],
+              },
+            ],
+          }
         }
         return {}
       },
     },
   },
   hooks: {
-    resolveInput: async ({ inputData, item, resolvedData, context }) => {
+    resolveInput: async ({
+      inputData,
+      item,
+      resolvedData,
+      context,
+      operation,
+    }) => {
       let authorsJSON: AuthorsJSON =
         inputData?.authorsJSON || item?.authorsJSON || []
       authorsJSON = resolveAuthorsJSON(authorsJSON)
@@ -315,7 +497,40 @@ const listConfigurations = list({
         }
       }
 
+      const session = context.session
+      if (operation === 'create') {
+        resolvedData.createdBy = { connect: { id: session.itemId } }
+      }
+      if (operation === 'update') {
+        if (inputData?.onlineUsers) {
+          resolvedData.updatedAt = item.updatedAt
+        } else {
+          resolvedData.updatedBy = { connect: { id: session.itemId } }
+        }
+      }
+
       resolvedData.authorsJSON = authorsJSON
+
+      /*
+      await relationshipUtil.mutateOrderFieldHook(subSubcategories)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      await relationshipUtil.mutateOrderFieldHook(tags)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      await relationshipUtil.mutateOrderFieldHook(relatedPosts)({
+        inputData,
+        item,
+        resolvedData,
+        context,
+      })
+      */
       return resolvedData
     },
   },

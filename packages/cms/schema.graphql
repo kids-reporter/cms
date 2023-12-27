@@ -156,6 +156,10 @@ type Post {
   ogImage: Photo
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: User
+  updatedBy: User
+  createdLog: JSON
+  updatedLog: JSON
   preview: JSON
   listPreview: String
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
@@ -191,6 +195,8 @@ input PostWhereInput {
   ogImage: PhotoWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  createdBy: UserWhereInput
+  updatedBy: UserWhereInput
   onlineUsers: UserManyRelationFilter
 }
 
@@ -296,6 +302,8 @@ input PostUpdateInput {
   ogImage: PhotoRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: UserRelateToOneForUpdateInput
+  updatedBy: UserRelateToOneForUpdateInput
   onlineUsers: UserRelateToManyForUpdateInput
 }
 
@@ -352,6 +360,12 @@ input PostRelateToManyForUpdateInput {
   connect: [PostWhereUniqueInput!]
 }
 
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+}
+
 input UserRelateToManyForUpdateInput {
   disconnect: [UserWhereUniqueInput!]
   set: [UserWhereUniqueInput!]
@@ -387,6 +401,8 @@ input PostCreateInput {
   ogImage: PhotoRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  createdBy: UserRelateToOneForCreateInput
+  updatedBy: UserRelateToOneForCreateInput
   onlineUsers: UserRelateToManyForCreateInput
 }
 
@@ -428,6 +444,11 @@ input TagRelateToManyForCreateInput {
 input PostRelateToManyForCreateInput {
   create: [PostCreateInput!]
   connect: [PostWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserRelateToManyForCreateInput {
@@ -604,6 +625,8 @@ type Project {
   credits: JSON
   relatedPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   relatedPostsCount(where: PostWhereInput! = {}): Int
+  relatedPostsOrderJson: JSON
+  relatedPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
   projectCategories(where: ProjectCategoryWhereInput! = {}, orderBy: [ProjectCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectCategoryWhereUniqueInput): [ProjectCategory!]
   projectCategoriesCount(where: ProjectCategoryWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -676,6 +699,7 @@ input ProjectUpdateInput {
   content: JSON
   credits: JSON
   relatedPosts: PostRelateToManyForUpdateInput
+  relatedPostsOrderJson: JSON
   projectCategories: ProjectCategoryRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
   ogTitle: String
@@ -709,6 +733,7 @@ input ProjectCreateInput {
   content: JSON
   credits: JSON
   relatedPosts: PostRelateToManyForCreateInput
+  relatedPostsOrderJson: JSON
   projectCategories: ProjectCategoryRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
   ogTitle: String
@@ -1270,6 +1295,8 @@ type EditorPicksSetting {
   nameForCMS: String
   editorPicksOfPosts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   editorPicksOfPostsCount(where: PostWhereInput! = {}): Int
+  editorPicksOfPostsOrderJson: JSON
+  editorPicksOfPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
   editorPicksOfProjects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   editorPicksOfProjectsCount(where: ProjectWhereInput! = {}): Int
   editorPicksOfTags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -1309,6 +1336,7 @@ input EditorPicksSettingUpdateInput {
   name: String
   nameForCMS: String
   editorPicksOfPosts: PostRelateToManyForUpdateInput
+  editorPicksOfPostsOrderJson: JSON
   editorPicksOfProjects: ProjectRelateToManyForUpdateInput
   editorPicksOfTags: TagRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1324,6 +1352,7 @@ input EditorPicksSettingCreateInput {
   name: String
   nameForCMS: String
   editorPicksOfPosts: PostRelateToManyForCreateInput
+  editorPicksOfPostsOrderJson: JSON
   editorPicksOfProjects: ProjectRelateToManyForCreateInput
   editorPicksOfTags: TagRelateToManyForCreateInput
   createdAt: DateTime

@@ -13,6 +13,7 @@ import {
   GENERAL_DESCRIPTION,
   MAIN_SITE_URL,
   SUBSCRIBE_URL,
+  SUBSCRIBE_TITLE,
   AuthorRole,
 } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
@@ -60,7 +61,15 @@ const teamMembers = [
     role: AuthorRole.AUDITORS,
     roleName: '主編',
     avatar: '',
-    bio: '主編就是協助稿件從企劃到編輯完成的主要橋樑。我也負責Podcast聲音平台及教案規劃，和團隊用多元的呈現方式，把重要議題轉成孩子有興趣閱讀、老師家長容易教學應用的素材。',
+    bio: '主編就是協助稿件從企劃到編輯完成的主要橋樑。我也負責Podcast及教案規劃，用多元的呈現方式，把重要議題轉成孩子有興趣閱讀、老師家長容易教學應用的素材。',
+  },
+  {
+    slug: 'wang-wei-han',
+    name: '王崴漢',
+    role: AuthorRole.AUDITORS,
+    roleName: '記者',
+    avatar: '',
+    bio: '記者工作是在對的時機點，向社會拋出新的疑問，激發讀者對生命更深層，也更深刻的探索與思辨。期許自己能用文字及影像參與並記下具時代意義的重要現場。',
   },
   {
     slug: 'chen-li-ting',
@@ -205,7 +214,7 @@ export default async function About() {
     <div className="subscribe">
       <div className="subscribe-desc">
         <div>
-          <h3>訂閱《少年報導者》</h3>
+          <h3>{SUBSCRIBE_TITLE}</h3>
           <p>
             不要錯過和漏接《少年報導者》精彩的專題和報導，請訂閱我們，在新聞推出的第一時間就會收到通知！
           </p>
