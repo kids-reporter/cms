@@ -162,7 +162,7 @@ const mutateOrderFieldHook = ({
       const newRelationships = items.map((item) => {
         return {
           id: item.id,
-          label: item.title,
+          label: item[refLabelField],
         }
       })
       orderJSON = [...orderJSON, ...newRelationships]
