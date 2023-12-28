@@ -1,31 +1,91 @@
 import { config } from './configs.js'
-import pg from 'pg'
+import { errorHandling, errors } from './utils.js'
+import axios from 'axios'
 
-const { Pool } = pg
-const pool = new Pool({
-  host: config.db.host,
-  port: parseInt(config.db.port),
-  database: config.db.database,
-  user: config.db.user,
-  password: config.db.password,
-})
-
-pool.connect((err, client, release) => {
-  if (err) {
-    return console.error('Error acquiring client', err.stack)
-  }
-  client.query(
-    `UPDATE public."Post"
-     SET status = 'published'
-     WHERE status = 'scheduled'
-     AND "publishedDate" <= NOW()`,
-    (err, result) => {
-      release()
-      if (err) {
-        return console.error('Error executing query', err.stack)
+const getScheduledPosts = async () => {
+  const getPayload = {
+    query: `
+      query Posts($where: PostWhereInput!) {
+        posts(where: $where) {
+          id
+        }
       }
-      console.log(`Updated ${result.rowCount} rows.`)
-      pool.end()
+    `,
+    variables: {
+      where: {
+        status: {
+          equals: 'scheduled',
+        },
+        AND: [
+          {
+            publishedDate: {
+              lte: new Date().toISOString(),
+            },
+          },
+        ],
+      },
+    },
+  }
+  try {
+    const dataRes = await axios.post(config.graphqlUrl, getPayload)
+    const data = dataRes?.data?.data?.posts
+    const idArray = data?.map((post) => post.id) || []
+    return idArray
+  } catch (err) {
+    throw errors.helpers.annotateAxiosError(err)
+  }
+}
+
+const updatePostStatus = async (postIds) => {
+  postIds.forEach(async (postId) => {
+    console.log(postId)
+    const updatePayload = {
+      query: `
+        mutation UpdatePosts($data: [PostUpdateArgs!]!) {
+          updatePosts(data: $data) {
+            id
+            status
+          }
+        }
+      `,
+      variables: {
+        data: [
+          {
+            where: {
+              id: postId,
+            },
+            data: {
+              status: 'published',
+            },
+          },
+        ],
+      },
     }
-  )
-})
+    try {
+      const update = await axios.post(config.graphqlUrl, updatePayload, {
+        withCredentials: true,
+        headers: {
+          Cookie: `keystonejs-session=${config.keystoneSessionCookie}`,
+        },
+      })
+      if (update?.data?.errors) {
+        throw new Error(update?.data?.errors[0]?.message)
+      }
+    } catch (err) {
+      throw errors.helpers.annotateAxiosError(err)
+    }
+  })
+}
+
+const main = async () => {
+  try {
+    const scheduledPosts = await getScheduledPosts()
+    console.log(scheduledPosts)
+    await updatePostStatus(scheduledPosts)
+  } catch (err) {
+    errorHandling(err)
+  }
+  console.log(`Cronjob scheduled-post completed.`)
+}
+
+main()

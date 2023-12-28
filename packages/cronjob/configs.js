@@ -19,11 +19,6 @@ export const config = {
   },
 
   // scheduled-post
-  db: {
-    host: process.env.PG_DB_HOST || '',
-    port: process.env.PG_DB_PORT || 5432,
-    database: process.env.PG_DB_NAME || '',
-    user: process.env.PG_DB_USER || '',
-    password: process.env.PG_DB_PASSWORD || '',
-  },
+  graphqlUrl: process.env.GRAPHQL_URL || 'http://localhost:3001/api/graphql',
+  keystoneSessionCookie: process.env.KEYSTONE_SESSION_COOKIE,
 }

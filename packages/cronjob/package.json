@@ -16,11 +16,9 @@
     "@slack/webhook": "^7.0.1",
     "@twreporter/errors": "^1.1.2",
     "axios": "^1.6.2",
-    "pg": "^8.11.3",
     "rss": "^1.2.2"
   },
   "devDependencies": {
-    "@types/pg": "^8.10.9",
     "@types/rss": "^0.0.32"
   }
 }
