@@ -89,11 +89,6 @@ const relationshipAndExtendedFields = ({
             // Query targets by ids
             const targets = await context.db?.[refList]?.findMany({
               where: { id: { in: targetIds } },
-              take: args.take,
-              skip: args.skip,
-              orderBy: {
-                publishedDate: 'desc',
-              },
             })
 
             // Order targets
@@ -104,7 +99,7 @@ const relationshipAndExtendedFields = ({
                       (target: any) => `${target?.id}` === `${id}`
                     )
                   })
-                : []
+                : targets
 
             return orderedTargets
           },
@@ -162,7 +157,7 @@ const mutateOrderFieldHook = ({
       const newRelationships = items.map((item) => {
         return {
           id: item.id,
-          label: item.title,
+          label: item[refLabelField],
         }
       })
       orderJSON = [...orderJSON, ...newRelationships]
