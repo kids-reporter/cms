@@ -104,7 +104,7 @@ const relationshipAndExtendedFields = ({
                       (target: any) => `${target?.id}` === `${id}`
                     )
                   })
-                : []
+                : targets
 
             return orderedTargets
           },
