@@ -80,7 +80,10 @@ const relationshipAndExtendedFields = ({
             })
             const order = source?.[orderJSONField]
             const relationships = source?.[relationshipField]
-            const orderedIds = order?.map((item) => item?.id) ?? []
+            let orderedIds = order?.map((item) => item?.id) ?? []
+            if (args.skip >= 0 && args.take >= 0) {
+              orderedIds = orderedIds.slice(args.skip, args.skip + args.take)
+            }
             const targetIds =
               relationships?.map((relationship: any) => {
                 return relationship?.id
@@ -89,11 +92,6 @@ const relationshipAndExtendedFields = ({
             // Query targets by ids
             const targets = await context.db?.[refList]?.findMany({
               where: { id: { in: targetIds } },
-              take: args.take,
-              skip: args.skip,
-              orderBy: {
-                publishedDate: 'desc',
-              },
             })
 
             // Order targets
