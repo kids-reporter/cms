@@ -89,11 +89,6 @@ const relationshipAndExtendedFields = ({
             // Query targets by ids
             const targets = await context.db?.[refList]?.findMany({
               where: { id: { in: targetIds } },
-              take: args.take,
-              skip: args.skip,
-              orderBy: {
-                publishedDate: 'desc',
-              },
             })
 
             // Order targets
