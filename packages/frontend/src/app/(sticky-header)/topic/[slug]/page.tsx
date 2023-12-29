@@ -38,7 +38,7 @@ const query = `
       mobileHeroImage {
         ...ImageEntity
       }
-      relatedPosts {
+      relatedPostsOrdered {
         title
         slug
         publishedDate
@@ -187,7 +187,7 @@ export default async function TopicPage({
     return notFound()
   }
 
-  const relatedPosts = getPostSummaries(project?.relatedPosts)
+  const relatedPosts = getPostSummaries(project?.relatedPostsOrdered)
 
   return (
     project && (
