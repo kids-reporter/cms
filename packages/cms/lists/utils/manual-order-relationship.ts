@@ -91,17 +91,22 @@ const relationshipAndExtendedFields = ({
               where: { id: { in: targetIds } },
             })
 
-            // Order targets
-            const orderedTargets =
-              orderedIds?.length > 0 && targets?.length > 0
-                ? orderedIds.map((id: string) => {
-                    return targets.find(
-                      (target: any) => `${target?.id}` === `${id}`
-                    )
-                  })
-                : targets
+            // Order targets & return
+            const orderedTargets: any[] = []
+            if (orderedIds?.length > 0 && targets?.length > 0) {
+              orderedIds.forEach((id: string) => {
+                const target = targets.find(
+                  (target: any) => `${target?.id}` === `${id}`
+                )
+                if (target) {
+                  orderedTargets.push(target)
+                }
+              })
+              return orderedTargets
+            }
 
-            return orderedTargets
+            // Return unordered result for fallback
+            return targets
           },
         }),
       ui: {
