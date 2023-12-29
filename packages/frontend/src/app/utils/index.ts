@@ -26,7 +26,7 @@ export const getFormattedDate = (date: string): string => {
 export const getPostSummaries = (posts: any[]): PostSummary[] => {
   // TODO: error handling for post
   return posts?.map((post: any) => {
-    const subSubcategory = post?.subSubcategories?.[0]
+    const subSubcategory = post?.subSubcategoriesOrdered?.[0]
 
     return {
       image: post?.heroImage?.resized?.medium ?? '',
@@ -56,9 +56,18 @@ export const log = (level: LogLevel = LogLevel.INFO, msg: string) => {
   })
 
   switch (level) {
-    case LogLevel.ERROR:
-      console.error(structuredMsg)
+    case LogLevel.ERROR: {
+      // Follow https://cloud.google.com/error-reporting/docs/formatting-error-messages doc to print structured error log
+      // and trigger GCP error reporting.
+      const errorLogEntry = {
+        severity: level,
+        '@type':
+          'type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent',
+        message: msg,
+      }
+      console.error(JSON.stringify(errorLogEntry))
       return
+    }
     case LogLevel.WARNING:
       console.warn(structuredMsg)
       return

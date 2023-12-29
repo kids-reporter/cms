@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const genTopicsGQL = (hasRelatedPosts: boolean): string => {
   const relatedPostsGQL = `
-    relatedPosts {
+    relatedPostsOrdered {
       ${POST_CONTENT_GQL}
     }
   `
@@ -153,7 +153,7 @@ export default async function Topic({
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,
               publishedDate: topic.publishedDate,
-              relatedPosts: topic.relatedPosts,
+              relatedPosts: topic.relatedPostsOrdered,
             }
           : undefined
       })

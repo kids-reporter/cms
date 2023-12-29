@@ -92,8 +92,8 @@ const getPostContents = (post: any) => {
 
   // Related posts data: related posts or topic's related post
   let relatedPosts: any[] = []
-  if (post?.relatedPosts?.length > 0) {
-    relatedPosts = getPostSummaries(post.relatedPosts)
+  if (post?.relatedPostsOrdered?.length > 0) {
+    relatedPosts = getPostSummaries(post.relatedPostsOrdered)
   } else if (topic?.relatedPosts?.length > 0) {
     relatedPosts = getPostSummaries(topic.relatedPosts)
   }
@@ -104,7 +104,7 @@ const getPostContents = (post: any) => {
   const topicURL = mainTopic?.slug ? `/topic/${mainTopic.slug}` : undefined
 
   // Subcategory related data
-  const subSubcategory = post?.subSubcategories?.[0]
+  const subSubcategory = post?.subSubcategoriesOrdered?.[0]
   const subcategory = subSubcategory?.subcategory
   const category = subcategory?.category
   const subSubcategoryURL =
@@ -185,7 +185,9 @@ export const Article = ({ post }: { post: any }) => {
           <Brief content={post?.brief} authors={authorsInBrief} theme={theme} />
           <Divider />
           <PostRenderer post={post} theme={theme} />
-          {post?.tags && <Tags title={'常用關鍵字'} tags={post.tags} />}
+          {post?.tagsOrdered && (
+            <Tags title={'常用關鍵字'} tags={post.tagsOrdered} />
+          )}
           <AuthorCard title="誰幫我們完成這篇文章" authors={orderedAuthors} />
         </ArticleContext.Provider>
       </div>
