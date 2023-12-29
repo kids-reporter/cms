@@ -56,9 +56,20 @@ export const log = (level: LogLevel = LogLevel.INFO, msg: string) => {
   })
 
   switch (level) {
-    case LogLevel.ERROR:
-      console.error(structuredMsg)
+    case LogLevel.ERROR: {
+      // Follow https://cloud.google.com/error-reporting/docs/formatting-error-messages doc to print structured error log
+      // and trigger GCP error reporting.
+      const errorLogEntry = {
+        severity: level,
+        jsonPayload: {
+          '@type':
+            'type.googleapis.com/google.devtools.clouderrorreporting.v1beta1.ReportedErrorEvent',
+          message: msg,
+        },
+      }
+      console.error(JSON.stringify(errorLogEntry))
       return
+    }
     case LogLevel.WARNING:
       console.warn(structuredMsg)
       return
