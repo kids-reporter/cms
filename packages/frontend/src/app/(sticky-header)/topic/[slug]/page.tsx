@@ -46,7 +46,7 @@ const query = `
           ...ImageEntity
         }
         ogDescription
-        subSubcategories {
+        subSubcategoriesOrdered {
           name
           slug
           subcategory {
