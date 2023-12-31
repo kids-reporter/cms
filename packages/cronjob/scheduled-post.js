@@ -1,8 +1,9 @@
 import { config } from './configs.js'
-import { errorHandling, errors } from './utils.js'
+import { TokenManager, errorHandling, errors } from './utils.js'
 import axios from 'axios'
 
 const getScheduledPosts = async () => {
+  // fetch qualified scheduled posts
   const getPayload = {
     query: `
       query Posts($where: PostWhereInput!) {
@@ -27,7 +28,7 @@ const getScheduledPosts = async () => {
     },
   }
   try {
-    const dataRes = await axios.post(config.graphqlUrl, getPayload)
+    const dataRes = await axios.post(config.apiUrl, getPayload)
     const data = dataRes?.data?.data?.posts
     const idArray = data?.map((post) => post.id) || []
     return idArray
@@ -37,8 +38,17 @@ const getScheduledPosts = async () => {
 }
 
 const updatePostStatus = async (postIds) => {
+  // fetch keystone session cookie token
+  const tokenManager = new TokenManager(
+    config.cronjobAccount.email,
+    config.cronjobAccount.password,
+    config.apiUrl
+  )
+  const token = await tokenManager.getToken()
+
+  // update post status
   postIds.forEach(async (postId) => {
-    console.log(postId)
+    console.log(`Update post ${postId} status to published.`)
     const updatePayload = {
       query: `
         mutation UpdatePosts($data: [PostUpdateArgs!]!) {
@@ -62,10 +72,10 @@ const updatePostStatus = async (postIds) => {
       },
     }
     try {
-      const update = await axios.post(config.graphqlUrl, updatePayload, {
+      const update = await axios.post(config.apiUrl, updatePayload, {
         withCredentials: true,
         headers: {
-          Cookie: `keystonejs-session=${config.keystoneSessionCookie}`,
+          Cookie: `keystonejs-session=${token}`,
         },
       })
       if (update?.data?.errors) {
@@ -80,8 +90,12 @@ const updatePostStatus = async (postIds) => {
 const main = async () => {
   try {
     const scheduledPosts = await getScheduledPosts()
-    console.log(scheduledPosts)
-    await updatePostStatus(scheduledPosts)
+    if (scheduledPosts.length === 0) {
+      console.log(`No scheduled posts.`)
+    } else {
+      console.log(`Scheduled posts: ${scheduledPosts}`)
+      await updatePostStatus(scheduledPosts)
+    }
   } catch (err) {
     errorHandling(err)
   }
