@@ -97,7 +97,7 @@ heroImage {
     medium
   }
 }
-subSubcategories {
+subSubcategoriesOrdered {
   name
   subcategory {
     name

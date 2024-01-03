@@ -26,7 +26,7 @@ const heroImageGQL = `
 `
 
 const categoryGQL = `
-  subSubcategories {
+  subSubcategoriesOrdered {
     name
     slug
     subcategory {
@@ -68,11 +68,11 @@ const postGQL = `
         slug
       }
       authorsJSON
-      tags {
+      tagsOrdered {
         name
         slug
       }
-      relatedPosts {
+      relatedPostsOrdered {
         title
         slug
         publishedDate
@@ -162,9 +162,11 @@ export async function generateMetadata({
       // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
       publishedDate: postMeta?.publishedDate ?? '',
       category:
-        postMeta?.subSubcategories?.[0]?.subcategory?.category?.name ?? '',
-      subcategory: postMeta?.subSubcategories?.[0]?.subcategory?.name ?? '',
-      subSubcategory: postMeta?.subSubcategories?.[0]?.name ?? '',
+        postMeta?.subSubcategoriesOrdered?.[0]?.subcategory?.category?.name ??
+        '',
+      subcategory:
+        postMeta?.subSubcategoriesOrdered?.[0]?.subcategory?.name ?? '',
+      subSubcategory: postMeta?.subSubcategoriesOrdered?.[0]?.name ?? '',
       contentType: 'article',
     },
   }
