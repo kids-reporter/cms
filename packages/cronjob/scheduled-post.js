@@ -46,11 +46,9 @@ const updatePostStatus = async (postIds) => {
   )
   const token = await tokenManager.getToken()
 
-  // update post status
-  postIds.forEach(async (postId) => {
-    console.log(`Update post ${postId} status to published.`)
-    const updatePayload = {
-      query: `
+  // build payload
+  let updatePayload = {
+    query: `
         mutation UpdatePosts($data: [PostUpdateArgs!]!) {
           updatePosts(data: $data) {
             id
@@ -58,33 +56,36 @@ const updatePostStatus = async (postIds) => {
           }
         }
       `,
-      variables: {
-        data: [
-          {
-            where: {
-              id: postId,
-            },
-            data: {
-              status: 'published',
-            },
-          },
-        ],
+    variables: {
+      data: [],
+    },
+  }
+  postIds.forEach((postId) => {
+    updatePayload.variables.data.push({
+      where: {
+        id: postId,
       },
-    }
-    try {
-      const update = await axios.post(config.apiUrl, updatePayload, {
-        withCredentials: true,
-        headers: {
-          Cookie: `keystonejs-session=${token}`,
-        },
-      })
-      if (update?.data?.errors) {
-        throw new Error(update?.data?.errors[0]?.message)
-      }
-    } catch (err) {
-      throw errors.helpers.annotateAxiosError(err)
-    }
+      data: {
+        status: 'published',
+      },
+    })
   })
+
+  // update post status
+  try {
+    console.log(`Update post ${postIds} status to published.`)
+    const update = await axios.post(config.apiUrl, updatePayload, {
+      withCredentials: true,
+      headers: {
+        Cookie: `keystonejs-session=${token}`,
+      },
+    })
+    if (update?.data?.errors) {
+      throw new Error(update?.data?.errors[0]?.message)
+    }
+  } catch (err) {
+    throw errors.helpers.annotateAxiosError(err)
+  }
 }
 
 const main = async () => {
