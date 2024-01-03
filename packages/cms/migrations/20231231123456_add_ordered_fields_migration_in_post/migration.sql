@@ -9,6 +9,11 @@ DECLARE recJsonText text;
 BEGIN
 
 for postRec in SELECT id FROM "Post" loop
+  -- empty json fields first
+  UPDATE "Post" SET "subSubcategoriesOrderJson" = '[]'::jsonb WHERE id = postRec.id;
+  UPDATE "Post" SET "tagsOrderJson" = '[]'::jsonb WHERE id = postRec.id;
+  UPDATE "Post" SET "relatedPostsOrderJson" = '[]'::jsonb WHERE id = postRec.id;
+
   -- subSubcategory
   for rec in SELECT "B" FROM "_Post_subSubcategories" WHERE "A"=postRec.id loop
     SELECT name into recName FROM "SubSubcategory" WHERE id=rec."B";
