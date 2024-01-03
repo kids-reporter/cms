@@ -1,7 +1,9 @@
 export const config = {
-  apiUrl: process.env.API_URL || 'https://kids-api.twreporter.org/api/graphql',
-  baseUrl: process.env.BASE_URL || 'https://kids.twreporter.org/',
-  bucketName: process.env.BUCKET_NAME || 'kids-storage.twreporter.org',
+  apiUrl: process.env.API_URL || 'http://localhost:3001/api/graphql',
+
+  // rss
+  baseUrl: process.env.BASE_URL || 'http://localhost:3001/',
+  bucketName: process.env.BUCKET_NAME || 'dev-kids-storage.twreporter.org',
   slackLogHook: process.env.SLACK_LOG_HOOK,
   rssFileName: process.env.RSS_FILE_NAME || 'rss/rss.xml',
   rssFetchDays: process.env.RSS_FETCH_DAYS || 7,
@@ -15,5 +17,11 @@ export const config = {
   gcs: {
     projectId: process.env.PROJECT_ID || '',
     keyFilename: process.env.KEY_FILENAME || '',
+  },
+
+  // scheduled-post
+  cronjobAccount: {
+    email: process.env.CRONJOB_ACCOUNT_EMAIL,
+    password: process.env.CRONJOB_ACCOUNT_PASSWORD,
   },
 }

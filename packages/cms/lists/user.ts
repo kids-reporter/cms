@@ -58,6 +58,10 @@ const listConfigurations = list({
           label: RoleEnum.PreviewHeadlessAccount,
           value: RoleEnum.PreviewHeadlessAccount,
         },
+        {
+          label: RoleEnum.CronjobHeadlessAccount,
+          value: RoleEnum.CronjobHeadlessAccount,
+        },
       ],
       validation: { isRequired: true },
     }),
