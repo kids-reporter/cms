@@ -17,13 +17,9 @@ const getScheduledPosts = async () => {
         status: {
           equals: 'scheduled',
         },
-        AND: [
-          {
-            publishedDate: {
-              lte: new Date().toISOString(),
-            },
-          },
-        ],
+        publishedDate: {
+          lte: new Date().toISOString(),
+        },
       },
     },
   }
