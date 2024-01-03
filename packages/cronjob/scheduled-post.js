@@ -77,7 +77,13 @@ const updatePostStatus = async (postIds) => {
       },
     })
     if (update?.data?.errors) {
-      throw new Error(update?.data?.errors[0]?.message)
+      const annotatedErr = errors.helpers.wrap(
+        update?.data?.errors,
+        'updatePostsError',
+        'Error updating post status',
+        update?.data?.errors[0]?.message
+      )
+      throw annotatedErr
     }
   } catch (err) {
     throw errors.helpers.annotateAxiosError(err)
