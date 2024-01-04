@@ -47,7 +47,7 @@ Cloud Audit Logs
 gcloud eventarc triggers create imageresizer-cal \
 --location=asia-east1 \
 --service-account=496849015885-compute@developer.gserviceaccount.com \
---destination-run-service=image-resizer \
+--destination-run-service=prod-image-resizer \
 --destination-run-region=asia-east1 \
 --destination-run-path="/" \
 --event-filters="type=google.cloud.audit.log.v1.written" \
