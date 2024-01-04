@@ -129,7 +129,7 @@ export default async function Topic({
     totalPages = Math.ceil(topicsCount / POST_PER_PAGE)
     if (currentPage > totalPages) {
       log(
-        LogLevel.ERROR,
+        LogLevel.WARNING,
         `Request page(${currentPage}) exceeds total pages(${totalPages}!`
       )
       notFound()
@@ -140,7 +140,7 @@ export default async function Topic({
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
     notFound()
   }
 

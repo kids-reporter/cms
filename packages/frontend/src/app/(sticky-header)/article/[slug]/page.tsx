@@ -140,7 +140,7 @@ export async function generateMetadata({
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   return {
@@ -205,7 +205,7 @@ export default async function PostPage({
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
     notFound()
   }
 

@@ -168,7 +168,7 @@ export default async function About() {
         withStack: true,
         withPayload: true,
       })
-      log(LogLevel.ERROR, msg)
+      log(LogLevel.WARNING, msg)
     }
   }
 

@@ -187,7 +187,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   // 2. Fetch latest posts
@@ -206,7 +206,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   // 3. Fetch featured posts & tags
@@ -229,7 +229,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   // 4. Fetch posts for each section
@@ -263,7 +263,7 @@ export default async function Home() {
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   return (

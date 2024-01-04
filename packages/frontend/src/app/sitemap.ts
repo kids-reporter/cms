@@ -69,7 +69,7 @@ const fetchSitemaps = async (): Promise<
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   try {
@@ -98,7 +98,7 @@ const fetchSitemaps = async (): Promise<
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   return sitemaps

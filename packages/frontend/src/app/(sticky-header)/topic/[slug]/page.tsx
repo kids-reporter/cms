@@ -106,7 +106,7 @@ export async function generateMetadata({
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
   }
 
   return {
@@ -158,7 +158,7 @@ export default async function TopicPage({
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
     return notFound()
   }
 
@@ -175,7 +175,7 @@ export default async function TopicPage({
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
 
     // TODO: return 500 error page
     return notFound()

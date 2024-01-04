@@ -195,7 +195,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
     notFound()
   }
 
@@ -229,7 +229,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       withStack: true,
       withPayload: true,
     })
-    log(LogLevel.ERROR, msg)
+    log(LogLevel.WARNING, msg)
     notFound()
   }
 
@@ -241,7 +241,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       category !== targetCategory?.subcategory?.category?.slug
     ) {
       log(
-        LogLevel.ERROR,
+        LogLevel.WARNING,
         `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
       )
       notFound()
@@ -250,7 +250,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     targetCategory = postsRes?.data?.data?.subcategory
     if (category !== targetCategory?.category?.slug) {
       log(
-        LogLevel.ERROR,
+        LogLevel.WARNING,
         `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
       )
       notFound()
@@ -270,7 +270,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
   if (totalPages > 0 && currentPage > totalPages) {
     log(
-      LogLevel.ERROR,
+      LogLevel.WARNING,
       `Incorrect page! currentPage=${currentPage}, totalPages=${totalPages}`
     )
     notFound()
