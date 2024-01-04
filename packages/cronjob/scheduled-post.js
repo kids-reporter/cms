@@ -2,6 +2,13 @@ import { config } from './configs.js'
 import { TokenManager, errorHandling, errors } from './utils.js'
 import axios from 'axios'
 
+// fetch keystone session cookie token
+const tokenManager = new TokenManager(
+  config.cronjobAccount.email,
+  config.cronjobAccount.password,
+  config.apiUrl
+)
+
 const getScheduledPosts = async () => {
   // fetch qualified scheduled posts
   const getPayload = {
@@ -24,7 +31,13 @@ const getScheduledPosts = async () => {
     },
   }
   try {
-    const dataRes = await axios.post(config.apiUrl, getPayload)
+    const token = await tokenManager.getToken()
+    const dataRes = await axios.post(config.apiUrl, getPayload, {
+      withCredentials: true,
+      headers: {
+        Cookie: `keystonejs-session=${token}`,
+      },
+    })
     const data = dataRes?.data?.data?.posts
     const idArray = data?.map((post) => post.id) || []
     return idArray
@@ -34,14 +47,6 @@ const getScheduledPosts = async () => {
 }
 
 const updatePostStatus = async (postIds) => {
-  // fetch keystone session cookie token
-  const tokenManager = new TokenManager(
-    config.cronjobAccount.email,
-    config.cronjobAccount.password,
-    config.apiUrl
-  )
-  const token = await tokenManager.getToken()
-
   // build payload
   let updatePayload = {
     query: `
@@ -70,6 +75,7 @@ const updatePostStatus = async (postIds) => {
   // update post status
   try {
     console.log(`Update post ${postIds} status to published.`)
+    const token = await tokenManager.getToken()
     const update = await axios.post(config.apiUrl, updatePayload, {
       withCredentials: true,
       headers: {
