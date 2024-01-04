@@ -386,7 +386,12 @@ const listConfigurations = list({
         RoleEnum.Editor,
         RoleEnum.Contributor,
       ]),
-      update: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
+      update: allowRoles([
+        RoleEnum.Owner,
+        RoleEnum.Admin,
+        RoleEnum.Editor,
+        RoleEnum.CronjobHeadlessAccount,
+      ]),
       delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin, RoleEnum.Editor]),
     },
     filter: {
