@@ -33,18 +33,22 @@ const getPostContents = (post: any) => {
     currentAuthors: { name: string; link: string }[] = []
   authorsJSON?.forEach((authorJSON: any, index: number) => {
     const author = post?.authors?.find((a: any) => a?.id === authorJSON?.id)
+    const authorObj = author
+      ? {
+          name: author.name,
+          link: `/author/${author.slug}`,
+        }
+      : {
+          name: authorJSON.name,
+          link: '',
+        }
     if (index === 0 || authorJSON.role === authorsJSON[index - 1]?.role) {
       currentAuthorRole = authorJSON.role
-      currentAuthors.push({
-        name: authorJSON.name,
-        link: author ? `/author/${author.slug}` : '',
-      })
+      currentAuthors.push(authorObj)
     } else {
       authorsInBrief.push({ title: currentAuthorRole, authors: currentAuthors })
       currentAuthorRole = authorJSON.role
-      currentAuthors = [
-        { name: authorJSON.name, link: author ? `/author/${author.slug}` : '' },
-      ]
+      currentAuthors = [authorObj]
     }
 
     if (index === authorsJSON?.length - 1) {
