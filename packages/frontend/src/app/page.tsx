@@ -163,14 +163,15 @@ export default async function Home() {
       take: topicsNum,
     },
   })
-  const topics = topicsRes?.data?.data?.projects?.map((topic: any) => {
-    return {
-      url: `/topic/${topic.slug}`,
-      image: topic?.heroImage?.resized?.medium ?? '',
-      title: topic.title,
-      subtitle: topic.subtitle,
-    }
-  })
+  const topics =
+    topicsRes?.data?.data?.projects?.map((topic: any) => {
+      return {
+        url: `/topic/${topic.slug}`,
+        image: topic?.heroImage?.resized?.medium ?? '',
+        title: topic.title,
+        subtitle: topic.subtitle,
+      }
+    }) ?? []
 
   // 2. Fetch latest posts
   const latestPostsRes = await sendGQLRequest(API_URL, {
