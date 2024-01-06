@@ -1,7 +1,5 @@
 import { Metadata } from 'next'
-import axios from 'axios'
 import { notFound } from 'next/navigation'
-import errors from '@twreporter/errors'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
@@ -10,7 +8,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
 } from '@/app/constants'
-import { getPostSummaries, log, LogLevel } from '@/app/utils'
+import { getPostSummaries, log, LogLevel, sendGQLRequest } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {
@@ -46,45 +44,43 @@ export default async function LatestPosts({
     notFound()
   }
 
-  let postsCount, posts, totalPages
-  try {
-    // Fetch total posts count
-    const postsCountRes = await axios.post(API_URL, {
-      query: postsCountGQL,
-    })
-    postsCount = postsCountRes?.data?.data?.postsCount
-
-    if (postsCount > 0) {
-      totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-      if (currentPage > totalPages) {
-        log(
-          LogLevel.WARNING,
-          `Request page(${currentPage}) exceeds total pages(${totalPages}!`
-        )
-        notFound()
-      }
-
-      // Fetch posts of specific page
-      const postsRes = await axios.post(API_URL, {
-        query: latestPostsGQL,
-        variables: {
-          orderBy: {
-            publishedDate: 'desc',
-          },
-          take: POST_PER_PAGE,
-          skip: (currentPage - 1) * POST_PER_PAGE,
-        },
-      })
-      posts = postsRes?.data?.data?.posts
-    }
-  } catch (err) {
-    const annotatedErr = errors.helpers.annotateAxiosError(err)
-    const msg = errors.helpers.printAll(annotatedErr, {
-      withStack: true,
-      withPayload: true,
-    })
-    log(LogLevel.WARNING, msg)
+  // Fetch total posts count
+  const postsCountRes = await sendGQLRequest(API_URL, {
+    query: postsCountGQL,
+  })
+  if (!postsCountRes) {
+    log(LogLevel.WARNING, `Empty post count response!`)
     notFound()
+  }
+  const postsCount = postsCountRes?.data?.data?.postsCount
+
+  let posts, totalPages
+  if (postsCount > 0) {
+    totalPages = Math.ceil(postsCount / POST_PER_PAGE)
+    if (currentPage > totalPages) {
+      log(
+        LogLevel.WARNING,
+        `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+      )
+      notFound()
+    }
+
+    // Fetch posts of specific page
+    const postsRes = await sendGQLRequest(API_URL, {
+      query: latestPostsGQL,
+      variables: {
+        orderBy: {
+          publishedDate: 'desc',
+        },
+        take: POST_PER_PAGE,
+        skip: (currentPage - 1) * POST_PER_PAGE,
+      },
+    })
+    if (!postsRes) {
+      log(LogLevel.WARNING, `Empty posts response!`)
+      notFound()
+    }
+    posts = postsRes?.data?.data?.posts
   }
 
   const postSummeries = getPostSummaries(posts)
