@@ -10,7 +10,7 @@ import {
   POST_CONTENT_GQL,
   DEFAULT_THEME_COLOR,
 } from '@/app/constants'
-import { getPostSummaries, log, LogLevel, sendGQLRequest } from '@/app/utils'
+import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 export const metadata: Metadata = {

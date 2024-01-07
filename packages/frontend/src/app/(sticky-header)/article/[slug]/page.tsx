@@ -8,7 +8,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
 } from '@/app/constants'
-import { log, LogLevel, sendGQLRequest } from '@/app/utils'
+import { sendGQLRequest, log, LogLevel } from '@/app/utils'
 import './page.scss'
 
 const topicRelatedPostsNum = 5
