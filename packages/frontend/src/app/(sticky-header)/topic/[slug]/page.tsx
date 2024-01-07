@@ -100,7 +100,7 @@ export async function generateMetadata({
   })
   const topicMeta = topicOGRes?.data?.data?.project
   if (!topicMeta) {
-    log(LogLevel.INFO, `Post not found! ${params.slug}`)
+    log(LogLevel.WARNING, `Post not found! ${params.slug}`)
   }
 
   return {

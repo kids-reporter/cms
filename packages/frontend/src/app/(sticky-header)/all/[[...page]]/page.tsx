@@ -40,7 +40,7 @@ export default async function LatestPosts({
   const currentPage = !params.page ? 1 : Number(params.page?.[0])
 
   if (params.page?.length > 1 || !(currentPage > 0)) {
-    log(LogLevel.INFO, `Incorrect page!: ${params.page}, ${currentPage}`)
+    log(LogLevel.WARNING, `Incorrect page!: ${params.page}, ${currentPage}`)
     notFound()
   }
 

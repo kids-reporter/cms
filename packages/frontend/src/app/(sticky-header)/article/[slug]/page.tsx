@@ -128,7 +128,7 @@ export async function generateMetadata({
   })
   const postMeta = postMetaRes?.data?.data?.post
   if (!postMeta) {
-    log(LogLevel.INFO, `Post meta not found! ${params.slug}`)
+    log(LogLevel.WARNING, `Post meta not found! ${params.slug}`)
   }
 
   return {
@@ -166,7 +166,7 @@ export default async function PostPage({
   params: { slug: string }
 }) {
   if (!params.slug) {
-    log(LogLevel.INFO, 'Invalid post slug!')
+    log(LogLevel.WARNING, 'Invalid post slug!')
     notFound()
   }
 
