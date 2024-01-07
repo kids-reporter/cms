@@ -127,6 +127,7 @@ export default async function Topic({
   })
   if (!projectsRes) {
     log(LogLevel.WARNING, 'Emptyp topic response!')
+    notFound()
   }
 
   const topics = projectsRes?.data?.data?.projects
