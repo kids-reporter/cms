@@ -12,7 +12,7 @@ const NavigationItems = [
     link: '/category/news/',
   },
   {
-    title: '讀報',
+    title: 'Podcast',
     link: '/category/listening-news/',
   },
   {
@@ -20,8 +20,8 @@ const NavigationItems = [
     link: '/category/comics/',
   },
   {
-    title: '校園',
-    link: '/category/campus/',
+    title: '教案',
+    link: '/category/campus/news-classroom',
   },
 ]
 
