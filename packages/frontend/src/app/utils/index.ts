@@ -61,6 +61,21 @@ export const sendGQLRequest = async (
     })
     log(LogLevel.ERROR, msg)
   }
+
+  const gqlErrors = response?.data?.errors
+  if (gqlErrors) {
+    const annotatedErr = errors.helpers.wrap(
+      new Error(`Errors occured while executing query: ${data}`),
+      'GraphQLError',
+      { errors: gqlErrors }
+    )
+    const msg = errors.helpers.printAll(annotatedErr, {
+      withStack: true,
+      withPayload: true,
+    })
+    log(LogLevel.ERROR, msg)
+  }
+
   return response
 }
 
