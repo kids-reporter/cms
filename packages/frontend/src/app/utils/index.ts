@@ -65,8 +65,9 @@ export const sendGQLRequest = async (
   const gqlErrors = response?.data?.errors
   if (gqlErrors) {
     const annotatedErr = errors.helpers.wrap(
-      new Error(`Errors occured while executing query: ${data}`),
+      new Error(`Errors occured while executing GQL query: ${data}`),
       'GraphQLError',
+      'Errors occured after axios request',
       { errors: gqlErrors }
     )
     const msg = errors.helpers.printAll(annotatedErr, {
