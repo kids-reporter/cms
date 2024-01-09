@@ -42,7 +42,7 @@ const categoryGQL = `
 `
 
 const postGQL = `
-  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!, $take: Int, $where2: PostWhereInput!) {
+  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!, $take: Int, $relatedPostWhere: PostWhereInput!) {
     post(where: $where) {
       title
       newsReadingGroup {
@@ -89,7 +89,7 @@ const postGQL = `
       projects {
         title
         slug
-        relatedPosts(take: $take, where: $where2) {
+        relatedPosts(take: $take, where: $relatedPostWhere) {
           ${POST_CONTENT_GQL}
         }
       }
@@ -191,7 +191,7 @@ export default async function PostPage({
         where: {
           slug: slug,
         },
-        where2: {
+        relatedPostWhere: {
           slug: {
             notIn: slug,
           },
