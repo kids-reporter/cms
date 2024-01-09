@@ -99,11 +99,7 @@ const getPostContents = (post: any) => {
   if (post?.relatedPostsOrdered?.length > 0) {
     relatedPosts = getPostSummaries(post.relatedPostsOrdered)
   } else if (topic?.relatedPosts?.length > 0) {
-    relatedPosts = getPostSummaries(
-      topic.relatedPosts.filter(
-        (relatedPost: any) => relatedPost?.slug !== post.slug
-      )
-    )
+    relatedPosts = getPostSummaries(topic.relatedPosts)
   }
 
   // Main project data

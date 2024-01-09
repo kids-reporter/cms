@@ -42,9 +42,8 @@ const categoryGQL = `
 `
 
 const postGQL = `
-  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!, $take: Int) {
+  query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!, $take: Int, $where2: PostWhereInput!) {
     post(where: $where) {
-      slug
       title
       newsReadingGroup {
         items (orderBy: $orderBy){
@@ -90,7 +89,7 @@ const postGQL = `
       projects {
         title
         slug
-        relatedPosts(take: $take) {
+        relatedPosts(take: $take, where: $where2) {
           ${POST_CONTENT_GQL}
         }
       }
@@ -178,7 +177,8 @@ export default async function PostPage({
 }: {
   params: { slug: string }
 }) {
-  if (!params.slug) {
+  const slug = params.slug
+  if (!slug) {
     log(LogLevel.INFO, 'Invalid post slug!')
     notFound()
   }
@@ -189,7 +189,12 @@ export default async function PostPage({
       query: postGQL,
       variables: {
         where: {
-          slug: params.slug,
+          slug: slug,
+        },
+        where2: {
+          slug: {
+            notIn: slug,
+          },
         },
         orderBy: [{ order: 'asc' }],
         take: topicRelatedPostsNum,
