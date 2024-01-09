@@ -50,7 +50,6 @@ export default async function LatestPosts({
   })
   if (!postsCountRes) {
     log(LogLevel.WARNING, `Empty post count response!`)
-    notFound()
   }
   const postsCount = postsCountRes?.data?.data?.postsCount
 
