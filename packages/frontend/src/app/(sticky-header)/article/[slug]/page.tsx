@@ -44,6 +44,7 @@ const categoryGQL = `
 const postGQL = `
   query($where: PostWhereUniqueInput!, $orderBy: [NewsReadingGroupItemOrderByInput!]!, $take: Int) {
     post(where: $where) {
+      slug
       title
       newsReadingGroup {
         items (orderBy: $orderBy){
