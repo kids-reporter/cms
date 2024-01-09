@@ -202,7 +202,7 @@ export default async function PostPage({
     })
     post = postRes?.data?.data?.post
     if (!post) {
-      log(LogLevel.INFO, `Post not found! ${params.slug}`)
+      log(LogLevel.INFO, `Post not found! ${slug}`)
       notFound()
     }
   } catch (err) {
