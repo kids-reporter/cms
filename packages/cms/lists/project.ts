@@ -210,6 +210,10 @@ const listConfigurations = list({
   ui: {
     label: 'Projects（專題）',
     labelField: 'title',
+    listView: {
+      initialSort: { field: 'publishedDate', direction: 'DESC' },
+      pageSize: 50,
+    },
   },
   hooks: {
     resolveInput: async ({ inputData, item, resolvedData, context }) => {
