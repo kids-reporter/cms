@@ -9,15 +9,15 @@ const NavigationItems = [
   },
   {
     title: '新聞',
-    link: '/category/news/',
+    link: '/category/news',
   },
   {
     title: 'Podcast',
-    link: '/category/listening-news/',
+    link: '/category/listening-news',
   },
   {
     title: '漫畫',
-    link: '/category/comics/',
+    link: '/category/comics',
   },
   {
     title: '教案',
