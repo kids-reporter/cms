@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/cms-core",
-  "version": "0.4.38",
+  "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "types": "src/index.ts",
