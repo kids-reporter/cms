@@ -12,16 +12,16 @@ const NavigationItems = [
     link: '/category/news',
   },
   {
-    title: 'Podcast',
-    link: '/category/listening-news',
-  },
-  {
     title: '漫畫',
     link: '/category/comics',
   },
   {
     title: '教案',
     link: '/category/campus/news-classroom',
+  },
+  {
+    title: 'Podcast',
+    link: '/category/listening-news',
   },
 ]
 
