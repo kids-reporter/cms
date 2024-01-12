@@ -9,19 +9,19 @@ const NavigationItems = [
   },
   {
     title: '新聞',
-    link: '/category/news/',
-  },
-  {
-    title: '讀報',
-    link: '/category/listening-news/',
+    link: '/category/news',
   },
   {
     title: '漫畫',
-    link: '/category/comics/',
+    link: '/category/comics',
   },
   {
-    title: '校園',
-    link: '/category/campus/',
+    title: '教案',
+    link: '/category/campus/news-classroom',
+  },
+  {
+    title: 'Podcast',
+    link: '/category/listening-news',
   },
 ]
 
