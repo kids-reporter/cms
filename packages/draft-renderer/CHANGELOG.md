@@ -1,7 +1,10 @@
-## Version 0.1.1
-### Notable Changes
-- change slideshow block to twreporter version
+# Changelog
 
-## Version 0.1.0
+## 2024-01-15
+
 ### Notable Changes
-- initial commits
+- chore
+  - upgrade to v1.0.0 & add changelog
+
+### Commits
+* \[[`71d910779a`](https://github.com/kids-reporter/cms-core/commit/71d910779a)] - **fix**: bump subpkg version (#452) (許守傑 Shou-Chieh Hsu (Jason))
