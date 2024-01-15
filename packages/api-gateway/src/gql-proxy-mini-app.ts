@@ -4,6 +4,7 @@ import consts from './constants.js'
 import _errors from '@twreporter/errors'
 import express from 'express'
 import { createProxyMiddleware } from 'http-proxy-middleware'
+import { GoogleAuth } from 'google-auth-library'
 
 // @twreporter/errors is a cjs module, therefore, we need to use its default property
 const errors = _errors.default
@@ -138,6 +139,13 @@ class TokenManager {
   }
 }
 
+async function generateIapToken(url: string, targetAudience: string) {
+  const auth = new GoogleAuth()
+  const client = await auth.getIdTokenClient(targetAudience)
+  const res = await client.request({ url })
+  return res.config.headers?.Authorization
+}
+
 /**
  *  This function creates a `GraphQLProxy` mini app.
  *  This mini app aims to add 'keystonejs-session' cookie on incoming requests' header
@@ -179,6 +187,12 @@ export function createGraphQLProxy({
         )
         const token = await tokenManager.getToken()
         res.locals.sessionToken = token
+
+        const iapToken = await generateIapToken(
+          apiOrigin + '/api/graphql',
+          process.env.AUD_CLAIM || ''
+        )
+        res.locals.iapToken = iapToken
       } catch (err) {
         console.log(
           JSON.stringify({
@@ -222,6 +236,8 @@ export function createGraphQLProxy({
             },
           })
         )
+        const iapToken = res.locals.iapToken
+        proxyReq.setHeader('Authorization', `Bearer ${iapToken}`)
         proxyReq.setHeader('Cookie', cookie)
         proxyReq.setHeader('Content-Type', 'application/json')
         proxyReq.setHeader('x-apollo-operation-name', '')
