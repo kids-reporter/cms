@@ -34,7 +34,7 @@ export const DownButton = styled(_DownButton)`
   cursor: pointer;
 `
 
-export const Title = styled.h1`
+const Title = styled.h1`
   max-width: 750px;
   font-weight: 700;
   text-align: center;
@@ -52,22 +52,44 @@ export const Title = styled.h1`
   }
 `
 
-export const SubTitle = styled.h2`
+const SubTitle = styled.h2`
   max-width: 700px;
   font-weight: 700;
-  color: #3a4f66;
-
-  margin: 60px auto 20px auto;
+  text-shadow: 0 2px 10px #00537a;
+  color: #fff;
 
   ${mediaQuery.mediumAbove} {
-    font-size: 36px;
-    width: 100%;
+    font-size: 20px;
   }
 
   ${mediaQuery.smallOnly} {
     font-size: 24px;
     width: calc(330 / 375 * 100%);
   }
+`
+
+const _TitleContainer = ({
+  title,
+  subtitle,
+  className,
+}: {
+  title: string
+  subtitle?: string
+  className?: string
+}) => {
+  return (
+    <div className={className}>
+      <Title>{title}</Title>
+      {subtitle && <SubTitle>{subtitle}</SubTitle>}
+    </div>
+  )
+}
+
+export const TitleContainer = styled(_TitleContainer)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `
 
 export const BackgroundImage = styled.div<{
@@ -88,7 +110,7 @@ export const BackgroundImage = styled.div<{
   /* make children align center*/
   position: relative;
 
-  ${Title} {
+  ${TitleContainer} {
     /* horizontal and vertical center */
     position: absolute;
     left: 50%;
@@ -145,6 +167,7 @@ export const PublishedDate = styled.div`
   font-size: 16px;
   font-weight: 500;
   text-align: center;
+  margin-top: 20px;
   margin-bottom: 70px;
   color: #a3a3a3;
 `
