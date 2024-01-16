@@ -35,7 +35,6 @@ export const DownButton = styled(_DownButton)`
 `
 
 const Title = styled.h1`
-  max-width: 750px;
   font-weight: 700;
   text-align: center;
   text-shadow: 0 2px 10px #00537a;
@@ -43,17 +42,14 @@ const Title = styled.h1`
 
   ${mediaQuery.mediumAbove} {
     font-size: 42px;
-    width: 100%;
   }
 
   ${mediaQuery.smallOnly} {
     font-size: 30px;
-    width: calc(330 / 375 * 100%);
   }
 `
 
 const SubTitle = styled.h2`
-  max-width: 700px;
   font-weight: 700;
   text-shadow: 0 2px 10px #00537a;
   color: #fff;
@@ -63,8 +59,7 @@ const SubTitle = styled.h2`
   }
 
   ${mediaQuery.smallOnly} {
-    font-size: 24px;
-    width: calc(330 / 375 * 100%);
+    font-size: 16px;
   }
 `
 
@@ -86,10 +81,19 @@ const _TitleContainer = ({
 }
 
 export const TitleContainer = styled(_TitleContainer)`
+  max-width: 750px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  ${mediaQuery.mediumAbove} {
+    width: 100%;
+  }
+
+  ${mediaQuery.smallOnly} {
+    width: calc(330 / 375 * 100%);
+  }
 `
 
 export const BackgroundImage = styled.div<{
@@ -120,7 +124,6 @@ export const BackgroundImage = styled.div<{
 
   ${DownButton} {
     position: absolute;
-    left: 50%;
   }
 
   ${mediaQuery.largeOnly} {
@@ -130,6 +133,7 @@ export const BackgroundImage = styled.div<{
     ${DownButton} {
       bottom: 50px;
       width: 60px;
+      left: calc(50% - 30px);
     }
   }
 
@@ -137,6 +141,7 @@ export const BackgroundImage = styled.div<{
     ${DownButton} {
       bottom: 40px;
       width: 50px;
+      left: calc(50% - 25px);
     }
   }
 
@@ -148,6 +153,7 @@ export const BackgroundImage = styled.div<{
     ${DownButton} {
       bottom: 30px;
       width: 40px;
+      left: calc(50% - 20px);
     }
   }
 
