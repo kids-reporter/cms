@@ -9,6 +9,7 @@ const nextConfig = {
     styledComponents: true,
   },
   poweredByHeader: false, // Remove poweredby for security issue, ref: https://nextjs.org/docs/pages/api-reference/next-config-js/poweredByHeader
+  middleware: ['middleware'],
 }
 module.exports = nextConfig
 

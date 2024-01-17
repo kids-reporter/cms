@@ -110,13 +110,25 @@ class TokenManager {
     let axiosRes
     // fetch token
     try {
-      axiosRes = await axios.post(this.apiEndpoint, {
-        query: gqlQuery,
-        variables: {
-          email: this.email,
-          password: this.password,
+      const iapToken = await generateIapToken(
+        this.apiEndpoint,
+        process.env.AUD_CLAIM || ''
+      )
+      axiosRes = await axios.post(
+        this.apiEndpoint,
+        {
+          query: gqlQuery,
+          variables: {
+            email: this.email,
+            password: this.password,
+          },
         },
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${iapToken}`,
+          },
+        }
+      )
     } catch (err) {
       throw errors.helpers.annotateAxiosError(err)
     }
