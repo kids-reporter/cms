@@ -86,6 +86,7 @@ export const TitleContainer = styled(_TitleContainer)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 
   ${mediaQuery.mediumAbove} {
     width: 100%;
