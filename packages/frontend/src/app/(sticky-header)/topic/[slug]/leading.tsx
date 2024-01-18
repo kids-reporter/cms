@@ -1,11 +1,11 @@
 'use client'
 import styled from 'styled-components'
-import { BackgroundImage, DownButton, Title } from './styled'
+import { BackgroundImage, DownButton, TitleContainer } from './styled'
 import { Photo } from '@/app/types'
 import { useRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
 
-const PositionedTitle = styled(Title)`
+const PositionedTitle = styled(TitleContainer)`
   ${mediaQuery.largeOnly} {
     &.left {
       left: calc(104 / 1440 * 100%);
@@ -42,11 +42,13 @@ const PositionedTitle = styled(Title)`
 
 export const Leading = ({
   title,
+  subtitle,
   titlePosition = 'center',
   backgroundImage,
   mobileBgImage,
 }: {
   title: string
+  subtitle?: string
   titlePosition?: string
   backgroundImage: Photo
   mobileBgImage?: Photo
@@ -88,7 +90,11 @@ export const Leading = ({
       $imageEntity={backgroundImage}
       $mobileImageEntity={mobileBgImage}
     >
-      <PositionedTitle className={titleClassName}>{title}</PositionedTitle>
+      <PositionedTitle
+        className={titleClassName}
+        title={title}
+        subtitle={subtitle}
+      />
       <span onClick={onDownButtonClick}>
         <DownButton />
       </span>
