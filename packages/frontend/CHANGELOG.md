@@ -2,6 +2,15 @@
 
 ## 2024-01-18
 
+### Notable Changes
+- fix
+  - fix topic page's title
+
+### Commits
+* \[[`6c99121`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/6c99121)] - **fix**: fix topic page subtitle (#466) (許守傑 Shou-Chieh Hsu (Jason))
+
+## 2024-01-18
+
 ### Commits
 * \[[`7e896e8df9`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/7e896e8df9)] - **chore**: bump subpkgs version to 1.0.1 (nickhsine)
 
