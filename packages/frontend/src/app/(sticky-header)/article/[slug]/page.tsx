@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import TableOfContent from './table-of-content'
 import Article from './article'
 import {
   API_URL,
@@ -192,5 +193,10 @@ export default async function PostPage({
     notFound()
   }
 
-  return <main>{post && <Article post={post} />}</main>
+  return (
+    <main>
+      <TableOfContent post={post} />
+      {post && <Article post={post} />}
+    </main>
+  )
 }
