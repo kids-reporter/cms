@@ -4,11 +4,13 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
 
+const zIndex = 1000
 const TOCContainer = styled.div`
   position: fixed;
   width: 90px;
   left: 0;
   transform: translateY(-50%);
+  z-index: ${zIndex};
 
   ${mediaQuery.mediumAbove} {
   }
@@ -17,7 +19,6 @@ const TOCContainer = styled.div`
   }
 `
 
-const zIndex = 100
 const tocWidth = 180 // px
 const TOCTab = styled.div`
   width: 30px;
@@ -46,6 +47,7 @@ const TOCBackground = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   position: fixed;
   z-index: ${zIndex};
   top: 220;
