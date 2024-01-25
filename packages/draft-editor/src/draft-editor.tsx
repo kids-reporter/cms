@@ -150,6 +150,7 @@ const DraftEditorControlsWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   padding-right: 45px;
+  gap: 2px;
 `
 
 const TextEditorWrapper = styled.div`

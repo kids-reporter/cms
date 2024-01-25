@@ -29,8 +29,9 @@ export function TOCButton(props: {
       <div
         className={props.className}
         onMouseDown={isActive ? removeLink : promptForLink}
+        title="索引"
       >
-        {'標'}
+        {'索'}
       </div>
     </React.Fragment>
   )
