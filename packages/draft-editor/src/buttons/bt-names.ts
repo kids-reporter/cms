@@ -28,4 +28,5 @@ export default {
   slideshow: 'slideshow',
   newsReading: 'news-reading',
   divider: 'divider',
+  tableOfContent: 'table-of-content',
 }

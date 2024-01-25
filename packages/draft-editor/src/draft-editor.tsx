@@ -29,6 +29,7 @@ import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { NewsReadingButton } from './buttons/news-reading'
+import { TOCButton } from './buttons/table-of-content'
 import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import {
@@ -94,53 +95,28 @@ const buttonStyle = css<{
   }};
 `
 
-// TODO: refactor custom button
-// Refactoring goal is to avoid `styled()` on every button,
-// which is tedious and duplicate.
+const withStyle = (Button: any) => {
+  return styled(Button)`
+    ${buttonStyle}
+  `
+}
+
 const CustomButton = styled.div`
   ${buttonStyle}
 `
-
-const CustomBlockquoteButton = styled(BlockquoteButton)`
-  ${buttonStyle}
-`
-
-const CustomLinkButton = styled(LinkButton)`
-  ${buttonStyle}
-`
-
-const CustomEnlargeButton = styled(EnlargeButton)`
-  ${buttonStyle}
+const CustomBlockquoteButton = withStyle(BlockquoteButton)
+const CustomLinkButton = withStyle(LinkButton)
+const CustomEnlargeButton = styled(withStyle(EnlargeButton))`
   color: #999;
 `
-
-const CustomImageButton = styled(ImageButton)`
-  ${buttonStyle}
-`
-
-const CustomSlideshowButton = styled(SlideshowButton)`
-  ${buttonStyle}
-`
-
-const CustomEmbeddedCodeButton = styled(EmbeddedCodeButton)`
-  ${buttonStyle}
-`
-
-const CustomNewsReadingButton = styled(NewsReadingButton)`
-  ${buttonStyle}
-`
-
-const CustomBackgroundColorButton = styled(BackgroundColorButton)`
-  ${buttonStyle}
-`
-
-const CustomFontColorButton = styled(FontColorButton)`
-  ${buttonStyle}
-`
-
-const CustomDividerButton = styled(DividerButton)`
-  ${buttonStyle}
-`
+const CustomImageButton = withStyle(ImageButton)
+const CustomSlideshowButton = withStyle(SlideshowButton)
+const CustomEmbeddedCodeButton = withStyle(EmbeddedCodeButton)
+const CustomNewsReadingButton = withStyle(NewsReadingButton)
+const CustomBackgroundColorButton = withStyle(BackgroundColorButton)
+const CustomFontColorButton = withStyle(FontColorButton)
+const CustomDividerButton = withStyle(DividerButton)
+const CustomTOCButton = withStyle(TOCButton)
 
 const DraftEditorWrapper = styled.div`
   /* Rich-editor default setting (.RichEditor-root)*/
@@ -448,6 +424,21 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onToggle={this.toggleBlockType}
                 readOnly={this.state.readOnly}
+              />
+              <CustomTOCButton
+                isDisabled={disabledButtons.includes(
+                  buttonNames.tableOfContent
+                )}
+                isActive={entityType === 'LINK'}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
               />
               <InlineStyleControls
                 disabledButtons={disabledButtons}
