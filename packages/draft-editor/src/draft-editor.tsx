@@ -430,16 +430,10 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(
                   buttonNames.tableOfContent
                 )}
-                isActive={entityType === 'LINK'}
+                isActive={entityType === 'TOC'}
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
               />
               <InlineStyleControls
                 disabledButtons={disabledButtons}
