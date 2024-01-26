@@ -23,7 +23,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@kids-reporter/draft-renderer": "^1.0.1",
+    "@kids-reporter/draft-renderer": "1.0.1",
     "@twreporter/errors": "^1.1.2",
     "draft-js": "^0.11.7"
   },
