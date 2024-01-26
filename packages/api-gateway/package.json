@@ -1,7 +1,7 @@
 {
   "name": "@kids-reporter/api-gateway",
   "type": "module",
-  "version": "0.4.30",
+  "version": "1.0.0",
   "scripts": {
     "dev": "make dev",
     "build": "make build",

@@ -6,7 +6,7 @@ import {
   GENERAL_DESCRIPTION,
   OG_SUFFIX,
 } from '@/app/constants'
-import { PublishedDate, SubTitle } from './styled'
+import { PublishedDate } from './styled'
 import { Content } from './content'
 import { Credits } from './credits'
 import {
@@ -156,11 +156,11 @@ export default async function TopicPage({
       <div>
         <Leading
           title={project.title}
+          subtitle={project.subtitle ?? ''}
           titlePosition={project.titlePosition}
           backgroundImage={project.heroImage}
           mobileBgImage={project.mobileHeroImage}
         />
-        {project.subtitle ? <SubTitle>{project.subtitle}</SubTitle> : null}
         {project.publishedDate ? (
           <PublishedDate>
             {getFormattedDate(project.publishedDate)} 最後更新

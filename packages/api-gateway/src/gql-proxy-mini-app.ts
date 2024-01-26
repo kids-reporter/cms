@@ -265,6 +265,29 @@ export function createGraphQLProxy({
             )
           }
         }
+
+        /**
+         * Try to fix [memory leak issue](https://github.com/kids-reporter/kids-reporter-monorepo/issues/467).
+         * This fix might not work.
+         * Need more time to observe the following metrics.
+         */
+        const cleanup = (err: Error) => {
+          console.log('clean up response')
+          // cleanup event listeners to allow clean garbage collection
+          proxyRes.removeListener('error', cleanup)
+          proxyRes.removeListener('close', cleanup)
+          res.removeListener('error', cleanup)
+          res.removeListener('close', cleanup)
+
+          // destroy all source streams to propagate the caught event backward
+          req.destroy(err)
+          proxyRes.destroy(err)
+        }
+
+        proxyRes.once('error', cleanup)
+        proxyRes.once('close', cleanup)
+        res.once('error', cleanup)
+        res.once('close', cleanup)
       },
 
       onError: (err, req, res, target) => { // eslint-disable-line
