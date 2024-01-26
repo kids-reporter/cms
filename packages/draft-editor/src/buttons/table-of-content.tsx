@@ -1,12 +1,12 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 
-export function TOCButton(props: {
+export const TOCButton = (props: {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
-}) {
+}) => {
   const { isActive, editorState, onChange } = props
 
   const promptForTOC = (e: React.MouseEvent<HTMLDivElement>) => {
