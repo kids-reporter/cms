@@ -11,6 +11,20 @@ export const TOCButton = (props: {
 
   const promptForTOC = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
+    const selection = editorState.getSelection()
+    console.log(selection)
+
+    /*
+    const contentState = editorState.getCurrentContent()
+    const contentStateWithEntity = contentState.createEntity(
+      'TOC',
+      'MUTABLE',
+    )
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
+    const newEditorState = EditorState.set(editorState, {
+        currentContent: contentStateWithEntity,
+      })
+    */
   }
 
   const removeTOC = () => {
