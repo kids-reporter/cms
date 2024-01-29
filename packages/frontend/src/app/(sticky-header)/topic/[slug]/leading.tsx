@@ -6,10 +6,17 @@ import { useRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
 
 const PositionedTitle = styled(TitleContainer)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
   ${mediaQuery.largeOnly} {
     &.left {
       left: calc(104 / 1440 * 100%);
       transform: translate(0, -50%);
+      align-items: flex-start;
     }
 
     &.bottom {
