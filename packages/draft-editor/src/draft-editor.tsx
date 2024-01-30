@@ -29,7 +29,6 @@ import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { NewsReadingButton } from './buttons/news-reading'
-import { TOCButton } from './buttons/table-of-content'
 import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import {
@@ -116,7 +115,6 @@ const CustomNewsReadingButton = withStyle(NewsReadingButton)
 const CustomBackgroundColorButton = withStyle(BackgroundColorButton)
 const CustomFontColorButton = withStyle(FontColorButton)
 const CustomDividerButton = withStyle(DividerButton)
-const CustomTOCButton = withStyle(TOCButton)
 
 const DraftEditorWrapper = styled.div`
   /* Rich-editor default setting (.RichEditor-root)*/
@@ -426,15 +424,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 onToggle={this.toggleBlockType}
                 readOnly={this.state.readOnly}
               />
-              <CustomTOCButton
-                isDisabled={disabledButtons.includes(
-                  buttonNames.tableOfContent
-                )}
-                isActive={entityType === 'TOC'}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
-              />
               <InlineStyleControls
                 disabledButtons={disabledButtons}
                 editorState={editorState}
@@ -633,6 +622,7 @@ type StyleControlsProps = {
 }
 
 const blockStyles = [
+  { label: '索', style: 'table-of-content', icon: '' },
   { label: 'H2', style: 'header-two', icon: '' },
   { label: 'H3', style: 'header-three', icon: '' },
   { label: 'H4', style: 'header-four', icon: '' },
@@ -699,18 +689,13 @@ const AnnotationButton = createAnnotationButton({
   decorator,
 })
 
-const CustomAnnotationButton = styled(AnnotationButton)`
-  ${buttonStyle}
-`
-
 const InfoBoxButton = createInfoBoxButton({
   InnerEditor: RichTextEditor,
   decorator,
 })
 
-const CustomInfoBoxButton = styled(InfoBoxButton)`
-  ${buttonStyle}
-`
+const CustomAnnotationButton = withStyle(AnnotationButton)
+const CustomInfoBoxButton = withStyle(InfoBoxButton)
 
 export { RichTextEditor, decorator }
 

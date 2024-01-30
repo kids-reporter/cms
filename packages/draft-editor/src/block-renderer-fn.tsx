@@ -5,6 +5,7 @@ import { EditableEmbeddedCode } from './block-renderers/embedded-code'
 import { EditableImage } from './block-renderers/image'
 import { EditableInfoBox } from './block-renderers/info-box'
 import { EditableSlideshow } from './block-renderers/slideshow'
+import { TableOfContent } from './block-renderers/table-of-content'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
 const { Divider, NewsReading } = blockRenderers
@@ -36,6 +37,9 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
     }
     case 'NEWS_READING': {
       return NewsReading({ data: entityData })
+    }
+    case 'TOC': {
+      return TableOfContent(undefined)
     }
   }
   return null
