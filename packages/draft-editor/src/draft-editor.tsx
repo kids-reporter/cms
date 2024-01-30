@@ -702,10 +702,7 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
-const TOCButton = createTOCButton({
-  InnerEditor: RichTextEditor,
-  decorator,
-})
+const TOCButton = createTOCButton()
 
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
