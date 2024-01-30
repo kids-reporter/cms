@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "make dev",
+    "dev": "GOOGLE_APPLICATION_CREDENTIALS=kids-reporter-abba0af42707.json GQL_ORIGIN=https://staging-kids-cms.twreporter.org/api/graphql GQL_HEADLESS_ACCOUNT_EMAIL=test_iap GQL_HEADLESS_ACCOUNT_PASSWORD=test_iap AUD_CLAIM=496849015885-qdfk6la2vmtapsnoaac9buphrvhu7qa0.apps.googleusercontent.com make dev",
     "build": "make build",
     "start": "make start",
     "lint": "make lint",

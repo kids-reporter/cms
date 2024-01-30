@@ -1,5 +1,12 @@
-import { list } from '@keystone-6/core'
-import { text, password, select, timestamp } from '@keystone-6/core/fields'
+import { list, graphql } from '@keystone-6/core'
+import {
+  text,
+  password,
+  select,
+  timestamp,
+  virtual,
+  checkbox,
+} from '@keystone-6/core/fields'
 import {
   allowAllRoles,
   allowRoles,
@@ -73,8 +80,60 @@ const listConfigurations = list({
         updatedAt: true,
       },
     }),
+    twoFactorAuthBypass: checkbox({
+      defaultValue: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'read' },
+        itemView: { fieldMode: 'read' },
+      },
+    }),
+    twoFactorAuthSecret: text({
+      db: {
+        isNullable: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuthTemp: text({
+      db: {
+        isNullable: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuthSetup: virtual({
+      field: graphql.field({
+        type: graphql.JSON,
+        resolve(): Record<string, string> {
+          return {
+            href: `/2fa-setup`,
+            target: '_self',
+            label: '設定二階段驗證',
+            buttonLabel: 'Setup 2FA',
+          }
+        },
+      }),
+      ui: {
+        views: './lists/views/link-button',
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
   },
-
   ui: {
     listView: {
       initialColumns: ['name', 'role'],

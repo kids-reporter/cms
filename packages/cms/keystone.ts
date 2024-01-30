@@ -9,6 +9,10 @@ import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { createPreviewMiniApp } from './express-mini-apps/preview/app'
 
+import qrcode from 'qrcode'
+import { authenticator } from 'otplib'
+import bodyParser from 'body-parser'
+
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
@@ -127,6 +131,124 @@ export default withAuth(
             keystoneContext: commonContext,
           })
         )
+
+        app.use(bodyParser.json())
+        // 2FA: generate secret and get QR code
+        app.get('/api/2fa/setup', async (req, res) => {
+          const context = await commonContext.withRequest(req, res)
+          const currentSession = context?.session
+          if (!currentSession) {
+            res.status(403).send({ success: false, error: 'no session' })
+            return
+          }
+          console.log('session', currentSession) //TEST
+          // console.log('cookies', req?.cookies) //TEST
+          const tempSecret = authenticator.generateSecret()
+          // save tempSecret to user table column twoFactorAuthTemp
+          await context.db.User.updateOne({
+            where: { id: currentSession?.itemId },
+            data: {
+              twoFactorAuthTemp: tempSecret,
+            },
+          })
+
+          const service = 'KidsReporter Keystone' //TODO: env
+          const otpauth = authenticator.keyuri(
+            currentSession?.data?.email,
+            service,
+            tempSecret
+          )
+
+          console.log(currentSession) //TEST
+          qrcode.toDataURL(otpauth, (err, imageUrl) => {
+            if (err) {
+              console.warn('Error with QR')
+              return
+            }
+
+            res.send({ qrcode: imageUrl })
+          })
+        })
+        // 2FA: verify token and save temp secret to user
+        app.post('/api/2fa/setup', async (req, res) => {
+          const token = req.body?.token
+          if (!token) {
+            res.status(422).send({ success: false, error: 'no token' })
+            return
+          }
+
+          const context = await commonContext.withRequest(req, res)
+          const currentSession = context?.session
+          if (!currentSession) {
+            res.status(403).send({ success: false, error: 'no session' })
+            return
+          }
+          console.log('session', currentSession) //TEST
+          // console.log('cookies', req?.cookies) //TEST
+
+          const user = await context.db.User.findOne({
+            where: { id: currentSession?.itemId },
+          })
+          if (!user) {
+            res.status(500).send({ success: false, error: 'no user' })
+            return
+          }
+
+          const tempSecret = user?.twoFactorAuthTemp
+          console.log(tempSecret) //TEST
+          const isValid = authenticator.check(token, String(tempSecret))
+          console.log(authenticator.generate(tempSecret)) //TEST
+
+          if (isValid) {
+            await context.db.User.updateOne({
+              where: { id: currentSession?.itemId },
+              data: {
+                twoFactorAuthSecret: tempSecret,
+              },
+            })
+            await context.db.User.updateOne({
+              where: { id: currentSession?.itemId },
+              data: {
+                twoFactorAuthTemp: '',
+              },
+            })
+            res.send({ success: true })
+          } else {
+            res.status(403).send({ success: false, error: 'invalid token' })
+            return
+          }
+        })
+        // 2FA: verify token
+        app.post('/api/2fa/check', async (req, res) => {
+          const token = req.body?.token
+          if (!token) {
+            res.status(422).send({ success: false, error: 'no token' })
+            return
+          }
+
+          const context = await commonContext.withRequest(req, res)
+          const currentSession = context?.session
+          if (!currentSession) {
+            res.status(403).send({ success: false, error: 'no session' })
+            return
+          }
+
+          const user = await context.db.User.findOne({
+            where: { id: currentSession?.itemId },
+          })
+          if (!user) {
+            res.status(500).send({ success: false, error: 'no user' })
+            return
+          }
+
+          const isValid = authenticator.check(
+            token,
+            String(user?.twoFactorAuthSecret)
+          )
+          console.log(authenticator.generate(user?.twoFactorAuthSecret)) //TEST
+
+          res.send({ success: isValid })
+        })
       },
     },
   })

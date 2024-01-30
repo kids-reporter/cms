@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node index",
     "rss": "node rss",
-    "scheduled-post": "node scheduled-post"
+    "scheduled-post": "CRONJOB_ACCOUNT_EMAIL=cronjob CRONJOB_ACCOUNT_PASSWORD=cronjob1 node scheduled-post"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.6.0",
