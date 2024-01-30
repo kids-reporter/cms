@@ -51,6 +51,7 @@ const Title = styled.h1`
 
 const SubTitle = styled.h2`
   font-weight: 700;
+  text-align: center;
   text-shadow: 0 2px 10px #00537a;
   color: #fff;
 
@@ -82,11 +83,6 @@ const _TitleContainer = ({
 
 export const TitleContainer = styled(_TitleContainer)`
   max-width: 750px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
 
   ${mediaQuery.mediumAbove} {
     width: 100%;
