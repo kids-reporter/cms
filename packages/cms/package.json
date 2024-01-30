@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "PORT=3001 NODE_ENV=test GCS_ORIGIN=https://dev-kids-storage.twreporter.org keystone dev",
+    "dev": "keystone dev",
     "start": "keystone start",
     "db-migrate": "keystone prisma migrate deploy",
     "build": "keystone build",
