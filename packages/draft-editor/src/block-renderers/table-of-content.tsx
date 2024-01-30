@@ -38,6 +38,7 @@ export const EditableTOC = (
       <TOCInput
         onConfirm={onTOCChange}
         onCancel={() => {
+          onEditFinish()
           setIsDrawerOpen(false)
         }}
         isOpen={isDrawerOpen}
