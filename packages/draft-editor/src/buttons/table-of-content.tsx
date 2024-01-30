@@ -1,7 +1,23 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { AtomicBlockUtils, EditorState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
+import { Button } from '@keystone-ui/button'
+
+const TextInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const Label = styled.span`
+  text-wrap: nowrap;
+`
+
+const StyledTextInput = styled(TextInput)`
+  margin: 10px;
+`
 
 export function TOCInput(props: {
   isOpen: boolean
@@ -32,24 +48,31 @@ export function TOCInput(props: {
           },
         }}
       >
-        <TextInput
-          placeholder="文章內顯示文字"
-          value={tocLabel}
-          onChange={(e) => {
-            setTOCLabel(e.target.value)
-          }}
-          type="text"
-          style={{ marginBottom: '10px', marginTop: '10px' }}
-        />
-        <TextInput
-          placeholder="目錄內顯示文字"
-          value={tocContent}
-          onChange={(e) => {
-            setTOCContent(e.target.value)
-          }}
-          type="text"
-          style={{ marginBottom: '10px', marginTop: '10px' }}
-        />
+        <TextInputContainer>
+          <Label>文章</Label>
+          <StyledTextInput
+            placeholder="文章內顯示文字"
+            value={tocContent}
+            onChange={(e) => {
+              setTOCContent(e.target.value)
+            }}
+            type="text"
+          />
+        </TextInputContainer>
+        <TextInputContainer>
+          <Label>目錄</Label>
+          <StyledTextInput
+            placeholder="目錄內顯示文字"
+            value={tocLabel}
+            onChange={(e) => {
+              setTOCLabel(e.target.value)
+            }}
+            type="text"
+          />
+          <Button size="small" onClick={() => setTOCLabel(tocContent)}>
+            同上
+          </Button>
+        </TextInputContainer>
       </Drawer>
     </DrawerController>
   )
