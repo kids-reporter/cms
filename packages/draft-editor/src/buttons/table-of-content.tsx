@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import { AtomicBlockUtils, EditorState, RawDraftContentState } from 'draft-js'
+import { AtomicBlockUtils, EditorState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 
 export function TOCInput(props: {
   isOpen: boolean
-  onConfirm: (arg0: { tocLabel: string; tocContent: string }) => void
+  tocLabelValue: string
+  tocContentValue: string
+  onConfirm: (tocLabel: string, tocContent: string) => void
   onCancel: () => void
 }) {
-  const { isOpen, onConfirm, onCancel } = props
+  const { isOpen, tocLabelValue, tocContentValue, onConfirm, onCancel } = props
 
-  const [tocLabel, setTOCLabel] = useState('')
-  const [tocContent, setTOCContent] = useState('')
+  const [tocLabel, setTOCLabel] = useState(tocLabelValue)
+  const [tocContent, setTOCContent] = useState(tocContentValue)
 
   return (
     <DrawerController isOpen={isOpen}>
@@ -26,12 +28,7 @@ export function TOCInput(props: {
           },
           confirm: {
             label: 'Confirm',
-            action: () => {
-              onConfirm({
-                tocLabel: tocLabel,
-                tocContent: tocContent,
-              })
-            },
+            action: () => onConfirm(tocLabel, tocContent),
           },
         }}
       >
@@ -58,33 +55,25 @@ export function TOCInput(props: {
   )
 }
 
-type InfoBoxButtonProps = {
+type TOCButtonProps = {
   className?: string
   editorState: EditorState
   onChange: (param: EditorState) => void
 }
 
 export function createTOCButton() {
-  return function TOCButton(props: InfoBoxButtonProps) {
+  return function TOCButton(props: TOCButtonProps) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-    const { className, editorState, onChange: onEditorStateChange } = props
+    const { className, editorState, onChange } = props
 
-    const onChange = ({
-      type,
-      rawContentState,
-    }: {
-      type: InfoBoxTypeEnum
-      rawContentState: RawDraftContentState
-    }) => {
+    const onTOCChange = (tocLabel: string, tocContent: string) => {
       const contentState = editorState.getCurrentContent()
-
-      // create an TOC entity
       const contentStateWithEntity = contentState.createEntity(
         'TOC',
         'IMMUTABLE',
         {
-          type,
-          rawContentState,
+          tocLabel: tocLabel,
+          tocContent: tocContent,
         }
       )
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
@@ -92,9 +81,9 @@ export function createTOCButton() {
         currentContent: contentStateWithEntity,
       })
 
-      //The third parameter here is a space string, not an empty string
-      //If you set an empty string, you will get an error: Unknown DraftEntity key: null
-      onEditorStateChange(
+      // The third parameter here is a space string, not an empty string
+      // If you set an empty string, you will get an error: Unknown DraftEntity key: null
+      onChange(
         AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
       )
       setIsDrawerOpen(false)
@@ -104,11 +93,13 @@ export function createTOCButton() {
       <React.Fragment>
         {isDrawerOpen && (
           <TOCInput
-            onConfirm={onChange}
+            onConfirm={onTOCChange}
             onCancel={() => {
               setIsDrawerOpen(false)
             }}
             isOpen={isDrawerOpen}
+            tocLabelValue={''}
+            tocContentValue={''}
           />
         )}
         <div
