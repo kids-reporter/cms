@@ -1,5 +1,10 @@
 # Changelog
 
+## 2024-01-18
+
+### Commits
+* \[[`7e896e8df9`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/7e896e8df9)] - **chore**: bump subpkgs version to 1.0.1 (nickhsine)
+
 ## 2024-01-15
 
 ### Notable Changes
