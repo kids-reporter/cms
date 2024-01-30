@@ -1,11 +1,13 @@
 import React from 'react'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
 
-export const TableOfContent = (props: AtomicBlockProps<string> | undefined) => {
+export const EditableTOC = (
+  props: AtomicBlockProps<{ tocLabel: string; tocContent: string }>
+) => {
   console.log(props)
   return (
     <React.Fragment>
-      <div>{'[索引]'}</div>
+      <div>{'[目錄]'}</div>
     </React.Fragment>
   )
 }

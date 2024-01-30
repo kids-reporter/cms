@@ -38,6 +38,7 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
+import { createTOCButton } from './buttons/table-of-content'
 
 const buttonStyle = css<{
   isDisabled: boolean
@@ -418,6 +419,14 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
           />
           <DraftEditorControls>
             <DraftEditorControlsWrapper>
+              <CustomTOCButton
+                isDisabled={disabledButtons.includes(
+                  buttonNames.tableOfContent
+                )}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+              />
               <BlockStyleControls
                 disabledButtons={disabledButtons}
                 editorState={editorState}
@@ -622,7 +631,6 @@ type StyleControlsProps = {
 }
 
 const blockStyles = [
-  { label: '索', style: 'table-of-content', icon: '' },
   { label: 'H2', style: 'header-two', icon: '' },
   { label: 'H3', style: 'header-three', icon: '' },
   { label: 'H4', style: 'header-four', icon: '' },
@@ -694,8 +702,14 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
+const TOCButton = createTOCButton({
+  InnerEditor: RichTextEditor,
+  decorator,
+})
+
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
+const CustomTOCButton = withStyle(TOCButton)
 
 export { RichTextEditor, decorator }
 
