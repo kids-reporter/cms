@@ -65,11 +65,10 @@ export const TableOfContent = ({ post }: { post: any }) => {
   const entityMap = post?.content?.entityMap
   const tocs: { id: string; label: string }[] = []
   Object.keys(entityMap)?.forEach((key) => {
-    // TODO: replace LINK with TOC
-    if (entityMap[key]?.type === 'LINK') {
+    if (entityMap[key]?.type === 'TOC') {
       tocs.push({
         id: `table-of-content-${key}`,
-        label: entityMap[key].data?.url ?? '',
+        label: entityMap[key].data?.tocLabel ?? '',
       })
     }
   })
