@@ -95,7 +95,7 @@ const buttonStyle = css<{
   }};
 `
 
-const withStyle = (Button: any) => {
+const withStyle = (Button: React.ComponentType<any>) => {
   return styled(Button)`
     ${buttonStyle}
   `

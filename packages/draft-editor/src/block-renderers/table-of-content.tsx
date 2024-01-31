@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
 import { TOCInput } from '../buttons/table-of-content'
-import { EditButton, EditableBlock as _EditableBlock } from './styled'
+import { EditableBlock as _EditableBlock } from './styled'
 
 const StyledTOC = styled.div``
 
@@ -45,18 +45,15 @@ export const EditableTOC = (
         tocLabelValue={tocData?.tocLabel}
         tocContentValue={tocData?.tocContent}
       />
-      <EditableBlock>
-        <StyledTOC>{`目錄:[${tocData?.tocLabel}] ${tocData?.tocContent}`}</StyledTOC>
-        <EditButton
-          onClick={() => {
-            onEditStart()
-            setIsDrawerOpen(true)
-          }}
-        >
-          <i className="fa-solid fa-pen"></i>
-          <span>Modify</span>
-        </EditButton>
-      </EditableBlock>
+      <EditableBlock
+        component={
+          <StyledTOC>{`目錄:[${tocData?.tocLabel}] ${tocData?.tocContent}`}</StyledTOC>
+        }
+        onClick={() => {
+          onEditStart()
+          setIsDrawerOpen(true)
+        }}
+      />
     </React.Fragment>
   )
 }
