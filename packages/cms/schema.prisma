@@ -20,6 +20,7 @@ model User {
   createdAt             DateTime? @default(now())
   updatedAt             DateTime? @updatedAt
   twoFactorAuthBypass   Boolean   @default(false)
+  twoFactorAuthVerified Boolean   @default(false)
   twoFactorAuthSecret   String?
   twoFactorAuthTemp     String?
   from_Post_createdBy   Post[]    @relation("Post_createdBy")

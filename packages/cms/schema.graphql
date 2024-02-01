@@ -10,9 +10,10 @@ type User {
   createdAt: DateTime
   updatedAt: DateTime
   twoFactorAuthBypass: Boolean
+  twoFactorAuthVerified: Boolean
   twoFactorAuthSecret: String
   twoFactorAuthTemp: String
-  twoFactorAuthSetup: JSON
+  twoFactorAuthConfigured: JSON
 }
 
 type PasswordState {
@@ -37,6 +38,7 @@ input UserWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   twoFactorAuthBypass: BooleanFilter
+  twoFactorAuthVerified: BooleanFilter
   twoFactorAuthSecret: StringNullableFilter
   twoFactorAuthTemp: StringNullableFilter
 }
@@ -139,6 +141,7 @@ input UserOrderByInput {
   createdAt: OrderDirection
   updatedAt: OrderDirection
   twoFactorAuthBypass: OrderDirection
+  twoFactorAuthVerified: OrderDirection
   twoFactorAuthSecret: OrderDirection
   twoFactorAuthTemp: OrderDirection
 }
@@ -156,6 +159,7 @@ input UserUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   twoFactorAuthBypass: Boolean
+  twoFactorAuthVerified: Boolean
   twoFactorAuthSecret: String
   twoFactorAuthTemp: String
 }
@@ -173,6 +177,7 @@ input UserCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   twoFactorAuthBypass: Boolean
+  twoFactorAuthVerified: Boolean
   twoFactorAuthSecret: String
   twoFactorAuthTemp: String
 }

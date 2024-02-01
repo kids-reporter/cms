@@ -84,8 +84,16 @@ const listConfigurations = list({
       defaultValue: false,
       ui: {
         createView: { fieldMode: 'hidden' },
-        listView: { fieldMode: 'read' },
-        itemView: { fieldMode: 'read' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuthVerified: checkbox({
+      defaultValue: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
       },
     }),
     twoFactorAuthSecret: text({
@@ -108,25 +116,31 @@ const listConfigurations = list({
         itemView: { fieldMode: 'hidden' },
       },
     }),
-    twoFactorAuthSetup: virtual({
+    twoFactorAuthConfigured: virtual({
       field: graphql.field({
         type: graphql.JSON,
-        resolve(): Record<string, string> {
+        async resolve(item, args, context) {
+          const user = await context.query.User.findOne({
+            where: { id: item.id.toString() },
+            query: 'twoFactorAuthBypass twoFactorAuthSecret',
+          })
+          const twoFAonfigured =
+            user.twoFactorAuthSecret && user.twoFactorAuthSecret.length
+              ? true
+              : false
           return {
-            href: `/2fa-setup`,
-            target: '_self',
-            label: '設定二階段驗證',
-            buttonLabel: 'Setup 2FA',
+            bypass: user.twoFactorAuthBypass,
+            configured: twoFAonfigured,
           }
         },
       }),
       ui: {
-        views: './lists/views/link-button',
+        views: './lists/views/two-fa-status',
         createView: {
           fieldMode: 'hidden',
         },
         itemView: {
-          fieldPosition: 'sidebar',
+          fieldMode: 'read',
         },
         listView: {
           fieldMode: 'hidden',

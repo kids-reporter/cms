@@ -16,7 +16,7 @@ import bodyParser from 'body-parser'
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
-  sessionData: 'name role email',
+  sessionData: 'name role email twoFactorAuthBypass twoFactorAuthVerified',
   secretField: 'password',
   initFirstItem: {
     // If there are no items in the database, keystone will ask you to create
@@ -80,6 +80,21 @@ export default withAuth(
         data: { status: 'healthy' },
       },
       extendExpressApp: (app, commonContext) => {
+        app.use(bodyParser.json())
+
+        // 2FA: froce redirect to 2fa verification after signin
+        app.use(async (req: Request, res: Response, next: NextFunction) => {
+          const signinRoute = '/signin'
+          const redirectTo2faVerify = `${signinRoute}?from=%2F2fa-verify`
+          if (
+            req.originalUrl.startsWith(signinRoute) &&
+            req.originalUrl !== redirectTo2faVerify
+          ) {
+            return res.redirect(redirectTo2faVerify)
+          }
+          next()
+        })
+
         const corsOpts = {
           origin: envVar.cors.allowOrigins,
         }
@@ -124,15 +139,60 @@ export default withAuth(
         app.options('/api/graphql', authenticationMw, corsMiddleware)
         app.post('/api/graphql', authenticationMw, corsMiddleware)
 
-        // proxy authenticated requests to preview server
-        app.use(
-          createPreviewMiniApp({
-            previewServer: envVar.previewServer,
-            keystoneContext: commonContext,
-          })
-        )
+        // 2FA: reset twoFactorAuthVerified to false when user logout
+        app.use(async (req, res, next) => {
+          if (
+            req.originalUrl === '/api/graphql' &&
+            req.body?.operationName === 'EndSession'
+          ) {
+            const context = await commonContext.withRequest(req, res)
+            await context.db.User.updateOne({
+              where: { id: context.session.itemId },
+              data: {
+                twoFactorAuthVerified: false,
+              },
+            })
+          }
+          next()
+        })
 
-        app.use(bodyParser.json())
+        // 2FA: middleware to check if user has verified 2FA on every request
+        app.use(async (req: Request, res: Response, next: NextFunction) => {
+          const context = await commonContext.withRequest(req, res)
+
+          // Skip 2FA check if user is not logged in
+          if (!context.session?.data) {
+            return next()
+          }
+
+          // Skip 2FA check for some routes
+          const excludedRoutes = ['/2fa', '/_next', '/favicon.ico', '/api']
+          if (
+            excludedRoutes.some((route) => req.originalUrl.startsWith(route))
+          ) {
+            if (
+              req.originalUrl === '/2fa-verify' &&
+              context.session?.data.twoFactorAuthVerified
+            ) {
+              return res.redirect('/')
+            } else {
+              return next()
+            }
+          }
+
+          // Skip 2FA check if user has bypassed flag
+          if (context.session?.data.twoFactorAuthBypass) {
+            return next()
+          }
+
+          // Redirect if user has not verified 2FA
+          if (context.session?.data.twoFactorAuthVerified) {
+            return next()
+          } else {
+            res.redirect('/2fa-verify')
+          }
+        })
+
         // 2FA: generate secret and get QR code
         app.get('/api/2fa/setup', async (req, res) => {
           const context = await commonContext.withRequest(req, res)
@@ -141,8 +201,6 @@ export default withAuth(
             res.status(403).send({ success: false, error: 'no session' })
             return
           }
-          console.log('session', currentSession) //TEST
-          // console.log('cookies', req?.cookies) //TEST
           const tempSecret = authenticator.generateSecret()
           // save tempSecret to user table column twoFactorAuthTemp
           await context.db.User.updateOne({
@@ -159,7 +217,6 @@ export default withAuth(
             tempSecret
           )
 
-          console.log(currentSession) //TEST
           qrcode.toDataURL(otpauth, (err, imageUrl) => {
             if (err) {
               console.warn('Error with QR')
@@ -169,6 +226,7 @@ export default withAuth(
             res.send({ qrcode: imageUrl })
           })
         })
+
         // 2FA: verify token and save temp secret to user
         app.post('/api/2fa/setup', async (req, res) => {
           const token = req.body?.token
@@ -183,8 +241,6 @@ export default withAuth(
             res.status(403).send({ success: false, error: 'no session' })
             return
           }
-          console.log('session', currentSession) //TEST
-          // console.log('cookies', req?.cookies) //TEST
 
           const user = await context.db.User.findOne({
             where: { id: currentSession?.itemId },
@@ -195,9 +251,7 @@ export default withAuth(
           }
 
           const tempSecret = user?.twoFactorAuthTemp
-          console.log(tempSecret) //TEST
           const isValid = authenticator.check(token, String(tempSecret))
-          console.log(authenticator.generate(tempSecret)) //TEST
 
           if (isValid) {
             await context.db.User.updateOne({
@@ -218,6 +272,7 @@ export default withAuth(
             return
           }
         })
+
         // 2FA: verify token
         app.post('/api/2fa/check', async (req, res) => {
           const token = req.body?.token
@@ -245,10 +300,17 @@ export default withAuth(
             token,
             String(user?.twoFactorAuthSecret)
           )
-          console.log(authenticator.generate(user?.twoFactorAuthSecret)) //TEST
 
           res.send({ success: isValid })
         })
+
+        // proxy authenticated requests to preview server
+        app.use(
+          createPreviewMiniApp({
+            previewServer: envVar.previewServer,
+            keystoneContext: commonContext,
+          })
+        )
       },
     },
   })

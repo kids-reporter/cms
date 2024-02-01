@@ -12,11 +12,24 @@ import { ChangeUserButton } from '../components/change-user-button'
 import { SinglePageContainer } from '../components/single-page-container'
 
 import axios from 'axios'
+import { gql, useMutation } from '@keystone-6/core/admin-ui/apollo'
+
+const UPDATE_USER_MUTATION = gql`
+  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+    updateUser(where: $where, data: $data) {
+      id
+      twoFactorAuthVerified
+    }
+  }
+`
 
 export default function TwoFactorAuthCreate() {
   const [token, setToken] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isVerified, setIsVerified] = useState(false)
+
+  // Get the mutation function and the loading state
+  const [updateUser] = useMutation(UPDATE_USER_MUTATION)
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -27,7 +40,17 @@ export default function TwoFactorAuthCreate() {
         if (response.data.success) {
           setErrorMessage('')
           setIsVerified(true)
-          //TODO: save 2FA verified status in cookie/session
+          await updateUser({
+            variables: {
+              where: {
+                id: 3,
+              },
+              data: {
+                twoFactorAuthVerified: true,
+              },
+            },
+          })
+          window.location.reload()
         } else {
           setErrorMessage(`2FA verification failed.  Invalid token.`)
         }
