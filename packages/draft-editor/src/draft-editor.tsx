@@ -2,7 +2,6 @@ import React from 'react'
 import buttonNames from './buttons/bt-names'
 import styled, { css } from 'styled-components'
 import {
-  ContentState,
   ContentBlock,
   DraftBlockType,
   DraftEditorCommand,
@@ -28,8 +27,6 @@ import {
 } from './buttons/font-color'
 import { ImageButton } from './buttons/image'
 import { LinkButton } from './buttons/link'
-import { TOCButton } from './buttons/table-of-content'
-import { EditModeTOC } from './block-renderers/table-of-content'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { NewsReadingButton } from './buttons/news-reading'
@@ -44,28 +41,13 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-
-const findTOCEntities = (
-  contentBlock: ContentBlock,
-  callback: (start: number, end: number) => void,
-  contentState: ContentState
-) => {
-  contentBlock.findEntityRanges((character) => {
-    const entityKey = character.getEntity()
-    return (
-      entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === 'TOC'
-    )
-  }, callback)
-}
+import { createTOCButton } from './buttons/table-of-content'
+import { TOCDecorator } from './entity-decorators/table-of-content'
 
 const decorator = new CompositeDecorator([
   annotationDecorator,
   linkDecorator,
-  {
-    strategy: findTOCEntities,
-    component: EditModeTOC,
-  },
+  TOCDecorator,
 ])
 
 const buttonStyle = css<{
@@ -144,7 +126,6 @@ const CustomNewsReadingButton = withStyle(NewsReadingButton)
 const CustomBackgroundColorButton = withStyle(BackgroundColorButton)
 const CustomFontColorButton = withStyle(FontColorButton)
 const CustomDividerButton = withStyle(DividerButton)
-const CustomTOCButton = withStyle(TOCButton)
 
 const DraftEditorWrapper = styled.div`
   /* Rich-editor default setting (.RichEditor-root)*/
@@ -738,8 +719,13 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
+const TOCButton = createTOCButton({
+  decorator,
+})
+
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
+const CustomTOCButton = withStyle(TOCButton)
 
 export { RichTextEditor, decorator }
 

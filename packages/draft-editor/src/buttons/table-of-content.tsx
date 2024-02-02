@@ -1,63 +1,139 @@
-import React from 'react'
-import { EditorState, RichUtils } from 'draft-js'
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { DraftDecoratorType, EditorState, RichUtils } from 'draft-js'
+import { Drawer, DrawerController } from '@keystone-ui/modals'
+import { TextInput } from '@keystone-ui/fields'
 
-export const TOCButton = (props: {
+const StyledTextInput = styled(TextInput)`
+  margin: 10px;
+`
+
+type AnnotationButtonProps = {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
   onEditStart: () => void
   onEditFinish: () => void
-}) => {
-  const { isActive, editorState, onChange } = props
+}
 
-  const promptForTOC = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    props.onEditStart()
-    const selection = editorState.getSelection()
-    if (!selection.isCollapsed()) {
-      const contentState = editorState.getCurrentContent()
-      const anchorKey = selection.getAnchorKey()
-      const currentBlock = contentState.getBlockForKey(anchorKey)
-      const start = selection.getStartOffset()
-      const end = selection.getEndOffset()
-      const selectedText = currentBlock.getText().slice(start, end)
+export function createTOCButton({
+  decorator,
+}: {
+  decorator: DraftDecoratorType
+}): React.FC<AnnotationButtonProps> {
+  return function AnnotationButton(props) {
+    const toggleEntity = RichUtils.toggleLink
+    const { isActive, editorState: editorStateOfOuterEditor, onChange } = props
+    const [tocLabel, setTOCLabel] = useState('')
+    const [toShowInput, setToShowInput] = useState(false)
+
+    const promptForAnnotation = (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault()
+      props.onEditStart()
+      const selection = editorStateOfOuterEditor.getSelection()
+      if (!selection.isCollapsed()) {
+        // setToShowInput(true)
+        const contentState = editorStateOfOuterEditor.getCurrentContent()
+        const startKey = selection.getStartKey()
+        const block = contentState.getBlockForKey(startKey)
+        const selectedText = block
+          .getText()
+          .slice(selection.getStartOffset(), selection.getEndOffset())
+        const contentStateWithEntity = contentState.createEntity(
+          'TOC',
+          'IMMUTABLE',
+          {
+            tocLabel: selectedText,
+          }
+        )
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
+        const newEditorState = EditorState.set(editorStateOfOuterEditor, {
+          currentContent: contentStateWithEntity,
+        })
+
+        onChange(
+          toggleEntity(newEditorState, newEditorState.getSelection(), entityKey)
+        )
+      }
+      props.onEditFinish()
+    }
+
+    const confirmAnnotation = () => {
+      const contentState = editorStateOfOuterEditor.getCurrentContent()
       const contentStateWithEntity = contentState.createEntity(
         'TOC',
         'IMMUTABLE',
-        { tocLabel: selectedText }
+        {
+          tocLabel: 'aaa',
+        }
       )
+      const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
+      const newEditorState = EditorState.set(editorStateOfOuterEditor, {
+        currentContent: contentStateWithEntity,
+      })
+
       onChange(
-        RichUtils.toggleLink(
-          EditorState.set(editorState, {
-            currentContent: contentStateWithEntity,
-          }),
-          selection,
-          contentStateWithEntity.getLastCreatedEntityKey()
-        )
+        toggleEntity(newEditorState, newEditorState.getSelection(), entityKey)
       )
-    }
-    props.onEditFinish()
-  }
 
-  const removeTOC = () => {
-    props.onEditStart()
-    const selection = editorState.getSelection()
-    if (!selection.isCollapsed()) {
-      onChange(RichUtils.toggleLink(editorState, selection, null))
+      setToShowInput(false)
+      setInputValue({
+        editorStateOfInnerEditor: EditorState.createEmpty(decorator),
+      })
+      props.onEditFinish()
     }
-    props.onEditFinish()
-  }
 
-  return (
-    <React.Fragment>
-      <div
-        className={props.className}
-        onMouseDown={isActive ? removeTOC : promptForTOC}
-        title="目錄"
-      >
-        {'目'}
-      </div>
-    </React.Fragment>
-  )
+    const removeAnnotation = () => {
+      const selection = editorStateOfOuterEditor.getSelection()
+      if (!selection.isCollapsed()) {
+        onChange(toggleEntity(editorStateOfOuterEditor, selection, null))
+      }
+      setToShowInput(false)
+      setInputValue({
+        editorStateOfInnerEditor: EditorState.createEmpty(decorator),
+      })
+      props.onEditFinish()
+    }
+
+    const input = (
+      <DrawerController isOpen={toShowInput}>
+        <Drawer
+          title="註解"
+          actions={{
+            cancel: {
+              label: 'Cancel',
+              action: removeAnnotation,
+            },
+            confirm: {
+              label: 'Confirm',
+              action: confirmAnnotation,
+            },
+          }}
+        >
+          <StyledTextInput
+            placeholder="目錄內顯示文字"
+            value={tocLabel}
+            onChange={(e) => {
+              setTOCLabel(e.target.value)
+            }}
+            type="text"
+          />
+        </Drawer>
+      </DrawerController>
+    )
+
+    return (
+      <React.Fragment>
+        {input}
+        <div
+          className={props.className}
+          onMouseDown={isActive ? removeAnnotation : promptForAnnotation}
+        >
+          <i className="far"></i>
+          <span>目</span>
+        </div>
+      </React.Fragment>
+    )
+  }
 }
