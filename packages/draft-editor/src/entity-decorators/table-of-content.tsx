@@ -45,7 +45,6 @@ export function TOCLabelEditor(props: {
   onCancel: () => void
 }) {
   const { isOpen, tocLabelValue, onConfirm, onCancel } = props
-
   const [tocLabel, setTOCLabel] = useState(tocLabelValue)
 
   return (
@@ -82,20 +81,26 @@ export function TOCLabelEditor(props: {
 }
 
 const EditModeTOC = (props: {
+  onEditStart: () => void
+  onEditFinish: (arg0?: { entityKey?: string; entityData?: string }) => void
   decoratedText: string
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
 }) => {
-  console.log(props)
   const { children, contentState, entityKey } = props
   const tocContent = props.decoratedText
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const { tocLabel } = contentState.getEntity(entityKey).getData()
+  const [tocLabel, setTOCLabel] = useState(
+    contentState.getEntity(entityKey).getData()
+  )
 
-  const onTOCLabelChange = (value: string) => {
-    contentState.replaceEntityData(entityKey, {
-      tocLabel: value,
+  const onTOCLabelChange = (labelValue: string) => {
+    setIsDrawerOpen(false)
+    setTOCLabel(labelValue)
+    props.onEditFinish({
+      entityKey,
+      entityData: labelValue,
     })
   }
 
@@ -107,6 +112,7 @@ const EditModeTOC = (props: {
         onConfirm={onTOCLabelChange}
         onCancel={() => {
           setIsDrawerOpen(false)
+          props.onEditFinish()
         }}
       />
       <TOCWrapper>
@@ -115,6 +121,7 @@ const EditModeTOC = (props: {
           onClick={(e) => {
             e.preventDefault()
             setIsDrawerOpen(true)
+            props.onEditStart()
           }}
         />
         <span>{children}</span>

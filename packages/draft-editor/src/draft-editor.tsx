@@ -338,58 +338,59 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     this.setState({ isEnlarged: !this.state.isEnlarged })
   }
 
+  onEditStart = () => {
+    this.setState({
+      // If custom block renderer requires mouse interaction,
+      // [Draft.js document](https://draftjs.org/docs/advanced-topics-block-components#recommendations-and-other-notes)
+      // suggests that we should temporarily set Editor
+      // to readOnly={true} during the interaction.
+      // In readOnly={true} condition, the user does not
+      // trigger any selection changes within the editor
+      // while interacting with custom block.
+      // If we don't set readOnly={true},
+      // it will cause some subtle bugs in InfoBox button.
+      readOnly: true,
+    })
+  }
+
+  onEditFinish = ({
+    entityKey,
+    entityData,
+  }: {
+    entityKey?: string
+    entityData?: { [key: string]: any }
+  } = {}) => {
+    if (entityKey && entityData) {
+      const oldContentState = this.props.editorState.getCurrentContent()
+      const newContentState = oldContentState.replaceEntityData(
+        entityKey,
+        entityData
+      )
+      this.onChange(
+        EditorState.set(this.props.editorState, {
+          currentContent: newContentState,
+        })
+      )
+    }
+
+    // Custom block interaction is finished.
+    // Therefore, we set readOnly={false} to
+    // make editor editable.
+    this.setState({
+      readOnly: false,
+    })
+  }
+
   blockRendererFn = (block: ContentBlock) => {
     const atomicBlockObj = atomicBlockRenderer(block)
     if (atomicBlockObj) {
-      const onEditStart = () => {
-        this.setState({
-          // If custom block renderer requires mouse interaction,
-          // [Draft.js document](https://draftjs.org/docs/advanced-topics-block-components#recommendations-and-other-notes)
-          // suggests that we should temporarily set Editor
-          // to readOnly={true} during the interaction.
-          // In readOnly={true} condition, the user does not
-          // trigger any selection changes within the editor
-          // while interacting with custom block.
-          // If we don't set readOnly={true},
-          // it will cause some subtle bugs in InfoBox button.
-          readOnly: true,
-        })
-      }
-      const onEditFinish = ({
-        entityKey,
-        entityData,
-      }: {
-        entityKey?: string
-        entityData?: { [key: string]: any }
-      } = {}) => {
-        if (entityKey && entityData) {
-          const oldContentState = this.props.editorState.getCurrentContent()
-          const newContentState = oldContentState.replaceEntityData(
-            entityKey,
-            entityData
-          )
-          this.onChange(
-            EditorState.set(this.props.editorState, {
-              currentContent: newContentState,
-            })
-          )
-        }
-
-        // Custom block interaction is finished.
-        // Therefore, we set readOnly={false} to
-        // make editor editable.
-        this.setState({
-          readOnly: false,
-        })
-      }
-
       // `onEditStart` and `onEditFinish` will be passed
       // into custom block component.
       // We can get them via `props.blockProps.onEditStart`
       // and `props.blockProps.onEditFinish` in the custom block components.
       atomicBlockObj['props'] = {
-        onEditStart,
-        onEditFinish,
+        onEditStart: this.onEditStart,
+        onEditFinish: this.onEditFinish,
         RichTextEditorComponent: RichTextEditor,
         decorator,
         getMainEditorReadOnly: () => this.state.readOnly,
@@ -405,6 +406,20 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     if (!(editorState instanceof EditorState)) {
       editorState = EditorState.createEmpty(decorator)
     }
+    editorState = EditorState.set(editorState, {
+      decorator: new CompositeDecorator([
+        annotationDecorator,
+        linkDecorator,
+        {
+          strategy: TOCDecorator.strategy,
+          component: TOCDecorator.component,
+          props: {
+            onEditStart: this.onEditStart,
+            onEditFinish: this.onEditFinish,
+          },
+        },
+      ]),
+    })
     const { isEnlarged, readOnly } = this.state
 
     const entityType = this.getEntityType(editorState)
@@ -719,9 +734,7 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
-const TOCButton = createTOCButton({
-  decorator,
-})
+const TOCButton = createTOCButton()
 
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
