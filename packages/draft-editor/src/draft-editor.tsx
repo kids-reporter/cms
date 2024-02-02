@@ -26,6 +26,7 @@ import {
 } from './buttons/font-color'
 import { ImageButton } from './buttons/image'
 import { LinkButton } from './buttons/link'
+import { TOCButton } from './buttons/table-of-content'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { NewsReadingButton } from './buttons/news-reading'
@@ -38,7 +39,6 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-import { createTOCButton } from './buttons/table-of-content'
 
 const buttonStyle = css<{
   isDisabled: boolean
@@ -116,6 +116,7 @@ const CustomNewsReadingButton = withStyle(NewsReadingButton)
 const CustomBackgroundColorButton = withStyle(BackgroundColorButton)
 const CustomFontColorButton = withStyle(FontColorButton)
 const CustomDividerButton = withStyle(DividerButton)
+const CustomTOCButton = withStyle(TOCButton)
 
 const DraftEditorWrapper = styled.div`
   /* Rich-editor default setting (.RichEditor-root)*/
@@ -423,9 +424,16 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(
                   buttonNames.tableOfContent
                 )}
+                isActive={entityType === 'TOC'}
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
               />
               <BlockStyleControls
                 disabledButtons={disabledButtons}
@@ -702,11 +710,8 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
-const TOCButton = createTOCButton()
-
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
-const CustomTOCButton = withStyle(TOCButton)
 
 export { RichTextEditor, decorator }
 
