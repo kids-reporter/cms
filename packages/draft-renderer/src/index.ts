@@ -7,11 +7,7 @@ import {
 } from './draft-renderer'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderers } from './block-renderers'
-import {
-  decorator,
-  annotationDecorator,
-  linkDecorator,
-} from './entity-decorators/index'
+import { decorator } from './entity-decorators/index'
 import { customStyleFn } from './custom-style-fn'
 
 const blockRenderMap = blockRenderMaps.content
@@ -26,8 +22,6 @@ export {
   blockRenderers,
   customStyleFn,
   decorator,
-  annotationDecorator,
-  linkDecorator,
 }
 
 export default {
