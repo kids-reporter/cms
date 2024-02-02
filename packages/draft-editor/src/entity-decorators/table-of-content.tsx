@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
+import { Drawer, DrawerController } from '@keystone-ui/modals'
+import { TextInput } from '@keystone-ui/fields'
 
 const TOCWrapper = styled.span<{ tocLabel: string }>`
   display: inline-block;
@@ -15,27 +17,96 @@ const TOCWrapper = styled.span<{ tocLabel: string }>`
   }
 `
 
+const TextInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
+const StyledTextInput = styled(TextInput)`
+  margin: 10px;
+`
+
+const Label = styled.span`
+  text-wrap: nowrap;
+`
+
+export function TOCLabelEditor(props: {
+  isOpen: boolean
+  tocLabelValue: string
+  onConfirm: (tocLabel: string) => void
+  onCancel: () => void
+}) {
+  const { isOpen, tocLabelValue, onConfirm, onCancel } = props
+
+  const [tocLabel, setTOCLabel] = useState(tocLabelValue)
+
+  return (
+    <DrawerController isOpen={isOpen}>
+      <Drawer
+        title={'目錄'}
+        actions={{
+          cancel: {
+            label: 'Cancel',
+            action: () => {
+              onCancel()
+            },
+          },
+          confirm: {
+            label: 'Confirm',
+            action: () => onConfirm(tocLabel),
+          },
+        }}
+      >
+        <TextInputContainer>
+          <Label>目錄顯示文字</Label>
+          <StyledTextInput
+            placeholder="目錄內顯示文字"
+            value={tocLabel}
+            onChange={(e) => {
+              setTOCLabel(e.target.value)
+            }}
+            type="text"
+          />
+        </TextInputContainer>
+      </Drawer>
+    </DrawerController>
+  )
+}
+
 const EditModeTOC = (props: {
   decoratedText: string
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
 }) => {
+  console.log(props)
   const { children, contentState, entityKey } = props
   const tocContent = props.decoratedText
-  const [showContent, setShowContent] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const { tocLabel } = contentState.getEntity(entityKey).getData()
+
+  const onTOCLabelChange = (value: string) => {
+    contentState.replaceEntityData(entityKey, {
+      tocLabel: value,
+    })
+  }
 
   return (
     <React.Fragment>
+      <TOCLabelEditor
+        isOpen={isDrawerOpen}
+        tocLabelValue={tocLabel}
+        onConfirm={onTOCLabelChange}
+        onCancel={() => {
+          setIsDrawerOpen(false)
+        }}
+      />
       <TOCWrapper
         tocLabel={tocLabel !== tocContent ? tocLabel : ''}
         onClick={(e) => {
           e.preventDefault()
-          contentState.replaceEntityData(entityKey, {
-            tocLabel: 'test',
-          })
-          setShowContent(!showContent)
+          setIsDrawerOpen(true)
         }}
       >
         <span>{children}</span>
