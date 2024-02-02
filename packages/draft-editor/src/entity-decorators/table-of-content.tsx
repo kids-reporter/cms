@@ -92,7 +92,7 @@ const EditModeTOC = (props: {
   const tocContent = props.decoratedText
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [tocLabel, setTOCLabel] = useState(
-    contentState.getEntity(entityKey).getData()
+    contentState.getEntity(entityKey).getData()?.tocLabel
   )
 
   const onTOCLabelChange = (labelValue: string) => {
