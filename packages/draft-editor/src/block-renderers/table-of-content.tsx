@@ -1,59 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { AtomicBlockProps } from '../block-renderer-fn.type'
-import { TOCInput } from '../buttons/table-of-content'
-import { EditableBlock as _EditableBlock } from './styled'
 
-const StyledTOC = styled.div``
-
-const EditableBlock = styled(_EditableBlock)`
-  &:hover {
-    ${StyledTOC} {
-      background-color: #f0f0f0;
-      opacity: 0.3;
-    }
+const TOCContainer = styled.span`
+  &::before {
+    content: '[';
+  }
+  &::after {
+    content: ']';
+  }
 `
 
-export const EditableTOC = (
-  props: AtomicBlockProps<{ tocLabel: string; tocContent: string }>
-) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const { block, blockProps, contentState } = props
-  const { onEditStart, onEditFinish } = blockProps
-  const entityKey = block.getEntityAt(0)
-  const entity = contentState.getEntity(entityKey)
-  const tocData = entity.getData()
-
-  const onTOCChange = (tocLabel: string, tocContent: string) => {
-    setIsDrawerOpen(false)
-
-    onEditFinish({
-      entityKey,
-      entityData: { tocLabel, tocContent },
-    })
-  }
+export const EditModeTOC = (props) => {
+  const tocContent = props.decoratedText
+  const { tocLabel } = props.contentState.getEntity(props.entityKey).getData()
 
   return (
-    <React.Fragment>
-      <TOCInput
-        onConfirm={onTOCChange}
-        onCancel={() => {
-          onEditFinish()
-          setIsDrawerOpen(false)
-        }}
-        isOpen={isDrawerOpen}
-        tocLabelValue={tocData?.tocLabel}
-        tocContentValue={tocData?.tocContent}
-      />
-      <EditableBlock
-        component={
-          <StyledTOC>{`目錄:[${tocData?.tocLabel}] ${tocData?.tocContent}`}</StyledTOC>
-        }
+    <TOCContainer>
+      <button
         onClick={() => {
-          onEditStart()
-          setIsDrawerOpen(true)
+          props.contentState.replaceEntityData(props.entityKey, {
+            tocLabel: 'test',
+          })
         }}
-      />
-    </React.Fragment>
+      >
+        目{tocContent === tocLabel ? '' : ` - ${tocLabel}`}
+      </button>
+      {props.children}
+    </TOCContainer>
   )
 }

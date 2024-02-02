@@ -2,6 +2,7 @@ import React from 'react'
 import buttonNames from './buttons/bt-names'
 import styled, { css } from 'styled-components'
 import {
+  ContentState,
   ContentBlock,
   DraftBlockType,
   DraftEditorCommand,
@@ -10,6 +11,7 @@ import {
   KeyBindingUtil,
   RichUtils,
   getDefaultKeyBinding,
+  CompositeDecorator,
 } from 'draft-js'
 
 import {
@@ -27,6 +29,7 @@ import {
 import { ImageButton } from './buttons/image'
 import { LinkButton } from './buttons/link'
 import { TOCButton } from './buttons/table-of-content'
+import { EditModeTOC } from './block-renderers/table-of-content'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
 import { NewsReadingButton } from './buttons/news-reading'
@@ -35,10 +38,35 @@ import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   blockRenderMap,
   customStyleFn,
-  decorator,
+  // decorator,
+  annotationDecorator,
+  linkDecorator,
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
+
+const findTOCEntities = (
+  contentBlock: ContentBlock,
+  callback: (start: number, end: number) => void,
+  contentState: ContentState
+) => {
+  contentBlock.findEntityRanges((character) => {
+    const entityKey = character.getEntity()
+    return (
+      entityKey !== null &&
+      contentState.getEntity(entityKey).getType() === 'TOC'
+    )
+  }, callback)
+}
+
+const decorator = new CompositeDecorator([
+  annotationDecorator,
+  linkDecorator,
+  {
+    strategy: findTOCEntities,
+    component: EditModeTOC,
+  },
+])
 
 const buttonStyle = css<{
   isDisabled: boolean
