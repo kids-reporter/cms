@@ -4,16 +4,23 @@ import { ContentBlock, ContentState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 
-const TOCWrapper = styled.span<{ tocLabel: string }>`
-  display: inline-block;
-  cursor: pointer;
+const TOCWrapper = styled.span`
+  display: inline;
   color: #27b5f7;
   &::before {
-    content: '[目錄:${(props) =>
-      props.tocLabel ? `(${props.tocLabel}) ` : ''}';
+    content: '[';
   }
   &::after {
     content: ']';
+  }
+`
+
+const TOCEditButton = styled.div<{ tocLabel: string }>`
+  display: inline;
+  cursor: pointer;
+  &::before {
+    content: '目錄:${(props) =>
+      props.tocLabel ? `(${props.tocLabel}) ` : ''}';
   }
 `
 
@@ -102,13 +109,14 @@ const EditModeTOC = (props: {
           setIsDrawerOpen(false)
         }}
       />
-      <TOCWrapper
-        tocLabel={tocLabel !== tocContent ? tocLabel : ''}
-        onClick={(e) => {
-          e.preventDefault()
-          setIsDrawerOpen(true)
-        }}
-      >
+      <TOCWrapper>
+        <TOCEditButton
+          tocLabel={tocLabel !== tocContent ? tocLabel : ''}
+          onClick={(e) => {
+            e.preventDefault()
+            setIsDrawerOpen(true)
+          }}
+        />
         <span>{children}</span>
       </TOCWrapper>
     </React.Fragment>
