@@ -82,13 +82,16 @@ export function TOCLabelEditor(props: {
 
 const EditModeTOC = (props: {
   onEditStart: () => void
-  onEditFinish: (arg0?: { entityKey?: string; entityData?: string }) => void
+  onEditFinish: (arg0?: { entityKey?: string; entityData?: object }) => void
   decoratedText: string
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
+  blockKey: string
+  start: number
+  end: number
 }) => {
-  const { children, contentState, entityKey } = props
+  const { children, contentState, entityKey, blockKey, start, end } = props
   const tocContent = props.decoratedText
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [tocLabel, setTOCLabel] = useState(
@@ -100,7 +103,10 @@ const EditModeTOC = (props: {
     setTOCLabel(labelValue)
     props.onEditFinish({
       entityKey,
-      entityData: labelValue,
+      entityData: {
+        tocID: `${blockKey}-${start}-${end}`,
+        tocLabel: labelValue,
+      },
     })
   }
 
@@ -129,6 +135,27 @@ const EditModeTOC = (props: {
     </React.Fragment>
   )
 }
+
+/*
+const RenderModeTOC = (props: {
+  decoratedText: string
+  contentState: ContentState
+  entityKey: string
+  children: React.ReactNode
+  blockKey: string
+  start: number
+  end: number
+}) => {
+  const { blockKey, start, end, entityKey } = props
+  const tocID = `${blockKey}-${start}-${end}`
+
+  // TODO: render IntersetionObservable wrapper with tocID
+  return (
+    <React.Fragment>
+    </React.Fragment>
+  )
+}
+*/
 
 const findTOCEntities = (
   contentBlock: ContentBlock,

@@ -31,6 +31,7 @@ export function createTOCButton(): React.FC<AnnotationButtonProps> {
           'TOC',
           'IMMUTABLE',
           {
+            tocID: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
             tocLabel: selectedText,
           }
         )
