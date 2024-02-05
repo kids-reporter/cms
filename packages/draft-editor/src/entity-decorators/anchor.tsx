@@ -5,7 +5,7 @@ import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 import { ANCHOR_FIELD_NAME } from '../buttons/anchor'
 
-const TOCWrapper = styled.span`
+const AnchorWrapper = styled.span`
   display: inline;
   color: #27b5f7;
   &::before {
@@ -16,7 +16,7 @@ const TOCWrapper = styled.span`
   }
 `
 
-const TOCEditButton = styled.div<{ tocLabel: string }>`
+const AnchorEditButton = styled.div<{ tocLabel: string }>`
   display: inline;
   cursor: pointer;
   &::before {
@@ -39,7 +39,7 @@ const Label = styled.span`
   text-wrap: nowrap;
 `
 
-const findTOCEntities = (
+const findAnchorEntities = (
   contentBlock: ContentBlock,
   callback: (start: number, end: number) => void,
   contentState: ContentState
@@ -53,7 +53,7 @@ const findTOCEntities = (
   }, callback)
 }
 
-const TOCLabelEditor = (props: {
+const AnchorLabelEditor = (props: {
   isOpen: boolean
   tocLabelValue: string
   onConfirm: (tocLabel: string) => void
@@ -95,7 +95,7 @@ const TOCLabelEditor = (props: {
   )
 }
 
-const EditModeTOC = (props: {
+const EditableAnchor = (props: {
   onEditStart: () => void
   onEditFinish: (arg0?: { entityKey?: string; entityData?: object }) => void
   decoratedText: string
@@ -132,7 +132,7 @@ const EditModeTOC = (props: {
   return (
     <React.Fragment>
       {isDrawerOpen && (
-        <TOCLabelEditor
+        <AnchorLabelEditor
           isOpen={isDrawerOpen}
           tocLabelValue={tocLabel}
           onConfirm={onTOCLabelChange}
@@ -142,8 +142,8 @@ const EditModeTOC = (props: {
           }}
         />
       )}
-      <TOCWrapper>
-        <TOCEditButton
+      <AnchorWrapper>
+        <AnchorEditButton
           tocLabel={tocLabel !== tocContent ? tocLabel : ''}
           onClick={(e) => {
             e.preventDefault()
@@ -152,15 +152,15 @@ const EditModeTOC = (props: {
           }}
         >
           <i className="fas fa-pen"></i>
-        </TOCEditButton>
+        </AnchorEditButton>
         <span>{children}</span>
-      </TOCWrapper>
+      </AnchorWrapper>
     </React.Fragment>
   )
 }
 
 /*
-const RenderModeTOC = (props: {
+const Anchor = (props: {
   decoratedText: string
   contentState: ContentState
   entityKey: string
@@ -181,6 +181,6 @@ const RenderModeTOC = (props: {
 */
 
 export const AnchorDecorator = {
-  strategy: findTOCEntities,
-  component: EditModeTOC,
+  strategy: findAnchorEntities,
+  component: EditableAnchor,
 }
