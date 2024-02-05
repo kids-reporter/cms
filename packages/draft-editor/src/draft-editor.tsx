@@ -41,7 +41,7 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-import { createTOCButton } from './buttons/table-of-content'
+import { createAnchorButton } from './buttons/table-of-content'
 import { TOCDecorator } from './entity-decorators/table-of-content'
 
 const buttonStyle = css<{
@@ -456,7 +456,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                   isEnlarged={isEnlarged}
                 ></CustomEnlargeButton>
               </EnlargeButtonWrapper>
-              <CustomTOCButton
+              <CustomAnchorButton
                 isDisabled={disabledButtons.includes(
                   buttonNames.tableOfContent
                 )}
@@ -728,11 +728,11 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
-const TOCButton = createTOCButton()
+const AnchorButton = createAnchorButton()
 
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
-const CustomTOCButton = withStyle(TOCButton)
+const CustomAnchorButton = withStyle(AnchorButton)
 
 export { RichTextEditor, decorator }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 
-type TOCButtonProps = {
+type AnchorButtonProps = {
   className?: string
   isActive: boolean
   editorState: EditorState
@@ -10,8 +10,8 @@ type TOCButtonProps = {
   onEditFinish: () => void
 }
 
-export function createTOCButton(): React.FC<TOCButtonProps> {
-  return function TOCButton(props) {
+export function createAnchorButton(): React.FC<AnchorButtonProps> {
+  return function AnchorButton(props) {
     const toggleEntity = RichUtils.toggleLink
     const { isActive, editorState: editorStateOfOuterEditor, onChange } = props
 
