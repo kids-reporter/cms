@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
@@ -38,12 +38,26 @@ const Label = styled.span`
   text-wrap: nowrap;
 `
 
-export function TOCLabelEditor(props: {
+const findTOCEntities = (
+  contentBlock: ContentBlock,
+  callback: (start: number, end: number) => void,
+  contentState: ContentState
+) => {
+  contentBlock.findEntityRanges((character) => {
+    const entityKey = character.getEntity()
+    return (
+      entityKey !== null &&
+      contentState.getEntity(entityKey).getType() === 'TOC'
+    )
+  }, callback)
+}
+
+const TOCLabelEditor = (props: {
   isOpen: boolean
   tocLabelValue: string
   onConfirm: (tocLabel: string) => void
   onCancel: () => void
-}) {
+}) => {
   const { isOpen, tocLabelValue, onConfirm, onCancel } = props
   const [tocLabel, setTOCLabel] = useState(tocLabelValue)
 
@@ -98,6 +112,10 @@ const EditModeTOC = (props: {
     contentState.getEntity(entityKey).getData()?.tocLabel
   )
 
+  useEffect(() => {
+    setTOCLabel(contentState.getEntity(entityKey).getData()?.tocLabel)
+  })
+
   const onTOCLabelChange = (labelValue: string) => {
     setIsDrawerOpen(false)
     setTOCLabel(labelValue)
@@ -112,15 +130,17 @@ const EditModeTOC = (props: {
 
   return (
     <React.Fragment>
-      <TOCLabelEditor
-        isOpen={isDrawerOpen}
-        tocLabelValue={tocLabel}
-        onConfirm={onTOCLabelChange}
-        onCancel={() => {
-          setIsDrawerOpen(false)
-          props.onEditFinish()
-        }}
-      />
+      {isDrawerOpen && (
+        <TOCLabelEditor
+          isOpen={isDrawerOpen}
+          tocLabelValue={tocLabel}
+          onConfirm={onTOCLabelChange}
+          onCancel={() => {
+            setIsDrawerOpen(false)
+            props.onEditFinish()
+          }}
+        />
+      )}
       <TOCWrapper>
         <TOCEditButton
           tocLabel={tocLabel !== tocContent ? tocLabel : ''}
@@ -158,20 +178,6 @@ const RenderModeTOC = (props: {
   )
 }
 */
-
-const findTOCEntities = (
-  contentBlock: ContentBlock,
-  callback: (start: number, end: number) => void,
-  contentState: ContentState
-) => {
-  contentBlock.findEntityRanges((character) => {
-    const entityKey = character.getEntity()
-    return (
-      entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === 'TOC'
-    )
-  }, callback)
-}
 
 export const TOCDecorator = {
   strategy: findTOCEntities,
