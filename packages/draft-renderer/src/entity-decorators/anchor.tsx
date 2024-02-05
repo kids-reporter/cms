@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
-import { ANCHOR_FIELD_NAME } from '../buttons/anchor'
+
+const ANCHOR_FIELD_NAME = 'ANCHOR'
 
 const AnchorWrapper = styled.span`
   display: inline;
@@ -159,7 +160,6 @@ const EditableAnchor = (props: {
   )
 }
 
-/*
 const Anchor = (props: {
   decoratedText: string
   contentState: ContentState
@@ -169,18 +169,37 @@ const Anchor = (props: {
   start: number
   end: number
 }) => {
-  const { blockKey, start, end, entityKey } = props
-  const anchorID = `${blockKey}-${start}-${end}`
+  const { children, blockKey, start, end } = props
+  const key = `${blockKey}-${start}-${end}`
+  const anchorID = `anchor-${key}`
+  const tocAnchorID = `toc-${key}`
 
-  // TODO: render IntersetionObservable wrapper with anchorID
-  return (
-    <React.Fragment>
-    </React.Fragment>
-  )
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const anchor = document.querySelector(`#${tocAnchorID}`)
+        entry.isIntersecting
+          ? anchor?.classList?.add('withinViewPort')
+          : anchor?.classList?.remove('outOfViewPort')
+      },
+      {
+        root: null,
+        threshold: 0,
+      }
+    )
+
+    observer.observe(document.querySelector(`#${anchorID}`) as Element)
+  }, [])
+
+  return <span id={anchorID}>{children}</span>
 }
-*/
 
-export const AnchorDecorator = {
+export const editableAnchorDecorator = {
   strategy: findAnchorEntities,
   component: EditableAnchor,
+}
+
+export const anchorDecorator = {
+  strategy: findAnchorEntities,
+  component: Anchor,
 }

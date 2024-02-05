@@ -37,10 +37,12 @@ import {
   blockRenderMap,
   customStyleFn,
   decorator,
+  annotationDecorator,
+  linkDecorator,
+  editableAnchorDecorator,
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-import { AnchorDecorator } from './entity-decorators/anchor'
 
 const buttonStyle = css<{
   isDisabled: boolean
@@ -402,8 +404,10 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     }
     editorState = EditorState.set(editorState, {
       decorator: new CompositeDecorator([
+        annotationDecorator,
+        linkDecorator,
         {
-          ...AnchorDecorator,
+          ...editableAnchorDecorator,
           props: {
             ...this.editProps,
           },
