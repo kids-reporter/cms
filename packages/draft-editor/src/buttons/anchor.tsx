@@ -16,7 +16,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
   const toggleEntity = RichUtils.toggleLink
   const { isActive, editorState: editorStateOfOuterEditor, onChange } = props
 
-  const promptForTOC = (e: React.MouseEvent<HTMLDivElement>) => {
+  const promptForAnchor = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     props.onEditStart()
 
@@ -49,7 +49,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
     props.onEditFinish()
   }
 
-  const removeTOC = () => {
+  const removeAnchor = () => {
     const selection = editorStateOfOuterEditor.getSelection()
     if (!selection.isCollapsed()) {
       onChange(toggleEntity(editorStateOfOuterEditor, selection, null))
@@ -60,7 +60,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
   return (
     <div
       className={props.className}
-      onMouseDown={isActive ? removeTOC : promptForTOC}
+      onMouseDown={isActive ? removeAnchor : promptForAnchor}
       title="索引"
     >
       <span>索</span>
