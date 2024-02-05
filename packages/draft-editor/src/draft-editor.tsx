@@ -333,47 +333,49 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     this.setState({ isEnlarged: !this.state.isEnlarged })
   }
 
-  onEditStart = () => {
-    this.setState({
-      // If custom block renderer requires mouse interaction,
-      // [Draft.js document](https://draftjs.org/docs/advanced-topics-block-components#recommendations-and-other-notes)
-      // suggests that we should temporarily set Editor
-      // to readOnly={true} during the interaction.
-      // In readOnly={true} condition, the user does not
-      // trigger any selection changes within the editor
-      // while interacting with custom block.
-      // If we don't set readOnly={true},
-      // it will cause some subtle bugs in InfoBox button.
-      readOnly: true,
-    })
-  }
+  editProps = {
+    onEditStart: () => {
+      this.setState({
+        // If custom block renderer requires mouse interaction,
+        // [Draft.js document](https://draftjs.org/docs/advanced-topics-block-components#recommendations-and-other-notes)
+        // suggests that we should temporarily set Editor
+        // to readOnly={true} during the interaction.
+        // In readOnly={true} condition, the user does not
+        // trigger any selection changes within the editor
+        // while interacting with custom block.
+        // If we don't set readOnly={true},
+        // it will cause some subtle bugs in InfoBox button.
+        readOnly: true,
+      })
+    },
 
-  onEditFinish = ({
-    entityKey,
-    entityData,
-  }: {
-    entityKey?: string
-    entityData?: { [key: string]: any }
-  } = {}) => {
-    if (entityKey && entityData) {
-      const oldContentState = this.props.editorState.getCurrentContent()
-      const newContentState = oldContentState.replaceEntityData(
-        entityKey,
-        entityData
-      )
-      this.onChange(
-        EditorState.set(this.props.editorState, {
-          currentContent: newContentState,
-        })
-      )
-    }
+    onEditFinish: ({
+      entityKey,
+      entityData,
+    }: {
+      entityKey?: string
+      entityData?: { [key: string]: any }
+    } = {}) => {
+      if (entityKey && entityData) {
+        const oldContentState = this.props.editorState.getCurrentContent()
+        const newContentState = oldContentState.replaceEntityData(
+          entityKey,
+          entityData
+        )
+        this.onChange(
+          EditorState.set(this.props.editorState, {
+            currentContent: newContentState,
+          })
+        )
+      }
 
-    // Custom block interaction is finished.
-    // Therefore, we set readOnly={false} to
-    // make editor editable.
-    this.setState({
-      readOnly: false,
-    })
+      // Custom block interaction is finished.
+      // Therefore, we set readOnly={false} to
+      // make editor editable.
+      this.setState({
+        readOnly: false,
+      })
+    },
   }
 
   blockRendererFn = (block: ContentBlock) => {
@@ -384,8 +386,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       // We can get them via `props.blockProps.onEditStart`
       // and `props.blockProps.onEditFinish` in the custom block components.
       atomicBlockObj['props'] = {
-        onEditStart: this.onEditStart,
-        onEditFinish: this.onEditFinish,
+        ...this.editProps,
         RichTextEditorComponent: RichTextEditor,
         decorator,
         getMainEditorReadOnly: () => this.state.readOnly,
@@ -409,8 +410,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
           strategy: AnchorDecorator.strategy,
           component: AnchorDecorator.component,
           props: {
-            onEditStart: this.onEditStart,
-            onEditFinish: this.onEditFinish,
+            ...this.editProps,
           },
         },
       ]),
