@@ -32,8 +32,8 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         ANCHOR_FIELD_NAME,
         'IMMUTABLE',
         {
-          tocID: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
-          tocLabel: selectedText,
+          anchorID: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
+          anchorLabel: selectedText,
         }
       )
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey()

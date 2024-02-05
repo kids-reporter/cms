@@ -68,7 +68,7 @@ export const TableOfContent = ({ post }: { post: any }) => {
     if (entityMap[key]?.type === 'ANCHOR') {
       tocs.push({
         id: `table-of-content-${key}`,
-        label: entityMap[key].data?.tocLabel ?? '',
+        label: entityMap[key].data?.anchorLabel ?? '',
       })
     }
   })

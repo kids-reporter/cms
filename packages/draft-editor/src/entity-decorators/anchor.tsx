@@ -16,12 +16,12 @@ const AnchorWrapper = styled.span`
   }
 `
 
-const AnchorEditButton = styled.div<{ tocLabel: string }>`
+const AnchorEditButton = styled.div<{ anchorLabel: string }>`
   display: inline;
   cursor: pointer;
   &::before {
     content: '目錄:${(props) =>
-      props.tocLabel ? `(${props.tocLabel}) ` : ''}';
+      props.anchorLabel ? `(${props.anchorLabel}) ` : ''}';
   }
 `
 
@@ -55,12 +55,12 @@ const findAnchorEntities = (
 
 const AnchorLabelEditor = (props: {
   isOpen: boolean
-  tocLabelValue: string
-  onConfirm: (tocLabel: string) => void
+  anchorLabelValue: string
+  onConfirm: (anchorLabel: string) => void
   onCancel: () => void
 }) => {
-  const { isOpen, tocLabelValue, onConfirm, onCancel } = props
-  const [tocLabel, setTOCLabel] = useState(tocLabelValue)
+  const { isOpen, anchorLabelValue, onConfirm, onCancel } = props
+  const [anchorLabel, setTOCLabel] = useState(anchorLabelValue)
 
   return (
     <DrawerController isOpen={isOpen}>
@@ -75,7 +75,7 @@ const AnchorLabelEditor = (props: {
           },
           confirm: {
             label: 'Confirm',
-            action: () => onConfirm(tocLabel),
+            action: () => onConfirm(anchorLabel),
           },
         }}
       >
@@ -83,7 +83,7 @@ const AnchorLabelEditor = (props: {
           <Label>目錄顯示文字</Label>
           <StyledTextInput
             placeholder="目錄內顯示文字"
-            value={tocLabel}
+            value={anchorLabel}
             onChange={(e) => {
               setTOCLabel(e.target.value)
             }}
@@ -109,12 +109,12 @@ const EditableAnchor = (props: {
   const { children, contentState, entityKey, blockKey, start, end } = props
   const tocContent = props.decoratedText
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [tocLabel, setTOCLabel] = useState(
-    contentState.getEntity(entityKey).getData()?.tocLabel
+  const [anchorLabel, setTOCLabel] = useState(
+    contentState.getEntity(entityKey).getData()?.anchorLabel
   )
 
   useEffect(() => {
-    setTOCLabel(contentState.getEntity(entityKey).getData()?.tocLabel)
+    setTOCLabel(contentState.getEntity(entityKey).getData()?.anchorLabel)
   })
 
   const onTOCLabelChange = (labelValue: string) => {
@@ -123,8 +123,8 @@ const EditableAnchor = (props: {
     props.onEditFinish({
       entityKey,
       entityData: {
-        tocID: `${blockKey}-${start}-${end}`,
-        tocLabel: labelValue,
+        anchorID: `${blockKey}-${start}-${end}`,
+        anchorLabel: labelValue,
       },
     })
   }
@@ -134,7 +134,7 @@ const EditableAnchor = (props: {
       {isDrawerOpen && (
         <AnchorLabelEditor
           isOpen={isDrawerOpen}
-          tocLabelValue={tocLabel}
+          anchorLabelValue={anchorLabel}
           onConfirm={onTOCLabelChange}
           onCancel={() => {
             setIsDrawerOpen(false)
@@ -144,7 +144,7 @@ const EditableAnchor = (props: {
       )}
       <AnchorWrapper>
         <AnchorEditButton
-          tocLabel={tocLabel !== tocContent ? tocLabel : ''}
+          anchorLabel={anchorLabel !== tocContent ? anchorLabel : ''}
           onClick={(e) => {
             e.preventDefault()
             setIsDrawerOpen(true)
@@ -170,9 +170,9 @@ const Anchor = (props: {
   end: number
 }) => {
   const { blockKey, start, end, entityKey } = props
-  const tocID = `${blockKey}-${start}-${end}`
+  const anchorID = `${blockKey}-${start}-${end}`
 
-  // TODO: render IntersetionObservable wrapper with tocID
+  // TODO: render IntersetionObservable wrapper with anchorID
   return (
     <React.Fragment>
     </React.Fragment>
