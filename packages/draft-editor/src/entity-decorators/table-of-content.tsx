@@ -180,7 +180,7 @@ const RenderModeTOC = (props: {
 }
 */
 
-export const TOCDecorator = {
+export const AnchorDecorator = {
   strategy: findTOCEntities,
   component: EditModeTOC,
 }

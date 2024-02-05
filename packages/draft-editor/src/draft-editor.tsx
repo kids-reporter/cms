@@ -42,7 +42,7 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-import { TOCDecorator } from './entity-decorators/table-of-content'
+import { AnchorDecorator } from './entity-decorators/table-of-content'
 
 const buttonStyle = css<{
   isDisabled: boolean
@@ -406,8 +406,8 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
         annotationDecorator,
         linkDecorator,
         {
-          strategy: TOCDecorator.strategy,
-          component: TOCDecorator.component,
+          strategy: AnchorDecorator.strategy,
+          component: AnchorDecorator.component,
           props: {
             onEditStart: this.onEditStart,
             onEditFinish: this.onEditFinish,
