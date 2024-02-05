@@ -129,7 +129,9 @@ const EditModeTOC = (props: {
             setIsDrawerOpen(true)
             props.onEditStart()
           }}
-        />
+        >
+          <i className="fas fa-pen"></i>
+        </TOCEditButton>
         <span>{children}</span>
       </TOCWrapper>
     </React.Fragment>
