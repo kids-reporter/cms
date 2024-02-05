@@ -26,7 +26,7 @@ import {
   customStylePrefix as fontColorPrefix,
 } from './buttons/font-color'
 import { ImageButton } from './buttons/image'
-import { AnchorButton } from './buttons/anchor'
+import { AnchorButton, ANCHOR_FIELD_NAME } from './buttons/anchor'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
@@ -459,7 +459,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               </EnlargeButtonWrapper>
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
-                isActive={entityType === 'TOC'}
+                isActive={entityType === ANCHOR_FIELD_NAME}
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}

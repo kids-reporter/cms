@@ -1,6 +1,8 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 
+export const ANCHOR_FIELD_NAME = 'ANCHOR'
+
 type AnchorButtonProps = {
   className?: string
   isActive: boolean
@@ -27,7 +29,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         .getText()
         .slice(selection.getStartOffset(), selection.getEndOffset())
       const contentStateWithEntity = contentState.createEntity(
-        'TOC',
+        ANCHOR_FIELD_NAME,
         'IMMUTABLE',
         {
           tocID: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,

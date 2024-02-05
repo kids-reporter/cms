@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
+import { ANCHOR_FIELD_NAME } from '../buttons/anchor'
 
 const TOCWrapper = styled.span`
   display: inline;
@@ -47,7 +48,7 @@ const findTOCEntities = (
     const entityKey = character.getEntity()
     return (
       entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === 'TOC'
+      contentState.getEntity(entityKey).getType() === ANCHOR_FIELD_NAME
     )
   }, callback)
 }
