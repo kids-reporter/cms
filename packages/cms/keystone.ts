@@ -185,12 +185,25 @@ export default withAuth(
             return next()
           }
 
-          // Redirect if user has not verified 2FA
+          // Proceed if 2FA is verified
           if (context.session?.data.twoFactorAuthVerified) {
             return next()
-          } else {
+          }
+
+          // If 2FA is set up but not verified, redirect to 2FA verification page
+          const user = await context.db.User.findOne({
+            where: { id: context.session.itemId },
+          })
+          if (!user) {
+            res.status(500).send({ success: false, error: 'no user' })
+            return
+          }
+          if (user?.twoFactorAuthSecret) {
             res.redirect('/2fa-verify')
           }
+
+          // All checks passed, proceed to the next middleware
+          next()
         })
 
         // 2FA: generate secret and get QR code
