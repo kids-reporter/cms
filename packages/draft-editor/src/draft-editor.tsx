@@ -418,6 +418,14 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     const { isEnlarged, readOnly } = this.state
 
     const entityType = this.getEntityType(editorState)
+    const editProps = {
+      onEditStart: () => {
+        this.setState({ readOnly: true })
+      },
+      onEditFinish: () => {
+        this.setState({ readOnly: false })
+      },
+    }
 
     return (
       <DraftEditorContainer isEnlarged={isEnlarged}>
@@ -463,12 +471,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
+                {...editProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
@@ -476,12 +479,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
+                {...editProps}
               />
               <CustomBackgroundColorButton
                 isDisabled={disabledButtons.includes(
@@ -499,12 +497,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
+                {...editProps}
               ></CustomBackgroundColorButton>
               <CustomFontColorButton
                 isDisabled={disabledButtons.includes(buttonNames.fontColor)}
@@ -520,12 +513,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
+                {...editProps}
               ></CustomFontColorButton>
               <CustomBlockquoteButton
                 isDisabled={disabledButtons.includes(buttonNames.blockquote)}
@@ -541,12 +529,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                   this.onChange(editorState)
                 }}
                 readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
+                {...editProps}
               />
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
