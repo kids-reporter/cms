@@ -36,7 +36,6 @@ import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   blockRenderMap,
   customStyleFn,
-  decorator,
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
@@ -44,6 +43,8 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
+
+const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
 
 const buttonStyle = css<{
   isDisabled: boolean

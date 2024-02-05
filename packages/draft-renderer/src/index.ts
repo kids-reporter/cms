@@ -8,7 +8,6 @@ import {
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderers } from './block-renderers'
 import {
-  decorator,
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
@@ -27,7 +26,6 @@ export {
   blockRenderMap,
   blockRenderers,
   customStyleFn,
-  decorator,
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
@@ -43,7 +41,6 @@ export default {
   blockRenderMap: blockRenderMaps.content,
   blockRenderers,
   customStyleFn,
-  decorator,
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
