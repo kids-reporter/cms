@@ -458,9 +458,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 ></CustomEnlargeButton>
               </EnlargeButtonWrapper>
               <CustomAnchorButton
-                isDisabled={disabledButtons.includes(
-                  buttonNames.tableOfContent
-                )}
+                isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === 'TOC'}
                 editorState={editorState}
                 onChange={this.onChange}
