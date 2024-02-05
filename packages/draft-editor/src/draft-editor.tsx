@@ -26,6 +26,7 @@ import {
   customStylePrefix as fontColorPrefix,
 } from './buttons/font-color'
 import { ImageButton } from './buttons/image'
+import { AnchorButton } from './buttons/anchor'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
@@ -41,7 +42,6 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-import { createAnchorButton } from './buttons/table-of-content'
 import { TOCDecorator } from './entity-decorators/table-of-content'
 
 const buttonStyle = css<{
@@ -109,6 +109,7 @@ const CustomButton = styled.div`
   ${buttonStyle}
 `
 const CustomBlockquoteButton = withStyle(BlockquoteButton)
+const CustomAnchorButton = withStyle(AnchorButton)
 const CustomLinkButton = withStyle(LinkButton)
 const CustomEnlargeButton = styled(withStyle(EnlargeButton))`
   color: #999;
@@ -728,11 +729,8 @@ const InfoBoxButton = createInfoBoxButton({
   decorator,
 })
 
-const AnchorButton = createAnchorButton()
-
 const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
-const CustomAnchorButton = withStyle(AnchorButton)
 
 export { RichTextEditor, decorator }
 
