@@ -14,15 +14,15 @@ type AnchorButtonProps = {
 
 export const AnchorButton = (props: AnchorButtonProps) => {
   const toggleEntity = RichUtils.toggleLink
-  const { isActive, editorState: editorStateOfOuterEditor, onChange } = props
+  const { isActive, editorState, onChange } = props
 
   const promptForAnchor = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     props.onEditStart()
 
-    const selection = editorStateOfOuterEditor.getSelection()
+    const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
-      const contentState = editorStateOfOuterEditor.getCurrentContent()
+      const contentState = editorState.getCurrentContent()
       const startKey = selection.getStartKey()
       const block = contentState.getBlockForKey(startKey)
       const selectedText = block
@@ -37,7 +37,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         }
       )
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
-      const newEditorState = EditorState.set(editorStateOfOuterEditor, {
+      const newEditorState = EditorState.set(editorState, {
         currentContent: contentStateWithEntity,
       })
 
@@ -50,9 +50,9 @@ export const AnchorButton = (props: AnchorButtonProps) => {
   }
 
   const removeAnchor = () => {
-    const selection = editorStateOfOuterEditor.getSelection()
+    const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
-      onChange(toggleEntity(editorStateOfOuterEditor, selection, null))
+      onChange(toggleEntity(editorState, selection, null))
     }
     props.onEditFinish()
   }
