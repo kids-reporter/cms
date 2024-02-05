@@ -26,7 +26,7 @@ import {
   customStylePrefix as fontColorPrefix,
 } from './buttons/font-color'
 import { ImageButton } from './buttons/image'
-import { AnchorButton, ANCHOR_FIELD_NAME } from './buttons/anchor'
+import { AnchorButton } from './buttons/anchor'
 import { LinkButton } from './buttons/link'
 import { SlideshowButton } from './buttons/slideshow'
 import { ImageSelector } from './buttons/selector/image-selector'
@@ -40,6 +40,7 @@ import {
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
+  ANCHOR_FIELD_NAME,
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'

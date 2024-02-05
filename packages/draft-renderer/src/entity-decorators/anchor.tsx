@@ -4,7 +4,7 @@ import { ContentBlock, ContentState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 
-const ANCHOR_FIELD_NAME = 'ANCHOR'
+export const ANCHOR_FIELD_NAME = 'ANCHOR'
 
 const AnchorWrapper = styled.span`
   display: inline;

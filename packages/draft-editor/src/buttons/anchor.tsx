@@ -1,7 +1,6 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
-
-export const ANCHOR_FIELD_NAME = 'ANCHOR'
+import { ANCHOR_FIELD_NAME } from '@kids-reporter/draft-renderer'
 
 type AnchorButtonProps = {
   className?: string
