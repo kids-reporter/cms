@@ -241,6 +241,7 @@ type State = {
 
 class RichTextEditor extends React.Component<RichTextEditorProps, State> {
   editorRef = null
+  editorDecorator
 
   constructor(props: RichTextEditorProps) {
     super(props)
@@ -248,6 +249,16 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       isEnlarged: false,
       readOnly: false,
     }
+    this.editorDecorator = new CompositeDecorator([
+      annotationDecorator,
+      linkDecorator,
+      {
+        ...editableAnchorDecorator,
+        props: {
+          ...this.editProps,
+        },
+      },
+    ])
   }
 
   onChange = (editorState: EditorState) => {
@@ -402,20 +413,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     let { editorState } = this.props
 
     if (!(editorState instanceof EditorState)) {
-      editorState = EditorState.createEmpty(decorator)
+      editorState = EditorState.createEmpty(this.editorDecorator)
+    } else {
+      editorState = EditorState.set(editorState, {
+        decorator: this.editorDecorator,
+      })
     }
-    editorState = EditorState.set(editorState, {
-      decorator: new CompositeDecorator([
-        annotationDecorator,
-        linkDecorator,
-        {
-          ...editableAnchorDecorator,
-          props: {
-            ...this.editProps,
-          },
-        },
-      ]),
-    })
     const { isEnlarged, readOnly } = this.state
 
     const entityType = this.getEntityType(editorState)
