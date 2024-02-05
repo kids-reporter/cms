@@ -12,7 +12,7 @@ import {
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
-  ANCHOR_FIELD_NAME,
+  ANCHOR_ENTITY_TYPE,
 } from './entity-decorators'
 import { customStyleFn } from './custom-style-fn'
 
@@ -31,7 +31,7 @@ export {
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
-  ANCHOR_FIELD_NAME,
+  ANCHOR_ENTITY_TYPE,
 }
 
 export default {
@@ -47,5 +47,5 @@ export default {
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
-  ANCHOR_FIELD_NAME,
+  ANCHOR_ENTITY_TYPE,
 }

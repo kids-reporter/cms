@@ -4,7 +4,7 @@ import { ContentBlock, ContentState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 
-export const ANCHOR_FIELD_NAME = 'ANCHOR'
+export const ANCHOR_ENTITY_TYPE = 'ANCHOR'
 
 const AnchorWrapper = styled.span`
   display: inline;
@@ -49,7 +49,7 @@ const findAnchorEntities = (
     const entityKey = character.getEntity()
     return (
       entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === ANCHOR_FIELD_NAME
+      contentState.getEntity(entityKey).getType() === ANCHOR_ENTITY_TYPE
     )
   }, callback)
 }

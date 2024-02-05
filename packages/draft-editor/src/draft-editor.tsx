@@ -40,7 +40,7 @@ import {
   annotationDecorator,
   linkDecorator,
   editableAnchorDecorator,
-  ANCHOR_FIELD_NAME,
+  ANCHOR_ENTITY_TYPE,
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
@@ -467,7 +467,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               </EnlargeButtonWrapper>
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
-                isActive={entityType === ANCHOR_FIELD_NAME}
+                isActive={entityType === ANCHOR_ENTITY_TYPE}
                 editorState={editorState}
                 onChange={this.onChange}
                 readOnly={this.state.readOnly}

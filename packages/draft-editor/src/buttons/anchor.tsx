@@ -1,6 +1,6 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
-import { ANCHOR_FIELD_NAME } from '@kids-reporter/draft-renderer'
+import { ANCHOR_ENTITY_TYPE } from '@kids-reporter/draft-renderer'
 
 type AnchorButtonProps = {
   className?: string
@@ -28,7 +28,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         .getText()
         .slice(selection.getStartOffset(), selection.getEndOffset())
       const contentStateWithEntity = contentState.createEntity(
-        ANCHOR_FIELD_NAME,
+        ANCHOR_ENTITY_TYPE,
         'IMMUTABLE',
         {
           anchorID: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
