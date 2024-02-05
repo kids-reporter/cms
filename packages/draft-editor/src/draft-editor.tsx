@@ -444,21 +444,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
           />
           <DraftEditorControls>
             <DraftEditorControlsWrapper>
-              <CustomTOCButton
-                isDisabled={disabledButtons.includes(
-                  buttonNames.tableOfContent
-                )}
-                isActive={entityType === 'TOC'}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
-                onEditStart={() => {
-                  this.setState({ readOnly: true })
-                }}
-                onEditFinish={() => {
-                  this.setState({ readOnly: false })
-                }}
-              />
               <BlockStyleControls
                 disabledButtons={disabledButtons}
                 editorState={editorState}
@@ -477,6 +462,21 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                   isEnlarged={isEnlarged}
                 ></CustomEnlargeButton>
               </EnlargeButtonWrapper>
+              <CustomTOCButton
+                isDisabled={disabledButtons.includes(
+                  buttonNames.tableOfContent
+                )}
+                isActive={entityType === 'TOC'}
+                editorState={editorState}
+                onChange={this.onChange}
+                readOnly={this.state.readOnly}
+                onEditStart={() => {
+                  this.setState({ readOnly: true })
+                }}
+                onEditFinish={() => {
+                  this.setState({ readOnly: false })
+                }}
+              />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
                 isActive={entityType === 'LINK'}
@@ -544,7 +544,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
                 isActive={entityType === 'ANNOTATION'}
                 editorState={editorState}
-                onChange={(editorState) => {
+                onChange={(editorState: EditorState) => {
                   this.onChange(editorState)
                 }}
                 readOnly={this.state.readOnly}

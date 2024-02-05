@@ -1,7 +1,7 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 
-type AnnotationButtonProps = {
+type TOCButtonProps = {
   className?: string
   isActive: boolean
   editorState: EditorState
@@ -10,12 +10,12 @@ type AnnotationButtonProps = {
   onEditFinish: () => void
 }
 
-export function createTOCButton(): React.FC<AnnotationButtonProps> {
-  return function AnnotationButton(props) {
+export function createTOCButton(): React.FC<TOCButtonProps> {
+  return function TOCButton(props) {
     const toggleEntity = RichUtils.toggleLink
     const { isActive, editorState: editorStateOfOuterEditor, onChange } = props
 
-    const promptForAnnotation = (e: React.MouseEvent<HTMLDivElement>) => {
+    const promptForTOC = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
       props.onEditStart()
 
@@ -48,7 +48,7 @@ export function createTOCButton(): React.FC<AnnotationButtonProps> {
       props.onEditFinish()
     }
 
-    const removeAnnotation = () => {
+    const removeTOC = () => {
       const selection = editorStateOfOuterEditor.getSelection()
       if (!selection.isCollapsed()) {
         onChange(toggleEntity(editorStateOfOuterEditor, selection, null))
@@ -60,10 +60,10 @@ export function createTOCButton(): React.FC<AnnotationButtonProps> {
       <React.Fragment>
         <div
           className={props.className}
-          onMouseDown={isActive ? removeAnnotation : promptForAnnotation}
+          onMouseDown={isActive ? removeTOC : promptForTOC}
+          title="索引"
         >
-          <i className="far"></i>
-          <span>目</span>
+          <span>索</span>
         </div>
       </React.Fragment>
     )
