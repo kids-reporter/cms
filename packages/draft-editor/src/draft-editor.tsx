@@ -35,7 +35,7 @@ import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   blockRenderMap,
   customStyleFn,
-  // decorator,
+  decorator,
   annotationDecorator,
   linkDecorator,
 } from '@kids-reporter/draft-renderer'
@@ -43,12 +43,6 @@ import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
 import { createTOCButton } from './buttons/table-of-content'
 import { TOCDecorator } from './entity-decorators/table-of-content'
-
-const decorator = new CompositeDecorator([
-  annotationDecorator,
-  linkDecorator,
-  TOCDecorator,
-])
 
 const buttonStyle = css<{
   isDisabled: boolean
