@@ -42,7 +42,7 @@ import {
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
-import { AnchorDecorator } from './entity-decorators/table-of-content'
+import { AnchorDecorator } from './entity-decorators/anchor'
 
 const buttonStyle = css<{
   isDisabled: boolean
