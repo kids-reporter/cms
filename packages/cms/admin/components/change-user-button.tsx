@@ -32,22 +32,21 @@ const ChangeUserButton = ({ children }: { children?: ReactNode }) => {
     }
   }, [data])
 
-  const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
+  const { data: queryData, loading: queryLoading } = useQuery(GET_USER)
 
   if (queryLoading) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
 
   const user = queryData?.authenticatedItem
 
   return (
     <Button isLoading={loading} onClick={() => endSession()}>
       {children ||
-        (user ? (
+        (user?.name ? (
           <>
             Not <b>{user.name}</b> ? Change user
           </>
         ) : (
-          'Sign out'
+          'Change user'
         ))}
     </Button>
   )

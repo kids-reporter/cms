@@ -7,7 +7,7 @@ import { controller } from '@keystone-6/core/fields/types/virtual/views'
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   if (typeof value === 'object' && value !== null) {
     const bypass = value['bypass']
-    const configured = value['configured']
+    const set = value['set']
 
     return (
       <FieldContainer>
@@ -20,8 +20,8 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
         <p>
           目前狀態:{' '}
-          <b style={{ color: configured ? 'green' : 'red' }}>
-            {configured ? '已設定' : '未設定'}
+          <b style={{ color: set ? 'green' : 'red' }}>
+            {set ? '已設定' : '未設定'}
           </b>
         </p>
         <a href="/2fa-setup" target="_self" style={{ textDecoration: 'none' }}>

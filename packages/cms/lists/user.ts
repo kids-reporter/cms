@@ -88,8 +88,10 @@ const listConfigurations = list({
         itemView: { fieldMode: 'hidden' },
       },
     }),
-    twoFactorAuthVerified: checkbox({
-      defaultValue: false,
+    twoFactorAuthVerified: timestamp({
+      db: {
+        isNullable: true,
+      },
       ui: {
         createView: { fieldMode: 'hidden' },
         listView: { fieldMode: 'hidden' },
@@ -116,21 +118,28 @@ const listConfigurations = list({
         itemView: { fieldMode: 'hidden' },
       },
     }),
-    twoFactorAuthConfigured: virtual({
+    twoFactorAuth: virtual({
       field: graphql.field({
         type: graphql.JSON,
         async resolve(item, args, context) {
           const user = await context.query.User.findOne({
             where: { id: item.id.toString() },
-            query: 'twoFactorAuthBypass twoFactorAuthSecret',
+            query:
+              'twoFactorAuthSecret twoFactorAuthBypass twoFactorAuthVerified',
           })
-          const twoFAonfigured =
+          const twoFAIsSet =
             user.twoFactorAuthSecret && user.twoFactorAuthSecret.length
+              ? true
+              : false
+          const twoFAIsVerified =
+            user.twoFactorAuthVerified &&
+            new Date(user.twoFactorAuthVerified) > new Date()
               ? true
               : false
           return {
             bypass: user.twoFactorAuthBypass,
-            configured: twoFAonfigured,
+            set: twoFAIsSet,
+            verified: twoFAIsVerified,
           }
         },
       }),

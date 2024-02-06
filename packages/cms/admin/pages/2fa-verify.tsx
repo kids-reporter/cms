@@ -10,9 +10,21 @@ import { Notice } from '@keystone-ui/notice'
 
 import { ChangeUserButton } from '../components/change-user-button'
 import { SinglePageContainer } from '../components/single-page-container'
+import appConfig from '../../config'
 
 import axios from 'axios'
-import { gql, useMutation } from '@keystone-6/core/admin-ui/apollo'
+import { useQuery, useMutation, gql } from '@keystone-6/core/admin-ui/apollo'
+
+const GET_USER = gql`
+  query GetUser2FASecret {
+    authenticatedItem {
+      ... on User {
+        id
+        twoFactorAuthSecret
+      }
+    }
+  }
+`
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
@@ -31,6 +43,12 @@ export default function TwoFactorAuthCreate() {
   // Get the mutation function and the loading state
   const [updateUser] = useMutation(UPDATE_USER_MUTATION)
 
+  const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
+  const userId = queryData?.authenticatedItem?.id
+
+  if (queryLoading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
+
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -40,13 +58,16 @@ export default function TwoFactorAuthCreate() {
         if (response.data.success) {
           setErrorMessage('')
           setIsVerified(true)
+          const sessionExpireTime = new Date(
+            new Date().getTime() + appConfig.session.maxAge * 1000
+          )
           await updateUser({
             variables: {
               where: {
-                id: 3,
+                id: userId,
               },
               data: {
-                twoFactorAuthVerified: true,
+                twoFactorAuthVerified: sessionExpireTime,
               },
             },
           })
