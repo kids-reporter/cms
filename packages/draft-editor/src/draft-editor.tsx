@@ -38,11 +38,11 @@ import {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  editableAnchorDecorator,
   ANCHOR_ENTITY_TYPE,
 } from '@kids-reporter/draft-renderer'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
+import { editableAnchorDecorator } from './entity-decorators/anchor'
 
 const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
 

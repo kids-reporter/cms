@@ -10,7 +10,7 @@ import { blockRenderers } from './block-renderers'
 import {
   annotationDecorator,
   linkDecorator,
-  editableAnchorDecorator,
+  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
 } from './entity-decorators'
 import { customStyleFn } from './custom-style-fn'
@@ -28,7 +28,7 @@ export {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  editableAnchorDecorator,
+  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
 }
 
@@ -43,6 +43,6 @@ export default {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  editableAnchorDecorator,
+  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
 }

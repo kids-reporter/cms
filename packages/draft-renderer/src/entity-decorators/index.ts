@@ -3,14 +3,14 @@ import { annotationDecorator } from './annotation-decorator'
 import { linkDecorator } from './link-decorator'
 import {
   anchorDecorator,
-  editableAnchorDecorator,
+  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
 } from './anchor'
 
 export {
   annotationDecorator,
   linkDecorator,
-  editableAnchorDecorator,
+  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
 }
 
