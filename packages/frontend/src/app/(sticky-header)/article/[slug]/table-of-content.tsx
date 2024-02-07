@@ -61,15 +61,14 @@ const TOCBackground = styled.div`
     props.isExpanded ? 'translateX(0px)' : `translateX(-${tocWidth}px)`};
 `
 
-// TODO: change color
 const Index = styled.div`
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
-  border: none;
   background-color: transparent;
   cursor: pointer;
   font-size: 14px;
+  word-wrap: break-word;
   color: #8e8e8e;
 
   &.withinViewPort {
@@ -109,7 +108,6 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
                 }}
               >
                 {tocIndex.label}
-                <br />
               </Index>
             )
         )}
