@@ -1,6 +1,5 @@
 import React from 'react'
 import buttonNames from './buttons/bt-names'
-import styled, { css } from 'styled-components'
 import {
   ContentBlock,
   DraftBlockType,
@@ -13,29 +12,6 @@ import {
   CompositeDecorator,
 } from 'draft-js'
 
-import {
-  buttonStyle,
-  BlockStyleControls,
-  InlineStyleControls,
-} from './buttons/control-buttons'
-import {
-  BackgroundColorButton,
-  customStylePrefix as bgColorPrefix,
-} from './buttons/bg-color'
-import { BlockquoteButton } from './buttons/blockquote'
-import { DividerButton } from './buttons/divider'
-import { EmbeddedCodeButton } from './buttons/embedded-code'
-import { EnlargeButton } from './buttons/enlarge'
-import {
-  FontColorButton,
-  customStylePrefix as fontColorPrefix,
-} from './buttons/font-color'
-import { ImageButton } from './buttons/image'
-import { AnchorButton } from './buttons/anchor'
-import { LinkButton } from './buttons/link'
-import { SlideshowButton } from './buttons/slideshow'
-import { ImageSelector } from './buttons/selector/image-selector'
-import { NewsReadingButton } from './buttons/news-reading'
 import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import {
@@ -45,141 +21,39 @@ import {
   linkDecorator,
   ANCHOR_ENTITY_TYPE,
 } from '@kids-reporter/draft-renderer'
+
+import {
+  DraftEditorContainer,
+  DraftEditorWrapper,
+  DraftEditorControls,
+  DraftEditorControlsWrapper,
+  EnlargeButtonWrapper,
+  TextEditorWrapper,
+} from './styled'
+import {
+  BlockStyleControls,
+  InlineStyleControls,
+  CustomEnlargeButton,
+  CustomAnchorButton,
+  CustomLinkButton,
+  CustomBackgroundColorButton,
+  CustomFontColorButton,
+  CustomBlockquoteButton,
+  CustomImageButton,
+  CustomSlideshowButton,
+  CustomEmbeddedCodeButton,
+  CustomNewsReadingButton,
+  CustomDividerButton,
+  withStyle,
+} from './buttons'
+import { ImageSelector } from './buttons/selector/image-selector'
 import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
+import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
+import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
 
 const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
-
-const withStyle = (Button: React.ComponentType<any>) => {
-  return styled(Button)`
-    ${buttonStyle}
-  `
-}
-
-const CustomBlockquoteButton = withStyle(BlockquoteButton)
-const CustomAnchorButton = withStyle(AnchorButton)
-const CustomLinkButton = withStyle(LinkButton)
-const CustomEnlargeButton = styled(withStyle(EnlargeButton))`
-  color: #999;
-`
-const CustomImageButton = withStyle(ImageButton)
-const CustomSlideshowButton = withStyle(SlideshowButton)
-const CustomEmbeddedCodeButton = withStyle(EmbeddedCodeButton)
-const CustomNewsReadingButton = withStyle(NewsReadingButton)
-const CustomBackgroundColorButton = withStyle(BackgroundColorButton)
-const CustomFontColorButton = withStyle(FontColorButton)
-const CustomDividerButton = withStyle(DividerButton)
-
-const DraftEditorWrapper = styled.div`
-  /* Rich-editor default setting (.RichEditor-root)*/
-  background: #fff;
-  border: 1px solid #ddd;
-  font-family: 'Georgia', serif;
-  font-size: 14px;
-  padding: 15px;
-
-  /* Custom setting */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  width: 100%;
-  height: 100%;
-  background: rgb(255, 255, 255);
-  border-radius: 6px;
-  padding: 0 1rem 1rem;
-`
-
-const DraftEditorControls = styled.div`
-  padding-top: 1rem;
-  width: 100%;
-  background: rgb(255, 255, 255);
-`
-
-const DraftEditorControlsWrapper = styled.div`
-  width: 100%;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding-right: 45px;
-  gap: 2px;
-`
-
-const TextEditorWrapper = styled.div`
-  /* Rich-editor default setting (.RichEditor-editor)*/
-  border-top: 1px solid #ddd;
-  cursor: text;
-  font-size: 16px;
-  margin-top: 10px;
-`
-
-const DraftEditorContainer = styled.div<{ isEnlarged: boolean }>`
-  overflow-x: hidden;
-  position: relative;
-  margin-top: 4px;
-  ${(props) =>
-    props.isEnlarged
-      ? css`
-          position: fixed;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          z-index: 30;
-          padding-left: 3em;
-          padding-right: 3em;
-          background: rgba(0, 0, 0, 0.5);
-        `
-      : ''}
-  ${DraftEditorWrapper} {
-    ${(props) =>
-      props.isEnlarged
-        ? css`
-            width: 100%;
-            height: 100%;
-            padding: 0 1rem 0;
-            overflow: scroll;
-          `
-        : ''}
-  }
-  ${DraftEditorControls} {
-    ${(props) =>
-      props.isEnlarged
-        ? css`
-            position: sticky;
-            top: 0;
-            z-index: 12;
-          `
-        : ''}
-  }
-  ${DraftEditorControlsWrapper} {
-    ${(props) =>
-      props.isEnlarged
-        ? css`
-            overflow: auto;
-            padding-bottom: 0;
-          `
-        : ''}
-  }
-  ${TextEditorWrapper} {
-    ${(props) =>
-      props.isEnlarged
-        ? css`
-            max-width: 100%;
-            min-height: 100vh;
-            padding-bottom: 0;
-          `
-        : ''}
-  }
-`
-
-const EnlargeButtonWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 0;
-`
 
 type State = {
   isEnlarged: boolean
