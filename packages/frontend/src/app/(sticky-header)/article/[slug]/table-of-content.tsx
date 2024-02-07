@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
+import { STICKY_HEADER_HEIGHT } from '@/app/constants'
 
 const zIndex = 1000
 const TOCContainer = styled.div`
@@ -96,7 +97,7 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
                     `#anchor-${tocIndex.key}`
                   ) as HTMLElement
                   window.scrollTo({
-                    top: anchor.offsetTop - 62, // TODO: fix header height issue
+                    top: anchor.offsetTop - STICKY_HEADER_HEIGHT,
                     behavior: 'smooth',
                   })
                 }}
