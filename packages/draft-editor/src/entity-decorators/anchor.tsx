@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ContentState } from 'draft-js'
-import { Drawer, DrawerController } from '@keystone-ui/modals'
+import { AlertDialog } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 import { findAnchorEntities } from '@kids-reporter/draft-renderer'
 
@@ -20,23 +20,13 @@ const AnchorEditButton = styled.div<{ anchorLabel: string }>`
   display: inline;
   cursor: pointer;
   &::before {
-    content: '目錄:${(props) =>
+    content: '索引:${(props) =>
       props.anchorLabel ? `(${props.anchorLabel}) ` : ''}';
   }
 `
 
-const TextInputContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-
 const StyledTextInput = styled(TextInput)`
   margin: 10px;
-`
-
-const Label = styled.span`
-  text-wrap: nowrap;
 `
 
 const AnchorLabelEditor = (props: {
@@ -49,35 +39,27 @@ const AnchorLabelEditor = (props: {
   const [anchorLabel, setTOCLabel] = useState(anchorLabelValue)
 
   return (
-    <DrawerController isOpen={isOpen}>
-      <Drawer
-        title={'目錄'}
-        actions={{
-          cancel: {
-            label: 'Cancel',
-            action: () => {
-              onCancel()
-            },
-          },
-          confirm: {
-            label: 'Confirm',
-            action: () => onConfirm(anchorLabel),
-          },
-        }}
-      >
-        <TextInputContainer>
-          <Label>目錄顯示文字</Label>
-          <StyledTextInput
-            placeholder="目錄內顯示文字"
-            value={anchorLabel}
-            onChange={(e) => {
-              setTOCLabel(e.target.value)
-            }}
-            type="text"
-          />
-        </TextInputContainer>
-      </Drawer>
-    </DrawerController>
+    <AlertDialog
+      title="編輯索引顯示文字"
+      isOpen={isOpen}
+      actions={{
+        cancel: {
+          label: 'Cancel',
+          action: () => onCancel(),
+        },
+        confirm: {
+          label: 'Confirm',
+          action: () => onConfirm(anchorLabel),
+        },
+      }}
+    >
+      <StyledTextInput
+        placeholder="索引在目錄內顯示文字"
+        type="text"
+        value={anchorLabel}
+        onChange={(e) => setTOCLabel(e.target.value)}
+      />
+    </AlertDialog>
   )
 }
 
