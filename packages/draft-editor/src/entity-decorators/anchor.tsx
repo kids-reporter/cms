@@ -7,7 +7,7 @@ import { findAnchorEntities } from '@kids-reporter/draft-renderer'
 
 const AnchorWrapper = styled.span`
   display: inline;
-  color: #27b5f7;
+  color: #8e8e8e;
   &::before {
     content: '[';
   }
