@@ -193,13 +193,16 @@ export default async function PostPage({
     notFound()
   }
 
+  // Traverse entityMap to find indexes of TOC
   const entityMap = post.content?.entityMap
   const tocIndexes: TOCIndex[] = []
   Object.keys(entityMap)?.forEach((key) => {
-    if (entityMap[key]?.type === 'ANCHOR') {
+    const entity = entityMap[key]
+    const data = entity?.data
+    if (entity && entity.type === 'ANCHOR' && data?.anchorID) {
       tocIndexes.push({
-        key: entityMap[key].data?.anchorID,
-        label: entityMap[key].data?.anchorLabel ?? '',
+        key: data.anchorID,
+        label: data.anchorLabel ?? '',
       })
     }
   })
