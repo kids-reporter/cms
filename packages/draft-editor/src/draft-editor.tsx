@@ -74,7 +74,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       {
         ...editableAnchorDecorator,
         props: {
-          ...this.editProps,
+          ...this.customEditProps,
         },
       },
     ])
@@ -165,7 +165,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     this.setState({ isEnlarged: !this.state.isEnlarged })
   }
 
-  editProps = {
+  commonEditProps = {
     onEditStart: () => {
       this.setState({
         // If custom block renderer requires mouse interaction,
@@ -180,7 +180,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
         readOnly: true,
       })
     },
+    onEditFinish: () => {
+      this.setState({ readOnly: false })
+    },
+  }
 
+  customEditProps = {
+    onEditStart: this.commonEditProps.onEditStart,
     onEditFinish: ({
       entityKey,
       entityData,
@@ -200,13 +206,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
           })
         )
       }
-
-      // Custom block interaction is finished.
-      // Therefore, we set readOnly={false} to
-      // make editor editable.
-      this.setState({
-        readOnly: false,
-      })
+      this.commonEditProps.onEditFinish()
     },
   }
 
@@ -218,7 +218,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       // We can get them via `props.blockProps.onEditStart`
       // and `props.blockProps.onEditFinish` in the custom block components.
       atomicBlockObj['props'] = {
-        ...this.editProps,
+        ...this.customEditProps,
         RichTextEditorComponent: RichTextEditor,
         decorator,
         getMainEditorReadOnly: () => this.state.readOnly,
@@ -246,15 +246,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       editorState: editorState,
       onChange: this.onChange,
       readOnly: this.state.readOnly,
-    }
-
-    const commonEditProps = {
-      onEditStart: () => {
-        this.setState({ readOnly: true })
-      },
-      onEditFinish: () => {
-        this.setState({ readOnly: false })
-      },
     }
 
     return (
@@ -299,13 +290,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === ANCHOR_ENTITY_TYPE}
                 {...commonProps}
-                {...commonEditProps}
+                {...this.commonEditProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
                 isActive={entityType === 'LINK'}
                 {...commonProps}
-                {...commonEditProps}
+                {...this.commonEditProps}
               />
               <CustomBackgroundColorButton
                 isDisabled={disabledButtons.includes(
@@ -321,7 +312,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                     ) !== undefined
                 }
                 {...commonProps}
-                {...commonEditProps}
+                {...this.commonEditProps}
               ></CustomBackgroundColorButton>
               <CustomFontColorButton
                 isDisabled={disabledButtons.includes(buttonNames.fontColor)}
@@ -335,7 +326,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                     ) !== undefined
                 }
                 {...commonProps}
-                {...commonEditProps}
+                {...this.commonEditProps}
               ></CustomFontColorButton>
               <CustomBlockquoteButton
                 isDisabled={disabledButtons.includes(buttonNames.blockquote)}
@@ -345,7 +336,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
                 isActive={entityType === 'ANNOTATION'}
                 {...commonProps}
-                {...commonEditProps}
+                {...this.commonEditProps}
               />
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
