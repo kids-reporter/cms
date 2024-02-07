@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import Link from 'next/link'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
 
@@ -61,7 +60,7 @@ const TOCBackground = styled.div`
 `
 
 // TODO: change color
-const StyledLink = styled(Link)`
+const TOC = styled.button`
   &.withinViewPort {
     color: green;
   }
@@ -94,14 +93,22 @@ export const TableOfContent = ({ post }: { post: any }) => {
         {tocs.map(
           (toc, index) =>
             toc && (
-              <StyledLink
+              <TOC
                 key={`toc-key-${index}`}
-                href={`#anchor-${toc.id}`}
                 id={`toc-${toc.id}`}
+                onClick={() => {
+                  const anchor = document.querySelector(
+                    `#anchor-${toc.id}`
+                  ) as HTMLElement
+                  window.scrollTo({
+                    top: anchor.offsetTop - 62, // TODO: fix header height issue
+                    behavior: 'smooth',
+                  })
+                }}
               >
                 {toc.label}
                 <br />
-              </StyledLink>
+              </TOC>
             )
         )}
       </TOCBackground>
