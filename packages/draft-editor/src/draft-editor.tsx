@@ -1,5 +1,4 @@
 import React from 'react'
-import buttonNames from './buttons/bt-names'
 import {
   ContentBlock,
   DraftBlockType,
@@ -11,9 +10,6 @@ import {
   getDefaultKeyBinding,
   CompositeDecorator,
 } from 'draft-js'
-
-import { RichTextEditorProps } from './draft-editor.type'
-import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   blockRenderMap,
   customStyleFn,
@@ -21,7 +17,9 @@ import {
   linkDecorator,
   ANCHOR_ENTITY_TYPE,
 } from '@kids-reporter/draft-renderer'
-
+import buttonNames from './buttons/bt-names'
+import { RichTextEditorProps } from './draft-editor.type'
+import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   DraftEditorContainer,
   DraftEditorWrapper,
