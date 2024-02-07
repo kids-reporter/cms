@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
-import { STICKY_HEADER_HEIGHT } from '@/app/constants'
+import { STICKY_HEADER_HEIGHT, ThemeColor } from '@/app/constants'
 
 const zIndex = 1000
 const TOCContainer = styled.div`
@@ -48,6 +48,7 @@ const TOCBackground = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 15px;
   position: fixed;
   z-index: ${zIndex};
   top: 220;
@@ -61,13 +62,18 @@ const TOCBackground = styled.div`
 `
 
 // TODO: change color
-const Index = styled.button`
+const Index = styled.div`
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
   border: none;
   background-color: transparent;
   cursor: pointer;
+  font-size: 14px;
+  color: #8e8e8e;
 
   &.withinViewPort {
-    color: green;
+    color: ${ThemeColor.BLUE};
   }
 `
 export type TOCIndex = { key: string; label: string }
