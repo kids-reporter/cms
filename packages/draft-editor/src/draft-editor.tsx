@@ -422,6 +422,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     const { isEnlarged, readOnly } = this.state
 
     const entityType = this.getEntityType(editorState)
+
+    const commonBtnProps = {
+      editorState: editorState,
+      onChange: this.onChange,
+      readOnly: this.state.readOnly,
+    }
+
     const editProps = {
       onEditStart: () => {
         this.setState({ readOnly: true })
@@ -472,17 +479,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === ANCHOR_ENTITY_TYPE}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
                 {...editProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
                 isActive={entityType === 'LINK'}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
                 {...editProps}
               />
               <CustomBackgroundColorButton
@@ -498,9 +501,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                         styleName.startsWith(bgColorPrefix)
                     ) !== undefined
                 }
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
                 {...editProps}
               ></CustomBackgroundColorButton>
               <CustomFontColorButton
@@ -514,64 +515,44 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                         styleName.startsWith(fontColorPrefix)
                     ) !== undefined
                 }
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
                 {...editProps}
               ></CustomFontColorButton>
               <CustomBlockquoteButton
                 isDisabled={disabledButtons.includes(buttonNames.blockquote)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
               />
               <CustomAnnotationButton
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
                 isActive={entityType === 'ANNOTATION'}
-                editorState={editorState}
-                onChange={(editorState: EditorState) => {
-                  this.onChange(editorState)
-                }}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
                 {...editProps}
               />
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
                 ImageSelector={ImageSelector}
+                {...commonBtnProps}
               />
               <CustomSlideshowButton
                 isDisabled={disabledButtons.includes(buttonNames.slideshow)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
                 ImageSelector={ImageSelector}
+                {...commonBtnProps}
               />
               <CustomInfoBoxButton
                 isDisabled={disabledButtons.includes(buttonNames.infoBox)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
               />
               <CustomEmbeddedCodeButton
                 isDisabled={disabledButtons.includes(buttonNames.embed)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
               ></CustomEmbeddedCodeButton>
               <CustomNewsReadingButton
                 isDisabled={disabledButtons.includes(buttonNames.newsReading)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
               ></CustomNewsReadingButton>
               <CustomDividerButton
                 isDisabled={disabledButtons.includes(buttonNames.divider)}
-                editorState={editorState}
-                onChange={this.onChange}
-                readOnly={this.state.readOnly}
+                {...commonBtnProps}
               />
             </DraftEditorControlsWrapper>
           </DraftEditorControls>
