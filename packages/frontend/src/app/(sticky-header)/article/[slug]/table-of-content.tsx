@@ -60,6 +60,13 @@ const TOCBackground = styled.div`
     props.isExpanded ? 'translateX(0px)' : `translateX(-${tocWidth}px)`};
 `
 
+// TODO: change color
+const StyledLink = styled(Link)`
+  &.withinViewPort {
+    color: green;
+  }
+`
+
 export const TableOfContent = ({ post }: { post: any }) => {
   const [isExpanded, setIsExpanded] = useState(true)
   const entityMap = post?.content?.entityMap
@@ -87,14 +94,14 @@ export const TableOfContent = ({ post }: { post: any }) => {
         {tocs.map(
           (toc, index) =>
             toc && (
-              <Link
+              <StyledLink
                 key={`toc-key-${index}`}
                 href={`#anchor-${toc.id}`}
                 id={`toc-${toc.id}`}
               >
                 {toc.label}
                 <br />
-              </Link>
+              </StyledLink>
             )
         )}
       </TOCBackground>

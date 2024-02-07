@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-// import styled from 'styled-components'
 import { ContentBlock, ContentState } from 'draft-js'
 
 export const ANCHOR_ENTITY_TYPE = 'ANCHOR'
@@ -35,10 +34,10 @@ const Anchor = (props: {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const anchor = document.querySelector(`#${tocAnchorID}`)
+        const tocAnchor = document.querySelector(`#${tocAnchorID}`)
         entry.isIntersecting
-          ? anchor?.classList?.add('withinViewPort')
-          : anchor?.classList?.remove('outOfViewPort')
+          ? tocAnchor?.classList?.add('withinViewPort')
+          : tocAnchor?.classList?.remove('withinViewPort')
       },
       {
         root: null,
