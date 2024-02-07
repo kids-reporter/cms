@@ -67,7 +67,7 @@ export const TableOfContent = ({ post }: { post: any }) => {
   Object.keys(entityMap)?.forEach((key) => {
     if (entityMap[key]?.type === 'ANCHOR') {
       tocs.push({
-        id: `toc-${entityMap[key].data?.anchorID}`,
+        id: entityMap[key].data?.anchorID,
         label: entityMap[key].data?.anchorLabel ?? '',
       })
     }
@@ -87,7 +87,11 @@ export const TableOfContent = ({ post }: { post: any }) => {
         {tocs.map(
           (toc, index) =>
             toc && (
-              <Link key={`toc-key-${index}`} href="#" id={toc.id}>
+              <Link
+                key={`toc-key-${index}`}
+                href={`#anchor-${toc.id}`}
+                id={`toc-${toc.id}`}
+              >
                 {toc.label}
                 <br />
               </Link>
