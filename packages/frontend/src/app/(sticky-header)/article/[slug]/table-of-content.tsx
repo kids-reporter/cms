@@ -60,24 +60,19 @@ const TOCBackground = styled.div`
 `
 
 // TODO: change color
-const TOC = styled.button`
+const Index = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
   &.withinViewPort {
     color: green;
   }
 `
+export type TOCIndex = { key: string; label: string }
 
-export const TableOfContent = ({ post }: { post: any }) => {
-  const [isExpanded, setIsExpanded] = useState(true)
-  const entityMap = post?.content?.entityMap
-  const tocs: { id: string; label: string }[] = []
-  Object.keys(entityMap)?.forEach((key) => {
-    if (entityMap[key]?.type === 'ANCHOR') {
-      tocs.push({
-        id: entityMap[key].data?.anchorID,
-        label: entityMap[key].data?.anchorLabel ?? '',
-      })
-    }
-  })
+export const TOC = (props: { indexes: TOCIndex[] }) => {
+  const [isExpanded, setIsExpanded] = useState(false)
 
   return (
     <TOCContainer>
@@ -90,15 +85,15 @@ export const TableOfContent = ({ post }: { post: any }) => {
         <div>索引</div>
       </TOCTab>
       <TOCBackground isExpanded={isExpanded}>
-        {tocs.map(
-          (toc, index) =>
-            toc && (
-              <TOC
+        {props.indexes.map(
+          (tocIndex, index) =>
+            tocIndex && (
+              <Index
                 key={`toc-key-${index}`}
-                id={`toc-${toc.id}`}
+                id={`toc-${tocIndex.key}`}
                 onClick={() => {
                   const anchor = document.querySelector(
-                    `#anchor-${toc.id}`
+                    `#anchor-${tocIndex.key}`
                   ) as HTMLElement
                   window.scrollTo({
                     top: anchor.offsetTop - 62, // TODO: fix header height issue
@@ -106,14 +101,12 @@ export const TableOfContent = ({ post }: { post: any }) => {
                   })
                 }}
               >
-                {toc.label}
+                {tocIndex.label}
                 <br />
-              </TOC>
+              </Index>
             )
         )}
       </TOCBackground>
     </TOCContainer>
   )
 }
-
-export default TableOfContent

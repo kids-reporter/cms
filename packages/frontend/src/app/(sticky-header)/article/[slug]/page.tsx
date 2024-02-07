@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import TableOfContent from './table-of-content'
+import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
 import {
   API_URL,
@@ -193,9 +193,20 @@ export default async function PostPage({
     notFound()
   }
 
+  const entityMap = post.content?.entityMap
+  const tocIndexes: TOCIndex[] = []
+  Object.keys(entityMap)?.forEach((key) => {
+    if (entityMap[key]?.type === 'ANCHOR') {
+      tocIndexes.push({
+        key: entityMap[key].data?.anchorID,
+        label: entityMap[key].data?.anchorLabel ?? '',
+      })
+    }
+  })
+
   return (
     <main>
-      <TableOfContent post={post} />
+      {tocIndexes.length > 0 && <TOC indexes={tocIndexes} />}
       {post && <Article post={post} />}
     </main>
   )
