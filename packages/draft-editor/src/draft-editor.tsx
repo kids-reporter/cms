@@ -423,13 +423,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
 
     const entityType = this.getEntityType(editorState)
 
-    const commonBtnProps = {
+    const commonProps = {
       editorState: editorState,
       onChange: this.onChange,
       readOnly: this.state.readOnly,
     }
 
-    const editProps = {
+    const commonEditProps = {
       onEditStart: () => {
         this.setState({ readOnly: true })
       },
@@ -479,14 +479,14 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === ANCHOR_ENTITY_TYPE}
-                {...commonBtnProps}
-                {...editProps}
+                {...commonProps}
+                {...commonEditProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
                 isActive={entityType === 'LINK'}
-                {...commonBtnProps}
-                {...editProps}
+                {...commonProps}
+                {...commonEditProps}
               />
               <CustomBackgroundColorButton
                 isDisabled={disabledButtons.includes(
@@ -501,8 +501,8 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                         styleName.startsWith(bgColorPrefix)
                     ) !== undefined
                 }
-                {...commonBtnProps}
-                {...editProps}
+                {...commonProps}
+                {...commonEditProps}
               ></CustomBackgroundColorButton>
               <CustomFontColorButton
                 isDisabled={disabledButtons.includes(buttonNames.fontColor)}
@@ -515,44 +515,44 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                         styleName.startsWith(fontColorPrefix)
                     ) !== undefined
                 }
-                {...commonBtnProps}
-                {...editProps}
+                {...commonProps}
+                {...commonEditProps}
               ></CustomFontColorButton>
               <CustomBlockquoteButton
                 isDisabled={disabledButtons.includes(buttonNames.blockquote)}
-                {...commonBtnProps}
+                {...commonProps}
               />
               <CustomAnnotationButton
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
                 isActive={entityType === 'ANNOTATION'}
-                {...commonBtnProps}
-                {...editProps}
+                {...commonProps}
+                {...commonEditProps}
               />
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
                 ImageSelector={ImageSelector}
-                {...commonBtnProps}
+                {...commonProps}
               />
               <CustomSlideshowButton
                 isDisabled={disabledButtons.includes(buttonNames.slideshow)}
                 ImageSelector={ImageSelector}
-                {...commonBtnProps}
+                {...commonProps}
               />
               <CustomInfoBoxButton
                 isDisabled={disabledButtons.includes(buttonNames.infoBox)}
-                {...commonBtnProps}
+                {...commonProps}
               />
               <CustomEmbeddedCodeButton
                 isDisabled={disabledButtons.includes(buttonNames.embed)}
-                {...commonBtnProps}
+                {...commonProps}
               ></CustomEmbeddedCodeButton>
               <CustomNewsReadingButton
                 isDisabled={disabledButtons.includes(buttonNames.newsReading)}
-                {...commonBtnProps}
+                {...commonProps}
               ></CustomNewsReadingButton>
               <CustomDividerButton
                 isDisabled={disabledButtons.includes(buttonNames.divider)}
-                {...commonBtnProps}
+                {...commonProps}
               />
             </DraftEditorControlsWrapper>
           </DraftEditorControls>
