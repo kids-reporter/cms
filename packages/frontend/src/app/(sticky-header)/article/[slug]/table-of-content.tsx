@@ -20,7 +20,7 @@ const TOCContainer = styled.div`
 `
 
 const tocWidth = 180 // px
-const TOCTab = styled.div`
+const TOCTab = styled.div<{ isExpanded: boolean }>`
   width: 30px;
   position: fixed;
   z-index: ${zIndex};
@@ -32,18 +32,25 @@ const TOCTab = styled.div`
   cursor: pointer;
 
   > div {
-    opacity: 0.6;
-    color: black;
+    width: 30px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    color: #8e8e8e;
     background-color: #f4f4f4;
+    border-radius: 0px 15px 15px 0px;
+    padding-top: 25px;
+    padding-bottom: 25px;
     font-size: 14px;
-    width: 14px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 `
-const TOCBackground = styled.div`
+const TOCBackground = styled.div<{ isExpanded: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,7 +95,10 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
         }}
         isExpanded={isExpanded}
       >
-        <div>索引</div>
+        <div>
+          <p>索</p>
+          <p>引</p>
+        </div>
       </TOCTab>
       <TOCBackground isExpanded={isExpanded}>
         {props.indexes.map(
