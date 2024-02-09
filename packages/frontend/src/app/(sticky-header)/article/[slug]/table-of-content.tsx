@@ -5,7 +5,6 @@ import { mediaQuery } from '@/app/utils/media-query'
 import { STICKY_HEADER_HEIGHT, ThemeColor } from '@/app/constants'
 
 const zIndex = 1000
-const tocWidth = 180
 
 const TOCContainer = styled.div`
   position: fixed;
@@ -13,12 +12,6 @@ const TOCContainer = styled.div`
   left: 0;
   transform: translateY(-50%);
   z-index: ${zIndex};
-
-  ${mediaQuery.mediumAbove} {
-  }
-
-  ${mediaQuery.smallOnly} {
-  }
 `
 
 const TOCTab = styled.div<{ isExpanded: boolean }>`
@@ -29,7 +22,11 @@ const TOCTab = styled.div<{ isExpanded: boolean }>`
   left: 0;
   transition: transform 0.1s ease-in-out 0.1s;
   transform: ${(props) =>
-    props.isExpanded ? `translateX(${tocWidth}px)` : 'translateX(0px)'};
+    props.isExpanded ? `translateX(160px)` : 'translateX(0px)'};
+  ${mediaQuery.mediumAbove} {
+    transform: ${(props) =>
+      props.isExpanded ? `translateX(180px)` : 'translateX(0px)'};
+  }
   cursor: pointer;
 
   > div {
@@ -52,6 +49,8 @@ const TOCTab = styled.div<{ isExpanded: boolean }>`
   }
 `
 const TOCBackground = styled.div<{ isExpanded: boolean }>`
+  width: 160px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,12 +60,15 @@ const TOCBackground = styled.div<{ isExpanded: boolean }>`
   z-index: ${zIndex};
   top: 220;
   left: 0;
-  height: 100vh;
-  width: ${tocWidth}px;
   background-color: #f4f4f4;
   transition: transform 0.1s ease-in-out 0.1s;
   transform: ${(props) =>
-    props.isExpanded ? 'translateX(0px)' : `translateX(-${tocWidth}px)`};
+    props.isExpanded ? 'translateX(0px)' : `translateX(-160px)`};
+  ${mediaQuery.mediumAbove} {
+    width: 180px;
+    transform: ${(props) =>
+      props.isExpanded ? 'translateX(0px)' : `translateX(-180px)`};
+  }
 `
 
 const Index = styled.div`
