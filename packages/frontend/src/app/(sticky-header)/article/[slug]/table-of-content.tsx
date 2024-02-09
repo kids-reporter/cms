@@ -5,6 +5,8 @@ import { mediaQuery } from '@/app/utils/media-query'
 import { STICKY_HEADER_HEIGHT, ThemeColor } from '@/app/constants'
 
 const zIndex = 1000
+const tocWidth = 180
+
 const TOCContainer = styled.div`
   position: fixed;
   width: 90px;
@@ -19,12 +21,11 @@ const TOCContainer = styled.div`
   }
 `
 
-const tocWidth = 180 // px
 const TOCTab = styled.div<{ isExpanded: boolean }>`
   width: 30px;
   position: fixed;
   z-index: ${zIndex};
-  top: 150px;
+  top: 245px;
   left: 0;
   transition: transform 0.1s ease-in-out 0.1s;
   transform: ${(props) =>
@@ -82,6 +83,8 @@ const Index = styled.div`
     color: ${ThemeColor.BLUE};
   }
 `
+const TOCBtn = '索引'.split('').map((c, i) => <p key={`toc-btn-${i}`}>{c}</p>)
+
 export type TOCIndex = { key: string; label: string }
 
 export const TOC = (props: { indexes: TOCIndex[] }) => {
@@ -95,10 +98,7 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
         }}
         isExpanded={isExpanded}
       >
-        <div>
-          <p>索</p>
-          <p>引</p>
-        </div>
+        <div>{TOCBtn}</div>
       </TOCTab>
       <TOCBackground isExpanded={isExpanded}>
         {props.indexes.map(
