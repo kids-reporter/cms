@@ -91,7 +91,7 @@ const EditableAnchor = (props: {
     props.onEditFinish({
       entityKey,
       entityData: {
-        anchorID: `${blockKey}-${start}-${end}`,
+        anchorKey: `${blockKey}-${start}-${end}`,
         anchorLabel: labelValue,
       },
     })

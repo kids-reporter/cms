@@ -199,9 +199,9 @@ export default async function PostPage({
   Object.keys(entityMap)?.forEach((key) => {
     const entity = entityMap[key]
     const data = entity?.data
-    if (entity && entity.type === 'ANCHOR' && data?.anchorID) {
+    if (entity && entity.type === 'ANCHOR' && data?.anchorKey) {
       tocIndexes.push({
-        key: data.anchorID,
+        key: data.anchorKey,
         label: data.anchorLabel ?? '',
       })
     }

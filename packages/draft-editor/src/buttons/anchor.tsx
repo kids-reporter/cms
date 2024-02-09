@@ -31,7 +31,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         ANCHOR_ENTITY_TYPE,
         'IMMUTABLE',
         {
-          anchorID: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
+          anchorKey: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
           anchorLabel: selectedText,
         }
       )
