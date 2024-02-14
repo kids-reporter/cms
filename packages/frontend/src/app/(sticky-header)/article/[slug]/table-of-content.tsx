@@ -73,6 +73,7 @@ const TOCBackground = styled.div<{ isExpanded: boolean }>`
 
 const Index = styled.div`
   width: 100%;
+  min-height: 16px;
   padding-left: 20px;
   padding-right: 20px;
   background-color: transparent;
