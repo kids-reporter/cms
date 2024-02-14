@@ -78,7 +78,7 @@ const EditableAnchor = (props: {
   const tocContent = props.decoratedText
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [anchorLabel, setTOCLabel] = useState(
-    contentState.getEntity(entityKey).getData()?.anchorLabel
+    contentState?.getEntity(entityKey)?.getData()?.anchorLabel
   )
 
   const onTOCLabelChange = (labelValue: string) => {
