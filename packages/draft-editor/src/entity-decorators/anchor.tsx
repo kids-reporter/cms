@@ -76,13 +76,13 @@ const EditableAnchor = (props: {
 }) => {
   const { children, contentState, entityKey, blockKey, start, end } = props
   const tocContent = props.decoratedText
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [anchorLabel, setTOCLabel] = useState(
     contentState?.getEntity(entityKey)?.getData()?.anchorLabel
   )
 
   const onTOCLabelChange = (labelValue: string) => {
-    setIsDrawerOpen(false)
+    setIsModalOpen(false)
     setTOCLabel(labelValue)
     props.onEditFinish({
       entityKey,
@@ -95,13 +95,13 @@ const EditableAnchor = (props: {
 
   return (
     <React.Fragment>
-      {isDrawerOpen && (
+      {isModalOpen && (
         <AnchorLabelEditor
-          isOpen={isDrawerOpen}
+          isOpen={isModalOpen}
           anchorLabelValue={anchorLabel}
           onConfirm={onTOCLabelChange}
           onCancel={() => {
-            setIsDrawerOpen(false)
+            setIsModalOpen(false)
             props.onEditFinish()
           }}
         />
@@ -111,7 +111,7 @@ const EditableAnchor = (props: {
           anchorLabel={anchorLabel !== tocContent ? anchorLabel : undefined}
           onClick={(e) => {
             e.preventDefault()
-            setIsDrawerOpen(true)
+            setIsModalOpen(true)
             props.onEditStart()
           }}
         >
