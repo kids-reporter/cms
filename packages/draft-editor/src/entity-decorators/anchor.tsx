@@ -21,7 +21,7 @@ const AnchorEditButton = styled.div<{ anchorLabel: string }>`
   cursor: pointer;
   &::before {
     content: '索引:${(props) =>
-      props.anchorLabel ? `(${props.anchorLabel}) ` : ''}';
+      props.anchorLabel !== undefined ? `(${props.anchorLabel}) ` : ''}';
   }
 `
 
@@ -112,7 +112,7 @@ const EditableAnchor = (props: {
       )}
       <AnchorWrapper>
         <AnchorEditButton
-          anchorLabel={anchorLabel !== tocContent ? anchorLabel : ''}
+          anchorLabel={anchorLabel !== tocContent ? anchorLabel : undefined}
           onClick={(e) => {
             e.preventDefault()
             setIsDrawerOpen(true)
