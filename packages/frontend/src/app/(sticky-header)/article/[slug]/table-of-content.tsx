@@ -104,7 +104,7 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
         <div>{TOCBtn}</div>
       </TOCTab>
       <TOCBackground isExpanded={isExpanded}>
-        {props.indexes.map(
+        {props.indexes?.map(
           (tocIndex, index) =>
             tocIndex && (
               <Index
@@ -114,10 +114,12 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
                   const anchor = document.querySelector(
                     `#anchor-${tocIndex.key}`
                   ) as HTMLElement
-                  window.scrollTo({
-                    top: anchor.offsetTop - STICKY_HEADER_HEIGHT,
-                    behavior: 'smooth',
-                  })
+                  if (anchor) {
+                    window.scrollTo({
+                      top: anchor.offsetTop - STICKY_HEADER_HEIGHT,
+                      behavior: 'smooth',
+                    })
+                  }
                 }}
               >
                 {tocIndex.label}
