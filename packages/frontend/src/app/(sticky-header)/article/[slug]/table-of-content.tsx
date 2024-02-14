@@ -78,6 +78,7 @@ const Index = styled.div`
   background-color: transparent;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 400;
   word-wrap: break-word;
   color: #8e8e8e;
 
