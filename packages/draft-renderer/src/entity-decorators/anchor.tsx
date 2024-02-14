@@ -35,9 +35,10 @@ const Anchor = (props: {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const tocAnchor = document.querySelector(`#${tocAnchorID}`)
+        const tocAnchorClassName = 'withinViewPort'
         entry.isIntersecting
-          ? tocAnchor?.classList?.add('withinViewPort')
-          : tocAnchor?.classList?.remove('withinViewPort')
+          ? tocAnchor?.classList?.add(tocAnchorClassName)
+          : tocAnchor?.classList?.remove(tocAnchorClassName)
       },
       {
         root: null,
