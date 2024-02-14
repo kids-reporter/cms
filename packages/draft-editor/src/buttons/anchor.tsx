@@ -24,14 +24,14 @@ export const AnchorButton = (props: AnchorButtonProps) => {
       const contentState = editorState.getCurrentContent()
       const startKey = selection.getStartKey()
       const block = contentState.getBlockForKey(startKey)
-      const selectedText = block
-        .getText()
-        .slice(selection.getStartOffset(), selection.getEndOffset())
+      const start = selection.getStartOffset()
+      const end = selection.getEndOffset()
+      const selectedText = block.getText().slice(start, end)
       const contentStateWithEntity = contentState.createEntity(
         ANCHOR_ENTITY_TYPE,
         'IMMUTABLE',
         {
-          anchorKey: `${block.getKey()}-${selection.getStartOffset()}-${selection.getEndOffset()}`,
+          anchorKey: `${block.getKey()}-${start}-${end}`,
           anchorLabel: selectedText,
         }
       )
