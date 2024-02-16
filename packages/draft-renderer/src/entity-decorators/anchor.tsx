@@ -22,12 +22,9 @@ const Anchor = (props: {
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
-  blockKey: string
-  start: number
-  end: number
 }) => {
-  const { children, blockKey, start, end } = props
-  const key = `${blockKey}-${start}-${end}`
+  const { children, contentState, entityKey } = props
+  const key = contentState?.getEntity(entityKey)?.getData()?.anchorKey
   const anchorID = `anchor-${key}`
   const tocAnchorID = `toc-${key}`
 

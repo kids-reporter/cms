@@ -70,11 +70,8 @@ const EditableAnchor = (props: {
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
-  blockKey: string
-  start: number
-  end: number
 }) => {
-  const { children, contentState, entityKey, blockKey, start, end } = props
+  const { children, contentState, entityKey } = props
   const tocContent = props.decoratedText
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [anchorLabel, setTOCLabel] = useState(
@@ -87,7 +84,7 @@ const EditableAnchor = (props: {
     props.onEditFinish({
       entityKey,
       entityData: {
-        anchorKey: `${blockKey}-${start}-${end}`,
+        anchorKey: contentState?.getEntity(entityKey)?.getData()?.anchorKey,
         anchorLabel: labelValue,
       },
     })

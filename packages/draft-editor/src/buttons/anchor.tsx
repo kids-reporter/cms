@@ -31,7 +31,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         ANCHOR_ENTITY_TYPE,
         'IMMUTABLE',
         {
-          anchorKey: `${block.getKey()}-${start}-${end}`,
+          anchorKey: `createdAt-${Date.now()}`,
           anchorLabel: selectedText,
         }
       )
