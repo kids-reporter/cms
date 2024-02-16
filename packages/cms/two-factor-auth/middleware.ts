@@ -10,12 +10,22 @@ export function twoFactorAuthMiddleware(
   // froce redirect to 2fa verification after signin
   app.use(async (req: Request, res: Response, next: NextFunction) => {
     const signinRoute = '/signin'
-    const redirectTo2faVerify = `${signinRoute}?from=%2F2fa-verify`
-    if (
-      req.originalUrl.startsWith(signinRoute) &&
-      req.originalUrl !== redirectTo2faVerify
-    ) {
-      return res.redirect(redirectTo2faVerify)
+    const queryString = Object.keys(req.query)
+      .map((key) => key + '=' + req.query[key])
+      .join('&')
+
+    // prevent 2fa-verify redirect loop
+    if (!queryString.includes('2fa-verify')) {
+      const redirectTo2faVerify = `${signinRoute}?from=%2F2fa-verify${encodeURIComponent(
+        queryString ? '?' + queryString : ''
+      )}`
+
+      if (
+        req.originalUrl.startsWith(signinRoute) &&
+        req.originalUrl !== redirectTo2faVerify
+      ) {
+        return res.redirect(redirectTo2faVerify)
+      }
     }
     return next()
   })
@@ -85,12 +95,20 @@ export function twoFactorAuthMiddleware(
       '/favicon.ico',
     ]
     if (excludedRoutes.some((route) => req.originalUrl.startsWith(route))) {
-      if (req.originalUrl === '/2fa-verify') {
+      if (req.originalUrl.startsWith('/2fa-verify')) {
+        // Redirect to 2FA setup if 2FA is not set up
         if (!context.session?.data.twoFactorAuth.set) {
           return res.redirect('/2fa-setup')
         }
+        // Redirect to home if 2FA is verified
         if (context.session?.data.twoFactorAuth.verified) {
-          return res.redirect('/')
+          const from = req.query.from
+          // if from is not empty, redirect to it
+          if (from) {
+            return res.redirect(from as string)
+          } else {
+            return res.redirect('/')
+          }
         }
       }
       return next()
@@ -106,9 +124,12 @@ export function twoFactorAuthMiddleware(
       return next()
     }
 
-    // If 2FA is set up but not verified, redirect to 2FA verification page
     if (context.session?.data.twoFactorAuth.set) {
+      // If 2FA is set up but not verified, redirect to 2FA verification page
       res.redirect('/2fa-verify')
+    } else {
+      // If 2FA is not set up, redirect to 2FA setup page
+      res.redirect('/2fa-setup')
     }
 
     // All checks passed, proceed to the next middleware
