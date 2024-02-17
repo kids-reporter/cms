@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ContentBlock, ContentState } from 'draft-js'
 
-export const ANCHOR_ENTITY_TYPE = 'ANCHOR'
+export const ANCHOR_ENTITY_TYPE = 'TOC_ANCHOR'
 
 export const findAnchorEntities = (
   contentBlock: ContentBlock,
