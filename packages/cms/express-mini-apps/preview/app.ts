@@ -25,7 +25,8 @@ export function createPreviewMiniApp({
     }
 
     // Otherwise, redirect them to login page
-    res.redirect('/signin')
+    const originUrl = req.originalUrl
+    res.redirect(`/signin?from=${encodeURIComponent(originUrl)}`)
   }
 
   const previewProxyMiddleware = createProxyMiddleware({
