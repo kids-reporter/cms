@@ -7,8 +7,6 @@ type AnchorButtonProps = {
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
-  onEditStart: () => void
-  onEditFinish: () => void
 }
 
 export const AnchorButton = (props: AnchorButtonProps) => {
@@ -17,7 +15,6 @@ export const AnchorButton = (props: AnchorButtonProps) => {
 
   const promptForAnchor = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
-    props.onEditStart()
 
     const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
@@ -44,8 +41,6 @@ export const AnchorButton = (props: AnchorButtonProps) => {
         toggleEntity(newEditorState, newEditorState.getSelection(), entityKey)
       )
     }
-
-    props.onEditFinish()
   }
 
   const removeAnchor = () => {
@@ -53,7 +48,6 @@ export const AnchorButton = (props: AnchorButtonProps) => {
     if (!selection.isCollapsed()) {
       onChange(toggleEntity(editorState, selection, null))
     }
-    props.onEditFinish()
   }
 
   return (

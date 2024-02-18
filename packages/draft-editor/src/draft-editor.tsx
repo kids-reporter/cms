@@ -296,7 +296,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === ANCHOR_ENTITY_TYPE}
                 {...commonProps}
-                {...this.commonEditProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
