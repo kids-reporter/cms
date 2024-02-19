@@ -101,7 +101,10 @@ export function twoFactorAuthMiddleware(
           return res.redirect('/2fa-setup')
         }
         // Redirect to home if 2FA is verified
-        if (context.session?.data.twoFactorAuth.verified) {
+        if (
+          context.session?.data.twoFactorAuth.bypass ||
+          context.session?.data.twoFactorAuth.verified
+        ) {
           const from = req.query.from
           // if from is not empty, redirect to it
           if (from) {

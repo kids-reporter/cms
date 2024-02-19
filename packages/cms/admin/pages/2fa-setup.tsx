@@ -16,12 +16,12 @@ import { SinglePageContainer } from '../components/single-page-container'
 
 import axios from 'axios'
 
-const GET_USER_2FA_SECRET = gql`
-  query GetUser2FASecret {
+const GET_USER = gql`
+  query GetCurrentUser {
     authenticatedItem {
       ... on User {
         id
-        twoFactorAuthSecret
+        twoFactorAuth
       }
     }
   }
@@ -45,13 +45,8 @@ export default function TwoFactorAuthCreate() {
   const [pageStep, setPageStep] = useState(1)
   const [updateUser] = useMutation(UPDATE_USER_MUTATION)
 
-  const {
-    data: queryData,
-    loading: queryLoading,
-    error,
-  } = useQuery(GET_USER_2FA_SECRET)
-  const userId = queryData?.authenticatedItem?.id
-  const twoFactorAuthSecret = queryData?.authenticatedItem?.twoFactorAuthSecret
+  const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
+  const currentUser = queryData?.authenticatedItem
 
   const getQrCodeUrl = async () => {
     try {
@@ -63,13 +58,15 @@ export default function TwoFactorAuthCreate() {
   }
 
   useEffect(() => {
-    if (twoFactorAuthSecret) {
-      setPageStep(1)
-    } else {
-      getQrCodeUrl()
-      setPageStep(2)
+    if (!queryLoading) {
+      if (currentUser.twoFactorAuth.set) {
+        setPageStep(1)
+      } else {
+        getQrCodeUrl()
+        setPageStep(2)
+      }
     }
-  }, [twoFactorAuthSecret])
+  }, [queryLoading, currentUser])
 
   if (queryLoading) return 'Loading...'
   if (error) return `Error! ${error.message}`
@@ -85,7 +82,7 @@ export default function TwoFactorAuthCreate() {
           await updateUser({
             variables: {
               where: {
-                id: userId,
+                id: currentUser.id,
               },
               data: {
                 twoFactorAuthSecret: '',

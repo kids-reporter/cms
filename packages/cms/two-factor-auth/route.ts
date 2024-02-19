@@ -1,6 +1,8 @@
 import { Express } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 
+import appConfig from '../config'
+
 import qrcode from 'qrcode'
 import { authenticator } from 'otplib'
 
@@ -69,16 +71,15 @@ export function twoFactorAuthRoute(
     const isValid = authenticator.check(token, String(tempSecret))
 
     if (isValid) {
+      const sessionExpireTime = new Date(
+        new Date().getTime() + appConfig.session.maxAge * 1000
+      )
       await context.db.User.updateOne({
         where: { id: currentSession?.itemId },
         data: {
           twoFactorAuthSecret: tempSecret,
-        },
-      })
-      await context.db.User.updateOne({
-        where: { id: currentSession?.itemId },
-        data: {
           twoFactorAuthTemp: '',
+          twoFactorAuthVerified: sessionExpireTime,
         },
       })
       res.send({ success: true })

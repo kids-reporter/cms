@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 /** @jsxFrag */
-import { useState, FormEvent } from 'react'
+import { useEffect, useState, FormEvent } from 'react'
 
 import { jsx, H1, Stack } from '@keystone-ui/core'
 import { Button } from '@keystone-ui/button'
@@ -16,11 +16,11 @@ import axios from 'axios'
 import { useQuery, useMutation, gql } from '@keystone-6/core/admin-ui/apollo'
 
 const GET_USER = gql`
-  query GetUser2FASecret {
+  query GetCurrentUser {
     authenticatedItem {
       ... on User {
         id
-        twoFactorAuthSecret
+        twoFactorAuth
       }
     }
   }
@@ -44,7 +44,25 @@ export default function TwoFactorAuthCreate() {
   const [updateUser] = useMutation(UPDATE_USER_MUTATION)
 
   const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
-  const userId = queryData?.authenticatedItem?.id
+  const currentUser = queryData?.authenticatedItem
+
+  useEffect(() => {
+    if (!queryLoading) {
+      // if 2FA has bypass flag or is already verified, hide verify form and  handle redirect from backend
+      if (
+        currentUser.twoFactorAuth.bypass ||
+        currentUser.twoFactorAuth.verified
+      ) {
+        setIsVerified(true)
+        window.location.reload()
+      }
+
+      // if 2FA is not set, redirect to 2fa-setup page
+      if (!currentUser.twoFactorAuth.set) {
+        window.location.href = '/2fa-setup'
+      }
+    }
+  }, [queryLoading, currentUser])
 
   if (queryLoading) return 'Loading...'
   if (error) return `Error! ${error.message}`
@@ -64,7 +82,7 @@ export default function TwoFactorAuthCreate() {
           await updateUser({
             variables: {
               where: {
-                id: userId,
+                id: currentUser.id,
               },
               data: {
                 twoFactorAuthVerified: sessionExpireTime,
