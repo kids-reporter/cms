@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @kids-reporter/draft-renderer@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes
@@ -11,7 +18,7 @@
 
 ### Commits
 
-* \[[`16cdad8725`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/16cdad8725)] - fix(draft-editor): clicking buttons without selection makes editor broken (nickhsine)
+- \[[`16cdad8725`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/16cdad8725)] - fix(draft-editor): clicking buttons without selection makes editor broken (nickhsine)
 
 ## 2024-01-18
 
