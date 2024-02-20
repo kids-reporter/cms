@@ -22,6 +22,7 @@ const SkeletonContainer = styled.div`
 export const PostRenderer = (props: PostProp) => {
   const [isMounted, setIsMounted] = useState(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
+  const firstAnchorIDRef = useRef<string | null>(null)
   const prevAnchorIDRef = useRef<string | null>(null)
 
   useEffect(() => {
@@ -37,11 +38,15 @@ export const PostRenderer = (props: PostProp) => {
       const firstVisibleAnchor = document.querySelector(
         `[id^="toc-"].${isVisibleClassName}`
       )
-      firstVisibleAnchor?.classList.add('isActive')
-
-      if (!firstVisibleAnchor && prevAnchorIDRef.current) {
-        const tocAnchorID = prevAnchorIDRef.current.replace('anchor', 'toc')
-        document.querySelector(`#${tocAnchorID}`)?.classList.add('isActive')
+      if (firstVisibleAnchor) {
+        firstVisibleAnchor.classList.add('isActive')
+      } else {
+        // Handling for outside first/last anchor
+        const prevAnchorID = prevAnchorIDRef.current
+        if (prevAnchorID && prevAnchorID !== firstAnchorIDRef.current) {
+          const tocAnchorID = prevAnchorID.replace('anchor', 'toc')
+          document.querySelector(`#${tocAnchorID}`)?.classList.add('isActive')
+        }
       }
     }
 
@@ -75,7 +80,10 @@ export const PostRenderer = (props: PostProp) => {
 
   useEffect(() => {
     const anchors = document.querySelectorAll('[id^="anchor-"]')
-    anchors?.forEach((anchor) => {
+    anchors?.forEach((anchor, index) => {
+      if (index === 0) {
+        firstAnchorIDRef.current = anchor.id
+      }
       observerRef.current?.observe(anchor)
     })
   })
