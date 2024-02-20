@@ -57,6 +57,10 @@ export const PostRenderer = (props: PostProp) => {
             prevAnchorIDRef.current = anchorID
           } else {
             tocAnchor?.classList?.remove(isVisibleClassName)
+            // Prevent initial fire when mounted
+            if (prevAnchorIDRef.current) {
+              prevAnchorIDRef.current = anchorID
+            }
           }
           highlightFirstVisible()
         })
