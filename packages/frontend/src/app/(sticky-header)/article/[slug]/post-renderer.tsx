@@ -40,9 +40,8 @@ export const PostRenderer = (props: PostProp) => {
       firstVisibleAnchor?.classList.add('isActive')
 
       if (!firstVisibleAnchor && prevAnchorIDRef.current) {
-        document
-          .querySelector(`#${prevAnchorIDRef.current}`)
-          ?.classList.add('isActive')
+        const tocAnchorID = prevAnchorIDRef.current.replace('anchor', 'toc')
+        document.querySelector(`#${tocAnchorID}`)?.classList.add('isActive')
       }
     }
 
