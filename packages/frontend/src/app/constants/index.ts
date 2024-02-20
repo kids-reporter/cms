@@ -109,3 +109,5 @@ subSubcategoriesOrdered {
 }
 publishedDate
 `
+
+export const STICKY_HEADER_HEIGHT = 62

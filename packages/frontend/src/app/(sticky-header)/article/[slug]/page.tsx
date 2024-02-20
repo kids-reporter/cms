@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
 import {
   API_URL,
@@ -192,5 +193,24 @@ export default async function PostPage({
     notFound()
   }
 
-  return <main>{post && <Article post={post} />}</main>
+  // Traverse entityMap to find indexes of TOC
+  const entityMap = post.content?.entityMap
+  const tocIndexes: TOCIndex[] = []
+  Object.keys(entityMap)?.forEach((key) => {
+    const entity = entityMap[key]
+    const data = entity?.data
+    if (entity && entity.type === 'TOC_ANCHOR' && data?.anchorKey) {
+      tocIndexes.push({
+        key: data.anchorKey,
+        label: data.anchorLabel ?? '',
+      })
+    }
+  })
+
+  return (
+    <main>
+      {tocIndexes.length > 0 && <TOC indexes={tocIndexes} />}
+      {post && <Article post={post} />}
+    </main>
+  )
 }

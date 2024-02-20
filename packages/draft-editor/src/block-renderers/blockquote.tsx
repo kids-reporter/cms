@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
 import { BlockquoteInput, BlockquoteInputValue } from '../buttons/blockquote'
-import { EditButton, EditableBlock as _EditableBlock } from './styled'
+import { EditableBlock as _EditableBlock } from './styled'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
 const { BlockquoteInArticleBody } = blockRenderers
@@ -48,20 +48,13 @@ export function EditableBlockquote(
         onConfirm={onInputChange}
         inputValue={data}
       />
-      <EditableBlock>
-        <StyledBlockquote data={data} />
-        <EditButton
-          onClick={() => {
-            // call `onEditStart` prop as we are trying to update the blockquote entity
-            onEditStart()
-            // open `BlockquoteInput`
-            setIsInputOpen(true)
-          }}
-        >
-          <i className="fa-solid fa-pen"></i>
-          <span>Modify</span>
-        </EditButton>
-      </EditableBlock>
+      <EditableBlock
+        component={<StyledBlockquote data={data} />}
+        onClick={() => {
+          onEditStart()
+          setIsInputOpen(true)
+        }}
+      />
     </React.Fragment>
   )
 }
