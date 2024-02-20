@@ -83,7 +83,7 @@ const Index = styled.div`
   word-wrap: break-word;
   color: #8e8e8e;
 
-  &.withinViewPort {
+  &.isActive {
     color: ${ThemeColor.BLUE};
   }
 `

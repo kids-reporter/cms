@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ContentBlock, ContentState } from 'draft-js'
 
 export const ANCHOR_ENTITY_TYPE = 'TOC_ANCHOR'
@@ -25,28 +25,7 @@ const Anchor = (props: {
 }) => {
   const { children, contentState, entityKey } = props
   const key = contentState?.getEntity(entityKey)?.getData()?.anchorKey
-  const anchorID = `anchor-${key}`
-  const tocAnchorID = `toc-${key}`
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const tocAnchor = document.querySelector(`#${tocAnchorID}`)
-        const tocAnchorClassName = 'withinViewPort'
-        entry.isIntersecting
-          ? tocAnchor?.classList?.add(tocAnchorClassName)
-          : tocAnchor?.classList?.remove(tocAnchorClassName)
-      },
-      {
-        root: null,
-        threshold: 0,
-      }
-    )
-
-    observer.observe(document.querySelector(`#${anchorID}`) as Element)
-  }, [])
-
-  return <span id={anchorID}>{children}</span>
+  return <span id={`anchor-${key}`}>{children}</span>
 }
 
 export const anchorDecorator = {

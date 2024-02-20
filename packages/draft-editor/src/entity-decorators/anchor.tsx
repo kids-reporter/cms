@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { ContentState } from 'draft-js'
 import { AlertDialog } from '@keystone-ui/modals'
@@ -77,6 +77,10 @@ const EditableAnchor = (props: {
   const [anchorLabel, setTOCLabel] = useState(
     contentState?.getEntity(entityKey)?.getData()?.anchorLabel
   )
+
+  useEffect(() => {
+    setTOCLabel(contentState.getEntity(entityKey).getData()?.anchorLabel)
+  })
 
   const onTOCLabelChange = (labelValue: string) => {
     setIsModalOpen(false)
