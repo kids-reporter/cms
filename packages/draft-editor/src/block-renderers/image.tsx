@@ -6,7 +6,7 @@ import {
   ImageSelector,
   ImageEntityWithMeta,
 } from '../buttons/selector/image-selector'
-import { EditButton, EditableBlock as _EditableBlock } from './styled'
+import { EditableBlock as _EditableBlock } from './styled'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
 const { ImageInArticleBody } = blockRenderers
@@ -62,20 +62,13 @@ export function EditableImage(props: AtomicBlockProps<EntityData>) {
           selected={[imageWithMeta]}
         />
       )}
-      <EditableBlock>
-        <StyledImage data={data} />
-        <EditButton
-          onClick={() => {
-            // call `onEditStart` prop as we are trying to update the blockquote entity
-            onEditStart()
-            // open `BlockquoteInput`
-            setIsSelectorOpen(true)
-          }}
-        >
-          <i className="fa-solid fa-pen"></i>
-          <span>Modify</span>
-        </EditButton>
-      </EditableBlock>
+      <EditableBlock
+        component={<StyledImage data={data} />}
+        onClick={() => {
+          onEditStart()
+          setIsSelectorOpen(true)
+        }}
+      />
     </React.Fragment>
   )
 }

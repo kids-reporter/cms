@@ -2,6 +2,7 @@
 import styled from 'styled-components'
 import { Photo } from '@/app/types'
 import { mediaQuery } from '@/app/utils/media-query'
+import { STICKY_HEADER_HEIGHT } from '@/app/constants'
 
 const _DownButton = ({ className }: { className?: string }) => {
   return (
@@ -98,8 +99,7 @@ export const BackgroundImage = styled.div<{
   $mobileImageEntity?: Photo
 }>`
   width: 100vw;
-  /* 62px is sticky header height */
-  height: calc(100vh - 62px);
+  height: calc(100vh - ${STICKY_HEADER_HEIGHT}px);
   background-image: image-set(
     url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 1x,
     url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 2x

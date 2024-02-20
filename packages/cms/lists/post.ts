@@ -149,6 +149,7 @@ const listConfigurations = list({
         richTextEditorButtonNames.slideshow,
         richTextEditorButtonNames.newsReading,
         richTextEditorButtonNames.divider,
+        richTextEditorButtonNames.anchor,
       ],
       ui: {
         listView: {

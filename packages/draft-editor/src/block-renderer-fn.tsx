@@ -16,27 +16,20 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
   const entityData = entity.getData()
 
   switch (entityType) {
-    case 'BLOCKQUOTE': {
+    case 'BLOCKQUOTE':
       return EditableBlockquote(props)
-    }
-    case 'DIVIDER': {
+    case 'DIVIDER':
       return Divider()
-    }
-    case 'IMAGE': {
+    case 'IMAGE':
       return EditableImage(props)
-    }
-    case 'SLIDESHOW': {
+    case 'SLIDESHOW':
       return EditableSlideshow(props)
-    }
-    case 'EMBEDDEDCODE': {
+    case 'EMBEDDEDCODE':
       return EditableEmbeddedCode(props)
-    }
-    case 'INFOBOX': {
+    case 'INFOBOX':
       return EditableInfoBox(props)
-    }
-    case 'NEWS_READING': {
+    case 'NEWS_READING':
       return NewsReading({ data: entityData })
-    }
   }
   return null
 }
