@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import {
-  ContentBlock,
-  ContentState,
-  Editor,
-  EditorState,
-  convertFromRaw,
-} from 'draft-js'
-import blockRenderMaps from '../block-render-maps/index'
-import { decorator } from '../entity-decorators/index'
+import { ContentState, Editor, EditorState, convertFromRaw } from 'draft-js'
+import blockRenderMaps from '../block-render-maps'
+import { decorator } from '../entity-decorators'
+import { findEntitiesByType } from '../utils/entity'
+
+export const ANNOTATION_ENTITY_TYPE = 'ANNOTATION'
 
 const AnnotationWrapper = styled.span`
   display: inline-block;
@@ -105,21 +102,7 @@ function AnnotationBlock(props: {
   )
 }
 
-function findAnnotationEntities(
-  contentBlock: ContentBlock,
-  callback: (start: number, end: number) => void,
-  contentState: ContentState
-) {
-  contentBlock.findEntityRanges((character) => {
-    const entityKey = character.getEntity()
-    return (
-      entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === 'ANNOTATION'
-    )
-  }, callback)
-}
-
 export const annotationDecorator = {
-  strategy: findAnnotationEntities,
+  strategy: findEntitiesByType(ANNOTATION_ENTITY_TYPE),
   component: AnnotationBlock,
 }

@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ContentBlock, ContentState } from 'draft-js'
+import { ContentState } from 'draft-js'
+import { findEntitiesByType } from '../utils/entity'
+
+export const LINK_ENTITY_TYPE = 'LINK'
 
 const LinkWrapper = styled.a`
   text-decoration: underline;
@@ -12,20 +15,6 @@ const LinkWrapper = styled.a`
     color: #232323;
   }
 `
-
-function findLinkEntities(
-  contentBlock: ContentBlock,
-  callback: (start: number, end: number) => void,
-  contentState: ContentState
-) {
-  contentBlock.findEntityRanges((character) => {
-    const entityKey = character.getEntity()
-    return (
-      entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === 'LINK'
-    )
-  }, callback)
-}
 
 const Link = (props: {
   contentState: ContentState
@@ -56,6 +45,6 @@ const Link = (props: {
 }
 
 export const linkDecorator = {
-  strategy: findLinkEntities,
+  strategy: findEntitiesByType(LINK_ENTITY_TYPE),
   component: Link,
 }

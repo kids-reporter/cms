@@ -1,21 +1,8 @@
 import React from 'react'
-import { ContentBlock, ContentState } from 'draft-js'
+import { ContentState } from 'draft-js'
+import { findEntitiesByType } from '../utils/entity'
 
 export const ANCHOR_ENTITY_TYPE = 'TOC_ANCHOR'
-
-export const findAnchorEntities = (
-  contentBlock: ContentBlock,
-  callback: (start: number, end: number) => void,
-  contentState: ContentState
-) => {
-  contentBlock.findEntityRanges((character) => {
-    const entityKey = character.getEntity()
-    return (
-      entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === ANCHOR_ENTITY_TYPE
-    )
-  }, callback)
-}
 
 const Anchor = (props: {
   decoratedText: string
@@ -29,6 +16,6 @@ const Anchor = (props: {
 }
 
 export const anchorDecorator = {
-  strategy: findAnchorEntities,
+  strategy: findEntitiesByType(ANCHOR_ENTITY_TYPE),
   component: Anchor,
 }
