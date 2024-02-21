@@ -8,7 +8,7 @@ export function twoFactorAuthMiddleware(
   commonContext: KeystoneContext
 ) {
   // froce redirect to 2fa verification after signin
-  app.use(async (req: Request, res: Response, next: NextFunction) => {
+  app.get('/signin', (req: Request, res: Response, next: NextFunction) => {
     const signinRoute = '/signin'
     const queryString = Object.keys(req.query)
       .map((key) => key + '=' + req.query[key])
@@ -20,10 +20,7 @@ export function twoFactorAuthMiddleware(
         queryString ? '?' + queryString : ''
       )}`
 
-      if (
-        req.originalUrl.startsWith(signinRoute) &&
-        req.originalUrl !== redirectTo2faVerify
-      ) {
+      if (req.originalUrl !== redirectTo2faVerify) {
         return res.redirect(redirectTo2faVerify)
       }
     }
@@ -31,21 +28,21 @@ export function twoFactorAuthMiddleware(
   })
 
   // reset twoFactorAuthVerified to false when user logout
-  app.use(async (req: Request, res: Response, next: NextFunction) => {
-    if (
-      req.originalUrl === '/api/graphql' &&
-      req.body?.operationName === 'EndSession'
-    ) {
-      const context = await commonContext.withRequest(req, res)
-      await context.db.User.updateOne({
-        where: { id: context.session.itemId },
-        data: {
-          twoFactorAuthVerified: null,
-        },
-      })
+  app.post(
+    '/api/graphql',
+    async (req: Request, res: Response, next: NextFunction) => {
+      if (req.body?.operationName === 'EndSession') {
+        const context = await commonContext.withRequest(req, res)
+        await context.db.User.updateOne({
+          where: { id: context.session.itemId },
+          data: {
+            twoFactorAuthVerified: null,
+          },
+        })
+      }
+      return next()
     }
-    return next()
-  })
+  )
 
   // middleware to check if user has verified 2FA on every request
   app.use(async (req: Request, res: Response, next: NextFunction) => {
@@ -62,12 +59,14 @@ export function twoFactorAuthMiddleware(
         ${req.body?.query}
       `
 
-      const gqlOperation = parsedGql.definitions[0].operation
+      const gqlOperation = parsedGql?.definitions?.[0]?.operation
       const gqlOperationName = parsedGql.definitions[0].name?.value
       const gqlOperationSelection =
         parsedGql.definitions[0].selectionSet?.selections
 
-      const excludedSelections = ['authenticatedItem']
+      const excludedSelections = [
+        'authenticatedItem', // to get current user
+      ]
       if (
         gqlOperation == 'query' &&
         gqlOperationSelection.some(
@@ -78,7 +77,10 @@ export function twoFactorAuthMiddleware(
         return next()
       }
 
-      const excludedOperations = ['UpdateUser', 'EndSession']
+      const excludedOperations = [
+        'UpdateUser', // to update user 2FA status
+        'EndSession', // to logout
+      ]
       if (
         excludedOperations.some((operation) => gqlOperationName === operation)
       ) {
