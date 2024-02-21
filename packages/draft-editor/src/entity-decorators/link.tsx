@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ContentState } from 'draft-js'
 import { AlertDialog } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
-import { findLinkEntities } from '@kids-reporter/draft-renderer'
+import { findEntitiesByType } from '@kids-reporter/draft-renderer'
 
 const AnchorWrapper = styled.span`
   display: inline;
@@ -125,6 +125,6 @@ const EditableAnchor = (props: {
 }
 
 export const editableAnchorDecorator = {
-  strategy: findLinkEntities,
+  strategy: findEntitiesByType('LINK'),
   component: EditableAnchor,
 }

@@ -10,11 +10,10 @@ import { blockRenderers } from './block-renderers'
 import {
   annotationDecorator,
   linkDecorator,
-  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
-  findInnerAnchorEntities,
   INNER_ANCHOR_ENTITY_TYPE,
 } from './entity-decorators'
+import { findEntitiesByType } from './utils/entity'
 import { customStyleFn } from './custom-style-fn'
 
 const blockRenderMap = blockRenderMaps.content
@@ -30,10 +29,9 @@ export {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
-  findInnerAnchorEntities,
   INNER_ANCHOR_ENTITY_TYPE,
+  findEntitiesByType,
 }
 
 export default {
@@ -47,8 +45,7 @@ export default {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
-  findInnerAnchorEntities,
   INNER_ANCHOR_ENTITY_TYPE,
+  findEntitiesByType,
 }
