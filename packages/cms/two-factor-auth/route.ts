@@ -15,7 +15,7 @@ export function twoFactorAuthRoute(
     const context = await commonContext.withRequest(req, res)
     const currentSession = context?.session
     if (!currentSession) {
-      res.status(403).send({ success: false, error: 'no session' })
+      res.status(403).send({ status: 'error', message: 'no session' })
       return
     }
     const tempSecret = authenticator.generateSecret()
@@ -40,7 +40,7 @@ export function twoFactorAuthRoute(
         return
       }
 
-      res.send({ qrcode: imageUrl })
+      res.send({ status: 'success', qrcode: imageUrl })
     })
   })
 
@@ -48,14 +48,14 @@ export function twoFactorAuthRoute(
   app.post('/api/2fa/setup', async (req, res) => {
     const token = req.body?.token
     if (!token) {
-      res.status(422).send({ success: false, error: 'no token' })
+      res.status(422).send({ status: 'error', message: 'no token' })
       return
     }
 
     const context = await commonContext.withRequest(req, res)
     const currentSession = context?.session
     if (!currentSession) {
-      res.status(403).send({ success: false, error: 'no session' })
+      res.status(403).send({ status: 'error', message: 'no session' })
       return
     }
 
@@ -63,7 +63,7 @@ export function twoFactorAuthRoute(
       where: { id: currentSession?.itemId },
     })
     if (!user) {
-      res.status(500).send({ success: false, error: 'no user' })
+      res.status(500).send({ status: 'error', message: 'no user' })
       return
     }
 
@@ -82,9 +82,9 @@ export function twoFactorAuthRoute(
           twoFactorAuthVerified: sessionExpireTime,
         },
       })
-      res.send({ success: true })
+      res.send({ status: 'success' })
     } else {
-      res.status(403).send({ success: false, error: 'invalid token' })
+      res.status(403).send({ status: 'error', message: 'invalid token' })
       return
     }
   })
@@ -93,14 +93,14 @@ export function twoFactorAuthRoute(
   app.post('/api/2fa/check', async (req, res) => {
     const token = req.body?.token
     if (!token) {
-      res.status(422).send({ success: false, error: 'no token' })
+      res.status(422).send({ status: 'error', message: 'no token' })
       return
     }
 
     const context = await commonContext.withRequest(req, res)
     const currentSession = context?.session
     if (!currentSession) {
-      res.status(403).send({ success: false, error: 'no session' })
+      res.status(403).send({ status: 'error', message: 'no session' })
       return
     }
 
@@ -108,7 +108,7 @@ export function twoFactorAuthRoute(
       where: { id: currentSession?.itemId },
     })
     if (!user) {
-      res.status(500).send({ success: false, error: 'no user' })
+      res.status(500).send({ status: 'error', message: 'no user' })
       return
     }
 
@@ -117,6 +117,6 @@ export function twoFactorAuthRoute(
       String(user?.twoFactorAuthSecret)
     )
 
-    res.send({ success: isValid })
+    res.send({ status: isValid ? 'success' : 'error' })
   })
 }

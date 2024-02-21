@@ -59,7 +59,7 @@ export default function TwoFactorAuthCreate() {
 
   useEffect(() => {
     if (!queryLoading) {
-      if (currentUser.twoFactorAuth.set) {
+      if (currentUser?.twoFactorAuth.set) {
         setPageStep(1)
       } else {
         getQrCodeUrl()
@@ -77,7 +77,7 @@ export default function TwoFactorAuthCreate() {
     try {
       const response = await axios.post('/api/2fa/check', { token: tokenClear })
       if (response.status === 200) {
-        if (response.data.success) {
+        if (response.data.status === 'success') {
           setErrorMessage('')
           await updateUser({
             variables: {
@@ -97,7 +97,7 @@ export default function TwoFactorAuthCreate() {
         }
       } else {
         setErrorMessage(
-          `2FA verification failed. Error: ${response.data.error}`
+          `2FA verification failed. Error: ${response.data.message}`
         )
       }
     } catch (error) {
@@ -115,7 +115,7 @@ export default function TwoFactorAuthCreate() {
         setErrorMessage('')
         setPageStep(3)
       } else {
-        setErrorMessage(`Failed to setup 2FA. Error: ${response.data.error}`)
+        setErrorMessage(`Failed to setup 2FA. Error: ${response.data.message}`)
       }
     } catch (error) {
       console.error('Failed to setup 2FA:', error)
@@ -129,6 +129,12 @@ export default function TwoFactorAuthCreate() {
         // Clear: inprogress
         <Stack gap="xlarge" as="form" onSubmit={clearSecret}>
           <H1>Confirm 2FA</H1>
+          <Notice
+            title="帳號目前已啟用二階段驗證，請先確認後再重設"
+            tone="passive"
+          >
+            To reset your 2FA, you need to verify your current 2FA token.
+          </Notice>
           {errorMessage && (
             <Notice title="Error" tone="negative">
               {errorMessage}

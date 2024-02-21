@@ -7,8 +7,12 @@ export function twoFactorAuthMiddleware(
   app: Express,
   commonContext: KeystoneContext
 ) {
-  // froce redirect to 2fa verification after signin
-  app.get('/signin', (req: Request, res: Response, next: NextFunction) => {
+  // Froce redirect to 2fa verification after signin
+  const siginFromOverrideMw = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const signinRoute = '/signin'
     const queryString = Object.keys(req.query)
       .map((key) => key + '=' + req.query[key])
@@ -21,123 +25,216 @@ export function twoFactorAuthMiddleware(
       )}`
 
       if (req.originalUrl !== redirectTo2faVerify) {
-        return res.redirect(redirectTo2faVerify)
+        res.redirect(redirectTo2faVerify)
+        res.locals.skip2fa = true
+        return next('route')
       }
     }
     return next()
-  })
+  }
 
-  // reset twoFactorAuthVerified to false when user logout
-  app.post(
-    '/api/graphql',
-    async (req: Request, res: Response, next: NextFunction) => {
-      if (req.body?.operationName === 'EndSession') {
-        const context = await commonContext.withRequest(req, res)
-        await context.db.User.updateOne({
-          where: { id: context.session.itemId },
-          data: {
-            twoFactorAuthVerified: null,
-          },
-        })
-      }
-      return next()
+  // Reset twoFactorAuthVerified to false when user logout
+  const endSessionMw = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    if (req.body?.operationName === 'EndSession') {
+      const context = await commonContext.withRequest(req, res)
+      await context.db.User.updateOne({
+        where: { id: context.session.itemId },
+        data: {
+          twoFactorAuthVerified: null,
+        },
+      })
+      res.locals.skip2fa = true
+      return next('route')
     }
-  )
+    return next()
+  }
 
-  // middleware to check if user has verified 2FA on every request
-  app.use(async (req: Request, res: Response, next: NextFunction) => {
+  // Skip 2FA check for specific graphql operations
+  const gqlAllowOperationsMw = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const parsedGql = gql`
+      ${req.body?.query}
+    `
+
+    const gqlOperation = parsedGql?.definitions?.[0]?.operation
+    const gqlOperationName = parsedGql.definitions[0].name?.value
+    const gqlOperationSelection =
+      parsedGql.definitions[0].selectionSet?.selections
+
+    const excludedSelections = [
+      'authenticatedItem', // to get current user
+    ]
+    if (
+      gqlOperation == 'query' &&
+      gqlOperationSelection.some(
+        (selection) =>
+          selection.name && excludedSelections.includes(selection.name.value)
+      )
+    ) {
+      res.locals.skip2fa = true
+      return next('route')
+    }
+
+    const excludedOperations = [
+      'GetCurrentUser', // to get current user
+      'UpdateUser', // to update user 2FA status
+      'EndSession', // to logout
+    ]
+    if (
+      excludedOperations.some((operation) => gqlOperationName === operation)
+    ) {
+      res.locals.skip2fa = true
+      return next('route')
+    }
+    return next()
+  }
+
+  // 2fa-verify page redirection
+  const twoFactorAuthVerifyMw = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     const context = await commonContext.withRequest(req, res)
 
-    // Skip 2FA check if user is not logged in
+    // Redirect to 2FA setup if 2FA is not set up
+    if (!context.session?.data.twoFactorAuth.set) {
+      res.redirect('/2fa-setup')
+      res.locals.skip2fa = true
+      return next('route')
+    }
+    // Redirect to home if 2FA is verified
+    if (
+      context.session?.data.twoFactorAuth.bypass ||
+      context.session?.data.twoFactorAuth.verified
+    ) {
+      const from = req.query.from
+      // if from is not empty, redirect to it
+      if (from) {
+        res.redirect(from as string)
+      } else {
+        res.redirect('/')
+      }
+      res.locals.skip2fa = true
+      return next('route')
+    }
+    return next()
+  }
+
+  // Whitelist 2FA check for some routes to allow access and prevent redirect loop
+  app.get(
+    ['/_next*', '/__nextjs*', '/2fa*', '/api/2fa*', '/favicon.ico'],
+    (req: Request, res: Response, next: NextFunction) => {
+      res.locals.skip2fa = true
+      return next('route')
+    }
+  )
+  app.post(['/api/2fa*'], (req: Request, res: Response, next: NextFunction) => {
+    res.locals.skip2fa = true
+    return next('route')
+  })
+
+  app.get('/signin', siginFromOverrideMw)
+  app.post('/api/graphql', endSessionMw, gqlAllowOperationsMw)
+  app.get('/2fa-verify', twoFactorAuthVerifyMw)
+
+  // Skip 2FA general check according to flag
+  const twoFactorSkipMw = (req: Request, res: Response, next: NextFunction) => {
+    if (res.locals.skip2fa) {
+      return next('route')
+    }
+    return next()
+  }
+
+  // Skip 2FA check if user is not logged in
+  const signinCheckMw = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const context = await commonContext.withRequest(req, res)
     if (!context.session?.data) {
-      return next()
+      return next('route')
     }
+    return next()
+  }
 
-    // Skip 2FA check for specific graphql operations
-    if (req.originalUrl === '/api/graphql') {
-      const parsedGql = gql`
-        ${req.body?.query}
-      `
-
-      const gqlOperation = parsedGql?.definitions?.[0]?.operation
-      const gqlOperationName = parsedGql.definitions[0].name?.value
-      const gqlOperationSelection =
-        parsedGql.definitions[0].selectionSet?.selections
-
-      const excludedSelections = [
-        'authenticatedItem', // to get current user
-      ]
-      if (
-        gqlOperation == 'query' &&
-        gqlOperationSelection.some(
-          (selection) =>
-            selection.name && excludedSelections.includes(selection.name.value)
-        )
-      ) {
-        return next()
-      }
-
-      const excludedOperations = [
-        'UpdateUser', // to update user 2FA status
-        'EndSession', // to logout
-      ]
-      if (
-        excludedOperations.some((operation) => gqlOperationName === operation)
-      ) {
-        return next()
-      }
-    }
-
-    // Skip 2FA check for some routes
-    const excludedRoutes = [
-      '/_next',
-      '/__nextjs',
-      '/2fa',
-      '/api/2fa',
-      '/favicon.ico',
-    ]
-    if (excludedRoutes.some((route) => req.originalUrl.startsWith(route))) {
-      if (req.originalUrl.startsWith('/2fa-verify')) {
-        // Redirect to 2FA setup if 2FA is not set up
-        if (!context.session?.data.twoFactorAuth.set) {
-          return res.redirect('/2fa-setup')
-        }
-        // Redirect to home if 2FA is verified
-        if (
-          context.session?.data.twoFactorAuth.bypass ||
-          context.session?.data.twoFactorAuth.verified
-        ) {
-          const from = req.query.from
-          // if from is not empty, redirect to it
-          if (from) {
-            return res.redirect(from as string)
-          } else {
-            return res.redirect('/')
-          }
-        }
-      }
-      return next()
-    }
-
-    // Skip 2FA check if user has bypassed flag
+  // Skip 2FA check if user has bypassed flag
+  const twoFactorBypassMw = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const context = await commonContext.withRequest(req, res)
     if (context.session?.data.twoFactorAuth.bypass) {
-      return next()
+      return next('route')
     }
+    return next()
+  }
 
-    // Proceed if 2FA is verified
+  // Proceed if 2FA is verified
+  const twoFactorVerifiedMw = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const context = await commonContext.withRequest(req, res)
     if (context.session?.data.twoFactorAuth.verified) {
-      return next()
+      return next('route')
     }
+    return next()
+  }
 
+  // 2FA redirections
+  const twoFactorRedirectMw = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const context = await commonContext.withRequest(req, res)
     if (context.session?.data.twoFactorAuth.set) {
       // If 2FA is set up but not verified, redirect to 2FA verification page
-      res.redirect('/2fa-verify')
+      if (req.originalUrl !== '/2fa-verify') {
+        return res.redirect('/2fa-verify')
+      }
     } else {
       // If 2FA is not set up, redirect to 2FA setup page
-      res.redirect('/2fa-setup')
+      if (req.originalUrl !== '/2fa-setup') {
+        return res.redirect('/2fa-setup')
+      }
     }
-
-    // All checks passed, proceed to the next middleware
     return next()
-  })
+  }
+
+  const debugMw = async (req: Request, res: Response, next: NextFunction) => {
+    // const context = await commonContext.withRequest(req, res)
+    return next()
+  }
+
+  // general 2FA check
+  app.get(
+    '*',
+    debugMw,
+    twoFactorSkipMw,
+    signinCheckMw,
+    twoFactorBypassMw,
+    twoFactorVerifiedMw,
+    twoFactorRedirectMw
+  )
+  app.post(
+    '*',
+    debugMw,
+    twoFactorSkipMw,
+    signinCheckMw,
+    twoFactorBypassMw,
+    twoFactorVerifiedMw,
+    twoFactorRedirectMw
+  )
 }

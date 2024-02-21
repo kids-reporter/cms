@@ -125,7 +125,7 @@ const listConfigurations = list({
           const user = await context.query.User.findOne({
             where: { id: item.id.toString() },
             query:
-              'twoFactorAuthSecret twoFactorAuthBypass twoFactorAuthVerified',
+              'id twoFactorAuthSecret twoFactorAuthBypass twoFactorAuthVerified',
           })
           const twoFAIsSet =
             user.twoFactorAuthSecret && user.twoFactorAuthSecret.length
@@ -140,6 +140,7 @@ const listConfigurations = list({
             bypass: user.twoFactorAuthBypass,
             set: twoFAIsSet,
             verified: twoFAIsVerified,
+            id: user.id,
           }
         },
       }),
