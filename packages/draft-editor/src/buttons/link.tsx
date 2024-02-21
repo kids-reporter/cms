@@ -11,14 +11,14 @@ const styles = {
   },
 }
 
-export function LinkButton(props: {
+export const LinkButton = (props: {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
   onEditStart: () => void
   onEditFinish: () => void
-}) {
+}) => {
   const { isActive, editorState, onChange } = props
 
   const [toShowUrlInput, setToShowUrlInput] = useState(false)

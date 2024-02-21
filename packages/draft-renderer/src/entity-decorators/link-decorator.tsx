@@ -38,7 +38,7 @@ const Link = (props: {
   const linkProps = url.match(/^#/)
     ? {
         onClick: () => {
-          const anchor = document.querySelector(`#${url}`) as HTMLElement
+          const anchor = document.querySelector(url) as HTMLElement
           if (anchor) {
             window.scrollTo({
               top: anchor.offsetTop - 62, //STICKY_HEADER_HEIGHT,
