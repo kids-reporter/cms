@@ -21,6 +21,7 @@ const disabledButtons = [
   buttonNames.infoBox,
   buttonNames.slideshow,
   buttonNames.newsReading,
+  buttonNames.anchor,
 ]
 
 type AnnotationButtonProps = {
@@ -49,9 +50,9 @@ export function createAnnotationButton({
 
     const promptForAnnotation = (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault()
-      props.onEditStart()
       const selection = editorStateOfOuterEditor.getSelection()
       if (!selection.isCollapsed()) {
+        props.onEditStart()
         setToShowInput(true)
       }
     }

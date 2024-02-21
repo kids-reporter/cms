@@ -10,7 +10,7 @@ import { ThemeColorEnum } from './utils/index'
 import { ThemeProvider } from 'styled-components'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { customStyleFn } from './custom-style-fn'
-import { decorator } from './entity-decorators/index'
+import { decorator } from './entity-decorators'
 
 const blockRendererFn = (block: any) => {
   const atomicBlockObj = atomicBlockRenderer(block)
