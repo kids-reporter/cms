@@ -33,6 +33,7 @@ import {
   InlineStyleControls,
   CustomEnlargeButton,
   CustomAnchorButton,
+  CustomInnerAnchorButton,
   CustomLinkButton,
   CustomBackgroundColorButton,
   CustomFontColorButton,
@@ -50,6 +51,7 @@ import { createInfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
+import { editableInnerAnchorDecorator } from './entity-decorators/inner-anchor'
 
 const styleSource = (
   <>
@@ -93,6 +95,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       linkDecorator,
       {
         ...editableAnchorDecorator,
+        props: {
+          ...this.customEditProps,
+        },
+      },
+      {
+        ...editableInnerAnchorDecorator,
         props: {
           ...this.customEditProps,
         },
@@ -295,6 +303,11 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === ANCHOR_ENTITY_TYPE}
+                {...commonProps}
+              />
+              <CustomInnerAnchorButton
+                isDisabled={disabledButtons.includes(buttonNames.innerAnchor)}
+                isActive={entityType === 'ANCHOR'}
                 {...commonProps}
               />
               <CustomLinkButton

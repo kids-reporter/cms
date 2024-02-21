@@ -29,4 +29,5 @@ export default {
   newsReading: 'news-reading',
   divider: 'divider',
   anchor: 'anchor',
+  innerAnchor: 'innerAnchor',
 }

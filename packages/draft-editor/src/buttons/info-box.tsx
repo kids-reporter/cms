@@ -22,6 +22,7 @@ const disabledButtons = [
   buttonNames.slideshow,
   buttonNames.newsReading,
   buttonNames.anchor,
+  buttonNames.innerAnchor,
 ]
 
 enum InfoBoxTypeEnum {
