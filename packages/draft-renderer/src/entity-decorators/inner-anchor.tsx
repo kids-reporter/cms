@@ -1,9 +1,9 @@
 import React from 'react'
 import { ContentBlock, ContentState } from 'draft-js'
 
-export const ANCHOR_ENTITY_TYPE = 'ANCHOR'
+export const INNER_ANCHOR_ENTITY_TYPE = 'ANCHOR'
 
-export const findAnchorEntities = (
+export const findInnerAnchorEntities = (
   contentBlock: ContentBlock,
   callback: (start: number, end: number) => void,
   contentState: ContentState
@@ -12,12 +12,12 @@ export const findAnchorEntities = (
     const entityKey = character.getEntity()
     return (
       entityKey !== null &&
-      contentState.getEntity(entityKey).getType() === ANCHOR_ENTITY_TYPE
+      contentState.getEntity(entityKey).getType() === INNER_ANCHOR_ENTITY_TYPE
     )
   }, callback)
 }
 
-const Anchor = (props: {
+const InnerAnchor = (props: {
   decoratedText: string
   contentState: ContentState
   entityKey: string
@@ -28,7 +28,7 @@ const Anchor = (props: {
   return <span id={id}>{children}</span>
 }
 
-export const anchorDecorator = {
-  strategy: findAnchorEntities,
-  component: Anchor,
+export const innerAnchorDecorator = {
+  strategy: findInnerAnchorEntities,
+  component: InnerAnchor,
 }

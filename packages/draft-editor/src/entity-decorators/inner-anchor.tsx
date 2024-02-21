@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ContentState } from 'draft-js'
 import { AlertDialog } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
-import { findAnchorEntities } from '@kids-reporter/draft-renderer'
+import { findInnerAnchorEntities } from '@kids-reporter/draft-renderer'
 
 const AnchorWrapper = styled.span`
   display: inline;
@@ -20,9 +20,13 @@ const AnchorEditButton = styled.div<{ anchorLabel: string }>`
   display: inline;
   cursor: pointer;
   &::before {
-    content: '索引:${(props) =>
+    content: '錨點:${(props) =>
       props.anchorLabel !== undefined ? `(${props.anchorLabel}) ` : ''}';
   }
+`
+
+const Warning = styled.p`
+  color: red;
 `
 
 const StyledTextInput = styled(TextInput)`
@@ -40,7 +44,7 @@ const AnchorLabelEditor = (props: {
 
   return (
     <AlertDialog
-      title="編輯錨點文字(ID): 注意！同篇文章ID不可重複！"
+      title="編輯錨點文字(ID)"
       isOpen={isOpen}
       actions={{
         cancel: {
@@ -53,6 +57,7 @@ const AnchorLabelEditor = (props: {
         },
       }}
     >
+      <Warning>注意: 同篇文章ID不可重複！</Warning>
       <StyledTextInput
         placeholder="錨點文字(ID)"
         type="text"
@@ -124,6 +129,6 @@ const EditableAnchor = (props: {
 }
 
 export const editableInnerAnchorDecorator = {
-  strategy: findAnchorEntities,
+  strategy: findInnerAnchorEntities,
   component: EditableAnchor,
 }

@@ -12,6 +12,8 @@ import {
   linkDecorator,
   findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
+  findInnerAnchorEntities,
+  INNER_ANCHOR_ENTITY_TYPE,
 } from './entity-decorators'
 import { customStyleFn } from './custom-style-fn'
 
@@ -30,6 +32,8 @@ export {
   linkDecorator,
   findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
+  findInnerAnchorEntities,
+  INNER_ANCHOR_ENTITY_TYPE,
 }
 
 export default {
@@ -45,4 +49,6 @@ export default {
   linkDecorator,
   findAnchorEntities,
   ANCHOR_ENTITY_TYPE,
+  findInnerAnchorEntities,
+  INNER_ANCHOR_ENTITY_TYPE,
 }
