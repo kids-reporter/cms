@@ -53,25 +53,11 @@ import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
 import { editableInnerAnchorDecorator } from './entity-decorators/inner-anchor'
 
-const styleSource = (
-  <>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-  </>
-)
+const styleSrcs = [
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
+  'https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+]
 
 const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
 
@@ -279,7 +265,14 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     return (
       <DraftEditorContainer isEnlarged={isEnlarged}>
         <DraftEditorWrapper>
-          {styleSource}
+          {styleSrcs.map((src, index) => (
+            <link
+              key={`style-src-${index}`}
+              href={src}
+              rel="stylesheet"
+              type="text/css"
+            />
+          ))}
           <DraftEditorControls>
             <DraftEditorControlsWrapper>
               <BlockStyleControls
