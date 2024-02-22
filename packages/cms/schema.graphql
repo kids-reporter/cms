@@ -9,6 +9,11 @@ type User {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
+  twoFactorAuthBypass: Boolean
+  twoFactorAuthVerified: DateTime
+  twoFactorAuthSecret: String
+  twoFactorAuthTemp: String
+  twoFactorAuth: JSON
 }
 
 type PasswordState {
@@ -32,6 +37,10 @@ input UserWhereInput {
   role: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  twoFactorAuthBypass: BooleanFilter
+  twoFactorAuthVerified: DateTimeNullableFilter
+  twoFactorAuthSecret: StringNullableFilter
+  twoFactorAuthTemp: StringNullableFilter
 }
 
 input IDFilter {
@@ -90,6 +99,40 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -97,6 +140,10 @@ input UserOrderByInput {
   role: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  twoFactorAuthBypass: OrderDirection
+  twoFactorAuthVerified: OrderDirection
+  twoFactorAuthSecret: OrderDirection
+  twoFactorAuthTemp: OrderDirection
 }
 
 enum OrderDirection {
@@ -111,6 +158,10 @@ input UserUpdateInput {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
+  twoFactorAuthBypass: Boolean
+  twoFactorAuthVerified: DateTime
+  twoFactorAuthSecret: String
+  twoFactorAuthTemp: String
 }
 
 input UserUpdateArgs {
@@ -125,6 +176,10 @@ input UserCreateInput {
   role: String
   createdAt: DateTime
   updatedAt: DateTime
+  twoFactorAuthBypass: Boolean
+  twoFactorAuthVerified: DateTime
+  twoFactorAuthSecret: String
+  twoFactorAuthTemp: String
 }
 
 type Post {
@@ -204,35 +259,6 @@ input PostWhereInput {
   createdBy: UserWhereInput
   updatedBy: UserWhereInput
   onlineUsers: UserManyRelationFilter
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  mode: QueryMode
-  not: NestedStringNullableFilter
-}
-
-input NestedStringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
 }
 
 input SubSubcategoryManyRelationFilter {
