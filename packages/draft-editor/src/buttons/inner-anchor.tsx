@@ -1,6 +1,6 @@
 import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
-// import { ANCHOR_ENTITY_TYPE } from '@kids-reporter/draft-renderer'
+import { ENTITY } from '@kids-reporter/draft-renderer'
 
 type InnerAnchorButtonProps = {
   className?: string
@@ -25,7 +25,7 @@ export const InnerAnchorButton = (props: InnerAnchorButtonProps) => {
       const end = selection.getEndOffset()
       const selectedText = block.getText().slice(start, end)
       const contentStateWithEntity = contentState.createEntity(
-        'ANCHOR', // TODO: ANCHOR_ENTITY_TYPE
+        ENTITY.Anchor,
         'MUTABLE',
         {
           anchorID: selectedText,
