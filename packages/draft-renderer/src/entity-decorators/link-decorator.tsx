@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ContentState } from 'draft-js'
-import { findEntitiesByType } from '../utils/entity'
-
-export const LINK_ENTITY_TYPE = 'LINK'
+import { ENTITY, findEntitiesByType } from '../utils/entity'
 
 const LinkWrapper = styled.a`
   text-decoration: underline;
@@ -45,6 +43,6 @@ const Link = (props: {
 }
 
 export const linkDecorator = {
-  strategy: findEntitiesByType(LINK_ENTITY_TYPE),
+  strategy: findEntitiesByType(ENTITY.Link),
   component: Link,
 }

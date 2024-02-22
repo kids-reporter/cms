@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ContentState, Editor, EditorState, convertFromRaw } from 'draft-js'
 import blockRenderMaps from '../block-render-maps'
 import { decorator } from '../entity-decorators'
-import { findEntitiesByType } from '../utils/entity'
+import { ENTITY, findEntitiesByType } from '../utils/entity'
 
 export const ANNOTATION_ENTITY_TYPE = 'ANNOTATION'
 
@@ -103,6 +103,6 @@ function AnnotationBlock(props: {
 }
 
 export const annotationDecorator = {
-  strategy: findEntitiesByType(ANNOTATION_ENTITY_TYPE),
+  strategy: findEntitiesByType(ENTITY.Annotation),
   component: AnnotationBlock,
 }

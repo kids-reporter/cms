@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { AlertDialog } from '@keystone-ui/modals'
 import { EditorState, RichUtils } from 'draft-js'
 import { TextInput } from '@keystone-ui/fields'
+import { ENTITY } from '@kids-reporter/draft-renderer'
 
 const styles = {
   urlInput: {
@@ -36,7 +37,7 @@ export const LinkButton = (props: {
   const confirmLink = () => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
-      'LINK',
+      ENTITY.Link,
       'MUTABLE',
       { url: urlValue }
     )

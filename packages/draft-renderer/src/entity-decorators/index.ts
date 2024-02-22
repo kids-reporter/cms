@@ -1,15 +1,10 @@
 import { CompositeDecorator } from 'draft-js'
 import { annotationDecorator } from './annotation-decorator'
 import { linkDecorator } from './link-decorator'
-import { anchorDecorator, ANCHOR_ENTITY_TYPE } from './anchor'
-import { innerAnchorDecorator, INNER_ANCHOR_ENTITY_TYPE } from './inner-anchor'
+import { anchorDecorator } from './anchor'
+import { innerAnchorDecorator } from './inner-anchor'
 
-export {
-  annotationDecorator,
-  linkDecorator,
-  ANCHOR_ENTITY_TYPE,
-  INNER_ANCHOR_ENTITY_TYPE,
-}
+export { annotationDecorator, linkDecorator }
 
 export const decorator = new CompositeDecorator([
   annotationDecorator,
