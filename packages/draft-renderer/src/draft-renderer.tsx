@@ -75,11 +75,11 @@ const DraftRenderer = ({
 
 const ArticleBodyDraftRenderer = DraftRenderer
 
-function ArticleIntroductionDraftRenderer({
+const ArticleIntroductionDraftRenderer = ({
   rawContentState,
   themeColor = ThemeColorEnum.RED,
   fontSizeLevel = FontSizeLevel.NORMAL,
-}: DraftRendererProps) {
+}: DraftRendererProps) => {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
 
@@ -102,11 +102,11 @@ function ArticleIntroductionDraftRenderer({
   )
 }
 
-function ProjectContentDraftRenderer({
+const ProjectContentDraftRenderer = ({
   rawContentState,
   themeColor = ThemeColorEnum.BLUE,
   fontSizeLevel = FontSizeLevel.NORMAL,
-}: DraftRendererProps) {
+}: DraftRendererProps) => {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
 
