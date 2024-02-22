@@ -53,6 +53,13 @@ const AnchorLabelEditor = (props: {
         },
       }}
     >
+      <p>
+        範例:
+        <br />
+        外部連結: https://www.twreporter.org/
+        <br />
+        內部錨點: #part1
+      </p>
       <StyledTextInput
         placeholder="url"
         type="text"

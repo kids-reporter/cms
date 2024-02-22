@@ -77,7 +77,7 @@ export const LinkButton = (props: {
 
   const urlInput = (
     <AlertDialog
-      title="Insert LINK"
+      title="編輯外部連結或內部錨點(ID)"
       isOpen={toShowUrlInput}
       actions={{
         cancel: {
@@ -90,6 +90,13 @@ export const LinkButton = (props: {
         },
       }}
     >
+      <p>
+        ex:
+        <br />
+        外部連結: https://www.twreporter.org/
+        <br />
+        內部錨點: #part1
+      </p>
       <TextInput
         onChange={(e) => setUrlValue(e.target.value)}
         style={styles.urlInput}

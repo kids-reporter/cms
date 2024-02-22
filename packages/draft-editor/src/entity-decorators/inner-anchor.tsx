@@ -57,7 +57,7 @@ const AnchorLabelEditor = (props: {
         },
       }}
     >
-      <Warning>注意: 同篇文章ID不可重複！</Warning>
+      <Warning>注意！同篇文章ID不可重複！</Warning>
       <StyledTextInput
         placeholder="錨點文字(ID)"
         type="text"
