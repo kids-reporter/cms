@@ -15,7 +15,7 @@ import {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  ANCHOR_ENTITY_TYPE,
+  ENTITY,
 } from '@kids-reporter/draft-renderer'
 import buttonNames from './buttons/bt-names'
 import { RichTextEditorProps } from './draft-editor.type'
@@ -295,17 +295,17 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               </EnlargeButtonWrapper>
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
-                isActive={entityType === ANCHOR_ENTITY_TYPE}
+                isActive={entityType === ENTITY.TOCAnchor}
                 {...commonProps}
               />
               <CustomInnerAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.innerAnchor)}
-                isActive={entityType === 'ANCHOR'}
+                isActive={entityType === ENTITY.Anchor}
                 {...commonProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
-                isActive={entityType === 'LINK'}
+                isActive={entityType === ENTITY.Link}
                 {...commonProps}
                 {...this.commonEditProps}
               />
@@ -345,7 +345,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               />
               <CustomAnnotationButton
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
-                isActive={entityType === 'ANNOTATION'}
+                isActive={entityType === ENTITY.Annotation}
                 {...commonProps}
                 {...this.commonEditProps}
               />
