@@ -91,14 +91,15 @@ export const PostRenderer = (props: PostProp) => {
   const content = props.post?.content
   const theme = props.theme
   const { fontSize } = useArticleContext()
-  const hash = window.location.hash
 
   return isMounted && content && theme ? (
     <ArticleBodyDraftRenderer
       rawContentState={content}
       themeColor={theme}
       fontSizeLevel={fontSize}
-      initiallyScrollTo={hash}
+      initiallyScrollTo={
+        typeof window !== 'undefined' ? window.location.hash : undefined
+      }
       offsetTop={STICKY_HEADER_HEIGHT}
     />
   ) : (

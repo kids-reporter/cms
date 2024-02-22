@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { ContentState } from 'draft-js'
 import { ENTITY, findEntitiesByType } from '../utils/entity'
+import { TopOffsetContext } from '../top-offset-context'
 
 const LinkWrapper = styled.a`
   text-decoration: underline;
@@ -20,6 +21,7 @@ const Link = (props: {
   children: React.ReactNode
 }) => {
   const { url } = props.contentState.getEntity(props.entityKey).getData()
+  const topOffset = useContext(TopOffsetContext)
 
   // Handling for internal/external links, internal links start with '#'
   const linkProps = url.match(/^#/)
@@ -28,7 +30,7 @@ const Link = (props: {
           const anchor = document.querySelector(url) as HTMLElement
           if (anchor) {
             window.scrollTo({
-              top: anchor.offsetTop - 62, //STICKY_HEADER_HEIGHT,
+              top: anchor.offsetTop - topOffset,
               behavior: 'smooth',
             })
           }
