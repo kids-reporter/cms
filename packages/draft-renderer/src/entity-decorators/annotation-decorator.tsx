@@ -5,8 +5,6 @@ import blockRenderMaps from '../block-render-maps'
 import { decorator } from '../entity-decorators'
 import { ENTITY, findEntitiesByType } from '../utils/entity'
 
-export const ANNOTATION_ENTITY_TYPE = 'ANNOTATION'
-
 const AnnotationWrapper = styled.span`
   display: inline-block;
   cursor: pointer;
