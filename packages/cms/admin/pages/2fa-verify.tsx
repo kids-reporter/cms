@@ -95,7 +95,7 @@ export default function TwoFactorAuthCreate() {
         }
       } else {
         setErrorMessage(
-          `2FA verification failed. Error: ${response.data.error}`
+          `2FA verification failed. Error: ${response.data.message}`
         )
       }
     } catch (error) {
