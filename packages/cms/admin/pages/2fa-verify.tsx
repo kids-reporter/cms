@@ -73,7 +73,7 @@ export default function TwoFactorAuthCreate() {
     try {
       const response = await axios.post('/api/2fa/check', { token })
       if (response.status === 200) {
-        if (response.data.success) {
+        if (response.data.status === 'success') {
           setErrorMessage('')
           setIsVerified(true)
           const sessionExpireTime = new Date(
