@@ -93,7 +93,7 @@ export const LinkButton = (props: {
       <p>
         ex:
         <br />
-        外部連結: https://www.twreporter.org/
+        外部連結: https://kids.twreporter.org/article/article1#part1
         <br />
         內部錨點: #part1
       </p>
