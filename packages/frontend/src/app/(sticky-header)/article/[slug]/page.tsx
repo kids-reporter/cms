@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ENTITY } from '@kids-reporter/draft-renderer'
 import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
 import {
@@ -200,7 +199,7 @@ export default async function PostPage({
   Object.keys(entityMap)?.forEach((key) => {
     const entity = entityMap[key]
     const data = entity?.data
-    if (entity && entity.type === ENTITY.TOCAnchor && data?.anchorKey) {
+    if (entity && entity.type === 'TOC_ANCHOR' && data?.anchorKey) {
       tocIndexes.push({
         key: data.anchorKey,
         label: data.anchorLabel ?? '',
