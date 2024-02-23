@@ -2,7 +2,7 @@ import React from 'react'
 import { ContentState } from 'draft-js'
 import { ENTITY, findEntitiesByType } from '../utils/entity'
 
-const Anchor = (props: {
+const TOCAnchor = (props: {
   decoratedText: string
   contentState: ContentState
   entityKey: string
@@ -13,7 +13,7 @@ const Anchor = (props: {
   return <span id={`anchor-${key}`}>{children}</span>
 }
 
-export const anchorDecorator = {
+export const tocAnchorDecorator = {
   strategy: findEntitiesByType(ENTITY.TOCAnchor),
-  component: Anchor,
+  component: TOCAnchor,
 }
