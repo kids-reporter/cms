@@ -50,8 +50,8 @@ import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
+import { editableTOCAnchorDecorator } from './entity-decorators/toc-anchor'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
-import { editableInnerAnchorDecorator } from './entity-decorators/inner-anchor'
 
 const styleSource = [
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
@@ -87,13 +87,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       annotationDecorator,
       linkDecorator,
       {
-        ...editableAnchorDecorator,
+        ...editableTOCAnchorDecorator,
         props: {
           ...this.customEditProps,
         },
       },
       {
-        ...editableInnerAnchorDecorator,
+        ...editableAnchorDecorator,
         props: {
           ...this.customEditProps,
         },
