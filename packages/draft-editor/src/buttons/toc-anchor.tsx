@@ -2,14 +2,14 @@ import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 import { ENTITY } from '@kids-reporter/draft-renderer'
 
-type AnchorButtonProps = {
+type TOCAnchorButtonProps = {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
 }
 
-export const AnchorButton = (props: AnchorButtonProps) => {
+export const TOCAnchorButton = (props: TOCAnchorButtonProps) => {
   const toggleEntity = RichUtils.toggleLink
   const { isActive, editorState, onChange } = props
 

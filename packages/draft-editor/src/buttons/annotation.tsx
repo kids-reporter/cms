@@ -22,7 +22,7 @@ const disabledButtons = [
   buttonNames.infoBox,
   buttonNames.slideshow,
   buttonNames.newsReading,
-  buttonNames.anchor,
+  buttonNames.tocAnchor,
   buttonNames.innerAnchor,
 ]
 
