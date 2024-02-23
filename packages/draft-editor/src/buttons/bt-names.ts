@@ -29,5 +29,5 @@ export default {
   newsReading: 'news-reading',
   divider: 'divider',
   tocAnchor: 'toc-anchor',
-  innerAnchor: 'innerAnchor',
+  anchor: 'anchor',
 }

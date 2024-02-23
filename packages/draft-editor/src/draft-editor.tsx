@@ -33,7 +33,7 @@ import {
   InlineStyleControls,
   CustomEnlargeButton,
   CustomTOCAnchorButton,
-  CustomInnerAnchorButton,
+  CustomAnchorButton,
   CustomLinkButton,
   CustomBackgroundColorButton,
   CustomFontColorButton,
@@ -298,8 +298,8 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 isActive={entityType === ENTITY.TOCAnchor}
                 {...commonProps}
               />
-              <CustomInnerAnchorButton
-                isDisabled={disabledButtons.includes(buttonNames.innerAnchor)}
+              <CustomAnchorButton
+                isDisabled={disabledButtons.includes(buttonNames.anchor)}
                 isActive={entityType === ENTITY.Anchor}
                 {...commonProps}
               />
