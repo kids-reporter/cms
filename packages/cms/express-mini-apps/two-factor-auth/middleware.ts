@@ -219,15 +219,9 @@ export function twoFactorAuthMiddleware(
     return next()
   }
 
-  const debugMw = async (req: Request, res: Response, next: NextFunction) => {
-    // const context = await commonContext.withRequest(req, res)
-    return next()
-  }
-
   // general 2FA check
   app.get(
     '*',
-    debugMw,
     twoFactorSkipMw,
     signinCheckMw,
     twoFactorBypassMw,
@@ -236,7 +230,6 @@ export function twoFactorAuthMiddleware(
   )
   app.post(
     '*',
-    debugMw,
     twoFactorSkipMw,
     signinCheckMw,
     twoFactorBypassMw,
