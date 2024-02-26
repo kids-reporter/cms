@@ -16,6 +16,7 @@ const options = [
 
 export type EmbeddedCodeInputValue = {
   caption?: string
+  width?: WidthOption
   embeddedCode: string
 }
 
