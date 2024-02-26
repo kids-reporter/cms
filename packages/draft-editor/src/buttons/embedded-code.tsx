@@ -4,9 +4,14 @@ import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput, TextArea } from '@keystone-ui/fields'
 import { AlignSelector } from './selector/align-selector'
 
+enum WidthOption {
+  Paragraph = 'paragraph-width',
+  Image = 'image-width',
+}
+
 const options = [
-  { value: 'paragraph-width', label: '與文章段落等寬' },
-  { value: 'image-width', label: '寬版(與圖片預設等寬)' },
+  { value: WidthOption.Paragraph, label: '與文章段落等寬' },
+  { value: WidthOption.Image, label: '寬版(與圖片預設等寬)' },
 ]
 
 export type EmbeddedCodeInputValue = {
@@ -26,7 +31,7 @@ export function EmbeddedCodeInput({
   inputValue: EmbeddedCodeInputValue
 }) {
   const [inputValueState, setInputValue] = useState(inputValue)
-  const [align, setAlign] = useState('default')
+  const [align, setAlign] = useState<WidthOption>(WidthOption.Paragraph)
   const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const confirmInput = () => {
@@ -85,7 +90,7 @@ export function EmbeddedCodeInput({
             align={align}
             options={options}
             onChange={(align: string) => {
-              setAlign(align)
+              setAlign(align as WidthOption)
             }}
             onOpen={onAlignSelectOpen}
           />
