@@ -5,6 +5,8 @@ type Session = {
     name: string
     email: string
     role: string
+    twoFactorAuthBypass: boolean
+    twoFactorAuthVerified: boolean
   }
 }
 

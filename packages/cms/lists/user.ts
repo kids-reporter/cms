@@ -1,5 +1,12 @@
-import { list } from '@keystone-6/core'
-import { text, password, select, timestamp } from '@keystone-6/core/fields'
+import { list, graphql } from '@keystone-6/core'
+import {
+  text,
+  password,
+  select,
+  timestamp,
+  virtual,
+  checkbox,
+} from '@keystone-6/core/fields'
 import {
   allowAllRoles,
   allowRoles,
@@ -73,8 +80,84 @@ const listConfigurations = list({
         updatedAt: true,
       },
     }),
+    twoFactorAuthBypass: checkbox({
+      defaultValue: false,
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuthVerified: timestamp({
+      db: {
+        isNullable: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuthSecret: text({
+      db: {
+        isNullable: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuthTemp: text({
+      db: {
+        isNullable: true,
+      },
+      ui: {
+        createView: { fieldMode: 'hidden' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'hidden' },
+      },
+    }),
+    twoFactorAuth: virtual({
+      field: graphql.field({
+        type: graphql.JSON,
+        async resolve(item, args, context) {
+          const user = await context.query.User.findOne({
+            where: { id: item.id.toString() },
+            query:
+              'id twoFactorAuthSecret twoFactorAuthBypass twoFactorAuthVerified',
+          })
+          const twoFAIsSet =
+            user.twoFactorAuthSecret && user.twoFactorAuthSecret.length
+              ? true
+              : false
+          const twoFAIsVerified =
+            user.twoFactorAuthVerified &&
+            new Date(user.twoFactorAuthVerified) > new Date()
+              ? true
+              : false
+          return {
+            bypass: user.twoFactorAuthBypass,
+            set: twoFAIsSet,
+            verified: twoFAIsVerified,
+            id: user.id,
+          }
+        },
+      }),
+      ui: {
+        views: './lists/views/two-fa-status',
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldMode: 'read',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
   },
-
   ui: {
     listView: {
       initialColumns: ['name', 'role'],
