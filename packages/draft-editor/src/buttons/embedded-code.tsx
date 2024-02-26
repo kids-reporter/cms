@@ -5,8 +5,8 @@ import { TextInput, TextArea } from '@keystone-ui/fields'
 import { AlignSelector } from './selector/align-selector'
 
 const options = [
-  { value: 'default', label: '寬版(與圖片預設等寬)' },
   { value: 'paragraph-width', label: '與文章段落等寬' },
+  { value: 'image-width', label: '寬版(與圖片預設等寬)' },
 ]
 
 export type EmbeddedCodeInputValue = {
