@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { AtomicBlockUtils, EditorState } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput, TextArea } from '@keystone-ui/fields'
+import { AlignSelector } from './selector/align-selector'
+
+const options = [
+  { value: 'default', label: '預設' },
+  { value: 'paragraph-width', label: '與文章段落等寬' },
+]
 
 export type EmbeddedCodeInputValue = {
   caption?: string
@@ -20,9 +26,18 @@ export function EmbeddedCodeInput({
   inputValue: EmbeddedCodeInputValue
 }) {
   const [inputValueState, setInputValue] = useState(inputValue)
+  const [align, setAlign] = useState('default')
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const confirmInput = () => {
     onConfirm(inputValueState)
+  }
+
+  const onAlignSelectOpen = () => {
+    const scrollWrapper = contentWrapperRef.current?.parentElement
+    if (scrollWrapper) {
+      scrollWrapper.scrollTop = scrollWrapper?.scrollHeight
+    }
   }
 
   return (
@@ -41,30 +56,40 @@ export function EmbeddedCodeInput({
           },
         }}
       >
-        <TextArea
-          onChange={(e) =>
-            setInputValue({
-              caption: inputValueState.caption,
-              embeddedCode: e.target.value,
-            })
-          }
-          placeholder="Embedded Code"
-          type="text"
-          value={inputValueState.embeddedCode}
-          style={{ marginBottom: '30px' }}
-        />
-        <TextInput
-          onChange={(e) =>
-            setInputValue({
-              caption: e.target.value,
-              embeddedCode: inputValueState.embeddedCode,
-            })
-          }
-          type="text"
-          placeholder="Caption"
-          value={inputValueState.caption}
-          style={{ marginBottom: '10px', marginTop: '30px' }}
-        />
+        <div ref={contentWrapperRef}>
+          <TextArea
+            onChange={(e) =>
+              setInputValue({
+                caption: inputValueState.caption,
+                embeddedCode: e.target.value,
+              })
+            }
+            placeholder="Embedded Code"
+            type="text"
+            value={inputValueState.embeddedCode}
+            style={{ marginBottom: '30px' }}
+          />
+          <TextInput
+            onChange={(e) =>
+              setInputValue({
+                caption: e.target.value,
+                embeddedCode: inputValueState.embeddedCode,
+              })
+            }
+            type="text"
+            placeholder="Caption"
+            value={inputValueState.caption}
+            style={{ marginBottom: '10px', marginTop: '30px' }}
+          />
+          <AlignSelector
+            align={align}
+            options={options}
+            onChange={(align: string) => {
+              setAlign(align)
+            }}
+            onOpen={onAlignSelectOpen}
+          />
+        </div>
       </Drawer>
     </DrawerController>
   )
