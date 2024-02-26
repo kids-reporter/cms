@@ -1,7 +1,7 @@
 import { Express } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 
-import appConfig from '../config'
+import appConfig from '../../config'
 
 import qrcode from 'qrcode'
 import { authenticator } from 'otplib'

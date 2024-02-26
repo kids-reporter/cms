@@ -25,9 +25,8 @@ export function twoFactorAuthMiddleware(
       )}`
 
       if (req.originalUrl !== redirectTo2faVerify) {
-        res.redirect(redirectTo2faVerify)
         res.locals.skip2fa = true
-        return next('route')
+        return res.redirect(redirectTo2faVerify)
       }
     }
     return next()
@@ -106,9 +105,8 @@ export function twoFactorAuthMiddleware(
 
     // Redirect to 2FA setup if 2FA is not set up
     if (!context.session?.data.twoFactorAuth.set) {
-      res.redirect('/2fa-setup')
       res.locals.skip2fa = true
-      return next('route')
+      return res.redirect('/2fa-setup')
     }
     // Redirect to home if 2FA is verified
     if (
@@ -116,21 +114,29 @@ export function twoFactorAuthMiddleware(
       context.session?.data.twoFactorAuth.verified
     ) {
       const from = req.query.from
+      res.locals.skip2fa = true
       // if from is not empty, redirect to it
       if (from) {
-        res.redirect(from as string)
+        return res.redirect(from as string)
       } else {
-        res.redirect('/')
+        return res.redirect('/')
       }
-      res.locals.skip2fa = true
-      return next('route')
     }
     return next()
   }
 
   // Whitelist 2FA check for some routes to allow access and prevent redirect loop
   app.get(
-    ['/_next*', '/__nextjs*', '/2fa*', '/api/2fa*', '/favicon.ico'],
+    [
+      '/_next*',
+      '/__nextjs*',
+      '/2fa*',
+      '/api/2fa*',
+      '/favicon.ico',
+      '/images/*',
+      '/files/*',
+      '/preview-server/*',
+    ],
     (req: Request, res: Response, next: NextFunction) => {
       res.locals.skip2fa = true
       return next('route')
