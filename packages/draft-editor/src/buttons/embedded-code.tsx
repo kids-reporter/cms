@@ -5,7 +5,7 @@ import { TextInput, TextArea } from '@keystone-ui/fields'
 import { AlignSelector } from './selector/align-selector'
 
 const options = [
-  { value: 'default', label: '預設' },
+  { value: 'default', label: '寬版(與圖片預設等寬)' },
   { value: 'paragraph-width', label: '與文章段落等寬' },
 ]
 
