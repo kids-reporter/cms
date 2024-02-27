@@ -4,19 +4,19 @@ import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput, TextArea } from '@keystone-ui/fields'
 import { AlignSelector } from './selector/align-selector'
 
-enum WidthOption {
+enum AlignOption {
   Paragraph = 'paragraph-width',
   Image = 'image-width',
 }
 
 const options = [
-  { value: WidthOption.Paragraph, label: '與文章段落等寬' },
-  { value: WidthOption.Image, label: '寬版(與圖片預設等寬)' },
+  { value: AlignOption.Paragraph, label: '與文章段落等寬' },
+  { value: AlignOption.Image, label: '寬版(與圖片預設等寬)' },
 ]
 
 export type EmbeddedCodeInputValue = {
   caption?: string
-  width?: WidthOption
+  align?: AlignOption
   embeddedCode: string
 }
 
@@ -27,7 +27,7 @@ export function EmbeddedCodeInput({
   inputValue,
 }: {
   isOpen: boolean
-  onConfirm: ({ caption, width, embeddedCode }: EmbeddedCodeInputValue) => void
+  onConfirm: ({ caption, align, embeddedCode }: EmbeddedCodeInputValue) => void
   onCancel: () => void
   inputValue: EmbeddedCodeInputValue
 }) {
@@ -66,7 +66,7 @@ export function EmbeddedCodeInput({
             onChange={(e) =>
               setInputValue({
                 caption: inputValueState.caption,
-                width: inputValueState.width,
+                align: inputValueState.align,
                 embeddedCode: e.target.value,
               })
             }
@@ -79,7 +79,7 @@ export function EmbeddedCodeInput({
             onChange={(e) =>
               setInputValue({
                 caption: e.target.value,
-                width: inputValueState.width,
+                align: inputValueState.align,
                 embeddedCode: inputValueState.embeddedCode,
               })
             }
@@ -89,12 +89,12 @@ export function EmbeddedCodeInput({
             style={{ marginBottom: '10px', marginTop: '30px' }}
           />
           <AlignSelector
-            align={inputValueState.width as WidthOption}
+            align={inputValueState.align as AlignOption}
             options={options}
             onChange={(align: string) => {
               setInputValue({
                 caption: inputValueState.caption,
-                width: align as WidthOption,
+                align: align as AlignOption,
                 embeddedCode: inputValueState.embeddedCode,
               })
             }}
