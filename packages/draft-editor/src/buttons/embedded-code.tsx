@@ -27,12 +27,11 @@ export function EmbeddedCodeInput({
   inputValue,
 }: {
   isOpen: boolean
-  onConfirm: ({ caption, embeddedCode }: EmbeddedCodeInputValue) => void
+  onConfirm: ({ caption, width, embeddedCode }: EmbeddedCodeInputValue) => void
   onCancel: () => void
   inputValue: EmbeddedCodeInputValue
 }) {
   const [inputValueState, setInputValue] = useState(inputValue)
-  const [align, setAlign] = useState<WidthOption>(WidthOption.Paragraph)
   const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const confirmInput = () => {
@@ -67,6 +66,7 @@ export function EmbeddedCodeInput({
             onChange={(e) =>
               setInputValue({
                 caption: inputValueState.caption,
+                width: inputValueState.width,
                 embeddedCode: e.target.value,
               })
             }
@@ -79,6 +79,7 @@ export function EmbeddedCodeInput({
             onChange={(e) =>
               setInputValue({
                 caption: e.target.value,
+                width: inputValueState.width,
                 embeddedCode: inputValueState.embeddedCode,
               })
             }
@@ -88,10 +89,14 @@ export function EmbeddedCodeInput({
             style={{ marginBottom: '10px', marginTop: '30px' }}
           />
           <AlignSelector
-            align={align}
+            align={inputValueState.width as WidthOption}
             options={options}
             onChange={(align: string) => {
-              setAlign(align as WidthOption)
+              setInputValue({
+                caption: inputValueState.caption,
+                width: align as WidthOption,
+                embeddedCode: inputValueState.embeddedCode,
+              })
             }}
             onOpen={onAlignSelectOpen}
           />
