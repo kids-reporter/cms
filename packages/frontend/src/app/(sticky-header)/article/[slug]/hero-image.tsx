@@ -14,7 +14,7 @@ export const HeroImage = (props: HeroImageProp) => {
       <figure className="hero-image">
         <div className="image-container">
           <img
-            srcSet={`${image.resized?.small} 800w, ${image.resized?.medium} 1200w, ${image.resized?.large} 2000w"`}
+            srcSet={`${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w"`}
             sizes="(min-width: 1100px) 1000px, 90vw"
             src={image.resized?.medium}
           />
