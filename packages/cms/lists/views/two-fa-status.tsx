@@ -32,9 +32,9 @@ const UPDATE_USER_MUTATION = gql`
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const { data: queryData } = useQuery(GET_CURRENT_USER)
   const currentUser = queryData?.authenticatedItem
-  const [updateUserSecret, { loadingSecret }] =
+  const [updateUserSecret, { loading: loadingSecret }] =
     useMutation(UPDATE_USER_MUTATION)
-  const [updateUserBypass, { loadingBypass }] =
+  const [updateUserBypass, { loading: loadingBypass }] =
     useMutation(UPDATE_USER_MUTATION)
 
   const clearSecret = async () => {
