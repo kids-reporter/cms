@@ -181,11 +181,22 @@ const listConfigurations = list({
         }
 
         if (
-          // session user updates her/his password
-          item?.email === userEmail &&
-          // `inputData` only contains `password` property
-          Object.keys(inputData).length === 1 &&
-          inputData?.password
+          // `inputData` only contains allowed property
+          (item?.email === userEmail &&
+            // session user updates her/his password
+            Object.keys(inputData).length === 1 &&
+            inputData?.password) ||
+          // session user 2fa-setup get qr code
+          (Object.keys(inputData).length === 1 &&
+            inputData?.twoFactorAuthTemp) ||
+          // session user 2fa-setup complete setup (twoFactorAuthTemp should be empty)
+          (Object.keys(inputData).length === 3 &&
+            'twoFactorAuthTemp' in inputData &&
+            inputData?.twoFactorAuthSecret &&
+            inputData?.twoFactorAuthVerified) ||
+          // session user 2fa-verify set verified (twoFactorAuthVerified should be empty)
+          (Object.keys(inputData).length === 1 &&
+            'twoFactorAuthVerified' in inputData)
         ) {
           return true
         }
