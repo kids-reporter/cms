@@ -24,6 +24,7 @@ const UPDATE_USER_MUTATION = gql`
       id
       twoFactorAuthSecret
       twoFactorAuthVerified
+      twoFactorAuthBypass
     }
   }
 `
@@ -31,7 +32,10 @@ const UPDATE_USER_MUTATION = gql`
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const { data: queryData } = useQuery(GET_CURRENT_USER)
   const currentUser = queryData?.authenticatedItem
-  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION)
+  const [updateUserSecret, { loadingSecret }] =
+    useMutation(UPDATE_USER_MUTATION)
+  const [updateUserBypass, { loadingBypass }] =
+    useMutation(UPDATE_USER_MUTATION)
 
   const clearSecret = async () => {
     if (
@@ -40,7 +44,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       window.confirm('確定要清除這個使用者的 2FA 設定？')
     ) {
       try {
-        await updateUser({
+        await updateUserSecret({
           variables: {
             where: {
               id: value['id'],
@@ -51,7 +55,30 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             },
           },
         })
-        alert('2FA 設定已清除')
+        window.location.reload()
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  }
+
+  const toggleBypass = async () => {
+    if (
+      value &&
+      value['id'] &&
+      window.confirm('確定要切換這個使用者的 2FA Bypass 設定？')
+    ) {
+      try {
+        await updateUserBypass({
+          variables: {
+            where: {
+              id: value['id'],
+            },
+            data: {
+              twoFactorAuthBypass: !currentUser?.twoFactorAuth.bypass,
+            },
+          },
+        })
         window.location.reload()
       } catch (err) {
         console.error(err)
@@ -63,7 +90,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     const bypass = value['bypass']
     const set = value['set']
     const id = value['id']
-    const canReset =
+    const isAdmin =
       (currentUser?.role === RoleEnum.Owner ||
         currentUser?.role === RoleEnum.Admin) &&
       set
@@ -80,6 +107,17 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           {bypass && (
             <span style={{ color: 'lightgrey' }}> (此帳號不需二階段驗證)</span>
           )}
+          {isAdmin && (
+            <Button
+              tone="warning"
+              weight="none"
+              onClick={toggleBypass}
+              disabled={loadingBypass}
+              style={{ marginLeft: '10px' }}
+            >
+              切換 Bypass
+            </Button>
+          )}
         </p>
         {id === currentUser?.id && (
           <a
@@ -90,12 +128,13 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             <Button>設定</Button>
           </a>
         )}
-        {canReset && (
+        {isAdmin && (
           <Button
             tone="negative"
             weight="none"
             onClick={clearSecret}
-            disabled={loading}
+            disabled={loadingSecret}
+            style={{ marginLeft: '10px' }}
           >
             清除 2FA
           </Button>
