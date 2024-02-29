@@ -11,7 +11,6 @@ import { ThemeProvider } from 'styled-components'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { customStyleFn } from './custom-style-fn'
 import { decorator } from './entity-decorators'
-import { TopOffsetContext } from './top-offset-context'
 
 const blockRendererFn = (block: any) => {
   const atomicBlockObj = atomicBlockRenderer(block)
@@ -59,19 +58,18 @@ const DraftRenderer = ({
       theme={{
         themeColor,
         fontSizeLevel,
+        offsetTop,
       }}
     >
-      <TopOffsetContext.Provider value={offsetTop}>
-        <Editor
-          editorState={editorState}
-          blockRenderMap={blockRenderMaps.content}
-          blockRendererFn={blockRendererFn}
-          customStyleFn={customStyleFn}
-          readOnly
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onChange={() => {}}
-        />
-      </TopOffsetContext.Provider>
+      <Editor
+        editorState={editorState}
+        blockRenderMap={blockRenderMaps.content}
+        blockRendererFn={blockRendererFn}
+        customStyleFn={customStyleFn}
+        readOnly
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onChange={() => {}}
+      />
     </ThemeProvider>
   )
 }
