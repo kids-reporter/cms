@@ -54,7 +54,6 @@ export const LinkEditor = (props: {
 const EditableLink = (props: {
   onEditStart: () => void
   onEditFinish: (arg0?: { entityKey?: string; entityData?: object }) => void
-  decoratedText: string
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
