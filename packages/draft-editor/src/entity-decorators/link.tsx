@@ -17,7 +17,7 @@ const LinkEditButton = styled.div`
   padding-right: 2px;
 `
 
-const LinkEditor = (props: {
+export const LinkEditor = (props: {
   isOpen: boolean
   urlValue: string
   onConfirm: (linkURL: string) => void
@@ -75,10 +75,11 @@ const EditableLink = (props: {
     props.onEditFinish({
       entityKey,
       entityData: {
-        url: contentState?.getEntity(entityKey)?.getData()?.url,
+        url: url,
       },
     })
   }
+
   return (
     <>
       {isModalOpen && (

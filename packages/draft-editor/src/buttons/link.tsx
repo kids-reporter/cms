@@ -1,15 +1,6 @@
 import React, { useState } from 'react'
-import { AlertDialog } from '@keystone-ui/modals'
 import { EditorState, RichUtils } from 'draft-js'
-import { TextInput } from '@keystone-ui/fields'
-
-const styles = {
-  urlInput: {
-    fontFamily: "'Georgia', serif",
-    marginRight: 10,
-    padding: 10,
-  },
-}
+import { LinkEditor } from '../entity-decorators/link'
 
 export function LinkButton(props: {
   className?: string
@@ -20,9 +11,7 @@ export function LinkButton(props: {
   onEditFinish: () => void
 }) {
   const { isActive, editorState, onChange } = props
-
   const [toShowUrlInput, setToShowUrlInput] = useState(false)
-  const [urlValue, setUrlValue] = useState('')
 
   const promptForLink = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -33,7 +22,7 @@ export function LinkButton(props: {
     }
   }
 
-  const confirmLink = () => {
+  const confirmLink = (urlValue: string) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
       'LINK',
@@ -53,15 +42,7 @@ export function LinkButton(props: {
     )
 
     setToShowUrlInput(false)
-    setUrlValue('')
     props.onEditFinish()
-  }
-
-  const onLinkInputKeyDown = (e) => {
-    if (e.which === 13) {
-      e.preventDefault()
-      confirmLink()
-    }
   }
 
   const removeLink = () => {
@@ -70,38 +51,19 @@ export function LinkButton(props: {
       onChange(RichUtils.toggleLink(editorState, selection, null))
     }
     setToShowUrlInput(false)
-    setUrlValue('')
     props.onEditFinish()
   }
 
-  const urlInput = (
-    <AlertDialog
-      title="Insert LINK"
-      isOpen={toShowUrlInput}
-      actions={{
-        cancel: {
-          label: 'Cancel',
-          action: removeLink,
-        },
-        confirm: {
-          label: 'Confirm',
-          action: confirmLink,
-        },
-      }}
-    >
-      <TextInput
-        onChange={(e) => setUrlValue(e.target.value)}
-        style={styles.urlInput}
-        type="text"
-        value={urlValue}
-        onKeyDown={onLinkInputKeyDown}
-      />
-    </AlertDialog>
-  )
-
   return (
     <React.Fragment>
-      {urlInput}
+      {toShowUrlInput && (
+        <LinkEditor
+          isOpen={toShowUrlInput}
+          urlValue={''}
+          onConfirm={confirmLink}
+          onCancel={removeLink}
+        />
+      )}
       <div
         className={props.className}
         onMouseDown={isActive ? removeLink : promptForLink}
