@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 import { LinkEditor } from '../entity-decorators/link'
 
-export function LinkButton(props: {
+export const LinkButton = (props: {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
   onEditStart: () => void
   onEditFinish: () => void
-}) {
+}) => {
   const { isActive, editorState, onChange } = props
   const [toShowUrlInput, setToShowUrlInput] = useState(false)
 
@@ -55,7 +55,7 @@ export function LinkButton(props: {
   }
 
   return (
-    <React.Fragment>
+    <>
       {toShowUrlInput && (
         <LinkEditor
           isOpen={toShowUrlInput}
@@ -70,6 +70,6 @@ export function LinkButton(props: {
       >
         <i className="fas fa-link"></i>
       </div>
-    </React.Fragment>
+    </>
   )
 }
