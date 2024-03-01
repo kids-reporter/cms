@@ -93,9 +93,7 @@ const EditableLink = (props: {
         />
       )}
       <LinkWrapper>
-        <linkDecorator.component {...{ children, contentState, entityKey }}>
-          {children}
-        </linkDecorator.component>
+        <linkDecorator.component {...{ children, contentState, entityKey }} />
         <LinkEditButton
           onClick={(e) => {
             e.preventDefault()
