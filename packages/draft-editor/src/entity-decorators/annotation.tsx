@@ -3,7 +3,7 @@ import { ContentState } from 'draft-js'
 import styled from 'styled-components'
 import { AlertDialog } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
-import { linkDecorator } from '@kids-reporter/draft-renderer'
+import { annotationDecorator } from '@kids-reporter/draft-renderer'
 
 const Wrapper = styled.span`
   display: inline;
@@ -17,7 +17,7 @@ const EditButton = styled.div`
   padding-right: 2px;
 `
 
-export const LinkEditor = (props: {
+export const AnnotationEditor = (props: {
   isOpen: boolean
   urlValue: string
   onConfirm: (linkURL: string) => void
@@ -51,7 +51,7 @@ export const LinkEditor = (props: {
   )
 }
 
-const EditableLink = (props: {
+const EditableAnnotation = (props: {
   onEditStart: () => void
   onEditFinish: (arg0?: { entityKey?: string; entityData?: object }) => void
   contentState: ContentState
@@ -82,7 +82,7 @@ const EditableLink = (props: {
   return (
     <>
       {isModalOpen && (
-        <LinkEditor
+        <AnnotationEditor
           isOpen={isModalOpen}
           urlValue={url}
           onConfirm={onURLChange}
@@ -93,7 +93,9 @@ const EditableLink = (props: {
         />
       )}
       <Wrapper>
-        <linkDecorator.component {...{ children, contentState, entityKey }} />
+        <annotationDecorator.component
+          {...{ children, contentState, entityKey }}
+        />
         <EditButton
           onClick={(e) => {
             e.preventDefault()
@@ -108,7 +110,7 @@ const EditableLink = (props: {
   )
 }
 
-export const editableLinkDecorator = {
-  strategy: linkDecorator.strategy,
-  component: EditableLink,
+export const edtiableAnnotationDecorator = {
+  strategy: annotationDecorator.strategy,
+  component: EditableAnnotation,
 }

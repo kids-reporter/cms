@@ -50,6 +50,7 @@ import { createInfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
+import { edtiableAnnotationDecorator } from './entity-decorators/annotation'
 import { editableLinkDecorator } from './entity-decorators/link'
 
 const styleSource = (
@@ -90,7 +91,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       readOnly: false,
     }
     this.editorDecorator = new CompositeDecorator([
-      annotationDecorator,
+      {
+        ...edtiableAnnotationDecorator,
+        props: {
+          ...this.customEditProps,
+        },
+      },
       {
         ...editableLinkDecorator,
         props: {
