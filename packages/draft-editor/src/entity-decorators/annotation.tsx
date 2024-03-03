@@ -1,9 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { ContentState } from 'draft-js'
+import { EditorState, ContentState, CompositeDecorator } from 'draft-js'
 import styled from 'styled-components'
-import { AlertDialog } from '@keystone-ui/modals'
-import { TextInput } from '@keystone-ui/fields'
-import { annotationDecorator } from '@kids-reporter/draft-renderer'
+import { Drawer, DrawerController } from '@keystone-ui/modals'
+import {
+  linkDecorator,
+  annotationDecorator,
+} from '@kids-reporter/draft-renderer'
+import buttonNames from '../buttons/bt-names'
+import { RichTextEditor } from '../draft-editor'
+
+export const renderDecorator = new CompositeDecorator([
+  annotationDecorator,
+  linkDecorator,
+])
+
+const disabledButtons = [
+  buttonNames.h2,
+  buttonNames.h3,
+  buttonNames.code,
+  buttonNames.codeBlock,
+  buttonNames.blockquote,
+  buttonNames.annotation,
+  buttonNames.embed,
+  buttonNames.image,
+  buttonNames.infoBox,
+  buttonNames.slideshow,
+  buttonNames.newsReading,
+  buttonNames.anchor,
+]
 
 const Wrapper = styled.span`
   display: inline;
@@ -19,35 +43,41 @@ const EditButton = styled.div`
 
 export const AnnotationEditor = (props: {
   isOpen: boolean
-  urlValue: string
-  onConfirm: (linkURL: string) => void
+  editorStateValue: EditorState
+  onConfirm: (editorState: EditorState) => void
   onCancel: () => void
 }) => {
-  const { isOpen, urlValue, onConfirm, onCancel } = props
-  const [url, setURL] = useState(urlValue)
+  const { isOpen, editorStateValue, onConfirm, onCancel } = props
+  const [editorState, setEditorState] = useState({
+    value: editorStateValue,
+  })
 
   return (
-    <AlertDialog
-      title="編輯連結"
-      isOpen={isOpen}
-      actions={{
-        cancel: {
-          label: 'Cancel',
-          action: () => onCancel(),
-        },
-        confirm: {
-          label: 'Confirm',
-          action: () => onConfirm(url),
-        },
-      }}
-    >
-      <TextInput
-        placeholder="連結"
-        type="text"
-        value={url}
-        onChange={(e) => setURL(e.target.value)}
-      />
-    </AlertDialog>
+    <DrawerController isOpen={isOpen}>
+      <Drawer
+        title="註解"
+        actions={{
+          cancel: {
+            label: 'Cancel',
+            action: () => onCancel(),
+          },
+          confirm: {
+            label: 'Confirm',
+            action: () => onConfirm(editorState.value),
+          },
+        }}
+      >
+        <RichTextEditor
+          disabledButtons={disabledButtons}
+          editorState={editorState.value}
+          onChange={(editorState: EditorState) => {
+            setEditorState({
+              value: editorState,
+            })
+          }}
+        />
+      </Drawer>
+    </DrawerController>
   )
 }
 
@@ -60,21 +90,23 @@ const EditableAnnotation = (props: {
 }) => {
   const { children, contentState, entityKey } = props
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [url, setURL] = useState(
-    contentState?.getEntity(entityKey)?.getData()?.url
-  )
-
-  useEffect(() => {
-    setURL(contentState?.getEntity(entityKey).getData()?.url)
+  const [editorState, setEditorState] = useState({
+    value: EditorState.createEmpty(renderDecorator),
   })
 
-  const onURLChange = (url: string) => {
+  useEffect(() => {
+    setEditorState(
+      contentState?.getEntity(entityKey).getData()?.rawContentState
+    )
+  })
+
+  const onEditorStateChange = (editorState: EditorState) => {
     setIsModalOpen(false)
-    setURL(url)
+    setEditorState({ value: editorState })
     props.onEditFinish({
       entityKey,
       entityData: {
-        url: url,
+        rawContentState: editorState,
       },
     })
   }
@@ -84,8 +116,8 @@ const EditableAnnotation = (props: {
       {isModalOpen && (
         <AnnotationEditor
           isOpen={isModalOpen}
-          urlValue={url}
-          onConfirm={onURLChange}
+          editorStateValue={editorState.value}
+          onConfirm={onEditorStateChange}
           onCancel={() => {
             setIsModalOpen(false)
             props.onEditFinish()

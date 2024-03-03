@@ -34,6 +34,7 @@ import {
   CustomEnlargeButton,
   CustomAnchorButton,
   CustomLinkButton,
+  CustomAnnotationButton,
   CustomBackgroundColorButton,
   CustomFontColorButton,
   CustomBlockquoteButton,
@@ -45,7 +46,6 @@ import {
   withStyle,
 } from './buttons'
 import { ImageSelector } from './buttons/selector/image-selector'
-import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
@@ -90,26 +90,19 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       isEnlarged: false,
       readOnly: false,
     }
-    this.editorDecorator = new CompositeDecorator([
-      {
-        ...edtiableAnnotationDecorator,
+    const editableDecorators = [
+      edtiableAnnotationDecorator,
+      editableLinkDecorator,
+      editableAnchorDecorator,
+    ].map((editableDecorator) => {
+      return {
+        ...editableDecorator,
         props: {
           ...this.customEditProps,
         },
-      },
-      {
-        ...editableLinkDecorator,
-        props: {
-          ...this.customEditProps,
-        },
-      },
-      {
-        ...editableAnchorDecorator,
-        props: {
-          ...this.customEditProps,
-        },
-      },
-    ])
+      }
+    })
+    this.editorDecorator = new CompositeDecorator(editableDecorators)
   }
 
   onChange = (editorState: EditorState) => {
@@ -412,17 +405,11 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
   }
 }
 
-const AnnotationButton = createAnnotationButton({
-  InnerEditor: RichTextEditor,
-  decorator,
-})
-
 const InfoBoxButton = createInfoBoxButton({
   InnerEditor: RichTextEditor,
   decorator,
 })
 
-const CustomAnnotationButton = withStyle(AnnotationButton)
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
 
 export { RichTextEditor, decorator }

@@ -13,6 +13,7 @@ import { FontColorButton } from './font-color'
 import { ImageButton } from './image'
 import { AnchorButton } from './anchor'
 import { LinkButton } from './link'
+import { AnnotationButton } from './annotation'
 import { SlideshowButton } from './slideshow'
 import { NewsReadingButton } from './news-reading'
 
@@ -27,6 +28,7 @@ export const InlineStyleControls = _InlineStyleControls
 export const CustomBlockquoteButton = withStyle(BlockquoteButton)
 export const CustomAnchorButton = withStyle(AnchorButton)
 export const CustomLinkButton = withStyle(LinkButton)
+export const CustomAnnotationButton = withStyle(AnnotationButton)
 export const CustomEnlargeButton = styled(withStyle(EnlargeButton))`
   color: #999;
 `
