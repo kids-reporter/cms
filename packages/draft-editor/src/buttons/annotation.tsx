@@ -61,7 +61,7 @@ export const AnnotationButton = (props: AnnotationButtonProps) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {toShowInput && (
         <AnnotationEditor
           isOpen={toShowInput}
@@ -77,6 +77,6 @@ export const AnnotationButton = (props: AnnotationButtonProps) => {
         <i className="far"></i>
         <span>Annotation</span>
       </div>
-    </React.Fragment>
+    </>
   )
 }
