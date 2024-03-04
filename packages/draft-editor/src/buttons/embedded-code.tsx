@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { AtomicBlockUtils, EditorState } from 'draft-js'
+import styled from 'styled-components'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput, TextArea } from '@keystone-ui/fields'
 import { AlignSelector } from './selector/align-selector'
@@ -13,6 +14,11 @@ const options = [
   { value: AlignOption.Paragraph, label: '與文章段落等寬' },
   { value: AlignOption.Image, label: '寬版(與圖片預設等寬)' },
 ]
+
+const Container = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`
 
 export type EmbeddedCodeInputValue = {
   caption?: string
@@ -61,7 +67,7 @@ export function EmbeddedCodeInput({
           },
         }}
       >
-        <div ref={contentWrapperRef}>
+        <Container ref={contentWrapperRef}>
           <TextArea
             onChange={(e) =>
               setInputValue({
@@ -100,7 +106,7 @@ export function EmbeddedCodeInput({
             }}
             onOpen={onAlignSelectOpen}
           />
-        </div>
+        </Container>
       </Drawer>
     </DrawerController>
   )
