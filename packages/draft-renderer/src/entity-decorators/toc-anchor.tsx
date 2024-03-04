@@ -10,7 +10,7 @@ const TOCAnchor = (props: {
 }) => {
   const { children, contentState, entityKey } = props
   const key = contentState?.getEntity(entityKey)?.getData()?.anchorKey
-  return <span id={`anchor-${key}`}>{children}</span>
+  return <span id={`toc-anchor-${key}`}>{children}</span>
 }
 
 export const tocAnchorDecorator = {
