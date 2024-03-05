@@ -5,11 +5,11 @@ import {
   convertToRaw,
   convertFromRaw,
 } from 'draft-js'
-import styled from 'styled-components'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { annotationDecorator } from '@kids-reporter/draft-renderer'
 import buttonNames from '../buttons/bt-names'
 import { RichTextEditor } from '../draft-editor'
+import { EditableWrapper } from './wrapper'
 
 const disabledButtons = [
   buttonNames.h2,
@@ -25,18 +25,6 @@ const disabledButtons = [
   buttonNames.newsReading,
   buttonNames.anchor,
 ]
-
-const Wrapper = styled.span`
-  display: inline;
-  color: #8e8e8e;
-`
-
-const EditButton = styled.div`
-  display: inline;
-  cursor: pointer;
-  padding-left: 2px;
-  padding-right: 2px;
-`
 
 export const AnnotationEditor = (props: {
   isOpen: boolean
@@ -131,20 +119,18 @@ const EditableAnnotation = (props: {
           }}
         />
       )}
-      <Wrapper>
-        <annotationDecorator.component
-          {...{ children, contentState, entityKey }}
-        />
-        <EditButton
-          onClick={(e) => {
-            e.preventDefault()
-            setIsModalOpen(true)
-            props.onEditStart()
-          }}
-        >
-          <i className="fas fa-pen"></i>
-        </EditButton>
-      </Wrapper>
+      <EditableWrapper
+        component={
+          <annotationDecorator.component
+            {...{ children, contentState, entityKey }}
+          />
+        }
+        onClick={(e) => {
+          e.preventDefault()
+          setIsModalOpen(true)
+          props.onEditStart()
+        }}
+      />
     </>
   )
 }

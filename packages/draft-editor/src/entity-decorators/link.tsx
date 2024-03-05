@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { ContentState } from 'draft-js'
-import styled from 'styled-components'
 import { AlertDialog } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
 import { linkDecorator } from '@kids-reporter/draft-renderer'
-
-const Wrapper = styled.span`
-  display: inline;
-  color: #8e8e8e;
-`
-
-const EditButton = styled.div`
-  display: inline;
-  cursor: pointer;
-  padding-left: 2px;
-  padding-right: 2px;
-`
+import { EditableWrapper } from './wrapper'
 
 export const LinkEditor = (props: {
   isOpen: boolean
@@ -92,18 +80,16 @@ const EditableLink = (props: {
           }}
         />
       )}
-      <Wrapper>
-        <linkDecorator.component {...{ children, contentState, entityKey }} />
-        <EditButton
-          onClick={(e) => {
-            e.preventDefault()
-            setIsModalOpen(true)
-            props.onEditStart()
-          }}
-        >
-          <i className="fas fa-pen"></i>
-        </EditButton>
-      </Wrapper>
+      <EditableWrapper
+        component={
+          <linkDecorator.component {...{ children, contentState, entityKey }} />
+        }
+        onClick={(e) => {
+          e.preventDefault()
+          setIsModalOpen(true)
+          props.onEditStart()
+        }}
+      />
     </>
   )
 }
