@@ -2,23 +2,14 @@ import React, { useState, useEffect } from 'react'
 import {
   EditorState,
   ContentState,
-  CompositeDecorator,
   convertToRaw,
   convertFromRaw,
 } from 'draft-js'
 import styled from 'styled-components'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
-import {
-  linkDecorator,
-  annotationDecorator,
-} from '@kids-reporter/draft-renderer'
+import { annotationDecorator } from '@kids-reporter/draft-renderer'
 import buttonNames from '../buttons/bt-names'
 import { RichTextEditor } from '../draft-editor'
-
-export const renderDecorator = new CompositeDecorator([
-  annotationDecorator,
-  linkDecorator,
-])
 
 const disabledButtons = [
   buttonNames.h2,

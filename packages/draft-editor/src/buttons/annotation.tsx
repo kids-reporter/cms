@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { EditorState, RichUtils, convertToRaw } from 'draft-js'
-import {
-  AnnotationEditor,
-  renderDecorator,
-} from '../entity-decorators/annotation'
+import { AnnotationEditor } from '../entity-decorators/annotation'
 
 type AnnotationButtonProps = {
   className?: string
@@ -65,7 +62,7 @@ export const AnnotationButton = (props: AnnotationButtonProps) => {
       {toShowInput && (
         <AnnotationEditor
           isOpen={toShowInput}
-          editorStateValue={EditorState.createEmpty(renderDecorator)}
+          editorStateValue={EditorState.createEmpty()}
           onConfirm={confirmAnnotation}
           onCancel={removeAnnotation}
         />
