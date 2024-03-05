@@ -16,6 +16,8 @@ const {
   MEMORY_CACHE_SIZE,
   CORS_ALLOW_ORIGINS,
   NODE_ENV,
+  TWO_FACTOR_AUTH_DISABLE,
+  TWO_FACTOR_AUTH_SERVICE_NAME,
 } = process.env
 
 enum DatabaseProvider {
@@ -33,7 +35,7 @@ const getAllowOrigins = (cors: string) => {
   }
 }
 
-export default {
+const environmentVariables = {
   isUIDisabled: IS_UI_DISABLED === 'true',
   memoryCacheTtl: Number.isNaN(Number(MEMORY_CACHE_TTL))
     ? 300_000
@@ -75,5 +77,11 @@ export default {
     origin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
     path: PREVIEW_SERVER_PATH || '/preview-server',
   },
+  twoFactorAuth: {
+    disable: TWO_FACTOR_AUTH_DISABLE === 'true', // feature toggle
+    serviceName: TWO_FACTOR_AUTH_SERVICE_NAME || 'KidsReporter Keystone', // the service name show in 2FA app
+  },
   nodeEnv: NODE_ENV || 'development', // value could be 'development', 'production' or 'test'
 }
+
+export default environmentVariables

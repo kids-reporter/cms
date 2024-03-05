@@ -24,10 +24,20 @@ const images = {
   storagePath: envVar.images.storagePath,
 }
 
-export default {
+const twoFactorAuth = {
+  disable: envVar.twoFactorAuth.disable,
+  serviceName:
+    envVar.twoFactorAuth.serviceName +
+    (envVar.nodeEnv === 'production' ? '' : ` ${envVar.nodeEnv}`),
+}
+
+const config = {
   database,
   session,
   googleCloudStorage,
   files,
   images,
+  twoFactorAuth,
 }
+
+export default config
