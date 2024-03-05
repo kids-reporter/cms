@@ -149,7 +149,7 @@ const EditableAnnotation = (props: {
   )
 }
 
-export const edtiableAnnotationDecorator = {
+export const editableAnnotationDecorator = {
   strategy: annotationDecorator.strategy,
   component: EditableAnnotation,
 }
