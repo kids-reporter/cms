@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { EditorState, ContentState, CompositeDecorator } from 'draft-js'
+import {
+  EditorState,
+  ContentState,
+  CompositeDecorator,
+  convertToRaw,
+  convertFromRaw,
+} from 'draft-js'
 import styled from 'styled-components'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import {
@@ -91,14 +97,22 @@ const EditableAnnotation = (props: {
   const { children, contentState, entityKey } = props
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editorState, setEditorState] = useState({
-    value: EditorState.createEmpty(renderDecorator),
+    value: EditorState.createWithContent(
+      convertFromRaw(
+        contentState?.getEntity(entityKey).getData()?.rawContentState
+      )
+    ),
   })
 
   useEffect(() => {
-    setEditorState(
-      contentState?.getEntity(entityKey).getData()?.rawContentState
-    )
-  })
+    setEditorState({
+      value: EditorState.createWithContent(
+        convertFromRaw(
+          contentState?.getEntity(entityKey).getData()?.rawContentState
+        )
+      ),
+    })
+  }, [contentState, entityKey])
 
   const onEditorStateChange = (editorState: EditorState) => {
     setIsModalOpen(false)
@@ -106,7 +120,9 @@ const EditableAnnotation = (props: {
     props.onEditFinish({
       entityKey,
       entityData: {
-        rawContentState: editorState,
+        rawContentState: editorState
+          ? convertToRaw(editorState.getCurrentContent())
+          : undefined,
       },
     })
   }
