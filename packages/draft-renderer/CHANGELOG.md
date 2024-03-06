@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4
+
+### Patch Changes
+
+- Update embedded code
+
 ## 1.0.3
 
 ### Patch Changes

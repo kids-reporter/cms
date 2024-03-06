@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/frontend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@googleapis/customsearch": "^1.0.4",
-    "@kids-reporter/draft-renderer": "1.0.3",
+    "@kids-reporter/draft-renderer": "1.0.4",
     "@twreporter/errors": "^1.1.2",
     "@types/draft-js": "^0.11.10",
     "@types/node": "20.4.1",
