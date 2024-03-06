@@ -11,6 +11,7 @@ import { EmbeddedCodeButton } from './embedded-code'
 import { EnlargeButton } from './enlarge'
 import { FontColorButton } from './font-color'
 import { ImageButton } from './image'
+import { TOCAnchorButton } from './toc-anchor'
 import { AnchorButton } from './anchor'
 import { LinkButton } from './link'
 import { SlideshowButton } from './slideshow'
@@ -25,6 +26,7 @@ export const withStyle = (Button: React.ComponentType<any>) => {
 export const BlockStyleControls = _BlockStyleControls
 export const InlineStyleControls = _InlineStyleControls
 export const CustomBlockquoteButton = withStyle(BlockquoteButton)
+export const CustomTOCAnchorButton = withStyle(TOCAnchorButton)
 export const CustomAnchorButton = withStyle(AnchorButton)
 export const CustomLinkButton = withStyle(LinkButton)
 export const CustomEnlargeButton = styled(withStyle(EnlargeButton))`

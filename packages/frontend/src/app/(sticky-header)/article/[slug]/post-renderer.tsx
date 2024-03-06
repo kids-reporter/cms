@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 import { ArticleBodyDraftRenderer } from '@kids-reporter/draft-renderer'
 import { STICKY_HEADER_HEIGHT, Theme } from '@/app/constants'
+import { tocAnchorPrefix, tocIndexPrefix } from './table-of-content'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 type PostProp = {
@@ -30,22 +31,25 @@ export const PostRenderer = (props: PostProp) => {
 
     const isVisibleClassName = 'isTOCVisible'
     const highlightFirstVisible = () => {
-      const tocIndexes = document.querySelectorAll(`[id^="toc-"]`)
+      const tocIndexes = document.querySelectorAll(`[id^="${tocIndexPrefix}-"]`)
       tocIndexes?.forEach((index) => {
         index?.classList.remove('isActive')
       })
 
-      const firstVisibleAnchor = document.querySelector(
-        `[id^="toc-"].${isVisibleClassName}`
+      const firstVisibleIndex = document.querySelector(
+        `[id^="${tocIndexPrefix}-"].${isVisibleClassName}`
       )
-      if (firstVisibleAnchor) {
-        firstVisibleAnchor.classList.add('isActive')
+      if (firstVisibleIndex) {
+        firstVisibleIndex.classList.add('isActive')
       } else {
         // Handling for outside first/last anchor
         const prevAnchorID = prevAnchorIDRef.current
         if (prevAnchorID && prevAnchorID !== firstAnchorIDRef.current) {
-          const tocAnchorID = prevAnchorID.replace('anchor', 'toc')
-          document.querySelector(`#${tocAnchorID}`)?.classList.add('isActive')
+          const tocIndexID = prevAnchorID.replace(
+            tocAnchorPrefix,
+            tocIndexPrefix
+          )
+          document.querySelector(`#${tocIndexID}`)?.classList.add('isActive')
         }
       }
     }
@@ -55,13 +59,13 @@ export const PostRenderer = (props: PostProp) => {
       (entries) => {
         entries.forEach((entry) => {
           const anchorID = entry.target.getAttribute('id')
-          const tocAnchorID = anchorID?.replace('anchor', 'toc')
-          const tocAnchor = document.querySelector(`#${tocAnchorID}`)
+          const indexID = anchorID?.replace(tocAnchorPrefix, tocIndexPrefix)
+          const index = document.querySelector(`#${indexID}`)
           if (entry.isIntersecting) {
-            tocAnchor?.classList?.add(isVisibleClassName)
+            index?.classList?.add(isVisibleClassName)
             prevAnchorIDRef.current = anchorID
           } else {
-            tocAnchor?.classList?.remove(isVisibleClassName)
+            index?.classList?.remove(isVisibleClassName)
             // Prevent initial fire when mounted
             if (prevAnchorIDRef.current) {
               prevAnchorIDRef.current = anchorID
@@ -79,7 +83,7 @@ export const PostRenderer = (props: PostProp) => {
   }, [])
 
   useEffect(() => {
-    const anchors = document.querySelectorAll('[id^="anchor-"]')
+    const anchors = document.querySelectorAll(`[id^="${tocAnchorPrefix}-"]`)
     anchors?.forEach((anchor, index) => {
       if (index === 0) {
         firstAnchorIDRef.current = anchor.id
@@ -97,6 +101,10 @@ export const PostRenderer = (props: PostProp) => {
       rawContentState={content}
       themeColor={theme}
       fontSizeLevel={fontSize}
+      initiallyScrollTo={
+        typeof window !== 'undefined' ? window.location.hash : undefined
+      }
+      offsetTop={STICKY_HEADER_HEIGHT}
     />
   ) : (
     <SkeletonContainer>

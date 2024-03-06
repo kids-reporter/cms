@@ -8,6 +8,7 @@ import {
 } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { RichTextEditorProps } from '../draft-editor.type'
+import { ENTITY } from '@kids-reporter/draft-renderer'
 
 const disabledButtons = [
   buttonNames.h2,
@@ -21,6 +22,7 @@ const disabledButtons = [
   buttonNames.infoBox,
   buttonNames.slideshow,
   buttonNames.newsReading,
+  buttonNames.tocAnchor,
   buttonNames.anchor,
 ]
 
@@ -63,7 +65,7 @@ export function createAnnotationButton({
         inputValue.editorStateOfInnerEditor.getCurrentContent()
       )
       const contentStateWithEntity = contentState.createEntity(
-        'ANNOTATION',
+        ENTITY.Annotation,
         'MUTABLE',
         {
           rawContentState,

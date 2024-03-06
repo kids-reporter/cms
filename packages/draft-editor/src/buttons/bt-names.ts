@@ -28,5 +28,6 @@ export default {
   slideshow: 'slideshow',
   newsReading: 'news-reading',
   divider: 'divider',
+  tocAnchor: 'toc-anchor',
   anchor: 'anchor',
 }
