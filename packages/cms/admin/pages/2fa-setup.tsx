@@ -151,6 +151,11 @@ export default function TwoFactorAuthCreate() {
                 Verify
               </Button>
               <ChangeUserButton />
+              <a href="/">
+                <Button weight="bold" tone="passive">
+                  Back to Admin UI
+                </Button>
+              </a>
             </Stack>
           </Stack>
         </Stack>
