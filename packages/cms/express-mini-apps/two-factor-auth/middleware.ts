@@ -1,9 +1,11 @@
 import { Express, Request, Response, NextFunction } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
+import { gql } from '@keystone-6/core/admin-ui/apollo'
 
 import appConfig from '../../config'
+import _errors from '@twreporter/errors'
 
-import { gql } from '@keystone-6/core/admin-ui/apollo'
+const errors = _errors.default
 
 export function twoFactorAuthMiddleware(
   app: Express,
@@ -51,9 +53,21 @@ export function twoFactorAuthMiddleware(
             },
           })
         } catch (error) {
-          console.error(
-            'FendSessionMw: ailed to save twoFactorAuthVerified to user table:',
-            error
+          const annotatedErr = errors.helpers.wrap(
+            error,
+            'endSessionMw',
+            'Failed to save twoFactorAuthVerified to user table'
+          )
+          console.log(
+            JSON.stringify({
+              severity: 'ERROR',
+              message: errors.helpers.printAll(
+                annotatedErr,
+                { withStack: true, withPayload: true },
+                0,
+                0
+              ),
+            })
           )
           res.status(500).send({
             status: 'error',

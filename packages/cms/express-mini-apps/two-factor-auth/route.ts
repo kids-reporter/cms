@@ -6,6 +6,10 @@ import appConfig from '../../config'
 import qrcode from 'qrcode'
 import { authenticator } from 'otplib'
 
+import _errors from '@twreporter/errors'
+
+const errors = _errors.default
+
 export function twoFactorAuthRoute(
   app: Express,
   commonContext: KeystoneContext
@@ -36,7 +40,22 @@ export function twoFactorAuthRoute(
           },
         })
       } catch (error) {
-        console.error('Failed to save tempSecret to user table:', error)
+        const annotatedErr = errors.helpers.wrap(
+          error,
+          'get2faSetup',
+          'Failed to save tempSecret to user table'
+        )
+        console.log(
+          JSON.stringify({
+            severity: 'ERROR',
+            message: errors.helpers.printAll(
+              annotatedErr,
+              { withStack: true, withPayload: true },
+              0,
+              0
+            ),
+          })
+        )
         res.status(500).send({
           status: 'error',
           message: 'Failed to save tempSecret to user table',
@@ -101,7 +120,22 @@ export function twoFactorAuthRoute(
             },
           })
         } catch (error) {
-          console.error('Failed to save 2fa setup to user table:', error)
+          const annotatedErr = errors.helpers.wrap(
+            error,
+            'post2faSetup',
+            'Failed to save 2fa setup to user table'
+          )
+          console.log(
+            JSON.stringify({
+              severity: 'ERROR',
+              message: errors.helpers.printAll(
+                annotatedErr,
+                { withStack: true, withPayload: true },
+                0,
+                0
+              ),
+            })
+          )
           res.status(500).send({
             status: 'error',
             message: 'Failed to save 2fa setup to user table',
