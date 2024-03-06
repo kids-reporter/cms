@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/cms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "dev": "keystone dev",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@keystone-6/auth": "7.0.0",
     "@keystone-6/core": "5.2.0",
-    "@kids-reporter/cms-core": "1.0.3",
+    "@kids-reporter/cms-core": "1.0.4",
     "@types/react-beautiful-dnd": "^13.1.4",
     "axios": "^1.6.2",
     "cors": "^2.8.5",
