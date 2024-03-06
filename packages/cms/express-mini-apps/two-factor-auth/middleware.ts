@@ -43,12 +43,25 @@ export function twoFactorAuthMiddleware(
     ) => {
       if (req.body?.operationName === 'EndSession') {
         const context = await commonContext.withRequest(req, res)
-        await context.db.User.updateOne({
-          where: { id: context.session.itemId },
-          data: {
-            twoFactorAuthVerified: null,
-          },
-        })
+        try {
+          await context.db.User.updateOne({
+            where: { id: context.session.itemId },
+            data: {
+              twoFactorAuthVerified: null,
+            },
+          })
+        } catch (error) {
+          console.error(
+            'FendSessionMw: ailed to save twoFactorAuthVerified to user table:',
+            error
+          )
+          res.status(500).send({
+            status: 'error',
+            message:
+              'endSessionMw: Failed to save twoFactorAuthVerified to user table',
+          })
+          return
+        }
         res.locals.skip2fa = true
         return next('route')
       }

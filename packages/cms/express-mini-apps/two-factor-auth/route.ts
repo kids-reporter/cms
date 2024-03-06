@@ -28,12 +28,21 @@ export function twoFactorAuthRoute(
       }
       const tempSecret = authenticator.generateSecret()
       // save tempSecret to user table column twoFactorAuthTemp
-      await context.db.User.updateOne({
-        where: { id: currentSession?.itemId },
-        data: {
-          twoFactorAuthTemp: tempSecret,
-        },
-      })
+      try {
+        await context.prisma.User.update({
+          where: { id: currentSession?.itemId },
+          data: {
+            twoFactorAuthTemp: tempSecret,
+          },
+        })
+      } catch (error) {
+        console.error('Failed to save tempSecret to user table:', error)
+        res.status(500).send({
+          status: 'error',
+          message: 'Failed to save tempSecret to user table',
+        })
+        return
+      }
 
       const service = appConfig.twoFactorAuth.serviceName
       const otpauth = authenticator.keyuri(
@@ -82,14 +91,23 @@ export function twoFactorAuthRoute(
         const sessionExpireTime = new Date(
           new Date().getTime() + appConfig.session.maxAge * 1000
         )
-        await context.db.User.updateOne({
-          where: { id: currentSession?.itemId },
-          data: {
-            twoFactorAuthSecret: tempSecret,
-            twoFactorAuthTemp: '',
-            twoFactorAuthVerified: sessionExpireTime,
-          },
-        })
+        try {
+          await context.prisma.User.update({
+            where: { id: currentSession?.itemId },
+            data: {
+              twoFactorAuthSecret: tempSecret,
+              twoFactorAuthTemp: '',
+              twoFactorAuthVerified: sessionExpireTime,
+            },
+          })
+        } catch (error) {
+          console.error('Failed to save 2fa setup to user table:', error)
+          res.status(500).send({
+            status: 'error',
+            message: 'Failed to save 2fa setup to user table',
+          })
+          return
+        }
         res.send({ status: 'success' })
       } else {
         res.status(403).send({ status: 'error', message: 'invalid token' })
