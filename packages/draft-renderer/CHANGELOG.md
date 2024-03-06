@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5
+
+### Patch Changes
+
+- feat: add anchor
+
 ## 1.0.4
 
 ### Patch Changes
