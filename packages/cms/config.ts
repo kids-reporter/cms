@@ -25,7 +25,7 @@ const images = {
 }
 
 const twoFactorAuth = {
-  disable: envVar.twoFactorAuth.disable,
+  enable: envVar.twoFactorAuth.enable,
   serviceName:
     envVar.twoFactorAuth.serviceName +
     (envVar.nodeEnv === 'production' ? '' : ` ${envVar.nodeEnv}`),

@@ -9,7 +9,7 @@ export function twoFactorAuthMiddleware(
   app: Express,
   commonContext: KeystoneContext
 ) {
-  if (!appConfig.twoFactorAuth.disable) {
+  if (appConfig.twoFactorAuth.enable) {
     // Froce redirect to 2fa verification after signin
     const siginFromOverrideMw = (
       req: Request,

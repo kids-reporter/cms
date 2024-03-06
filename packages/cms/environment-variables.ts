@@ -16,7 +16,7 @@ const {
   MEMORY_CACHE_SIZE,
   CORS_ALLOW_ORIGINS,
   NODE_ENV,
-  TWO_FACTOR_AUTH_DISABLE,
+  TWO_FACTOR_AUTH_ENABLE,
   TWO_FACTOR_AUTH_SERVICE_NAME,
 } = process.env
 
@@ -78,7 +78,7 @@ const environmentVariables = {
     path: PREVIEW_SERVER_PATH || '/preview-server',
   },
   twoFactorAuth: {
-    disable: TWO_FACTOR_AUTH_DISABLE === 'true', // feature toggle
+    enable: TWO_FACTOR_AUTH_ENABLE === 'true', // feature toggle
     serviceName: TWO_FACTOR_AUTH_SERVICE_NAME || 'KidsReporter Keystone', // the service name show in 2FA app
   },
   nodeEnv: NODE_ENV || 'development', // value could be 'development', 'production' or 'test'

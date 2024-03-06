@@ -10,7 +10,7 @@ export function twoFactorAuthRoute(
   app: Express,
   commonContext: KeystoneContext
 ) {
-  if (appConfig.twoFactorAuth.disable) {
+  if (!appConfig.twoFactorAuth.enable) {
     app.get('/2fa-verify', async (req, res) => {
       return res.redirect('/')
     })
