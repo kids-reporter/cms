@@ -41,7 +41,7 @@ const AnchorLabelEditor = (props: {
 }) => {
   const { isOpen, anchorLabelValue, onConfirm, onCancel } = props
   const [anchorLabel, setAnchorLabel] = useState(anchorLabelValue)
-  const [warning, setWarning] = useState('')
+  const [msg, setMsg] = useState('')
 
   // Restrict id format
   // ref: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id
@@ -65,7 +65,7 @@ const AnchorLabelEditor = (props: {
             if (isValidID(anchorLabel)) {
               onConfirm(anchorLabel)
             } else {
-              setWarning('ID格式錯誤！')
+              setMsg('ID格式錯誤！')
             }
           },
         },
@@ -82,7 +82,7 @@ const AnchorLabelEditor = (props: {
         value={anchorLabel}
         onChange={(e) => setAnchorLabel(e.target.value)}
       />
-      {warning && <Warning>{warning}</Warning>}
+      {msg && <Warning>{msg}</Warning>}
     </AlertDialog>
   )
 }
