@@ -2,18 +2,18 @@ import React from 'react'
 import { ContentState } from 'draft-js'
 import { ENTITY, findEntitiesByType } from '../utils/entity'
 
-const Anchor = (props: {
+const TOCAnchor = (props: {
   decoratedText: string
   contentState: ContentState
   entityKey: string
   children: React.ReactNode
 }) => {
   const { children, contentState, entityKey } = props
-  const id = contentState?.getEntity(entityKey)?.getData()?.anchorID
-  return <span id={id}>{children}</span>
+  const key = contentState?.getEntity(entityKey)?.getData()?.anchorKey
+  return <span id={`toc-anchor-${key}`}>{children}</span>
 }
 
-export const anchorDecorator = {
-  strategy: findEntitiesByType(ENTITY.Anchor),
-  component: Anchor,
+export const tocAnchorDecorator = {
+  strategy: findEntitiesByType(ENTITY.TOCAnchor),
+  component: TOCAnchor,
 }

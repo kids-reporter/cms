@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import blockRenderMaps from './block-render-maps/index'
 import {
   Editor,
@@ -26,21 +26,39 @@ type DraftRendererProps = {
   themeColor: ThemeColorEnum
   fontSizeLevel: FontSizeLevel
   rawContentState: RawDraftContentState
+  initiallyScrollTo?: string
+  offsetTop?: number
 }
 
-function DraftRenderer({
+const DraftRenderer = ({
   rawContentState,
   themeColor = ThemeColorEnum.RED,
   fontSizeLevel = FontSizeLevel.NORMAL,
-}: DraftRendererProps) {
+  initiallyScrollTo = '',
+  offsetTop = 0,
+}: DraftRendererProps) => {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
+
+  const scrollToElement = (hash: string) => {
+    const anchor = document.querySelector(hash) as HTMLElement
+    anchor &&
+      window.scrollTo({
+        top: anchor.offsetTop - offsetTop,
+        behavior: 'smooth',
+      })
+  }
+
+  useEffect(() => {
+    initiallyScrollTo && scrollToElement(initiallyScrollTo)
+  }, [])
 
   return (
     <ThemeProvider
       theme={{
         themeColor,
         fontSizeLevel,
+        offsetTop,
       }}
     >
       <Editor
@@ -58,11 +76,11 @@ function DraftRenderer({
 
 const ArticleBodyDraftRenderer = DraftRenderer
 
-function ArticleIntroductionDraftRenderer({
+const ArticleIntroductionDraftRenderer = ({
   rawContentState,
   themeColor = ThemeColorEnum.RED,
   fontSizeLevel = FontSizeLevel.NORMAL,
-}: DraftRendererProps) {
+}: DraftRendererProps) => {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
 
@@ -85,11 +103,11 @@ function ArticleIntroductionDraftRenderer({
   )
 }
 
-function ProjectContentDraftRenderer({
+const ProjectContentDraftRenderer = ({
   rawContentState,
   themeColor = ThemeColorEnum.BLUE,
   fontSizeLevel = FontSizeLevel.NORMAL,
-}: DraftRendererProps) {
+}: DraftRendererProps) => {
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
 

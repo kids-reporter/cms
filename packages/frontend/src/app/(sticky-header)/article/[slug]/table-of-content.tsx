@@ -89,6 +89,8 @@ const Index = styled.div`
 `
 const TOCBtn = '索引'.split('').map((c, i) => <p key={`toc-btn-${i}`}>{c}</p>)
 
+export const tocAnchorPrefix = 'toc-anchor'
+export const tocIndexPrefix = 'toc-index'
 export type TOCIndex = { key: string; label: string }
 
 export const TOC = (props: { indexes: TOCIndex[] }) => {
@@ -110,10 +112,10 @@ export const TOC = (props: { indexes: TOCIndex[] }) => {
             tocIndex && (
               <Index
                 key={`toc-key-${index}`}
-                id={`toc-${tocIndex.key}`}
+                id={`${tocIndexPrefix}-${tocIndex.key}`}
                 onClick={() => {
                   const anchor = document.querySelector(
-                    `#anchor-${tocIndex.key}`
+                    `#${tocAnchorPrefix}-${tocIndex.key}`
                   ) as HTMLElement
                   if (anchor) {
                     window.scrollTo({

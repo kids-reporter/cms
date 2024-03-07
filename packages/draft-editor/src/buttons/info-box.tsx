@@ -21,6 +21,7 @@ const disabledButtons = [
   buttonNames.infoBox,
   buttonNames.slideshow,
   buttonNames.newsReading,
+  buttonNames.tocAnchor,
   buttonNames.anchor,
 ]
 

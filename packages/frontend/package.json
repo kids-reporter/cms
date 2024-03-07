@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/frontend",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,11 +11,10 @@
   },
   "dependencies": {
     "@googleapis/customsearch": "^1.0.4",
-    "@kids-reporter/draft-renderer": "1.0.3",
+    "@kids-reporter/draft-renderer": "1.0.5",
     "@twreporter/errors": "^1.1.2",
     "@types/draft-js": "^0.11.10",
     "@types/node": "20.4.1",
-    "@types/react": "18.2.18",
     "@types/react-dom": "18.2.6",
     "@types/react-helmet": "^6.1.7",
     "@types/react-transition-group": "^4.4.6",

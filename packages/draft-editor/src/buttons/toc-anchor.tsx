@@ -2,14 +2,14 @@ import React from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 import { ENTITY } from '@kids-reporter/draft-renderer'
 
-type AnchorButtonProps = {
+type TOCAnchorButtonProps = {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
 }
 
-export const AnchorButton = (props: AnchorButtonProps) => {
+export const TOCAnchorButton = (props: TOCAnchorButtonProps) => {
   const toggleEntity = RichUtils.toggleLink
   const { isActive, editorState, onChange } = props
 
@@ -25,10 +25,11 @@ export const AnchorButton = (props: AnchorButtonProps) => {
       const end = selection.getEndOffset()
       const selectedText = block.getText().slice(start, end)
       const contentStateWithEntity = contentState.createEntity(
-        ENTITY.Anchor,
-        'MUTABLE',
+        ENTITY.TOCAnchor,
+        'IMMUTABLE',
         {
-          anchorID: selectedText,
+          anchorKey: `createdAt-${Date.now()}`,
+          anchorLabel: selectedText,
         }
       )
       const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
@@ -53,9 +54,9 @@ export const AnchorButton = (props: AnchorButtonProps) => {
     <div
       className={props.className}
       onMouseDown={isActive ? removeAnchor : promptForAnchor}
-      title="錨點"
+      title="索引"
     >
-      <span>錨</span>
+      <span>索</span>
     </div>
   )
 }

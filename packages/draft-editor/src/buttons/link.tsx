@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { AlertDialog } from '@keystone-ui/modals'
 import { EditorState, RichUtils } from 'draft-js'
 import { TextInput } from '@keystone-ui/fields'
+import { ENTITY } from '@kids-reporter/draft-renderer'
 
 const styles = {
   urlInput: {
@@ -11,14 +12,14 @@ const styles = {
   },
 }
 
-export function LinkButton(props: {
+export const LinkButton = (props: {
   className?: string
   isActive: boolean
   editorState: EditorState
   onChange: (arg0: EditorState) => void
   onEditStart: () => void
   onEditFinish: () => void
-}) {
+}) => {
   const { isActive, editorState, onChange } = props
 
   const [toShowUrlInput, setToShowUrlInput] = useState(false)
@@ -36,7 +37,7 @@ export function LinkButton(props: {
   const confirmLink = () => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
-      'LINK',
+      ENTITY.Link,
       'MUTABLE',
       { url: urlValue }
     )
@@ -76,7 +77,7 @@ export function LinkButton(props: {
 
   const urlInput = (
     <AlertDialog
-      title="Insert LINK"
+      title="編輯外部連結或內部錨點(ID)"
       isOpen={toShowUrlInput}
       actions={{
         cancel: {
@@ -89,6 +90,17 @@ export function LinkButton(props: {
         },
       }}
     >
+      <p>
+        <br />
+        外部連結範例:
+        <br />
+        https://kids.twreporter.org/article/article1#part1
+        <br />
+        <br />
+        內部錨點範例:
+        <br />
+        #part1
+      </p>
       <TextInput
         onChange={(e) => setUrlValue(e.target.value)}
         style={styles.urlInput}

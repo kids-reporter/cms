@@ -8,11 +8,12 @@ import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { createPreviewMiniApp } from './express-mini-apps/preview/app'
+import { twoFactorAuth } from './express-mini-apps/two-factor-auth'
 
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
-  sessionData: 'name role email',
+  sessionData: 'name role email twoFactorAuth',
   secretField: 'password',
   initFirstItem: {
     // If there are no items in the database, keystone will ask you to create
@@ -119,6 +120,9 @@ export default withAuth(
         // enable cors and authentication middlewares
         app.options('/api/graphql', authenticationMw, corsMiddleware)
         app.post('/api/graphql', authenticationMw, corsMiddleware)
+
+        // enable 2FA middleware and related routes
+        twoFactorAuth(app, commonContext)
 
         // proxy authenticated requests to preview server
         app.use(
