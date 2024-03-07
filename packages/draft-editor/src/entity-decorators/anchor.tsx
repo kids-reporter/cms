@@ -40,7 +40,15 @@ const AnchorLabelEditor = (props: {
   onCancel: () => void
 }) => {
   const { isOpen, anchorLabelValue, onConfirm, onCancel } = props
-  const [anchorLabel, setTOCLabel] = useState(anchorLabelValue)
+  const [anchorLabel, setAnchorLabel] = useState(anchorLabelValue)
+  const [warning, setWarning] = useState('')
+
+  // Restrict id format
+  // ref: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id
+  const isValidID = (id: string) => {
+    const idRex = /^[A-Za-z][\w-]*$/
+    return idRex.test(id)
+  }
 
   return (
     <AlertDialog
@@ -53,17 +61,28 @@ const AnchorLabelEditor = (props: {
         },
         confirm: {
           label: 'Confirm',
-          action: () => onConfirm(anchorLabel),
+          action: () => {
+            if (isValidID(anchorLabel)) {
+              onConfirm(anchorLabel)
+            } else {
+              setWarning('ID格式錯誤！')
+            }
+          },
         },
       }}
     >
-      <Warning>注意！同篇文章ID不可重複！</Warning>
+      <Warning>
+        注意！同篇文章ID不可重複！ID需使用半型英文字母(大/小寫)開頭，接續
+        英文字母/數字/-/_
+      </Warning>
+      <p>範例: part1, Section-234, table_5</p>
       <StyledTextInput
         placeholder="錨點文字(ID)"
         type="text"
         value={anchorLabel}
-        onChange={(e) => setTOCLabel(e.target.value)}
+        onChange={(e) => setAnchorLabel(e.target.value)}
       />
+      {warning && <Warning>{warning}</Warning>}
     </AlertDialog>
   )
 }
