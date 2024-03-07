@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { EditorState, RichUtils } from 'draft-js'
 import { ENTITY } from '@kids-reporter/draft-renderer'
-import { AnchorLabelEditor } from '../entity-decorators/anchor'
+import { AnchorIDEditor } from '../entity-decorators/anchor'
 
 type AnchorButtonProps = {
   className?: string
@@ -15,25 +15,24 @@ type AnchorButtonProps = {
 export const AnchorButton = (props: AnchorButtonProps) => {
   const toggleEntity = RichUtils.toggleLink
   const { isActive, editorState, onChange } = props
-  const [toShowInput, setToShowInput] = useState(false)
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
 
   const promptForAnchor = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
-
     const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
       props.onEditStart()
-      setToShowInput(true)
+      setIsEditorOpen(true)
     }
   }
 
-  const confirmAnchor = (anchorLabelValue: string) => {
+  const confirmAnchor = (anchorID: string) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
       ENTITY.Anchor,
       'MUTABLE',
       {
-        anchorID: anchorLabelValue,
+        anchorID: anchorID,
       }
     )
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey()
@@ -45,7 +44,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
       toggleEntity(newEditorState, newEditorState.getSelection(), entityKey)
     )
 
-    setToShowInput(false)
+    setIsEditorOpen(false)
     props.onEditFinish()
   }
 
@@ -54,15 +53,15 @@ export const AnchorButton = (props: AnchorButtonProps) => {
     if (!selection.isCollapsed()) {
       onChange(toggleEntity(editorState, selection, null))
     }
-    setToShowInput(false)
+    setIsEditorOpen(false)
     props.onEditFinish()
   }
 
   return (
     <>
-      {toShowInput && (
-        <AnchorLabelEditor
-          isOpen={toShowInput}
+      {isEditorOpen && (
+        <AnchorIDEditor
+          isOpen={isEditorOpen}
           anchorLabelValue={''}
           onConfirm={confirmAnchor}
           onCancel={removeAnchor}

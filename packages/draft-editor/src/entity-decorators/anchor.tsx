@@ -33,7 +33,7 @@ const StyledTextInput = styled(TextInput)`
   margin: 10px;
 `
 
-export const AnchorLabelEditor = (props: {
+export const AnchorIDEditor = (props: {
   isOpen: boolean
   anchorLabelValue: string
   onConfirm: (anchorLabel: string) => void
@@ -120,7 +120,7 @@ const EditableAnchor = (props: {
   return (
     <React.Fragment>
       {isModalOpen && (
-        <AnchorLabelEditor
+        <AnchorIDEditor
           isOpen={isModalOpen}
           anchorLabelValue={anchorID}
           onConfirm={onAnchorIDChange}
