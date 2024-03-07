@@ -33,7 +33,7 @@ const StyledTextInput = styled(TextInput)`
   margin: 10px;
 `
 
-const AnchorLabelEditor = (props: {
+export const AnchorLabelEditor = (props: {
   isOpen: boolean
   anchorLabelValue: string
   onConfirm: (anchorLabel: string) => void
