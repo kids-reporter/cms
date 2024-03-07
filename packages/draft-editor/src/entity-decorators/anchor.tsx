@@ -35,12 +35,12 @@ const StyledTextInput = styled(TextInput)`
 
 export const AnchorIDEditor = (props: {
   isOpen: boolean
-  anchorLabelValue: string
-  onConfirm: (anchorLabel: string) => void
+  anchorIDValue: string
+  onConfirm: (anchorID: string) => void
   onCancel: () => void
 }) => {
-  const { isOpen, anchorLabelValue, onConfirm, onCancel } = props
-  const [anchorLabel, setAnchorLabel] = useState(anchorLabelValue)
+  const { isOpen, anchorIDValue, onConfirm, onCancel } = props
+  const [anchorLabel, setAnchorLabel] = useState(anchorIDValue)
   const [msg, setMsg] = useState('')
 
   // Restrict id format
@@ -122,7 +122,7 @@ const EditableAnchor = (props: {
       {isModalOpen && (
         <AnchorIDEditor
           isOpen={isModalOpen}
-          anchorLabelValue={anchorID}
+          anchorIDValue={anchorID}
           onConfirm={onAnchorIDChange}
           onCancel={() => {
             setIsModalOpen(false)

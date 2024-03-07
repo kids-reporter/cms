@@ -62,7 +62,7 @@ export const AnchorButton = (props: AnchorButtonProps) => {
       {isEditorOpen && (
         <AnchorIDEditor
           isOpen={isEditorOpen}
-          anchorLabelValue={''}
+          anchorIDValue={''}
           onConfirm={confirmAnchor}
           onCancel={removeAnchor}
         />
