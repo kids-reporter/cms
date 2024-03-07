@@ -20,13 +20,9 @@ const AnchorEditButton = styled.div<{ anchorLabel: string }>`
   display: inline;
   cursor: pointer;
   &::before {
-    content: '錨點:${(props) =>
+    content: '索引:${(props) =>
       props.anchorLabel !== undefined ? `(${props.anchorLabel}) ` : ''}';
   }
-`
-
-const Warning = styled.p`
-  color: red;
 `
 
 const StyledTextInput = styled(TextInput)`
@@ -44,7 +40,7 @@ const AnchorLabelEditor = (props: {
 
   return (
     <AlertDialog
-      title="編輯錨點文字(ID)"
+      title="編輯索引顯示文字"
       isOpen={isOpen}
       actions={{
         cancel: {
@@ -57,9 +53,8 @@ const AnchorLabelEditor = (props: {
         },
       }}
     >
-      <Warning>注意！同篇文章ID不可重複！</Warning>
       <StyledTextInput
-        placeholder="錨點文字(ID)"
+        placeholder="索引在目錄內顯示文字"
         type="text"
         value={anchorLabel}
         onChange={(e) => setTOCLabel(e.target.value)}
@@ -68,7 +63,7 @@ const AnchorLabelEditor = (props: {
   )
 }
 
-const EditableAnchor = (props: {
+const EditableTOCAnchor = (props: {
   onEditStart: () => void
   onEditFinish: (arg0?: { entityKey?: string; entityData?: object }) => void
   decoratedText: string
@@ -79,21 +74,22 @@ const EditableAnchor = (props: {
   const { children, contentState, entityKey } = props
   const tocContent = props.decoratedText
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [anchorID, setAnchorID] = useState(
-    contentState?.getEntity(entityKey)?.getData()?.anchorID
+  const [anchorLabel, setTOCLabel] = useState(
+    contentState?.getEntity(entityKey)?.getData()?.anchorLabel
   )
 
   useEffect(() => {
-    setAnchorID(contentState.getEntity(entityKey).getData()?.anchorID)
+    setTOCLabel(contentState.getEntity(entityKey).getData()?.anchorLabel)
   })
 
-  const onAnchorIDChange = (anchorID: string) => {
+  const onTOCLabelChange = (labelValue: string) => {
     setIsModalOpen(false)
-    setAnchorID(anchorID)
+    setTOCLabel(labelValue)
     props.onEditFinish({
       entityKey,
       entityData: {
-        anchorID: anchorID,
+        anchorKey: contentState?.getEntity(entityKey)?.getData()?.anchorKey,
+        anchorLabel: labelValue,
       },
     })
   }
@@ -103,8 +99,8 @@ const EditableAnchor = (props: {
       {isModalOpen && (
         <AnchorLabelEditor
           isOpen={isModalOpen}
-          anchorLabelValue={anchorID}
-          onConfirm={onAnchorIDChange}
+          anchorLabelValue={anchorLabel}
+          onConfirm={onTOCLabelChange}
           onCancel={() => {
             setIsModalOpen(false)
             props.onEditFinish()
@@ -113,7 +109,7 @@ const EditableAnchor = (props: {
       )}
       <AnchorWrapper>
         <AnchorEditButton
-          anchorLabel={anchorID !== tocContent ? anchorID : undefined}
+          anchorLabel={anchorLabel !== tocContent ? anchorLabel : undefined}
           onClick={(e) => {
             e.preventDefault()
             setIsModalOpen(true)
@@ -128,7 +124,7 @@ const EditableAnchor = (props: {
   )
 }
 
-export const editableAnchorDecorator = {
-  strategy: findEntitiesByType(ENTITY.Anchor),
-  component: EditableAnchor,
+export const editableTOCAnchorDecorator = {
+  strategy: findEntitiesByType(ENTITY.TOCAnchor),
+  component: EditableTOCAnchor,
 }

@@ -1,10 +1,22 @@
 # Changelog
 
+## 1.0.2
+
+### Patch Changes
+
+- @kids-reporter/cms-core@1.0.5
+
+## 1.0.1
+
+### Patch Changes
+
+- @kids-reporter/cms-core@1.0.4
+
 ## 2024-02-05
 
 ### Commits
 
-* \[[`550285efab`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/550285efab)] - chore(cms): upgrade cms-core to @^1.0.2 (nickhsine)
+- \[[`550285efab`](https://github.com/kids-reporter/kids-reporter-monorepo/commit/550285efab)] - chore(cms): upgrade cms-core to @^1.0.2 (nickhsine)
 
 ## 2024-01-18
 

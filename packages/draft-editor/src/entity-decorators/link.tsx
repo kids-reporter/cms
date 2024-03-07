@@ -16,7 +16,7 @@ export const LinkEditor = (props: {
 
   return (
     <AlertDialog
-      title="編輯連結"
+      title="編輯外部連結或內部錨點(ID)"
       isOpen={isOpen}
       actions={{
         cancel: {
@@ -29,6 +29,17 @@ export const LinkEditor = (props: {
         },
       }}
     >
+      <p>
+        <br />
+        外部連結範例:
+        <br />
+        https://kids.twreporter.org/article/article1#part1
+        <br />
+        <br />
+        內部錨點範例:
+        <br />
+        #part1
+      </p>
       <TextInput
         placeholder="連結"
         type="text"

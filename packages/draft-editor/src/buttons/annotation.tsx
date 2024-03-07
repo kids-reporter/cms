@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { EditorState, RichUtils, convertToRaw } from 'draft-js'
+import { ENTITY } from '@kids-reporter/draft-renderer'
 import { AnnotationEditor } from '../entity-decorators/annotation'
 
 type AnnotationButtonProps = {
@@ -29,7 +30,7 @@ export const AnnotationButton = (props: AnnotationButtonProps) => {
     const contentState = editorStateOfOuterEditor.getCurrentContent()
     const rawContentState = convertToRaw(editorState.getCurrentContent())
     const contentStateWithEntity = contentState.createEntity(
-      'ANNOTATION',
+      ENTITY.Annotation,
       'MUTABLE',
       {
         rawContentState,

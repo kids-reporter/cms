@@ -7,12 +7,8 @@ import {
 } from './draft-renderer'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import { blockRenderers } from './block-renderers'
-import {
-  annotationDecorator,
-  linkDecorator,
-  findAnchorEntities,
-  ANCHOR_ENTITY_TYPE,
-} from './entity-decorators'
+import { annotationDecorator, linkDecorator } from './entity-decorators'
+import { ENTITY, findEntitiesByType } from './utils/entity'
 import { customStyleFn } from './custom-style-fn'
 
 const blockRenderMap = blockRenderMaps.content
@@ -28,8 +24,8 @@ export {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  findAnchorEntities,
-  ANCHOR_ENTITY_TYPE,
+  ENTITY,
+  findEntitiesByType,
 }
 
 export default {
@@ -43,6 +39,6 @@ export default {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  findAnchorEntities,
-  ANCHOR_ENTITY_TYPE,
+  ENTITY,
+  findEntitiesByType,
 }

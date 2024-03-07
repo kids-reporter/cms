@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { EditorState, RichUtils } from 'draft-js'
+import { ENTITY } from '@kids-reporter/draft-renderer'
 import { LinkEditor } from '../entity-decorators/link'
 
 export const LinkButton = (props: {
@@ -25,7 +26,7 @@ export const LinkButton = (props: {
   const confirmLink = (urlValue: string) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
-      'LINK',
+      ENTITY.Link,
       'MUTABLE',
       { url: urlValue }
     )

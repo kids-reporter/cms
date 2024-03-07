@@ -27,6 +27,7 @@ type EmbeddedCodeBlockProps = {
   className?: string
   data: {
     caption?: string
+    align?: string
     embeddedCode: string
   }
 }
@@ -96,8 +97,8 @@ export const EmbeddedCodeBlock = ({
   )
 }
 
-const ArticleBodyContainer = styled.div`
-  max-width: 700px;
+const ArticleBodyContainer = styled.div<{ $align?: string }>`
+  max-width: ${(props) => (props.$align === 'image-width' ? '1000' : '700')}px;
   margin: 0 auto 27px auto;
 
   ${mediaQuery.smallOnly} {
@@ -110,7 +111,7 @@ export function EmbeddedCodeInArticleBody({
   data,
 }: EmbeddedCodeBlockProps) {
   return (
-    <ArticleBodyContainer className={className}>
+    <ArticleBodyContainer $align={data.align} className={className}>
       <EmbeddedCodeBlock data={data} />
     </ArticleBodyContainer>
   )
