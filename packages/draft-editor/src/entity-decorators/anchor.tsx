@@ -40,7 +40,7 @@ export const AnchorIDEditor = (props: {
   onCancel: () => void
 }) => {
   const { isOpen, anchorIDValue, onConfirm, onCancel } = props
-  const [anchorLabel, setAnchorLabel] = useState(anchorIDValue)
+  const [anchorID, setAnchorID] = useState(anchorIDValue)
   const [msg, setMsg] = useState('')
 
   // Restrict id format
@@ -62,8 +62,8 @@ export const AnchorIDEditor = (props: {
         confirm: {
           label: 'Confirm',
           action: () => {
-            if (isValidID(anchorLabel)) {
-              onConfirm(anchorLabel)
+            if (isValidID(anchorID)) {
+              onConfirm(anchorID)
             } else {
               setMsg('ID格式錯誤！')
             }
@@ -79,8 +79,8 @@ export const AnchorIDEditor = (props: {
       <StyledTextInput
         placeholder="錨點文字(ID)"
         type="text"
-        value={anchorLabel}
-        onChange={(e) => setAnchorLabel(e.target.value)}
+        value={anchorID}
+        onChange={(e) => setAnchorID(e.target.value)}
       />
       {msg && <Warning>{msg}</Warning>}
     </AlertDialog>
