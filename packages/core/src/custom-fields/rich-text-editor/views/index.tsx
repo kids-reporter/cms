@@ -1,5 +1,5 @@
 import React from 'react'
-import { jsx, Stack } from '@keystone-ui/core'; // eslint-disable-line
+import { Stack } from '@keystone-ui/core'; // eslint-disable-line
 import { FieldContainer, FieldLabel } from '@keystone-ui/fields'
 import {
   CardValueComponent,
@@ -11,7 +11,7 @@ import {
 } from '@keystone-6/core/types'
 import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
-import { RichTextEditor, decorator } from '@kids-reporter/draft-editor'
+import { RichTextEditor } from '@kids-reporter/draft-editor'
 
 export const Field = ({
   field,
@@ -63,22 +63,19 @@ export const controller = (
     path: config.path,
     label: config.label,
     graphqlSelection: config.path,
-    defaultValue: EditorState.createEmpty(decorator),
+    defaultValue: EditorState.createEmpty(),
     deserialize: (data) => {
       const rawContentState = data[config.path]
       if (rawContentState === null) {
-        return EditorState.createEmpty(decorator)
+        return EditorState.createEmpty()
       }
       try {
         const contentState = convertFromRaw(rawContentState)
-        const editorState = EditorState.createWithContent(
-          contentState,
-          decorator
-        )
+        const editorState = EditorState.createWithContent(contentState)
         return editorState
       } catch (err) {
         console.error(err)
-        return EditorState.createEmpty(decorator)
+        return EditorState.createEmpty()
       }
     },
     serialize: (editorState: EditorState) => {
