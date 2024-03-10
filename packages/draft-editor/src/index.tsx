@@ -9,15 +9,18 @@ import { editableLinkDecorator } from './entity-decorators/link'
 import { editableTOCAnchorDecorator } from './entity-decorators/toc-anchor'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
 
-const decorators = [
-  editableAnnotationDecorator,
-  editableLinkDecorator,
-  editableTOCAnchorDecorator,
-  editableAnchorDecorator,
-]
-
 const RichTextEditor = (props: RichTextEditorProps) => {
-  return <_RichTextEditor decorators={decorators} {...props} />
+  return (
+    <_RichTextEditor
+      decorators={[
+        editableAnnotationDecorator,
+        editableLinkDecorator,
+        editableTOCAnchorDecorator,
+        editableAnchorDecorator,
+      ]}
+      {...props}
+    />
+  )
 }
 
 export { RichTextEditor, buttonNames }
