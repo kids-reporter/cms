@@ -13,8 +13,6 @@ import { Select } from './form/select'
 import { editableAnnotationDecorator } from '../entity-decorators/annotation'
 import { editableLinkDecorator } from '../entity-decorators/link'
 
-const editableDecorators = [editableAnnotationDecorator, editableLinkDecorator]
-
 const disabledButtons = [
   buttonNames.h2,
   buttonNames.h3,
@@ -113,7 +111,7 @@ export function InfoBoxInput(props: InfoBoxInputType) {
           }}
         />
         <RichTextEditor
-          decorators={editableDecorators}
+          decorators={[editableAnnotationDecorator, editableLinkDecorator]}
           disabledButtons={disabledButtons}
           editorState={inputValueState.editorState}
           onChange={(editorState: EditorState) => {

@@ -28,8 +28,6 @@ const disabledButtons = [
   buttonNames.anchor,
 ]
 
-const editableDecorators = [editableLinkDecorator]
-
 export const AnnotationEditor = (props: {
   isOpen: boolean
   editorStateValue: EditorState
@@ -57,7 +55,7 @@ export const AnnotationEditor = (props: {
         }}
       >
         <RichTextEditor
-          decorators={editableDecorators}
+          decorators={[editableLinkDecorator]}
           disabledButtons={disabledButtons}
           editorState={editorState.value}
           onChange={(editorState: EditorState) => {
