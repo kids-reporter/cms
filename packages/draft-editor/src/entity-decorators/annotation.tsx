@@ -10,6 +10,7 @@ import { annotationDecorator } from '@kids-reporter/draft-renderer'
 import buttonNames from '../buttons/bt-names'
 import { RichTextEditor } from '../rich-text-editor'
 import { EditableWrapper } from './wrapper'
+import { editableLinkDecorator } from './link'
 
 const disabledButtons = [
   buttonNames.h2,
@@ -23,8 +24,11 @@ const disabledButtons = [
   buttonNames.infoBox,
   buttonNames.slideshow,
   buttonNames.newsReading,
+  buttonNames.tocAnchor,
   buttonNames.anchor,
 ]
+
+const editableDecorators = [editableLinkDecorator]
 
 export const AnnotationEditor = (props: {
   isOpen: boolean
@@ -53,6 +57,7 @@ export const AnnotationEditor = (props: {
         }}
       >
         <RichTextEditor
+          decorators={editableDecorators}
           disabledButtons={disabledButtons}
           editorState={editorState.value}
           onChange={(editorState: EditorState) => {

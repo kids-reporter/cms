@@ -13,12 +13,9 @@ import {
 import {
   blockRenderMap,
   customStyleFn,
-  annotationDecorator,
-  linkDecorator,
   ENTITY,
 } from '@kids-reporter/draft-renderer'
 import buttonNames from './buttons/bt-names'
-import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   DraftEditorContainer,
@@ -47,13 +44,9 @@ import {
   withStyle,
 } from './buttons'
 import { ImageSelector } from './buttons/selector/image-selector'
-import { createInfoBoxButton } from './buttons/info-box'
+import { InfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
-import { editableTOCAnchorDecorator } from './entity-decorators/toc-anchor'
-import { editableAnchorDecorator } from './entity-decorators/anchor'
-import { editableAnnotationDecorator } from './entity-decorators/annotation'
-import { editableLinkDecorator } from './entity-decorators/link'
 
 const styleSource = [
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
@@ -68,29 +61,37 @@ const styleSource = [
   />
 ))
 
-const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
-
 type State = {
   isEnlarged: boolean
   readOnly: boolean
 }
 
-class RichTextEditor extends React.Component<RichTextEditorProps, State> {
+export type RichTextEditorProps = {
+  onChange: (editorState: EditorState) => void
+  editorState: EditorState
+  disabledButtons?: string[]
+}
+
+type RichTextEditorWithDecoratorProps = RichTextEditorProps & {
+  decorators: any[]
+}
+
+class RichTextEditor extends React.Component<
+  RichTextEditorWithDecoratorProps,
+  State
+> {
   editorRef = null
   editorDecorator
 
-  constructor(props: RichTextEditorProps) {
+  constructor(props: RichTextEditorWithDecoratorProps) {
     super(props)
     this.state = {
       isEnlarged: false,
       readOnly: false,
     }
-    const editableDecorators = [
-      editableAnnotationDecorator,
-      editableLinkDecorator,
-      editableTOCAnchorDecorator,
-      editableAnchorDecorator,
-    ].map((editableDecorator) => {
+
+    // Assign edit props to decorators
+    const editableDecorators = props.decorators.map((editableDecorator) => {
       return {
         ...editableDecorator,
         props: {
@@ -240,8 +241,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       // and `props.blockProps.onEditFinish` in the custom block components.
       atomicBlockObj['props'] = {
         ...this.customEditProps,
-        RichTextEditorComponent: RichTextEditor,
-        decorator,
         getMainEditorReadOnly: () => this.state.readOnly,
       }
     }
@@ -406,16 +405,10 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
   }
 }
 
-const InfoBoxButton = createInfoBoxButton({
-  InnerEditor: RichTextEditor,
-  decorator,
-})
-
 const CustomInfoBoxButton = withStyle(InfoBoxButton)
 
-export { RichTextEditor, decorator }
+export { RichTextEditor }
 
 export default {
   RichTextEditor,
-  decorator,
 }
