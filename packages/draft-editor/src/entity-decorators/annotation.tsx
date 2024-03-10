@@ -8,7 +8,7 @@ import {
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { annotationDecorator } from '@kids-reporter/draft-renderer'
 import buttonNames from '../buttons/bt-names'
-import { RichTextEditor } from '../draft-editor'
+import { RichTextEditor } from '../rich-text-editor'
 import { EditableWrapper } from './wrapper'
 
 const disabledButtons = [

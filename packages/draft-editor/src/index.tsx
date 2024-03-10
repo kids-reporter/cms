@@ -1,4 +1,4 @@
-import { RichTextEditor, decorator } from './draft-editor'
+import { RichTextEditor, decorator } from './rich-text-editor'
 import buttonNames from './buttons/bt-names'
 
 export { RichTextEditor, buttonNames, decorator }
