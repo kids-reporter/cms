@@ -41,10 +41,9 @@ import {
   CustomEmbeddedCodeButton,
   CustomNewsReadingButton,
   CustomDividerButton,
-  withStyle,
+  CustomInfoBoxButton,
 } from './buttons'
 import { ImageSelector } from './buttons/selector/image-selector'
-import { InfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
 
@@ -91,7 +90,7 @@ class RichTextEditor extends React.Component<
     }
 
     // Assign edit props to decorators
-    const editableDecorators = props.decorators.map((editableDecorator) => {
+    const editableDecorators = props.decorators?.map((editableDecorator) => {
       return {
         ...editableDecorator,
         props: {
@@ -404,8 +403,6 @@ class RichTextEditor extends React.Component<
     )
   }
 }
-
-const CustomInfoBoxButton = withStyle(InfoBoxButton)
 
 export { RichTextEditor }
 

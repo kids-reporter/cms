@@ -17,6 +17,7 @@ import { LinkButton } from './link'
 import { AnnotationButton } from './annotation'
 import { SlideshowButton } from './slideshow'
 import { NewsReadingButton } from './news-reading'
+import { InfoBoxButton } from './info-box'
 
 export const withStyle = (Button: React.ComponentType<any>) => {
   return styled(Button)`
@@ -41,3 +42,4 @@ export const CustomNewsReadingButton = withStyle(NewsReadingButton)
 export const CustomBackgroundColorButton = withStyle(BackgroundColorButton)
 export const CustomFontColorButton = withStyle(FontColorButton)
 export const CustomDividerButton = withStyle(DividerButton)
+export const CustomInfoBoxButton = withStyle(InfoBoxButton)
