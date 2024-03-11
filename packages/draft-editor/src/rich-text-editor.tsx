@@ -66,13 +66,13 @@ type State = {
   editorState: EditorState
 }
 
-export type RichTextEditorProps = {
+export type RichTextEditorWithoutDecoratorProps = {
   onChange: (editorState: EditorState) => void
   editorState: EditorState
   disabledButtons?: string[]
 }
 
-type RichTextEditorWithDecoratorProps = RichTextEditorProps & {
+type RichTextEditorWithDecoratorProps = RichTextEditorWithoutDecoratorProps & {
   decorators: any[]
 }
 
