@@ -1,11 +1,40 @@
 import { Express, Request, Response, NextFunction } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 import { gql } from '@keystone-6/core/admin-ui/apollo'
+import { verify } from 'jsonwebtoken'
 
 import appConfig from '../../config'
-import _errors from '@twreporter/errors'
 
-const errors = _errors.default
+function getCookieValue(cookie_str: string | undefined, key: string) {
+  let value
+  if (cookie_str) {
+    const cookies = cookie_str.split(';')
+    for (const cookie of cookies) {
+      const [cookie_key, cookie_value] = cookie.split('=')
+      if (cookie_key.trim() === key) {
+        value = cookie_value
+        break
+      }
+    }
+  }
+  return value
+}
+
+function verify2FAJWT(jwt: string, currentUserId: string) {
+  try {
+    const decoded = verify(jwt, appConfig.twoFactorAuth.secret)
+    const { userId, twoFactorExpire } = decoded
+
+    if (currentUserId !== userId || Date.now() > twoFactorExpire) {
+      return false
+    }
+
+    return true
+  } catch (error) {
+    // consider failed if jwt decode failed
+    return false
+  }
+}
 
 export function twoFactorAuthMiddleware(
   app: Express,
@@ -37,45 +66,13 @@ export function twoFactorAuthMiddleware(
       return next()
     }
 
-    // Reset twoFactorAuthVerified to false when user logout
+    // Reset 2FA verify state when user logout
     const endSessionMw = async (
       req: Request,
       res: Response,
       next: NextFunction
     ) => {
       if (req.body?.operationName === 'EndSession') {
-        const context = await commonContext.withRequest(req, res)
-        try {
-          await context.db.User.updateOne({
-            where: { id: context.session.itemId },
-            data: {
-              twoFactorAuthVerified: null,
-            },
-          })
-        } catch (error) {
-          const annotatedErr = errors.helpers.wrap(
-            error,
-            'endSessionMw',
-            'Failed to save twoFactorAuthVerified to user table'
-          )
-          console.log(
-            JSON.stringify({
-              severity: 'ERROR',
-              message: errors.helpers.printAll(
-                annotatedErr,
-                { withStack: true, withPayload: true },
-                0,
-                0
-              ),
-            })
-          )
-          res.status(500).send({
-            status: 'error',
-            message:
-              'endSessionMw: Failed to save twoFactorAuthVerified to user table',
-          })
-          return
-        }
         res.locals.skip2fa = true
         return next('route')
       }
@@ -139,9 +136,15 @@ export function twoFactorAuthMiddleware(
         return res.redirect('/2fa-setup')
       }
       // Redirect to home if 2FA is verified
+      const keystonejs_2fa_value = getCookieValue(
+        req.get('Cookie'),
+        'keystonejs-2fa'
+      )
+
       if (
         context.session?.data.twoFactorAuth.bypass ||
-        context.session?.data.twoFactorAuth.verified
+        (keystonejs_2fa_value &&
+          verify2FAJWT(keystonejs_2fa_value, context.session.itemId))
       ) {
         const from = req.query.from
         res.locals.skip2fa = true
@@ -229,7 +232,16 @@ export function twoFactorAuthMiddleware(
       next: NextFunction
     ) => {
       const context = await commonContext.withRequest(req, res)
-      if (context.session?.data.twoFactorAuth.verified) {
+
+      const keystonejs_2fa_value = getCookieValue(
+        req.get('Cookie'),
+        'keystonejs-2fa'
+      )
+
+      if (
+        keystonejs_2fa_value &&
+        verify2FAJWT(keystonejs_2fa_value, context.session.itemId)
+      ) {
         return next('route')
       }
       return next()
@@ -256,9 +268,29 @@ export function twoFactorAuthMiddleware(
       return next()
     }
 
+    // Clear 2FA cookie if user is not logged in or 2FA not set
+    const clear2FaCookie = async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ) => {
+      const context = await commonContext.withRequest(req, res)
+      const isLoggedIn = getCookieValue(req.get('Cookie'), 'keystonejs-session')
+      if (!context.session?.data.twoFactorAuth.set || !isLoggedIn) {
+        res.clearCookie(appConfig.twoFactorAuth.cookieName, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'lax',
+          expires: new Date(Date.now()),
+        })
+      }
+      return next()
+    }
+
     // general 2FA check
     app.get(
       '*',
+      clear2FaCookie,
       twoFactorSkipMw,
       signinCheckMw,
       twoFactorBypassMw,
@@ -267,6 +299,7 @@ export function twoFactorAuthMiddleware(
     )
     app.post(
       '*',
+      clear2FaCookie,
       twoFactorSkipMw,
       signinCheckMw,
       twoFactorBypassMw,

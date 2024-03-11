@@ -32,7 +32,6 @@ const UPDATE_USER_MUTATION = gql`
     updateUser(where: $where, data: $data) {
       id
       twoFactorAuthSecret
-      twoFactorAuthVerified
     }
   }
 `
@@ -86,7 +85,6 @@ export default function TwoFactorAuthCreate() {
               },
               data: {
                 twoFactorAuthSecret: '',
-                twoFactorAuthVerified: null,
               },
             },
           })

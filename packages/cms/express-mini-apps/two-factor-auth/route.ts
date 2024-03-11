@@ -5,10 +5,41 @@ import appConfig from '../../config'
 
 import qrcode from 'qrcode'
 import { authenticator } from 'otplib'
+import { sign } from 'jsonwebtoken'
 
 import _errors from '@twreporter/errors'
 
+authenticator.options = {
+  window: 1,
+}
+
 const errors = _errors.default
+
+const sessionExpireTime = new Date(
+  new Date().getTime() + appConfig.session.maxAge * 1000
+)
+
+const twoFactorAuthCookieOptions = {
+  httpOnly: true, // Prevent JavaScript access
+  secure: true, // Secure flag for HTTPS only
+  sameSite: 'lax', // CSRF protection
+  expires: sessionExpireTime,
+}
+
+function issue2FAJWT(userId: string) {
+  const secret = appConfig.twoFactorAuth.secret
+
+  const payload = {
+    userId: userId,
+    twoFactorExpire: sessionExpireTime,
+  }
+
+  const jwtToken = sign(payload, secret, {
+    expiresIn: `${appConfig.session.maxAge * 1000}s`,
+  })
+
+  return jwtToken
+}
 
 export function twoFactorAuthRoute(
   app: Express,
@@ -107,18 +138,20 @@ export function twoFactorAuthRoute(
       const isValid = authenticator.check(token, String(tempSecret))
 
       if (isValid) {
-        const sessionExpireTime = new Date(
-          new Date().getTime() + appConfig.session.maxAge * 1000
-        )
         try {
           await context.prisma.User.update({
             where: { id: currentSession?.itemId },
             data: {
               twoFactorAuthSecret: tempSecret,
               twoFactorAuthTemp: '',
-              twoFactorAuthVerified: sessionExpireTime,
             },
           })
+          const jwtToken = issue2FAJWT(currentSession?.itemId)
+          res.cookie(
+            appConfig.twoFactorAuth.cookieName,
+            jwtToken,
+            twoFactorAuthCookieOptions
+          )
         } catch (error) {
           const annotatedErr = errors.helpers.wrap(
             error,
@@ -177,7 +210,18 @@ export function twoFactorAuthRoute(
         String(user?.twoFactorAuthSecret)
       )
 
-      res.send({ status: isValid ? 'success' : 'error' })
+      if (isValid) {
+        const jwtToken = issue2FAJWT(currentSession?.itemId)
+
+        res.cookie(
+          appConfig.twoFactorAuth.cookieName,
+          jwtToken,
+          twoFactorAuthCookieOptions
+        )
+        res.send({ status: 'success' })
+      } else {
+        res.send({ status: 'error' })
+      }
     })
   }
 }

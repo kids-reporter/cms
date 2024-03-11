@@ -26,6 +26,8 @@ const images = {
 
 const twoFactorAuth = {
   enable: envVar.twoFactorAuth.enable,
+  secret: envVar.twoFactorAuth.secret,
+  cookieName: envVar.twoFactorAuth.cookieName,
   serviceName:
     envVar.twoFactorAuth.serviceName +
     (envVar.nodeEnv === 'production' ? '' : ` ${envVar.nodeEnv}`),
