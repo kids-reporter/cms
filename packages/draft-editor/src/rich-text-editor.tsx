@@ -63,6 +63,7 @@ const styleSource = [
 type State = {
   isEnlarged: boolean
   readOnly: boolean
+  editorState: EditorState
 }
 
 export type RichTextEditorProps = {
@@ -80,15 +81,9 @@ class RichTextEditor extends React.Component<
   State
 > {
   editorRef = null
-  editorState
 
   constructor(props: RichTextEditorWithDecoratorProps) {
     super(props)
-    this.state = {
-      isEnlarged: false,
-      readOnly: false,
-    }
-
     // Assign edit props to decorators
     const editableDecorators = new CompositeDecorator(
       props.decorators?.map((editableDecorator) => {
@@ -100,15 +95,21 @@ class RichTextEditor extends React.Component<
         }
       })
     )
+
     const { editorState } = props
-    this.editorState = !(editorState instanceof EditorState)
-      ? EditorState.createEmpty(editableDecorators)
-      : EditorState.set(editorState, {
-          decorator: editableDecorators,
-        })
+    this.state = {
+      isEnlarged: false,
+      readOnly: false,
+      editorState: !(editorState instanceof EditorState)
+        ? EditorState.createEmpty(editableDecorators)
+        : EditorState.set(editorState, {
+            decorator: editableDecorators,
+          }),
+    }
   }
 
   onChange = (editorState: EditorState) => {
+    this.setState({ editorState: editorState })
     this.props.onChange(editorState)
   }
 
@@ -127,7 +128,7 @@ class RichTextEditor extends React.Component<
   handleReturn = (event: React.KeyboardEvent) => {
     if (KeyBindingUtil.isSoftNewlineEvent(event)) {
       const { onChange } = this.props
-      onChange(RichUtils.insertSoftNewline(this.editorState))
+      onChange(RichUtils.insertSoftNewline(this.state.editorState))
       return 'handled'
     }
 
@@ -138,10 +139,10 @@ class RichTextEditor extends React.Component<
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
         e,
-        this.editorState,
+        this.state.editorState,
         4 /* maxDepth */
       )
-      if (newEditorState !== this.editorState) {
+      if (newEditorState !== this.state.editorState) {
         this.onChange(newEditorState)
       }
       return null
@@ -150,11 +151,13 @@ class RichTextEditor extends React.Component<
   }
 
   toggleBlockType = (blockType: DraftBlockType) => {
-    this.onChange(RichUtils.toggleBlockType(this.editorState, blockType))
+    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType))
   }
 
   toggleInlineStyle = (inlineStyle: string) => {
-    this.onChange(RichUtils.toggleInlineStyle(this.editorState, inlineStyle))
+    this.onChange(
+      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
+    )
   }
 
   getEntityType = (editorState: EditorState) => {
@@ -221,16 +224,16 @@ class RichTextEditor extends React.Component<
       entityData?: { [key: string]: any }
     } = {}) => {
       if (entityKey && entityData) {
-        const oldContentState = this.editorState.getCurrentContent()
+        const oldContentState = this.state.editorState.getCurrentContent()
         const newContentState = oldContentState.replaceEntityData(
           entityKey,
           entityData
         )
-        this.onChange(
-          EditorState.set(this.editorState, {
-            currentContent: newContentState,
-          })
-        )
+        const newEditorState = EditorState.set(this.state.editorState, {
+          currentContent: newContentState,
+        })
+        this.setState({ editorState: newEditorState })
+        this.onChange(newEditorState)
       }
       this.commonEditProps.onEditFinish()
     },
@@ -253,14 +256,14 @@ class RichTextEditor extends React.Component<
 
   render() {
     const { disabledButtons = [] } = this.props
-    const { isEnlarged, readOnly } = this.state
+    const { isEnlarged, readOnly, editorState } = this.state
 
-    const entityType = this.getEntityType(this.editorState)
+    const entityType = this.getEntityType(editorState)
 
     const commonProps = {
-      editorState: this.editorState,
+      editorState: editorState,
       onChange: this.onChange,
-      readOnly: this.state.readOnly,
+      readOnly: readOnly,
     }
 
     return (
@@ -271,15 +274,15 @@ class RichTextEditor extends React.Component<
             <DraftEditorControlsWrapper>
               <BlockStyleControls
                 disabledButtons={disabledButtons}
-                editorState={this.editorState}
+                editorState={editorState}
                 onToggle={this.toggleBlockType}
-                readOnly={this.state.readOnly}
+                readOnly={readOnly}
               />
               <InlineStyleControls
                 disabledButtons={disabledButtons}
-                editorState={this.editorState}
+                editorState={editorState}
                 onToggle={this.toggleInlineStyle}
-                readOnly={this.state.readOnly}
+                readOnly={readOnly}
               />
               <EnlargeButtonWrapper>
                 <CustomEnlargeButton
@@ -308,7 +311,7 @@ class RichTextEditor extends React.Component<
                   buttonNames.backgroundColor
                 )}
                 isActive={
-                  this.editorState
+                  editorState
                     .getCurrentInlineStyle()
                     .find(
                       (styleName) =>
@@ -322,7 +325,7 @@ class RichTextEditor extends React.Component<
               <CustomFontColorButton
                 isDisabled={disabledButtons.includes(buttonNames.fontColor)}
                 isActive={
-                  this.editorState
+                  editorState
                     .getCurrentInlineStyle()
                     .find(
                       (styleName) =>
@@ -383,7 +386,7 @@ class RichTextEditor extends React.Component<
               blockRenderMap={blockRenderMap}
               blockRendererFn={this.blockRendererFn}
               customStyleFn={customStyleFn}
-              editorState={this.editorState}
+              editorState={editorState}
               handleKeyCommand={this.handleKeyCommand}
               handleReturn={this.handleReturn}
               keyBindingFn={this.mapKeyToEditorCommand}
