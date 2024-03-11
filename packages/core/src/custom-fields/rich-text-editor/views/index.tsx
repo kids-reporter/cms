@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack } from '@keystone-ui/core'; // eslint-disable-line
+import { jsx, Stack } from '@keystone-ui/core'; // eslint-disable-line
 import { FieldContainer, FieldLabel } from '@keystone-ui/fields'
 import {
   CardValueComponent,
