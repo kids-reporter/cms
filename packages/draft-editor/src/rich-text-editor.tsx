@@ -127,8 +127,7 @@ class RichTextEditor extends React.Component<
 
   handleReturn = (event: React.KeyboardEvent) => {
     if (KeyBindingUtil.isSoftNewlineEvent(event)) {
-      const { onChange } = this.props
-      onChange(RichUtils.insertSoftNewline(this.state.editorState))
+      this.onChange(RichUtils.insertSoftNewline(this.state.editorState))
       return 'handled'
     }
 
@@ -232,7 +231,6 @@ class RichTextEditor extends React.Component<
         const newEditorState = EditorState.set(this.state.editorState, {
           currentContent: newContentState,
         })
-        this.setState({ editorState: newEditorState })
         this.onChange(newEditorState)
       }
       this.commonEditProps.onEditFinish()
