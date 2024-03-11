@@ -168,7 +168,7 @@ export const InfoBoxButton = (props: InfoBoxButtonProps) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {toShowInput && (
         <InfoBoxInput
           onConfirm={onChange}
@@ -191,6 +191,6 @@ export const InfoBoxButton = (props: InfoBoxButtonProps) => {
         <i className="far"></i>
         <span>InfoBox</span>
       </div>
-    </React.Fragment>
+    </>
   )
 }
