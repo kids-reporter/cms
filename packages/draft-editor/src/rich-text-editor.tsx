@@ -228,10 +228,11 @@ class RichTextEditor extends React.Component<
           entityKey,
           entityData
         )
-        const newEditorState = EditorState.set(this.state.editorState, {
-          currentContent: newContentState,
-        })
-        this.onChange(newEditorState)
+        this.onChange(
+          EditorState.set(this.state.editorState, {
+            currentContent: newContentState,
+          })
+        )
       }
       this.commonEditProps.onEditFinish()
     },
