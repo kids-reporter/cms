@@ -27,6 +27,10 @@ const listConfigurations = list({
       many: false,
       label: '大頭照',
     }),
+    image: relationship({
+      label: '圖片',
+      ref: 'Photo',
+    }),
     posts: relationship({
       ref: 'Post.authors',
       many: true,
