@@ -586,6 +586,7 @@ type Author {
   email: String
   bio: String
   avatar: Photo
+  image: Photo
   posts(where: PostWhereInput! = {}, orderBy: [PostOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostWhereUniqueInput): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
   createdAt: DateTime
@@ -607,6 +608,7 @@ input AuthorWhereInput {
   email: StringFilter
   bio: StringFilter
   avatar: PhotoWhereInput
+  image: PhotoWhereInput
   posts: PostManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -628,6 +630,7 @@ input AuthorUpdateInput {
   email: String
   bio: String
   avatar: PhotoRelateToOneForUpdateInput
+  image: PhotoRelateToOneForUpdateInput
   posts: PostRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -644,6 +647,7 @@ input AuthorCreateInput {
   email: String
   bio: String
   avatar: PhotoRelateToOneForCreateInput
+  image: PhotoRelateToOneForCreateInput
   posts: PostRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
