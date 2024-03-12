@@ -52,7 +52,7 @@ export const sendGQLRequest = async (
 ) => {
   let response
   try {
-    response = await axios.post(url, data, config)
+    response = await axios.post(url, data, { timeout: 5000, ...config })
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
     const msg = errors.helpers.printAll(annotatedErr, {
