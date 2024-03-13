@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import errors from '@twreporter/errors'
 import { Cards, PostCardProp } from './cards'
 import { useState } from 'react'
+import { AXIOS_TIMEOUT } from '@/app/utils'
 
 const Container = styled.div`
   text-align: center;
@@ -54,7 +55,8 @@ export const LoadMoreResults = ({
       try {
         setIsLoading(true)
         axiosRes = await axios.get(
-          `/api/search?q=${nextQuery.q}&start=${start}&count=${count}`
+          `/api/search?q=${nextQuery.q}&start=${start}&count=${count}`,
+          { timeout: AXIOS_TIMEOUT }
         )
       } catch (err) {
         setIsLoading(false)
