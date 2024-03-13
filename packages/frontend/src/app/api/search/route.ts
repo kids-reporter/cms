@@ -120,7 +120,7 @@ async function getSearchResults({
   }
 }
 
-const filterPostItems = (items?: customsearch_v1.Schema$Result[]) => {
+const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
   return Array.isArray(items)
     ? items.filter((item) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
@@ -132,7 +132,7 @@ const filterPostItems = (items?: customsearch_v1.Schema$Result[]) => {
     : items
 }
 
-export async function getPostOnlySearchResults({
+export async function getFilteredSearchResults({
   cx,
   apiKey,
   q,
@@ -176,14 +176,14 @@ export async function getPostOnlySearchResults({
     }
   }
   let _accItems = accumulatedItems
-  const items = filterPostItems(searchResults?.items)
+  const items = filterItems(searchResults?.items)
   if (Array.isArray(items)) {
     _accItems = _accItems.concat(items)
     // repeatedly request API to get enough items
     if (_accItems.length < count && searchResults?.nextQuery) {
       const nextCount = searchResults.nextQuery.count
       const nextStart = searchResults.nextQuery.startIndex
-      return getPostOnlySearchResults({
+      return getFilteredSearchResults({
         cx,
         apiKey,
         q,
@@ -218,7 +218,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const searchResults = await getPostOnlySearchResults({
+    const searchResults = await getFilteredSearchResults({
       cx,
       apiKey,
       q,
