@@ -121,14 +121,16 @@ async function getSearchResults({
   }
 }
 
-function filterPostItems(items?: customsearch_v1.Schema$Result[]) {
-  if (Array.isArray(items)) {
-    return items.filter((item) => {
-      const metaTag = item?.pagemap?.metatags?.[0]
-      return metaTag?.['og:type'] === 'article'
-    })
-  }
-  return items
+const filterPostItems = (items?: customsearch_v1.Schema$Result[]) => {
+  return Array.isArray(items)
+    ? items.filter((item) => {
+        const metaTag = item?.pagemap?.metatags?.[0]
+        return (
+          metaTag?.['contenttype'] === 'article' ||
+          metaTag?.['contenttype'] === 'topic'
+        )
+      })
+    : []
 }
 
 export async function getPostOnlySearchResults({
