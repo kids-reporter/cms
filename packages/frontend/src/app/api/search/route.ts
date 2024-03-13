@@ -41,19 +41,21 @@ export function transferItemsToPostCards(
     const url = item?.link || metaTag?.['og:url']
     const contentType = metaTag?.['contenttype']
 
-    cardItems.push({
-      post: {
-        image,
-        title,
-        desc,
-        publishedDate,
-        url,
-        category: contentType === ContentType.TOPIC ? '專題' : category,
-        subSubcategory,
-        theme: Theme.BLUE,
-      },
-      isSimple: false,
-    })
+    if (contentType === ContentType.ARTICLE || ContentType.TOPIC) {
+      cardItems.push({
+        post: {
+          image,
+          title,
+          desc,
+          publishedDate,
+          url,
+          category: contentType === ContentType.TOPIC ? '專題' : category,
+          subSubcategory,
+          theme: Theme.BLUE,
+        },
+        isSimple: false,
+      })
+    }
   })
 
   return cardItems
