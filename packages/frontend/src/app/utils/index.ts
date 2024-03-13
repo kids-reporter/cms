@@ -45,6 +45,8 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
   })
 }
 
+export const AXIOS_TIMEOUT = 5000
+
 export const sendGQLRequest = async (
   url: string,
   data?: any,
@@ -52,7 +54,10 @@ export const sendGQLRequest = async (
 ) => {
   let response
   try {
-    response = await axios.post(url, data, config)
+    response = await axios.post(url, data, {
+      timeout: AXIOS_TIMEOUT,
+      ...config,
+    })
   } catch (err) {
     const annotatedErr = errors.helpers.annotateAxiosError(err)
     const msg = errors.helpers.printAll(annotatedErr, {
