@@ -129,7 +129,7 @@ const filterPostItems = (items?: customsearch_v1.Schema$Result[]) => {
           contentType === ContentType.TOPIC
         )
       })
-    : []
+    : items
 }
 
 export async function getPostOnlySearchResults({
