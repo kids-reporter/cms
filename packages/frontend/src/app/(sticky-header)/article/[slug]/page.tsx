@@ -8,6 +8,7 @@ import {
   GENERAL_DESCRIPTION,
   POST_CONTENT_GQL,
   OG_SUFFIX,
+  ContentType,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
 import './page.scss'
@@ -143,7 +144,7 @@ export async function generateMetadata({
       images: postMeta?.ogImage?.resized?.small
         ? [postMeta.ogImage.resized.small]
         : [],
-      type: 'article',
+      type: ContentType.ARTICLE,
     },
     other: {
       // Since we can't inject <!-- <PageMap>...</PageMap> --> to <head> section with Next metadata API,
@@ -156,7 +157,7 @@ export async function generateMetadata({
       subcategory:
         postMeta?.subSubcategoriesOrdered?.[0]?.subcategory?.name ?? '',
       subSubcategory: postMeta?.subSubcategoriesOrdered?.[0]?.name ?? '',
-      contentType: 'article',
+      contentType: ContentType.ARTICLE,
     },
   }
 }
