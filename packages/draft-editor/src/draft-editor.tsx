@@ -15,7 +15,7 @@ import {
   customStyleFn,
   annotationDecorator,
   linkDecorator,
-  ANCHOR_ENTITY_TYPE,
+  ENTITY,
 } from '@kids-reporter/draft-renderer'
 import buttonNames from './buttons/bt-names'
 import { RichTextEditorProps } from './draft-editor.type'
@@ -32,6 +32,7 @@ import {
   BlockStyleControls,
   InlineStyleControls,
   CustomEnlargeButton,
+  CustomTOCAnchorButton,
   CustomAnchorButton,
   CustomLinkButton,
   CustomBackgroundColorButton,
@@ -49,27 +50,21 @@ import { createAnnotationButton } from './buttons/annotation'
 import { createInfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
+import { editableTOCAnchorDecorator } from './entity-decorators/toc-anchor'
 import { editableAnchorDecorator } from './entity-decorators/anchor'
 
-const styleSource = (
-  <>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-  </>
-)
+const styleSource = [
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
+  'https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+].map((src, index) => (
+  <link
+    key={`style-src-${index}`}
+    href={src}
+    rel="stylesheet"
+    type="text/css"
+  />
+))
 
 const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
 
@@ -91,6 +86,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     this.editorDecorator = new CompositeDecorator([
       annotationDecorator,
       linkDecorator,
+      {
+        ...editableTOCAnchorDecorator,
+        props: {
+          ...this.customEditProps,
+        },
+      },
       {
         ...editableAnchorDecorator,
         props: {
@@ -292,14 +293,20 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                   isEnlarged={isEnlarged}
                 ></CustomEnlargeButton>
               </EnlargeButtonWrapper>
+              <CustomTOCAnchorButton
+                isDisabled={disabledButtons.includes(buttonNames.tocAnchor)}
+                isActive={entityType === ENTITY.TOCAnchor}
+                {...commonProps}
+              />
               <CustomAnchorButton
                 isDisabled={disabledButtons.includes(buttonNames.anchor)}
-                isActive={entityType === ANCHOR_ENTITY_TYPE}
+                isActive={entityType === ENTITY.Anchor}
                 {...commonProps}
+                {...this.commonEditProps}
               />
               <CustomLinkButton
                 isDisabled={disabledButtons.includes(buttonNames.link)}
-                isActive={entityType === 'LINK'}
+                isActive={entityType === ENTITY.Link}
                 {...commonProps}
                 {...this.commonEditProps}
               />
@@ -339,7 +346,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
               />
               <CustomAnnotationButton
                 isDisabled={disabledButtons.includes(buttonNames.annotation)}
-                isActive={entityType === 'ANNOTATION'}
+                isActive={entityType === ENTITY.Annotation}
                 {...commonProps}
                 {...this.commonEditProps}
               />

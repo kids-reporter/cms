@@ -19,6 +19,10 @@ model User {
   role                  String
   createdAt             DateTime? @default(now())
   updatedAt             DateTime? @updatedAt
+  twoFactorAuthBypass   Boolean   @default(false)
+  twoFactorAuthVerified DateTime?
+  twoFactorAuthSecret   String?
+  twoFactorAuthTemp     String?
   from_Post_createdBy   Post[]    @relation("Post_createdBy")
   from_Post_updatedBy   Post[]    @relation("Post_updatedBy")
   from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
@@ -88,6 +92,7 @@ model Photo {
   from_Post_heroImage            Post[]            @relation("Post_heroImage")
   from_Post_ogImage              Post[]            @relation("Post_ogImage")
   from_Author_avatar             Author[]          @relation("Author_avatar")
+  from_Author_image              Author[]          @relation("Author_image")
   from_Project_heroImage         Project[]         @relation("Project_heroImage")
   from_Project_mobileHeroImage   Project[]         @relation("Project_mobileHeroImage")
   from_Project_ogImage           Project[]         @relation("Project_ogImage")
@@ -106,6 +111,8 @@ model Author {
   bio                String    @default("")
   avatar             Photo?    @relation("Author_avatar", fields: [avatarId], references: [id])
   avatarId           Int?      @map("avatar")
+  image              Photo?    @relation("Author_image", fields: [imageId], references: [id])
+  imageId            Int?      @map("image")
   posts              Post[]    @relation("Author_posts")
   createdAt          DateTime? @default(now())
   updatedAt          DateTime? @updatedAt
@@ -114,6 +121,7 @@ model Author {
 
   @@index([name])
   @@index([avatarId])
+  @@index([imageId])
 }
 
 model Project {
