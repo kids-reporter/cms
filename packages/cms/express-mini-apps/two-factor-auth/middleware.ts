@@ -2,23 +2,9 @@ import { Express, Request, Response, NextFunction } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 import { gql } from '@keystone-6/core/admin-ui/apollo'
 import { verify } from 'jsonwebtoken'
+import cookieParser from 'cookie-parser'
 
 import appConfig from '../../config'
-
-function getCookieValue(cookie_str: string | undefined, key: string) {
-  let value
-  if (cookie_str) {
-    const cookies = cookie_str.split(';')
-    for (const cookie of cookies) {
-      const [cookie_key, cookie_value] = cookie.split('=')
-      if (cookie_key.trim() === key) {
-        value = cookie_value
-        break
-      }
-    }
-  }
-  return value
-}
 
 function verify2FAJWT(jwt: string, currentUserId: string) {
   try {
@@ -41,6 +27,7 @@ export function twoFactorAuthMiddleware(
   app: Express,
   commonContext: KeystoneContext
 ) {
+  app.use(cookieParser())
   if (appConfig.twoFactorAuth.enable) {
     // Froce redirect to 2fa verification after signin
     const siginFromOverrideMw = (
@@ -135,16 +122,12 @@ export function twoFactorAuthMiddleware(
         res.locals.skip2fa = true
         return res.redirect('/2fa-setup')
       }
-      // Redirect to home if 2FA is verified
-      const keystonejs_2fa_value = getCookieValue(
-        req.get('Cookie'),
-        'keystonejs-2fa'
-      )
 
+      // Redirect to home if 2FA is verified
       if (
         context.session?.data.twoFactorAuth.bypass ||
-        (keystonejs_2fa_value &&
-          verify2FAJWT(keystonejs_2fa_value, context.session.itemId))
+        (req.cookies['keystonejs-2fa'] &&
+          verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
         const from = req.query.from
         res.locals.skip2fa = true
@@ -233,14 +216,9 @@ export function twoFactorAuthMiddleware(
     ) => {
       const context = await commonContext.withRequest(req, res)
 
-      const keystonejs_2fa_value = getCookieValue(
-        req.get('Cookie'),
-        'keystonejs-2fa'
-      )
-
       if (
-        keystonejs_2fa_value &&
-        verify2FAJWT(keystonejs_2fa_value, context.session.itemId)
+        req.cookies['keystonejs-2fa'] &&
+        verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId)
       ) {
         return next('route')
       }
@@ -275,8 +253,10 @@ export function twoFactorAuthMiddleware(
       next: NextFunction
     ) => {
       const context = await commonContext.withRequest(req, res)
-      const isLoggedIn = getCookieValue(req.get('Cookie'), 'keystonejs-session')
-      if (!context.session?.data.twoFactorAuth.set || !isLoggedIn) {
+      if (
+        !context.session?.data.twoFactorAuth.set ||
+        !req.cookies['keystonejs-2fa']
+      ) {
         res.clearCookie(appConfig.twoFactorAuth.cookieName, {
           httpOnly: true,
           secure: true,
