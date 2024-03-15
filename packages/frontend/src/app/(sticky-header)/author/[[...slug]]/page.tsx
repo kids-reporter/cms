@@ -9,14 +9,10 @@ import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  KIDS_URL_ORIGIN,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 import './page.scss'
-
-export const metadata: Metadata = {
-  title: '工作團隊 - 少年報導者 The Reporter for Kids',
-  description: GENERAL_DESCRIPTION,
-}
 
 const authorGQL = `
   query($authorWhere2: AuthorWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
@@ -36,6 +32,62 @@ const authorGQL = `
     }
   }
 `
+
+const metaGQL = `
+query($where: AuthorWhereUniqueInput!) {
+  author(where: $where) {
+    slug
+    name
+    bio
+    image {
+      resized {
+        small
+      }
+    }
+  }
+}
+`
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: any }
+}): Promise<Metadata> {
+  const slug = params.slug?.[0]
+
+  const authorMetaRes = await sendGQLRequest(API_URL, {
+    query: metaGQL,
+    variables: {
+      where: {
+        slug: slug,
+      },
+    },
+  })
+  const authorMeta = authorMetaRes?.data?.data?.author
+  if (!authorMeta) {
+    log(LogLevel.WARNING, `Author meta not found! ${slug}`)
+  }
+
+  return {
+    title: authorMeta.name,
+    alternates: {
+      canonical: `${KIDS_URL_ORIGIN}/author/${slug}`,
+    },
+    openGraph: {
+      title: authorMeta.name,
+      description: authorMeta.bio ?? GENERAL_DESCRIPTION,
+      images: authorMeta.image?.resized?.small
+        ? [authorMeta.image.resized.small]
+        : [],
+    },
+    other: {
+      // Since we can't inject <!-- <PageMap>...</PageMap> --> to <head> section with Next metadata API,
+      // so handle google seo with extra <meta> tag here, but be awared there are limitations(maximum 50 tags):
+      // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
+      contentType: 'author',
+    },
+  }
+}
 
 // Author's routing path: /author/[slug]/[page num], ex: /author/yunruchen/1
 export default async function Author({ params }: { params: { slug: any } }) {
