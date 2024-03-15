@@ -32,6 +32,7 @@ function verify2FAJWT(jwt: string, currentUserId: string) {
     return true
   } catch (error) {
     // consider failed if jwt decode failed
+    console.warn('2FA JWT verification failed:', error)
     return false
   }
 }
@@ -110,7 +111,6 @@ export function twoFactorAuthMiddleware(
 
       const excludedOperations = [
         'GetCurrentUser', // to get current user
-        'UpdateUser', // to update user 2FA status
         'EndSession', // to logout
       ]
       if (
