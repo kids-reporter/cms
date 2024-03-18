@@ -1,16 +1,7 @@
 import React, { useState } from 'react'
-import { AlertDialog } from '@keystone-ui/modals'
 import { EditorState, RichUtils } from 'draft-js'
-import { TextInput } from '@keystone-ui/fields'
 import { ENTITY } from '@kids-reporter/draft-renderer'
-
-const styles = {
-  urlInput: {
-    fontFamily: "'Georgia', serif",
-    marginRight: 10,
-    padding: 10,
-  },
-}
+import { LinkEditor } from '../entity-decorators/link'
 
 export const LinkButton = (props: {
   className?: string
@@ -21,9 +12,7 @@ export const LinkButton = (props: {
   onEditFinish: () => void
 }) => {
   const { isActive, editorState, onChange } = props
-
   const [toShowUrlInput, setToShowUrlInput] = useState(false)
-  const [urlValue, setUrlValue] = useState('')
 
   const promptForLink = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
@@ -34,7 +23,7 @@ export const LinkButton = (props: {
     }
   }
 
-  const confirmLink = () => {
+  const confirmLink = (urlValue: string) => {
     const contentState = editorState.getCurrentContent()
     const contentStateWithEntity = contentState.createEntity(
       ENTITY.Link,
@@ -54,15 +43,7 @@ export const LinkButton = (props: {
     )
 
     setToShowUrlInput(false)
-    setUrlValue('')
     props.onEditFinish()
-  }
-
-  const onLinkInputKeyDown = (e) => {
-    if (e.which === 13) {
-      e.preventDefault()
-      confirmLink()
-    }
   }
 
   const removeLink = () => {
@@ -71,55 +52,25 @@ export const LinkButton = (props: {
       onChange(RichUtils.toggleLink(editorState, selection, null))
     }
     setToShowUrlInput(false)
-    setUrlValue('')
     props.onEditFinish()
   }
 
-  const urlInput = (
-    <AlertDialog
-      title="編輯外部連結或內部錨點(ID)"
-      isOpen={toShowUrlInput}
-      actions={{
-        cancel: {
-          label: 'Cancel',
-          action: removeLink,
-        },
-        confirm: {
-          label: 'Confirm',
-          action: confirmLink,
-        },
-      }}
-    >
-      <p>
-        <br />
-        外部連結範例:
-        <br />
-        https://kids.twreporter.org/article/article1#part1
-        <br />
-        <br />
-        內部錨點範例:
-        <br />
-        #part1
-      </p>
-      <TextInput
-        onChange={(e) => setUrlValue(e.target.value)}
-        style={styles.urlInput}
-        type="text"
-        value={urlValue}
-        onKeyDown={onLinkInputKeyDown}
-      />
-    </AlertDialog>
-  )
-
   return (
-    <React.Fragment>
-      {urlInput}
+    <>
+      {toShowUrlInput && (
+        <LinkEditor
+          isOpen={toShowUrlInput}
+          urlValue={''}
+          onConfirm={confirmLink}
+          onCancel={removeLink}
+        />
+      )}
       <div
         className={props.className}
         onMouseDown={isActive ? removeLink : promptForLink}
       >
         <i className="fas fa-link"></i>
       </div>
-    </React.Fragment>
+    </>
   )
 }
