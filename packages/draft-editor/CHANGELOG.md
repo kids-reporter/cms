@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+### Patch Changes
+
+- Enable editable link & annotation
+
 ## 1.0.6
 
 ### Patch Changes
