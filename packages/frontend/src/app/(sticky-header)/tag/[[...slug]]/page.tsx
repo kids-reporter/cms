@@ -9,6 +9,7 @@ import {
   POST_CONTENT_GQL,
   KIDS_URL_ORIGIN,
   OG_SUFFIX,
+  ContentType,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 import './page.scss'
@@ -76,7 +77,7 @@ export async function generateMetadata({
       // so handle google seo with extra <meta> tag here, but be awared there are limitations(maximum 50 tags):
       // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
       publishedDate: tagMeta?.publishedDate ?? '',
-      contentType: 'tag',
+      contentType: ContentType.TAG,
     },
   }
 }
