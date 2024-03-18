@@ -76,7 +76,6 @@ export async function generateMetadata({
       // Since we can't inject <!-- <PageMap>...</PageMap> --> to <head> section with Next metadata API,
       // so handle google seo with extra <meta> tag here, but be awared there are limitations(maximum 50 tags):
       // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
-      publishedDate: tagMeta?.publishedDate ?? '',
       contentType: ContentType.TAG,
     },
   }
