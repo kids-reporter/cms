@@ -40,6 +40,11 @@ export enum ThemeColor {
 
 export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
 
+export enum ContentType {
+  ARTICLE = 'article',
+  TOPIC = 'topic',
+}
+
 export enum AuthorRole {
   CONSULTANTS = '諮詢專家',
   COMIC_CONSULTANTS = '漫畫顧問',

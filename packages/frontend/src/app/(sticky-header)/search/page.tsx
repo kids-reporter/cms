@@ -2,7 +2,7 @@ import errors from '@twreporter/errors'
 import { LoadMoreResults } from './results'
 import { SearchTitle } from './styled'
 import {
-  getPostOnlySearchResults,
+  getFilteredSearchResults,
   transferItemsToPostCards,
   defaultCount,
 } from '@/app/api/search/route'
@@ -24,7 +24,7 @@ export default async function SearchPage({
 
   let data
   try {
-    data = await getPostOnlySearchResults({
+    data = await getFilteredSearchResults({
       q: searchParams.q,
       apiKey,
       cx,
