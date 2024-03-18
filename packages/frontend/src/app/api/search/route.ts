@@ -47,7 +47,6 @@ export function transferItemsToPostCards(
       contentType === ContentType.TAG
     ) {
       let category = metaTag?.['category'] ?? ''
-
       if (contentType === ContentType.TOPIC) {
         category = '專題'
       } else if (contentType === ContentType.AUTHOR) {
@@ -55,6 +54,7 @@ export function transferItemsToPostCards(
       } else if (contentType === ContentType.TAG) {
         category = '標籤'
       }
+
       cardItems.push({
         post: {
           image,
