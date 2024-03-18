@@ -13,12 +13,9 @@ import {
 import {
   blockRenderMap,
   customStyleFn,
-  annotationDecorator,
-  linkDecorator,
   ENTITY,
 } from '@kids-reporter/draft-renderer'
 import buttonNames from './buttons/bt-names'
-import { RichTextEditorProps } from './draft-editor.type'
 import { atomicBlockRenderer } from './block-renderer-fn'
 import {
   DraftEditorContainer,
@@ -35,6 +32,7 @@ import {
   CustomTOCAnchorButton,
   CustomAnchorButton,
   CustomLinkButton,
+  CustomAnnotationButton,
   CustomBackgroundColorButton,
   CustomFontColorButton,
   CustomBlockquoteButton,
@@ -43,15 +41,11 @@ import {
   CustomEmbeddedCodeButton,
   CustomNewsReadingButton,
   CustomDividerButton,
-  withStyle,
+  CustomInfoBoxButton,
 } from './buttons'
 import { ImageSelector } from './buttons/selector/image-selector'
-import { createAnnotationButton } from './buttons/annotation'
-import { createInfoBoxButton } from './buttons/info-box'
 import { customStylePrefix as bgColorPrefix } from './buttons/bg-color'
 import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
-import { editableTOCAnchorDecorator } from './entity-decorators/toc-anchor'
-import { editableAnchorDecorator } from './entity-decorators/anchor'
 
 const styleSource = [
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
@@ -66,42 +60,56 @@ const styleSource = [
   />
 ))
 
-const decorator = new CompositeDecorator([annotationDecorator, linkDecorator])
-
 type State = {
   isEnlarged: boolean
   readOnly: boolean
+  editorState: EditorState
 }
 
-class RichTextEditor extends React.Component<RichTextEditorProps, State> {
-  editorRef = null
-  editorDecorator
+export type RichTextEditorWithoutDecoratorProps = {
+  onChange: (editorState: EditorState) => void
+  editorState: EditorState
+  disabledButtons?: string[]
+}
 
-  constructor(props: RichTextEditorProps) {
+type RichTextEditorWithDecoratorProps = RichTextEditorWithoutDecoratorProps & {
+  decorators: any[]
+}
+
+class RichTextEditor extends React.Component<
+  RichTextEditorWithDecoratorProps,
+  State
+> {
+  editorRef = null
+
+  constructor(props: RichTextEditorWithDecoratorProps) {
     super(props)
+    // Assign edit props to decorators
+    const editableDecorators = new CompositeDecorator(
+      props.decorators?.map((editableDecorator) => {
+        return {
+          ...editableDecorator,
+          props: {
+            ...this.customEditProps,
+          },
+        }
+      })
+    )
+
+    const { editorState } = props
     this.state = {
       isEnlarged: false,
       readOnly: false,
+      editorState: !(editorState instanceof EditorState)
+        ? EditorState.createEmpty(editableDecorators)
+        : EditorState.set(editorState, {
+            decorator: editableDecorators,
+          }),
     }
-    this.editorDecorator = new CompositeDecorator([
-      annotationDecorator,
-      linkDecorator,
-      {
-        ...editableTOCAnchorDecorator,
-        props: {
-          ...this.customEditProps,
-        },
-      },
-      {
-        ...editableAnchorDecorator,
-        props: {
-          ...this.customEditProps,
-        },
-      },
-    ])
   }
 
   onChange = (editorState: EditorState) => {
+    this.setState({ editorState: editorState })
     this.props.onChange(editorState)
   }
 
@@ -119,8 +127,7 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
 
   handleReturn = (event: React.KeyboardEvent) => {
     if (KeyBindingUtil.isSoftNewlineEvent(event)) {
-      const { onChange, editorState } = this.props
-      onChange(RichUtils.insertSoftNewline(editorState))
+      this.onChange(RichUtils.insertSoftNewline(this.state.editorState))
       return 'handled'
     }
 
@@ -131,10 +138,10 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
     if (e.keyCode === 9 /* TAB */) {
       const newEditorState = RichUtils.onTab(
         e,
-        this.props.editorState,
+        this.state.editorState,
         4 /* maxDepth */
       )
-      if (newEditorState !== this.props.editorState) {
+      if (newEditorState !== this.state.editorState) {
         this.onChange(newEditorState)
       }
       return null
@@ -143,12 +150,12 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
   }
 
   toggleBlockType = (blockType: DraftBlockType) => {
-    this.onChange(RichUtils.toggleBlockType(this.props.editorState, blockType))
+    this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType))
   }
 
   toggleInlineStyle = (inlineStyle: string) => {
     this.onChange(
-      RichUtils.toggleInlineStyle(this.props.editorState, inlineStyle)
+      RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     )
   }
 
@@ -216,13 +223,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       entityData?: { [key: string]: any }
     } = {}) => {
       if (entityKey && entityData) {
-        const oldContentState = this.props.editorState.getCurrentContent()
+        const oldContentState = this.state.editorState.getCurrentContent()
         const newContentState = oldContentState.replaceEntityData(
           entityKey,
           entityData
         )
         this.onChange(
-          EditorState.set(this.props.editorState, {
+          EditorState.set(this.state.editorState, {
             currentContent: newContentState,
           })
         )
@@ -240,8 +247,6 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
       // and `props.blockProps.onEditFinish` in the custom block components.
       atomicBlockObj['props'] = {
         ...this.customEditProps,
-        RichTextEditorComponent: RichTextEditor,
-        decorator,
         getMainEditorReadOnly: () => this.state.readOnly,
       }
     }
@@ -250,23 +255,14 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
 
   render() {
     const { disabledButtons = [] } = this.props
-    let { editorState } = this.props
-
-    if (!(editorState instanceof EditorState)) {
-      editorState = EditorState.createEmpty(this.editorDecorator)
-    } else {
-      editorState = EditorState.set(editorState, {
-        decorator: this.editorDecorator,
-      })
-    }
-    const { isEnlarged, readOnly } = this.state
+    const { isEnlarged, readOnly, editorState } = this.state
 
     const entityType = this.getEntityType(editorState)
 
     const commonProps = {
       editorState: editorState,
       onChange: this.onChange,
-      readOnly: this.state.readOnly,
+      readOnly: readOnly,
     }
 
     return (
@@ -279,13 +275,13 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
                 disabledButtons={disabledButtons}
                 editorState={editorState}
                 onToggle={this.toggleBlockType}
-                readOnly={this.state.readOnly}
+                readOnly={readOnly}
               />
               <InlineStyleControls
                 disabledButtons={disabledButtons}
                 editorState={editorState}
                 onToggle={this.toggleInlineStyle}
-                readOnly={this.state.readOnly}
+                readOnly={readOnly}
               />
               <EnlargeButtonWrapper>
                 <CustomEnlargeButton
@@ -407,22 +403,8 @@ class RichTextEditor extends React.Component<RichTextEditorProps, State> {
   }
 }
 
-const AnnotationButton = createAnnotationButton({
-  InnerEditor: RichTextEditor,
-  decorator,
-})
-
-const InfoBoxButton = createInfoBoxButton({
-  InnerEditor: RichTextEditor,
-  decorator,
-})
-
-const CustomAnnotationButton = withStyle(AnnotationButton)
-const CustomInfoBoxButton = withStyle(InfoBoxButton)
-
-export { RichTextEditor, decorator }
+export { RichTextEditor }
 
 export default {
   RichTextEditor,
-  decorator,
 }
