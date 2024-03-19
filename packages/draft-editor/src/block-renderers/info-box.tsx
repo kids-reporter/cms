@@ -20,12 +20,7 @@ const EditableBlock = styled(_EditableBlock)`
 export function EditableInfoBox(props: AtomicBlockProps<InfoBoxInputValue>) {
   const [isInputOpen, setIsInputOpen] = useState(false)
   const { block, blockProps, contentState } = props
-  const {
-    onEditStart,
-    onEditFinish,
-    RichTextEditorComponent: Editor,
-    decorator,
-  } = blockProps
+  const { onEditStart, onEditFinish } = blockProps
   const entityKey = block.getEntityAt(0)
   const entity = contentState.getEntity(entityKey)
   const data = entity.getData()
@@ -50,8 +45,6 @@ export function EditableInfoBox(props: AtomicBlockProps<InfoBoxInputValue>) {
         }}
         onConfirm={onInputChange}
         inputValue={data}
-        Editor={Editor}
-        decorator={decorator}
       />
       <EditableBlock
         component={<StyledInfoBox data={data} />}

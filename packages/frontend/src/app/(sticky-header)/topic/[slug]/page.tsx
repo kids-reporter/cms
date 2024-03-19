@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import {
   API_URL,
   KIDS_URL_ORIGIN,
+  ContentType,
   Theme,
   GENERAL_DESCRIPTION,
   OG_SUFFIX,
@@ -120,7 +121,7 @@ export async function generateMetadata({
       // so handle google seo with extra <meta> tag here, but be awared there are limitations(maximum 50 tags):
       // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
       publishedDate: topicMeta?.publishedDate ?? '',
-      contentType: 'topic',
+      contentType: ContentType.TOPIC,
     },
   }
 }

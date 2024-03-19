@@ -1,7 +1,7 @@
 import errors from '@twreporter/errors'
 import { NextResponse } from 'next/server'
 import { PostCardProp } from '@/app/components/post-card'
-import { Theme } from '@/app/constants'
+import { ContentType, Theme } from '@/app/constants'
 import { customsearch } from '@googleapis/customsearch'
 import { customsearch_v1 } from '@googleapis/customsearch/v1'
 import { log, LogLevel } from '@/app/utils'
@@ -39,24 +39,23 @@ export function transferItemsToPostCards(
     const category = metaTag?.['category'] ?? ''
     const subSubcategory = metaTag?.['subSubcategory'] ?? ''
     const url = item?.link || metaTag?.['og:url']
+    const contentType = metaTag?.['contenttype']
 
-    // @TODO: enable contentType filter when google crawler fetched new meta
-    // const contentType = metaTag?.['contentType']
-    // if (contentType === 'article' || 'topic') {
-    cardItems.push({
-      post: {
-        image,
-        title,
-        desc,
-        publishedDate,
-        url,
-        category, // category: contentType === 'topic' ? '專題' : category
-        subSubcategory,
-        theme: Theme.BLUE,
-      },
-      isSimple: false,
-    })
-    // }
+    if (contentType === ContentType.ARTICLE || ContentType.TOPIC) {
+      cardItems.push({
+        post: {
+          image,
+          title,
+          desc,
+          publishedDate,
+          url,
+          category: contentType === ContentType.TOPIC ? '專題' : category,
+          subSubcategory,
+          theme: Theme.BLUE,
+        },
+        isSimple: false,
+      })
+    }
   })
 
   return cardItems
@@ -121,17 +120,19 @@ async function getSearchResults({
   }
 }
 
-function filterPostItems(items?: customsearch_v1.Schema$Result[]) {
-  if (Array.isArray(items)) {
-    return items.filter((item) => {
-      const metaTag = item?.pagemap?.metatags?.[0]
-      return metaTag?.['og:type'] === 'article'
-    })
-  }
-  return items
+const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
+  return Array.isArray(items)
+    ? items.filter((item) => {
+        const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
+        return (
+          contentType === ContentType.ARTICLE ||
+          contentType === ContentType.TOPIC
+        )
+      })
+    : items
 }
 
-export async function getPostOnlySearchResults({
+export async function getFilteredSearchResults({
   cx,
   apiKey,
   q,
@@ -175,14 +176,14 @@ export async function getPostOnlySearchResults({
     }
   }
   let _accItems = accumulatedItems
-  const items = filterPostItems(searchResults?.items)
+  const items = filterItems(searchResults?.items)
   if (Array.isArray(items)) {
     _accItems = _accItems.concat(items)
     // repeatedly request API to get enough items
     if (_accItems.length < count && searchResults?.nextQuery) {
       const nextCount = searchResults.nextQuery.count
       const nextStart = searchResults.nextQuery.startIndex
-      return getPostOnlySearchResults({
+      return getFilteredSearchResults({
         cx,
         apiKey,
         q,
@@ -217,7 +218,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const searchResults = await getPostOnlySearchResults({
+    const searchResults = await getFilteredSearchResults({
       cx,
       apiKey,
       q,
