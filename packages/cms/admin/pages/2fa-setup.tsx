@@ -128,7 +128,7 @@ export default function TwoFactorAuthCreate() {
       {pageStep === -1 && (
         // Setup: complete
         <Stack gap="xlarge" as="form">
-          <H1>2FA Setup Completed</H1>
+          <H1>2FA Setup Aborted</H1>
           {errorMessage && (
             <Notice title="Error" tone="negative">
               {errorMessage}
