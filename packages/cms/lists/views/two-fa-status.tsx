@@ -89,9 +89,8 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     const set = value['set']
     const id = value['id']
     const isAdmin =
-      (currentUser?.role === RoleEnum.Owner ||
-        currentUser?.role === RoleEnum.Admin) &&
-      set
+      currentUser?.role === RoleEnum.Owner ||
+      currentUser?.role === RoleEnum.Admin
 
     return (
       <FieldContainer>
@@ -126,7 +125,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             <Button>設定</Button>
           </a>
         )}
-        {isAdmin && (
+        {isAdmin && set && (
           <Button
             tone="negative"
             weight="none"
