@@ -7,14 +7,12 @@ import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  KIDS_URL_ORIGIN,
+  OG_SUFFIX,
+  ContentType,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 import './page.scss'
-
-export const metadata: Metadata = {
-  title: '標籤 - 少年報導者 The Reporter for Kids',
-  description: GENERAL_DESCRIPTION,
-}
 
 const tagGQL = `
 query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
@@ -27,6 +25,61 @@ query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrde
   }
 }
 `
+
+const metaGQL = `
+query($where: TagWhereUniqueInput!) {
+  tag(where: $where) {
+    ogDescription
+    ogTitle
+    ogImage {
+      resized {
+        small
+      }
+    }
+  }
+}
+`
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: any }
+}): Promise<Metadata> {
+  const slug = params.slug?.[0]
+
+  const tagOGRes = await sendGQLRequest(API_URL, {
+    query: metaGQL,
+    variables: {
+      where: {
+        slug: slug,
+      },
+    },
+  })
+  const tagMeta = tagOGRes?.data?.data?.tag
+  if (!tagMeta) {
+    log(LogLevel.WARNING, `Tag meta not found! ${slug}`)
+  }
+
+  return {
+    title: `${tagMeta?.ogTitle ? tagMeta.ogTitle + ' - ' : ''}${OG_SUFFIX}`,
+    alternates: {
+      canonical: `${KIDS_URL_ORIGIN}/tag/${slug}`,
+    },
+    openGraph: {
+      title: tagMeta?.ogTitle ?? OG_SUFFIX,
+      description: tagMeta?.ogDescription ?? GENERAL_DESCRIPTION,
+      images: tagMeta?.ogImage?.resized?.small
+        ? [tagMeta.ogImage.resized.small]
+        : [],
+    },
+    other: {
+      // Since we can't inject <!-- <PageMap>...</PageMap> --> to <head> section with Next metadata API,
+      // so handle google seo with extra <meta> tag here, but be awared there are limitations(maximum 50 tags):
+      // https://developers.google.com/custom-search/docs/structured_data?hl=zh-tw#limitations
+      contentType: ContentType.TAG,
+    },
+  }
+}
 
 // Tag's routing path: /tag/[slug]/[page num], ex: /tag/life/1
 export default async function Tag({ params }: { params: { slug: any } }) {

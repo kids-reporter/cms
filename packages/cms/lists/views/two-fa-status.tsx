@@ -23,7 +23,6 @@ const UPDATE_USER_MUTATION = gql`
     updateUser(where: $where, data: $data) {
       id
       twoFactorAuthSecret
-      twoFactorAuthVerified
       twoFactorAuthBypass
     }
   }
@@ -51,7 +50,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             },
             data: {
               twoFactorAuthSecret: '',
-              twoFactorAuthVerified: null,
             },
           },
         })

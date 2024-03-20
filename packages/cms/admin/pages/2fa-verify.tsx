@@ -10,10 +10,9 @@ import { Notice } from '@keystone-ui/notice'
 
 import { ChangeUserButton } from '../components/change-user-button'
 import { SinglePageContainer } from '../components/single-page-container'
-import appConfig from '../../config'
 
 import axios from 'axios'
-import { useQuery, useMutation, gql } from '@keystone-6/core/admin-ui/apollo'
+import { useQuery, gql } from '@keystone-6/core/admin-ui/apollo'
 
 const GET_USER = gql`
   query GetCurrentUser {
@@ -26,39 +25,25 @@ const GET_USER = gql`
   }
 `
 
-const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
-    updateUser(where: $where, data: $data) {
-      id
-      twoFactorAuthVerified
-    }
-  }
-`
-
 export default function TwoFactorAuthCreate() {
   const [token, setToken] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isVerified, setIsVerified] = useState(false)
-
-  // Get the mutation function and the loading state
-  const [updateUser] = useMutation(UPDATE_USER_MUTATION)
 
   const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
   const currentUser = queryData?.authenticatedItem
 
   useEffect(() => {
     if (!queryLoading) {
-      // if 2FA has bypass flag or is already verified, hide verify form and  handle redirect from backend
-      if (
-        currentUser.twoFactorAuth.bypass ||
-        currentUser.twoFactorAuth.verified
-      ) {
+      // if 2FA has bypass flag, hide verify form and handle redirect from backend
+      if (currentUser.twoFactorAuth.bypass) {
         setIsVerified(true)
         window.location.reload()
       }
 
       // if 2FA is not set, redirect to 2fa-setup page
       if (!currentUser.twoFactorAuth.set) {
+        setIsVerified(true)
         window.location.href = '/2fa-setup'
       }
     }
@@ -76,19 +61,6 @@ export default function TwoFactorAuthCreate() {
         if (response.data.status === 'success') {
           setErrorMessage('')
           setIsVerified(true)
-          const sessionExpireTime = new Date(
-            new Date().getTime() + appConfig.session.maxAge * 1000
-          )
-          await updateUser({
-            variables: {
-              where: {
-                id: currentUser.id,
-              },
-              data: {
-                twoFactorAuthVerified: sessionExpireTime,
-              },
-            },
-          })
           window.location.reload()
         } else {
           setErrorMessage(`2FA verification failed.  Invalid token.`)
@@ -120,6 +92,7 @@ export default function TwoFactorAuthCreate() {
               value={token}
               onChange={(event) => setToken(event.target.value)}
               disabled={isVerified}
+              autoFocus
             />
             <Stack gap="medium" across>
               <Button

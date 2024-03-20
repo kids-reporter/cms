@@ -43,6 +43,8 @@ export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
 export enum ContentType {
   ARTICLE = 'article',
   TOPIC = 'topic',
+  AUTHOR = 'author',
+  TAG = 'tag,',
 }
 
 export enum AuthorRole {
