@@ -6,7 +6,6 @@ type Session = {
     email: string
     role: string
     twoFactorAuthBypass: boolean
-    twoFactorAuthVerified: boolean
   }
 }
 
