@@ -18,6 +18,8 @@ const {
   NODE_ENV,
   TWO_FACTOR_AUTH_ENABLE,
   TWO_FACTOR_AUTH_SERVICE_NAME,
+  TWO_FACTOR_AUTH_SECRET,
+  TWO_FACTOR_AUTH_COOKIE_NAME,
 } = process.env
 
 enum DatabaseProvider {
@@ -79,6 +81,10 @@ const environmentVariables = {
   },
   twoFactorAuth: {
     enable: TWO_FACTOR_AUTH_ENABLE === 'true', // feature toggle
+    secret:
+      TWO_FACTOR_AUTH_SECRET || // secret for 2FA JWT
+      'default_2fa_secret_and_it_should_be_more_than_32_characters',
+    cookieName: TWO_FACTOR_AUTH_COOKIE_NAME || 'keystonejs-2fa',
     serviceName: TWO_FACTOR_AUTH_SERVICE_NAME || 'KidsReporter Keystone', // the service name show in 2FA app
   },
   nodeEnv: NODE_ENV || 'development', // value could be 'development', 'production' or 'test'
