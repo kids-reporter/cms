@@ -45,6 +45,7 @@ const DraftRenderer = ({
     anchor &&
       window.scrollTo({
         top: anchor.offsetTop - offsetTop,
+        behavior: 'instant',
       })
   }
 
