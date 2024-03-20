@@ -1,33 +1,14 @@
 import { Express, Request, Response, NextFunction } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 import { gql } from '@keystone-6/core/admin-ui/apollo'
-import { verify } from 'jsonwebtoken'
-import cookieParser from 'cookie-parser'
 
+import { verify2FAJWT } from './index'
 import appConfig from '../../config'
-
-function verify2FAJWT(jwt: string, currentUserId: string) {
-  try {
-    const decoded = verify(jwt, appConfig.twoFactorAuth.secret)
-    const { userId, twoFactorExpire } = decoded
-
-    if (currentUserId !== userId || Date.now() > twoFactorExpire) {
-      return false
-    }
-
-    return true
-  } catch (error) {
-    // consider failed if jwt decode failed
-    console.warn('2FA JWT verification failed:', error)
-    return false
-  }
-}
 
 export function twoFactorAuthMiddleware(
   app: Express,
   commonContext: KeystoneContext
 ) {
-  app.use(cookieParser())
   if (appConfig.twoFactorAuth.enable) {
     // Froce redirect to 2fa verification after signin
     const siginFromOverrideMw = (
@@ -246,17 +227,13 @@ export function twoFactorAuthMiddleware(
       return next()
     }
 
-    // Clear 2FA cookie if user is not logged in or 2FA not set
+    // Clear 2FA cookie if user is not logged in
     const clear2FaCookie = async (
       req: Request,
       res: Response,
       next: NextFunction
     ) => {
-      const context = await commonContext.withRequest(req, res)
-      if (
-        !context.session?.data.twoFactorAuth.set ||
-        !req.cookies['keystonejs-2fa']
-      ) {
+      if (!req.cookies['keystonejs-session']) {
         res.clearCookie(appConfig.twoFactorAuth.cookieName, {
           httpOnly: true,
           secure: true,

@@ -2,6 +2,7 @@ import { Express } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 
 import appConfig from '../../config'
+import { verify2FAJWT } from './index'
 
 import qrcode from 'qrcode'
 import { authenticator } from 'otplib'
@@ -56,6 +57,15 @@ export function twoFactorAuthRoute(
     // generate secret and get QR code
     app.get('/api/2fa/setup', async (req, res) => {
       const context = await commonContext.withRequest(req, res)
+
+      if (
+        !req.cookies['keystonejs-2fa'] ||
+        !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId)
+      ) {
+        res.status(403).send({ status: 'error', message: 'invalid 2fa' })
+        return
+      }
+
       const currentSession = context?.session
       if (!currentSession) {
         res.status(403).send({ status: 'error', message: 'no session' })
@@ -123,6 +133,14 @@ export function twoFactorAuthRoute(
       const currentSession = context?.session
       if (!currentSession) {
         res.status(403).send({ status: 'error', message: 'no session' })
+        return
+      }
+
+      if (
+        !req.cookies['keystonejs-2fa'] ||
+        !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId)
+      ) {
+        res.status(403).send({ status: 'error', message: 'invalid 2fa' })
         return
       }
 

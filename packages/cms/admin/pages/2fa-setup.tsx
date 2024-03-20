@@ -53,6 +53,8 @@ export default function TwoFactorAuthCreate() {
       setQrCodeUrl(response.data.qrcode)
     } catch (error) {
       console.error('Failed to fetch QR code URL:', error)
+      setErrorMessage('Failed to fetch QR code URL')
+      setPageStep(-1)
     }
   }
 
@@ -123,6 +125,27 @@ export default function TwoFactorAuthCreate() {
 
   return (
     <SinglePageContainer>
+      {pageStep === -1 && (
+        // Setup: complete
+        <Stack gap="xlarge" as="form">
+          <H1>2FA Setup Completed</H1>
+          {errorMessage && (
+            <Notice title="Error" tone="negative">
+              {errorMessage}
+            </Notice>
+          )}
+          <Stack gap="medium">
+            <Stack gap="medium" across>
+              <a href="/">
+                <Button weight="bold" tone="passive">
+                  Back to Admin UI
+                </Button>
+              </a>
+            </Stack>
+          </Stack>
+        </Stack>
+      )}
+
       {pageStep === 1 && (
         // Clear: inprogress
         <Stack gap="xlarge" as="form" onSubmit={clearSecret}>
