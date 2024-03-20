@@ -36,12 +36,25 @@ export function transferItemsToPostCards(
     const title = creativeWork?.headline || metaTag?.['og:title']
     const desc = metaTag?.['og:description']
     const publishedDate = metaTag?.['publishedDate'] ?? ''
-    const category = metaTag?.['category'] ?? ''
     const subSubcategory = metaTag?.['subSubcategory'] ?? ''
     const url = item?.link || metaTag?.['og:url']
     const contentType = metaTag?.['contenttype']
 
-    if (contentType === ContentType.ARTICLE || ContentType.TOPIC) {
+    if (
+      contentType === ContentType.ARTICLE ||
+      contentType === ContentType.TOPIC ||
+      contentType === ContentType.AUTHOR ||
+      contentType === ContentType.TAG
+    ) {
+      let category = metaTag?.['category'] ?? ''
+      if (contentType === ContentType.TOPIC) {
+        category = '專題'
+      } else if (contentType === ContentType.AUTHOR) {
+        category = '作者'
+      } else if (contentType === ContentType.TAG) {
+        category = '標籤'
+      }
+
       cardItems.push({
         post: {
           image,
@@ -49,7 +62,7 @@ export function transferItemsToPostCards(
           desc,
           publishedDate,
           url,
-          category: contentType === ContentType.TOPIC ? '專題' : category,
+          category: category,
           subSubcategory,
           theme: Theme.BLUE,
         },
@@ -126,7 +139,9 @@ const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
         return (
           contentType === ContentType.ARTICLE ||
-          contentType === ContentType.TOPIC
+          contentType === ContentType.TOPIC ||
+          contentType === ContentType.AUTHOR ||
+          contentType === ContentType.TAG
         )
       })
     : items
