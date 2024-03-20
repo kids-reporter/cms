@@ -138,8 +138,9 @@ export function twoFactorAuthRoute(
       }
 
       if (
-        !req.cookies['keystonejs-2fa'] ||
-        !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId)
+        context.session?.data.twoFactorAuth.set &&
+        (!req.cookies['keystonejs-2fa'] ||
+          !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
         res.status(403).send({ status: 'error', message: 'invalid 2fa' })
         return
