@@ -23,7 +23,6 @@ const UPDATE_USER_MUTATION = gql`
     updateUser(where: $where, data: $data) {
       id
       twoFactorAuthSecret
-      twoFactorAuthVerified
       twoFactorAuthBypass
     }
   }
@@ -51,7 +50,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             },
             data: {
               twoFactorAuthSecret: '',
-              twoFactorAuthVerified: null,
             },
           },
         })
@@ -91,9 +89,8 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     const set = value['set']
     const id = value['id']
     const isAdmin =
-      (currentUser?.role === RoleEnum.Owner ||
-        currentUser?.role === RoleEnum.Admin) &&
-      set
+      currentUser?.role === RoleEnum.Owner ||
+      currentUser?.role === RoleEnum.Admin
 
     return (
       <FieldContainer>
@@ -107,17 +104,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           {bypass && (
             <span style={{ color: 'lightgrey' }}> (此帳號不需二階段驗證)</span>
           )}
-          {isAdmin && (
-            <Button
-              tone="warning"
-              weight="none"
-              onClick={toggleBypass}
-              disabled={loadingBypass}
-              style={{ marginLeft: '10px' }}
-            >
-              切換 Bypass
-            </Button>
-          )}
         </p>
         {id === currentUser?.id && (
           <a
@@ -125,13 +111,28 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             target="_self"
             style={{ textDecoration: 'none' }}
           >
-            <Button>設定</Button>
+            <Button weight="none" title="重新設定自己的二階段驗證">
+              設定
+            </Button>
           </a>
         )}
         {isAdmin && (
           <Button
+            tone="warning"
+            weight="none"
+            title="[Admin] 切換這個使用者的 Bypass 設定 (不需二階段驗證)"
+            onClick={toggleBypass}
+            disabled={loadingBypass}
+            style={{ marginLeft: '10px' }}
+          >
+            切換 Bypass
+          </Button>
+        )}
+        {isAdmin && set && (
+          <Button
             tone="negative"
             weight="none"
+            title="[Admin] 清除這個使用者的 2FA 設定 (Secret)"
             onClick={clearSecret}
             disabled={loadingSecret}
             style={{ marginLeft: '10px' }}

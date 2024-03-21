@@ -2,10 +2,8 @@ import { Express, Request, Response, NextFunction } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 import { gql } from '@keystone-6/core/admin-ui/apollo'
 
+import { verify2FAJWT } from './index'
 import appConfig from '../../config'
-import _errors from '@twreporter/errors'
-
-const errors = _errors.default
 
 export function twoFactorAuthMiddleware(
   app: Express,
@@ -37,45 +35,13 @@ export function twoFactorAuthMiddleware(
       return next()
     }
 
-    // Reset twoFactorAuthVerified to false when user logout
+    // Reset 2FA verify state when user logout
     const endSessionMw = async (
       req: Request,
       res: Response,
       next: NextFunction
     ) => {
       if (req.body?.operationName === 'EndSession') {
-        const context = await commonContext.withRequest(req, res)
-        try {
-          await context.db.User.updateOne({
-            where: { id: context.session.itemId },
-            data: {
-              twoFactorAuthVerified: null,
-            },
-          })
-        } catch (error) {
-          const annotatedErr = errors.helpers.wrap(
-            error,
-            'endSessionMw',
-            'Failed to save twoFactorAuthVerified to user table'
-          )
-          console.log(
-            JSON.stringify({
-              severity: 'ERROR',
-              message: errors.helpers.printAll(
-                annotatedErr,
-                { withStack: true, withPayload: true },
-                0,
-                0
-              ),
-            })
-          )
-          res.status(500).send({
-            status: 'error',
-            message:
-              'endSessionMw: Failed to save twoFactorAuthVerified to user table',
-          })
-          return
-        }
         res.locals.skip2fa = true
         return next('route')
       }
@@ -113,7 +79,6 @@ export function twoFactorAuthMiddleware(
 
       const excludedOperations = [
         'GetCurrentUser', // to get current user
-        'UpdateUser', // to update user 2FA status
         'EndSession', // to logout
       ]
       if (
@@ -138,10 +103,12 @@ export function twoFactorAuthMiddleware(
         res.locals.skip2fa = true
         return res.redirect('/2fa-setup')
       }
+
       // Redirect to home if 2FA is verified
       if (
         context.session?.data.twoFactorAuth.bypass ||
-        context.session?.data.twoFactorAuth.verified
+        (req.cookies['keystonejs-2fa'] &&
+          verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
         const from = req.query.from
         res.locals.skip2fa = true
@@ -229,7 +196,11 @@ export function twoFactorAuthMiddleware(
       next: NextFunction
     ) => {
       const context = await commonContext.withRequest(req, res)
-      if (context.session?.data.twoFactorAuth.verified) {
+
+      if (
+        req.cookies['keystonejs-2fa'] &&
+        verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId)
+      ) {
         return next('route')
       }
       return next()
@@ -256,9 +227,27 @@ export function twoFactorAuthMiddleware(
       return next()
     }
 
+    // Clear 2FA cookie if user is not logged in
+    const clear2FaCookie = async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ) => {
+      if (!req.cookies['keystonejs-session']) {
+        res.clearCookie(appConfig.twoFactorAuth.cookieName, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'lax',
+          expires: new Date(Date.now()),
+        })
+      }
+      return next()
+    }
+
     // general 2FA check
     app.get(
       '*',
+      clear2FaCookie,
       twoFactorSkipMw,
       signinCheckMw,
       twoFactorBypassMw,
@@ -267,6 +256,7 @@ export function twoFactorAuthMiddleware(
     )
     app.post(
       '*',
+      clear2FaCookie,
       twoFactorSkipMw,
       signinCheckMw,
       twoFactorBypassMw,
