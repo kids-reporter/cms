@@ -54,38 +54,40 @@ export function twoFactorAuthMiddleware(
       res: Response,
       next: NextFunction
     ) => {
-      const parsedGql = gql`
-        ${req.body?.query}
-      `
+      if (req.body?.query) {
+        const parsedGql = gql`
+          ${req.body?.query}
+        `
+        const gqlOperation = parsedGql?.definitions?.[0]?.operation
+        const gqlOperationName = parsedGql.definitions[0].name?.value
+        const gqlOperationSelection =
+          parsedGql.definitions[0].selectionSet?.selections
 
-      const gqlOperation = parsedGql?.definitions?.[0]?.operation
-      const gqlOperationName = parsedGql.definitions[0].name?.value
-      const gqlOperationSelection =
-        parsedGql.definitions[0].selectionSet?.selections
+        const excludedSelections = [
+          'authenticatedItem', // to get current user
+        ]
+        if (
+          gqlOperation == 'query' &&
+          gqlOperationSelection.some(
+            (selection) =>
+              selection.name &&
+              excludedSelections.includes(selection.name.value)
+          )
+        ) {
+          res.locals.skip2fa = true
+          return next('route')
+        }
 
-      const excludedSelections = [
-        'authenticatedItem', // to get current user
-      ]
-      if (
-        gqlOperation == 'query' &&
-        gqlOperationSelection.some(
-          (selection) =>
-            selection.name && excludedSelections.includes(selection.name.value)
-        )
-      ) {
-        res.locals.skip2fa = true
-        return next('route')
-      }
-
-      const excludedOperations = [
-        'GetCurrentUser', // to get current user
-        'EndSession', // to logout
-      ]
-      if (
-        excludedOperations.some((operation) => gqlOperationName === operation)
-      ) {
-        res.locals.skip2fa = true
-        return next('route')
+        const excludedOperations = [
+          'GetCurrentUser', // to get current user
+          'EndSession', // to logout
+        ]
+        if (
+          excludedOperations.some((operation) => gqlOperationName === operation)
+        ) {
+          res.locals.skip2fa = true
+          return next('route')
+        }
       }
       return next()
     }
