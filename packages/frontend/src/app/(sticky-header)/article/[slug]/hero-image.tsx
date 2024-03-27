@@ -11,7 +11,7 @@ export const HeroImage = (props: HeroImageProp) => {
   const aspectRatio =
     image?.imageFile?.width && image?.imageFile?.height
       ? `${image.imageFile.width}/${image.imageFile.height}`
-      : undefined
+      : '16/9'
 
   return (
     image &&
