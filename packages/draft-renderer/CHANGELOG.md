@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+### Patch Changes
+
+- Fix layout shift issue caused by image in article body
+
 ## 1.0.6
 
 ### Patch Changes
