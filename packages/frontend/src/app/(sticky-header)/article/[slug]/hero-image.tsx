@@ -14,8 +14,7 @@ export const HeroImage = (props: HeroImageProp) => {
       : '16/9'
 
   return (
-    image &&
-    aspectRatio && (
+    image && (
       <figure className="hero-image">
         <div className="image-container">
           <img
