@@ -1,4 +1,4 @@
-import { Express } from 'express'
+import { Express, CookieOptions } from 'express'
 import { KeystoneContext } from '@keystone-6/core/types'
 
 import appConfig from '../../config'
@@ -16,15 +16,17 @@ authenticator.options = {
 
 const errors = _errors.default
 
-const sessionExpireTime = new Date(
-  new Date().getTime() + appConfig.session.maxAge * 1000
-)
+function sessionExpireTime() {
+  return new Date(new Date().getTime() + appConfig.session.maxAge * 1000)
+}
 
-const twoFactorAuthCookieOptions = {
-  httpOnly: true, // Prevent JavaScript access
-  secure: true, // Secure flag for HTTPS only
-  sameSite: 'lax', // CSRF protection
-  expires: sessionExpireTime,
+function twoFactorAuthCookieOptions(): CookieOptions {
+  return {
+    httpOnly: true, // Prevent JavaScript access
+    secure: true, // Secure flag for HTTPS only
+    sameSite: 'lax', // CSRF protection
+    expires: sessionExpireTime(),
+  }
 }
 
 function issue2FAJWT(userId: string) {
@@ -32,7 +34,7 @@ function issue2FAJWT(userId: string) {
 
   const payload = {
     userId: userId,
-    twoFactorExpire: sessionExpireTime,
+    twoFactorExpire: sessionExpireTime(),
   }
 
   const jwtToken = sign(payload, secret, {
@@ -170,7 +172,7 @@ export function twoFactorAuthRoute(
           res.cookie(
             appConfig.twoFactorAuth.cookieName,
             jwtToken,
-            twoFactorAuthCookieOptions
+            twoFactorAuthCookieOptions()
           )
         } catch (error) {
           const annotatedErr = errors.helpers.wrap(
@@ -236,7 +238,7 @@ export function twoFactorAuthRoute(
         res.cookie(
           appConfig.twoFactorAuth.cookieName,
           jwtToken,
-          twoFactorAuthCookieOptions
+          twoFactorAuthCookieOptions()
         )
         res.send({ status: 'success' })
       } else {
