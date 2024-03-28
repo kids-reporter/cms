@@ -22,6 +22,7 @@ const FigureCaption = styled.figcaption`
 
 const Img = styled.img`
   width: 100%;
+  object-fit: contain;
 `
 
 type ImageBlockProps = {
@@ -44,6 +45,10 @@ type ImageBlockProps = {
 
 export function ImageBlock({ className = '', data }: ImageBlockProps) {
   const { desc, imageFile, resized } = data || {}
+  const aspectRatio =
+    imageFile?.width && imageFile?.height
+      ? `${imageFile.width}/${imageFile.height}`
+      : '16/9'
 
   const imgSrcSetArr = []
   if (resized?.medium) {
@@ -61,6 +66,7 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
         src={imageFile?.url}
         srcSet={imgSrcSetArr.join(',')}
         sizes="(min-width: 1200px) 1000px, 100vw"
+        style={{ aspectRatio: aspectRatio }}
       />
       {desc && <FigureCaption>{desc}</FigureCaption>}
     </Figure>

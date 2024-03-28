@@ -17,6 +17,10 @@ const topicRelatedPostsNum = 5
 
 const heroImageGQL = `
   heroImage {
+    imageFile {
+      width
+      height
+    }
     resized {
       small
       medium
