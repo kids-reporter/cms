@@ -12,7 +12,6 @@ export const RelatedPosts = (props: PostSliderProp) => {
           src="/assets/images/post-related-post-title.svg"
           alt="相關文章"
         />
-
         <PostSlider {...props} />
       </div>
     )
