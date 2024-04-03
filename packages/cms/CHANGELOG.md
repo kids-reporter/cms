@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7
+
+### Patch Changes
+
+- @kids-reporter/cms-core@1.0.10
+
 ## 1.0.6
 
 ### Patch Changes
