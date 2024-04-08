@@ -69,17 +69,27 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
           <span>分享</span>
           {shareIcons.map((icon, index) => {
             return (
-              <button key={`share-icon-${index}`} onClick={icon.onClick}>
+              <button
+                className="flex flex-col justify-center items-center"
+                key={`share-icon-${index}`}
+                onClick={icon.onClick}
+              >
                 <img src={`/assets/images/${icon.image}`} />
               </button>
             )
           })}
         </div>
         <div className="section">
-          <button onClick={onFontSizeChange}>
+          <button
+            className="flex flex-col justify-center items-center"
+            onClick={onFontSizeChange}
+          >
             <img src={`/assets/images/rpjr-icon-color-text.svg`} />
           </button>
-          <button onClick={() => window.print()}>
+          <button
+            className="flex flex-col justify-center items-center"
+            onClick={() => window.print()}
+          >
             <img src={`/assets/images/rpjr-icon-color-print.svg`} />
           </button>
         </div>
