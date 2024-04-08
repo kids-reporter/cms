@@ -7,6 +7,7 @@ import StickyHeader, {
 import HomeTopDetector from './home-top-detector'
 import { Navigation } from '@/app/components/navigation'
 import { SearchIcon } from '@/app/icons'
+import { SEARCH_PLACEHOLDER } from '@/app/constants'
 import './main-header.scss'
 
 export const MainHeader = () => {
@@ -14,7 +15,7 @@ export const MainHeader = () => {
     <form role="search" method="get" action="/search" aria-haspopup="listbox">
       <input
         type="text"
-        placeholder="搜尋更多新聞、議題"
+        placeholder={SEARCH_PLACEHOLDER}
         name="q"
         title="Search for..."
         aria-label="Search for..."

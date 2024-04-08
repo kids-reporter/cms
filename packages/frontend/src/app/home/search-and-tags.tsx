@@ -1,6 +1,6 @@
 import Tags, { Tag } from '@/app/components/tags'
 import { SearchIcon } from '@/app/icons'
-import { Theme } from '@/app/constants'
+import { Theme, SEARCH_PLACEHOLDER } from '@/app/constants'
 import './search-and-tags.scss'
 
 type SearchAndTagsProp = {
@@ -15,7 +15,7 @@ export const SearchAndTags = (props: SearchAndTagsProp) => {
       <form role="search" method="get" action="/search" aria-haspopup="listbox">
         <input
           type="text"
-          placeholder="搜尋更多新聞、議題"
+          placeholder={SEARCH_PLACEHOLDER}
           name="q"
           title="Search for..."
           aria-label="Search for..."
