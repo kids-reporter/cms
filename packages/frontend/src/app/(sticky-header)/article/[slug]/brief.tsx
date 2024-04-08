@@ -6,8 +6,9 @@ import { ArticleIntroductionDraftRenderer } from '@kids-reporter/draft-renderer'
 import { RawDraftContentState } from 'draft-js'
 import { Theme } from '@/app/constants'
 import { useArticleContext } from './article-context'
-import './brief.scss'
 import 'react-loading-skeleton/dist/skeleton.css'
+
+const textColor = '#575757'
 
 export type AuthorGroup = {
   title: string
@@ -23,8 +24,8 @@ type AuthorsProp = {
 
 const Authors = (props: AuthorsProp) => {
   return (
-    <p className="author-list">
-      <span>
+    <p style={{ lineHeight: '150%', color: textColor }} className="text-center">
+      <span className="text-sm">
         {'('}
         {props?.authorGroups?.map((authorGroup, authorGroupIndex) => {
           return (
@@ -34,7 +35,12 @@ const Authors = (props: AuthorsProp) => {
                 return (
                   <span key={`brief-author-${index}`}>
                     {author.link ? (
-                      <Link href={author.link} target="_blank" rel="noopener">
+                      <Link
+                        className="underline decoration-1"
+                        href={author.link}
+                        target="_blank"
+                        rel="noopener"
+                      >
                         {author.name}
                       </Link>
                     ) : (
