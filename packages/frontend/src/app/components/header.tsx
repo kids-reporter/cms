@@ -118,7 +118,11 @@ export const StickyHeader = () => {
         title="Search for..."
         aria-label="Search for..."
       />
-      <button type="submit" className="search-submit" aria-label="搜尋按鈕">
+      <button
+        type="submit"
+        className="search-submit flex flex-col justify-center items-center"
+        aria-label="搜尋按鈕"
+      >
         {SearchIcon}
       </button>
     </form>
