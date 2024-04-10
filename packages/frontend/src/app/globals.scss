@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --fontFamily: 'Noto Sans TC', Sans-Serif;
   --max-width: 1100px;

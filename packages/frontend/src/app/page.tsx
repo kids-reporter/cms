@@ -15,7 +15,6 @@ import {
   Theme,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest } from '@/app/utils'
-import './page.scss'
 
 export const revalidate = 300
 export const metadata: Metadata = {
@@ -225,7 +224,7 @@ export default async function Home() {
     )) ?? []
 
   return (
-    <main>
+    <main className="flex flex-col items-center w-screen">
       <MainHeader />
       {topics?.length > 0 && <MainSlider topics={topics} />}
       <PostSelection latestPosts={latestPosts} featuredPosts={featuredPosts} />
