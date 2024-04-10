@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Navigation } from '@/app/components/navigation'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL } from '@/app/constants'
+import { SUBSCRIBE_URL, SEARCH_PLACEHOLDER } from '@/app/constants'
 import './header.scss'
 
 const slogan = <img src="/assets/images/header-left-slogan.svg" />
@@ -113,7 +113,7 @@ export const StickyHeader = () => {
     >
       <input
         type="text"
-        placeholder="搜尋更多新聞、議題"
+        placeholder={SEARCH_PLACEHOLDER}
         name="q"
         title="Search for..."
         aria-label="Search for..."
