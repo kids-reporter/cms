@@ -270,7 +270,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   return (
     <main
       style={{ width: '95vw' }}
-      className="flex flex-col justify-center items-center mb-10 gap-10"
+      className="flex flex-col justify-center items-center mb-10"
     >
       <div
         className={`w-full flex flex-col justify-center items-center gap-10 theme-${theme}`}
