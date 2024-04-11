@@ -11,7 +11,6 @@ import {
   ContentType,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 const topicRelatedPostsNum = 5
 
@@ -213,7 +212,7 @@ export default async function PostPage({
   })
 
   return (
-    <main>
+    <main className="flex flex-col items-center max-w-screen-2xl">
       {tocIndexes.length > 0 && <TOC indexes={tocIndexes} />}
       {post && <Article post={post} />}
     </main>
