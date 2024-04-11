@@ -87,13 +87,15 @@ export const PostSlider = ({
                 })}
               </Swiper>
               <button
-                className="prev-btn bg-transparent cursor-pointer absolute border-none"
+                style={{ left: '15px', top: '15%', zIndex: '900' }}
+                className="w-8 lg:w-14 bg-transparent cursor-pointer absolute border-none"
                 onClick={() => swiperRef.current?.slidePrev()}
               >
                 <ArrowLeft color={themeColor} />
               </button>
               <button
-                className="next-btn bg-transparent cursor-pointer absolute border-none"
+                style={{ right: '15px', top: '15%', zIndex: '900' }}
+                className="w-8 lg:w-14 bg-transparent cursor-pointer absolute border-none"
                 onClick={() => swiperRef.current?.slideNext()}
               >
                 <ArrowRight color={themeColor} />
