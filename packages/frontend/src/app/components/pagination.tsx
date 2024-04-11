@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
 import { AngleLeft, AngleRight } from '@/app/icons'
-import './pagination.scss'
+import './pagination.css'
 
 type PaginationProp = {
   currentPage: number
@@ -66,7 +66,12 @@ export const Pagination = (props: PaginationProp) => {
     return (
       <div key={`pagination-index-${pageIndex}`}>
         <Link
-          className={`index ${pageIndex === currentPage ? 'active' : ''}`}
+          style={{
+            transition: 'all 0.12s cubic-bezier(0.455, 0.03, 0.515, 0.955)',
+          }}
+          className={`index w-10 h-10 flex flex-row justify-center items-center text-xl font-bold text-gray-900 bg-gray-200 m-1 rounded-full border-2 border-transparent cursor-pointer ${
+            pageIndex === currentPage ? 'active' : ''
+          }`}
           href={`${routingPrefix}/${pageIndex}`}
         >
           {pageIndex}
@@ -164,15 +169,21 @@ export const Pagination = (props: PaginationProp) => {
 
   return (
     totalPages > 0 && (
-      <div className="pagination">
+      <div className="w-full flex flex-row justify-center items-center flex-wrap">
         {belowFirstPage ? null : (
-          <Link className="prev" href={`${routingPrefix}/${currentPage - 1}`}>
+          <Link
+            className="flex items-center justify-center cursor-pointer mx-5"
+            href={`${routingPrefix}/${currentPage - 1}`}
+          >
             {AngleLeft}
           </Link>
         )}
         {pagesArrayJSX}
         {aboveFinalPage ? null : (
-          <Link className="next" href={`${routingPrefix}/${currentPage + 1}`}>
+          <Link
+            className="flex items-center justify-center cursor-pointer mx-5"
+            href={`${routingPrefix}/${currentPage + 1}`}
+          >
             {AngleRight}
           </Link>
         )}
