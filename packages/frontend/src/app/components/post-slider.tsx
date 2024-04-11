@@ -50,7 +50,7 @@ export const PostSlider = ({
         <div className="w-full flex items-start justify-center flex-row relative">
           {postNum === 1 ? (
             posts[0] && (
-              <div className="single">
+              <div className="w-full md:w-1/2 lg:w-1/3">
                 <PostCard post={posts[0]} />
               </div>
             )
