@@ -37,7 +37,9 @@ export const AuthorCard = (props: AuthorCardProp) => {
   return (
     authors?.length > 0 && (
       <div className="author-section">
-        <h3 className="text-center mt-10 mb-10">{props.title}</h3>
+        <h3 className="text-3xl font-bold text-center mt-10 mb-10">
+          {props.title}
+        </h3>
         <div className="max-w-5xl w-full flex flex-wrap justify-evenly items-stretch gap-10 mx-auto">
           {authors.map((author, index) => {
             const avatarURL = author.avatar ?? DEFAULT_AVATAR
