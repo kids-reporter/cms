@@ -19,7 +19,7 @@ export const PostCard = ({
         href={post.url}
         className={`w-full h-full pl-1 pr-1 flex justify-start flex-col bg-transparent rounded-2xl theme-${
           post.theme
-        } ${className ? className : ''}`}
+        } ${className ?? ''}`}
       >
         <div
           style={{ height: 'calc(100% / 16 * 9)', aspectRatio: '16/9' }}
