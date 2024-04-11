@@ -12,7 +12,7 @@ import { PostSummary } from '@/app/components/types'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import './post-slider.scss'
+import './post-slider.css'
 
 export type PostSliderProp = {
   posts: PostSummary[]
@@ -43,8 +43,11 @@ export const PostSlider = ({
 
   return (
     postNum > 0 && (
-      <div className={`post-slider theme-${sliderTheme}`}>
-        <div className="cards">
+      <div
+        style={{ width: 'min(var(--normal-container-max-width), 100%)' }}
+        className={`flex items-center justify-center flex-col mx-auto mb-5 theme-${sliderTheme}`}
+      >
+        <div className="w-full flex items-start justify-center flex-row relative">
           {postNum === 1 ? (
             posts[0] && (
               <div className="single">
@@ -84,13 +87,13 @@ export const PostSlider = ({
                 })}
               </Swiper>
               <button
-                className="prev-btn"
+                className="prev-btn bg-transparent cursor-pointer absolute border-none"
                 onClick={() => swiperRef.current?.slidePrev()}
               >
                 <ArrowLeft color={themeColor} />
               </button>
               <button
-                className="next-btn"
+                className="next-btn bg-transparent cursor-pointer absolute border-none"
                 onClick={() => swiperRef.current?.slideNext()}
               >
                 <ArrowRight color={themeColor} />
