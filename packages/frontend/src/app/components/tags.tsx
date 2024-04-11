@@ -36,10 +36,14 @@ export const Tags = (props: TagsProp) => {
               tag && (
                 <Link
                   key={`post-tag-${index}`}
-                  style={{
-                    background: 'var(--theme-color) !important',
-                    color: props?.fill ? 'black !important' : '',
-                  }}
+                  style={
+                    props?.fill
+                      ? {
+                          background: 'var(--theme-color) !important',
+                          color: 'black !important',
+                        }
+                      : {}
+                  }
                   className={'rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag'}
                   href={`/tag/${tag.slug}`}
                 >
