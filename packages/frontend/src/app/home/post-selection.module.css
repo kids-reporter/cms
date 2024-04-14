@@ -8,7 +8,7 @@
 }
 
 @media screen and (max-width: 999px) {
-  .card-child-1{
+  .card-child-1 {
     flex-basis: 100%;
     display: flex;
     justify-content: center;

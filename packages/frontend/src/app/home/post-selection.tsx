@@ -2,7 +2,7 @@ import Link from 'next/link'
 import PostCard from '@/app/components/post-card'
 import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
-import './post-selection.css'
+import styles from './post-selection.module.css'
 
 type PostSelectionProp = {
   latestPosts: PostSummary[]
@@ -12,7 +12,7 @@ type PostSelectionProp = {
 const PostBrick = ({ post }: { post: PostSummary }) => {
   return (
     post && (
-      <Link className="post-brick flex flex-col" href={post.url}>
+      <Link className={`${styles['post-brick']} flex flex-col`} href={post.url}>
         <div className="flex flex-row justify-between items-center">
           <p
             style={{ lineHeight: '160%', letterSpacing: '.2em' }}
@@ -95,27 +95,27 @@ export const PostSelection = (props: PostSelectionProp) => {
               style={{ rowGap: '20px' }}
               className="inline-flex justify-between flex-wrap"
             >
-              <div className="card-child-1">
+              <div className={`${styles['card-child-1']}`}>
                 {featuredPosts?.[0] && (
                   <PostCard post={featuredPosts[0]} isSimple={true} />
                 )}
               </div>
-              <div className="card-child-2">
+              <div className={`${styles['card-child-2']}`}>
                 {featuredPosts?.[1] && (
                   <PostCard post={featuredPosts[1]} isSimple={true} />
                 )}
               </div>
-              <div className="card-child-rest">
+              <div className={`${styles['card-child-rest']}`}>
                 {featuredPosts?.[2] && (
                   <PostCard post={featuredPosts[2]} isSimple={true} />
                 )}
               </div>
-              <div className="card-child-rest">
+              <div className={`${styles['card-child-rest']}`}>
                 {featuredPosts?.[3] && (
                   <PostCard post={featuredPosts[3]} isSimple={true} />
                 )}
               </div>
-              <div className="card-child-rest">
+              <div className={`${styles['card-child-rest']}`}>
                 {featuredPosts?.[4] && (
                   <PostCard post={featuredPosts[4]} isSimple={true} />
                 )}
