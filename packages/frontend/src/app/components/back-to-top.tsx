@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { BACK_TO_TOP_ELEMENT_ID } from '@/app/constants'
-import './back-to-top.css'
+import styles from './back-to-top.module.css'
 
 export const BackToTop = () => {
   return (
@@ -8,7 +8,7 @@ export const BackToTop = () => {
       href="#"
       id={BACK_TO_TOP_ELEMENT_ID}
       style={{ backgroundColor: 'var(--paletteColor1)' }}
-      className="back-to-top fixed flex items-center justify-center p-3 rounded-full"
+      className={`${styles['back-to-top']} fixed flex items-center justify-center p-3 rounded-full`}
       title="到最上面"
       aria-label="到最上面"
     >
