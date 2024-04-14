@@ -1,6 +1,6 @@
 import PostCard from '@/app/components/post-card'
 import { PostSummary } from '@/app/components/types'
-import './post-list.css'
+import './post-list.module.css'
 
 export const PostList = ({ posts }: { posts: PostSummary[] }) => {
   return (
