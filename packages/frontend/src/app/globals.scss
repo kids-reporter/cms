@@ -114,6 +114,9 @@ body {
   --stk-block-background-padding: 20px;
   --letterSpacing: 0.05em;
   --margin-bottom: 28px;
+
+  ol { list-style-type: decimal;}
+  ul { list-style-type: disc;}
 }
 
 body.no-scroll {
