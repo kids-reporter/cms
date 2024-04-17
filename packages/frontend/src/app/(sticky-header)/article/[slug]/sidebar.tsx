@@ -57,7 +57,7 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
   return (
     <div
       style={{ zIndex: '900', marginTop: '-430px' }}
-      className="sm:hidden md:hidden lg:block sticky w-16 left-0 top-44"
+      className="hidden lg:block sticky w-16 left-0 top-44"
     >
       <div className="relative flex justify-center flex-col items-center gap-4">
         {topicURL && (

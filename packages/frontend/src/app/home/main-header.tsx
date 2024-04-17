@@ -8,6 +8,7 @@ import HomeTopDetector from './home-top-detector'
 import { Navigation } from '@/app/components/navigation'
 import { SearchIcon } from '@/app/icons'
 import { SEARCH_PLACEHOLDER } from '@/app/constants'
+import styles from './main-header.module.css'
 
 export const MainHeader = () => {
   const searchInput = (
@@ -53,7 +54,7 @@ export const MainHeader = () => {
               width="291"
             />
           </div>
-          <div className="h-72 flex flex-col justify-end">
+          <div className={`${styles.menu} h-72 flex flex-col justify-end`}>
             <Link className="flex flex-col items-center" href="/">
               <img
                 className="max-w-80 mb-10"
