@@ -3,6 +3,8 @@ import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 import './post-card.scss'
 
+const fallbackImg = '/assets/images/404.png'
+
 export type PostCardProp = {
   className?: string
   post: PostSummary
@@ -23,7 +25,10 @@ export const PostCard = ({
         }`}
       >
         <div className="hero-image-container">
-          <img className={isSimple ? 'simple' : ''} src={post.image} />
+          <img
+            className={isSimple ? 'simple' : ''}
+            src={post.image ?? fallbackImg}
+          />
         </div>
         <div className={`card-info ${isSimple ? 'simple' : ''}`}>
           <div className="card-top">
