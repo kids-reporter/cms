@@ -1,0 +1,19 @@
+.menu ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  border: 1.5px solid #eaeaea;
+  border-radius: 30px;
+  padding: 4px 30px 5px;
+  margin-top: 20px;
+  list-style-type: none;
+  font-size: 18px;
+}
+
+.menu li {
+  --menu-item-padding: 0 calc(var(--menu-items-spacing, 25px) / 2);
+  padding: var(--menu-item-padding, 0px);
+  color: #232323;
+}

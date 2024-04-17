@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
-import './post-card.scss'
 
 export type PostCardProp = {
   className?: string
@@ -18,24 +17,70 @@ export const PostCard = ({
     post && (
       <Link
         href={post.url}
-        className={`post-body theme-${post.theme} ${
-          className ? className : ''
-        }`}
+        className={`w-full h-full pl-1 pr-1 flex justify-start flex-col bg-transparent rounded-2xl theme-${
+          post.theme
+        } ${className ?? ''}`}
       >
-        <div className="hero-image-container">
-          <img className={isSimple ? 'simple' : ''} src={post.image} />
+        <div
+          style={{ height: 'calc(100% / 16 * 9)', aspectRatio: '16/9' }}
+          className="max-w-full"
+        >
+          <img
+            style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
+            className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
+            src={post.image}
+          />
         </div>
-        <div className={`card-info ${isSimple ? 'simple' : ''}`}>
-          <div className="card-top">
-            <span className="card-category">{post.category}</span>
-            <span className="card-title">{post.title}</span>
-            {!isSimple && <span className="card-desc">{post.desc}</span>}
-          </div>
-          <div className="card-bottom">
-            {post.subSubcategory && (
-              <span className="subSubcategory">{post.subSubcategory}</span>
+        <div
+          style={{ borderRadius: isSimple ? '0 0 20px 20px' : '' }}
+          className={`h-full flex flex-col justify-between pt-5 pb-1 md:pb-5 ${
+            isSimple ? 'px-5' : ''
+          } bg-white`}
+        >
+          <div className="flex flex-col justify-start">
+            <span
+              style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
+              className="text-left font-medium text-base tracking-wider mb-1"
+            >
+              {post.category}
+            </span>
+            <span
+              style={{
+                minHeight: 'auto',
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                WebkitLineClamp: '2',
+                lineHeight: '160%',
+                letterSpacing: '0.08em',
+              }}
+              className="md:min-h-16 overflow-hidden not-italic font-bold text-xl text-gray-900 text-left mb-5"
+            >
+              {post.title}
+            </span>
+            {!isSimple && (
+              <span
+                style={{
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: '3',
+                  lineHeight: '160%',
+                }}
+                className="overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900 mb-5"
+              >
+                {post.desc}
+              </span>
             )}
-            <span className="published-date">
+          </div>
+          <div className="flex justify-between items-center">
+            {post.subSubcategory && (
+              <span
+                style={{ background: 'var(--theme-color)', lineHeight: '160%' }}
+                className="text-center text-white font-normal text-xs tracking-wider pointer-events-none rounded-3xl px-3 py-1"
+              >
+                {post.subSubcategory}
+              </span>
+            )}
+            <span className="text-gray-500 text-xs">
               {(post.publishedDate && getFormattedDate(post.publishedDate)) ??
                 ''}
             </span>

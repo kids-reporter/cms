@@ -1,0 +1,33 @@
+/* override style in swiper js */
+.swiper {
+  width: 95%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.swiper-pagination-bullets {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+.swiper-pagination-bullet {
+  width: 13px;
+  height: 13px;
+  @media screen and (max-width: 767px) {
+    width: 9px;
+    height: 9px;
+  }
+  margin: 50px 10px 0;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--theme-color);
+}
