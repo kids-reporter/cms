@@ -101,7 +101,10 @@ export function twoFactorAuthMiddleware(
       const context = await commonContext.withRequest(req, res)
 
       // Redirect to 2FA setup if 2FA is not set up
-      if (!context.session?.data.twoFactorAuth.set) {
+      if (
+        !context.session?.data.twoFactorAuth.set &&
+        !context.session?.data.twoFactorAuth.bypass
+      ) {
         res.locals.skip2fa = true
         return res.redirect('/2fa-setup')
       }
