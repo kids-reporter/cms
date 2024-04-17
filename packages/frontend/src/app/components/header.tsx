@@ -138,7 +138,9 @@ export const StickyHeader = () => {
   )
 
   const hamburgerOverlay = (
-    <div className={`${styles['hamburger-overlay-mobile']}`}>
+    <div
+      className={`${styles['hamburger-overlay-mobile']} fixed w-full h-full top-0 left-0 right-0 bottom-0 bg-white flex flex-col justify-center items-center`}
+    >
       <div
         style={{ padding: 'var(--panel-padding, 30px)' }}
         className="w-full flex flex-row justify-end pb-0"
