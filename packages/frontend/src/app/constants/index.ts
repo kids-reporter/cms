@@ -44,7 +44,7 @@ export enum ContentType {
   ARTICLE = 'article',
   TOPIC = 'topic',
   AUTHOR = 'author',
-  TAG = 'tag,',
+  TAG = 'tag',
 }
 
 export enum AuthorRole {
