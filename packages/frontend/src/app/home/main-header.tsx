@@ -20,7 +20,7 @@ export const MainHeader = () => {
       aria-haspopup="listbox"
     >
       <input
-        className="text-gray-500 w-full h-full text-base bg-gray-200 pl-3 pr-10 border-none rounded-3xl focus:outline-none"
+        className="text-gray-500 w-full h-full text-base bg-gray-100 pl-3 pr-10 border-none rounded-3xl focus:outline-none"
         type="text"
         placeholder={SEARCH_PLACEHOLDER}
         name="q"
@@ -47,7 +47,7 @@ export const MainHeader = () => {
           style={{ width: '90vw', gridTemplateColumns: '1fr auto 1fr' }}
           className="max-w-7xl hidden lg:grid items-end mx-auto mb-16 p-9"
         >
-          <div>
+          <div className="flex flex-row justify-end">
             <img
               className="h-auto max-w-full align-middle"
               src="/assets/images/navbar_pic.svg"
@@ -64,7 +64,7 @@ export const MainHeader = () => {
             </Link>
             <Navigation />
           </div>
-          <div className="h-56 flex flex-col justify-end items-end">
+          <div className="h-56 flex flex-col justify-end items-start ml-8">
             <div className="h-full flex flex-col justify-between">
               {searchInput}
               <div className="h-8 flex flex-row items-center">

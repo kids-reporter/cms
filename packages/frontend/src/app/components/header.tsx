@@ -11,7 +11,7 @@ const slogan = <img src="/assets/images/header-left-slogan.svg" />
 export const ContributeBtn = (
   <Link
     href="/about#post"
-    className="header-left__btn-1 rpjr-btn leading-6 text-sm font-medium px-3"
+    className="header-left__btn-1 rpjr-btn leading-6 text-sm lg:text-lg font-medium px-3"
     style={{ marginRight: '14px', fontFamily: 'Noto Sans TC, Sans-Serif' }}
   >
     投稿
@@ -22,7 +22,7 @@ export const SubscribeBtn = (
   <Link
     href={SUBSCRIBE_URL}
     target="_blank"
-    className="header-left__btn-1 rpjr-btn rpjr-btn-orange leading-6 text-sm font-medium px-3"
+    className="header-left__btn-1 rpjr-btn rpjr-btn-orange leading-6 text-sm lg:text-lg font-medium px-3"
     style={{ marginRight: '15px', fontFamily: 'Noto Sans TC, Sans-Serif' }}
   >
     訂閱
@@ -33,7 +33,7 @@ export const AboutUsBtn = (
   <Link
     href="/about#us"
     style={{ fontFamily: 'Noto Sans TC, Sans-Serif' }}
-    className="rpjr-btn rpjr-btn-red leading-6 text-sm font-medium px-3"
+    className="rpjr-btn rpjr-btn-red leading-6 text-sm lg:text-lg font-medium px-3"
     aria-label="我們是誰"
     target="_blank"
     rel="noopener noreferrer"
