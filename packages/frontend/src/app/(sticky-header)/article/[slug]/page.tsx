@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
 import {
-  API_URL,
   KIDS_URL_ORIGIN,
   GENERAL_DESCRIPTION,
   POST_CONTENT_GQL,
@@ -123,7 +122,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug
 
-  const postMetaRes = await sendGQLRequest(API_URL, {
+  const postMetaRes = await sendGQLRequest({
     query: metaGQL,
     variables: {
       where: {
@@ -176,7 +175,7 @@ export default async function PostPage({
     notFound()
   }
 
-  const postRes = await sendGQLRequest(API_URL, {
+  const postRes = await sendGQLRequest({
     query: postGQL,
     variables: {
       where: {

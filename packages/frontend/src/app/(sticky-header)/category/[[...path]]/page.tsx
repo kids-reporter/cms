@@ -4,7 +4,6 @@ import PostList from '@/app/components/post-list'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -158,7 +157,7 @@ export default async function Category({ params }: { params: { path: any } }) {
 
   // Fetch subcategories for navigation
   const navigationItems = []
-  const subcategoriesRes = await sendGQLRequest(API_URL, {
+  const subcategoriesRes = await sendGQLRequest({
     query: subcategoriesGQL,
     variables: {
       where: {
@@ -198,7 +197,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     query = categoryPostsGQL
     slug = category
   }
-  const postsRes = await sendGQLRequest(API_URL, {
+  const postsRes = await sendGQLRequest({
     query: query,
     variables: {
       where: {

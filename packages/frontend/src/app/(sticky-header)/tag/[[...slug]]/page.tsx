@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -46,7 +45,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug?.[0]
 
-  const tagOGRes = await sendGQLRequest(API_URL, {
+  const tagOGRes = await sendGQLRequest({
     query: metaGQL,
     variables: {
       where: {
@@ -90,7 +89,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const response = await sendGQLRequest(API_URL, {
+  const response = await sendGQLRequest({
     query: tagGQL,
     variables: {
       where: {
