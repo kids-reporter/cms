@@ -21,11 +21,14 @@
 .swiper-pagination-bullet {
   width: 13px;
   height: 13px;
-  @media screen and (max-width: 767px) {
+  margin: 50px 10px 0;
+}
+
+@media screen and (max-width: 767px) {
+  .swiper-pagination-bullet {
     width: 9px;
     height: 9px;
   }
-  margin: 50px 10px 0;
 }
 
 .swiper-pagination-bullet-active {
