@@ -8,7 +8,7 @@ import {
   TwitterIcon,
 } from '@/app/icons'
 import { GENERAL_DESCRIPTION, SUBSCRIBE_URL } from '@/app/constants'
-import './footer.scss'
+import styles from './footer.module.css'
 
 const socialIcons = [
   {
@@ -39,23 +39,31 @@ const socialIcons = [
 
 export const Footer = () => {
   return (
-    <div className="footer">
-      <div className="footer-action">
+    <div className="flex flex-col w-full mt-10">
+      <div
+        style={{ padding: 'var(--stk-block-background-padding)' }}
+        className="flex w-full bg-gray-100 justify-center overflow-hidden"
+      >
         <div className="footer-container">
-          <div className="footer-top">
-            <div className="footer-top__left">
-              <picture className="footer-top__left-logo">
+          <div className={styles['footer-top']}>
+            <div className={styles['footer-top__left']}>
+              <picture className={styles['footer-top__left-logo']}>
                 <img src="/assets/images/footer-logo.svg" alt="" />
               </picture>
-              <p className="footer-desc">{GENERAL_DESCRIPTION}</p>
-              <div className="footer-top__left-social">
-                <div className="footer-top__social-icon-group">
+              <p
+                style={{ letterSpacing: 'var(--letterSpacing)' }}
+                className="leading-8 mb-8"
+              >
+                {GENERAL_DESCRIPTION}
+              </p>
+              <div className={styles['footer-top__left-social']}>
+                <div className={styles['footer-top__social-icon-group']}>
                   {socialIcons.map((icon, index) => {
                     return (
                       <Link
                         key={`social-icon-${index}`}
                         href={icon.link}
-                        className="footer-top__social-icon-item"
+                        className={styles['footer-top__social-icon-item']}
                         target="_blank"
                       >
                         {icon.img}
@@ -65,35 +73,38 @@ export const Footer = () => {
                 </div>{' '}
               </div>
             </div>
-            <div className="footer-top__middle">
-              <div className="footer-top__team-box">
-                <Link href="/about" className="footer-top__team-box-item">
+            <div className={styles['footer-top__middle']}>
+              <div className={styles['footer-top__team-box']}>
+                <Link
+                  href="/about"
+                  className={styles['footer-top__team-box-item']}
+                >
                   <img src="/assets/images/footer_pic1.svg" alt="我們是誰" />
                   我們是誰
                 </Link>
                 <Link
                   href="/about#team"
-                  className="footer-top__team-box-item __mPS2id"
+                  className={`${styles['footer-top__team-box-item']} __mPS2id`}
                 >
                   <img src="/assets/images/footer_pic2.svg" alt="我們是誰" />
                   核心團隊
                 </Link>
                 <Link
                   href="/about#consultants"
-                  className="footer-top__team-box-item __mPS2id"
+                  className={`${styles['footer-top__team-box-item']} __mPS2id`}
                 >
                   <img src="/assets/images/footer_pic3.svg" alt="我們是誰" />
                   顧問群
                 </Link>
                 <Link
                   href="/about#mail"
-                  className="footer-top__team-box-item __mPS2id"
+                  className={`${styles['footer-top__team-box-item']} __mPS2id`}
                 >
                   <img src="/assets/images/footer_pic4.svg" alt="我們是誰" />
                   聯絡我們
                 </Link>
               </div>
-              <div className="footer-top__button-group">
+              <div className={styles['footer-top__button-group']}>
                 <Link
                   href="https://support.twreporter.org/"
                   className="header-left__btn-1 rpjr-btn rpjr-btn-big"
@@ -117,39 +128,65 @@ export const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="footer-top__right">
+            <div className={styles['footer-top__right']}>
               <img
                 src="/assets/images/footer_pic5.svg"
-                className="footer-top__fig"
+                className={styles['footer-top__fig']}
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="footer-copyright">
-        <div className="footer-container">
-          <div className="footer-copyright-left">
-            <p className="footer-number">
+      <div
+        style={{ backgroundColor: 'var(--paletteColor6)' }}
+        className="w-full flex items-center flex-row justify-between p-10"
+      >
+        <div
+          style={{
+            width: 'var(--container-width)',
+            maxWidth: 'var(--normal-container-max-width)',
+            minHeight: 'var(--shrink-height, var(--height))',
+          }}
+          className="flex flex-col lg:flex-row justify-center pb-16 lg:pb-0 gap-5 lg:gap-0 lg:justify-between items-center ml-auto mr-auto "
+        >
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-5">
+            <p
+              style={{
+                letterSpacing: 'var(--letterSpacing)',
+                color: 'var(--paletteColor4)',
+              }}
+              className="footer-number text-xs md:text-sm"
+            >
               公益勸募許可字號｜衛部救字第1121364182號{' '}
             </p>
-            <div className="footer-policy">
+            <div
+              className={`${styles['footer-policy']} flex flex-row justify-center flex-no-wrap gap-5`}
+            >
               <Link
                 href="https://www.twreporter.org/a/privacy-footer"
                 target="_blank"
-                className="footer-link"
+                className="text-gray-900 font-medium text-base"
               >
                 <strong>隱私政策</strong>
               </Link>{' '}
               <Link
                 href="https://www.twreporter.org/a/license-footer"
                 target="_blank"
-                className="footer-link"
+                className="text-gray-900 font-medium text-base"
               >
                 <strong>許可協議</strong>
               </Link>{' '}
             </div>
           </div>
-          <p>Copyright © 2024 The Reporter</p>
+          <p
+            style={{
+              letterSpacing: 'var(--letterSpacing)',
+              color: 'var(--paletteColor4)',
+            }}
+            className="footer-number text-xs md:text-sm"
+          >
+            Copyright © 2024 The Reporter
+          </p>
         </div>
       </div>
     </div>
