@@ -44,96 +44,100 @@ export const Footer = () => {
         style={{ padding: 'var(--stk-block-background-padding)' }}
         className="flex w-full bg-gray-100 justify-center overflow-hidden"
       >
-        <div className="footer-container">
-          <div className={styles['footer-top']}>
-            <div className={styles['footer-top__left']}>
-              <picture className={styles['footer-top__left-logo']}>
-                <img src="/assets/images/footer-logo.svg" alt="" />
-              </picture>
-              <p
-                style={{ letterSpacing: 'var(--letterSpacing)' }}
-                className="leading-8 mb-8"
+        <div
+          style={{
+            width: 'var(--container-width)',
+            maxWidth: 'var(--normal-container-max-width)',
+          }}
+          className={styles['footer-top']}
+        >
+          <div className={styles['footer-top__left']}>
+            <picture className={styles['footer-top__left-logo']}>
+              <img src="/assets/images/footer-logo.svg" alt="" />
+            </picture>
+            <p
+              style={{ letterSpacing: 'var(--letterSpacing)' }}
+              className="leading-8 mb-8"
+            >
+              {GENERAL_DESCRIPTION}
+            </p>
+            <div className={styles['footer-top__left-social']}>
+              <div className={styles['footer-top__social-icon-group']}>
+                {socialIcons.map((icon, index) => {
+                  return (
+                    <Link
+                      key={`social-icon-${index}`}
+                      href={icon.link}
+                      className={styles['footer-top__social-icon-item']}
+                      target="_blank"
+                    >
+                      {icon.img}
+                    </Link>
+                  )
+                })}
+              </div>{' '}
+            </div>
+          </div>
+          <div className={styles['footer-top__middle']}>
+            <div className={styles['footer-top__team-box']}>
+              <Link
+                href="/about"
+                className={styles['footer-top__team-box-item']}
               >
-                {GENERAL_DESCRIPTION}
-              </p>
-              <div className={styles['footer-top__left-social']}>
-                <div className={styles['footer-top__social-icon-group']}>
-                  {socialIcons.map((icon, index) => {
-                    return (
-                      <Link
-                        key={`social-icon-${index}`}
-                        href={icon.link}
-                        className={styles['footer-top__social-icon-item']}
-                        target="_blank"
-                      >
-                        {icon.img}
-                      </Link>
-                    )
-                  })}
-                </div>{' '}
-              </div>
+                <img src="/assets/images/footer_pic1.svg" alt="我們是誰" />
+                我們是誰
+              </Link>
+              <Link
+                href="/about#team"
+                className={`${styles['footer-top__team-box-item']} __mPS2id`}
+              >
+                <img src="/assets/images/footer_pic2.svg" alt="我們是誰" />
+                核心團隊
+              </Link>
+              <Link
+                href="/about#consultants"
+                className={`${styles['footer-top__team-box-item']} __mPS2id`}
+              >
+                <img src="/assets/images/footer_pic3.svg" alt="我們是誰" />
+                顧問群
+              </Link>
+              <Link
+                href="/about#mail"
+                className={`${styles['footer-top__team-box-item']} __mPS2id`}
+              >
+                <img src="/assets/images/footer_pic4.svg" alt="我們是誰" />
+                聯絡我們
+              </Link>
             </div>
-            <div className={styles['footer-top__middle']}>
-              <div className={styles['footer-top__team-box']}>
-                <Link
-                  href="/about"
-                  className={styles['footer-top__team-box-item']}
-                >
-                  <img src="/assets/images/footer_pic1.svg" alt="我們是誰" />
-                  我們是誰
-                </Link>
-                <Link
-                  href="/about#team"
-                  className={`${styles['footer-top__team-box-item']} __mPS2id`}
-                >
-                  <img src="/assets/images/footer_pic2.svg" alt="我們是誰" />
-                  核心團隊
-                </Link>
-                <Link
-                  href="/about#consultants"
-                  className={`${styles['footer-top__team-box-item']} __mPS2id`}
-                >
-                  <img src="/assets/images/footer_pic3.svg" alt="我們是誰" />
-                  顧問群
-                </Link>
-                <Link
-                  href="/about#mail"
-                  className={`${styles['footer-top__team-box-item']} __mPS2id`}
-                >
-                  <img src="/assets/images/footer_pic4.svg" alt="我們是誰" />
-                  聯絡我們
-                </Link>
-              </div>
-              <div className={styles['footer-top__button-group']}>
-                <Link
-                  href="https://support.twreporter.org/"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-big"
-                  target="_blank"
-                >
-                  贊助我們
-                </Link>
-                <Link
-                  href={SUBSCRIBE_URL}
-                  target="_blank"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-orange rpjr-btn-big"
-                >
-                  訂閱我們
-                </Link>
-                <Link
-                  href="https://www.twreporter.org/"
-                  className="header-left__btn-1 rpjr-btn rpjr-btn-red rpjr-btn-big"
-                  target="_blank"
-                >
-                  前往報導者
-                </Link>
-              </div>
+            <div className={styles['footer-top__button-group']}>
+              <Link
+                href="https://support.twreporter.org/"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-big"
+                target="_blank"
+              >
+                贊助我們
+              </Link>
+              <Link
+                href={SUBSCRIBE_URL}
+                target="_blank"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-orange rpjr-btn-big"
+              >
+                訂閱我們
+              </Link>
+              <Link
+                href="https://www.twreporter.org/"
+                className="header-left__btn-1 rpjr-btn rpjr-btn-red rpjr-btn-big"
+                target="_blank"
+              >
+                前往報導者
+              </Link>
             </div>
-            <div className={styles['footer-top__right']}>
-              <img
-                src="/assets/images/footer_pic5.svg"
-                className={styles['footer-top__fig']}
-              />
-            </div>
+          </div>
+          <div className={styles['footer-top__right']}>
+            <img
+              src="/assets/images/footer_pic5.svg"
+              className={styles['footer-top__fig']}
+            />
           </div>
         </div>
       </div>
