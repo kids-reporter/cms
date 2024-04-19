@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -113,7 +112,7 @@ export default async function Topic({
   }
 
   // Fetch projects of specific page
-  const projectsRes = await sendGQLRequest(API_URL, {
+  const projectsRes = await sendGQLRequest({
     query: genTopicsGQL(currentPage === 1),
     variables: {
       orderBy: [

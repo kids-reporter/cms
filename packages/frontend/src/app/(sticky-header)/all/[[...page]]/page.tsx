@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -45,7 +44,7 @@ export default async function LatestPosts({
   }
 
   // Fetch total posts count
-  const postsCountRes = await sendGQLRequest(API_URL, {
+  const postsCountRes = await sendGQLRequest({
     query: postsCountGQL,
   })
   if (!postsCountRes) {
@@ -65,7 +64,7 @@ export default async function LatestPosts({
     }
 
     // Fetch posts of specific page
-    const postsRes = await sendGQLRequest(API_URL, {
+    const postsRes = await sendGQLRequest({
       query: latestPostsGQL,
       variables: {
         orderBy: {

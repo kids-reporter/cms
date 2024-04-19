@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import {
-  API_URL,
   KIDS_URL_ORIGIN,
   ContentType,
   Theme,
@@ -91,7 +90,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug
 
-  const topicOGRes = await sendGQLRequest(API_URL, {
+  const topicOGRes = await sendGQLRequest({
     query: metaGQL,
     variables: {
       where: {
@@ -136,7 +135,7 @@ export default async function TopicPage({
   }
 
   // TODO: maybe we could try apollo-client pkg
-  const axiosRes = await sendGQLRequest(API_URL, {
+  const axiosRes = await sendGQLRequest({
     query,
     variables: {
       where: {

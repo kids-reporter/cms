@@ -8,12 +8,7 @@ import SearchAndTags from '@/app/home/search-and-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
-import {
-  API_URL,
-  GENERAL_DESCRIPTION,
-  POST_CONTENT_GQL,
-  Theme,
-} from '@/app/constants'
+import { GENERAL_DESCRIPTION, POST_CONTENT_GQL, Theme } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest } from '@/app/utils'
 
 export const revalidate = 300
@@ -155,7 +150,7 @@ const sortOrder = {
 
 export default async function Home() {
   // 1. Fetch topics
-  const topicsRes = await sendGQLRequest(API_URL, {
+  const topicsRes = await sendGQLRequest({
     query: topicsGQL,
     variables: {
       orderBy: sortOrder,
@@ -173,7 +168,7 @@ export default async function Home() {
     }) ?? []
 
   // 2. Fetch latest posts
-  const latestPostsRes = await sendGQLRequest(API_URL, {
+  const latestPostsRes = await sendGQLRequest({
     query: latestPostsGQL,
     variables: {
       orderBy: sortOrder,
@@ -183,7 +178,7 @@ export default async function Home() {
   const latestPosts = getPostSummaries(latestPostsRes?.data?.data?.posts) ?? []
 
   // 3. Fetch featured posts & tags
-  const editorPicksRes = await sendGQLRequest(API_URL, {
+  const editorPicksRes = await sendGQLRequest({
     query: editorPicksGQL,
     variables: {
       take: featuredPostsNum,
@@ -207,7 +202,7 @@ export default async function Home() {
           .replace(/(^\/)|(\/$)/g, '')
           .split('/')
         const isSubcategory = categoryTokens.length === 3
-        const res = await sendGQLRequest(API_URL, {
+        const res = await sendGQLRequest({
           query: isSubcategory ? subcategoryPostsGQL : categoryPostsGQL,
           variables: {
             where: {
