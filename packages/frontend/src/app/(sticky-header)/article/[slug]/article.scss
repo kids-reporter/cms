@@ -18,6 +18,7 @@ body.single-post {
     }
   }
 }
+
 .post {
   --container-width-base: calc(90vw - var(--frame-size, 0px) * 2);
   --container-width: var(--container-width-base);
@@ -30,14 +31,15 @@ body.single-post {
 }
 
 .icon-rpjr-icon-tag .path1:before {
-    content: "\e907";
-    color: var(--theme-color) !important;
-  }
-  .icon-rpjr-icon-tag .path2:before {
-    content: "\e908";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
+  content: "\e907";
+  color: var(--theme-color) !important;
+}
+
+.icon-rpjr-icon-tag .path2:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
 
 /*.post .entry-content,*/
 .post .topic-breadcrumb {
@@ -57,19 +59,20 @@ body.single-post {
     }
   }
 }
-.post .topic-breadcrumb
-{
-    max-width: 800px !important;
-    margin-right: auto;
-    margin-left: auto;
+
+.post .topic-breadcrumb {
+  max-width: 800px !important;
+  margin-right: auto;
+  margin-left: auto;
 }
-.post .hero-section
-{
-    max-width: 800px !important;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: var(--margin-bottom, 40px);
+
+.post .hero-section {
+  max-width: 800px !important;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: var(--margin-bottom, 40px);
 }
+
 .post .ct-featured-image {
     @media screen and (max-width: 689px) {
         max-width: none !important;
@@ -97,9 +100,9 @@ body.single-post {
 }
 
 .post .post-intro {
-    max-width: 760px !important;
-    margin-right: auto;
-    margin-left: auto;
+  max-width: 760px !important;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .post topic-breadcrumb {
@@ -162,41 +165,40 @@ body.single-post {
     }
 }
 .post .post-date {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 160%;
-    letter-spacing: 0.05em;
-    color: #A3A3A3;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  letter-spacing: 0.05em;
+  color: #A3A3A3;
 }
 
 .post .post-date-category {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 34px;
-    margin-top: 60px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+  margin-top: 60px !important;
 }
+
 .post .post-date-category .post-date {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 160%;
-    /* identical to box height, or 26px */
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  /* identical to box height, or 26px */
 
-    letter-spacing: 0.05em;
-
-    color: #A3A3A3;
+  letter-spacing: 0.05em;
+  color: #A3A3A3;
 }
+
 .post .post-intro {
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 200%;
-
-    letter-spacing: 0.05em;
-
-    color: #575757;
-    padding: 13px 15px;
-    background: #F4F4F4;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 200%;
+  letter-spacing: 0.05em;
+  color: #575757;
+  padding: 13px 15px;
+  background: #F4F4F4;
 
     @media screen and (min-width: 768px) {
         font-size: 18px;
@@ -308,6 +310,7 @@ body.single-post {
         }
     }
 }
+
 .post .author-section__title {
     font-family: SweiMarkerSansCJKtc-Regular, 'Noto Sans TC', Sans-Serif, serif;
     display: block;
@@ -327,28 +330,28 @@ body.single-post {
 }
 
 .post .author-section__box {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    gap:40px;
-    flex-basis: 33%;
-    max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap:40px;
+  flex-basis: 33%;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .post .author-section__m-btn {
-    display: block;
-    margin: 30px auto 60px;
-    padding: 8px 12px;
-    cursor: pointer;
+  display: block;
+  margin: 30px auto 60px;
+  padding: 8px 12px;
+  cursor: pointer;
 
-    @media screen and (min-width: 768px) {
-        display: none;
-    }
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 }
 
 body.single-post main article.post>.entry-content>*:not(.alignwide):not(.alignfull) {
-    max-width: 700px;
+  max-width: 700px;
 }
