@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   DEFAULT_AVATAR,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
@@ -56,7 +55,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug?.[0]
 
-  const authorMetaRes = await sendGQLRequest(API_URL, {
+  const authorMetaRes = await sendGQLRequest({
     query: metaGQL,
     variables: {
       where: {
@@ -100,7 +99,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const response = await sendGQLRequest(API_URL, {
+  const response = await sendGQLRequest({
     query: authorGQL,
     variables: {
       authorWhere2: {

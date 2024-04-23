@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import AuthorCard from '@/app/components/author-card'
 import {
-  API_URL,
   CREDIT_DONATE_URL,
   CONTRIBUTE_FORM,
   DEFAULT_AVATAR,
@@ -149,7 +148,7 @@ const consultants = [
 export default async function About() {
   // Fetch memeber avatar
   for (const member of teamMembers) {
-    const res = await sendGQLRequest(API_URL, {
+    const res = await sendGQLRequest({
       query: authorGQL,
       variables: {
         where: {

@@ -1,5 +1,6 @@
-import { gqlEndpoint } from '@/environment-variables'
+import { internalGqlEndpoint, gqlEndpoint } from '@/environment-variables'
 
+export const INTERNAL_API_URL = internalGqlEndpoint
 export const API_URL = gqlEndpoint
 
 export const KIDS_URL_ORIGIN = 'https://kids.twreporter.org'
@@ -44,7 +45,7 @@ export enum ContentType {
   ARTICLE = 'article',
   TOPIC = 'topic',
   AUTHOR = 'author',
-  TAG = 'tag,',
+  TAG = 'tag',
 }
 
 export enum AuthorRole {

@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import errors from '@twreporter/errors'
 import { Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
-import { DEFAULT_THEME_COLOR } from '@/app/constants'
+import { DEFAULT_THEME_COLOR, API_URL, INTERNAL_API_URL } from '@/app/constants'
 
 export const getThemeColor = (theme: Theme) => {
   if (theme === Theme.YELLOW) {
@@ -48,10 +48,17 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
 export const AXIOS_TIMEOUT = 5000
 
 export const sendGQLRequest = async (
-  url: string,
   data?: any,
   config?: AxiosRequestConfig<any> | undefined
 ) => {
+  // Define url based on environment
+  let url
+  if (typeof window === 'undefined') {
+    url = INTERNAL_API_URL
+  } else {
+    url = API_URL
+  }
+
   let response
   try {
     response = await axios.post(url, data, {
