@@ -100,7 +100,7 @@ const teamMembers = [
     bio: '在新聞的世界裡，「設計」這個角色就是要發力讓報導變得更好看、更好懂，所以我們把重要的故事情境化成畫作，把複雜的資料轉成圖表，努力吸引你們的眼球！',
   },
   {
-    slug: 'yunruchen',
+    slug: 'kl-wu',
     name: '吳冠伶',
     role: AuthorRole.EDITORS,
     roleName: '編輯',
