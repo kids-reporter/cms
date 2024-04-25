@@ -3,36 +3,37 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Navigation } from '@/app/components/navigation'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
-import { SUBSCRIBE_URL } from '@/app/constants'
-import './header.scss'
+import { SUBSCRIBE_URL, SEARCH_PLACEHOLDER } from '@/app/constants'
+import styles from './header.module.css'
 
 const slogan = <img src="/assets/images/header-left-slogan.svg" />
 
-export const ContributeBtn = (
+const ContributeBtn = (
   <Link
     href="/about#post"
-    className="header-left__btn-1 rpjr-btn"
-    style={{ marginRight: '14px' }}
+    className="header-left__btn-1 rpjr-btn leading-6 text-sm font-medium px-3"
+    style={{ marginRight: '14px', fontFamily: 'Noto Sans TC, Sans-Serif' }}
   >
     投稿
   </Link>
 )
 
-export const SubscribeBtn = (
+const SubscribeBtn = (
   <Link
     href={SUBSCRIBE_URL}
     target="_blank"
-    className="header-left__btn-1 rpjr-btn rpjr-btn-orange"
-    style={{ marginRight: '15px' }}
+    className="header-left__btn-1 rpjr-btn rpjr-btn-orange leading-6 text-sm font-medium px-3"
+    style={{ marginRight: '15px', fontFamily: 'Noto Sans TC, Sans-Serif' }}
   >
     訂閱
   </Link>
 )
 
-export const AboutUsBtn = (
+const AboutUsBtn = (
   <Link
     href="/about#us"
-    className="rpjr-btn rpjr-btn-red"
+    style={{ fontFamily: 'Noto Sans TC, Sans-Serif' }}
+    className="rpjr-btn rpjr-btn-red leading-6 text-sm font-medium px-3"
     aria-label="我們是誰"
     target="_blank"
     rel="noopener noreferrer"
@@ -66,11 +67,11 @@ export const StickyHeader = () => {
   }
 
   const brand = (
-    <div className="site-branding">
-      <Link href="/" className="site-logo-container" rel="home">
+    <div className="pr-2.5">
+      <Link href="/" className="max-h-full" rel="home">
         <img
           src="/assets/images/LOGO.svg"
-          className="default-logo"
+          className="h-8 object-contain"
           alt="少年報導者 The Reporter for Kids"
         />
       </Link>
@@ -79,48 +80,31 @@ export const StickyHeader = () => {
 
   const search = (
     <button
-      className="search-btn"
+      className={`${styles['search-icon']} cursor-pointer border-none mx-2.5`}
       aria-label="開啟搜尋表單"
       data-label="right"
       onClick={onSearchOverlayOpen}
     >
-      <span>搜尋</span>
       {SearchIcon}
     </button>
   )
 
   const about = (
-    <div className="about-us">
-      <Link
-        href="/about#us"
-        className="rpjr-btn rpjr-btn-red"
-        aria-label="我們是誰"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        我們是誰
-      </Link>
-    </div>
+    <div className="h-8 flex items-stretch ml-2.5">{AboutUsBtn}</div>
   )
 
   const searchInput = (
-    <form
-      role="search"
-      method="get"
-      className="search-form"
-      action="/search"
-      aria-haspopup="listbox"
-    >
+    <form role="search" method="get" action="/search" aria-haspopup="listbox">
       <input
         type="text"
-        placeholder="搜尋更多新聞、議題"
+        placeholder={SEARCH_PLACEHOLDER}
         name="q"
         title="Search for..."
         aria-label="Search for..."
       />
       <button
+        className="flex flex-row justify-center items-center"
         type="submit"
-        className="search-submit flex flex-col justify-center items-center"
         aria-label="搜尋按鈕"
       >
         {SearchIcon}
@@ -129,61 +113,108 @@ export const StickyHeader = () => {
   )
 
   const searchOverlay = (
-    <div className="search-overlay">
-      <div className="control">
-        <button onClick={onSearchOverlayClose}>{CrossIcon}</button>
+    <div
+      style={{ zIndex: '999' }}
+      className="fixed w-full h-full top-0 left-0 right-0 bottom-0 bg-white flex flex-col justify-center items-center"
+    >
+      <div
+        style={{ padding: 'var(--panel-padding, 30px)' }}
+        className="w-full flex flex-row justify-end pb-0"
+      >
+        <button
+          className="bg-transparent w-10 cursor-pointer border-none p-1"
+          onClick={onSearchOverlayClose}
+        >
+          {CrossIcon}
+        </button>
       </div>
-      <div className="content">{searchInput}</div>
+      <div
+        style={{ padding: 'var(--panel-padding, 35px)' }}
+        className={`${styles['search-overlay']} flex-grow w-full flex flex-col justify-center items-center`}
+      >
+        {searchInput}
+      </div>
     </div>
   )
 
   const hamburgerOverlay = (
-    <div className="hamburger-overlay-mobile">
-      <div className="control">
-        <button onClick={onHamburgerOverlayClose}>{CrossIcon}</button>
+    <div
+      className={`${styles['hamburger-overlay-mobile']} fixed w-full h-full top-0 left-0 right-0 bottom-0 bg-white flex flex-col justify-center items-center`}
+    >
+      <div
+        style={{ padding: 'var(--panel-padding, 30px)' }}
+        className="w-full flex flex-row justify-end pb-0"
+      >
+        <button
+          style={{ padding: '6px 5px' }}
+          className="bg-transparent w-10 cursor-pointer border-none"
+          onClick={onHamburgerOverlayClose}
+        >
+          {CrossIcon}
+        </button>
       </div>
-      <div className="content">
-        <Link href="/" className="logo-mobile">
+      <div
+        style={{ padding: 'var(--panel-padding, 35px)' }}
+        className="flex-grow w-full flex flex-col justify-center items-center"
+      >
+        <Link href="/" className={`${styles['logo-mobile']} h-0 md:h-24`}>
           <img
+            style={{
+              maxWidth: 'initial',
+              height: 'inherit',
+              verticalAlign: 'initial',
+            }}
+            className="w-auto object-contain"
             src="/assets/images/logo-full.svg"
             alt="少年報導者 The Reporter for Kids"
           />
         </Link>
-        <div className="btn-group">
-          <Link
-            href="/about#post"
-            className="header-left__btn-1 rpjr-btn"
-            style={{ marginRight: '14px' }}
-            onClick={onHamburgerOverlayClose}
-          >
-            投稿
-          </Link>
+        <div className="flex flex-row flex-wrap justify-center sm:mt-10 md:mt-10 mt-16 mb-10">
+          {ContributeBtn}
           {SubscribeBtn}
           {AboutUsBtn}
         </div>
         {searchInput}
-        <Navigation onClick={onHamburgerOverlayClose} />
+        <div className={`${styles['mobile-menu']}`}>
+          <Navigation onClick={onHamburgerOverlayClose} />
+        </div>
       </div>
     </div>
   )
 
   return (
-    <div className="sticky-header" id="sticky-header">
-      <div className="header-container">
-        <div className="left">{brand}</div>
-        <div className="right">
-          <div className="cta">
+    <div
+      style={{ zIndex: '999' }}
+      className="w-screen flex justify-between fixed top-0 bg-white"
+      id="sticky-header"
+    >
+      <div
+        style={{
+          width: 'var(--container-width)',
+          maxWidth: 'var(--normal-container-max-width)',
+          minHeight: 'var(--shrink-height, var(--height))',
+        }}
+        className="flex justify-between h-16 ml-auto mr-auto bg-white"
+      >
+        <div className="flex items-center">{brand}</div>
+        <div className="hidden lg:flex flex-grow justify-between items-center">
+          <div
+            style={{ margin: 'var(--margin, 0 10px)' }}
+            className="flex flex-row items-center"
+          >
             {ContributeBtn}
             {SubscribeBtn}
             {slogan}
           </div>
-          <div className="others">
-            <Navigation />
+          <div className={'flex flex-row items-center'}>
+            <div className={`${styles.menu}`}>
+              <Navigation />
+            </div>
             {search}
             {about}
           </div>
         </div>
-        <div className="right-mobile">
+        <div className="lg:hidden flex flex-row justify-center">
           <button className="hamburger" onClick={onHamburgerOverlayOpen}>
             {HamburgerIcon}
           </button>

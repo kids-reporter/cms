@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import './tags.scss'
 
 export type Tag = {
   name: string
@@ -17,7 +16,7 @@ export const Tags = (props: TagsProp) => {
   const tags = props?.tags
 
   return (
-    <div className="tags">
+    <div className="flex flex-col items-center">
       {title && (
         <h3 className="rpjr-post-tags__heading">
           <i className="icon-rpjr-icon-tag">
@@ -28,15 +27,24 @@ export const Tags = (props: TagsProp) => {
         </h3>
       )}
       {tags?.length > 0 && (
-        <div className="rpjr-post-tags__box">
+        <div
+          style={{ columnGap: '15px', rowGap: '30px' }}
+          className="max-w-xl w-full flex flex-wrap items-center justify-center mt-6 ml-auto mx-auto mb-0"
+        >
           {tags.map((tag, index) => {
             return (
               tag && (
                 <Link
                   key={`post-tag-${index}`}
-                  className={`rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag ${
-                    props?.fill ? 'fill' : ''
-                  }`}
+                  style={
+                    props?.fill
+                      ? {
+                          background: 'var(--theme-color) !important',
+                          color: 'black !important',
+                        }
+                      : {}
+                  }
+                  className={'rpjr-post_tags__tag-item rpjr-btn rpjr-btn-tag'}
                   href={`/tag/${tag.slug}`}
                 >
                   #&nbsp;{tag.name}
