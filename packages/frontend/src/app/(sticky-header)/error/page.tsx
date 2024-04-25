@@ -5,7 +5,7 @@ export default async function Error() {
       className="flex flex-col justify-center items-center mb-16"
     >
       <img
-        className="max-w-xl w-full mt-20 mb-16"
+        className="max-w-72 md:max-w-md lg:max-w-xl w-full mt-20 mb-16"
         src="./assets/images/500_error.png"
         alt="500 Internal Server Error"
       />
