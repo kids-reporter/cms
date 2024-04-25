@@ -8,7 +8,6 @@ import {
   POST_CONTENT_GQL,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 export const metadata: Metadata = {
   title: '所有文章 - 少年報導者 The Reporter for Kids',
@@ -84,8 +83,11 @@ export default async function LatestPosts({
   const postSummeries = getPostSummaries(posts)
 
   return (
-    <main className="container">
-      <img className="title-image" src={'/assets/images/new_article.svg'} />
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10 gap-10"
+    >
+      <img className="max-w-xl w-full" src={'/assets/images/new_article.svg'} />
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (
         <Pagination

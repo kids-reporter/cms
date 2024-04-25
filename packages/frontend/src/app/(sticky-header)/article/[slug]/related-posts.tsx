@@ -1,16 +1,17 @@
 import PostSlider, { PostSliderProp } from '@/app/components/post-slider'
-import './related-post.scss'
 
 export const RelatedPosts = (props: PostSliderProp) => {
   return (
     props?.posts?.length > 0 && (
-      <div className="related-post-container">
-        <h3 className="ct-block-title">
-          <img
-            src="/assets/images/post-related-post-title.svg"
-            alt="相關文章"
-          />
-        </h3>
+      <div
+        style={{ width: '95vw' }}
+        className="flex flex-col justify-center items-center px-0 py-12"
+      >
+        <img
+          className="w-full h-20 mb-4 "
+          src="/assets/images/post-related-post-title.svg"
+          alt="相關文章"
+        />
         <PostSlider {...props} />
       </div>
     )

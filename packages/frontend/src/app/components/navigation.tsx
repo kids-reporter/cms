@@ -28,7 +28,7 @@ const NavigationItems = [
 export const Navigation = (props: { onClick?: () => void }) => {
   return (
     <nav aria-label="頁首選單">
-      <ul className="menu" role="menubar">
+      <ul role="menubar">
         {NavigationItems.map((item, index) => {
           return (
             <li key={`header-nav-item-${index}`}>
@@ -37,7 +37,6 @@ export const Navigation = (props: { onClick?: () => void }) => {
                 onClick={() => {
                   props.onClick?.()
                 }}
-                className="ct-menu-link"
                 role="menuitem"
               >
                 {item.title}

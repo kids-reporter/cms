@@ -2,7 +2,7 @@ import Script from 'next/script'
 import BackToTop from '@/app/components/back-to-top'
 import Footer from '@/app/components/footer'
 import StyledComponentsRegistry from './registry'
-import './globals.scss'
+import './globals.css'
 
 const gtmID = 'GTM-T37WZJ44'
 

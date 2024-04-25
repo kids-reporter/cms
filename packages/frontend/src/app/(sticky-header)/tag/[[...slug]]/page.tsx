@@ -11,7 +11,6 @@ import {
   ContentType,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 const tagGQL = `
 query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
@@ -126,9 +125,17 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   const postSummeries = getPostSummaries(posts)
 
   return (
-    <main>
-      <div className="info">
-        <h1>#{tag.name}</h1>
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10 px-9 pt-10 gap-10"
+    >
+      <div className="w-full flex flex-col justify-center items-center bg-white">
+        <h1
+          style={{ lineHeight: '160%' }}
+          className="text-center text-3xl text-gray-900 font-bold tracking-wider"
+        >
+          #{tag.name}
+        </h1>
       </div>
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (

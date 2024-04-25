@@ -144,6 +144,10 @@ a {
   --theme-color: #27B5F7;
 }
 
+.icon-rpjr-icon-arrow-right {
+  color: var(--paletteColor6);
+}
+
 .icon-rpjr-icon-arrow-right::before {
   content: "\e900";
 }
