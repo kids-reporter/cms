@@ -10,7 +10,6 @@ import {
   DEFAULT_THEME_COLOR,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 export const metadata: Metadata = {
   title: '分類: 少年報導者 The Reporter for Kids',
@@ -268,10 +267,15 @@ export default async function Category({ params }: { params: { path: any } }) {
   const imageURL = getImageFromCategory(category)
 
   return (
-    <main className="container">
-      <div className={`content theme-${theme}`}>
-        <img className="title-image" src={imageURL} />
-        <div className="navigation">
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10"
+    >
+      <div
+        className={`w-full flex flex-col justify-center items-center gap-10 theme-${theme}`}
+      >
+        <img className="max-w-xl w-full" src={imageURL} />
+        <div className="flex flex-row flex-wrap justify-center gap-2.5">
           {navigationItems?.map(
             (item, index) =>
               item && (
