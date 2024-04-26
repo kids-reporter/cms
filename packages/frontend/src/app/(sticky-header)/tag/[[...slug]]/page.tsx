@@ -114,7 +114,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   const postsCount = tag.postsCount
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-  if (currentPage > totalPages) {
+  if (currentPage > 1 && currentPage > totalPages) {
     log(
       LogLevel.WARNING,
       `Request page(${currentPage}) exceeds total pages(${totalPages})!`
