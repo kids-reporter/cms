@@ -10,13 +10,13 @@ export default async function Error() {
         alt="500 Internal Server Error"
       />
       <div className="flex flex-col justify-center items-center gap-2.5">
-        <h1 className="text-3xl font-bold">伺服器遭遇困難⋯⋯</h1>
+        <h1 className="text-3xl md:text-4xl font-bold">伺服器遭遇困難⋯⋯</h1>
         <span
           style={{
             fontFamily: 'var(--fontFamily)',
             color: 'var(--paletteColor3)',
           }}
-          className="text-lg text-center font-medium"
+          className="text-base font-medium"
         >
           請稍後或重新整理頁面。
         </span>

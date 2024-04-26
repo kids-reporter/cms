@@ -17,13 +17,15 @@ export default function NotFound() {
           alt="Not found"
         />
         <div className="flex flex-col justify-center items-center gap-2.5">
-          <h1 className="text-3xl font-bold">很抱歉，找不到符合條件的頁面。</h1>
+          <h1 className="text-3xl md:text-4xl font-bold">
+            很抱歉，找不到符合條件的頁面。
+          </h1>
           <div
             style={{
               fontFamily: 'var(--fontFamily)',
               color: 'var(--paletteColor3)',
             }}
-            className="text-lg font-medium"
+            className="text-base font-medium"
           >
             看起來在這個位置找不到東西。也許可以試著找其他的？
           </div>
