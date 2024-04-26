@@ -8,28 +8,30 @@ export default function NotFound() {
       <StickyHeader />
       <div
         style={{ width: '95vw' }}
-        className="flex flex-col justify-center items-center mb-16 gap-10"
+        className="flex flex-col justify-center items-center mb-16"
       >
         <TopDetector />
         <img
-          className="max-w-80 w-full"
+          className="max-w-72 md:max-w-md lg:max-w-xl w-full"
           src="/assets/images/404.png"
           alt="Not found"
         />
-        <h1 className="text-3xl font-bold">很抱歉，找不到符合條件的頁面。</h1>
-        <div
-          style={{
-            fontFamily: 'var(--fontFamily)',
-            color: 'var(--paletteColor3)',
-          }}
-          className="text-lg font-medium"
-        >
-          看起來在這個位置找不到東西。也許可以試著找其他的？
+        <div className="flex flex-col justify-center items-center gap-2.5">
+          <h1 className="text-3xl font-bold">很抱歉，找不到符合條件的頁面。</h1>
+          <div
+            style={{
+              fontFamily: 'var(--fontFamily)',
+              color: 'var(--paletteColor3)',
+            }}
+            className="text-lg font-medium"
+          >
+            看起來在這個位置找不到東西。也許可以試著找其他的？
+          </div>
         </div>
         <form
           role="search"
           method="get"
-          className="max-w-sm w-full h-10 flex flex-row items-center mb-12 relative"
+          className="max-w-sm w-full h-10 flex flex-row items-center mt-6 mb-12 relative"
           action="/search"
           aria-haspopup="listbox"
           data-live-results="thumbs"
