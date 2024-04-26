@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
@@ -75,7 +75,7 @@ export default async function LatestPosts({
     })
     if (!postsRes) {
       log(LogLevel.WARNING, `Empty posts response!`)
-      notFound()
+      redirect('/error')
     }
     posts = postsRes?.data?.data?.posts
   }
