@@ -117,7 +117,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   if (currentPage > totalPages) {
     log(
       LogLevel.WARNING,
-      `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+      `Request page(${currentPage}) exceeds total pages(${totalPages})!`
     )
     notFound()
   }

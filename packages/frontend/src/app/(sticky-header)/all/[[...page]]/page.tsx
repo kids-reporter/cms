@@ -57,7 +57,7 @@ export default async function LatestPosts({
     if (currentPage > totalPages) {
       log(
         LogLevel.WARNING,
-        `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+        `Request page(${currentPage}) exceeds total pages(${totalPages})!`
       )
       notFound()
     }
