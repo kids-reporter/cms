@@ -99,7 +99,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                           <i
                             style={{ color: 'var(--theme-color)' }}
                             className="icon-rpjr-icon-arrow-right"
-                          ></i>
+                          />
                         </span>
                       </Link>
                     </div>
