@@ -6,6 +6,7 @@ import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  ERROR_PAGE,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 
@@ -75,7 +76,7 @@ export default async function LatestPosts({
     })
     if (!postsRes) {
       log(LogLevel.WARNING, `Empty posts response!`)
-      redirect('/error')
+      redirect(ERROR_PAGE)
     }
     posts = postsRes?.data?.data?.posts
   }
