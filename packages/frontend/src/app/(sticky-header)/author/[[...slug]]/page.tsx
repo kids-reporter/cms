@@ -124,7 +124,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
   const avatarURL = author.avatar?.resized?.tiny ?? DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-  if (currentPage > totalPages) {
+  if (currentPage > 1 && currentPage > totalPages) {
     log(
       LogLevel.WARNING,
       `Request page(${currentPage}) exceeds total pages(${totalPages})!`
