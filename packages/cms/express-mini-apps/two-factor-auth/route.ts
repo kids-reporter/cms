@@ -204,6 +204,81 @@ export function twoFactorAuthRoute(
       }
     })
 
+    // clear exist secret
+    app.post('/api/2fa/clear', async (req, res) => {
+      const token = req.body?.token
+      if (!token) {
+        res.status(422).send({ status: 'error', message: 'no token' })
+        return
+      }
+
+      const context = await commonContext.withRequest(req, res)
+      const currentSession = context?.session
+      if (!currentSession) {
+        res.status(403).send({ status: 'fail', message: 'no session' })
+        return
+      }
+
+      if (
+        context.session?.data.twoFactorAuth.set &&
+        (!req.cookies['keystonejs-2fa'] ||
+          !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
+      ) {
+        res.status(403).send({ status: 'fail', message: 'invalid 2fa' })
+        return
+      }
+
+      const user = await context.db.User.findOne({
+        where: { id: currentSession?.itemId },
+      })
+      if (!user) {
+        res.status(500).send({ status: 'error', message: 'no user' })
+        return
+      }
+
+      const isValid = authenticator.check(
+        token,
+        String(user?.twoFactorAuthSecret)
+      )
+
+      if (isValid) {
+        try {
+          await context.prisma.User.update({
+            where: { id: currentSession?.itemId },
+            data: {
+              twoFactorAuthSecret: '',
+            },
+          })
+        } catch (error) {
+          const annotatedErr = errors.helpers.wrap(
+            error,
+            'post2faClear',
+            'Failed to clear 2fa token in user table'
+          )
+          console.log(
+            JSON.stringify({
+              severity: 'ERROR',
+              message: errors.helpers.printAll(
+                annotatedErr,
+                { withStack: true, withPayload: true },
+                0,
+                0
+              ),
+            })
+          )
+          res.status(500).send({
+            status: 'error',
+            message: 'Failed to clear 2fa token in user table',
+          })
+          return
+        }
+        res.send({ status: 'success' })
+      } else {
+        res.status(403).send({ status: 'fail', message: 'invalid token' })
+        return
+      }
+    })
+
     // verify token
     app.post('/api/2fa/check', async (req, res) => {
       const token = req.body?.token
