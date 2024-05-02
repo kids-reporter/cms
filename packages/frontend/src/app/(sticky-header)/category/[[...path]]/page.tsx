@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
@@ -8,6 +8,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
   DEFAULT_THEME_COLOR,
+  ERROR_PAGE,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 
@@ -209,7 +210,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   })
   if (!postsRes) {
     log(LogLevel.WARNING, `Empty related posts!`)
-    notFound()
+    redirect(ERROR_PAGE)
   }
 
   let targetCategory
@@ -223,7 +224,7 @@ export default async function Category({ params }: { params: { path: any } }) {
         LogLevel.WARNING,
         `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
       )
-      notFound()
+      redirect(ERROR_PAGE)
     }
   } else if (subcategory) {
     targetCategory = postsRes?.data?.data?.subcategory
@@ -232,7 +233,7 @@ export default async function Category({ params }: { params: { path: any } }) {
         LogLevel.WARNING,
         `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
       )
-      notFound()
+      redirect(ERROR_PAGE)
     }
   } else {
     targetCategory = postsRes?.data?.data?.category

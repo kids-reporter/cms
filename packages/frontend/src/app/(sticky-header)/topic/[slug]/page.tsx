@@ -131,7 +131,8 @@ export default async function TopicPage({
   params: { slug: string }
 }) {
   if (!params?.slug) {
-    return notFound()
+    log(LogLevel.WARNING, 'Incorrect topic slug!')
+    notFound()
   }
 
   // TODO: maybe we could try apollo-client pkg

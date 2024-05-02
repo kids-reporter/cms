@@ -96,7 +96,10 @@ export const AuthorCard = (props: AuthorCardProp) => {
                       >
                         <span>
                           了解更多{' '}
-                          <i className="icon-rpjr-icon-arrow-right"></i>
+                          <i
+                            style={{ color: 'var(--theme-color)' }}
+                            className="icon-rpjr-icon-arrow-right"
+                          />
                         </span>
                       </Link>
                     </div>
