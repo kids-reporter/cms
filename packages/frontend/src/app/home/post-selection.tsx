@@ -74,7 +74,8 @@ export const PostSelection = (props: PostSelectionProp) => {
               className="flex items-center font-medium text-lg text-gray-900 gap-1"
               href={'/all'}
             >
-              更多<i className="icon-rpjr-icon-arrow-right"></i>
+              更多
+              <i className="icon-rpjr-icon-arrow-right" />
             </Link>
           </div>
           <div
