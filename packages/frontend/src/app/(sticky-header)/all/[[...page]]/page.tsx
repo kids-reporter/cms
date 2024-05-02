@@ -55,10 +55,10 @@ export default async function LatestPosts({
   let posts, totalPages
   if (postsCount > 0) {
     totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-    if (currentPage > totalPages) {
+    if (currentPage > 1 && currentPage > totalPages) {
       log(
         LogLevel.WARNING,
-        `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+        `Request page(${currentPage}) exceeds total pages(${totalPages})!`
       )
       notFound()
     }
