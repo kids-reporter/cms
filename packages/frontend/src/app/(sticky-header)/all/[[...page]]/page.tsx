@@ -1,11 +1,12 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  ERROR_PAGE,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
 
@@ -75,7 +76,7 @@ export default async function LatestPosts({
     })
     if (!postsRes) {
       log(LogLevel.WARNING, `Empty posts response!`)
-      notFound()
+      redirect(ERROR_PAGE)
     }
     posts = postsRes?.data?.data?.posts
   }
