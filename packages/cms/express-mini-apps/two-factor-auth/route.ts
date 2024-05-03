@@ -65,13 +65,17 @@ export function twoFactorAuthRoute(
         (!req.cookies['keystonejs-2fa'] ||
           !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
-        res.status(403).send({ status: 'fail', message: 'invalid 2fa' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'invalid 2fa' } })
         return
       }
 
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
       const tempSecret = authenticator.generateSecret()
@@ -135,7 +139,9 @@ export function twoFactorAuthRoute(
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
 
@@ -144,7 +150,9 @@ export function twoFactorAuthRoute(
         (!req.cookies['keystonejs-2fa'] ||
           !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
-        res.status(403).send({ status: 'fail', message: 'invalid 2fa' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'invalid 2fa' } })
         return
       }
 
@@ -199,7 +207,9 @@ export function twoFactorAuthRoute(
         }
         res.send({ status: 'success' })
       } else {
-        res.status(403).send({ status: 'fail', message: 'invalid token' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { token: 'invalid token' } })
         return
       }
     })
@@ -215,7 +225,9 @@ export function twoFactorAuthRoute(
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(401).send({ status: 'fail', message: 'no session' })
+        res
+          .status(401)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
 
@@ -224,7 +236,9 @@ export function twoFactorAuthRoute(
         (!req.cookies['keystonejs-2fa'] ||
           !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
-        res.status(401).send({ status: 'fail', message: 'invalid 2fa' })
+        res
+          .status(401)
+          .send({ status: 'fail', data: { session: 'invalid 2fa' } })
         return
       }
 
@@ -274,7 +288,9 @@ export function twoFactorAuthRoute(
         }
         res.send({ status: 'success' })
       } else {
-        res.status(401).send({ status: 'fail', message: 'invalid token' })
+        res
+          .status(401)
+          .send({ status: 'fail', data: { token: 'invalid token' } })
         return
       }
     })
@@ -290,7 +306,9 @@ export function twoFactorAuthRoute(
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
 
