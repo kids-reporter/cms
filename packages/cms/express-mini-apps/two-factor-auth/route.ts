@@ -208,14 +208,14 @@ export function twoFactorAuthRoute(
     app.post('/api/2fa/clear', async (req, res) => {
       const token = req.body?.token
       if (!token) {
-        res.status(422).send({ status: 'error', message: 'no token' })
+        res.status(401).send({ status: 'error', message: 'no token' })
         return
       }
 
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res.status(401).send({ status: 'fail', message: 'no session' })
         return
       }
 
@@ -224,7 +224,7 @@ export function twoFactorAuthRoute(
         (!req.cookies['keystonejs-2fa'] ||
           !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
-        res.status(403).send({ status: 'fail', message: 'invalid 2fa' })
+        res.status(401).send({ status: 'fail', message: 'invalid 2fa' })
         return
       }
 
@@ -274,7 +274,7 @@ export function twoFactorAuthRoute(
         }
         res.send({ status: 'success' })
       } else {
-        res.status(403).send({ status: 'fail', message: 'invalid token' })
+        res.status(401).send({ status: 'fail', message: 'invalid token' })
         return
       }
     })
