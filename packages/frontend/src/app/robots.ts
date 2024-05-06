@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { KIDS_URL_ORIGIN } from '@/app/constants'
+import { isProduction } from '@/environment-variables'
 
 const devConfig = {
   rules: {
@@ -17,5 +18,5 @@ const prodConfig = {
 }
 
 export default function robots(): MetadataRoute.Robots {
-  return process.env.NEXT_PUBLIC_RELEASE_ENV === 'prod' ? prodConfig : devConfig
+  return isProduction ? prodConfig : devConfig
 }
