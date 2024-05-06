@@ -1,17 +1,16 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Navigator from './navigator'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
   DEFAULT_THEME_COLOR,
+  ERROR_PAGE,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 export const metadata: Metadata = {
   title: '分類: 少年報導者 The Reporter for Kids',
@@ -159,7 +158,7 @@ export default async function Category({ params }: { params: { path: any } }) {
 
   // Fetch subcategories for navigation
   const navigationItems = []
-  const subcategoriesRes = await sendGQLRequest(API_URL, {
+  const subcategoriesRes = await sendGQLRequest({
     query: subcategoriesGQL,
     variables: {
       where: {
@@ -199,7 +198,7 @@ export default async function Category({ params }: { params: { path: any } }) {
     query = categoryPostsGQL
     slug = category
   }
-  const postsRes = await sendGQLRequest(API_URL, {
+  const postsRes = await sendGQLRequest({
     query: query,
     variables: {
       where: {
@@ -211,7 +210,7 @@ export default async function Category({ params }: { params: { path: any } }) {
   })
   if (!postsRes) {
     log(LogLevel.WARNING, `Empty related posts!`)
-    notFound()
+    redirect(ERROR_PAGE)
   }
 
   let targetCategory
@@ -225,7 +224,7 @@ export default async function Category({ params }: { params: { path: any } }) {
         LogLevel.WARNING,
         `Parent category mismatch! subSubcategory=${subSubcategory}, subcategory=${targetCategory?.subcategory?.slug}/${subcategory}, category=${targetCategory?.subcategory?.category?.slug}/${category}`
       )
-      notFound()
+      redirect(ERROR_PAGE)
     }
   } else if (subcategory) {
     targetCategory = postsRes?.data?.data?.subcategory
@@ -234,7 +233,7 @@ export default async function Category({ params }: { params: { path: any } }) {
         LogLevel.WARNING,
         `Parent category mismatch! subcategory=${subcategory}, category=${targetCategory?.category?.slug}/${category}`
       )
-      notFound()
+      redirect(ERROR_PAGE)
     }
   } else {
     targetCategory = postsRes?.data?.data?.category
@@ -269,10 +268,15 @@ export default async function Category({ params }: { params: { path: any } }) {
   const imageURL = getImageFromCategory(category)
 
   return (
-    <main className="container">
-      <div className={`content theme-${theme}`}>
-        <img className="title-image" src={imageURL} />
-        <div className="navigation">
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10"
+    >
+      <div
+        className={`w-full flex flex-col justify-center items-center gap-10 theme-${theme}`}
+      >
+        <img className="max-w-xl w-full" src={imageURL} />
+        <div className="flex flex-row flex-wrap justify-center gap-2.5">
           {navigationItems?.map(
             (item, index) =>
               item && (

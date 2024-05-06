@@ -17,10 +17,11 @@ export const Block = styled.div`
 export const Caption = styled.div`
   font-size: ${({ theme }) =>
     theme?.fontSizeLevel === 'large' ? '18px' : '14px'};
-  line-height: 1.43;
-  letter-spacing: 0.4px;
-  color: #808080;
-  padding: 15px 15px 0 15px;
+  padding: 10px 0 0 0;
+  margin-top: 5px;
+  line-height: 28px;
+  text-align: center;
+  color: var(--paletteColor3, #808080);
 `
 
 type EmbeddedCodeBlockProps = {

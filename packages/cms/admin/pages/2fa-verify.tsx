@@ -31,23 +31,23 @@ export default function TwoFactorAuthCreate() {
   const [isVerified, setIsVerified] = useState(false)
 
   const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
-  const currentUser = queryData?.authenticatedItem
 
   useEffect(() => {
-    if (!queryLoading) {
+    if (!queryLoading && queryData) {
+      const currentUser = queryData?.authenticatedItem
       // if 2FA has bypass flag, hide verify form and handle redirect from backend
-      if (currentUser.twoFactorAuth.bypass) {
+      if (currentUser && currentUser.twoFactorAuth.bypass) {
         setIsVerified(true)
         window.location.reload()
       }
 
       // if 2FA is not set, redirect to 2fa-setup page
-      if (!currentUser.twoFactorAuth.set) {
+      if (currentUser && !currentUser.twoFactorAuth.set) {
         setIsVerified(true)
         window.location.href = '/2fa-setup'
       }
     }
-  }, [queryLoading, currentUser])
+  }, [queryLoading, queryData])
 
   if (queryLoading) return 'Loading...'
   if (error) return `Error! ${error.message}`

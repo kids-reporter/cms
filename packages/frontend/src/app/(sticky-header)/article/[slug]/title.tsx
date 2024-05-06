@@ -1,5 +1,4 @@
 import { FontSizeLevel } from '@/app/constants'
-import './title.scss'
 
 type TitleProp = {
   text: string
@@ -16,7 +15,7 @@ export const Title = ({
     <>
       {subtitle && <div className="subtitle">{subtitle}</div>}
       <h1
-        className={`title ${subtitle ? '' : 'noSubtitle'} ${
+        className={`title ${subtitle ? 'mt-5' : 'mt-20'} ${
           fontSize === FontSizeLevel.LARGE ? 'large' : ''
         }`}
       >

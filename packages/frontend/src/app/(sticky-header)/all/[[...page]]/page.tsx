@@ -1,15 +1,14 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
+  ERROR_PAGE,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 export const metadata: Metadata = {
   title: '所有文章 - 少年報導者 The Reporter for Kids',
@@ -45,7 +44,7 @@ export default async function LatestPosts({
   }
 
   // Fetch total posts count
-  const postsCountRes = await sendGQLRequest(API_URL, {
+  const postsCountRes = await sendGQLRequest({
     query: postsCountGQL,
   })
   if (!postsCountRes) {
@@ -56,16 +55,16 @@ export default async function LatestPosts({
   let posts, totalPages
   if (postsCount > 0) {
     totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-    if (currentPage > totalPages) {
+    if (currentPage > 1 && currentPage > totalPages) {
       log(
         LogLevel.WARNING,
-        `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+        `Request page(${currentPage}) exceeds total pages(${totalPages})!`
       )
       notFound()
     }
 
     // Fetch posts of specific page
-    const postsRes = await sendGQLRequest(API_URL, {
+    const postsRes = await sendGQLRequest({
       query: latestPostsGQL,
       variables: {
         orderBy: {
@@ -77,7 +76,7 @@ export default async function LatestPosts({
     })
     if (!postsRes) {
       log(LogLevel.WARNING, `Empty posts response!`)
-      notFound()
+      redirect(ERROR_PAGE)
     }
     posts = postsRes?.data?.data?.posts
   }
@@ -85,8 +84,11 @@ export default async function LatestPosts({
   const postSummeries = getPostSummaries(posts)
 
   return (
-    <main className="container">
-      <img className="title-image" src={'/assets/images/new_article.svg'} />
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10 gap-10"
+    >
+      <img className="max-w-xl w-full" src={'/assets/images/new_article.svg'} />
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (
         <Pagination

@@ -1,0 +1,4 @@
+/* Avoid grid cell overflow parent, ref: https://datacadamia.com/web/css/grid/overflow#overflow_example */
+#grid > * {
+  min-width: 0px;
+}

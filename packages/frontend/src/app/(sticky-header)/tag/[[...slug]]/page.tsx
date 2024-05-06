@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
   POST_CONTENT_GQL,
@@ -12,7 +11,6 @@ import {
   ContentType,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 const tagGQL = `
 query($where: TagWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
@@ -47,7 +45,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug?.[0]
 
-  const tagOGRes = await sendGQLRequest(API_URL, {
+  const tagOGRes = await sendGQLRequest({
     query: metaGQL,
     variables: {
       where: {
@@ -91,7 +89,7 @@ export default async function Tag({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const response = await sendGQLRequest(API_URL, {
+  const response = await sendGQLRequest({
     query: tagGQL,
     variables: {
       where: {
@@ -116,10 +114,10 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   const postsCount = tag.postsCount
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-  if (currentPage > totalPages) {
+  if (currentPage > 1 && currentPage > totalPages) {
     log(
       LogLevel.WARNING,
-      `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+      `Request page(${currentPage}) exceeds total pages(${totalPages})!`
     )
     notFound()
   }
@@ -127,9 +125,17 @@ export default async function Tag({ params }: { params: { slug: any } }) {
   const postSummeries = getPostSummaries(posts)
 
   return (
-    <main>
-      <div className="info">
-        <h1>#{tag.name}</h1>
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10 px-9 pt-10 gap-10"
+    >
+      <div className="w-full flex flex-col justify-center items-center bg-white">
+        <h1
+          style={{ lineHeight: '160%' }}
+          className="text-center text-3xl text-gray-900 font-bold tracking-wider"
+        >
+          #{tag.name}
+        </h1>
       </div>
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (

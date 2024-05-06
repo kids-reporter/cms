@@ -1,5 +1,6 @@
-import { gqlEndpoint } from '@/environment-variables'
+import { internalGqlEndpoint, gqlEndpoint } from '@/environment-variables'
 
+export const INTERNAL_API_URL = internalGqlEndpoint
 export const API_URL = gqlEndpoint
 
 export const KIDS_URL_ORIGIN = 'https://kids.twreporter.org'
@@ -44,7 +45,7 @@ export enum ContentType {
   ARTICLE = 'article',
   TOPIC = 'topic',
   AUTHOR = 'author',
-  TAG = 'tag,',
+  TAG = 'tag',
 }
 
 export enum AuthorRole {
@@ -118,3 +119,6 @@ publishedDate
 `
 
 export const STICKY_HEADER_HEIGHT = 62
+export const SEARCH_PLACEHOLDER = '搜尋更多新聞、議題'
+
+export const ERROR_PAGE = '/error'

@@ -23,7 +23,7 @@ import {
   DEFAULT_THEME_COLOR,
 } from '@/app/constants'
 import { getPostSummaries } from '@/app/utils'
-import './article.scss'
+import './article.css'
 
 const getPostContents = (post: any) => {
   // Assemble authors for brief
@@ -158,7 +158,7 @@ export const Article = ({ post }: { post: any }) => {
           <MobileSidebar topicURL={topicURL} />
           {topicURL && (
             <div className="topic-breadcrumb">
-              <Link href={topicURL}>
+              <Link className="text-sm md:text-base lg:text-lg" href={topicURL}>
                 <img src="/assets/images/topic-breadcrumb-icon.svg" />
                 {mainTopic?.title}
               </Link>

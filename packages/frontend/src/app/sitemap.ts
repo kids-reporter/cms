@@ -11,7 +11,7 @@ Therefore, so far we can't upgrade to v13.5.4 due to #56018 & #54057 remains.
 */
 
 import { MetadataRoute } from 'next'
-import { API_URL, KIDS_URL_ORIGIN } from '@/app/constants'
+import { KIDS_URL_ORIGIN } from '@/app/constants'
 import { sendGQLRequest } from '@/app/utils'
 
 export const revalidate = 86400 // 1 day
@@ -41,7 +41,7 @@ const fetchSitemaps = async (): Promise<
   const sixtyDaysBefore = new Date(
     new Date().setHours(0, 0, 0, 0) - 60 * 24 * 60 * 60 * 1000
   )
-  const postsRes = await sendGQLRequest(API_URL, {
+  const postsRes = await sendGQLRequest({
     query: postsGQL,
     variables: {
       where: {
@@ -61,7 +61,7 @@ const fetchSitemaps = async (): Promise<
     sitemaps = [...posts]
   }
 
-  const topicsRes = await sendGQLRequest(API_URL, {
+  const topicsRes = await sendGQLRequest({
     query: topicsGQL,
     variables: {
       where: {

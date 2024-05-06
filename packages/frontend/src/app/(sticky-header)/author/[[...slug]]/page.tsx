@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import PostList from '@/app/components/post-list'
 import Pagination from '@/app/components/pagination'
 import {
-  API_URL,
   DEFAULT_AVATAR,
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
@@ -13,7 +12,6 @@ import {
   ContentType,
 } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest, log, LogLevel } from '@/app/utils'
-import './page.scss'
 
 const authorGQL = `
   query($authorWhere2: AuthorWhereUniqueInput!, $take: Int, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
@@ -56,7 +54,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = params.slug?.[0]
 
-  const authorMetaRes = await sendGQLRequest(API_URL, {
+  const authorMetaRes = await sendGQLRequest({
     query: metaGQL,
     variables: {
       where: {
@@ -100,7 +98,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
     notFound()
   }
 
-  const response = await sendGQLRequest(API_URL, {
+  const response = await sendGQLRequest({
     query: authorGQL,
     variables: {
       authorWhere2: {
@@ -126,10 +124,10 @@ export default async function Author({ params }: { params: { slug: any } }) {
   const avatarURL = author.avatar?.resized?.tiny ?? DEFAULT_AVATAR
 
   const totalPages = Math.ceil(postsCount / POST_PER_PAGE)
-  if (currentPage > totalPages) {
+  if (currentPage > 1 && currentPage > totalPages) {
     log(
       LogLevel.WARNING,
-      `Request page(${currentPage}) exceeds total pages(${totalPages}!`
+      `Request page(${currentPage}) exceeds total pages(${totalPages})!`
     )
     notFound()
   }
@@ -137,16 +135,43 @@ export default async function Author({ params }: { params: { slug: any } }) {
   const postSummeries = getPostSummaries(posts)
 
   return (
-    <main className="container">
-      <div className="info">
-        <div className="avatar">
-          <img src={avatarURL} alt={author.name} />
+    <main
+      style={{ width: '95vw' }}
+      className="flex flex-col justify-center items-center mb-10 gap-10"
+    >
+      <div className="max-w-2xl flex flex-col justify-center items-center pt-10 px-9 bg-white gap-1.5">
+        <div className="max-w-44 max-h-44 overflow-hidden object-cover rounded-full mx-auto mb-1.5">
+          <img
+            className="max-w-44 max-h-44 w-full object-cover"
+            src={avatarURL}
+            alt={author.name}
+          />
         </div>
-        <h1>{author.name}</h1>
+        <h1
+          style={{ lineHeight: '160%', letterSpacing: '.08em' }}
+          className="text-center text-xl text-gray-900 font-bold mt-3 mb-9"
+        >
+          {author.name}
+        </h1>
         {author.email && (
-          <Link href={`mailto:${author.email}`}>{author.email}</Link>
+          <Link
+            style={{
+              lineHeight: '160%',
+              letterSpacing: '.05em',
+              color: 'var(--paletteColor1)',
+            }}
+            className="text-center not-italic font-medium text-base mb-2"
+            href={`mailto:${author.email}`}
+          >
+            {author.email}
+          </Link>
         )}
-        <p className="bio">{author.bio}</p>
+        <p
+          style={{ lineHeight: '200%', letterSpacing: '.05em' }}
+          className="text-center not-italic font-normal text-lg text-gray-900 whitespace-pre-wrap"
+        >
+          {author.bio}
+        </p>
       </div>
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (

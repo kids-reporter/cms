@@ -1,5 +1,4 @@
 import { Photo } from '@/app/types'
-import './hero-image.scss'
 
 type HeroImageProp = {
   image: Photo
@@ -15,16 +14,26 @@ export const HeroImage = (props: HeroImageProp) => {
 
   return (
     image && (
-      <figure className="hero-image">
-        <div className="image-container">
+      <figure className="max-w-5xl mx-auto pt-10 pb-12">
+        <div className="relative inline-flex w-full overflow-hidden">
           <img
+            className="max-w-full object-contain"
             srcSet={`${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`}
             sizes="(min-width: 1100px) 1000px, 90vw"
             src={image.resized?.medium}
-            style={{ aspectRatio: aspectRatio }}
+            style={{
+              width: 'inherit',
+              height: 'auto',
+              aspectRatio: aspectRatio,
+            }}
           />
         </div>
-        <figcaption>{caption ?? ''}</figcaption>
+        <figcaption
+          style={{ color: 'var(--paletteColor3)' }}
+          className="pt-2.5 mt-1 text-sm leading-7 text-center"
+        >
+          {caption ?? ''}
+        </figcaption>
       </figure>
     )
   )
