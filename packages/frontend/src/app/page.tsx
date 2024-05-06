@@ -11,7 +11,8 @@ import GoToMainSite from '@/app/home/go-to-main-site'
 import { GENERAL_DESCRIPTION, POST_CONTENT_GQL, Theme } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest } from '@/app/utils'
 
-export const revalidate = 300
+// Specify revalidation time for static rendering in production env
+export const revalidate = process.env.NEXT_PUBLIC_RELEASE_ENV === 'prod' ? 300 : 0
 export const metadata: Metadata = {
   title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
   description: GENERAL_DESCRIPTION,
