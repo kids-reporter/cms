@@ -32,13 +32,18 @@ export const Section = (props: SectionProp) => {
           className="flex flex-row justify-between items-center mb-12 pt-10"
         >
           <div style={{ flex: '1' }} className="hidden lg:flex">
-            <img className="max-w-sm" src={`/assets/images/${config.image}`} />
+            <img
+              className="max-w-sm"
+              src={`/assets/images/${config.image}`}
+              loading="lazy"
+            />
           </div>
           <div style={{ flex: '1' }} className="flex flex-row justify-center">
             <img
               className="w-full flex h-24 items-center justify-center"
               src={`/assets/images/${config.titleImg}`}
               alt={config.title}
+              loading="lazy"
             />
           </div>
           <div

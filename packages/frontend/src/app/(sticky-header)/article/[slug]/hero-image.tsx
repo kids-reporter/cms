@@ -26,6 +26,7 @@ export const HeroImage = (props: HeroImageProp) => {
               height: 'auto',
               aspectRatio: aspectRatio,
             }}
+            loading="lazy"
           />
         </div>
         <figcaption

@@ -82,6 +82,7 @@ export const MainHeader = () => {
               className="h-auto max-w-full align-middle"
               src="/assets/images/navbar_pic.svg"
               width="291"
+              loading="lazy"
             />
           </div>
           <div className={`${styles.menu} h-72 flex flex-col justify-end`}>
@@ -90,6 +91,7 @@ export const MainHeader = () => {
                 className="max-w-80 mb-10"
                 src="/assets/images/logo-full.svg"
                 alt="少年報導者 The Reporter for Kids"
+                loading="lazy"
               />
             </Link>
             <Navigation />

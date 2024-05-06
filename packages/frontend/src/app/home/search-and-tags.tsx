@@ -16,6 +16,7 @@ export const SearchAndTags = (props: SearchAndTagsProp) => {
         className="max-w-64 w-full mb-10"
         decoding="async"
         src="/assets/images/search_title.svg"
+        loading="lazy"
       />
       <form
         style={{ maxWidth: '50%' }}

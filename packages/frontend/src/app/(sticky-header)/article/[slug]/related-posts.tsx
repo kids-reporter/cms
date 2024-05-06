@@ -11,6 +11,7 @@ export const RelatedPosts = (props: PostSliderProp) => {
           className="w-full h-20 mb-4 "
           src="/assets/images/post-related-post-title.svg"
           alt="相關文章"
+          loading="lazy"
         />
         <PostSlider {...props} />
       </div>

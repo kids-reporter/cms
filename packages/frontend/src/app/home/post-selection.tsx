@@ -55,6 +55,7 @@ export const PostSelection = (props: PostSelectionProp) => {
         className="max-w-52 w-full my-8 mx-auto"
         src={'/assets/images/selected_news.png'}
         alt="精選文章"
+        loading="lazy"
       />
       <div className="max-w-screen-xl flex flex-col lg:flex-row p-6 gap-10">
         <div
@@ -66,7 +67,7 @@ export const PostSelection = (props: PostSelectionProp) => {
               style={{ lineHeight: '160%', letterSpacing: '.08em' }}
               className="flex items-center font-bold text-xl text-gray-900 gap-2.5"
             >
-              <img src={'/assets/images/home-icon-clock.svg'} />
+              <img src={'/assets/images/home-icon-clock.svg'} loading="lazy" />
               最新文章
             </span>
             <Link

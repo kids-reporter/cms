@@ -63,7 +63,10 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
         {topicURL && (
           <div>
             <Link href={topicURL}>
-              <img src="/assets/images/topic-breadcrumb-sidebar-icon.svg" />
+              <img
+                src="/assets/images/topic-breadcrumb-sidebar-icon.svg"
+                loading="lazy"
+              />
             </Link>
           </div>
         )}
@@ -82,7 +85,7 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
                 key={`share-icon-${index}`}
                 onClick={icon.onClick}
               >
-                <img src={`/assets/images/${icon.image}`} />
+                <img src={`/assets/images/${icon.image}`} loading="lazy" />
               </button>
             )
           })}
@@ -93,14 +96,20 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
             className="w-12 flex flex-col justify-center items-center appearance-none bg-transparent border-none cursor-pointer"
             onClick={onFontSizeChange}
           >
-            <img src={`/assets/images/rpjr-icon-color-text.svg`} />
+            <img
+              src={`/assets/images/rpjr-icon-color-text.svg`}
+              loading="lazy"
+            />
           </button>
           <button
             style={{ aspectRatio: '1/1' }}
             className="w-12 flex flex-col justify-center items-center appearance-none bg-transparent border-none cursor-pointer"
             onClick={() => window.print()}
           >
-            <img src={`/assets/images/rpjr-icon-color-print.svg`} />
+            <img
+              src={`/assets/images/rpjr-icon-color-print.svg`}
+              loading="lazy"
+            />
           </button>
         </div>
       </div>
@@ -132,7 +141,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
                   key={`share-icon-${index}`}
                   onClick={icon.onClick}
                 >
-                  <img src={`/assets/images/${icon.image}`} />
+                  <img src={`/assets/images/${icon.image}`} loading="lazy" />
                 </button>
               )
             })}
@@ -149,7 +158,10 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
                 className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
                 href={topicURL}
               >
-                <img src="/assets/images/topic-breadcrumb-sidebar-mobile-icon.svg" />
+                <img
+                  src="/assets/images/topic-breadcrumb-sidebar-mobile-icon.svg"
+                  loading="lazy"
+                />
               </Link>
               <span
                 style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
@@ -165,7 +177,10 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
               className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
               onClick={onShareClick}
             >
-              <img src={`/assets/images/mobile-sidebar-share.svg`} />
+              <img
+                src={`/assets/images/mobile-sidebar-share.svg`}
+                loading="lazy"
+              />
             </button>
             <span
               style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
@@ -180,7 +195,10 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
               className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
               onClick={onFontSizeChange}
             >
-              <img src={`/assets/images/mobile-sidebar-change-font.svg`} />
+              <img
+                src={`/assets/images/mobile-sidebar-change-font.svg`}
+                loading="lazy"
+              />
             </button>
             <span
               style={{ lineHeight: '160%', letterSpacing: '0.08em' }}

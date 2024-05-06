@@ -31,6 +31,7 @@ export const PostCard = ({
             style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
             className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
             src={post.image ?? fallbackImg}
+            loading="lazy"
           />
         </div>
         <div
