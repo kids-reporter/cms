@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import PostCard from '@/app/components/post-card'
+import PostCard, { Loading } from '@/app/components/post-card'
 import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 import styles from './post-selection.module.css'
@@ -55,7 +55,7 @@ export const PostSelection = (props: PostSelectionProp) => {
         className="max-w-52 w-full my-8 mx-auto"
         src={'/assets/images/selected_news.png'}
         alt="精選文章"
-        loading="lazy"
+        loading="eager"
       />
       <div className="max-w-screen-xl flex flex-col lg:flex-row p-6 gap-10">
         <div
@@ -67,7 +67,7 @@ export const PostSelection = (props: PostSelectionProp) => {
               style={{ lineHeight: '160%', letterSpacing: '.08em' }}
               className="flex items-center font-bold text-xl text-gray-900 gap-2.5"
             >
-              <img src={'/assets/images/home-icon-clock.svg'} loading="lazy" />
+              <img src={'/assets/images/home-icon-clock.svg'} loading="eager" />
               最新文章
             </span>
             <Link
@@ -99,27 +99,47 @@ export const PostSelection = (props: PostSelectionProp) => {
             >
               <div className={`${styles['card-child-1']}`}>
                 {featuredPosts?.[0] && (
-                  <PostCard post={featuredPosts[0]} isSimple={true} />
+                  <PostCard
+                    post={featuredPosts[0]}
+                    isSimple={true}
+                    loading={Loading.EAGER}
+                  />
                 )}
               </div>
               <div className={`${styles['card-child-2']}`}>
                 {featuredPosts?.[1] && (
-                  <PostCard post={featuredPosts[1]} isSimple={true} />
+                  <PostCard
+                    post={featuredPosts[1]}
+                    isSimple={true}
+                    loading={Loading.EAGER}
+                  />
                 )}
               </div>
               <div className={`${styles['card-child-rest']}`}>
                 {featuredPosts?.[2] && (
-                  <PostCard post={featuredPosts[2]} isSimple={true} />
+                  <PostCard
+                    post={featuredPosts[2]}
+                    isSimple={true}
+                    loading={Loading.EAGER}
+                  />
                 )}
               </div>
               <div className={`${styles['card-child-rest']}`}>
                 {featuredPosts?.[3] && (
-                  <PostCard post={featuredPosts[3]} isSimple={true} />
+                  <PostCard
+                    post={featuredPosts[3]}
+                    isSimple={true}
+                    loading={Loading.EAGER}
+                  />
                 )}
               </div>
               <div className={`${styles['card-child-rest']}`}>
                 {featuredPosts?.[4] && (
-                  <PostCard post={featuredPosts[4]} isSimple={true} />
+                  <PostCard
+                    post={featuredPosts[4]}
+                    isSimple={true}
+                    loading={Loading.EAGER}
+                  />
                 )}
               </div>
             </div>

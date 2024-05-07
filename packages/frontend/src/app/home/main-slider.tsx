@@ -81,7 +81,7 @@ export const MainSlider = (props: SliderProp) => {
                     <img
                       className="w-8 md:w-10"
                       src={'/assets/images/topic_icon.svg'}
-                      loading="lazy"
+                      loading="eager"
                     />
                     <span
                       style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
@@ -101,7 +101,7 @@ export const MainSlider = (props: SliderProp) => {
                       <img
                         className="w-full h-full object-cover rounded-none md:rounded-2xl"
                         src={topic.image}
-                        loading="lazy"
+                        loading="eager"
                       />
                     </div>
                     <span
