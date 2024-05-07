@@ -7,7 +7,7 @@ import { SUBSCRIBE_URL, SEARCH_PLACEHOLDER } from '@/app/constants'
 import styles from './header.module.css'
 
 const slogan = (
-  <img src="/assets/images/header-left-slogan.svg" loading="lazy" />
+  <img src="/assets/images/header-left-slogan.svg" loading="eager" />
 )
 
 const ContributeBtn = (
@@ -75,7 +75,7 @@ export const StickyHeader = () => {
           src="/assets/images/LOGO.svg"
           className="h-8 object-contain"
           alt="少年報導者 The Reporter for Kids"
-          loading="lazy"
+          loading="eager"
         />
       </Link>
     </div>
@@ -170,7 +170,7 @@ export const StickyHeader = () => {
             className="w-auto object-contain"
             src="/assets/images/logo-full.svg"
             alt="少年報導者 The Reporter for Kids"
-            loading="lazy"
+            loading="eager"
           />
         </Link>
         <div className="flex flex-row flex-wrap justify-center sm:mt-10 md:mt-10 mt-16 mb-10">
