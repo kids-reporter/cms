@@ -31,7 +31,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
     const subSubcategory = post?.subSubcategoriesOrdered?.[0]
 
     return {
-      image: post?.heroImage?.resized?.medium ?? '',
+      image: post?.heroImage?.resized?.small ?? '',
       title: post.title,
       url: `/article/${post.slug}`,
       desc: post.ogDescription,
