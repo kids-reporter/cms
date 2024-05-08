@@ -59,6 +59,8 @@ type TopicSummary = {
   relatedPosts?: any[]
 }
 
+const topicIcon = '/assets/images/topic_icon.svg'
+
 const TopicCard = (props: { topic: TopicSummary }) => {
   const moreComponent = (
     <div className={`rpjr-btn rpjr-btn-theme-outline theme-blue`}>
@@ -81,11 +83,7 @@ const TopicCard = (props: { topic: TopicSummary }) => {
           style={{ width: 'fit-content', height: 'fit-content', zIndex: '2' }}
           className="absolute top-5 left-5 bg-white lg:hidden flex flex-row items-center rounded-3xl px-4 py-1 gap-1"
         >
-          <img
-            className="w-10"
-            src={'/assets/images/topic_icon.svg'}
-            loading="lazy"
-          />
+          <img className="w-10" src={topicIcon} loading="lazy" />
           <span
             style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
             className="font-bold text-xl"
@@ -97,11 +95,7 @@ const TopicCard = (props: { topic: TopicSummary }) => {
           className={`${styles['topic-info']} flex flex-col justify-between items-start bg-white border-solid border-gray-300`}
         >
           <div className="w-full hidden lg:flex flex-row items-center gap-1">
-            <img
-              className="max-w-10"
-              src={'/assets/images/topic_icon.svg'}
-              loading="lazy"
-            />
+            <img className="max-w-10" src={topicIcon} loading="lazy" />
             <span
               style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
               className="font-bold text-xl"
