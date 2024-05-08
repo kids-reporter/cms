@@ -178,7 +178,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
               onClick={onShareClick}
             >
               <img
-                src={`/assets/images/mobile-sidebar-share.svg`}
+                src="/assets/images/mobile-sidebar-share.svg"
                 loading="lazy"
               />
             </button>
