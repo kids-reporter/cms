@@ -196,7 +196,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
               onClick={onFontSizeChange}
             >
               <img
-                src={`/assets/images/mobile-sidebar-change-font.svg`}
+                src="/assets/images/mobile-sidebar-change-font.svg"
                 loading="lazy"
               />
             </button>
