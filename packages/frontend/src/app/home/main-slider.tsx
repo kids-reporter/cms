@@ -102,6 +102,7 @@ export const MainSlider = (props: SliderProp) => {
                         className="w-full h-full object-cover rounded-none md:rounded-2xl"
                         src={topic.image}
                         loading="eager"
+                        fetchPriority="high"
                       />
                     </div>
                     <span
