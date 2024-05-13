@@ -65,13 +65,17 @@ export function twoFactorAuthRoute(
         (!req.cookies['keystonejs-2fa'] ||
           !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
-        res.status(403).send({ status: 'fail', message: 'invalid 2fa' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'invalid 2fa' } })
         return
       }
 
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
       const tempSecret = authenticator.generateSecret()
@@ -135,7 +139,9 @@ export function twoFactorAuthRoute(
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
 
@@ -144,7 +150,9 @@ export function twoFactorAuthRoute(
         (!req.cookies['keystonejs-2fa'] ||
           !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
       ) {
-        res.status(403).send({ status: 'fail', message: 'invalid 2fa' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'invalid 2fa' } })
         return
       }
 
@@ -199,7 +207,90 @@ export function twoFactorAuthRoute(
         }
         res.send({ status: 'success' })
       } else {
-        res.status(403).send({ status: 'fail', message: 'invalid token' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { token: 'invalid token' } })
+        return
+      }
+    })
+
+    // clear exist secret
+    app.post('/api/2fa/clear', async (req, res) => {
+      const token = req.body?.token
+      if (!token) {
+        res.status(401).send({ status: 'error', message: 'no token' })
+        return
+      }
+
+      const context = await commonContext.withRequest(req, res)
+      const currentSession = context?.session
+      if (!currentSession) {
+        res
+          .status(401)
+          .send({ status: 'fail', data: { session: 'no session' } })
+        return
+      }
+
+      if (
+        context.session?.data.twoFactorAuth.set &&
+        (!req.cookies['keystonejs-2fa'] ||
+          !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
+      ) {
+        res
+          .status(401)
+          .send({ status: 'fail', data: { session: 'invalid 2fa' } })
+        return
+      }
+
+      const user = await context.db.User.findOne({
+        where: { id: currentSession?.itemId },
+      })
+      if (!user) {
+        res.status(500).send({ status: 'error', message: 'no user' })
+        return
+      }
+
+      const isValid = authenticator.check(
+        token,
+        String(user?.twoFactorAuthSecret)
+      )
+
+      if (isValid) {
+        try {
+          await context.prisma.User.update({
+            where: { id: currentSession?.itemId },
+            data: {
+              twoFactorAuthSecret: '',
+            },
+          })
+        } catch (error) {
+          const annotatedErr = errors.helpers.wrap(
+            error,
+            'post2faClear',
+            'Failed to clear 2fa token in user table'
+          )
+          console.log(
+            JSON.stringify({
+              severity: 'ERROR',
+              message: errors.helpers.printAll(
+                annotatedErr,
+                { withStack: true, withPayload: true },
+                0,
+                0
+              ),
+            })
+          )
+          res.status(500).send({
+            status: 'error',
+            message: 'Failed to clear 2fa token in user table',
+          })
+          return
+        }
+        res.send({ status: 'success' })
+      } else {
+        res
+          .status(401)
+          .send({ status: 'fail', data: { token: 'invalid token' } })
         return
       }
     })
@@ -215,7 +306,9 @@ export function twoFactorAuthRoute(
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
       if (!currentSession) {
-        res.status(403).send({ status: 'fail', message: 'no session' })
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
         return
       }
 
