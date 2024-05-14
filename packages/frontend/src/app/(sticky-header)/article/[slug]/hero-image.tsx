@@ -1,4 +1,5 @@
 import { Photo } from '@/app/types'
+import { FALLBACK_IMG } from '@/app/constants'
 
 type HeroImageProp = {
   image: Photo
@@ -20,7 +21,7 @@ export const HeroImage = (props: HeroImageProp) => {
             className="max-w-full object-contain"
             srcSet={`${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`}
             sizes="(min-width: 1100px) 1000px, 90vw"
-            src={image.resized?.medium}
+            src={image.resized?.medium ?? FALLBACK_IMG}
             style={{
               width: 'inherit',
               height: 'auto',

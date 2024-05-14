@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
-
-const fallbackImg = '/assets/images/404.png'
+import { FALLBACK_IMG } from '@/app/constants'
 
 export type PostCardProp = {
   className?: string
@@ -30,7 +29,7 @@ export const PostCard = ({
           <img
             style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
             className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
-            src={post.image ?? fallbackImg}
+            src={post.image ?? FALLBACK_IMG}
           />
         </div>
         <div

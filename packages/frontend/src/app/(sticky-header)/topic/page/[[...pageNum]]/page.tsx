@@ -8,6 +8,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
   TOPIC_PAGE_ROUTE,
+  FALLBACK_IMG,
   Theme,
 } from '@/app/constants'
 import {
@@ -186,7 +187,7 @@ export default async function Topic({
     ? topics.map((topic: any) => {
         return topic
           ? {
-              image: topic.heroImage?.resized?.medium ?? '', // TODO: fallback image
+              image: topic.heroImage?.resized?.medium ?? FALLBACK_IMG,
               title: topic.title,
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,

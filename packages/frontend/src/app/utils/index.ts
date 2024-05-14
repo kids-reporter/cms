@@ -2,7 +2,12 @@ import axios, { AxiosRequestConfig } from 'axios'
 import errors from '@twreporter/errors'
 import { Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
-import { DEFAULT_THEME_COLOR, API_URL, INTERNAL_API_URL } from '@/app/constants'
+import {
+  FALLBACK_IMG,
+  DEFAULT_THEME_COLOR,
+  API_URL,
+  INTERNAL_API_URL,
+} from '@/app/constants'
 
 export const getThemeColor = (theme: Theme) => {
   if (theme === Theme.YELLOW) {
@@ -31,7 +36,7 @@ export const getPostSummaries = (posts: any[]): PostSummary[] => {
     const subSubcategory = post?.subSubcategoriesOrdered?.[0]
 
     return {
-      image: post?.heroImage?.resized?.medium ?? '',
+      image: post?.heroImage?.resized?.medium ?? FALLBACK_IMG,
       title: post.title,
       url: `/article/${post.slug}`,
       desc: post.ogDescription,

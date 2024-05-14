@@ -2,7 +2,7 @@
 import styled from 'styled-components'
 import { Photo } from '@/app/types'
 import { mediaQuery } from '@/app/utils/media-query'
-import { STICKY_HEADER_HEIGHT } from '@/app/constants'
+import { FALLBACK_IMG, STICKY_HEADER_HEIGHT } from '@/app/constants'
 
 const _DownButton = ({ className }: { className?: string }) => {
   return (
@@ -101,8 +101,10 @@ export const BackgroundImage = styled.div<{
   width: 100vw;
   height: calc(100vh - ${STICKY_HEADER_HEIGHT}px);
   background-image: image-set(
-    url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 1x,
-    url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 2x
+    url(${({ $imageEntity }) => $imageEntity?.resized?.medium ?? FALLBACK_IMG})
+      1x,
+    url(${({ $imageEntity }) => $imageEntity?.resized?.large ?? FALLBACK_IMG})
+      2x
   );
   background-repeat: no-repeat;
   background-size: cover;
@@ -125,7 +127,8 @@ export const BackgroundImage = styled.div<{
 
   ${mediaQuery.largeOnly} {
     background-image: image-set(
-      url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 1x
+      url(${({ $imageEntity }) => $imageEntity?.resized?.large ?? FALLBACK_IMG})
+        1x
     );
     ${DownButton} {
       bottom: 50px;
@@ -144,8 +147,11 @@ export const BackgroundImage = styled.div<{
 
   ${mediaQuery.smallOnly} {
     background-image: image-set(
-      url(${({ $imageEntity }) => $imageEntity?.resized?.small}) 1x,
-      url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 2x
+      url(${({ $imageEntity }) => $imageEntity?.resized?.small ?? FALLBACK_IMG})
+        1x,
+      url(${({ $imageEntity }) =>
+          $imageEntity?.resized?.medium ?? FALLBACK_IMG})
+        2x
     );
     ${DownButton} {
       bottom: 30px;
@@ -156,7 +162,7 @@ export const BackgroundImage = styled.div<{
 
   ${mediaQuery.smallOnly} {
     ${({ $mobileImageEntity }) => {
-      const url = $mobileImageEntity?.resized?.small
+      const url = $mobileImageEntity?.resized?.small ?? FALLBACK_IMG
       if (url) {
         return `background-image: url(${url})`
       }
