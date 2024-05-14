@@ -27,6 +27,7 @@ export const HeroImage = (props: HeroImageProp) => {
               aspectRatio: aspectRatio,
             }}
             loading="eager"
+            fetchPriority="high"
           />
         </div>
         <figcaption
