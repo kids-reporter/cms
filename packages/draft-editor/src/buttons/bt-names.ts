@@ -23,6 +23,7 @@ export default {
   annotation: 'annotation',
   embed: 'embed',
   image: 'image',
+  imageLink: 'image-link',
   infoBox: 'info-box',
   link: 'link',
   slideshow: 'slideshow',
