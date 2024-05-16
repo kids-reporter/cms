@@ -358,7 +358,7 @@ export default async function About() {
       </div>
       <img
         className="max-w-4xl w-full"
-        src={'/assets/images/about_certification_template.jpg'}
+        src={'/assets/images/about_certification_template.png'}
       />
       <p
         style={{ letterSpacing: '.08em', lineHeight: '160%' }}
