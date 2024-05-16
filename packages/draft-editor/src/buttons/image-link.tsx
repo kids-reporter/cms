@@ -8,6 +8,36 @@ import {
 } from 'draft-js'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
+import buttonNames from './bt-names'
+import { RichTextEditor } from '../rich-text-editor'
+import { editableLinkDecorator } from '../entity-decorators/link'
+
+const disabledButtons = [
+  buttonNames.bold,
+  buttonNames.italic,
+  buttonNames.underline,
+  buttonNames.fontColor,
+  buttonNames.backgroundColor,
+  buttonNames.ol,
+  buttonNames.ul,
+  buttonNames.divider,
+  buttonNames.h2,
+  buttonNames.h3,
+  buttonNames.h4,
+  buttonNames.h5,
+  buttonNames.code,
+  buttonNames.codeBlock,
+  buttonNames.blockquote,
+  buttonNames.infoBox,
+  buttonNames.slideshow,
+  buttonNames.newsReading,
+  buttonNames.tocAnchor,
+  buttonNames.anchor,
+  buttonNames.embed,
+  buttonNames.annotation,
+  buttonNames.image,
+  buttonNames.imageLink,
+]
 
 export type ImageLinkValue = {
   type: 'image-link'
@@ -60,7 +90,17 @@ export const ImageLinkEditor = (props: {
           value={url}
           onChange={(e) => setURL(e.target.value)}
         />
-        {/* TODO: caption editor */}
+        <RichTextEditor
+          decorators={[editableLinkDecorator]}
+          disabledButtons={disabledButtons}
+          editorState={inputValueState.editorState}
+          onChange={(editorState: EditorState) => {
+            setInputValueState({
+              type: inputValueState.type,
+              editorState,
+            })
+          }}
+        />
       </Drawer>
     </DrawerController>
   )
