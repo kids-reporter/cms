@@ -3,6 +3,7 @@ import { ContentBlock } from 'draft-js'
 import { EditableBlockquote } from './block-renderers/blockquote'
 import { EditableEmbeddedCode } from './block-renderers/embedded-code'
 import { EditableImage } from './block-renderers/image'
+import { EditableImageLink } from './block-renderers/image-link'
 import { EditableInfoBox } from './block-renderers/info-box'
 import { EditableSlideshow } from './block-renderers/slideshow'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
@@ -22,6 +23,8 @@ const AtomicBlock: React.FC<AtomicBlockProps<any>> = (props) => {
       return Divider()
     case 'IMAGE':
       return EditableImage(props)
+    case 'IMAGE_LINK':
+      return EditableImageLink(props)
     case 'SLIDESHOW':
       return EditableSlideshow(props)
     case 'EMBEDDEDCODE':

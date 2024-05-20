@@ -5,6 +5,7 @@ const {
   Divider,
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
+  ImageLinkInArticleBody,
   InfoBoxInArticleBody,
   SlideshowInArticleBody,
   NewsReading,
@@ -28,6 +29,9 @@ const AtomicBlock = (props: {
     }
     case 'IMAGE': {
       return ImageInArticleBody({ data: entityData })
+    }
+    case 'IMAGE_LINK': {
+      return ImageLinkInArticleBody({ data: entityData })
     }
     case 'SLIDESHOW': {
       return SlideshowInArticleBody({ data: entityData })

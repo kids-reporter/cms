@@ -130,7 +130,7 @@ export function ImageLinkButton(props: {
 
     // create an InfoBox entity
     const contentStateWithEntity = contentState.createEntity(
-      'IMAGELINK',
+      'IMAGE_LINK',
       'IMMUTABLE',
       {
         type,
