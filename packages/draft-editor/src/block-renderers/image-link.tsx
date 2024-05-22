@@ -125,17 +125,6 @@ export const ImageLinkEditor = (props: {
           value={url}
           onChange={(e) => setURL(e.target.value)}
         />
-        <RichTextEditor
-          decorators={[editableLinkDecorator]}
-          disabledButtons={disabledButtons}
-          editorState={inputValueState.editorState}
-          onChange={(editorState: EditorState) => {
-            setInputValueState({
-              type: inputValueState.type,
-              editorState,
-            })
-          }}
-        />
         <AlignSelector
           align={align}
           options={[
@@ -150,6 +139,17 @@ export const ImageLinkEditor = (props: {
           ]}
           onChange={onAlignSelectChange}
           onOpen={onAlignSelectOpen}
+        />
+        <RichTextEditor
+          decorators={[editableLinkDecorator]}
+          disabledButtons={disabledButtons}
+          editorState={inputValueState.editorState}
+          onChange={(editorState: EditorState) => {
+            setInputValueState({
+              type: inputValueState.type,
+              editorState,
+            })
+          }}
         />
       </Drawer>
     </DrawerController>
