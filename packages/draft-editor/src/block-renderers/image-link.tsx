@@ -88,13 +88,13 @@ export const ImageLinkEditor = (props: {
   onCancel: () => void
 }) => {
   const { isOpen, inputValue, onConfirm, onCancel } = props
-  const [url, setURL] = useState('')
-  const [align, setAlign] = useState(ImageAlignment.DEFAULT)
+  const [url, setURL] = useState(inputValue.url ?? '')
+  const [align, setAlign] = useState(
+    inputValue.alignment ?? ImageAlignment.DEFAULT
+  )
   const contentState = convertFromRaw(inputValue.rawContentState)
-  const [inputValueState, setInputValueState] = useState({
-    url: '',
-    alignment: ImageAlignment.DEFAULT,
-    editorState: EditorState.createWithContent(contentState),
+  const [description, setDescription] = useState({
+    value: EditorState.createWithContent(contentState),
   })
 
   const contentWrapperRef = useRef<HTMLDivElement>(null)
@@ -126,7 +126,7 @@ export const ImageLinkEditor = (props: {
                 url: url,
                 alignment: align,
                 rawContentState: convertToRaw(
-                  inputValueState.editorState.getCurrentContent()
+                  description.value.getCurrentContent()
                 ),
               }),
           },
@@ -149,13 +149,9 @@ export const ImageLinkEditor = (props: {
         <RichTextEditor
           decorators={[editableLinkDecorator]}
           disabledButtons={disabledButtons}
-          editorState={inputValueState.editorState}
+          editorState={description.value}
           onChange={(editorState: EditorState) => {
-            setInputValueState({
-              url: url,
-              alignment: align,
-              editorState,
-            })
+            setDescription({ value: editorState })
           }}
         />
       </Drawer>
@@ -191,7 +187,7 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
           inputValue={{
             url: url,
             alignment: alignment,
-            rawContentState: { blocks: [], entityMap: {} },
+            rawContentState: rawContentState,
           }}
           onConfirm={onChange}
           onCancel={() => {
