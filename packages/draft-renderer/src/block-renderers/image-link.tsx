@@ -1,11 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
+import {
+  ContentBlock,
+  ContentState,
+  Editor,
+  EditorState,
+  RawDraftContentState,
+  convertFromRaw,
+} from 'draft-js'
+import blockRenderMaps from '../block-render-maps/index'
+import { decorator } from '../entity-decorators/index'
 import { mediaQuery } from '../utils/media-query'
 
 const Figure = styled.figure`
   width: 100%;
 `
 
+/* TODO: caption style
 const FigureCaption = styled.figcaption`
   width: fit-content;
   max-width: 100%;
@@ -19,6 +30,7 @@ const FigureCaption = styled.figcaption`
   line-height: 28px;
   text-align: center;
 `
+*/
 
 const Img = styled.img`
   width: 100%;
@@ -28,9 +40,9 @@ const Img = styled.img`
 type ImageLinkBlockProps = {
   className?: string
   data: {
-    alignment?: string
-    desc?: string
     url: string
+    alignment?: string
+    rawContentState: RawDraftContentState
   }
 }
 
@@ -38,14 +50,24 @@ export const ImageLinkBlock = ({
   className = '',
   data,
 }: ImageLinkBlockProps) => {
-  const { desc, url } = data || {}
+  const { url, rawContentState } = data
+  const contentState = convertFromRaw(rawContentState)
+  const editorState = EditorState.createWithContent(contentState, decorator)
+  const blockRenderMap = blockRenderMaps.infoBox.default
   // const aspectRatio = '16/9'
 
-  // TODO: fallback img
+  // TODO: fallback img, desc style
   const imgBlock = (
     <Figure className={className}>
       <Img alt={''} src={url} />
-      {desc && <FigureCaption>{'aaa'}</FigureCaption>}
+      <Editor
+        blockRenderMap={blockRenderMap}
+        blockRendererFn={blockRendererFn}
+        editorState={editorState}
+        readOnly
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onChange={() => {}}
+      />
     </Figure>
   )
 
@@ -153,4 +175,30 @@ export const ImageLinkInInfoBox = ({
       <ImageLinkBlock data={data} />
     </InfoBoxContainer>
   )
+}
+
+function AtomicBlock(props: {
+  contentState: ContentState
+  block: ContentBlock
+}) {
+  const entity = props.contentState.getEntity(props.block.getEntityAt(0))
+
+  const entityType = entity.getType()
+  const entityData = entity.getData()
+
+  switch (entityType) {
+    case 'IMAGE_LINK': {
+      return ImageLinkInInfoBox({ data: entityData })
+    }
+  }
+  return null
+}
+
+const blockRendererFn = (block: ContentBlock) => {
+  return block.getType() === 'atomic'
+    ? {
+        component: AtomicBlock,
+        editable: false,
+      }
+    : null
 }

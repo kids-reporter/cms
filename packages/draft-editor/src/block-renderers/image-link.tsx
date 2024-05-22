@@ -10,10 +10,7 @@ import {
 } from 'draft-js'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
-import {
-  ImageEntityWithMeta,
-  ImageAlignOptions,
-} from '../buttons/selector/image-selector'
+import { ImageAlignOptions } from '../buttons/selector/image-selector'
 import { AlignSelector } from '../buttons/selector/align-selector'
 import { EditableBlock as _EditableBlock } from './styled'
 import { RichTextEditor } from '../rich-text-editor'
@@ -65,8 +62,10 @@ const EditableBlock = styled(_EditableBlock)`
     }
 `
 
-type EntityData = ImageEntityWithMeta & {
+type EntityData = {
+  url: string
   alignment?: string
+  rawContentState?: RawDraftContentState
 }
 
 export type ImageLinkValue = {
@@ -108,7 +107,7 @@ export const ImageLinkEditor = (props: {
   return (
     <DrawerController isOpen={isOpen}>
       <Drawer
-        title={`Image Link`}
+        title="Image Link"
         actions={{
           cancel: {
             label: 'Cancel',
@@ -163,23 +162,15 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
   const entityKey = block.getEntityAt(0)
   const entity = contentState.getEntity(entityKey)
   const data = entity.getData() || {}
-  const {alignment: _alignment, ...imageWithMeta} = data // eslint-disable-line
+  const { url, alignment, rawContentState } = data // eslint-disable-line
 
   const onChange = () => {
     onEditFinish()
+    setIsEditorOpen(false)
     /*
-    setIsSelectorOpen(false)
-
-    if (selectedImages?.length === 0) {
-      onEditFinish()
-      return
-    }
-
-    const selectedImage = selectedImages?.[0]
-
     onEditFinish({
       entityKey,
-      entityData: Object.assign({ alignment: alignment }, selectedImage),
+      entityData: Object.assign({ alignment: alignment }),
     })
     */
   }
