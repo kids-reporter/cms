@@ -48,6 +48,12 @@ const { ImageLinkInArticleBody } = blockRenderers
 
 const StyledImage = styled(ImageLinkInArticleBody)``
 
+const Label = styled.label`
+  display: block;
+  margin: 10px 0;
+  font-weight: 600;
+`
+
 const EditableBlock = styled(_EditableBlock)`
   &:hover {
     ${StyledImage} {
@@ -119,6 +125,7 @@ export const ImageLinkEditor = (props: {
           },
         }}
       >
+        <Label>連結</Label>
         <TextInput
           placeholder="圖片連結"
           type="text"
@@ -140,6 +147,7 @@ export const ImageLinkEditor = (props: {
           onChange={onAlignSelectChange}
           onOpen={onAlignSelectOpen}
         />
+        <Label>文字</Label>
         <RichTextEditor
           decorators={[editableLinkDecorator]}
           disabledButtons={disabledButtons}
