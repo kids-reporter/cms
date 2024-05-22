@@ -168,15 +168,12 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
   const data = entity.getData() || {}
   const { url, alignment, rawContentState } = data // eslint-disable-line
 
-  const onChange = () => {
-    onEditFinish()
+  const onChange = (inputValue: EntityData) => {
     setIsEditorOpen(false)
-    /*
     onEditFinish({
       entityKey,
-      entityData: Object.assign({ alignment: alignment }),
+      entityData: inputValue,
     })
-    */
   }
 
   return (
@@ -192,6 +189,7 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
           onConfirm={onChange}
           onCancel={() => {
             setIsEditorOpen(false)
+            onEditFinish()
           }}
         />
       )}
