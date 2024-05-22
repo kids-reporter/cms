@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AtomicBlockUtils, EditorState, RawDraftContentState } from 'draft-js'
 import { ImageLinkEditor } from '../block-renderers/image-link'
+import { ImageAlignment } from '../buttons/selector/image-selector'
 
 export const ImageLinkButton = (props: {
   editorState: EditorState
@@ -20,8 +21,8 @@ export const ImageLinkButton = (props: {
     alignment,
     rawContentState,
   }: {
-    url: ''
-    alignment: 'default'
+    url: string
+    alignment: ImageAlignment
     rawContentState: RawDraftContentState
   }) => {
     const contentState = editorState.getCurrentContent()
@@ -55,7 +56,7 @@ export const ImageLinkButton = (props: {
           isOpen={isEditorOpen}
           inputValue={{
             url: '',
-            alignment: 'default',
+            alignment: ImageAlignment.DEFAULT,
             rawContentState: { blocks: [], entityMap: {} },
           }}
           onConfirm={onChange}

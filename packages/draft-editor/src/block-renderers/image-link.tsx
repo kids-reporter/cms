@@ -10,7 +10,10 @@ import {
 } from 'draft-js'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
-import { ImageAlignOptions } from '../buttons/selector/image-selector'
+import {
+  ImageAlignment,
+  ImageAlignOptions,
+} from '../buttons/selector/image-selector'
 import { AlignSelector } from '../buttons/selector/align-selector'
 import { EditableBlock as _EditableBlock } from './styled'
 import { RichTextEditor } from '../rich-text-editor'
@@ -69,8 +72,8 @@ type EntityData = {
 }
 
 export type ImageLinkValue = {
-  url: ''
-  alignment: 'default'
+  url: string
+  alignment: ImageAlignment
   rawContentState: RawDraftContentState
 }
 
@@ -78,25 +81,25 @@ export const ImageLinkEditor = (props: {
   isOpen: boolean
   inputValue: ImageLinkValue
   onConfirm: (arg0: {
-    url: ''
-    alignment: 'default'
+    url: string
+    alignment: ImageAlignment
     rawContentState: RawDraftContentState
   }) => void
   onCancel: () => void
 }) => {
   const { isOpen, inputValue, onConfirm, onCancel } = props
   const [url, setURL] = useState('')
-  const [align, setAlign] = useState('default')
+  const [align, setAlign] = useState(ImageAlignment.DEFAULT)
   const contentState = convertFromRaw(inputValue.rawContentState)
   const [inputValueState, setInputValueState] = useState({
     url: '',
-    alignment: 'default',
+    alignment: ImageAlignment.DEFAULT,
     editorState: EditorState.createWithContent(contentState),
   })
 
   const contentWrapperRef = useRef<HTMLDivElement>(null)
 
-  const onAlignSelectChange = (align: string) => {
+  const onAlignSelectChange = (align: ImageAlignment) => {
     setAlign(align)
   }
 
@@ -120,8 +123,8 @@ export const ImageLinkEditor = (props: {
             label: 'Confirm',
             action: () =>
               onConfirm({
-                url: '',
-                alignment: 'default',
+                url: url,
+                alignment: align,
                 rawContentState: convertToRaw(
                   inputValueState.editorState.getCurrentContent()
                 ),
@@ -139,7 +142,7 @@ export const ImageLinkEditor = (props: {
         <AlignSelector
           align={align}
           options={ImageAlignOptions}
-          onChange={onAlignSelectChange}
+          onChange={onAlignSelectChange as (val: string) => void}
           onOpen={onAlignSelectOpen}
         />
         <Label>圖說</Label>
@@ -149,8 +152,8 @@ export const ImageLinkEditor = (props: {
           editorState={inputValueState.editorState}
           onChange={(editorState: EditorState) => {
             setInputValueState({
-              url: '',
-              alignment: 'default',
+              url: url,
+              alignment: align,
               editorState,
             })
           }}
@@ -186,8 +189,8 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
         <ImageLinkEditor
           isOpen={isEditorOpen}
           inputValue={{
-            url: '',
-            alignment: 'default',
+            url: url,
+            alignment: alignment,
             rawContentState: { blocks: [], entityMap: {} },
           }}
           onConfirm={onChange}
