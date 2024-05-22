@@ -145,7 +145,7 @@ export const ImageLinkEditor = (props: {
           onChange={onAlignSelectChange}
           onOpen={onAlignSelectOpen}
         />
-        <Label>文字</Label>
+        <Label>圖說</Label>
         <RichTextEditor
           decorators={[editableLinkDecorator]}
           disabledButtons={disabledButtons}
