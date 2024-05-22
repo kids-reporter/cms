@@ -25,58 +25,34 @@ const Img = styled.img`
   object-fit: contain;
 `
 
-type ImageBlockProps = {
+type ImageLinkBlockProps = {
   className?: string
   data: {
     alignment?: string
     desc?: string
-    imageFile: {
-      url: string
-      width: number
-      height: number
-    }
-    resized?: {
-      original: string
-      small: string
-      medium: string
-      large: string
-    }
+    url: string
   }
 }
 
-export const ImageBlock = ({ className = '', data }: ImageBlockProps) => {
-  const { desc, imageFile, resized } = data || {}
-  const aspectRatio =
-    imageFile?.width && imageFile?.height
-      ? `${imageFile.width}/${imageFile.height}`
-      : '16/9'
+export const ImageLinkBlock = ({
+  className = '',
+  data,
+}: ImageLinkBlockProps) => {
+  const { desc, url } = data || {}
+  // const aspectRatio = '16/9'
 
-  const imgSrcSetArr = []
-  if (resized?.medium) {
-    imgSrcSetArr.push(`${resized.medium} 500w`)
-  }
-
-  if (resized?.large) {
-    imgSrcSetArr.push(`${resized.large} 1000w`)
-  }
-
+  // TODO: fallback img
   const imgBlock = (
     <Figure className={className}>
-      <Img
-        alt={desc}
-        src={resized?.original ?? resized?.medium}
-        srcSet={imgSrcSetArr.join(',')}
-        sizes="(min-width: 1200px) 1000px, 100vw"
-        style={{ aspectRatio: aspectRatio }}
-      />
-      {desc && <FigureCaption>{desc}</FigureCaption>}
+      <Img alt={''} src={url} />
+      {desc && <FigureCaption>{'aaa'}</FigureCaption>}
     </Figure>
   )
 
   return imgBlock
 }
 
-type ImageBlockInArticleBodyProps = ImageBlockProps
+type ImageBlockInArticleBodyProps = ImageLinkBlockProps
 
 const ArticleBodyContainer = styled.div<{ $alignment?: string }>`
   /* reset browser default styles */
@@ -129,7 +105,7 @@ export const ImageLinkInArticleBody = ({
 }: ImageBlockInArticleBodyProps) => {
   return (
     <ArticleBodyContainer $alignment={data.alignment} className={className}>
-      <ImageBlock data={data} />
+      <ImageLinkBlock data={data} />
     </ArticleBodyContainer>
   )
 }
@@ -168,13 +144,13 @@ const InfoBoxContainer = styled.div<{ $alignment?: string }>`
   }}
 `
 
-export function ImageInInfoBox({
+export const ImageLinkInInfoBox = ({
   className = '',
   data,
-}: ImageBlockInArticleBodyProps) {
+}: ImageBlockInArticleBodyProps) => {
   return (
     <InfoBoxContainer $alignment={data.alignment} className={className}>
-      <ImageBlock data={data} />
+      <ImageLinkBlock data={data} />
     </InfoBoxContainer>
   )
 }
