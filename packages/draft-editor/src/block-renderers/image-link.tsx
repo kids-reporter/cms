@@ -102,8 +102,6 @@ export const ImageLinkEditor = (props: {
     }
   }
 
-  console.log(setInputValueState)
-
   return (
     <DrawerController isOpen={isOpen}>
       <Drawer
