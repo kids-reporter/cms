@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { Drawer, DrawerController } from '@keystone-ui/modals'
 import { TextInput } from '@keystone-ui/fields'
@@ -11,6 +11,7 @@ import {
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
 import { ImageEntityWithMeta } from '../buttons/selector/image-selector'
+import { AlignSelector } from '../buttons/selector/align-selector'
 import { EditableBlock as _EditableBlock } from './styled'
 import { RichTextEditor } from '../rich-text-editor'
 import { editableLinkDecorator } from '../entity-decorators/link'
@@ -75,11 +76,25 @@ export const ImageLinkEditor = (props: {
 }) => {
   const { isOpen, inputValue, onConfirm, onCancel } = props
   const [url, setURL] = useState('')
+  const [align, setAlign] = useState('default')
   const contentState = convertFromRaw(inputValue.rawContentState)
   const [inputValueState, setInputValueState] = useState({
     type: inputValue.type,
     editorState: EditorState.createWithContent(contentState),
   })
+
+  const contentWrapperRef = useRef<HTMLDivElement>(null)
+
+  const onAlignSelectChange = (align: string) => {
+    setAlign(align)
+  }
+
+  const onAlignSelectOpen = () => {
+    const scrollWrapper = contentWrapperRef.current?.parentElement
+    if (scrollWrapper) {
+      scrollWrapper.scrollTop = scrollWrapper?.scrollHeight
+    }
+  }
 
   console.log(setInputValueState)
 
@@ -120,6 +135,21 @@ export const ImageLinkEditor = (props: {
               editorState,
             })
           }}
+        />
+        <AlignSelector
+          align={align}
+          options={[
+            { value: 'default', label: 'default', isDisabled: false },
+            {
+              value: 'paragraph-width',
+              label: '與文章段落等寬',
+              isDisabled: false,
+            },
+            { value: 'left', label: 'left', isDisabled: false },
+            { value: 'right', label: 'right', isDisabled: false },
+          ]}
+          onChange={onAlignSelectChange}
+          onOpen={onAlignSelectOpen}
         />
       </Drawer>
     </DrawerController>
