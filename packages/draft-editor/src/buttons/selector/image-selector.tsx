@@ -7,6 +7,13 @@ import { AlignSelector } from './align-selector'
 import { SearchBox as _SearchBox, SearchBoxOnChangeFn } from './search-box'
 import { Pagination } from './pagination'
 
+export const ImageAlignOptions = [
+  { value: 'default', label: 'default', isDisabled: false },
+  { value: 'paragraph-width', label: '與文章段落等寬', isDisabled: false },
+  { value: 'left', label: 'left', isDisabled: false },
+  { value: 'right', label: 'right', isDisabled: false },
+]
+
 const _ = {
   debounce,
 }
@@ -216,13 +223,6 @@ export function ImageSelector(props: {
 
   const pageSize = 6
 
-  const options = [
-    { value: 'default', label: 'default', isDisabled: false },
-    { value: 'paragraph-width', label: '與文章段落等寬', isDisabled: false },
-    { value: 'left', label: 'left', isDisabled: false },
-    { value: 'right', label: 'right', isDisabled: false },
-  ]
-
   const {
     enableMultiSelect = false,
     enableCaption = false,
@@ -380,7 +380,7 @@ export function ImageSelector(props: {
           {enableAlignment && (
             <AlignSelector
               align={align}
-              options={options}
+              options={ImageAlignOptions}
               onChange={onAlignSelectChange}
               onOpen={onAlignSelectOpen}
             />

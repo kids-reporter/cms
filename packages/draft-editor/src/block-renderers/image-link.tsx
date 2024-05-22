@@ -10,7 +10,10 @@ import {
 } from 'draft-js'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 import { AtomicBlockProps } from '../block-renderer-fn.type'
-import { ImageEntityWithMeta } from '../buttons/selector/image-selector'
+import {
+  ImageEntityWithMeta,
+  ImageAlignOptions,
+} from '../buttons/selector/image-selector'
 import { AlignSelector } from '../buttons/selector/align-selector'
 import { EditableBlock as _EditableBlock } from './styled'
 import { RichTextEditor } from '../rich-text-editor'
@@ -132,16 +135,7 @@ export const ImageLinkEditor = (props: {
         />
         <AlignSelector
           align={align}
-          options={[
-            { value: 'default', label: 'default', isDisabled: false },
-            {
-              value: 'paragraph-width',
-              label: '與文章段落等寬',
-              isDisabled: false,
-            },
-            { value: 'left', label: 'left', isDisabled: false },
-            { value: 'right', label: 'right', isDisabled: false },
-          ]}
+          options={ImageAlignOptions}
           onChange={onAlignSelectChange}
           onOpen={onAlignSelectOpen}
         />
