@@ -9,9 +9,9 @@ import {
 import { EditableBlock as _EditableBlock } from './styled'
 import { blockRenderers } from '@kids-reporter/draft-renderer'
 
-const { ImageInArticleBody } = blockRenderers
+const { ImageLinkInArticleBody } = blockRenderers
 
-const StyledImage = styled(ImageInArticleBody)``
+const StyledImage = styled(ImageLinkInArticleBody)``
 
 const EditableBlock = styled(_EditableBlock)`
   &:hover {

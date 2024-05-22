@@ -106,11 +106,11 @@ export const ImageLinkEditor = (props: {
   )
 }
 
-export function ImageLinkButton(props: {
+export const ImageLinkButton = (props: {
   editorState: EditorState
   onChange: (param: EditorState) => void
   className?: string
-}) {
+}) => {
   const { editorState, onChange: onEditorStateChange, className } = props
 
   const [isEditorOpen, setIsEditorOpen] = useState(false)
@@ -128,7 +128,6 @@ export function ImageLinkButton(props: {
   }) => {
     const contentState = editorState.getCurrentContent()
 
-    // create an InfoBox entity
     const contentStateWithEntity = contentState.createEntity(
       'IMAGE_LINK',
       'IMMUTABLE',
