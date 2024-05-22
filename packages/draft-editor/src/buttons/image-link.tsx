@@ -16,10 +16,12 @@ export const ImageLinkButton = (props: {
   }
 
   const onChange = ({
-    type,
+    url,
+    alignment,
     rawContentState,
   }: {
-    type: 'image-link'
+    url: ''
+    alignment: 'default'
     rawContentState: RawDraftContentState
   }) => {
     const contentState = editorState.getCurrentContent()
@@ -28,7 +30,8 @@ export const ImageLinkButton = (props: {
       'IMAGE_LINK',
       'IMMUTABLE',
       {
-        type,
+        url,
+        alignment,
         rawContentState,
       }
     )
@@ -51,7 +54,8 @@ export const ImageLinkButton = (props: {
         <ImageLinkEditor
           isOpen={isEditorOpen}
           inputValue={{
-            type: 'image-link',
+            url: '',
+            alignment: 'default',
             rawContentState: { blocks: [], entityMap: {} },
           }}
           onConfirm={onChange}

@@ -69,7 +69,8 @@ type EntityData = {
 }
 
 export type ImageLinkValue = {
-  type: 'image-link'
+  url: ''
+  alignment: 'default'
   rawContentState: RawDraftContentState
 }
 
@@ -77,7 +78,8 @@ export const ImageLinkEditor = (props: {
   isOpen: boolean
   inputValue: ImageLinkValue
   onConfirm: (arg0: {
-    type: 'image-link'
+    url: ''
+    alignment: 'default'
     rawContentState: RawDraftContentState
   }) => void
   onCancel: () => void
@@ -87,7 +89,8 @@ export const ImageLinkEditor = (props: {
   const [align, setAlign] = useState('default')
   const contentState = convertFromRaw(inputValue.rawContentState)
   const [inputValueState, setInputValueState] = useState({
-    type: inputValue.type,
+    url: '',
+    alignment: 'default',
     editorState: EditorState.createWithContent(contentState),
   })
 
@@ -117,7 +120,8 @@ export const ImageLinkEditor = (props: {
             label: 'Confirm',
             action: () =>
               onConfirm({
-                type: inputValueState.type,
+                url: '',
+                alignment: 'default',
                 rawContentState: convertToRaw(
                   inputValueState.editorState.getCurrentContent()
                 ),
@@ -145,7 +149,8 @@ export const ImageLinkEditor = (props: {
           editorState={inputValueState.editorState}
           onChange={(editorState: EditorState) => {
             setInputValueState({
-              type: inputValueState.type,
+              url: '',
+              alignment: 'default',
               editorState,
             })
           }}
@@ -181,7 +186,8 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
         <ImageLinkEditor
           isOpen={isEditorOpen}
           inputValue={{
-            type: 'image-link',
+            url: '',
+            alignment: 'default',
             rawContentState: { blocks: [], entityMap: {} },
           }}
           onConfirm={onChange}
