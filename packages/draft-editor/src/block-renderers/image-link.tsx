@@ -127,7 +127,7 @@ export const ImageLinkEditor = (props: {
 }
 
 export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false)
+  const [isEditorOpen, setIsEditorOpen] = useState(false)
   const { block, blockProps, contentState } = props
   const { onEditStart, onEditFinish } = blockProps
   const entityKey = block.getEntityAt(0)
@@ -156,16 +156,16 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
 
   return (
     <>
-      {isSelectorOpen && (
+      {isEditorOpen && (
         <ImageLinkEditor
-          isOpen={isSelectorOpen}
+          isOpen={isEditorOpen}
           inputValue={{
             type: 'image-link',
             rawContentState: { blocks: [], entityMap: {} },
           }}
           onConfirm={onChange}
           onCancel={() => {
-            setIsSelectorOpen(false)
+            setIsEditorOpen(false)
           }}
         />
       )}
@@ -173,7 +173,7 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
         component={<StyledImage data={data} />}
         onClick={() => {
           onEditStart()
-          setIsSelectorOpen(true)
+          setIsEditorOpen(true)
         }}
       />
     </>
