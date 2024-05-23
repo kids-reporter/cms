@@ -102,7 +102,7 @@ slug
 ogDescription
 heroImage {
   resized {
-    medium
+    small
   }
 }
 subSubcategoriesOrdered {
