@@ -159,7 +159,10 @@ export const Article = ({ post }: { post: any }) => {
           {topicURL && (
             <div className="topic-breadcrumb">
               <Link className="text-sm md:text-base lg:text-lg" href={topicURL}>
-                <img src="/assets/images/topic-breadcrumb-icon.svg" />
+                <img
+                  src="/assets/images/topic-breadcrumb-icon.svg"
+                  loading="lazy"
+                />
                 {mainTopic?.title}
               </Link>
             </div>

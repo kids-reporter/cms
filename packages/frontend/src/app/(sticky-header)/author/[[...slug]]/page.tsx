@@ -145,6 +145,7 @@ export default async function Author({ params }: { params: { slug: any } }) {
             className="max-w-44 max-h-44 w-full object-cover"
             src={avatarURL}
             alt={author.name}
+            loading="lazy"
           />
         </div>
         <h1
