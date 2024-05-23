@@ -59,6 +59,8 @@ type TopicSummary = {
   relatedPosts?: any[]
 }
 
+const topicIcon = '/assets/images/topic_icon.svg'
+
 const TopicCard = (props: { topic: TopicSummary }) => {
   const moreComponent = (
     <div className={`rpjr-btn rpjr-btn-theme-outline theme-blue`}>
@@ -74,13 +76,14 @@ const TopicCard = (props: { topic: TopicSummary }) => {
           <img
             className="w-full h-full object-cover align-middle"
             src={topic.image}
+            loading="lazy"
           />
         </div>
         <div
           style={{ width: 'fit-content', height: 'fit-content', zIndex: '2' }}
           className="absolute top-5 left-5 bg-white lg:hidden flex flex-row items-center rounded-3xl px-4 py-1 gap-1"
         >
-          <img className="w-10" src={'/assets/images/topic_icon.svg'} />
+          <img className="w-10" src={topicIcon} loading="lazy" />
           <span
             style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
             className="font-bold text-xl"
@@ -92,7 +95,7 @@ const TopicCard = (props: { topic: TopicSummary }) => {
           className={`${styles['topic-info']} flex flex-col justify-between items-start bg-white border-solid border-gray-300`}
         >
           <div className="w-full hidden lg:flex flex-row items-center gap-1">
-            <img className="max-w-10" src={'/assets/images/topic_icon.svg'} />
+            <img className="max-w-10" src={topicIcon} loading="lazy" />
             <span
               style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
               className="font-bold text-xl"
@@ -213,7 +216,11 @@ export default async function Topic({
       className={`${styles.main} flex flex-col justify-center items-center mb-10`}
     >
       <div className="max-w-7xl w-full flex flex-col justify-center items-center gap-10">
-        <img className="max-w-xl w-full" src={'/assets/images/topic_pic.svg'} />
+        <img
+          className="max-w-xl w-full"
+          src={'/assets/images/topic_pic.svg'}
+          loading="lazy"
+        />
         {featuredTopic && (
           <div className="w-full flex flex-col justify-center bg-white lg:bg-gray-100 p-0 lg:p-5 gap-5 rounded-3xl">
             <TopicCard topic={featuredTopic} />
