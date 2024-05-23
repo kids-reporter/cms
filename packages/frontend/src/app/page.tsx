@@ -98,7 +98,7 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
     slug
     heroImage {
       resized {
-        medium
+        small
       }
     }
   }
@@ -168,7 +168,7 @@ export default async function Home() {
     topicsRes?.data?.data?.projects?.map((topic: any) => {
       return {
         url: `/topic/${topic.slug}`,
-        image: topic?.heroImage?.resized?.medium ?? FALLBACK_IMG,
+        image: topic?.heroImage?.resized?.small ?? FALLBACK_IMG,
         title: topic.title,
         subtitle: topic.subtitle,
       }
