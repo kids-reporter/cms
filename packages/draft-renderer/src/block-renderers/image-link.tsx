@@ -16,22 +16,6 @@ const Figure = styled.figure`
   width: 100%;
 `
 
-/* TODO: caption style
-const FigureCaption = styled.figcaption`
-  width: fit-content;
-  max-width: 100%;
-  font-size: ${({ theme }) =>
-    theme?.fontSizeLevel === 'large' ? '18px' : '14px'};
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0.5em;
-  color: rgb(58, 79, 102);
-  letter-spacing: 0.7px;
-  line-height: 28px;
-  text-align: center;
-`
-*/
-
 const Img = styled.img`
   width: 100%;
   object-fit: contain;
@@ -53,13 +37,12 @@ export const ImageLinkBlock = ({
   const { url, rawContentState } = data
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
-  const blockRenderMap = blockRenderMaps.infoBox.default
-  // const aspectRatio = '16/9'
+  const blockRenderMap = blockRenderMaps.imageLink
 
-  // TODO: fallback img, desc style
+  // TODO: fallback img
   const imgBlock = (
     <Figure className={className}>
-      <Img alt={''} src={url} />
+      <Img src={url} />
       <Editor
         blockRenderMap={blockRenderMap}
         blockRendererFn={blockRendererFn}
@@ -177,10 +160,10 @@ export const ImageLinkInInfoBox = ({
   )
 }
 
-function AtomicBlock(props: {
+const AtomicBlock = (props: {
   contentState: ContentState
   block: ContentBlock
-}) {
+}) => {
   const entity = props.contentState.getEntity(props.block.getEntityAt(0))
 
   const entityType = entity.getType()
