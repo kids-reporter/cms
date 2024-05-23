@@ -38,6 +38,7 @@ export const MakeFriends = () => {
         <img
           className="max-w-44 lg:max-w-80 w-full"
           src={'/assets/images/reporter_pic.svg'}
+          loading="lazy"
         />
       </div>
     </div>

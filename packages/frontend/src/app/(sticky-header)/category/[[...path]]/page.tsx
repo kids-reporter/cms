@@ -275,7 +275,7 @@ export default async function Category({ params }: { params: { path: any } }) {
       <div
         className={`w-full flex flex-col justify-center items-center gap-10 theme-${theme}`}
       >
-        <img className="max-w-xl w-full" src={imageURL} />
+        <img className="max-w-xl w-full" src={imageURL} loading="lazy" />
         <div className="flex flex-row flex-wrap justify-center gap-2.5">
           {navigationItems?.map(
             (item, index) =>

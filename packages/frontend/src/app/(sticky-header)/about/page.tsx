@@ -165,7 +165,7 @@ export default async function About() {
       style={{ width: '95vw', scrollMarginTop: '62px' }}
       className="max-w-2xl flex flex-col justify-center items-center gap-10"
     >
-      <img src={'/assets/images/about_who_we_are.svg'} />
+      <img src={'/assets/images/about_who_we_are.svg'} loading="lazy" />
       <p
         style={{ color: 'var(--paletteColor4)', letterSpacing: '0.9px' }}
         className="text-lg font-normal leading-9"
@@ -193,7 +193,11 @@ export default async function About() {
               key={`tell-you-${index}`}
               className="flex flex-col items-center"
             >
-              <img className="max-w-36 w-full" src={item.image} />
+              <img
+                className="max-w-36 w-full"
+                src={item.image}
+                loading="lazy"
+              />
               <p
                 style={{
                   color: 'var(--paletteColor4)',
@@ -225,22 +229,27 @@ export default async function About() {
         <img
           className="max-w-80 w-full"
           src={'/assets/images/about_news_pic1.svg'}
+          loading="lazy"
         />
         <img
           className="max-w-80 w-full"
           src={'/assets/images/about_news_pic2.svg'}
+          loading="lazy"
         />
         <img
           className="max-w-80 w-full"
           src={'/assets/images/about_news_pic3.svg'}
+          loading="lazy"
         />
         <img
           className="max-w-80 w-full"
           src={'/assets/images/about_news_pic4.svg'}
+          loading="lazy"
         />
         <img
           className="max-w-80 w-full"
           src={'/assets/images/about_news_pic5.svg'}
+          loading="lazy"
         />
       </div>
     </div>
@@ -288,6 +297,7 @@ export default async function About() {
       <img
         className="max-w-44 md:max-w-72 lg:max-w-80 w-full"
         src="/assets/images/about_CTA_subscribe.svg"
+        loading="lazy"
       />
     </div>
   )
@@ -321,7 +331,11 @@ export default async function About() {
       >
         《少年報導者》是一個開放的公共平台，報導仔希望聽見大家的看法和心聲，歡迎10～15歲的同學投稿給報導仔，針對新聞時事、國家政策、校園生活，或是藝術文化、運動體育，都可以寫下你的觀點、評論，讓報導仔協助你成為我們的評論員。
       </p>
-      <img className="max-w-2xl w-full" src={'/assets/images/about_road.svg'} />
+      <img
+        className="max-w-2xl w-full"
+        src={'/assets/images/about_road.svg'}
+        loading="lazy"
+      />
       <div className="flex flex-row justify-around items-start flex-wrap mt-10 mb-10 gap-10">
         <span
           style={{ color: 'var(--paletteColor8)', letterSpacing: '1.08px' }}
@@ -359,6 +373,7 @@ export default async function About() {
       <img
         className="max-w-4xl w-full"
         src={'/assets/images/about_certification_template.png'}
+        loading="lazy"
       />
       <p
         style={{ letterSpacing: '.08em', lineHeight: '160%' }}
@@ -417,6 +432,7 @@ export default async function About() {
       <img
         className="max-w-44 md:max-w-72 lg:max-w-80 w-full"
         src="/assets/images/about_CTA_mail.svg"
+        loading="lazy"
       />
     </div>
   )
@@ -433,6 +449,7 @@ export default async function About() {
       <img
         className="max-w-80 w-full mb-10"
         src={'/assets/images/about_go_to_main_site.png'}
+        loading="lazy"
       />
       <h3
         style={{
