@@ -104,6 +104,7 @@ export const StickyHeader = () => {
         name="q"
         title="Search for..."
         aria-label="Search for..."
+        autoFocus
       />
       <button
         className="flex flex-row justify-center items-center"
