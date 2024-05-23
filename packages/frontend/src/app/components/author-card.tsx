@@ -56,6 +56,7 @@ export const AuthorCard = (props: AuthorCardProp) => {
                       className="max-w-full align-middle"
                       src={avatarURL}
                       alt={author.name}
+                      loading="lazy"
                     />
                   </div>
                   <span

@@ -53,7 +53,7 @@ export const Footer = () => {
         >
           <div className={styles['footer-top__left']}>
             <picture className={styles['footer-top__left-logo']}>
-              <img src="/assets/images/footer-logo.svg" alt="" />
+              <img src="/assets/images/footer-logo.svg" alt="" loading="lazy" />
             </picture>
             <p
               style={{ letterSpacing: 'var(--letterSpacing)' }}
@@ -84,28 +84,44 @@ export const Footer = () => {
                 href="/about"
                 className={styles['footer-top__team-box-item']}
               >
-                <img src="/assets/images/footer_pic1.svg" alt="我們是誰" />
+                <img
+                  src="/assets/images/footer_pic1.svg"
+                  alt="我們是誰"
+                  loading="lazy"
+                />
                 我們是誰
               </Link>
               <Link
                 href="/about#team"
                 className={`${styles['footer-top__team-box-item']} __mPS2id`}
               >
-                <img src="/assets/images/footer_pic2.svg" alt="我們是誰" />
+                <img
+                  src="/assets/images/footer_pic2.svg"
+                  alt="我們是誰"
+                  loading="lazy"
+                />
                 核心團隊
               </Link>
               <Link
                 href="/about#consultants"
                 className={`${styles['footer-top__team-box-item']} __mPS2id`}
               >
-                <img src="/assets/images/footer_pic3.svg" alt="我們是誰" />
+                <img
+                  src="/assets/images/footer_pic3.svg"
+                  alt="我們是誰"
+                  loading="lazy"
+                />
                 顧問群
               </Link>
               <Link
                 href="/about#mail"
                 className={`${styles['footer-top__team-box-item']} __mPS2id`}
               >
-                <img src="/assets/images/footer_pic4.svg" alt="我們是誰" />
+                <img
+                  src="/assets/images/footer_pic4.svg"
+                  alt="我們是誰"
+                  loading="lazy"
+                />
                 聯絡我們
               </Link>
             </div>
@@ -137,6 +153,7 @@ export const Footer = () => {
             <img
               src="/assets/images/footer_pic5.svg"
               className={styles['footer-top__fig']}
+              loading="lazy"
             />
           </div>
         </div>
