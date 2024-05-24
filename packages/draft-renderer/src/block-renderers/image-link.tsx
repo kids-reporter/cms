@@ -27,7 +27,7 @@ type ImageLinkBlockProps = {
   className?: string
   data: {
     url: string
-    alignment?: string
+    alignment: string
     rawContentState: RawDraftContentState
   }
 }

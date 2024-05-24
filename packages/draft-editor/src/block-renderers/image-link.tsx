@@ -65,12 +65,6 @@ const EditableBlock = styled(_EditableBlock)`
     }
 `
 
-type EntityData = {
-  url: string
-  alignment?: string
-  rawContentState?: RawDraftContentState
-}
-
 export type ImageLinkValue = {
   url: string
   alignment: ImageAlignment
@@ -80,11 +74,7 @@ export type ImageLinkValue = {
 export const ImageLinkEditor = (props: {
   isOpen: boolean
   inputValue: ImageLinkValue
-  onConfirm: (arg0: {
-    url: string
-    alignment: ImageAlignment
-    rawContentState: RawDraftContentState
-  }) => void
+  onConfirm: (arg0: ImageLinkValue) => void
   onCancel: () => void
 }) => {
   const { isOpen, inputValue, onConfirm, onCancel } = props
@@ -159,7 +149,7 @@ export const ImageLinkEditor = (props: {
   )
 }
 
-export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
+export const EditableImageLink = (props: AtomicBlockProps<ImageLinkValue>) => {
   const [isEditorOpen, setIsEditorOpen] = useState(false)
   const { block, blockProps, contentState } = props
   const { onEditStart, onEditFinish } = blockProps
@@ -168,7 +158,7 @@ export const EditableImageLink = (props: AtomicBlockProps<EntityData>) => {
   const data = entity.getData() || {}
   const { url, alignment, rawContentState } = data // eslint-disable-line
 
-  const onChange = (inputValue: EntityData) => {
+  const onChange = (inputValue: ImageLinkValue) => {
     setIsEditorOpen(false)
     onEditFinish({
       entityKey,
