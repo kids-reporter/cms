@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { DefaultDraftBlockRenderMap } from 'draft-js'
 import { Atomic, Paragraph } from './article-content'
 
-const ParagraphForInfoBox = styled(Paragraph)`
+const ParagraphForImageLink = styled(Paragraph)`
   /* overwrite css */
   font-size: ${({ theme }) =>
     theme?.fontSizeLevel === 'large' ? '18px' : '14px'};
@@ -24,7 +24,7 @@ const _blockRenderMapForAnnotation = Immutable.Map({
   },
   unstyled: {
     element: 'div',
-    wrapper: <ParagraphForInfoBox />,
+    wrapper: <ParagraphForImageLink />,
   },
 })
 

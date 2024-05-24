@@ -12,6 +12,8 @@ import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
 import { mediaQuery } from '../utils/media-query'
 
+const fallbackImg = '/assets/images/image_placeholder.png'
+
 const Figure = styled.figure`
   width: 100%;
 `
@@ -39,10 +41,9 @@ export const ImageLinkBlock = ({
   const editorState = EditorState.createWithContent(contentState, decorator)
   const blockRenderMap = blockRenderMaps.imageLink
 
-  // TODO: fallback img
   const imgBlock = (
     <Figure className={className}>
-      <Img src={url} />
+      <Img src={url ?? fallbackImg} />
       <Editor
         blockRenderMap={blockRenderMap}
         blockRendererFn={blockRendererFn}
