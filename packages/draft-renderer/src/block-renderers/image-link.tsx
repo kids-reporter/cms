@@ -6,6 +6,7 @@ import {
   RawDraftContentState,
   convertFromRaw,
 } from 'draft-js'
+import { InfoBoxContainer } from './image-block'
 import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
 import { mediaQuery } from '../utils/media-query'
@@ -112,40 +113,6 @@ export const ImageLinkInArticleBody = ({
     </ArticleBodyContainer>
   )
 }
-
-const InfoBoxContainer = styled.div<{ $alignment?: string }>`
-  /* reset browser default styles */
-  figure {
-    margin: 0 0 27px 0;
-  }
-
-  ${(props) => {
-    switch (props.$alignment) {
-      case 'left': {
-        return `
-          width: 200px;
-          float: left;
-          margin: 5px 27px 5px 0px;
-        `
-      }
-      case 'right': {
-        return `
-          width: 200px;
-          float: right;
-          margin: 5px 0px 5px 27px;
-        `
-      }
-      case 'paragraph-width':
-      default: {
-        return `
-        width: fit-content;
-        margin-left: auto; 
-        margin-right: auto;
-        `
-      }
-    }
-  }}
-`
 
 export const ImageLinkInInfoBox = ({
   className = '',
