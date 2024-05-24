@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  ContentBlock,
-  ContentState,
   Editor,
   EditorState,
   RawDraftContentState,
@@ -46,7 +44,6 @@ export const ImageLinkBlock = ({
       <Img src={url ?? fallbackImg} />
       <Editor
         blockRenderMap={blockRenderMap}
-        blockRendererFn={blockRendererFn}
         editorState={editorState}
         readOnly
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -159,30 +156,4 @@ export const ImageLinkInInfoBox = ({
       <ImageLinkBlock data={data} />
     </InfoBoxContainer>
   )
-}
-
-const AtomicBlock = (props: {
-  contentState: ContentState
-  block: ContentBlock
-}) => {
-  const entity = props.contentState.getEntity(props.block.getEntityAt(0))
-
-  const entityType = entity.getType()
-  const entityData = entity.getData()
-
-  switch (entityType) {
-    case 'IMAGE_LINK': {
-      return ImageLinkInInfoBox({ data: entityData })
-    }
-  }
-  return null
-}
-
-const blockRendererFn = (block: ContentBlock) => {
-  return block.getType() === 'atomic'
-    ? {
-        component: AtomicBlock,
-        editable: false,
-      }
-    : null
 }
