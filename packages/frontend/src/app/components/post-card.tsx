@@ -4,16 +4,23 @@ import { getFormattedDate } from '@/app/utils'
 
 const fallbackImg = '/assets/images/404.png'
 
+export enum Loading {
+  LAZY = 'lazy',
+  EAGER = 'eager',
+}
+
 export type PostCardProp = {
   className?: string
   post: PostSummary
   isSimple?: boolean
+  loading?: Loading
 }
 
 export const PostCard = ({
   className,
   post,
   isSimple = false,
+  loading = Loading.LAZY,
 }: PostCardProp) => {
   return (
     post && (
@@ -31,6 +38,7 @@ export const PostCard = ({
             style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
             className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
             src={post.image ?? fallbackImg}
+            loading={loading}
           />
         </div>
         <div

@@ -25,7 +25,7 @@ const GET_USER = gql`
   }
 `
 
-export default function TwoFactorAuthCreate() {
+export default function TwoFactorAuthVerify() {
   const [token, setToken] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isVerified, setIsVerified] = useState(false)
@@ -35,14 +35,12 @@ export default function TwoFactorAuthCreate() {
   useEffect(() => {
     if (!queryLoading && queryData) {
       const currentUser = queryData?.authenticatedItem
-      // if 2FA has bypass flag, hide verify form and handle redirect from backend
       if (currentUser && currentUser.twoFactorAuth.bypass) {
+        // if 2FA has bypass flag, hide verify form and handle redirect from backend
         setIsVerified(true)
         window.location.reload()
-      }
-
-      // if 2FA is not set, redirect to 2fa-setup page
-      if (currentUser && !currentUser.twoFactorAuth.set) {
+      } else if (currentUser && !currentUser.twoFactorAuth.set) {
+        // if 2FA is not set, hide verify form and redirect to 2fa-setup page
         setIsVerified(true)
         window.location.href = '/2fa-setup'
       }

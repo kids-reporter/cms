@@ -9,7 +9,7 @@ import { jsx, H1, Stack } from '@keystone-ui/core'
 import { Button } from '@keystone-ui/button'
 import { TextInput } from '@keystone-ui/fields'
 import { Notice } from '@keystone-ui/notice'
-import { useQuery, useMutation, gql } from '@keystone-6/core/admin-ui/apollo'
+import { useQuery, gql } from '@keystone-6/core/admin-ui/apollo'
 
 import { ChangeUserButton } from '../components/change-user-button'
 import { SinglePageContainer } from '../components/single-page-container'
@@ -27,22 +27,12 @@ const GET_USER = gql`
   }
 `
 
-const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
-    updateUser(where: $where, data: $data) {
-      id
-      twoFactorAuthSecret
-    }
-  }
-`
-
 export default function TwoFactorAuthCreate() {
   const [qrCodeUrl, setQrCodeUrl] = useState('')
   const [tokenClear, setTokenClear] = useState('')
   const [tokenSetup, setTokenSetup] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [pageStep, setPageStep] = useState(1)
-  const [updateUser] = useMutation(UPDATE_USER_MUTATION)
 
   const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
   const currentUser = queryData?.authenticatedItem
@@ -76,20 +66,10 @@ export default function TwoFactorAuthCreate() {
     event.preventDefault()
 
     try {
-      const response = await axios.post('/api/2fa/check', { token: tokenClear })
+      const response = await axios.post('/api/2fa/clear', { token: tokenClear })
       if (response.status === 200) {
         if (response.data.status === 'success') {
           setErrorMessage('')
-          await updateUser({
-            variables: {
-              where: {
-                id: currentUser.id,
-              },
-              data: {
-                twoFactorAuthSecret: '',
-              },
-            },
-          })
           getQrCodeUrl()
           setPageStep(2)
         } else {

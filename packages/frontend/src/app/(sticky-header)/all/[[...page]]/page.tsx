@@ -88,7 +88,11 @@ export default async function LatestPosts({
       style={{ width: '95vw' }}
       className="flex flex-col justify-center items-center mb-10 gap-10"
     >
-      <img className="max-w-xl w-full" src={'/assets/images/new_article.svg'} />
+      <img
+        className="max-w-xl w-full"
+        src={'/assets/images/new_article.svg'}
+        loading="lazy"
+      />
       <PostList posts={postSummeries} />
       {totalPages && totalPages > 0 && (
         <Pagination

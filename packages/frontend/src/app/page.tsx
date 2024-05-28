@@ -10,8 +10,10 @@ import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
 import { GENERAL_DESCRIPTION, POST_CONTENT_GQL, Theme } from '@/app/constants'
 import { getPostSummaries, sendGQLRequest } from '@/app/utils'
+import { isProduction } from '@/environment-variables'
 
-export const revalidate = 300
+// Specify revalidation time for static rendering in production env
+export const revalidate = isProduction ? 300 : 0
 export const metadata: Metadata = {
   title: '少年報導者 The Reporter for Kids - 理解世界 參與未來',
   description: GENERAL_DESCRIPTION,
@@ -91,7 +93,7 @@ query Query($orderBy: [ProjectOrderByInput!]!, $take: Int) {
     slug
     heroImage {
       resized {
-        medium
+        small
       }
     }
   }
@@ -161,7 +163,7 @@ export default async function Home() {
     topicsRes?.data?.data?.projects?.map((topic: any) => {
       return {
         url: `/topic/${topic.slug}`,
-        image: topic?.heroImage?.resized?.medium ?? '',
+        image: topic?.heroImage?.resized?.small ?? '',
         title: topic.title,
         subtitle: topic.subtitle,
       }

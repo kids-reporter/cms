@@ -15,6 +15,7 @@ export default function NotFound() {
           className="max-w-72 md:max-w-md lg:max-w-xl w-full"
           src="/assets/images/404.png"
           alt="Not found"
+          loading="lazy"
         />
         <div className="flex flex-col justify-center items-center gap-2.5">
           <h1 className="text-3xl md:text-4xl font-bold">
