@@ -1,5 +1,5 @@
 import errors from '@twreporter/errors'
-import { LoadMoreResults } from './results'
+import { LoadMoreResults } from './load-more-results'
 import { SearchTitle } from './styled'
 import {
   getFilteredSearchResults,
