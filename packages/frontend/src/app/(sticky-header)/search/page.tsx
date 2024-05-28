@@ -6,6 +6,7 @@ import {
   transferItemsToPostCards,
   defaultCount,
 } from '@/app/api/search/route'
+import { EMAIL } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
 
 const apiKey = process.env.SEARCH_API_KEY || ''
@@ -42,7 +43,7 @@ export default async function SearchPage({
     return (
       <SearchTitle>
         搜尋結果服務異常，請稍候再試。 若持續發生，煩請來信至
-        kidsnews@twreporter.org。
+        {EMAIL}。
       </SearchTitle>
     )
   }
