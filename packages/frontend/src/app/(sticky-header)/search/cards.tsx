@@ -1,5 +1,5 @@
 'use client'
-import PostCard, { PostCardProp } from '@/app/components/post-card'
+import Card, { CardProp } from './card'
 import styled from 'styled-components'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { createRef } from 'react'
@@ -34,9 +34,9 @@ const FlexContainer = styled(TransitionGroup)`
   }
 `
 
-export type { PostCardProp }
+export type { CardProp }
 
-const Cards = ({ items }: { items: PostCardProp[] }) => {
+const Cards = ({ items }: { items: CardProp[] }) => {
   const cardsJsx = items.map((item, idx) => {
     const nodeRef = createRef<HTMLDivElement>()
     if (!item) {
@@ -51,7 +51,7 @@ const Cards = ({ items }: { items: PostCardProp[] }) => {
         classNames="item"
       >
         <div ref={nodeRef}>
-          <PostCard post={item.post} />
+          <Card post={item.post} />
         </div>
       </CSSTransition>
     )

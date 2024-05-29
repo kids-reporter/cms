@@ -3,7 +3,7 @@
 import axios from 'axios'
 import styled from 'styled-components'
 import errors from '@twreporter/errors'
-import { Cards, PostCardProp } from './cards'
+import { Cards, CardProp } from './cards'
 import { useState } from 'react'
 import { AXIOS_TIMEOUT } from '@/app/utils'
 
@@ -35,7 +35,7 @@ export const LoadMoreResults = ({
   currentCardItems,
   nextQuery: nextQueryParam,
 }: {
-  currentCardItems: PostCardProp[]
+  currentCardItems: CardProp[]
   nextQuery?: {
     q: string
     startIndex?: number
