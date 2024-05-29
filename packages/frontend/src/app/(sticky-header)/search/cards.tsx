@@ -13,7 +13,7 @@ const FlexContainer = styled(TransitionGroup)`
     min-width: 0;
   }
   gap: 30px;
-  margin: 0 auto 30px auto;
+  margin: 0 40px 30px 40px;
 
   ${mediaQuery.mediumAbove} {
     max-width: var(--normal-container-max-width);

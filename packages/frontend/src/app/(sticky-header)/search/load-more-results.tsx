@@ -80,9 +80,7 @@ export const LoadMoreResults = ({
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
       {nextQuery && !isLoading ? (
-        <LoadMoreBt onClick={loadMore}>
-          載入更多 {cardItems.length}/{}
-        </LoadMoreBt>
+        <LoadMoreBt onClick={loadMore}>載入更多 {cardItems.length}</LoadMoreBt>
       ) : null}
       {isLoading ? <LoadingGif src="/assets/images/loading.gif" /> : null}
     </Container>
