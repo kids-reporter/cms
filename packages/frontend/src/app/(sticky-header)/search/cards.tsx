@@ -6,17 +6,11 @@ import { createRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
 
 const FlexContainer = styled(TransitionGroup)`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   // Avoid grid cell overflow parent, ref: https://datacadamia.com/web/css/grid/overflow#overflow_example
   & > * {
     min-width: 0;
-  }
-  grid-template-columns: repeat(3, 1fr);
-  @media screen and (max-width: 999px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 1fr;
   }
   gap: 30px;
   margin: 0 auto 30px auto;

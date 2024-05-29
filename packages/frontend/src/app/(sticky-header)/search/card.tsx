@@ -26,7 +26,7 @@ export const Card = ({
     post && (
       <Link
         href={post.url}
-        className={`w-full h-full pl-1 pr-1 flex justify-start flex-col bg-transparent rounded-2xl theme-${
+        className={`w-full h-full pl-1 pr-1 flex justify-start flex-row bg-transparent rounded-2xl theme-${
           post.theme
         } ${className ?? ''}`}
       >
