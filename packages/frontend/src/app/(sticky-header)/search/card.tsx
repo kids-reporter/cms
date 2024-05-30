@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { PostSummary } from '@/app/components/types'
+import { PostCardProp } from '@/app/components/post-card'
 import { getFormattedDate } from '@/app/utils'
 
 const fallbackImg = '/assets/images/404.png'
@@ -9,11 +9,8 @@ export enum Loading {
   EAGER = 'eager',
 }
 
-export type CardProp = {
-  className?: string
-  post: PostSummary
-  isSimple?: boolean
-  loading?: Loading
+export type CardProp = PostCardProp & {
+  postCount?: number
 }
 
 export const Card = ({

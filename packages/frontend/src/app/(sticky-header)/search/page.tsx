@@ -3,7 +3,7 @@ import { LoadMoreResults } from './load-more-results'
 import { SearchTitle } from './styled'
 import {
   getFilteredSearchResults,
-  transferItemsToPostCards,
+  transferItemsToCards,
   defaultCount,
 } from '@/app/api/search/route'
 import { EMAIL } from '@/app/constants'
@@ -49,7 +49,7 @@ export default async function SearchPage({
   }
 
   const cardItems = Array.isArray(data?.items)
-    ? transferItemsToPostCards(data.items)
+    ? transferItemsToCards(data.items)
     : []
 
   return (
