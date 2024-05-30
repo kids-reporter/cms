@@ -10,6 +10,8 @@ import { sign } from 'jsonwebtoken'
 
 import _errors from '@twreporter/errors'
 
+const cookieName2fa = appConfig.twoFactorAuth.cookieName
+
 authenticator.options = {
   window: 1,
 }
@@ -62,8 +64,8 @@ export function twoFactorAuthRoute(
 
       if (
         context.session?.data.twoFactorAuth.set &&
-        (!req.cookies['keystonejs-2fa'] ||
-          !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
+        (!req.cookies[cookieName2fa] ||
+          !verify2FAJWT(req.cookies[cookieName2fa], context.session.itemId))
       ) {
         res
           .status(403)
@@ -147,8 +149,8 @@ export function twoFactorAuthRoute(
 
       if (
         context.session?.data.twoFactorAuth.set &&
-        (!req.cookies['keystonejs-2fa'] ||
-          !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
+        (!req.cookies[cookieName2fa] ||
+          !verify2FAJWT(req.cookies[cookieName2fa], context.session.itemId))
       ) {
         res
           .status(403)
@@ -233,8 +235,8 @@ export function twoFactorAuthRoute(
 
       if (
         context.session?.data.twoFactorAuth.set &&
-        (!req.cookies['keystonejs-2fa'] ||
-          !verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
+        (!req.cookies[cookieName2fa] ||
+          !verify2FAJWT(req.cookies[cookieName2fa], context.session.itemId))
       ) {
         res
           .status(401)
