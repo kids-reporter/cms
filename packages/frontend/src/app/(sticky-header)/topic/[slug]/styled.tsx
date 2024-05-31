@@ -152,7 +152,8 @@ export const BackgroundImage = styled.div<{
         1x,
       url(${({ $imageEntity }) =>
           $imageEntity?.resized?.medium ?? FALLBACK_IMG})
-        2x
+        2x,
+      url(${FALLBACK_IMG})
     );
     ${DownButton} {
       bottom: 30px;
