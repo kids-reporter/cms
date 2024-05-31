@@ -129,7 +129,8 @@ export const BackgroundImage = styled.div<{
   ${mediaQuery.largeOnly} {
     background-image: image-set(
       url(${({ $imageEntity }) => $imageEntity?.resized?.large ?? FALLBACK_IMG})
-        1x
+        1x,
+      url(${FALLBACK_IMG})
     );
     ${DownButton} {
       bottom: 50px;
@@ -165,11 +166,7 @@ export const BackgroundImage = styled.div<{
   ${mediaQuery.smallOnly} {
     ${({ $mobileImageEntity }) => {
       const url = $mobileImageEntity?.resized?.small ?? FALLBACK_IMG
-      if (url) {
-        return `background-image: url(${url})`
-      }
-
-      return ''
+      return `background-image: url(${url}), url(${FALLBACK_IMG})`
     }}
   }
 `
