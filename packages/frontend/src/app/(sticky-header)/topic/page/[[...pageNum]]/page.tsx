@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
+import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
@@ -74,9 +75,9 @@ const TopicCard = (props: { topic: TopicSummary }) => {
     <Link href={topic.url}>
       <div className="flex relative flex-col lg:flex-row items-stretch">
         <div className={styles['hero-image-container']}>
-          <img
+          <ImageWithFallback
             className="w-full h-full object-cover align-middle"
-            src={topic.image}
+            src={topic.image ?? FALLBACK_IMG}
             loading="lazy"
           />
         </div>

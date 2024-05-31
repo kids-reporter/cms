@@ -104,7 +104,8 @@ export const BackgroundImage = styled.div<{
     url(${({ $imageEntity }) => $imageEntity?.resized?.medium ?? FALLBACK_IMG})
       1x,
     url(${({ $imageEntity }) => $imageEntity?.resized?.large ?? FALLBACK_IMG})
-      2x
+      2x,
+    url(${FALLBACK_IMG})
   );
   background-repeat: no-repeat;
   background-size: cover;

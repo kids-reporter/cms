@@ -1,4 +1,5 @@
 import { Photo } from '@/app/types'
+import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import { FALLBACK_IMG } from '@/app/constants'
 
 type HeroImageProp = {
@@ -17,7 +18,7 @@ export const HeroImage = (props: HeroImageProp) => {
     image && (
       <figure className="max-w-5xl mx-auto pt-10 pb-12">
         <div className="relative inline-flex w-full overflow-hidden">
-          <img
+          <ImageWithFallback
             className="max-w-full object-contain"
             srcSet={`${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`}
             sizes="(min-width: 1100px) 1000px, 90vw"

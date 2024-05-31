@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { PostSummary } from '@/app/components/types'
+import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import { getFormattedDate } from '@/app/utils'
 import { FALLBACK_IMG } from '@/app/constants'
 
@@ -33,7 +34,7 @@ export const PostCard = ({
           style={{ height: 'calc(100% / 16 * 9)', aspectRatio: '16/9' }}
           className="max-w-full"
         >
-          <img
+          <ImageWithFallback
             style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
             className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
             src={post.image ?? FALLBACK_IMG}
