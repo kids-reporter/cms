@@ -135,7 +135,7 @@ async function getSearchResults({
 
 const filterItems = (
   accumulatedItems: any[],
-  items?: customsearch_v1.Schema$Result[]
+  items: customsearch_v1.Schema$Result[]
 ) => {
   return Array.isArray(items)
     ? items.filter((item) => {
