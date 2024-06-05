@@ -133,16 +133,25 @@ async function getSearchResults({
   }
 }
 
-const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
+const filterItems = (
+  accumulatedItems: any[],
+  items?: customsearch_v1.Schema$Result[]
+) => {
   return Array.isArray(items)
     ? items.filter((item) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
-        return (
-          contentType === ContentType.ARTICLE ||
-          contentType === ContentType.TOPIC ||
-          contentType === ContentType.AUTHOR ||
-          contentType === ContentType.TAG
-        )
+        console.log(accumulatedItems?.length)
+        if (contentType === ContentType.AUTHOR) {
+          const slug = item?.link ? /author\/(.)*\//g.exec(item.link) : ''
+          console.log(item.link, slug)
+          return true // accumulatedItems.find(acc => acc.slug === slug) ?? false
+        } else {
+          return (
+            contentType === ContentType.ARTICLE ||
+            contentType === ContentType.TOPIC ||
+            contentType === ContentType.TAG
+          )
+        }
       })
     : items
 }
@@ -191,7 +200,7 @@ export async function getFilteredSearchResults({
     }
   }
   let _accItems = accumulatedItems
-  const items = filterItems(searchResults?.items)
+  const items = filterItems(_accItems, searchResults?.items)
   if (Array.isArray(items)) {
     _accItems = _accItems.concat(items)
     // repeatedly request API to get enough items
