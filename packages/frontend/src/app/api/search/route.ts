@@ -134,17 +134,35 @@ async function getSearchResults({
 }
 
 const filterItems = (
-  accumulatedItems: any[],
+  accumulatedItems: customsearch_v1.Schema$Result[],
   items: customsearch_v1.Schema$Result[]
 ) => {
+  const getSlugFromLink = (link: string | undefined | null) => {
+    const authorRegex = /author\/([^/]*)\/?/
+    return link?.match(authorRegex)?.[1]
+  }
+
+  const isAuthorUnique = (
+    slug: string | undefined,
+    accumulatedItems: customsearch_v1.Schema$Result[]
+  ) => {
+    return (
+      slug &&
+      !accumulatedItems.find((accItem) => {
+        return (
+          accItem?.pagemap?.metatags?.[0]?.['contenttype'] ===
+            ContentType.AUTHOR && getSlugFromLink(accItem?.link) === slug
+        )
+      })
+    )
+  }
+
   return Array.isArray(items)
     ? items.filter((item) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
-        console.log(accumulatedItems?.length)
         if (contentType === ContentType.AUTHOR) {
-          const slug = item?.link ? /author\/(.)*\//g.exec(item.link) : ''
-          console.log(item.link, slug)
-          return true // accumulatedItems.find(acc => acc.slug === slug) ?? false
+          const slug = getSlugFromLink(item?.link)
+          return isAuthorUnique(slug, accumulatedItems)
         } else {
           return (
             contentType === ContentType.ARTICLE ||
