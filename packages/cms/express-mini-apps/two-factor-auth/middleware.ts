@@ -5,6 +5,8 @@ import { gql } from '@keystone-6/core/admin-ui/apollo'
 import { verify2FAJWT } from './index'
 import appConfig from '../../config'
 
+const cookieName2fa = appConfig.twoFactorAuth.cookieName
+
 export function twoFactorAuthMiddleware(
   app: Express,
   commonContext: KeystoneContext
@@ -112,8 +114,8 @@ export function twoFactorAuthMiddleware(
       // Redirect to home if 2FA is verified
       if (
         context.session?.data.twoFactorAuth.bypass ||
-        (req.cookies['keystonejs-2fa'] &&
-          verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId))
+        (req.cookies[cookieName2fa] &&
+          verify2FAJWT(req.cookies[cookieName2fa], context.session.itemId))
       ) {
         const from = req.query.from
         res.locals.skip2fa = true
@@ -203,8 +205,8 @@ export function twoFactorAuthMiddleware(
       const context = await commonContext.withRequest(req, res)
 
       if (
-        req.cookies['keystonejs-2fa'] &&
-        verify2FAJWT(req.cookies['keystonejs-2fa'], context.session.itemId)
+        req.cookies[cookieName2fa] &&
+        verify2FAJWT(req.cookies[cookieName2fa], context.session.itemId)
       ) {
         return next('route')
       }
