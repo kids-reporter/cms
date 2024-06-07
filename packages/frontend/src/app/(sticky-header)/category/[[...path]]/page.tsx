@@ -55,7 +55,7 @@ query($where: SubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
 `
 
 const subSubcategoryPostsGQL = `
-query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
+query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!, $orderBy: [PostOrderByInput!]!) {
   subSubcategory(where: $where) {
     subcategory {
       slug
@@ -63,7 +63,7 @@ query($where: SubSubcategoryWhereUniqueInput!, $take: Int!, $skip: Int!) {
         slug
       }
     }
-    relatedPosts(take: $take, skip: $skip) {
+    relatedPosts(take: $take, skip: $skip, orderBy: $orderBy) {
       ${POST_CONTENT_GQL}
     }
     relatedPostsCount
@@ -198,15 +198,25 @@ export default async function Category({ params }: { params: { path: any } }) {
     query = categoryPostsGQL
     slug = category
   }
+  const commonVars = {
+    where: {
+      slug: slug,
+    },
+    take: POST_PER_PAGE,
+    skip: (currentPage - 1) * POST_PER_PAGE,
+  }
   const postsRes = await sendGQLRequest({
     query: query,
-    variables: {
-      where: {
-        slug: slug,
-      },
-      take: POST_PER_PAGE,
-      skip: (currentPage - 1) * POST_PER_PAGE,
-    },
+    variables: subSubcategory
+      ? {
+          ...commonVars,
+          orderBy: [
+            {
+              publishedDate: 'desc',
+            },
+          ],
+        }
+      : commonVars,
   })
   if (!postsRes) {
     log(LogLevel.WARNING, `Empty related posts!`)
