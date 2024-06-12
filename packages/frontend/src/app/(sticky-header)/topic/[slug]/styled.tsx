@@ -100,12 +100,10 @@ export const BackgroundImage = styled.div<{
 }>`
   width: 100vw;
   height: calc(100vh - ${STICKY_HEADER_HEIGHT}px);
+  background-image: url(${FALLBACK_IMG});
   background-image: image-set(
-    url(${({ $imageEntity }) => $imageEntity?.resized?.medium ?? FALLBACK_IMG})
-      1x,
-    url(${({ $imageEntity }) => $imageEntity?.resized?.large ?? FALLBACK_IMG})
-      2x,
-    url(${FALLBACK_IMG})
+    url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 1x,
+    url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 2x
   );
   background-repeat: no-repeat;
   background-size: cover;
@@ -128,9 +126,7 @@ export const BackgroundImage = styled.div<{
 
   ${mediaQuery.largeOnly} {
     background-image: image-set(
-      url(${({ $imageEntity }) => $imageEntity?.resized?.large ?? FALLBACK_IMG})
-        1x,
-      url(${FALLBACK_IMG})
+      url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 1x
     );
     ${DownButton} {
       bottom: 50px;
@@ -149,12 +145,8 @@ export const BackgroundImage = styled.div<{
 
   ${mediaQuery.smallOnly} {
     background-image: image-set(
-      url(${({ $imageEntity }) => $imageEntity?.resized?.small ?? FALLBACK_IMG})
-        1x,
-      url(${({ $imageEntity }) =>
-          $imageEntity?.resized?.medium ?? FALLBACK_IMG})
-        2x,
-      url(${FALLBACK_IMG})
+      url(${({ $imageEntity }) => $imageEntity?.resized?.small}) 1x,
+      url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 2x
     );
     ${DownButton} {
       bottom: 30px;
@@ -165,8 +157,7 @@ export const BackgroundImage = styled.div<{
 
   ${mediaQuery.smallOnly} {
     ${({ $mobileImageEntity }) => {
-      const url = $mobileImageEntity?.resized?.small ?? FALLBACK_IMG
-      return `background-image: url(${url}), url(${FALLBACK_IMG})`
+      return `background-image: url(${$mobileImageEntity?.resized?.small})`
     }}
   }
 `
