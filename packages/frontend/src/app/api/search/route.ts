@@ -133,16 +133,43 @@ async function getSearchResults({
   }
 }
 
-const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
+const filterItems = (
+  accumulatedItems: customsearch_v1.Schema$Result[],
+  items: customsearch_v1.Schema$Result[]
+) => {
+  const getSlugFromLink = (link: string | undefined | null) => {
+    const authorRegex = /author\/([^/]*)\/?/
+    return link?.match(authorRegex)?.[1]
+  }
+
+  const isAuthorUnique = (
+    slug: string | undefined,
+    accumulatedItems: customsearch_v1.Schema$Result[]
+  ) => {
+    return (
+      slug &&
+      !accumulatedItems.find((accItem) => {
+        return (
+          accItem?.pagemap?.metatags?.[0]?.['contenttype'] ===
+            ContentType.AUTHOR && getSlugFromLink(accItem?.link) === slug
+        )
+      })
+    )
+  }
+
   return Array.isArray(items)
     ? items.filter((item) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
-        return (
-          contentType === ContentType.ARTICLE ||
-          contentType === ContentType.TOPIC ||
-          contentType === ContentType.AUTHOR ||
-          contentType === ContentType.TAG
-        )
+        if (contentType === ContentType.AUTHOR) {
+          const slug = getSlugFromLink(item?.link)
+          return isAuthorUnique(slug, accumulatedItems)
+        } else {
+          return (
+            contentType === ContentType.ARTICLE ||
+            contentType === ContentType.TOPIC ||
+            contentType === ContentType.TAG
+          )
+        }
       })
     : items
 }
@@ -191,7 +218,7 @@ export async function getFilteredSearchResults({
     }
   }
   let _accItems = accumulatedItems
-  const items = filterItems(searchResults?.items)
+  const items = filterItems(_accItems, searchResults?.items)
   if (Array.isArray(items)) {
     _accItems = _accItems.concat(items)
     // repeatedly request API to get enough items
