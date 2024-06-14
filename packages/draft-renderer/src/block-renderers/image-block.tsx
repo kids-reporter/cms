@@ -134,7 +134,7 @@ export function ImageInArticleBody({
   )
 }
 
-const InfoBoxContainer = styled.div<{ $alignment?: string }>`
+export const InfoBoxContainer = styled.div<{ $alignment?: string }>`
   /* reset browser default styles */
   figure {
     margin: 0 0 27px 0;

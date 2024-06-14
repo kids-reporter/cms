@@ -5,6 +5,7 @@ import {
   blockRenderMap as blockRenderMapForInfoBox,
   blockRenderMapForInfoBoxWithHeaderBorder,
 } from './info-box'
+import { blockRenderMap as blockRenderMapForImageLink } from './image-link'
 import { blockRenderMap as blockRenderMapForProjectContent } from './project-content'
 
 export default {
@@ -17,6 +18,7 @@ export default {
     default: blockRenderMapForInfoBox,
     headerBorder: blockRenderMapForInfoBoxWithHeaderBorder,
   },
+  imageLink: blockRenderMapForImageLink,
   // project page content
   projectContent: blockRenderMapForProjectContent,
 }
