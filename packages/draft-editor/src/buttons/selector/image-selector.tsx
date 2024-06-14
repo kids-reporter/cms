@@ -7,6 +7,24 @@ import { AlignSelector } from './align-selector'
 import { SearchBox as _SearchBox, SearchBoxOnChangeFn } from './search-box'
 import { Pagination } from './pagination'
 
+export enum ImageAlignment {
+  DEFAULT = 'default',
+  PARAGRAPH = 'paragraph-width',
+  LEFT = 'left',
+  RIGHT = 'right',
+}
+
+export const ImageAlignOptions = [
+  { value: ImageAlignment.DEFAULT, label: '預設', isDisabled: false },
+  {
+    value: ImageAlignment.PARAGRAPH,
+    label: '與文章段落等寬',
+    isDisabled: false,
+  },
+  { value: ImageAlignment.LEFT, label: '靠左', isDisabled: false },
+  { value: ImageAlignment.RIGHT, label: '靠右', isDisabled: false },
+]
+
 const _ = {
   debounce,
 }
@@ -197,7 +215,7 @@ export function ImageSelector(props: {
   selected?: ImageEntityWithMeta[]
   alignment?: string
 }) {
-  const alignment = props.alignment || 'default'
+  const alignment = props.alignment || ImageAlignment.DEFAULT
   const [
     queryImages,
     {
@@ -215,13 +233,6 @@ export function ImageSelector(props: {
   const contentWrapperRef = useRef<HTMLDivElement>(null)
 
   const pageSize = 6
-
-  const options = [
-    { value: 'default', label: 'default', isDisabled: false },
-    { value: 'paragraph-width', label: '與文章段落等寬', isDisabled: false },
-    { value: 'left', label: 'left', isDisabled: false },
-    { value: 'right', label: 'right', isDisabled: false },
-  ]
 
   const {
     enableMultiSelect = false,
@@ -380,7 +391,7 @@ export function ImageSelector(props: {
           {enableAlignment && (
             <AlignSelector
               align={align}
-              options={options}
+              options={ImageAlignOptions}
               onChange={onAlignSelectChange}
               onOpen={onAlignSelectOpen}
             />
