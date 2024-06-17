@@ -11,6 +11,7 @@ import { EmbeddedCodeButton } from './embedded-code'
 import { EnlargeButton } from './enlarge'
 import { FontColorButton } from './font-color'
 import { ImageButton } from './image'
+import { ImageLinkButton } from './image-link'
 import { TOCAnchorButton } from './toc-anchor'
 import { AnchorButton } from './anchor'
 import { LinkButton } from './link'
@@ -36,6 +37,7 @@ export const CustomEnlargeButton = styled(withStyle(EnlargeButton))`
   color: #999;
 `
 export const CustomImageButton = withStyle(ImageButton)
+export const CustomImageLinkButton = withStyle(ImageLinkButton)
 export const CustomSlideshowButton = withStyle(SlideshowButton)
 export const CustomEmbeddedCodeButton = withStyle(EmbeddedCodeButton)
 export const CustomNewsReadingButton = withStyle(NewsReadingButton)

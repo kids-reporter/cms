@@ -5,6 +5,7 @@ const {
   Divider,
   EmbeddedCodeInArticleBody,
   ImageInArticleBody,
+  ImageLinkInArticleBody,
   InfoBoxInArticleBody,
   SlideshowInArticleBody,
   NewsReading,
@@ -20,27 +21,22 @@ const AtomicBlock = (props: {
   const entityData = entity.getData()
 
   switch (entityType) {
-    case 'BLOCKQUOTE': {
+    case 'BLOCKQUOTE':
       return BlockquoteInArticleBody({ data: entityData })
-    }
-    case 'DIVIDER': {
+    case 'DIVIDER':
       return Divider()
-    }
-    case 'IMAGE': {
+    case 'IMAGE':
       return ImageInArticleBody({ data: entityData })
-    }
-    case 'SLIDESHOW': {
+    case 'IMAGE_LINK':
+      return ImageLinkInArticleBody({ data: entityData })
+    case 'SLIDESHOW':
       return SlideshowInArticleBody({ data: entityData })
-    }
-    case 'EMBEDDEDCODE': {
+    case 'EMBEDDEDCODE':
       return EmbeddedCodeInArticleBody({ data: entityData })
-    }
-    case 'INFOBOX': {
+    case 'INFOBOX':
       return InfoBoxInArticleBody({ data: entityData })
-    }
-    case 'NEWS_READING': {
+    case 'NEWS_READING':
       return NewsReading({ data: entityData })
-    }
   }
   return null
 }

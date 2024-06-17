@@ -145,6 +145,7 @@ const listConfigurations = list({
         richTextEditorButtonNames.h4,
         richTextEditorButtonNames.h5,
         richTextEditorButtonNames.image,
+        richTextEditorButtonNames.imageLink,
         richTextEditorButtonNames.infoBox,
         richTextEditorButtonNames.slideshow,
         richTextEditorButtonNames.newsReading,

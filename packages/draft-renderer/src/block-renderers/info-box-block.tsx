@@ -10,6 +10,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import blockRenderMaps from '../block-render-maps/index'
 import { ImageInInfoBox } from '../block-renderers/image-block'
+import { ImageLinkInInfoBox } from '../block-renderers/image-link'
 import { ThemeColorEnum } from '../utils/index'
 import { decorator } from '../entity-decorators/index'
 import { mediaQuery } from '../utils/media-query'
@@ -207,9 +208,10 @@ function AtomicBlock(props: {
   const entityData = entity.getData()
 
   switch (entityType) {
-    case 'IMAGE': {
+    case 'IMAGE':
       return ImageInInfoBox({ data: entityData })
-    }
+    case 'IMAGE_LINK':
+      return ImageLinkInInfoBox({ data: entityData })
   }
   return null
 }
