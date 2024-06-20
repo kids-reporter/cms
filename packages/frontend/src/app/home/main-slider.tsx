@@ -9,6 +9,7 @@ import {
   Navigation,
   Pagination,
 } from 'swiper/modules'
+import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import { ArrowLeft, ArrowRight } from '@/app/icons/arrow'
 import { Theme, DEFAULT_THEME_COLOR } from '@/app/constants'
 
@@ -98,7 +99,7 @@ export const MainSlider = (props: SliderProp) => {
                       }}
                       className="max-w-full"
                     >
-                      <img
+                      <ImageWithFallback
                         className="w-full h-full object-cover rounded-none md:rounded-2xl"
                         src={topic.image}
                         loading="eager"

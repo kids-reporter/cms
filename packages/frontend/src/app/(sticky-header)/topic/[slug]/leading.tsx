@@ -1,6 +1,11 @@
 'use client'
 import styled from 'styled-components'
-import { Container, FullSizeImage, DownButton, TitleContainer } from './styled'
+import {
+  Container,
+  FullScreenImage,
+  DownButton,
+  TitleContainer,
+} from './styled'
 import { Photo } from '@/app/types'
 import { useRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
@@ -93,7 +98,7 @@ export const Leading = ({
   }
   return (
     <Container ref={ref}>
-      <FullSizeImage
+      <FullScreenImage
         imageEntity={backgroundImage}
         mobileImageEntity={mobileBgImage}
       />

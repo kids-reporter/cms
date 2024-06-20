@@ -10,6 +10,7 @@ export const ImageWithFallback = (
       onError={({ currentTarget }) => {
         currentTarget.onerror = null
         currentTarget.src = FALLBACK_IMG
+        currentTarget.srcset = ''
       }}
     />
   )

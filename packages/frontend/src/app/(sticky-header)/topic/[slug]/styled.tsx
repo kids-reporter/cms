@@ -139,7 +139,7 @@ export const Container = styled.div`
   }
 `
 
-export const FullSizeImage = (props: {
+export const FullScreenImage = (props: {
   imageEntity: Photo
   mobileImageEntity?: Photo
 }) => {
