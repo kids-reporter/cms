@@ -52,7 +52,7 @@ export const sendGQLRequest = async (
   data?: any,
   config?: AxiosRequestConfig<any> | undefined
 ) => {
-  // Define url based on environment
+  // Define url based on environment, dev/staging needs pure internal api to bypass Identity-Aware Proxy(IAP)
   let url
   if (typeof window === 'undefined' && !isProduction) {
     url = INTERNAL_API_URL
