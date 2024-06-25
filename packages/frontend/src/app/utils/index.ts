@@ -3,6 +3,7 @@ import errors from '@twreporter/errors'
 import { Theme, ThemeColor } from '@/app/constants'
 import { PostSummary } from '@/app/components/types'
 import { DEFAULT_THEME_COLOR, API_URL, INTERNAL_API_URL } from '@/app/constants'
+import { isProduction } from '@/environment-variables'
 
 export const getThemeColor = (theme: Theme) => {
   if (theme === Theme.YELLOW) {
@@ -53,7 +54,7 @@ export const sendGQLRequest = async (
 ) => {
   // Define url based on environment
   let url
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined' && !isProduction) {
     url = INTERNAL_API_URL
   } else {
     url = API_URL
