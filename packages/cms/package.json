@@ -3,6 +3,7 @@
   "version": "1.0.9",
   "description": "",
   "scripts": {
+    "dev": "keystone dev",
     "start": "keystone start",
     "db-migrate": "keystone prisma migrate deploy",
     "build": "keystone build",
