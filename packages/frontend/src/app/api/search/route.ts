@@ -87,7 +87,7 @@ export function transferItemsToCards(
             },
           },
         })
-        console.log(topicRes?.data?.data?.topic.relatedPostsCount)
+        console.log(topicRes?.data?.data?.topic?.relatedPostsCount)
       } else if (contentType === ContentType.AUTHOR) {
         category = '作者'
         const authorRes = await sendGQLRequest({
@@ -98,7 +98,7 @@ export function transferItemsToCards(
             },
           },
         })
-        console.log(authorRes?.data?.data?.author.postsCount)
+        console.log(authorRes?.data?.data?.author?.postsCount)
       } else if (contentType === ContentType.TAG) {
         category = '標籤'
         const tagRes = await sendGQLRequest({
@@ -109,7 +109,7 @@ export function transferItemsToCards(
             },
           },
         })
-        console.log(tagRes?.data?.data?.tag.postsCount)
+        console.log(tagRes?.data?.data?.tag?.postsCount)
       }
 
       // TODO: postsCount, topic hero image
