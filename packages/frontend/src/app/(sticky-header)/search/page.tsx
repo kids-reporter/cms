@@ -54,7 +54,13 @@ export default async function SearchPage({
     : []
 
   const searchInput = (
-    <form role="search" method="get" action="/search" aria-haspopup="listbox">
+    <form
+      className="flex flex-row"
+      role="search"
+      method="get"
+      action="/search"
+      aria-haspopup="listbox"
+    >
       <input
         type="text"
         placeholder={searchParams.q}
@@ -74,7 +80,7 @@ export default async function SearchPage({
   )
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       <img src="/assets/images/search-result.png" />
       {searchInput}
       <LoadMoreResults
