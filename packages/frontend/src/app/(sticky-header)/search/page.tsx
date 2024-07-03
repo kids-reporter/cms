@@ -81,7 +81,7 @@ export default async function SearchPage({
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <img src="/assets/images/search-result.png" />
+      <img src="/assets/images/search-result.png" loading="lazy" />
       {searchInput}
       <LoadMoreResults
         currentCardItems={cardItems}
