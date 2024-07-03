@@ -5,6 +5,7 @@ import {
   EmbeddedCodeInArticleBody,
 } from './embedded-code-block'
 import { ImageBlock, ImageInArticleBody } from './image-block'
+import { ImageLinkInArticleBody } from './image-link'
 import { InfoBoxInArticleBody } from './info-box-block'
 import { SlideshowBlock, SlideshowInArticleBody } from './slideshow-block'
 import { NewsReading } from './news-reading'
@@ -16,6 +17,7 @@ export const blockRenderers = {
   EmbeddedCodeInArticleBody,
   ImageBlock,
   ImageInArticleBody,
+  ImageLinkInArticleBody,
   InfoBoxInArticleBody,
   NewsReading,
   SlideshowBlock,

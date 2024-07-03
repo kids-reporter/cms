@@ -14,13 +14,14 @@ import {
   AuthorRole,
 } from '@/app/constants'
 import { sendGQLRequest } from '@/app/utils'
+import { isProduction } from '@/environment-variables'
 
 export const metadata: Metadata = {
   title: '關於少年報導者 - 少年報導者 The Reporter for Kids',
   description: GENERAL_DESCRIPTION,
 }
 
-export const revalidate = 86400
+export const revalidate = isProduction ? 86400 : 0 // 1 day
 
 const authorGQL = `
 query($where: AuthorWhereUniqueInput!) {
@@ -372,7 +373,7 @@ export default async function About() {
       </div>
       <img
         className="max-w-4xl w-full"
-        src={'/assets/images/about_certification_template.jpg'}
+        src={'/assets/images/about_certification_template.png'}
         loading="lazy"
       />
       <p

@@ -37,6 +37,7 @@ import {
   CustomFontColorButton,
   CustomBlockquoteButton,
   CustomImageButton,
+  CustomImageLinkButton,
   CustomSlideshowButton,
   CustomEmbeddedCodeButton,
   CustomNewsReadingButton,
@@ -349,6 +350,10 @@ class RichTextEditor extends React.Component<
               <CustomImageButton
                 isDisabled={disabledButtons.includes(buttonNames.image)}
                 ImageSelector={ImageSelector}
+                {...commonProps}
+              />
+              <CustomImageLinkButton
+                isDisabled={disabledButtons.includes(buttonNames.imageLink)}
                 {...commonProps}
               />
               <CustomSlideshowButton
