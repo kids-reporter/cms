@@ -77,6 +77,7 @@ export const LoadMoreResults = ({
 
   return (
     <Container>
+      <div>找到{}項結果</div>
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
       {nextQuery && !isLoading ? (

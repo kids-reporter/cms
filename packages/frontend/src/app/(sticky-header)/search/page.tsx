@@ -6,6 +6,7 @@ import {
   transferItemsToCards,
   defaultCount,
 } from '@/app/api/search/route'
+import { CrossIcon } from '@/app/icons'
 import { EMAIL } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
 
@@ -52,9 +53,30 @@ export default async function SearchPage({
     ? transferItemsToCards(data.items)
     : []
 
+  const searchInput = (
+    <form role="search" method="get" action="/search" aria-haspopup="listbox">
+      <input
+        type="text"
+        placeholder={searchParams.q}
+        name="q"
+        title="Search for..."
+        aria-label="Search for..."
+        autoFocus
+      />
+      <button
+        className="flex flex-row justify-center items-center"
+        type="submit"
+        aria-label="搜尋按鈕"
+      >
+        {CrossIcon}
+      </button>
+    </form>
+  )
+
   return (
     <div>
-      <SearchTitle>搜尋結果 {searchParams.q}</SearchTitle>
+      <img src="/assets/images/search-result.png" />
+      {searchInput}
       <LoadMoreResults
         currentCardItems={cardItems}
         nextQuery={data.nextQuery}
