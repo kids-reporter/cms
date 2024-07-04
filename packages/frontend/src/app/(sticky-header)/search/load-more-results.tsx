@@ -73,7 +73,7 @@ export const LoadMoreResults = ({
 
   return (
     <div className="text-center max-w-4xl w-full">
-      <span>找到{}項結果</span>
+      <div className="w-full text-left">找到{}項結果</div>
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
       {nextQuery && !isLoading ? (
