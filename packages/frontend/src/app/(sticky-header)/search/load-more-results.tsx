@@ -7,10 +7,6 @@ import { Cards, CardProp } from './cards'
 import { useState } from 'react'
 import { AXIOS_TIMEOUT } from '@/app/utils'
 
-const Container = styled.div`
-  text-align: center;
-`
-
 const LoadMoreBt = styled.div`
   color: #232323;
   font-size: 16px;
@@ -76,7 +72,7 @@ export const LoadMoreResults = ({
   }
 
   return (
-    <Container>
+    <div className="text-center max-w-4xl w-full">
       <span>找到{}項結果</span>
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
@@ -84,7 +80,7 @@ export const LoadMoreResults = ({
         <LoadMoreBt onClick={loadMore}>載入更多</LoadMoreBt>
       ) : null}
       {isLoading ? <LoadingGif src="/assets/images/loading.gif" /> : null}
-    </Container>
+    </div>
   )
 }
 

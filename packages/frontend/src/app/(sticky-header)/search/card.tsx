@@ -19,20 +19,25 @@ export const Card = ({
   isSimple = false,
   loading = Loading.LAZY,
 }: CardProp) => {
-  const desc = (
+  const textPart = (
     <div
       style={{ borderRadius: isSimple ? '0 0 20px 20px' : '' }}
-      className={`h-full flex flex-col justify-between pt-5 pb-1 md:pb-5 ${
+      className={`h-full flex flex-col justify-between gap-11 pb-1 md:pb-5 ${
         isSimple ? 'px-5' : ''
       } bg-white`}
     >
-      <div className="flex flex-col justify-start">
-        <span
-          style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
-          className="text-left font-medium text-base tracking-wider mb-1"
-        >
-          {post.category}
-        </span>
+      <div className="flex flex-col justify-start gap-1.5">
+        <div className="flex flex-row">
+          <span
+            style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
+            className="text-left font-medium text-base tracking-wider mb-1"
+          >
+            {post.category}
+          </span>
+          <span className="text-gray-500 text-xs">
+            {(post.publishedDate && getFormattedDate(post.publishedDate)) ?? ''}
+          </span>
+        </div>
         <span
           style={{
             minHeight: 'auto',
@@ -42,7 +47,7 @@ export const Card = ({
             lineHeight: '160%',
             letterSpacing: '0.08em',
           }}
-          className="md:min-h-16 overflow-hidden not-italic font-bold text-xl text-gray-900 text-left mb-5"
+          className="md:min-h-16 overflow-hidden not-italic font-bold text-xl text-gray-900 text-left"
         >
           {post.title}
         </span>
@@ -51,10 +56,10 @@ export const Card = ({
             style={{
               display: '-webkit-box',
               WebkitBoxOrient: 'vertical',
-              WebkitLineClamp: '3',
+              WebkitLineClamp: '2',
               lineHeight: '160%',
             }}
-            className="overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900 mb-5"
+            className="overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900"
           >
             {post.desc}
           </span>
@@ -76,11 +81,8 @@ export const Card = ({
     </div>
   )
 
-  const image = (
-    <div
-      style={{ height: 'calc(100% / 16 * 9)', aspectRatio: '16/9' }}
-      className="max-w-full"
-    >
+  const imagePart = (
+    <div style={{ aspectRatio: '16/9' }} className="max-w-full h-40">
       <img
         style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
         className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
@@ -94,12 +96,12 @@ export const Card = ({
     post && (
       <Link
         href={post.url}
-        className={`w-full h-full pl-1 pr-1 flex justify-start flex-row bg-transparent rounded-2xl theme-${
+        className={`w-full h-40 pl-1 pr-1 flex justify-start flex-row gap-6 bg-transparent rounded-2xl theme-${
           post.theme
         } ${className ?? ''}`}
       >
-        {desc}
-        {image}
+        {textPart}
+        {imagePart}
       </Link>
     )
   )
