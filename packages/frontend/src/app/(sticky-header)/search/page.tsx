@@ -6,8 +6,7 @@ import {
   transferItemsToCards,
   defaultCount,
 } from '@/app/api/search/route'
-import { CrossIcon } from '@/app/icons'
-import { EMAIL } from '@/app/constants'
+import { EMAIL, SEARCH_PLACEHOLDER } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
 
 const apiKey = process.env.SEARCH_API_KEY || ''
@@ -55,26 +54,26 @@ export default async function SearchPage({
 
   const searchInput = (
     <form
-      className="flex flex-row"
+      className="flex flex-row max-w-md w-full h-10 mb-12"
       role="search"
       method="get"
       action="/search"
       aria-haspopup="listbox"
     >
       <input
-        type="text"
-        placeholder={searchParams.q}
+        className="w-full h-full border-solid border rounded-full text-base pl-3 pr-10 focus:outline-none"
+        style={{
+          color: '#232323',
+          backgroundColor: '#F5F5F5',
+          borderColor: '#A3A3A3',
+        }}
+        type="search"
+        value={searchParams.q}
+        placeholder={SEARCH_PLACEHOLDER}
         name="q"
         title="Search for..."
         aria-label="Search for..."
       />
-      <button
-        className="flex flex-row justify-center items-center"
-        type="submit"
-        aria-label="搜尋按鈕"
-      >
-        {CrossIcon}
-      </button>
     </form>
   )
 
