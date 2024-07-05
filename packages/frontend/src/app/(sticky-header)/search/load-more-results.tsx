@@ -73,12 +73,6 @@ export const LoadMoreResults = ({
 
   return (
     <div className="text-center max-w-4xl w-full">
-      <p
-        style={{ lineHeight: '36px', letterSpacing: '0.08em' }}
-        className="w-full h-9 text-left text-sm text-gray-700 align-bottom border-t-2 border-gray-200"
-      >
-        找到{}項結果
-      </p>
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
       {nextQuery && !isLoading ? (

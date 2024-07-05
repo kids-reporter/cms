@@ -47,6 +47,7 @@ type SearchResult = {
     startIndex?: number
     q: string
   }
+  totalResults?: string
   items: customsearch_v1.Schema$Result[]
 }
 
@@ -177,6 +178,7 @@ async function getSearchResults({
     ? {
         startIndex: nextPage.startIndex,
         count: nextPage.count,
+        totalResults: nextPage.totalResults,
         q,
       }
     : undefined
@@ -269,6 +271,7 @@ export async function getFilteredSearchResults({
 
   return {
     nextQuery: searchResults.nextQuery,
+    totalResults: searchResults.nextQuery?.totalResults,
     items: _accItems,
   }
 }

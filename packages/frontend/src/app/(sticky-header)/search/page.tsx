@@ -77,10 +77,20 @@ export default async function SearchPage({
     </form>
   )
 
+  const resultCount = data?.totalResults && (
+    <p
+      style={{ lineHeight: '36px', letterSpacing: '0.08em' }}
+      className="w-full h-9 text-left text-sm text-gray-700 align-bottom border-t-2 border-gray-200"
+    >
+      找到{data.totalResults}項結果
+    </p>
+  )
+
   return (
     <div className="flex flex-col justify-center items-center">
       <img src="/assets/images/search-result.png" loading="lazy" />
       {searchInput}
+      {resultCount}
       <LoadMoreResults
         currentCardItems={cardItems}
         nextQuery={data.nextQuery}
