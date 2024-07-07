@@ -1,13 +1,8 @@
 import Link from 'next/link'
-import { PostSummary } from '@/app/components/types'
+import { PostSummary, Loading } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 
 const fallbackImg = '/assets/images/404.png'
-
-export enum Loading {
-  LAZY = 'lazy',
-  EAGER = 'eager',
-}
 
 export type PostCardProp = {
   className?: string

@@ -10,3 +10,8 @@ export type PostSummary = {
   publishedDate: string
   theme: Theme
 }
+
+export enum Loading {
+  LAZY = 'lazy',
+  EAGER = 'eager',
+}

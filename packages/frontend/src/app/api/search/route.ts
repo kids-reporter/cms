@@ -51,15 +51,15 @@ type SearchResult = {
   items: customsearch_v1.Schema$Result[]
 }
 
-export function transferItemsToCards(
+export async function transferItemsToCards(
   items: customsearch_v1.Schema$Result[]
-): CardProp[] {
+): Promise<CardProp[]> {
   if (!Array.isArray(items)) {
     return items
   }
 
   const cardItems: CardProp[] = []
-  items.forEach(async (item) => {
+  for (const item of items) {
     const metaTag = item?.pagemap?.metatags?.[0]
     const creativeWork = item?.pagemap?.creativework?.[0]
     const image = creativeWork?.image || metaTag?.['og:image']
@@ -77,6 +77,7 @@ export function transferItemsToCards(
       contentType === ContentType.TAG
     ) {
       let category = metaTag?.['category'] ?? ''
+      let postCount = 0
       const slug = url.split('/').pop()
       if (contentType === ContentType.TOPIC) {
         category = '專題'
@@ -88,7 +89,7 @@ export function transferItemsToCards(
             },
           },
         })
-        console.log(topicRes?.data?.data?.topic?.relatedPostsCount)
+        postCount = topicRes?.data?.data?.topic?.relatedPostsCount
       } else if (contentType === ContentType.AUTHOR) {
         category = '作者'
         const authorRes = await sendGQLRequest({
@@ -99,7 +100,7 @@ export function transferItemsToCards(
             },
           },
         })
-        console.log(authorRes?.data?.data?.author?.postsCount)
+        postCount = authorRes?.data?.data?.author?.postsCount
       } else if (contentType === ContentType.TAG) {
         category = '標籤'
         const tagRes = await sendGQLRequest({
@@ -110,25 +111,25 @@ export function transferItemsToCards(
             },
           },
         })
-        console.log(tagRes?.data?.data?.tag?.postsCount)
+        postCount = tagRes?.data?.data?.tag?.postsCount
       }
 
       // TODO: postsCount, topic hero image
       cardItems.push({
         post: {
           image,
-          title,
+          title: `${contentType === ContentType.TAG ? '#' : ''}${title}`,
           desc,
           publishedDate,
           url,
           category: category,
           subSubcategory,
           theme: Theme.BLUE,
+          postCount: postCount,
         },
-        isSimple: false,
       })
     }
-  })
+  }
 
   return cardItems
 }
@@ -302,7 +303,7 @@ export async function GET(request: Request) {
       count,
     })
     if (postCardFormat) {
-      const items = transferItemsToCards(searchResults.items)
+      const items = await transferItemsToCards(searchResults.items)
       return NextResponse.json({
         status: 'success',
         data: Object.assign(searchResults, { items }),

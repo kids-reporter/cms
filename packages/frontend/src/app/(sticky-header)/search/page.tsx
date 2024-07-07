@@ -49,7 +49,7 @@ export default async function SearchPage({
   }
 
   const cardItems = Array.isArray(data?.items)
-    ? transferItemsToCards(data.items)
+    ? await transferItemsToCards(data.items)
     : []
 
   const searchInput = (

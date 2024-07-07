@@ -1,24 +1,15 @@
 import Link from 'next/link'
-import { PostCardProp } from '@/app/components/post-card'
+import { PostSummary, Loading } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 
 const fallbackImg = '/assets/images/404.png'
 
-export enum Loading {
-  LAZY = 'lazy',
-  EAGER = 'eager',
+export type CardProp = {
+  className?: string
+  post: PostSummary & { postCount?: number }
 }
 
-export type CardProp = PostCardProp & {
-  postCount?: number
-}
-
-export const Card = ({
-  className,
-  post,
-  isSimple = false,
-  loading = Loading.LAZY,
-}: CardProp) => {
+export const Card = ({ className, post }: CardProp) => {
   const top = (
     <div className="flex flex-row">
       <span
@@ -27,9 +18,17 @@ export const Card = ({
       >
         {post.category}
       </span>
-      <span className="text-gray-500 text-xs">
-        {(post.publishedDate && getFormattedDate(post.publishedDate)) ?? ''}
-      </span>
+      {post?.postCount !== undefined && post.postCount > 0 && (
+        <span style={{ color: '#A3A3A3' }} className="pl-1">
+          {' '}
+          | 共{post.postCount}篇文章
+        </span>
+      )}
+      {post.publishedDate && (
+        <span className="text-gray-500 text-xs">
+          {getFormattedDate(post.publishedDate) ?? ''}
+        </span>
+      )}
     </div>
   )
 
@@ -72,13 +71,20 @@ export const Card = ({
   )
 
   const imagePart = (
-    <div style={{ aspectRatio: '16/9' }} className="max-w-full h-40">
+    <div style={{ aspectRatio: '16/9' }} className="max-w-full h-40 relative">
       <img
-        style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
+        style={{ borderRadius: '20px' }}
         className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
         src={post.image ?? fallbackImg}
-        loading={loading}
+        loading={Loading.LAZY}
       />
+      {post?.postCount !== undefined && post.postCount > 0 && (
+        <img
+          className="w-6 h-6 absolute top-4 right-4"
+          src="/assets/images/multiple_articles.png"
+          loading={Loading.LAZY}
+        />
+      )}
     </div>
   )
 
