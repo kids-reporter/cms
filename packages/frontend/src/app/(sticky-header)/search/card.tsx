@@ -14,19 +14,18 @@ export const Card = ({ className, post }: CardProp) => {
     <div className="flex flex-row">
       <span
         style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
-        className="text-left font-medium text-base tracking-wider mb-1"
+        className="text-left font-medium text-base tracking-wider mb-1 pr-1"
       >
         {post.category}
       </span>
-      {post?.postCount !== undefined && post.postCount > 0 && (
-        <span style={{ color: '#A3A3A3' }} className="pl-1">
-          {' '}
-          | 共{post.postCount}篇文章
+      {post.publishedDate && (
+        <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
+          {`| ${getFormattedDate(post.publishedDate)}`}
         </span>
       )}
-      {post.publishedDate && (
-        <span className="text-gray-500 text-xs">
-          {getFormattedDate(post.publishedDate) ?? ''}
+      {post?.postCount !== undefined && post.postCount > 0 && (
+        <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
+          共{post.postCount}篇文章
         </span>
       )}
     </div>

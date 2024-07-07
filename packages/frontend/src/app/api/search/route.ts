@@ -9,11 +9,6 @@ import { log, LogLevel, sendGQLRequest } from '@/app/utils'
 const topicQuery = `
 query Query($where: ProjectWhereUniqueInput!) {
   project(where: $where) {
-    heroImage {
-      resized {
-        tiny
-      }
-    }
     relatedPostsCount
   }
 }
@@ -89,7 +84,7 @@ export async function transferItemsToCards(
             },
           },
         })
-        postCount = topicRes?.data?.data?.topic?.relatedPostsCount
+        postCount = topicRes?.data?.data?.project?.relatedPostsCount
       } else if (contentType === ContentType.AUTHOR) {
         category = '作者'
         const authorRes = await sendGQLRequest({
@@ -120,7 +115,9 @@ export async function transferItemsToCards(
           image,
           title: `${contentType === ContentType.TAG ? '#' : ''}${title}`,
           desc,
-          publishedDate,
+          publishedDate: `${publishedDate}${
+            contentType === ContentType.TOPIC ? '最後更新·' : ''
+          }`,
           url,
           category: category,
           subSubcategory,
