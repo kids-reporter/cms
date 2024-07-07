@@ -82,7 +82,7 @@ export const Card = ({ className, post }: CardProp) => {
       />
       {post?.postCount !== undefined && post.postCount > 0 && (
         <img
-          className="w-6 h-6 absolute top-4 right-4"
+          className="absolute top-2 right-2"
           src="/assets/images/multiple_articles.png"
           loading={Loading.LAZY}
         />
