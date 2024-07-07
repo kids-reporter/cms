@@ -1,12 +1,13 @@
 import errors from '@twreporter/errors'
 import { LoadMoreResults } from './load-more-results'
+import { SearchInput } from './search-input'
 import { SearchTitle } from './styled'
 import {
   getFilteredSearchResults,
   transferItemsToCards,
   defaultCount,
 } from '@/app/api/search/route'
-import { EMAIL, SEARCH_PLACEHOLDER } from '@/app/constants'
+import { EMAIL } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
 
 const apiKey = process.env.SEARCH_API_KEY || ''
@@ -52,31 +53,6 @@ export default async function SearchPage({
     ? await transferItemsToCards(data.items)
     : []
 
-  const searchInput = (
-    <form
-      className="flex flex-row max-w-md w-full h-10 mb-12"
-      role="search"
-      method="get"
-      action="/search"
-      aria-haspopup="listbox"
-    >
-      <input
-        className="w-full h-full border-solid border rounded-full text-base pl-3 pr-10 focus:outline-none"
-        style={{
-          color: '#232323',
-          backgroundColor: '#F5F5F5',
-          borderColor: '#A3A3A3',
-        }}
-        type="search"
-        value={searchParams.q}
-        placeholder={SEARCH_PLACEHOLDER}
-        name="q"
-        title="Search for..."
-        aria-label="Search for..."
-      />
-    </form>
-  )
-
   const resultCount = data?.totalResults && (
     <p
       style={{ lineHeight: '36px', letterSpacing: '0.08em' }}
@@ -89,7 +65,7 @@ export default async function SearchPage({
   return (
     <div className="flex flex-col justify-center items-center">
       <img src="/assets/images/search-result.png" loading="lazy" />
-      {searchInput}
+      <SearchInput value={searchParams.q} />
       {resultCount}
       <LoadMoreResults
         currentCardItems={cardItems}
