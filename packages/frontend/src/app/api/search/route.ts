@@ -23,8 +23,15 @@ query Query($where: AuthorWhereUniqueInput!) {
 `
 
 const tagQuery = `
-query Query($where: TagWhereUniqueInput!) {
+query Query($where: TagWhereUniqueInput!, $take: Int, $orderBy: [PostOrderByInput!]!) {
   tag(where: $where) {
+    posts(take: $take, orderBy: $orderBy) {
+      heroImage {
+        resized {
+          tiny
+        }
+      }
+    }
     postsCount
   }
 }
@@ -57,7 +64,7 @@ export async function transferItemsToCards(
   for (const item of items) {
     const metaTag = item?.pagemap?.metatags?.[0]
     const creativeWork = item?.pagemap?.creativework?.[0]
-    const image = creativeWork?.image || metaTag?.['og:image']
+    let image = creativeWork?.image || metaTag?.['og:image']
     const title = creativeWork?.headline || metaTag?.['og:title']
     const desc = metaTag?.['og:description']
     const publishedDate = metaTag?.['publisheddate'] ?? ''
@@ -105,9 +112,14 @@ export async function transferItemsToCards(
             where: {
               slug: slug,
             },
+            take: 1,
+            orderBy: {
+              publishedDate: 'desc',
+            },
           },
         })
         postCount = tagRes?.data?.data?.tag?.postsCount
+        image = tagRes?.data?.data?.tag?.posts?.[0]?.heroImage?.resized?.tiny
       }
 
       cardItems.push({
