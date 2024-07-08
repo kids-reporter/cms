@@ -53,6 +53,13 @@ type SearchResult = {
   items: customsearch_v1.Schema$Result[]
 }
 
+const validContentTypes = [
+  ContentType.ARTICLE,
+  ContentType.TOPIC,
+  ContentType.AUTHOR,
+  ContentType.TAG,
+]
+
 export async function transferItemsToCards(
   items: customsearch_v1.Schema$Result[]
 ): Promise<CardProp[]> {
@@ -63,82 +70,71 @@ export async function transferItemsToCards(
   const cardItems: CardProp[] = []
   for (const item of items) {
     const metaTag = item?.pagemap?.metatags?.[0]
-    const creativeWork = item?.pagemap?.creativework?.[0]
-    let image = creativeWork?.image || metaTag?.['og:image']
-    const title = creativeWork?.headline || metaTag?.['og:title']
-    const desc = metaTag?.['og:description']
-    const publishedDate = metaTag?.['publisheddate'] ?? ''
-    const subSubcategory = metaTag?.['subSubcategory'] ?? ''
-    const url = item?.link || metaTag?.['og:url']
     const contentType = metaTag?.['contenttype']
+    const url = item?.link || metaTag?.['og:url']
+    const slug = url.match(/(author|topic|tag)\/([^/]*)\/?/)?.[2]
 
-    // TODO: refactor
-    if (
-      contentType === ContentType.ARTICLE ||
-      contentType === ContentType.TOPIC ||
-      contentType === ContentType.AUTHOR ||
-      contentType === ContentType.TAG
-    ) {
-      let category = metaTag?.['category'] ?? ''
-      let postCount = 0
-      const regex = /(author|topic|tag)\/([^/]*)\/?/
-      const slug = url.match(regex)?.[2]
+    if (!validContentTypes.includes(contentType)) {
+      continue
+    }
 
-      if (contentType === ContentType.TOPIC) {
-        category = '專題'
-        const topicRes = await sendGQLRequest({
-          query: topicQuery,
-          variables: {
-            where: {
-              slug: slug,
-            },
-          },
-        })
-        postCount = topicRes?.data?.data?.project?.relatedPostsCount
-      } else if (contentType === ContentType.AUTHOR) {
-        category = '作者'
-        const authorRes = await sendGQLRequest({
-          query: authorQuery,
-          variables: {
-            where: {
-              slug: slug,
-            },
-          },
-        })
-        postCount = authorRes?.data?.data?.author?.postsCount
-      } else if (contentType === ContentType.TAG) {
-        category = '標籤'
-        const tagRes = await sendGQLRequest({
-          query: tagQuery,
-          variables: {
-            where: {
-              slug: slug,
-            },
-            take: 1,
-            orderBy: {
-              publishedDate: 'desc',
-            },
-          },
-        })
-        postCount = tagRes?.data?.data?.tag?.postsCount
-        image = tagRes?.data?.data?.tag?.posts?.[0]?.heroImage?.resized?.tiny
-      }
+    const creativeWork = item?.pagemap?.creativework?.[0]
+    const contentSummary = {
+      type: contentType,
+      image: creativeWork?.image || metaTag?.['og:image'],
+      title: creativeWork?.headline || metaTag?.['og:title'],
+      desc: metaTag?.['og:description'],
+      publishedDate: metaTag?.['publisheddate'] ?? '',
+      url: item?.link || metaTag?.['og:url'],
+      category: metaTag?.['category'] ?? '',
+      subSubcategory: metaTag?.['subSubcategory'] ?? '',
+      theme: Theme.BLUE,
+      postCount: 0,
+    }
 
-      cardItems.push({
-        content: {
-          type: contentType,
-          image,
-          title,
-          desc,
-          publishedDate,
-          url,
-          category: category,
-          subSubcategory,
-          theme: Theme.BLUE,
-          postCount: postCount,
+    if (contentType === ContentType.TOPIC) {
+      const topicRes = await sendGQLRequest({
+        query: topicQuery,
+        variables: {
+          where: {
+            slug: slug,
+          },
         },
       })
+      contentSummary.category = '專題'
+      contentSummary.postCount =
+        topicRes?.data?.data?.project?.relatedPostsCount
+    } else if (contentType === ContentType.AUTHOR) {
+      const authorRes = await sendGQLRequest({
+        query: authorQuery,
+        variables: {
+          where: {
+            slug: slug,
+          },
+        },
+      })
+      contentSummary.category = '作者'
+      contentSummary.postCount = authorRes?.data?.data?.author?.postsCount
+    } else if (contentType === ContentType.TAG) {
+      const tagRes = await sendGQLRequest({
+        query: tagQuery,
+        variables: {
+          where: {
+            slug: slug,
+          },
+          take: 1,
+          orderBy: {
+            publishedDate: 'desc',
+          },
+        },
+      })
+      contentSummary.category = '標籤'
+      contentSummary.postCount = tagRes?.data?.data?.tag?.postsCount
+      contentSummary.image =
+        tagRes?.data?.data?.tag?.posts?.[0]?.heroImage?.resized?.tiny
     }
+
+    cardItems.push({ content: contentSummary })
   }
 
   return cardItems
