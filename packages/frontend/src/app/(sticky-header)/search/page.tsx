@@ -55,8 +55,8 @@ export default async function SearchPage({
 
   const resultCount = data?.totalResults && (
     <p
-      style={{ lineHeight: '36px', letterSpacing: '0.08em' }}
-      className="w-full h-9 text-left text-sm text-gray-700 align-bottom border-t-2 border-gray-200"
+      style={{ letterSpacing: '0.08em', color: '#595959' }}
+      className="w-full text-left text-sm font-medium pt-4 border-t-2 border-gray-200"
     >
       找到{data.totalResults}項結果
     </p>
