@@ -72,6 +72,7 @@ export async function transferItemsToCards(
     const url = item?.link || metaTag?.['og:url']
     const contentType = metaTag?.['contenttype']
 
+    // TODO: refactor
     if (
       contentType === ContentType.ARTICLE ||
       contentType === ContentType.TOPIC ||
@@ -80,7 +81,8 @@ export async function transferItemsToCards(
     ) {
       let category = metaTag?.['category'] ?? ''
       let postCount = 0
-      const slug = url.split('/').pop()
+      const regex = /(author|topic|tag)\/([^/]*)\/?/
+      const slug = url.match(regex)?.[2]
 
       if (contentType === ContentType.TOPIC) {
         category = '專題'
