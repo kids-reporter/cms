@@ -49,9 +49,13 @@ export default async function SearchPage({
     )
   }
 
-  const cardItems = Array.isArray(data?.items)
-    ? await transferItemsToCards(data.items)
-    : []
+  const searchImg = (
+    <img
+      className="min-[320px]:px-4 px-3"
+      src="/assets/images/search-result.png"
+      loading="lazy"
+    />
+  )
 
   const resultCount = data?.totalResults && (
     <p
@@ -62,13 +66,13 @@ export default async function SearchPage({
     </p>
   )
 
+  const cardItems = Array.isArray(data?.items)
+    ? await transferItemsToCards(data.items)
+    : []
+
   return (
     <div className="flex flex-col justify-center items-center pt-8 px-4">
-      <img
-        className="min-[320px]:px-4 px-3"
-        src="/assets/images/search-result.png"
-        loading="lazy"
-      />
+      {searchImg}
       <SearchInput value={searchParams.q} />
       {resultCount}
       <LoadMoreResults
