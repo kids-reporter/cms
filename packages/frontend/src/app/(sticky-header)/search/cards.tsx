@@ -12,11 +12,16 @@ const FlexContainer = styled(TransitionGroup)`
   & > * {
     min-width: 0;
   }
-  gap: 30px;
+  gap: 32px;
   margin: 48px 0px 30px 0px;
 
   ${mediaQuery.mediumAbove} {
+    gap: 44px;
     max-width: var(--normal-container-max-width);
+  }
+
+  ${mediaQuery.smallOnly} {
+    gap: 40px;
   }
 
   .item-enter {

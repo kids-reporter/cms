@@ -15,27 +15,33 @@ export const Card = ({ className, content }: CardProp) => {
     <div className="flex flex-row">
       <span
         style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
-        className="text-left font-medium text-base tracking-wider mb-1 pr-1"
+        className="text-left font-medium min-[320px]:text-base text-sm tracking-wider mb-1 pr-1"
       >
         {content.category}
       </span>
       {content.publishedDate || content.postCount > 0 ? (
         <span
-          className="pr-1"
+          className="pr-1 min-[320px]:text-base text-sm"
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
           |
         </span>
       ) : null}
       {content.publishedDate ? (
-        <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
+        <span
+          className="min-[320px]:text-base text-sm"
+          style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
+        >
           {`${getFormattedDate(content.publishedDate)}${
             content.type === ContentType.TOPIC ? '最後更新·' : ''
           }`}
         </span>
       ) : null}
       {content?.postCount !== undefined && content.postCount > 0 ? (
-        <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
+        <span
+          className="min-[320px]:text-base text-sm"
+          style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
+        >
           {`共${content.postCount}篇文章`}
         </span>
       ) : null}
@@ -106,7 +112,7 @@ export const Card = ({ className, content }: CardProp) => {
     content && (
       <Link
         href={content.url}
-        className={`w-full flex justify-start flex-col-reverse min-[320px]:flex-row gap-6 bg-transparent rounded-2xl theme-${
+        className={`w-full flex justify-start flex-col-reverse min-[320px]:flex-row md:gap-6 min-[320px]:gap-5 gap-3 bg-transparent rounded-2xl theme-${
           content.theme
         } ${className ?? ''}`}
       >
