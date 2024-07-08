@@ -36,7 +36,7 @@ export const SearchInput = (props: { value: string }) => {
         onChange={onInputChange}
       />
       <button
-        className="w-4 h-4 absolute bg-transparent cursor-pointer border-0 right-2.5"
+        className={`${styles['search-icon']} w-4 h-4 absolute bg-transparent cursor-pointer border-0 right-3.5`}
         type="submit"
         aria-label="搜尋按鈕"
       >
