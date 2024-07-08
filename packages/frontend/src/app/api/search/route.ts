@@ -60,7 +60,7 @@ export async function transferItemsToCards(
     const image = creativeWork?.image || metaTag?.['og:image']
     const title = creativeWork?.headline || metaTag?.['og:title']
     const desc = metaTag?.['og:description']
-    const publishedDate = metaTag?.['publishedDate'] ?? ''
+    const publishedDate = metaTag?.['publisheddate'] ?? ''
     const subSubcategory = metaTag?.['subSubcategory'] ?? ''
     const url = item?.link || metaTag?.['og:url']
     const contentType = metaTag?.['contenttype']
@@ -109,15 +109,13 @@ export async function transferItemsToCards(
         postCount = tagRes?.data?.data?.tag?.postsCount
       }
 
-      // TODO: postsCount, topic hero image
       cardItems.push({
-        post: {
+        content: {
+          type: contentType,
           image,
-          title: `${contentType === ContentType.TAG ? '#' : ''}${title}`,
+          title,
           desc,
-          publishedDate: `${publishedDate}${
-            contentType === ContentType.TOPIC ? '最後更新·' : ''
-          }`,
+          publishedDate,
           url,
           category: category,
           subSubcategory,

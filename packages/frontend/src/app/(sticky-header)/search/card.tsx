@@ -1,31 +1,34 @@
 import Link from 'next/link'
 import { PostSummary, Loading } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
+import { ContentType } from '@/app/constants'
 
 const fallbackImg = '/assets/images/404.png'
 
 export type CardProp = {
   className?: string
-  post: PostSummary & { postCount?: number }
+  content: PostSummary & { type: ContentType; postCount?: number }
 }
 
-export const Card = ({ className, post }: CardProp) => {
+export const Card = ({ className, content }: CardProp) => {
   const top = (
     <div className="flex flex-row">
       <span
         style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
         className="text-left font-medium text-base tracking-wider mb-1 pr-1"
       >
-        {post.category}
+        {content.category}
       </span>
-      {post.publishedDate && (
+      {content.publishedDate && (
         <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
-          {`| ${getFormattedDate(post.publishedDate)}`}
+          {`| ${getFormattedDate(content.publishedDate)}${
+            content.type === ContentType.TOPIC ? '最後更新·' : ''
+          }`}
         </span>
       )}
-      {post?.postCount !== undefined && post.postCount > 0 && (
+      {content?.postCount !== undefined && content.postCount > 0 && (
         <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
-          共{post.postCount}篇文章
+          共{content.postCount}篇文章
         </span>
       )}
     </div>
@@ -43,7 +46,8 @@ export const Card = ({ className, post }: CardProp) => {
       }}
       className="md:min-h-16 overflow-hidden not-italic font-bold md:text-2xl text-xl text-gray-900 text-left"
     >
-      {post.title}
+      {content?.type === ContentType.TAG ? '#' : ''}
+      {content?.title}
     </span>
   )
 
@@ -57,7 +61,7 @@ export const Card = ({ className, post }: CardProp) => {
       }}
       className="overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900"
     >
-      {post.desc}
+      {content.desc}
     </span>
   )
 
@@ -77,10 +81,10 @@ export const Card = ({ className, post }: CardProp) => {
       <img
         style={{ borderRadius: '20px' }}
         className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
-        src={post.image ?? fallbackImg}
+        src={content.image ?? fallbackImg}
         loading={Loading.LAZY}
       />
-      {post?.postCount !== undefined && post.postCount > 0 && (
+      {content?.postCount !== undefined && content.postCount > 0 && (
         <img
           className="absolute top-2 right-2"
           src="/assets/images/multiple_articles.png"
@@ -91,11 +95,11 @@ export const Card = ({ className, post }: CardProp) => {
   )
 
   return (
-    post && (
+    content && (
       <Link
-        href={post.url}
-        className={`w-full min-[320px]:min-h-40 pl-1 pr-1 flex justify-start flex-col-reverse min-[320px]:flex-row gap-6 bg-transparent rounded-2xl theme-${
-          post.theme
+        href={content.url}
+        className={`w-full flex justify-start flex-col-reverse min-[320px]:flex-row gap-6 bg-transparent rounded-2xl theme-${
+          content.theme
         } ${className ?? ''}`}
       >
         {textPart}

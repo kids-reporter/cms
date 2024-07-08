@@ -45,7 +45,7 @@ const Cards = ({ items }: { items: CardProp[] }) => {
         classNames="item"
       >
         <div ref={nodeRef}>
-          <Card post={item.post} />
+          <Card content={item.content} />
         </div>
       </CSSTransition>
     )
