@@ -53,12 +53,7 @@ type SearchResult = {
   items: customsearch_v1.Schema$Result[]
 }
 
-const validContentTypes = [
-  ContentType.ARTICLE,
-  ContentType.TOPIC,
-  ContentType.AUTHOR,
-  ContentType.TAG,
-]
+const validContentTypes = Object.values(ContentType)
 
 export async function transferItemsToCards(
   items: customsearch_v1.Schema$Result[]

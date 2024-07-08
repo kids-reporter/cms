@@ -7,11 +7,16 @@ import {
   transferItemsToCards,
   defaultCount,
 } from '@/app/api/search/route'
-import { EMAIL } from '@/app/constants'
+import { EMAIL, ContentType } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
 
 const apiKey = process.env.SEARCH_API_KEY || ''
 const cx = process.env.SEARCH_ENGINE_ID || ''
+
+// Filtering search output: https://developers.google.com/custom-search/docs/structured_search
+const fitlerParams = Object.values(ContentType)
+  .map((type) => `more:pagemap:metatags-contenttype:${type}`)
+  .join(' OR ')
 
 export default async function SearchPage({
   searchParams,
@@ -27,7 +32,7 @@ export default async function SearchPage({
   let data
   try {
     data = await getFilteredSearchResults({
-      q: searchParams.q,
+      q: `${searchParams.q} ${fitlerParams}`,
       apiKey,
       cx,
       start: 1,
