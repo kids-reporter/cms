@@ -14,7 +14,7 @@ const apiKey = process.env.SEARCH_API_KEY || ''
 const cx = process.env.SEARCH_ENGINE_ID || ''
 
 // Filtering search output: https://developers.google.com/custom-search/docs/structured_search
-const fitlerParams = Object.values(ContentType)
+const filterParams = Object.values(ContentType)
   .map((type) => `more:pagemap:metatags-contenttype:${type}`)
   .join(' OR ')
 
@@ -32,7 +32,7 @@ export default async function SearchPage({
   let data
   try {
     data = await getFilteredSearchResults({
-      q: `${searchParams.q} ${fitlerParams}`,
+      q: `${searchParams.q} ${filterParams}`,
       apiKey,
       cx,
       start: 1,
