@@ -71,8 +71,6 @@ export async function transferItemsToCards(
   for (const item of items) {
     const metaTag = item?.pagemap?.metatags?.[0]
     const contentType = metaTag?.['contenttype']
-    const url = item?.link || metaTag?.['og:url']
-    const slug = url.match(/(author|topic|tag)\/([^/]*)\/?/)?.[2]
 
     if (!validContentTypes.includes(contentType)) {
       continue
@@ -92,7 +90,9 @@ export async function transferItemsToCards(
       postCount: 0,
     }
 
-    if (contentType === ContentType.TOPIC) {
+    const url = item?.link || metaTag?.['og:url']
+    const slug = url.match(/(author|topic|tag)\/([^/]*)\/?/)?.[2]
+    if (contentType === ContentType.TOPIC && slug) {
       const topicRes = await sendGQLRequest({
         query: topicQuery,
         variables: {
@@ -104,7 +104,7 @@ export async function transferItemsToCards(
       contentSummary.category = '專題'
       contentSummary.postCount =
         topicRes?.data?.data?.project?.relatedPostsCount
-    } else if (contentType === ContentType.AUTHOR) {
+    } else if (contentType === ContentType.AUTHOR && slug) {
       const authorRes = await sendGQLRequest({
         query: authorQuery,
         variables: {
@@ -115,7 +115,7 @@ export async function transferItemsToCards(
       })
       contentSummary.category = '作者'
       contentSummary.postCount = authorRes?.data?.data?.author?.postsCount
-    } else if (contentType === ContentType.TAG) {
+    } else if (contentType === ContentType.TAG && slug) {
       const tagRes = await sendGQLRequest({
         query: tagQuery,
         variables: {
