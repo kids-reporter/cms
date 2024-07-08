@@ -40,7 +40,7 @@ query Query($where: TagWhereUniqueInput!, $take: Int, $orderBy: [PostOrderByInpu
 const client = customsearch('v1')
 const apiKey = process.env.SEARCH_API_KEY || ''
 const cx = process.env.SEARCH_ENGINE_ID || ''
-export const defaultCount = 9
+export const defaultCount = 10
 export const defaultStart = 1
 
 type SearchResult = {
