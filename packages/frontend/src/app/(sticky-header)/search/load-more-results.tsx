@@ -72,7 +72,7 @@ export const LoadMoreResults = ({
   }
 
   return (
-    <div className="text-center max-w-4xl w-full">
+    <div className="text-center lg:max-w-4xl md:max-w-2xl min-[320px]:max-w-xl w-full">
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
       {nextQuery && !isLoading ? (

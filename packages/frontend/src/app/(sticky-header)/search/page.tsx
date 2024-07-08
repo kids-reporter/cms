@@ -63,8 +63,12 @@ export default async function SearchPage({
   )
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <img src="/assets/images/search-result.png" loading="lazy" />
+    <div className="flex flex-col justify-center items-center pt-8 px-4">
+      <img
+        className="min-[320px]:px-4 px-3"
+        src="/assets/images/search-result.png"
+        loading="lazy"
+      />
       <SearchInput value={searchParams.q} />
       {resultCount}
       <LoadMoreResults

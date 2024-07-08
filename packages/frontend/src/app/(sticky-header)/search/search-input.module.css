@@ -1,0 +1,9 @@
+.input {
+  outline: none;
+  border: 1px solid #A3A3A3;
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid var(--paletteColor1);
+}

@@ -94,7 +94,7 @@ export const Card = ({ className, post }: CardProp) => {
     post && (
       <Link
         href={post.url}
-        className={`w-full h-40 pl-1 pr-1 flex justify-start flex-row gap-6 bg-transparent rounded-2xl theme-${
+        className={`w-full min-[320px]:min-h-40 pl-1 pr-1 flex justify-start flex-col-reverse min-[320px]:flex-row gap-6 bg-transparent rounded-2xl theme-${
           post.theme
         } ${className ?? ''}`}
       >

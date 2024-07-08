@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { SEARCH_PLACEHOLDER } from '@/app/constants'
 
+import styles from './search-input.module.css'
+
 export const SearchInput = (props: { value: string }) => {
   const { value } = props
   const [input, setInput] = useState(value)
@@ -19,11 +21,10 @@ export const SearchInput = (props: { value: string }) => {
       aria-haspopup="listbox"
     >
       <input
-        className="w-full h-full border-solid border rounded-full text-base pl-3 pr-10 focus:outline-none"
+        className={`${styles.input} w-full h-full rounded-full text-base pl-3 pr-10`}
         style={{
           color: '#232323',
           backgroundColor: '#F5F5F5',
-          borderColor: '#A3A3A3',
         }}
         type="search"
         value={input}
