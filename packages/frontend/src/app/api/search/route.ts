@@ -204,12 +204,7 @@ const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
   return Array.isArray(items)
     ? items.filter((item) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
-        return (
-          contentType === ContentType.ARTICLE ||
-          contentType === ContentType.TOPIC ||
-          contentType === ContentType.AUTHOR ||
-          contentType === ContentType.TAG
-        )
+        return validContentTypes.includes(contentType)
       })
     : items
 }
