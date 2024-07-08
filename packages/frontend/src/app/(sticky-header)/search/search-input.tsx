@@ -15,7 +15,7 @@ export const SearchInput = (props: { value: string }) => {
 
   return (
     <form
-      className="flex flex-row items-center max-w-md w-full h-10 relative mb-12"
+      className="flex flex-row items-center max-w-md w-full h-10 relative md:mb-12 min-[320px]:mb-10 mb-6"
       role="search"
       method="get"
       action="/search"
