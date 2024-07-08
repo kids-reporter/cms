@@ -76,7 +76,7 @@ export default async function SearchPage({
     : []
 
   return (
-    <div className="flex flex-col justify-center items-center pt-8 px-4">
+    <div className="md:max-w-4xl min-[320px]:max-w-2xl max-w-72 flex flex-col justify-center items-center pt-8 px-4">
       {searchImg}
       <SearchInput value={searchParams.q} />
       {resultCount}
