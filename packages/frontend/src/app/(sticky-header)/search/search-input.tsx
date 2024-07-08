@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { SEARCH_PLACEHOLDER } from '@/app/constants'
+import { SearchIcon } from '@/app/icons'
 
 import styles from './search-input.module.css'
 
@@ -14,7 +15,7 @@ export const SearchInput = (props: { value: string }) => {
 
   return (
     <form
-      className="flex flex-row max-w-md w-full h-10 mb-12"
+      className="flex flex-row items-center max-w-md w-full h-10 relative mb-12"
       role="search"
       method="get"
       action="/search"
@@ -26,7 +27,7 @@ export const SearchInput = (props: { value: string }) => {
           color: '#232323',
           backgroundColor: '#F5F5F5',
         }}
-        type="search"
+        type="text"
         value={input}
         placeholder={SEARCH_PLACEHOLDER}
         name="q"
@@ -34,6 +35,13 @@ export const SearchInput = (props: { value: string }) => {
         aria-label="Search for..."
         onChange={onInputChange}
       />
+      <button
+        className="w-4 h-4 absolute bg-transparent cursor-pointer border-0 right-2.5"
+        type="submit"
+        aria-label="搜尋按鈕"
+      >
+        {SearchIcon}
+      </button>
     </form>
   )
 }
