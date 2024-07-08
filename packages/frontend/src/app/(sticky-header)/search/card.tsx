@@ -7,7 +7,7 @@ const fallbackImg = '/assets/images/404.png'
 
 export type CardProp = {
   className?: string
-  content: PostSummary & { type: ContentType; postCount?: number }
+  content: PostSummary & { type: ContentType; postCount: number }
 }
 
 export const Card = ({ className, content }: CardProp) => {
@@ -19,18 +19,26 @@ export const Card = ({ className, content }: CardProp) => {
       >
         {content.category}
       </span>
-      {content.publishedDate && (
+      {content.publishedDate || content.postCount > 0 ? (
+        <span
+          className="pr-1"
+          style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
+        >
+          |
+        </span>
+      ) : null}
+      {content.publishedDate ? (
         <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
-          {`| ${getFormattedDate(content.publishedDate)}${
+          {`${getFormattedDate(content.publishedDate)}${
             content.type === ContentType.TOPIC ? '最後更新·' : ''
           }`}
         </span>
-      )}
-      {content?.postCount !== undefined && content.postCount > 0 && (
+      ) : null}
+      {content?.postCount !== undefined && content.postCount > 0 ? (
         <span style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}>
-          共{content.postCount}篇文章
+          {`共${content.postCount}篇文章`}
         </span>
-      )}
+      ) : null}
     </div>
   )
 

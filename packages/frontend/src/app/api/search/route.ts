@@ -74,6 +74,7 @@ export async function transferItemsToCards(
       let category = metaTag?.['category'] ?? ''
       let postCount = 0
       const slug = url.split('/').pop()
+
       if (contentType === ContentType.TOPIC) {
         category = '專題'
         const topicRes = await sendGQLRequest({
