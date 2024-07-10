@@ -1,6 +1,11 @@
+import dynamic from 'next/dynamic'
 import { Photo } from '@/app/types'
-import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import { FALLBACK_IMG } from '@/app/constants'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 type HeroImageProp = {
   image: Photo

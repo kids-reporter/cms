@@ -1,9 +1,14 @@
 'use client'
+import dynamic from 'next/dynamic'
 import styled from 'styled-components'
-import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import { Photo } from '@/app/types'
 import { mediaQuery } from '@/app/utils/media-query'
 import { FALLBACK_IMG, STICKY_HEADER_HEIGHT } from '@/app/constants'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 const _DownButton = ({ className }: { className?: string }) => {
   return (

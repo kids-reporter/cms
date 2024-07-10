@@ -1,8 +1,13 @@
 import Link from 'next/link'
 import { PostSummary } from '@/app/components/types'
-import { ImageWithFallback } from '@/app/components/image-with-fallback'
+import dynamic from 'next/dynamic'
 import { getFormattedDate } from '@/app/utils'
 import { FALLBACK_IMG } from '@/app/constants'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 export enum Loading {
   LAZY = 'lazy',

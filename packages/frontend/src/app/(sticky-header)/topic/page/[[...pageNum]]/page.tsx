@@ -1,9 +1,9 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
-import { ImageWithFallback } from '@/app/components/image-with-fallback'
 import {
   GENERAL_DESCRIPTION,
   POST_PER_PAGE,
@@ -20,6 +20,11 @@ import {
   LogLevel,
 } from '@/app/utils'
 import styles from './page.module.css'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 export const metadata: Metadata = {
   title: '彙整: 專題 - 少年報導者 The Reporter for Kids',
