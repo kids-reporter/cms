@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { SEARCH_PLACEHOLDER } from '@/app/constants'
-import { SearchIcon } from '@/app/icons'
+import { CrossIcon, SearchIcon } from '@/app/icons'
 
 import styles from './search-input.module.css'
 
@@ -12,6 +12,12 @@ export const SearchInput = (props: { value: string }) => {
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
   }
+
+  const onInputClear = () => {
+    setInput('')
+  }
+
+  const isResultMatchKeyword = value === input
 
   return (
     <form
@@ -35,13 +41,24 @@ export const SearchInput = (props: { value: string }) => {
         aria-label="Search for..."
         onChange={onInputChange}
       />
-      <button
-        className={`${styles['search-icon']} w-4 h-4 absolute bg-transparent cursor-pointer border-0 right-3.5`}
-        type="submit"
-        aria-label="搜尋按鈕"
-      >
-        {SearchIcon}
-      </button>
+      {!isResultMatchKeyword && (
+        <button
+          className={`${styles['search-icon']} w-4 h-4 absolute bg-transparent cursor-pointer border-0 right-3.5`}
+          type="submit"
+          aria-label="搜尋按鈕"
+        >
+          {SearchIcon}
+        </button>
+      )}
+      {isResultMatchKeyword && (
+        <button
+          className={`${styles['search-icon']} w-4 h-4 absolute bg-transparent cursor-pointer border-0 right-3.5`}
+          aria-label="清除按鈕"
+          onClick={onInputClear}
+        >
+          {CrossIcon}
+        </button>
+      )}
     </form>
   )
 }
