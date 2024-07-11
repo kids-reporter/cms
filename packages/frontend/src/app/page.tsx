@@ -8,7 +8,12 @@ import SearchAndTags from '@/app/home/search-and-tags'
 import MakeFriends from '@/app/home/make-friend'
 import CallToAction from '@/app/home/call-to-action'
 import GoToMainSite from '@/app/home/go-to-main-site'
-import { GENERAL_DESCRIPTION, POST_CONTENT_GQL, Theme } from '@/app/constants'
+import {
+  FALLBACK_IMG,
+  GENERAL_DESCRIPTION,
+  POST_CONTENT_GQL,
+  Theme,
+} from '@/app/constants'
 import { getPostSummaries, sendGQLRequest } from '@/app/utils'
 import { isProduction } from '@/environment-variables'
 
@@ -163,7 +168,7 @@ export default async function Home() {
     topicsRes?.data?.data?.projects?.map((topic: any) => {
       return {
         url: `/topic/${topic.slug}`,
-        image: topic?.heroImage?.resized?.small ?? '',
+        image: topic?.heroImage?.resized?.small ?? FALLBACK_IMG,
         title: topic.title,
         subtitle: topic.subtitle,
       }
