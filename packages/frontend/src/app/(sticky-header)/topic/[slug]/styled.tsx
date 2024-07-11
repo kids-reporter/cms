@@ -1,8 +1,14 @@
 'use client'
+import dynamic from 'next/dynamic'
 import styled from 'styled-components'
 import { Photo } from '@/app/types'
 import { mediaQuery } from '@/app/utils/media-query'
-import { STICKY_HEADER_HEIGHT } from '@/app/constants'
+import { FALLBACK_IMG, STICKY_HEADER_HEIGHT } from '@/app/constants'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 const _DownButton = ({ className }: { className?: string }) => {
   return (
@@ -94,19 +100,9 @@ export const TitleContainer = styled(_TitleContainer)`
   }
 `
 
-export const BackgroundImage = styled.div<{
-  $imageEntity: Photo
-  $mobileImageEntity?: Photo
-}>`
+export const Container = styled.div`
   width: 100vw;
   height: calc(100vh - ${STICKY_HEADER_HEIGHT}px);
-  background-image: image-set(
-    url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 1x,
-    url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 2x
-  );
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 
   /* make children align center*/
   position: relative;
@@ -124,9 +120,6 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.largeOnly} {
-    background-image: image-set(
-      url(${({ $imageEntity }) => $imageEntity?.resized?.large}) 1x
-    );
     ${DownButton} {
       bottom: 50px;
       width: 60px;
@@ -143,28 +136,46 @@ export const BackgroundImage = styled.div<{
   }
 
   ${mediaQuery.smallOnly} {
-    background-image: image-set(
-      url(${({ $imageEntity }) => $imageEntity?.resized?.small}) 1x,
-      url(${({ $imageEntity }) => $imageEntity?.resized?.medium}) 2x
-    );
     ${DownButton} {
       bottom: 30px;
       width: 40px;
       left: calc(50% - 20px);
     }
   }
-
-  ${mediaQuery.smallOnly} {
-    ${({ $mobileImageEntity }) => {
-      const url = $mobileImageEntity?.resized?.small
-      if (url) {
-        return `background-image: url(${url})`
-      }
-
-      return ''
-    }}
-  }
 `
+
+export const FullScreenImage = (props: {
+  imageEntity: Photo
+  mobileImageEntity?: Photo
+}) => {
+  const { imageEntity, mobileImageEntity } = props
+
+  return (
+    <picture>
+      {mobileImageEntity ? (
+        <source
+          media={mediaQuery.smallOnly.replace('@media ', '')}
+          srcSet={`${mobileImageEntity?.resized?.small}`}
+        />
+      ) : (
+        <source
+          media={mediaQuery.smallOnly.replace('@media ', '')}
+          srcSet={`${imageEntity?.resized?.small} 1x, ${imageEntity?.resized?.medium} 2x`}
+        />
+      )}
+      <source
+        media={mediaQuery.largeOnly.replace('@media ', '')}
+        srcSet={`${imageEntity?.resized?.large} 1x`}
+      />
+      <ImageWithFallback
+        className="w-full object-cover"
+        style={{ height: `calc(100vh - ${STICKY_HEADER_HEIGHT}px)` }}
+        src={imageEntity?.resized?.medium ?? FALLBACK_IMG}
+        srcSet={`${imageEntity?.resized?.medium} 1x, ${imageEntity?.resized?.large} 2x`}
+      />
+    </picture>
+  )
+}
 
 export const PublishedDate = styled.div`
   font-size: 16px;
@@ -177,7 +188,7 @@ export const PublishedDate = styled.div`
 
 export default {
   Title,
-  BackgroundImage,
+  Container,
   DownButton,
   SubTitle,
   PublishedDate,

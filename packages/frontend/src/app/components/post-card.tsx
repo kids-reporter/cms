@@ -1,8 +1,13 @@
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { PostSummary, Loading } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
+import { FALLBACK_IMG } from '@/app/constants'
 
-const fallbackImg = '/assets/images/404.png'
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 export type PostCardProp = {
   className?: string
@@ -29,10 +34,10 @@ export const PostCard = ({
           style={{ height: 'calc(100% / 16 * 9)', aspectRatio: '16/9' }}
           className="max-w-full"
         >
-          <img
+          <ImageWithFallback
             style={{ borderRadius: isSimple ? '20px 20px 0 0' : '20px' }}
             className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
-            src={post.image ?? fallbackImg}
+            src={post.image ?? FALLBACK_IMG}
             loading={loading}
           />
         </div>
