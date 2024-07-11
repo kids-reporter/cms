@@ -3,13 +3,9 @@
 import axios from 'axios'
 import styled from 'styled-components'
 import errors from '@twreporter/errors'
-import { Cards, PostCardProp } from './cards'
+import { Cards, CardProp } from './cards'
 import { useState } from 'react'
 import { AXIOS_TIMEOUT } from '@/app/utils'
-
-const Container = styled.div`
-  text-align: center;
-`
 
 const LoadMoreBt = styled.div`
   color: #232323;
@@ -35,7 +31,7 @@ export const LoadMoreResults = ({
   currentCardItems,
   nextQuery: nextQueryParam,
 }: {
-  currentCardItems: PostCardProp[]
+  currentCardItems: CardProp[]
   nextQuery?: {
     q: string
     startIndex?: number
@@ -76,14 +72,14 @@ export const LoadMoreResults = ({
   }
 
   return (
-    <Container>
+    <div className="text-center w-full">
       <Cards items={cardItems} />
       {loadMoreError ? <span>載入發生錯誤，請稍候再試</span> : null}
       {nextQuery && !isLoading ? (
         <LoadMoreBt onClick={loadMore}>載入更多</LoadMoreBt>
       ) : null}
       {isLoading ? <LoadingGif src="/assets/images/loading.gif" /> : null}
-    </Container>
+    </div>
   )
 }
 
