@@ -1,6 +1,11 @@
 'use client'
 import styled from 'styled-components'
-import { BackgroundImage, DownButton, TitleContainer } from './styled'
+import {
+  Container,
+  FullScreenImage,
+  DownButton,
+  TitleContainer,
+} from './styled'
 import { Photo } from '@/app/types'
 import { useRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
@@ -92,11 +97,11 @@ export const Leading = ({
     }
   }
   return (
-    <BackgroundImage
-      ref={ref}
-      $imageEntity={backgroundImage}
-      $mobileImageEntity={mobileBgImage}
-    >
+    <Container ref={ref}>
+      <FullScreenImage
+        imageEntity={backgroundImage}
+        mobileImageEntity={mobileBgImage}
+      />
       <PositionedTitle
         className={titleClassName}
         title={title}
@@ -105,7 +110,7 @@ export const Leading = ({
       <span onClick={onDownButtonClick}>
         <DownButton />
       </span>
-    </BackgroundImage>
+    </Container>
   )
 }
 

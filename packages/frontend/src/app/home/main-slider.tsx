@@ -1,5 +1,6 @@
 'use client'
 import { useRef } from 'react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Swiper as SwiperCore } from 'swiper/types'
@@ -17,6 +18,11 @@ import 'swiper/css/effect-coverflow'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import './main-slider.css'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 type SliderProp = {
   topics: { url: string; image: string; title: string; subtitle: string }[]
@@ -98,7 +104,7 @@ export const MainSlider = (props: SliderProp) => {
                       }}
                       className="max-w-full"
                     >
-                      <img
+                      <ImageWithFallback
                         className="w-full h-full object-cover rounded-none md:rounded-2xl"
                         src={topic.image}
                         loading="eager"
