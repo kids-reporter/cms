@@ -100,8 +100,6 @@ const listConfigurations = list({
         richTextEditorButtonNames.codeBlock,
         richTextEditorButtonNames.embed,
         richTextEditorButtonNames.h2,
-        richTextEditorButtonNames.h3,
-        richTextEditorButtonNames.h4,
         richTextEditorButtonNames.h5,
         richTextEditorButtonNames.image,
         richTextEditorButtonNames.infoBox,
