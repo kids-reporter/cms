@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import PostSlider from '@/app/components/post-slider'
 import Pagination from '@/app/components/pagination'
@@ -8,6 +9,7 @@ import {
   POST_PER_PAGE,
   POST_CONTENT_GQL,
   TOPIC_PAGE_ROUTE,
+  FALLBACK_IMG,
   Theme,
 } from '@/app/constants'
 import {
@@ -18,6 +20,11 @@ import {
   LogLevel,
 } from '@/app/utils'
 import styles from './page.module.css'
+
+const ImageWithFallback = dynamic(
+  () => import('@/app/components/image-with-fallback'),
+  { ssr: false }
+)
 
 export const metadata: Metadata = {
   title: '彙整: 專題 - 少年報導者 The Reporter for Kids',
@@ -73,9 +80,9 @@ const TopicCard = (props: { topic: TopicSummary }) => {
     <Link href={topic.url}>
       <div className="flex relative flex-col lg:flex-row items-stretch">
         <div className={styles['hero-image-container']}>
-          <img
+          <ImageWithFallback
             className="w-full h-full object-cover align-middle"
-            src={topic.image}
+            src={topic.image ?? FALLBACK_IMG}
             loading="lazy"
           />
         </div>
@@ -189,7 +196,7 @@ export default async function Topic({
     ? topics.map((topic: any) => {
         return topic
           ? {
-              image: topic.heroImage?.resized?.medium ?? '', // TODO: fallback image
+              image: topic.heroImage?.resized?.medium ?? FALLBACK_IMG,
               title: topic.title,
               url: `/topic/${topic.slug}`,
               desc: topic.ogDescription,
