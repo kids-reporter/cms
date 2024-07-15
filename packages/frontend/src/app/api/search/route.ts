@@ -1,46 +1,15 @@
 import errors from '@twreporter/errors'
 import { NextResponse } from 'next/server'
-import { CardProp } from '@/app/(sticky-header)/search/card'
+import { PostCardProp } from '@/app/components/post-card'
 import { ContentType, Theme } from '@/app/constants'
 import { customsearch } from '@googleapis/customsearch'
 import { customsearch_v1 } from '@googleapis/customsearch/v1'
-import { log, LogLevel, sendGQLRequest } from '@/app/utils'
-
-const topicQuery = `
-query Query($where: ProjectWhereUniqueInput!) {
-  project(where: $where) {
-    relatedPostsCount
-  }
-}
-`
-
-const authorQuery = `
-query Query($where: AuthorWhereUniqueInput!) {
-  author(where: $where) {
-    postsCount
-  }
-}
-`
-
-const tagQuery = `
-query Query($where: TagWhereUniqueInput!, $take: Int, $orderBy: [PostOrderByInput!]!) {
-  tag(where: $where) {
-    posts(take: $take, orderBy: $orderBy) {
-      heroImage {
-        resized {
-          tiny
-        }
-      }
-    }
-    postsCount
-  }
-}
-`
+import { log, LogLevel } from '@/app/utils'
 
 const client = customsearch('v1')
 const apiKey = process.env.SEARCH_API_KEY || ''
 const cx = process.env.SEARCH_ENGINE_ID || ''
-export const defaultCount = 10
+export const defaultCount = 9
 export const defaultStart = 1
 
 type SearchResult = {
@@ -49,88 +18,58 @@ type SearchResult = {
     startIndex?: number
     q: string
   }
-  totalResults?: string
   items: customsearch_v1.Schema$Result[]
 }
 
-const validContentTypes = Object.values(ContentType)
-
-export async function transferItemsToCards(
+export function transferItemsToPostCards(
   items: customsearch_v1.Schema$Result[]
-): Promise<CardProp[]> {
+): PostCardProp[] {
   if (!Array.isArray(items)) {
     return items
   }
 
-  const cardItems: CardProp[] = []
-  for (const item of items) {
+  const cardItems: PostCardProp[] = []
+  items.forEach((item) => {
     const metaTag = item?.pagemap?.metatags?.[0]
+    const creativeWork = item?.pagemap?.creativework?.[0]
+    const image = creativeWork?.image || metaTag?.['og:image']
+    const title = creativeWork?.headline || metaTag?.['og:title']
+    const desc = metaTag?.['og:description']
+    const publishedDate = metaTag?.['publishedDate'] ?? ''
+    const subSubcategory = metaTag?.['subSubcategory'] ?? ''
+    const url = item?.link || metaTag?.['og:url']
     const contentType = metaTag?.['contenttype']
 
-    if (!validContentTypes.includes(contentType)) {
-      continue
-    }
+    if (
+      contentType === ContentType.ARTICLE ||
+      contentType === ContentType.TOPIC ||
+      contentType === ContentType.AUTHOR ||
+      contentType === ContentType.TAG
+    ) {
+      let category = metaTag?.['category'] ?? ''
+      if (contentType === ContentType.TOPIC) {
+        category = '專題'
+      } else if (contentType === ContentType.AUTHOR) {
+        category = '作者'
+      } else if (contentType === ContentType.TAG) {
+        category = '標籤'
+      }
 
-    const creativeWork = item?.pagemap?.creativework?.[0]
-    const contentSummary = {
-      type: contentType,
-      image: creativeWork?.image || metaTag?.['og:image'],
-      title: creativeWork?.headline || metaTag?.['og:title'],
-      desc: metaTag?.['og:description'],
-      publishedDate: metaTag?.['publisheddate'] ?? '',
-      url: item?.link || metaTag?.['og:url'],
-      category: metaTag?.['category'] ?? '',
-      subSubcategory: metaTag?.['subSubcategory'] ?? '',
-      theme: Theme.BLUE,
-      postCount: 0,
+      cardItems.push({
+        post: {
+          image,
+          title,
+          desc,
+          publishedDate,
+          url,
+          category: category,
+          subSubcategory,
+          theme: Theme.BLUE,
+        },
+        isSimple: false,
+      })
     }
-
-    const url = item?.link || metaTag?.['og:url']
-    const slug = url.match(/(author|topic|tag)\/([^/]*)\/?/)?.[2]
-    if (contentType === ContentType.TOPIC && slug) {
-      const topicRes = await sendGQLRequest({
-        query: topicQuery,
-        variables: {
-          where: {
-            slug: slug,
-          },
-        },
-      })
-      contentSummary.category = '專題'
-      contentSummary.postCount =
-        topicRes?.data?.data?.project?.relatedPostsCount
-    } else if (contentType === ContentType.AUTHOR && slug) {
-      const authorRes = await sendGQLRequest({
-        query: authorQuery,
-        variables: {
-          where: {
-            slug: slug,
-          },
-        },
-      })
-      contentSummary.category = '作者'
-      contentSummary.postCount = authorRes?.data?.data?.author?.postsCount
-    } else if (contentType === ContentType.TAG && slug) {
-      const tagRes = await sendGQLRequest({
-        query: tagQuery,
-        variables: {
-          where: {
-            slug: slug,
-          },
-          take: 1,
-          orderBy: {
-            publishedDate: 'desc',
-          },
-        },
-      })
-      contentSummary.category = '標籤'
-      contentSummary.postCount = tagRes?.data?.data?.tag?.postsCount
-      contentSummary.image =
-        tagRes?.data?.data?.tag?.posts?.[0]?.heroImage?.resized?.tiny
-    }
-
-    cardItems.push({ content: contentSummary })
-  }
+  })
 
   return cardItems
 }
@@ -180,7 +119,6 @@ async function getSearchResults({
     ? {
         startIndex: nextPage.startIndex,
         count: nextPage.count,
-        totalResults: nextPage.totalResults,
         q,
       }
     : undefined
@@ -199,7 +137,12 @@ const filterItems = (items?: customsearch_v1.Schema$Result[]) => {
   return Array.isArray(items)
     ? items.filter((item) => {
         const contentType = item?.pagemap?.metatags?.[0]?.['contenttype']
-        return validContentTypes.includes(contentType)
+        return (
+          contentType === ContentType.ARTICLE ||
+          contentType === ContentType.TOPIC ||
+          contentType === ContentType.AUTHOR ||
+          contentType === ContentType.TAG
+        )
       })
     : items
 }
@@ -268,7 +211,6 @@ export async function getFilteredSearchResults({
 
   return {
     nextQuery: searchResults.nextQuery,
-    totalResults: searchResults.nextQuery?.totalResults,
     items: _accItems,
   }
 }
@@ -299,7 +241,7 @@ export async function GET(request: Request) {
       count,
     })
     if (postCardFormat) {
-      const items = await transferItemsToCards(searchResults.items)
+      const items = transferItemsToPostCards(searchResults.items)
       return NextResponse.json({
         status: 'success',
         data: Object.assign(searchResults, { items }),
