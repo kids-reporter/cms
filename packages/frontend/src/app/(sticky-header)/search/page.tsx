@@ -67,7 +67,7 @@ export default async function SearchPage({
       style={{ letterSpacing: '0.08em', color: '#595959' }}
       className="w-full text-left text-sm font-medium pt-4 border-t-2 border-gray-200"
     >
-      找到{data.totalResults}項結果
+      找到 {data.totalResults} 項結果
     </p>
   )
 

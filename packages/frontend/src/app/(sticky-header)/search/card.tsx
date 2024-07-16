@@ -33,7 +33,7 @@ export const Card = ({ className, content }: CardProp) => {
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
           {`${getFormattedDate(content.publishedDate)}${
-            content.type === ContentType.TOPIC ? '最後更新·' : ''
+            content.type === ContentType.TOPIC ? ' 最後更新·' : ''
           }`}
         </span>
       ) : null}
@@ -42,7 +42,7 @@ export const Card = ({ className, content }: CardProp) => {
           className="min-[320px]:text-base text-sm"
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
-          {`共${content.postCount}篇文章`}
+          {`共 ${content.postCount} 篇文章`}
         </span>
       ) : null}
     </div>
