@@ -90,11 +90,11 @@ export const Card = ({ className, content }: CardProp) => {
   const imagePart = (
     <div
       style={{ aspectRatio: '16/9' }}
-      className="max-w-full h-40 relative hover:scale-125"
+      className="shrink-0 max-w-full h-40 relative overflow-hidden rounded-2xl"
     >
       <img
         style={{ borderRadius: '20px' }}
-        className={`w-full h-full object-cover align-middle overflow-hidden rounded-2xl`}
+        className={`w-full h-full object-cover align-middle hover:scale-125`}
         src={content.image ?? fallbackImg}
         loading={Loading.LAZY}
       />
