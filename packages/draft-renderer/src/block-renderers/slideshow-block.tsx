@@ -443,6 +443,8 @@ export function SlideshowBlock({ className = '', data }: SlideshowBlockProps) {
     ]
 
     return _images?.map((img: ImageEntity, index: number) => {
+      const width = img.imageFile.width ?? 0
+      const height = img.imageFile.height ?? 0
       const imgSrc = img.resized?.medium ?? img.imageFile.url
       const imgSrcSetArr = []
 
@@ -458,6 +460,8 @@ export function SlideshowBlock({ className = '', data }: SlideshowBlockProps) {
         imgSrcSetArr.push(`${img.resized.large} 2000w`)
       }
 
+      const objectFit = width > height ? 'cover' : 'contain'
+
       return (
         // since the items of _images would have the same id,
         // hence, we append `index` on the key
@@ -466,7 +470,7 @@ export function SlideshowBlock({ className = '', data }: SlideshowBlockProps) {
             <img
               srcSet={imgSrcSetArr.join(',')}
               src={imgSrc}
-              style={{ display: 'block', objectFit: 'cover', height: '100%' }}
+              style={{ display: 'block', objectFit, height: '100%' }}
               sizes="(max-width: 768px) 100vw, (min-width: 1400px) 1000px, 500px"
             />
           </div>
