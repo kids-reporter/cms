@@ -15,16 +15,16 @@ export const Card = ({ className, content }: CardProp) => {
     <div className="flex flex-row">
       <span
         style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
-        className="text-left font-medium min-[320px]:text-base text-sm tracking-wider mb-1 pr-1"
+        className="text-left font-medium min-[320px]:text-base text-sm tracking-wider"
       >
         {content.category}
       </span>
       {content.publishedDate || content.postCount > 0 ? (
         <span
-          className="pr-1 min-[320px]:text-base text-sm"
+          className="min-[320px]:text-base text-sm"
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
-          |
+          ｜
         </span>
       ) : null}
       {content.publishedDate ? (
@@ -54,7 +54,7 @@ export const Card = ({ className, content }: CardProp) => {
         minHeight: 'auto',
         display: '-webkit-box',
         WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: '2',
+        WebkitLineClamp: '1',
         lineHeight: '160%',
         letterSpacing: '0.08em',
       }}
@@ -70,7 +70,7 @@ export const Card = ({ className, content }: CardProp) => {
       style={{
         display: '-webkit-box',
         WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: '2',
+        WebkitLineClamp: '3',
         lineHeight: '160%',
       }}
       className="overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900"
@@ -80,7 +80,7 @@ export const Card = ({ className, content }: CardProp) => {
   )
 
   const textPart = (
-    <div className="flex flex-col justify-start min-[320px]:gap-y-px gap-1">
+    <div className="flex flex-col justify-between min-[320px]:gap-y-px gap-1">
       {top}
       {title}
       {desc}
