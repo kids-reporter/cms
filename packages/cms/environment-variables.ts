@@ -1,6 +1,7 @@
 const {
   IS_UI_DISABLED,
   ACCESS_CONTROL_STRATEGY,
+  FRONTEND_ORIGIN,
   PREVIEW_SERVER_ORIGIN,
   PREVIEW_SERVER_PATH,
   DATABASE_PROVIDER,
@@ -78,6 +79,9 @@ const environmentVariables = {
   previewServer: {
     origin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
     path: PREVIEW_SERVER_PATH || '/preview-server',
+  },
+  frontend: {
+    origin: FRONTEND_ORIGIN || 'http://localhost:3001',
   },
   twoFactorAuth: {
     enable: TWO_FACTOR_AUTH_ENABLE === 'true', // feature toggle

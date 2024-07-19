@@ -316,7 +316,7 @@ const listConfigurations = list({
         type: graphql.JSON,
         resolve(item: Record<string, unknown>): Record<string, string> {
           return {
-            href: `${envVars.previewServer.path}/article/${item.slug}`,
+            href: `${envVars.frontend.origin}/api/draft?secret=''&type=article&slug=${item.slug}`,
             label: '文章預覽',
             buttonLabel: 'Preview',
           }
@@ -341,7 +341,7 @@ const listConfigurations = list({
       field: graphql.field({
         type: graphql.String,
         resolve(item: Record<string, unknown>) {
-          return `${envVars.previewServer.path}/article/${item.slug}`
+          return `${envVars.frontend.origin}/api/draft?secret=''&type=article&slug=${item.slug}`
         },
       }),
       ui: {
