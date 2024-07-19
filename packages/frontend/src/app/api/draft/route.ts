@@ -1,5 +1,6 @@
 import { draftMode } from 'next/headers'
 // import { redirect } from 'next/navigation'
+import { PREVIEW_SECRET } from '@/app/constants'
 
 enum DraftType {
   ARTICLE = 'article',
@@ -19,11 +20,10 @@ export async function GET(request: Request) {
   const secret = searchParams.get('secret')
   const type = searchParams.get('type')
   const slug = searchParams.get('slug')
-
   const isValidType = type === DraftType.ARTICLE || type === DraftType.TOPIC
 
-  if (secret !== 'MY_SECRET_TOKEN' || !isValidType || !slug) {
-    return new Response('Invalid token', { status: 401 })
+  if (secret !== PREVIEW_SECRET || !isValidType || !slug) {
+    return new Response('Invalid parameters.', { status: 401 })
   }
 
   // Fetch the headless CMS to check if the provided `slug` exists
