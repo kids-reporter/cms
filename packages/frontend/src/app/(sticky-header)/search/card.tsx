@@ -80,7 +80,7 @@ export const Card = ({ className, content }: CardProp) => {
   )
 
   const textPart = (
-    <div className="flex flex-col justify-between min-[320px]:gap-y-px gap-1">
+    <div className="flex flex-col justify-start min-[320px]:gap-1.5 gap-1">
       {top}
       {title}
       {desc}
