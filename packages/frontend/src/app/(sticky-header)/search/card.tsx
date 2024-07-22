@@ -15,13 +15,13 @@ export const Card = ({ className, content }: CardProp) => {
     <div className="flex flex-row">
       <span
         style={{ color: 'var(--theme-color)', lineHeight: '160%' }}
-        className="text-left font-medium min-[320px]:text-base text-sm tracking-wider"
+        className="text-left font-medium md:text-base text-sm tracking-wider"
       >
         {content.category}
       </span>
       {content.publishedDate || content.postCount > 0 ? (
         <span
-          className="min-[320px]:text-base text-sm"
+          className="md:text-base text-sm"
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
           ｜
@@ -29,7 +29,7 @@ export const Card = ({ className, content }: CardProp) => {
       ) : null}
       {content.publishedDate ? (
         <span
-          className="min-[320px]:text-base text-sm"
+          className="md:text-base text-sm"
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
           {`${getFormattedDate(content.publishedDate)}${
@@ -39,7 +39,7 @@ export const Card = ({ className, content }: CardProp) => {
       ) : null}
       {content?.postCount !== undefined && content.postCount > 0 ? (
         <span
-          className="min-[320px]:text-base text-sm"
+          className="md:text-base text-sm"
           style={{ color: '#A3A3A3', letterSpacing: '0.08em' }}
         >
           {`共 ${content.postCount} 篇文章`}
@@ -80,7 +80,7 @@ export const Card = ({ className, content }: CardProp) => {
   )
 
   const textPart = (
-    <div className="flex flex-col justify-start min-[320px]:gap-1.5 gap-1">
+    <div className="flex flex-col justify-start md:gap-1.5 gap-1">
       {top}
       {title}
       {desc}
@@ -90,7 +90,7 @@ export const Card = ({ className, content }: CardProp) => {
   const imagePart = (
     <div
       style={{ aspectRatio: '16/9' }}
-      className="shrink-0 max-w-full h-40 relative overflow-hidden rounded-2xl"
+      className="shrink-0 max-w-full md:h-40 h-full relative overflow-hidden rounded-2xl"
     >
       <img
         style={{ borderRadius: '20px' }}
@@ -112,7 +112,7 @@ export const Card = ({ className, content }: CardProp) => {
     content && (
       <Link
         href={content.url}
-        className={`w-full flex justify-start flex-col-reverse min-[320px]:flex-row md:gap-6 min-[320px]:gap-5 gap-3 bg-transparent rounded-2xl theme-${
+        className={`w-full flex justify-start flex-col-reverse md:flex-row md:gap-6 md:gap-5 gap-3 bg-transparent rounded-2xl theme-${
           content.theme
         } ${className ?? ''}`}
       >
