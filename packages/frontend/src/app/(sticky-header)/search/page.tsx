@@ -56,7 +56,7 @@ export default async function SearchPage({
 
   const searchImg = (
     <img
-      className="min-[320px]:px-4 px-3"
+      className="md:px-4 px-3"
       src="/assets/images/search-result.png"
       loading="lazy"
     />
@@ -76,7 +76,7 @@ export default async function SearchPage({
     : []
 
   return (
-    <div className="md:max-w-4xl min-[320px]:max-w-2xl max-w-72 flex flex-col justify-center items-center pt-8 px-4">
+    <div className="lg:max-w-4xl md:max-w-2xl max-w-full flex flex-col justify-center items-center pt-8 mx-4">
       {searchImg}
       <SearchInput value={searchParams.q} />
       {resultCount}
