@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import PostCard from '@/app/components/post-card'
-import { PostSummary, Loading } from '@/app/components/types'
+import PostCard, { Loading } from '@/app/components/post-card'
+import { PostSummary } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 import styles from './post-selection.module.css'
 
