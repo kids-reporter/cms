@@ -1,22 +1,15 @@
 import errors from '@twreporter/errors'
-import { LoadMoreResults } from './load-more-results'
-import { SearchInput } from './search-input'
+import { LoadMoreResults } from './results'
 import { SearchTitle } from './styled'
 import {
   getFilteredSearchResults,
-  transferItemsToCards,
+  transferItemsToPostCards,
   defaultCount,
 } from '@/app/api/search/route'
-import { EMAIL, ContentType } from '@/app/constants'
 import { LogLevel, log } from '@/app/utils'
 
 const apiKey = process.env.SEARCH_API_KEY || ''
 const cx = process.env.SEARCH_ENGINE_ID || ''
-
-// Filtering search output: https://developers.google.com/custom-search/docs/structured_search
-const filterParams = Object.values(ContentType)
-  .map((type) => `more:pagemap:metatags-contenttype:${type}`)
-  .join(' OR ')
 
 export default async function SearchPage({
   searchParams,
@@ -32,7 +25,7 @@ export default async function SearchPage({
   let data
   try {
     data = await getFilteredSearchResults({
-      q: `${searchParams.q} ${filterParams}`,
+      q: searchParams.q,
       apiKey,
       cx,
       start: 1,
@@ -49,37 +42,18 @@ export default async function SearchPage({
     return (
       <SearchTitle>
         搜尋結果服務異常，請稍候再試。 若持續發生，煩請來信至
-        {EMAIL}。
+        kidsnews@twreporter.org。
       </SearchTitle>
     )
   }
 
-  const searchImg = (
-    <img
-      className="md:px-4 px-3"
-      src="/assets/images/search-result.png"
-      loading="lazy"
-    />
-  )
-
-  const resultCount = data?.totalResults && (
-    <p
-      style={{ letterSpacing: '0.08em', color: '#595959' }}
-      className="w-full text-left text-sm font-medium pt-4 border-t-2 border-gray-200"
-    >
-      找到 {data.totalResults} 項結果
-    </p>
-  )
-
   const cardItems = Array.isArray(data?.items)
-    ? await transferItemsToCards(data.items)
+    ? transferItemsToPostCards(data.items)
     : []
 
   return (
-    <div className="lg:max-w-4xl md:max-w-2xl max-w-full flex flex-col justify-center items-center pt-8 mx-4">
-      {searchImg}
-      <SearchInput value={searchParams.q} />
-      {resultCount}
+    <div>
+      <SearchTitle>搜尋結果 {searchParams.q}</SearchTitle>
       <LoadMoreResults
         currentCardItems={cardItems}
         nextQuery={data.nextQuery}
