@@ -22,6 +22,8 @@ export const GENERAL_DESCRIPTION =
 
 export const SUBSCRIBE_TITLE = '訂閱《少年報導者》電子報'
 
+export const Z_INDEX_TOP = 1000
+
 export enum FontSizeLevel {
   NORMAL = 'normal',
   LARGE = 'large',
