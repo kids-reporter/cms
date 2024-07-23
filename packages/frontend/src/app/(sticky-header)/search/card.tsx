@@ -67,12 +67,9 @@ export const Card = ({ className, content }: CardProp) => {
   const desc = (
     <span
       style={{
-        display: '-webkit-box',
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: '3',
         lineHeight: '160%',
       }}
-      className="overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900"
+      className={`${styles.desc} overflow-hidden text-left not-italic font-medium text-base tracking-wider text-gray-900`}
     >
       {content.desc}
     </span>
