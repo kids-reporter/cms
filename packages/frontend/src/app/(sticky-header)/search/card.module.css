@@ -1,0 +1,11 @@
+.title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+@media screen and (max-width: 767px) {
+  .title {
+    -webkit-line-clamp: 2;
+  }
+}

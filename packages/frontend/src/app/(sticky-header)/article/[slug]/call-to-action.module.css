@@ -9,7 +9,7 @@
 
 @media screen and (max-width: 999px) {
   .cta {
-  background-size: 250px;
+    background-size: 250px;
   }
   .cta-content {
     max-width: 500px;
@@ -18,8 +18,8 @@
 
 @media screen and (max-width: 767px) {
   .cta {
-  background-position: bottom center !important;
-  background-size: 200px;
+    background-position: bottom center !important;
+    background-size: 200px;
   }
   .cta-content {
     max-width: 100%;

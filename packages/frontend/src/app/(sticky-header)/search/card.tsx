@@ -3,6 +3,8 @@ import { PostSummary, Loading } from '@/app/components/types'
 import { getFormattedDate } from '@/app/utils'
 import { ContentType } from '@/app/constants'
 
+import styles from './card.module.css'
+
 const fallbackImg = '/assets/images/404.png'
 
 export type CardProp = {
@@ -52,13 +54,10 @@ export const Card = ({ className, content }: CardProp) => {
     <span
       style={{
         minHeight: 'auto',
-        display: '-webkit-box',
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: '1',
         lineHeight: '160%',
         letterSpacing: '0.08em',
       }}
-      className="md:min-h-16 overflow-hidden not-italic font-bold md:text-2xl text-xl text-gray-900 text-left"
+      className={`${styles.title} md:min-h-16 overflow-hidden not-italic font-bold md:text-2xl text-xl text-gray-900 text-left`}
     >
       {content?.type === ContentType.TAG ? '#' : ''}
       {content?.title}
