@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.11
+
+### Patch Changes
+
+- Change slider image ratio
+
 ## 1.0.10
 
 ### Patch Changes
