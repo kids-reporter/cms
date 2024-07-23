@@ -1,13 +1,7 @@
 .title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-}
-
-@media screen and (max-width: 767px) {
-  .title {
-    -webkit-line-clamp: 2;
-  }
+  -webkit-line-clamp: 2;
 }
 
 .desc {
@@ -16,6 +10,10 @@
 }
 
 @media screen and (min-width: 768px) {
+  .title {
+    -webkit-line-clamp: 1;
+  }
+
   .desc {
     -webkit-line-clamp: 3;
   }
