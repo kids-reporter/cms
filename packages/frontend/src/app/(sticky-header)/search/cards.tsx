@@ -17,14 +17,14 @@ const FlexContainer = styled(TransitionGroup)`
   margin: 24px 0px 32px 0px;
 
   ${mediaQuery.mediumAbove} {
-    gap: 44px;
-    margin: 48px 0px 64px 0px;
-    max-width: var(--normal-container-max-width);
+    gap: 32px;
+    margin: 40px 0px 48px 0px;
   }
 
   ${mediaQuery.largeOnly} {
-    gap: 32px;
-    margin: 40px 0px 48px 0px;
+    gap: 44px;
+    margin: 48px 0px 64px 0px;
+    max-width: var(--normal-container-max-width);
   }
 
   .item-enter {
