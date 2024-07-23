@@ -1,28 +1,30 @@
 'use client'
-import PostCard, { PostCardProp } from '@/app/components/post-card'
+import Card, { CardProp } from './card'
 import styled from 'styled-components'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import { createRef } from 'react'
 import { mediaQuery } from '@/app/utils/media-query'
 
 const FlexContainer = styled(TransitionGroup)`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   // Avoid grid cell overflow parent, ref: https://datacadamia.com/web/css/grid/overflow#overflow_example
   & > * {
     min-width: 0;
   }
-  grid-template-columns: repeat(3, 1fr);
-  @media screen and (max-width: 999px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 1fr;
-  }
-  gap: 30px;
-  margin: 0 auto 30px auto;
+
+  gap: 40px;
+  margin: 24px 0px 32px 0px;
 
   ${mediaQuery.mediumAbove} {
+    gap: 44px;
+    margin: 48px 0px 64px 0px;
     max-width: var(--normal-container-max-width);
+  }
+
+  ${mediaQuery.largeOnly} {
+    gap: 32px;
+    margin: 40px 0px 48px 0px;
   }
 
   .item-enter {
@@ -34,9 +36,9 @@ const FlexContainer = styled(TransitionGroup)`
   }
 `
 
-export type { PostCardProp }
+export type { CardProp }
 
-const Cards = ({ items }: { items: PostCardProp[] }) => {
+const Cards = ({ items }: { items: CardProp[] }) => {
   const cardsJsx = items.map((item, idx) => {
     const nodeRef = createRef<HTMLDivElement>()
     if (!item) {
@@ -51,7 +53,7 @@ const Cards = ({ items }: { items: PostCardProp[] }) => {
         classNames="item"
       >
         <div ref={nodeRef}>
-          <PostCard post={item.post} />
+          <Card content={item.content} />
         </div>
       </CSSTransition>
     )

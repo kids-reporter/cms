@@ -2,9 +2,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
-import { STICKY_HEADER_HEIGHT, ThemeColor } from '@/app/constants'
+import { STICKY_HEADER_HEIGHT, Z_INDEX_TOP, ThemeColor } from '@/app/constants'
 
-const zIndex = 1000
+const zIndex = Z_INDEX_TOP
 
 const TOCContainer = styled.div`
   position: fixed;
