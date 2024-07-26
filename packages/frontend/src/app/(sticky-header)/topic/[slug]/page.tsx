@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import {
   KIDS_URL_ORIGIN,
   ContentType,
@@ -125,26 +126,42 @@ export async function generateMetadata({
   }
 }
 
+// TODO: maybe we could try apollo-client pkg
+async function getTopic(slug: string) {
+  const { isEnabled } = draftMode()
+
+  return isEnabled
+    ? await sendGQLRequest({
+        query,
+        variables: {
+          where: {
+            slug: slug,
+          },
+        },
+      })
+    : await sendGQLRequest({
+        query,
+        variables: {
+          where: {
+            slug: slug,
+          },
+        },
+      })
+}
+
 export default async function TopicPage({
   params,
 }: {
   params: { slug: string }
 }) {
-  if (!params?.slug) {
+  const slug = params.slug
+  if (!slug) {
     log(LogLevel.WARNING, 'Incorrect topic slug!')
     notFound()
   }
 
-  // TODO: maybe we could try apollo-client pkg
-  const axiosRes = await sendGQLRequest({
-    query,
-    variables: {
-      where: {
-        slug: params.slug,
-      },
-    },
-  })
-  const project = axiosRes?.data?.data?.project
+  const projectRes = await getTopic(slug)
+  const project = projectRes?.data?.data?.project
   if (!project) {
     log(LogLevel.WARNING, 'Empty topic!')
     notFound()
