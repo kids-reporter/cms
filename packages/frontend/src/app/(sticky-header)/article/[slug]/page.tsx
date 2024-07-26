@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
@@ -164,6 +165,42 @@ export async function generateMetadata({
   }
 }
 
+async function getPost(slug: string) {
+  const { isEnabled } = draftMode()
+
+  return isEnabled
+    ? await sendGQLRequest({
+        query: postGQL,
+        variables: {
+          where: {
+            slug: slug,
+          },
+          relatedPostsWhere: {
+            slug: {
+              notIn: slug,
+            },
+          },
+          orderBy: [{ order: 'asc' }],
+          take: topicRelatedPostsNum,
+        },
+      })
+    : await sendGQLRequest({
+        query: postGQL,
+        variables: {
+          where: {
+            slug: slug,
+          },
+          relatedPostsWhere: {
+            slug: {
+              notIn: slug,
+            },
+          },
+          orderBy: [{ order: 'asc' }],
+          take: topicRelatedPostsNum,
+        },
+      })
+}
+
 export default async function PostPage({
   params,
 }: {
@@ -175,21 +212,7 @@ export default async function PostPage({
     notFound()
   }
 
-  const postRes = await sendGQLRequest({
-    query: postGQL,
-    variables: {
-      where: {
-        slug: slug,
-      },
-      relatedPostsWhere: {
-        slug: {
-          notIn: slug,
-        },
-      },
-      orderBy: [{ order: 'asc' }],
-      take: topicRelatedPostsNum,
-    },
-  })
+  const postRes = await getPost(slug)
   const post = postRes?.data?.data?.post
   if (!post) {
     log(LogLevel.WARNING, `Post not found! ${slug}`)
