@@ -40,7 +40,7 @@ export const SearchInput = (props: { value: string }) => {
         />
       )}
       <form
-        className="flex flex-row items-center max-w-md w-full h-10 relative md:mb-12 min-[320px]:mb-10 mb-6"
+        className="flex flex-row items-center max-w-md w-full h-10 relative lg:mb-12 md:mb-10 mb-6"
         style={{ zIndex: isFocused ? Z_INDEX_TOP + 2 : Z_INDEX_TOP - 2 }}
         role="search"
         method="get"
