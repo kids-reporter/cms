@@ -83,27 +83,11 @@ const SlidesSection = styled.div`
   flex-basis: 100%;
   overflow: hidden;
   position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
 
   ${mediaQuery.smallOnly} {
     order: 2;
-  }
-
-  ${mediaQuery.smallOnly} {
-    padding-bottom: calc(
-      ${mockup.mobile.slide.height} / ${mockup.mobile.container.width}*100%
-    );
-  }
-
-  ${mediaQuery.mediumOnly} {
-    padding-bottom: calc(
-      ${mockup.desktop.slide.height} / ${mockup.desktop.container.width}*100%
-    );
-  }
-
-  ${mediaQuery.largeOnly} {
-    padding-bottom: calc(
-      ${mockup.hd.slide.height} / ${mockup.hd.container.width}*100%
-    );
   }
 `
 
@@ -332,49 +316,6 @@ const SlideFlexItem = styled.div`
   }
 `
 
-const SlideMask = styled.div`
-  position: absolute;
-  top: 0;
-  height: 100%;
-  opacity: 0.55;
-`
-
-const LeftSlideMask = styled(SlideMask)`
-  left: 0;
-
-  ${mediaQuery.smallOnly} {
-    width: ${(getLeftMaskWidth(mockup.mobile) /
-      getContainerWidth(mockup.mobile)) *
-    100}%;
-  }
-
-  ${mediaQuery.mediumOnly} {
-    width: ${getLeftMaskWidth(mockup.desktop)}px;
-  }
-
-  ${mediaQuery.largeOnly} {
-    width: ${getLeftMaskWidth(mockup.hd)}px;
-  }
-`
-
-const RightSlideMask = styled(SlideMask)`
-  right: 0;
-
-  ${mediaQuery.smallOnly} {
-    width: ${(getRightMaskWidth(mockup.mobile) /
-      getContainerWidth(mockup.mobile)) *
-    100}%;
-  }
-
-  ${mediaQuery.mediumOnly} {
-    width: ${getRightMaskWidth(mockup.desktop)}px;
-  }
-
-  ${mediaQuery.largeOnly} {
-    width: ${getRightMaskWidth(mockup.hd)}px;
-  }
-`
-
 const SlideshowFlexBox = styled.div`
   ${PrevButton} {
     border-color: #d8d8d8;
@@ -387,9 +328,6 @@ const SlideshowFlexBox = styled.div`
   }
   ${ImageNumber} {
     color: #fff;
-  }
-  ${SlideMask} {
-    background-color: ${({ theme }) => getColorHex(theme?.themeColor)};
   }
 
   width: 100%;
@@ -450,26 +388,6 @@ function getContainerWidth(deviceMockup: DeviceMockup) {
  */
 function getSlideWidth(deviceMockup: DeviceMockup) {
   return deviceMockup.slide.width + deviceMockup.slide.paddingRight
-}
-
-/**
- * @param {DeviceMockup} deviceMockup
- * @return {number}
- */
-function getLeftMaskWidth(deviceMockup: DeviceMockup) {
-  return deviceMockup.offset.left - deviceMockup.slide.paddingRight // px
-}
-
-/**
- * @param {DeviceMockup} deviceMockup
- * @return {number}
- */
-function getRightMaskWidth(deviceMockup: DeviceMockup) {
-  return (
-    deviceMockup.container.width -
-    deviceMockup.offset.left -
-    getSlideWidth(deviceMockup)
-  ) // px
 }
 
 type ImageFile = {
@@ -548,12 +466,14 @@ export function SlideshowBlock({ className = '', data }: SlideshowBlockProps) {
         // since the items of _images would have the same id,
         // hence, we append `index` on the key
         <SlideFlexItem key={`slide_${img.id}_${index}`}>
-          <img
-            srcSet={imgSrcSetArr.join(',')}
-            src={imgSrc}
-            style={{ objectFit, width: '100%' }}
-            sizes="(max-width: 768px) 100vw, (min-width: 1400px) 1000px, 500px"
-          />
+          <div className="w-full h-full relative overflow-hidden">
+            <img
+              srcSet={imgSrcSetArr.join(',')}
+              src={imgSrc}
+              style={{ display: 'block', objectFit, height: '100%' }}
+              sizes="(max-width: 768px) 100vw, (min-width: 1400px) 1000px, 500px"
+            />
+          </div>
         </SlideFlexItem>
       )
     })
@@ -606,8 +526,6 @@ export function SlideshowBlock({ className = '', data }: SlideshowBlockProps) {
         >
           {slides}
         </SlidesFlexBox>
-        <LeftSlideMask />
-        <RightSlideMask />
       </SlidesSection>
       <PrevNextSection>
         <PrevButton onClick={isSliding ? undefined : slideToPrev}>
