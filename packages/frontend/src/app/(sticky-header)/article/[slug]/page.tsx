@@ -166,7 +166,7 @@ export async function generateMetadata({
   }
 }
 
-async function getPost(slug: string) {
+const getPost = async (slug: string) => {
   const data = {
     query: postGQL,
     variables: {
@@ -183,15 +183,14 @@ async function getPost(slug: string) {
     },
   }
   const { isEnabled } = draftMode()
-  const requestParams =
-    isEnabled && PREVIEW_SECRET
-      ? {
-          data: data,
-          config: { auth: { username: 'preview', password: PREVIEW_SECRET } },
-        }
-      : { data }
 
-  return await sendGQLRequest(requestParams)
+  if (isEnabled && PREVIEW_SECRET) {
+    return await sendGQLRequest(data, {
+      auth: { username: 'preview', password: PREVIEW_SECRET },
+    })
+  } else {
+    return await sendGQLRequest(data)
+  }
 }
 
 export default async function PostPage({

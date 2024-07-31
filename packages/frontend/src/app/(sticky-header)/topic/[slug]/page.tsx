@@ -128,7 +128,7 @@ export async function generateMetadata({
 }
 
 // TODO: maybe we could try apollo-client pkg
-async function getTopic(slug: string) {
+const getTopic = async (slug: string) => {
   const data = {
     query,
     variables: {
@@ -138,15 +138,14 @@ async function getTopic(slug: string) {
     },
   }
   const { isEnabled } = draftMode()
-  const requestParams =
-    isEnabled && PREVIEW_SECRET
-      ? {
-          data: data,
-          config: { auth: { username: 'preview', password: PREVIEW_SECRET } },
-        }
-      : { data }
 
-  return await sendGQLRequest(requestParams)
+  if (isEnabled && PREVIEW_SECRET) {
+    return await sendGQLRequest(data, {
+      auth: { username: 'preview', password: PREVIEW_SECRET },
+    })
+  } else {
+    return await sendGQLRequest(data)
+  }
 }
 
 export default async function TopicPage({
