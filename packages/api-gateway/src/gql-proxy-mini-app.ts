@@ -10,6 +10,11 @@ const errors = _errors.default
 
 const statusCodes = consts.statusCodes
 
+export type Account = {
+  email: string
+  password: string
+}
+
 class TokenManager {
   // Singleton
   static instance?: TokenManager
@@ -145,12 +150,11 @@ class TokenManager {
  */
 export function createGraphQLProxy({
   headlessAccount,
+  previewAccount,
   apiOrigin,
 }: {
-  headlessAccount: {
-    email: string
-    password: string
-  }
+  headlessAccount: Account
+  previewAccount: Account
   apiOrigin: string
 }) {
   // create express mini app
@@ -172,9 +176,11 @@ export function createGraphQLProxy({
       )
 
       try {
+        console.log(req, previewAccount)
+        const account = headlessAccount //req.get('auth') === 'preview' ? previewAccount : headlessAccount
         const tokenManager = new TokenManager(
-          headlessAccount.email,
-          headlessAccount.password,
+          account.email,
+          account.password,
           apiOrigin + '/api/graphql'
         )
         const token = await tokenManager.getToken()
@@ -240,9 +246,11 @@ export function createGraphQLProxy({
             })
           )
           try {
+            console.log(req)
+            const account = headlessAccount // req.get('auth') === 'preview' ? previewAccount : headlessAccount
             const tokenManager = new TokenManager(
-              headlessAccount.email,
-              headlessAccount.password,
+              account.email,
+              account.password,
               apiOrigin + '/api/graphql'
             )
             await tokenManager.renewToken()

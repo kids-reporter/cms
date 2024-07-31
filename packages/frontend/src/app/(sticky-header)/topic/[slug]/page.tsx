@@ -6,6 +6,7 @@ import {
   Theme,
   GENERAL_DESCRIPTION,
   OG_SUFFIX,
+  PREVIEW_SECRET,
 } from '@/app/constants'
 import { PublishedDate } from './styled'
 import { Content } from './content'
@@ -128,25 +129,24 @@ export async function generateMetadata({
 
 // TODO: maybe we could try apollo-client pkg
 async function getTopic(slug: string) {
+  const data = {
+    query,
+    variables: {
+      where: {
+        slug: slug,
+      },
+    },
+  }
   const { isEnabled } = draftMode()
+  const requestParams =
+    isEnabled && PREVIEW_SECRET
+      ? {
+          data: data,
+          config: { auth: { username: 'preview', password: PREVIEW_SECRET } },
+        }
+      : { data }
 
-  return isEnabled
-    ? await sendGQLRequest({
-        query,
-        variables: {
-          where: {
-            slug: slug,
-          },
-        },
-      })
-    : await sendGQLRequest({
-        query,
-        variables: {
-          where: {
-            slug: slug,
-          },
-        },
-      })
+  return await sendGQLRequest(requestParams)
 }
 
 export default async function TopicPage({

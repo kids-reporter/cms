@@ -9,6 +9,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
   ContentType,
+  PREVIEW_SECRET,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
 
@@ -166,39 +167,31 @@ export async function generateMetadata({
 }
 
 async function getPost(slug: string) {
+  const data = {
+    query: postGQL,
+    variables: {
+      where: {
+        slug: slug,
+      },
+      relatedPostsWhere: {
+        slug: {
+          notIn: slug,
+        },
+      },
+      orderBy: [{ order: 'asc' }],
+      take: topicRelatedPostsNum,
+    },
+  }
   const { isEnabled } = draftMode()
+  const requestParams =
+    isEnabled && PREVIEW_SECRET
+      ? {
+          data: data,
+          config: { auth: { username: 'preview', password: PREVIEW_SECRET } },
+        }
+      : { data }
 
-  return isEnabled
-    ? await sendGQLRequest({
-        query: postGQL,
-        variables: {
-          where: {
-            slug: slug,
-          },
-          relatedPostsWhere: {
-            slug: {
-              notIn: slug,
-            },
-          },
-          orderBy: [{ order: 'asc' }],
-          take: topicRelatedPostsNum,
-        },
-      })
-    : await sendGQLRequest({
-        query: postGQL,
-        variables: {
-          where: {
-            slug: slug,
-          },
-          relatedPostsWhere: {
-            slug: {
-              notIn: slug,
-            },
-          },
-          orderBy: [{ order: 'asc' }],
-          take: topicRelatedPostsNum,
-        },
-      })
+  return await sendGQLRequest(requestParams)
 }
 
 export default async function PostPage({
