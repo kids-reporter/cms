@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies
+  - @kids-reporter/draft-renderer@1.0.11
+
 ## 1.0.12
 
 ### Patch Changes
