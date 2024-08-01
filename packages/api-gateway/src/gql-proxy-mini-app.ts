@@ -151,10 +151,12 @@ class TokenManager {
 export function createGraphQLProxy({
   headlessAccount,
   previewAccount,
+  previewSecret,
   apiOrigin,
 }: {
   headlessAccount: Account
   previewAccount: Account
+  previewSecret: string
   apiOrigin: string
 }) {
   // create express mini app
@@ -176,8 +178,9 @@ export function createGraphQLProxy({
       )
 
       try {
-        console.log(req, previewAccount)
-        const account = headlessAccount //req.get('auth') === 'preview' ? previewAccount : headlessAccount
+        const isPreview =
+          req?.headers?.['authorization'] === `preview_${previewSecret}`
+        const account = isPreview ? previewAccount : headlessAccount
         const tokenManager = new TokenManager(
           account.email,
           account.password,
@@ -246,8 +249,9 @@ export function createGraphQLProxy({
             })
           )
           try {
-            console.log(req)
-            const account = headlessAccount // req.get('auth') === 'preview' ? previewAccount : headlessAccount
+            const isPreview =
+              req?.headers?.['authorization'] === `preview_${previewSecret}`
+            const account = isPreview ? previewAccount : headlessAccount
             const tokenManager = new TokenManager(
               account.email,
               account.password,

@@ -185,8 +185,11 @@ const getPost = async (slug: string) => {
   const { isEnabled } = draftMode()
 
   if (isEnabled && PREVIEW_SECRET) {
+    draftMode().disable()
     return await sendGQLRequest(data, {
-      auth: { username: 'preview', password: PREVIEW_SECRET },
+      headers: {
+        Authorization: `Bearer preview_${PREVIEW_SECRET}`,
+      },
     })
   } else {
     return await sendGQLRequest(data)
