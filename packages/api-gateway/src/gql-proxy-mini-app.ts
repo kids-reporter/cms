@@ -183,7 +183,7 @@ export function createGraphQLProxy({
   previewSecret: string
   apiOrigin: string
 }) {
-  const previewAuthToken = `Bearer preview_${previewSecret}`
+  const previewAuthToken = `Basic preview_${previewSecret}`
 
   // create express mini app
   const router = express.Router()

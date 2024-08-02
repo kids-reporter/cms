@@ -143,7 +143,7 @@ const getTopic = async (slug: string) => {
     draftMode().disable()
     return await sendGQLRequest(data, {
       headers: {
-        Authorization: `Bearer preview_${PREVIEW_SECRET}`,
+        Authorization: `Basic preview_${PREVIEW_SECRET}`,
       },
     })
   } else {
