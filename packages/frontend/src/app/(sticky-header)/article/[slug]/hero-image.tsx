@@ -32,6 +32,7 @@ export const HeroImage = (props: HeroImageProp) => {
               width: 'inherit',
               height: 'auto',
               aspectRatio: aspectRatio,
+              cursor: 'zoom-in',
             }}
             loading="eager"
             fetchPriority="high"

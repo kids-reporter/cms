@@ -23,6 +23,7 @@ const FigureCaption = styled.figcaption`
 const Img = styled.img`
   width: 100%;
   object-fit: contain;
+  cursor: zoom-in;
 `
 
 type ImageBlockProps = {

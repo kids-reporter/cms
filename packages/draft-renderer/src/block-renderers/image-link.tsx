@@ -20,6 +20,7 @@ const Figure = styled.figure`
 const Img = styled.img`
   width: 100%;
   object-fit: contain;
+  cursor: zoom-in;
 `
 
 type ImageLinkBlockProps = {
