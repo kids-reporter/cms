@@ -264,8 +264,10 @@ export function createGraphQLProxy({
         proxyReq.setHeader('Cookie', cookie)
         proxyReq.setHeader('Content-Type', 'application/json')
         proxyReq.setHeader('x-apollo-operation-name', '')
-        // TODO: make it conditional
-        proxyReq.removeHeader('authorization')
+
+        // Appended authorization header for preview needs to be removed when proxied to cms
+        req?.headers?.['authorization'] === previewAuthToken &&
+          proxyReq.removeHeader('authorization')
       },
 
       onProxyRes: async (proxyRes, req, res) => {
