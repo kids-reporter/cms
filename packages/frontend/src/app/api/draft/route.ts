@@ -10,12 +10,10 @@ export async function GET(request: Request) {
   const isValidType = type === ContentType.ARTICLE || type === ContentType.TOPIC
 
   if (secret !== PREVIEW_SECRET || !isValidType || !slug) {
-    // TODO: redirect to 404
-    return new Response('Invalid parameters.', { status: 401 })
+    redirect('/not-found')
   }
 
   draftMode().enable()
-
   const path = `/${type}/${slug}`
   redirect(path)
 }
