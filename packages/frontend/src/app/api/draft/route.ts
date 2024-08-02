@@ -9,8 +9,8 @@ export async function GET(request: Request) {
   const slug = searchParams.get('slug')
   const isValidType = type === ContentType.ARTICLE || type === ContentType.TOPIC
 
-  console.log(secret, PREVIEW_SECRET)
-  if (/*secret !== PREVIEW_SECRET || */ !isValidType || !slug) {
+  if (secret !== PREVIEW_SECRET || !isValidType || !slug) {
+    // TODO: redirect to 404
     return new Response('Invalid parameters.', { status: 401 })
   }
 

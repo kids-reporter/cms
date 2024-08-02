@@ -16,8 +16,6 @@ export type Account = {
 }
 
 class TokenManager {
-  // Singleton
-  static instance?: TokenManager
   private email: string
   private password: string
   private apiEndpoint: string
@@ -33,12 +31,6 @@ class TokenManager {
     this.password = password
     this.apiEndpoint = apiEndpoint
     this.token = ''
-
-    if (TokenManager.instance) {
-      return TokenManager.instance
-    }
-
-    TokenManager.instance = this
   }
 
   /**
@@ -143,6 +135,38 @@ class TokenManager {
   }
 }
 
+class HeadlessTokenManger extends TokenManager {
+  // Singleton
+  static instance?: HeadlessTokenManger
+  constructor(
+    email: string,
+    password: string,
+    apiEndpoint = 'http://localhost:3000/api/graphql'
+  ) {
+    super(email, password, apiEndpoint)
+    if (HeadlessTokenManger.instance) {
+      return HeadlessTokenManger.instance
+    }
+    HeadlessTokenManger.instance = this
+  }
+}
+
+class PreviewTokenManager extends TokenManager {
+  // Singleton
+  static instance?: PreviewTokenManager
+  constructor(
+    email: string,
+    password: string,
+    apiEndpoint = 'http://localhost:3000/api/graphql'
+  ) {
+    super(email, password, apiEndpoint)
+    if (PreviewTokenManager.instance) {
+      return PreviewTokenManager.instance
+    }
+    PreviewTokenManager.instance = this
+  }
+}
+
 /**
  *  This function creates a `GraphQLProxy` mini app.
  *  This mini app aims to add 'keystonejs-session' cookie on incoming requests' header
@@ -159,6 +183,8 @@ export function createGraphQLProxy({
   previewSecret: string
   apiOrigin: string
 }) {
+  const previewAuthToken = `Bearer preview_${previewSecret}`
+
   // create express mini app
   const router = express.Router()
 
@@ -178,14 +204,18 @@ export function createGraphQLProxy({
       )
 
       try {
-        const isPreview =
-          req?.headers?.['authorization'] === `preview_${previewSecret}`
-        const account = isPreview ? previewAccount : headlessAccount
-        const tokenManager = new TokenManager(
-          account.email,
-          account.password,
-          apiOrigin + '/api/graphql'
-        )
+        const isPreview = req?.headers?.['authorization'] === previewAuthToken
+        const tokenManager = isPreview
+          ? new PreviewTokenManager(
+              previewAccount.email,
+              previewAccount.password,
+              apiOrigin + '/api/graphql'
+            )
+          : new HeadlessTokenManger(
+              headlessAccount.email,
+              headlessAccount.password,
+              apiOrigin + '/api/graphql'
+            )
         const token = await tokenManager.getToken()
         res.locals.sessionToken = token
       } catch (err) {
@@ -234,6 +264,8 @@ export function createGraphQLProxy({
         proxyReq.setHeader('Cookie', cookie)
         proxyReq.setHeader('Content-Type', 'application/json')
         proxyReq.setHeader('x-apollo-operation-name', '')
+        // TODO: make it conditional
+        proxyReq.removeHeader('authorization')
       },
 
       onProxyRes: async (proxyRes, req, res) => {
@@ -250,13 +282,18 @@ export function createGraphQLProxy({
           )
           try {
             const isPreview =
-              req?.headers?.['authorization'] === `preview_${previewSecret}`
-            const account = isPreview ? previewAccount : headlessAccount
-            const tokenManager = new TokenManager(
-              account.email,
-              account.password,
-              apiOrigin + '/api/graphql'
-            )
+              req?.headers?.['authorization'] === previewAuthToken
+            const tokenManager = isPreview
+              ? new PreviewTokenManager(
+                  previewAccount.email,
+                  previewAccount.password,
+                  apiOrigin + '/api/graphql'
+                )
+              : new HeadlessTokenManger(
+                  headlessAccount.email,
+                  headlessAccount.password,
+                  apiOrigin + '/api/graphql'
+                )
             await tokenManager.renewToken()
           } catch (err) {
             const annotatedErr = errors.helpers.wrap(
