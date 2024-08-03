@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import { Photo } from '@/app/types'
 import { FALLBACK_IMG } from '@/app/constants'
+import { useArticleContext } from './article-context'
 
 const ImageWithFallback = dynamic(
   () => import('@/app/components/image-with-fallback'),
@@ -10,10 +11,13 @@ const ImageWithFallback = dynamic(
 type HeroImageProp = {
   image: Photo
   caption: string
+  handleImgModalOpen: (imgSrc: string) => void
 }
 
 export const HeroImage = (props: HeroImageProp) => {
   const { image, caption } = props
+  const { handleImgModalOpen } = useArticleContext()
+
   const aspectRatio =
     image?.imageFile?.width && image?.imageFile?.height
       ? `${image.imageFile.width}/${image.imageFile.height}`
@@ -36,6 +40,9 @@ export const HeroImage = (props: HeroImageProp) => {
             }}
             loading="eager"
             fetchPriority="high"
+            onClick={() =>
+              handleImgModalOpen(image.resized?.medium ?? FALLBACK_IMG)
+            }
           />
         </div>
         <figcaption

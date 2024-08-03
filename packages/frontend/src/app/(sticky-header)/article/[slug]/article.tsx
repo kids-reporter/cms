@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArticleContext } from './article-context'
 import Title from './title'
 import HeroImage from './hero-image'
+import ImageModal from './image-modal'
 import { NewsReading } from './news-reading'
 import PublishedDate from './published-date'
 import SubSubcategory from './subSubcategory'
@@ -150,10 +151,28 @@ export const Article = ({ post }: { post: any }) => {
     )
   }
 
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false)
+  const [imgSrc, setImgSrc] = useState<string>('')
+  const handleImgModalOpen = (imgSrc: string) => {
+    setIsImgModalOpen(true)
+    setImgSrc(imgSrc)
+  }
+  const handleImgModalClose = () => {
+    setIsImgModalOpen(false)
+    setImgSrc('')
+  }
+
   return (
     <>
       <div className={`post${theme ? ` theme-${theme}` : ''}`}>
-        <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
+        <ArticleContext.Provider
+          value={{
+            fontSize,
+            onFontSizeChange,
+            handleImgModalOpen,
+            handleImgModalClose,
+          }}
+        >
           <Sidebar topicURL={topicURL} />
           <MobileSidebar topicURL={topicURL} />
           {topicURL && (
@@ -167,7 +186,16 @@ export const Article = ({ post }: { post: any }) => {
               </Link>
             </div>
           )}
-          <HeroImage image={post?.heroImage} caption={post?.heroCaption} />
+          <ImageModal
+            isOpen={isImgModalOpen}
+            imgSrc={imgSrc}
+            handleImgModalClose={handleImgModalClose}
+          />
+          <HeroImage
+            image={post?.heroImage}
+            caption={post?.heroCaption}
+            handleImgModalOpen={handleImgModalOpen}
+          />
           {post && (
             <div className="hero-section">
               <header className="entry-header">
