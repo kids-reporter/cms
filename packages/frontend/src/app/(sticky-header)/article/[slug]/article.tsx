@@ -156,10 +156,12 @@ export const Article = ({ post }: { post: any }) => {
   const handleImgModalOpen = (imgSrc: string) => {
     setIsImgModalOpen(true)
     setImgSrc(imgSrc)
+    document.body.classList.add('no-scroll')
   }
   const handleImgModalClose = () => {
     setIsImgModalOpen(false)
     setImgSrc('')
+    document.body.classList.remove('no-scroll')
   }
 
   return (
