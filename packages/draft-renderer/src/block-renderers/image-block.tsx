@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { mediaQuery } from '../utils/media-query'
 
 const Figure = styled.figure`
@@ -46,6 +46,7 @@ type ImageBlockProps = {
 }
 
 export function ImageBlock({ className = '', data }: ImageBlockProps) {
+  const theme = useTheme()
   const { desc, imageFile, resized } = data || {}
   const aspectRatio =
     imageFile?.width && imageFile?.height
@@ -69,6 +70,7 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
         srcSet={imgSrcSetArr.join(',')}
         sizes="(min-width: 1200px) 1000px, 100vw"
         style={{ aspectRatio: aspectRatio }}
+        onClick={() => theme?.handleImgModalOpen?.(resized?.original)}
       />
       {desc && <FigureCaption>{desc}</FigureCaption>}
     </Figure>

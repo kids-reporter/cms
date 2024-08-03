@@ -10,7 +10,7 @@ export const ImageModal = (props: {
   return (
     isOpen && (
       <div
-        className="absolute w-screen h-screen top-0 left-0 bg-black"
+        className="fixed w-screen h-screen top-0 left-0 bg-black"
         style={{ zIndex: '2000' }}
       >
         <button
