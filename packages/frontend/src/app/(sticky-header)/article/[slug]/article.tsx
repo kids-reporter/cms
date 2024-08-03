@@ -164,6 +164,30 @@ export const Article = ({ post }: { post: any }) => {
     document.body.classList.remove('no-scroll')
   }
 
+  const topicBreadCrumb = topicURL && (
+    <div className="topic-breadcrumb">
+      <Link className="text-sm md:text-base lg:text-lg" href={topicURL}>
+        <img src="/assets/images/topic-breadcrumb-icon.svg" loading="lazy" />
+        {mainTopic?.title}
+      </Link>
+    </div>
+  )
+
+  const postHeader = post && (
+    <div className="hero-section">
+      <header className="entry-header">
+        <Title text={post.title} subtitle={post.subtitle} fontSize={fontSize} />
+        <div className="post-date-category">
+          <PublishedDate date={post.publishedDate} />
+          <SubSubcategory
+            text={subSubcategory?.name}
+            link={subSubcategoryURL}
+          />
+        </div>
+      </header>
+    </div>
+  )
+
   return (
     <>
       <div className={`post${theme ? ` theme-${theme}` : ''}`}>
@@ -177,17 +201,7 @@ export const Article = ({ post }: { post: any }) => {
         >
           <Sidebar topicURL={topicURL} />
           <MobileSidebar topicURL={topicURL} />
-          {topicURL && (
-            <div className="topic-breadcrumb">
-              <Link className="text-sm md:text-base lg:text-lg" href={topicURL}>
-                <img
-                  src="/assets/images/topic-breadcrumb-icon.svg"
-                  loading="lazy"
-                />
-                {mainTopic?.title}
-              </Link>
-            </div>
-          )}
+          {topicBreadCrumb}
           <ImageModal
             isOpen={isImgModalOpen}
             imgSrc={imgSrc}
@@ -198,24 +212,7 @@ export const Article = ({ post }: { post: any }) => {
             caption={post?.heroCaption}
             handleImgModalOpen={handleImgModalOpen}
           />
-          {post && (
-            <div className="hero-section">
-              <header className="entry-header">
-                <Title
-                  text={post.title}
-                  subtitle={post.subtitle}
-                  fontSize={fontSize}
-                />
-                <div className="post-date-category">
-                  <PublishedDate date={post.publishedDate} />
-                  <SubSubcategory
-                    text={subSubcategory?.name}
-                    link={subSubcategoryURL}
-                  />
-                </div>
-              </header>
-            </div>
-          )}
+          {postHeader}
           {post?.newsReadingGroup && (
             <NewsReading data={post.newsReadingGroup} />
           )}
