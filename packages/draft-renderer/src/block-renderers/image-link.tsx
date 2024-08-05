@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import {
   Editor,
   EditorState,
@@ -36,6 +36,7 @@ export const ImageLinkBlock = ({
   className = '',
   data,
 }: ImageLinkBlockProps) => {
+  const theme = useTheme()
   const { url, rawContentState } = data
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
@@ -43,7 +44,10 @@ export const ImageLinkBlock = ({
 
   const imgBlock = (
     <Figure className={className}>
-      <Img src={url ?? fallbackImg} />
+      <Img
+        src={url ?? fallbackImg}
+        onClick={() => theme?.handleImgModalOpen?.(url ?? fallbackImg)}
+      />
       <Editor
         blockRenderMap={blockRenderMap}
         editorState={editorState}

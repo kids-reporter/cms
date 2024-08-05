@@ -70,7 +70,9 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
         srcSet={imgSrcSetArr.join(',')}
         sizes="(min-width: 1200px) 1000px, 100vw"
         style={{ aspectRatio: aspectRatio }}
-        onClick={() => theme?.handleImgModalOpen?.(resized?.original)}
+        onClick={() =>
+          theme?.handleImgModalOpen?.(resized?.original ?? resized?.medium)
+        }
       />
       {desc && <FigureCaption>{desc}</FigureCaption>}
     </Figure>
