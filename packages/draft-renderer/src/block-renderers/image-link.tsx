@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import {
   Editor,
@@ -17,10 +17,10 @@ const Figure = styled.figure`
   width: 100%;
 `
 
-const Img = styled.img`
+const Img = styled.img<{ $isDesktopAndAbove: boolean }>`
   width: 100%;
   object-fit: contain;
-  cursor: zoom-in;
+  ${(props) => (props.$isDesktopAndAbove ? 'cursor: zoom-in;' : '')};
 `
 
 type ImageLinkBlockProps = {
@@ -38,6 +38,19 @@ export const ImageLinkBlock = ({
 }: ImageLinkBlockProps) => {
   const theme = useTheme()
   const { url, rawContentState } = data
+  const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
+
+  const handleWindowResize = () => {
+    setIsDesktopAndAbove(window.innerWidth > 1024)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
+
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
   const blockRenderMap = blockRenderMaps.imageLink
@@ -46,7 +59,10 @@ export const ImageLinkBlock = ({
     <Figure className={className}>
       <Img
         src={url ?? fallbackImg}
-        onClick={() => theme?.handleImgModalOpen?.(url ?? fallbackImg)}
+        $isDesktopAndAbove={isDesktopAndAbove}
+        onClick={() =>
+          isDesktopAndAbove && theme?.handleImgModalOpen?.(url ?? fallbackImg)
+        }
       />
       <Editor
         blockRenderMap={blockRenderMap}

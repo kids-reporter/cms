@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { mediaQuery } from '../utils/media-query'
 
@@ -20,10 +20,10 @@ const FigureCaption = styled.figcaption`
   text-align: center;
 `
 
-const Img = styled.img`
+const Img = styled.img<{ $isDesktopAndAbove: boolean }>`
   width: 100%;
   object-fit: contain;
-  cursor: zoom-in;
+  ${(props) => (props.$isDesktopAndAbove ? 'cursor: zoom-in;' : '')};
 `
 
 type ImageBlockProps = {
@@ -48,6 +48,19 @@ type ImageBlockProps = {
 export function ImageBlock({ className = '', data }: ImageBlockProps) {
   const theme = useTheme()
   const { desc, imageFile, resized } = data || {}
+  const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
+
+  const handleWindowResize = () => {
+    setIsDesktopAndAbove(window.innerWidth > 1024)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
+
   const aspectRatio =
     imageFile?.width && imageFile?.height
       ? `${imageFile.width}/${imageFile.height}`
@@ -70,7 +83,9 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
         srcSet={imgSrcSetArr.join(',')}
         sizes="(min-width: 1200px) 1000px, 100vw"
         style={{ aspectRatio: aspectRatio }}
+        $isDesktopAndAbove={isDesktopAndAbove}
         onClick={() =>
+          isDesktopAndAbove &&
           theme?.handleImgModalOpen?.(resized?.original ?? resized?.medium)
         }
       />

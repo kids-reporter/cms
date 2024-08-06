@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Photo } from '@/app/types'
 import { FALLBACK_IMG } from '@/app/constants'
@@ -17,6 +18,18 @@ type HeroImageProp = {
 export const HeroImage = (props: HeroImageProp) => {
   const { image, caption } = props
   const { handleImgModalOpen } = useArticleContext()
+  const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
+
+  const handleWindowResize = () => {
+    setIsDesktopAndAbove(window.innerWidth > 1024)
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
 
   const aspectRatio =
     image?.imageFile?.width && image?.imageFile?.height
@@ -36,11 +49,12 @@ export const HeroImage = (props: HeroImageProp) => {
               width: 'inherit',
               height: 'auto',
               aspectRatio: aspectRatio,
-              cursor: 'zoom-in',
+              cursor: isDesktopAndAbove ? 'zoom-in' : 'default',
             }}
             loading="eager"
             fetchPriority="high"
             onClick={() =>
+              isDesktopAndAbove &&
               handleImgModalOpen(image.resized?.medium ?? FALLBACK_IMG)
             }
           />
