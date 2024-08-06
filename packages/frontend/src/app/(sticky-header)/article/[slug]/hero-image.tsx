@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import debounce from 'lodash/debounce'
 import { Photo } from '@/app/types'
-import { FALLBACK_IMG } from '@/app/constants'
+import { FALLBACK_IMG, DEBOUNCE_THRESHOLD } from '@/app/constants'
 import { useArticleContext } from './article-context'
 
 const ImageWithFallback = dynamic(
@@ -20,11 +21,12 @@ export const HeroImage = (props: HeroImageProp) => {
   const { handleImgModalOpen } = useArticleContext()
   const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
 
-  const handleWindowResize = () => {
+  const handleWindowResize = debounce(() => {
     setIsDesktopAndAbove(window.innerWidth > 1024)
-  }
+  }, DEBOUNCE_THRESHOLD)
 
   useEffect(() => {
+    setIsDesktopAndAbove(window.innerWidth > 1024)
     window.addEventListener('resize', handleWindowResize)
     return () => {
       window.removeEventListener('resize', handleWindowResize)

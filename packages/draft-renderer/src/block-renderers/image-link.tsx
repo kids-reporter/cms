@@ -45,6 +45,7 @@ export const ImageLinkBlock = ({
   }
 
   useEffect(() => {
+    setIsDesktopAndAbove(window.innerWidth > 1024)
     window.addEventListener('resize', handleWindowResize)
     return () => {
       window.removeEventListener('resize', handleWindowResize)

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import debounce from 'lodash/debounce'
 import { Loading } from '@/app/components/types'
 import { Z_INDEX_TOP } from '@/app/constants'
 
@@ -62,23 +63,21 @@ export const ImageModal = (props: {
           setCrossIconPos(CrossIconPos.RIGHT_TOP)
         }
       } else {
-        // default
         setCrossIconPos(CrossIconPos.INSIDE)
       }
     }
   }
 
-  // TODO: debounce
-  const handleESCClick = (e) => {
-    /*isOpen && */ e.key === 'Escape' && handleImgModalClose?.()
-  }
+  const handleESCPress = debounce((e) => {
+    isOpen && e.key === 'Escape' && handleImgModalClose?.()
+  }, 500)
 
   useEffect(() => {
-    window.addEventListener('keydown', handleESCClick)
+    window.addEventListener('keydown', handleESCPress)
     return () => {
-      window.removeEventListener('keydown', handleESCClick)
+      window.removeEventListener('keydown', handleESCPress)
     }
-  }, [])
+  }, [isOpen])
 
   useEffect(() => {
     isOpen && checkFullScreenImageSize()

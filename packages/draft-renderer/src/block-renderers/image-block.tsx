@@ -55,6 +55,7 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
   }
 
   useEffect(() => {
+    setIsDesktopAndAbove(window.innerWidth > 1024)
     window.addEventListener('resize', handleWindowResize)
     return () => {
       window.removeEventListener('resize', handleWindowResize)
