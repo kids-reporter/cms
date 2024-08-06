@@ -157,7 +157,6 @@ export const Article = ({ post }: { post: any }) => {
     setIsImgModalOpen(true)
     setImgSrc(imgSrc)
     document.body.classList.add('no-scroll')
-    console.log('handleImgModalOpen')
   }
   const handleImgModalClose = () => {
     setIsImgModalOpen(false)
