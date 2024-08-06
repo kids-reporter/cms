@@ -77,7 +77,7 @@ export const ImageModal = (props: {
     return () => {
       window.removeEventListener('keydown', handleESCPress)
     }
-  }, [isOpen])
+  }, [])
 
   useEffect(() => {
     isOpen && checkFullScreenImageSize()
@@ -108,12 +108,12 @@ export const ImageModal = (props: {
   return (
     isOpen && (
       <div
-        className="hidden lg:block fixed w-screen h-screen top-0 left-0 bg-black/50"
+        className="w-screen h-screen fixed top-0 left-0 hidden lg:flex lg:flex-col items-center justify-center bg-black/50"
         style={{ zIndex: Z_INDEX_TOP + 1 }}
       >
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="relative">
           <img
-            className="w-full h-full object-contain"
+            className="max-w-screen max-h-screen object-contain"
             ref={imgRef}
             loading={Loading.EAGER}
             {...imgProps}
