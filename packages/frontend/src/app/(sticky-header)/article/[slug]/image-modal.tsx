@@ -35,10 +35,10 @@ const CrossIconPosCss = (position: CrossIconPos) => {
 
 export const ImageModal = (props: {
   isOpen: boolean
-  imgSrc: string
+  imgProps: React.ImgHTMLAttributes<HTMLImageElement>
   handleImgModalClose: () => void
 }) => {
-  const { isOpen, imgSrc, handleImgModalClose } = props
+  const { isOpen, imgProps, handleImgModalClose } = props
   const imgRef = useRef(null)
   const [crossIconPos, setCrossIconPos] = useState(CrossIconPos.INSIDE)
 
@@ -109,7 +109,7 @@ export const ImageModal = (props: {
           </svg>
         </button>
         <div className="w-full h-full flex flex-col items-center justify-center">
-          <img ref={imgRef} src={imgSrc} loading={Loading.LAZY} />
+          <img ref={imgRef} loading={Loading.EAGER} {...imgProps} />
         </div>
       </div>
     )

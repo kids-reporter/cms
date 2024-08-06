@@ -67,7 +67,7 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
       ? `${imageFile.width}/${imageFile.height}`
       : '16/9'
 
-  const imgSrcSetArr = []
+  const imgSrcSetArr: string[] = []
   if (resized?.medium) {
     imgSrcSetArr.push(`${resized.medium} 500w`)
   }
@@ -87,7 +87,11 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
         $isDesktopAndAbove={isDesktopAndAbove}
         onClick={() =>
           isDesktopAndAbove &&
-          theme?.handleImgModalOpen?.(resized?.original ?? resized?.medium)
+          theme?.handleImgModalOpen?.({
+            src: resized?.original ?? resized?.medium,
+            sizes: '(min-width: 1200px) 1000px, 100vw',
+            srcSet: imgSrcSetArr.join(','),
+          })
         }
       />
       {desc && <FigureCaption>{desc}</FigureCaption>}

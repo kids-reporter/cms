@@ -25,7 +25,9 @@ enum FontSizeLevel {
 type DraftRendererProps = {
   themeColor: ThemeColorEnum
   fontSizeLevel: FontSizeLevel
-  handleImgModalOpen?: (imgSrc: string) => void
+  handleImgModalOpen?: (
+    imgProps: React.ImgHTMLAttributes<HTMLImageElement>
+  ) => void
   rawContentState: RawDraftContentState
   initiallyScrollTo?: string
   offsetTop?: number

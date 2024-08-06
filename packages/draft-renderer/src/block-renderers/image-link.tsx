@@ -62,7 +62,10 @@ export const ImageLinkBlock = ({
         src={url ?? fallbackImg}
         $isDesktopAndAbove={isDesktopAndAbove}
         onClick={() =>
-          isDesktopAndAbove && theme?.handleImgModalOpen?.(url ?? fallbackImg)
+          isDesktopAndAbove &&
+          theme?.handleImgModalOpen?.({
+            src: url ?? fallbackImg,
+          })
         }
       />
       <Editor

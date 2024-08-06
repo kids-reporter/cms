@@ -4,7 +4,9 @@ import { FontSizeLevel } from '@/app/constants'
 type Article = {
   fontSize: FontSizeLevel
   onFontSizeChange: () => void
-  handleImgModalOpen: (imgSrc: string) => void
+  handleImgModalOpen: (
+    imgProps: React.ImgHTMLAttributes<HTMLImageElement>
+  ) => void
   handleImgModalClose: () => void
 }
 

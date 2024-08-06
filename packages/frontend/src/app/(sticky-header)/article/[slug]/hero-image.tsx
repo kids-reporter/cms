@@ -13,7 +13,9 @@ const ImageWithFallback = dynamic(
 type HeroImageProp = {
   image: Photo
   caption: string
-  handleImgModalOpen: (imgSrc: string) => void
+  handleImgModalOpen: (
+    imgProps: React.ImgHTMLAttributes<HTMLImageElement>
+  ) => void
 }
 
 export const HeroImage = (props: HeroImageProp) => {
@@ -57,7 +59,11 @@ export const HeroImage = (props: HeroImageProp) => {
             fetchPriority="high"
             onClick={() =>
               isDesktopAndAbove &&
-              handleImgModalOpen(image.resized?.medium ?? FALLBACK_IMG)
+              handleImgModalOpen({
+                sizes: '(min-width: 1100px) 1000px, 90vw',
+                srcSet: `${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`,
+                src: image.resized?.medium ?? FALLBACK_IMG,
+              })
             }
           />
         </div>

@@ -152,15 +152,19 @@ export const Article = ({ post }: { post: any }) => {
   }
 
   const [isImgModalOpen, setIsImgModalOpen] = useState(false)
-  const [imgSrc, setImgSrc] = useState<string>('')
-  const handleImgModalOpen = (imgSrc: string) => {
+  const [imgProps, setImgProps] = useState<
+    React.ImgHTMLAttributes<HTMLImageElement>
+  >({})
+  const handleImgModalOpen = (
+    imgProps: React.ImgHTMLAttributes<HTMLImageElement>
+  ) => {
     setIsImgModalOpen(true)
-    setImgSrc(imgSrc)
+    setImgProps(imgProps)
     document.body.classList.add('no-scroll')
   }
   const handleImgModalClose = () => {
     setIsImgModalOpen(false)
-    setImgSrc('')
+    setImgProps({})
     document.body.classList.remove('no-scroll')
   }
 
@@ -204,7 +208,7 @@ export const Article = ({ post }: { post: any }) => {
           {topicBreadCrumb}
           <ImageModal
             isOpen={isImgModalOpen}
-            imgSrc={imgSrc}
+            imgProps={imgProps}
             handleImgModalClose={handleImgModalClose}
           />
           <HeroImage
