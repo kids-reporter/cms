@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
+import debounce from 'lodash/debounce'
 import { breakpoints, mediaQuery } from '../utils/media-query'
+import { DEBOUNCE_THRESHOLD } from '../utils/constants'
 
 const Figure = styled.figure`
   width: 100%;
@@ -50,10 +52,9 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
   const { desc, imageFile, resized } = data || {}
   const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
 
-  // TODO: debounce
-  const handleWindowResize = () => {
+  const handleWindowResize = debounce(() => {
     setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
-  }
+  }, DEBOUNCE_THRESHOLD)
 
   useEffect(() => {
     setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)

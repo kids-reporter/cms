@@ -6,10 +6,12 @@ import {
   RawDraftContentState,
   convertFromRaw,
 } from 'draft-js'
+import debounce from 'lodash/debounce'
 import { InfoBoxContainer } from './image-block'
 import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
 import { breakpoints, mediaQuery } from '../utils/media-query'
+import { DEBOUNCE_THRESHOLD } from '../utils/constants'
 
 const fallbackImg = '/assets/images/image_placeholder.png'
 
@@ -40,9 +42,9 @@ export const ImageLinkBlock = ({
   const { url, rawContentState } = data
   const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
 
-  const handleWindowResize = () => {
+  const handleWindowResize = debounce(() => {
     setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
-  }
+  }, DEBOUNCE_THRESHOLD)
 
   useEffect(() => {
     setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
