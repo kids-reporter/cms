@@ -40,15 +40,19 @@ export const HeroImage = (props: HeroImageProp) => {
       ? `${image.imageFile.width}/${image.imageFile.height}`
       : '16/9'
 
+  const commonImgProps = {
+    sizes: '(min-width: 1100px) 1000px, 90vw',
+    srcSet: `${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`,
+    src: image.resized?.medium ?? FALLBACK_IMG,
+  }
+
   return (
     image && (
       <figure className="max-w-5xl mx-auto pt-10 pb-12">
         <div className="relative inline-flex w-full overflow-hidden">
           <ImageWithFallback
             className="max-w-full object-contain"
-            srcSet={`${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`}
-            sizes="(min-width: 1100px) 1000px, 90vw"
-            src={image.resized?.medium ?? FALLBACK_IMG}
+            {...commonImgProps}
             style={{
               width: 'inherit',
               height: 'auto',
@@ -58,12 +62,7 @@ export const HeroImage = (props: HeroImageProp) => {
             loading="eager"
             fetchPriority="high"
             onClick={() =>
-              isDesktopAndAbove &&
-              handleImgModalOpen({
-                sizes: '(min-width: 1100px) 1000px, 90vw',
-                srcSet: `${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`,
-                src: image.resized?.medium ?? FALLBACK_IMG,
-              })
+              isDesktopAndAbove && handleImgModalOpen(commonImgProps)
             }
           />
         </div>

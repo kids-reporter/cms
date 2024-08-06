@@ -56,16 +56,17 @@ export const ImageLinkBlock = ({
   const editorState = EditorState.createWithContent(contentState, decorator)
   const blockRenderMap = blockRenderMaps.imageLink
 
+  const commonImgProps = {
+    src: url ?? fallbackImg,
+  }
+
   const imgBlock = (
     <Figure className={className}>
       <Img
-        src={url ?? fallbackImg}
+        {...commonImgProps}
         $isDesktopAndAbove={isDesktopAndAbove}
         onClick={() =>
-          isDesktopAndAbove &&
-          theme?.handleImgModalOpen?.({
-            src: url ?? fallbackImg,
-          })
+          isDesktopAndAbove && theme?.handleImgModalOpen?.(commonImgProps)
         }
       />
       <Editor

@@ -71,27 +71,25 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
   if (resized?.medium) {
     imgSrcSetArr.push(`${resized.medium} 500w`)
   }
-
   if (resized?.large) {
     imgSrcSetArr.push(`${resized.large} 1000w`)
+  }
+
+  const commonImgProps = {
+    src: resized?.original ?? resized?.medium,
+    sizes: '(min-width: 1200px) 1000px, 100vw',
+    srcSet: imgSrcSetArr.join(','),
   }
 
   const imgBlock = (
     <Figure className={className}>
       <Img
         alt={desc}
-        src={resized?.original ?? resized?.medium}
-        srcSet={imgSrcSetArr.join(',')}
-        sizes="(min-width: 1200px) 1000px, 100vw"
+        {...commonImgProps}
         style={{ aspectRatio: aspectRatio }}
         $isDesktopAndAbove={isDesktopAndAbove}
         onClick={() =>
-          isDesktopAndAbove &&
-          theme?.handleImgModalOpen?.({
-            src: resized?.original ?? resized?.medium,
-            sizes: '(min-width: 1200px) 1000px, 100vw',
-            srcSet: imgSrcSetArr.join(','),
-          })
+          isDesktopAndAbove && theme?.handleImgModalOpen?.(commonImgProps)
         }
       />
       {desc && <FigureCaption>{desc}</FigureCaption>}
