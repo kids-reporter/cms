@@ -9,7 +9,7 @@ import {
 import { InfoBoxContainer } from './image-block'
 import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
-import { mediaQuery } from '../utils/media-query'
+import { breakpoints, mediaQuery } from '../utils/media-query'
 
 const fallbackImg = '/assets/images/image_placeholder.png'
 
@@ -41,11 +41,11 @@ export const ImageLinkBlock = ({
   const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
 
   const handleWindowResize = () => {
-    setIsDesktopAndAbove(window.innerWidth > 1024)
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
   }
 
   useEffect(() => {
-    setIsDesktopAndAbove(window.innerWidth > 1024)
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
     window.addEventListener('resize', handleWindowResize)
     return () => {
       window.removeEventListener('resize', handleWindowResize)

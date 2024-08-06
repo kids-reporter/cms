@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { mediaQuery } from '../utils/media-query'
+import { breakpoints, mediaQuery } from '../utils/media-query'
 
 const Figure = styled.figure`
   width: 100%;
@@ -50,12 +50,13 @@ export function ImageBlock({ className = '', data }: ImageBlockProps) {
   const { desc, imageFile, resized } = data || {}
   const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
 
+  // TODO: debounce
   const handleWindowResize = () => {
-    setIsDesktopAndAbove(window.innerWidth > 1024)
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
   }
 
   useEffect(() => {
-    setIsDesktopAndAbove(window.innerWidth > 1024)
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
     window.addEventListener('resize', handleWindowResize)
     return () => {
       window.removeEventListener('resize', handleWindowResize)
