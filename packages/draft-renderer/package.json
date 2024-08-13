@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/draft-renderer",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "babel-loader": "^8.2.5",
     "body-scroll-lock": "3.1.5",
     "html-webpack-plugin": "^5.5.0",
+    "lodash": "^4.17.21",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2"
   },
