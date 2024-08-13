@@ -1,15 +1,17 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useState } from 'react'
+import styled, { useTheme } from 'styled-components'
 import {
   Editor,
   EditorState,
   RawDraftContentState,
   convertFromRaw,
 } from 'draft-js'
+import debounce from 'lodash/debounce'
 import { InfoBoxContainer } from './image-block'
 import blockRenderMaps from '../block-render-maps/index'
 import { decorator } from '../entity-decorators/index'
-import { mediaQuery } from '../utils/media-query'
+import { breakpoints, mediaQuery } from '../utils/media-query'
+import { DEBOUNCE_THRESHOLD } from '../utils/constants'
 
 const fallbackImg = '/assets/images/image_placeholder.png'
 
@@ -17,9 +19,10 @@ const Figure = styled.figure`
   width: 100%;
 `
 
-const Img = styled.img`
+const Img = styled.img<{ $isDesktopAndAbove: boolean }>`
   width: 100%;
   object-fit: contain;
+  ${(props) => (props.$isDesktopAndAbove ? 'cursor: zoom-in;' : '')};
 `
 
 type ImageLinkBlockProps = {
@@ -35,14 +38,39 @@ export const ImageLinkBlock = ({
   className = '',
   data,
 }: ImageLinkBlockProps) => {
+  const theme = useTheme()
   const { url, rawContentState } = data
+  const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
+
+  const handleWindowResize = debounce(() => {
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
+  }, DEBOUNCE_THRESHOLD)
+
+  useEffect(() => {
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
+
   const contentState = convertFromRaw(rawContentState)
   const editorState = EditorState.createWithContent(contentState, decorator)
   const blockRenderMap = blockRenderMaps.imageLink
 
+  const commonImgProps = {
+    src: url ?? fallbackImg,
+  }
+
   const imgBlock = (
     <Figure className={className}>
-      <Img src={url ?? fallbackImg} />
+      <Img
+        {...commonImgProps}
+        $isDesktopAndAbove={isDesktopAndAbove}
+        onClick={() =>
+          isDesktopAndAbove && theme?.handleImgModalOpen?.(commonImgProps)
+        }
+      />
       <Editor
         blockRenderMap={blockRenderMap}
         editorState={editorState}

@@ -1,6 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { mediaQuery } from '../utils/media-query'
+import React, { useEffect, useState } from 'react'
+import styled, { useTheme } from 'styled-components'
+import debounce from 'lodash/debounce'
+import { breakpoints, mediaQuery } from '../utils/media-query'
+import { DEBOUNCE_THRESHOLD } from '../utils/constants'
 
 const Figure = styled.figure`
   width: 100%;
@@ -20,9 +22,10 @@ const FigureCaption = styled.figcaption`
   text-align: center;
 `
 
-const Img = styled.img`
+const Img = styled.img<{ $isDesktopAndAbove: boolean }>`
   width: 100%;
   object-fit: contain;
+  ${(props) => (props.$isDesktopAndAbove ? 'cursor: zoom-in;' : '')};
 `
 
 type ImageBlockProps = {
@@ -45,29 +48,51 @@ type ImageBlockProps = {
 }
 
 export function ImageBlock({ className = '', data }: ImageBlockProps) {
+  const theme = useTheme()
   const { desc, imageFile, resized } = data || {}
+  const [isDesktopAndAbove, setIsDesktopAndAbove] = useState(false)
+
+  const handleWindowResize = debounce(() => {
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
+  }, DEBOUNCE_THRESHOLD)
+
+  useEffect(() => {
+    setIsDesktopAndAbove(window.innerWidth > breakpoints.desktop)
+    window.addEventListener('resize', handleWindowResize)
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  }, [])
+
   const aspectRatio =
     imageFile?.width && imageFile?.height
       ? `${imageFile.width}/${imageFile.height}`
       : '16/9'
 
-  const imgSrcSetArr = []
+  const imgSrcSetArr: string[] = []
   if (resized?.medium) {
     imgSrcSetArr.push(`${resized.medium} 500w`)
   }
-
   if (resized?.large) {
     imgSrcSetArr.push(`${resized.large} 1000w`)
+  }
+
+  const commonImgProps = {
+    src: resized?.original ?? resized?.medium,
+    sizes: '(min-width: 1200px) 1000px, 100vw',
+    srcSet: imgSrcSetArr.join(','),
   }
 
   const imgBlock = (
     <Figure className={className}>
       <Img
         alt={desc}
-        src={resized?.original ?? resized?.medium}
-        srcSet={imgSrcSetArr.join(',')}
-        sizes="(min-width: 1200px) 1000px, 100vw"
+        {...commonImgProps}
         style={{ aspectRatio: aspectRatio }}
+        $isDesktopAndAbove={isDesktopAndAbove}
+        onClick={() =>
+          isDesktopAndAbove && theme?.handleImgModalOpen?.(commonImgProps)
+        }
       />
       {desc && <FigureCaption>{desc}</FigureCaption>}
     </Figure>
