@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import debounce from 'lodash/debounce'
 import { Loading } from '@/app/components/types'
-import { Z_INDEX_TOP } from '@/app/constants'
+import { Z_INDEX_TOP, DEBOUNCE_THRESHOLD } from '@/app/constants'
+import { breakpoints } from '@/app/utils/media-query'
 
 enum CrossIconPos {
   INSIDE = 'inside',
@@ -68,14 +69,20 @@ export const ImageModal = (props: {
     }
   }
 
+  const handleWindowResize = debounce(() => {
+    window.innerWidth <= breakpoints.desktop && handleImgModalClose?.()
+  }, DEBOUNCE_THRESHOLD)
+
   const handleESCPress = debounce((e) => {
-    isOpen && e.key === 'Escape' && handleImgModalClose?.()
-  }, 500)
+    e.key === 'Escape' && handleImgModalClose?.()
+  }, DEBOUNCE_THRESHOLD)
 
   useEffect(() => {
     window.addEventListener('keydown', handleESCPress)
+    window.addEventListener('resize', handleWindowResize)
     return () => {
       window.removeEventListener('keydown', handleESCPress)
+      window.removeEventListener('resize', handleWindowResize)
     }
   }, [])
 
