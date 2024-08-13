@@ -94,13 +94,14 @@ export const PostRenderer = (props: PostProp) => {
 
   const content = props.post?.content
   const theme = props.theme
-  const { fontSize } = useArticleContext()
+  const { fontSize, handleImgModalOpen } = useArticleContext()
 
   return isMounted && content && theme ? (
     <ArticleBodyDraftRenderer
       rawContentState={content}
       themeColor={theme}
       fontSizeLevel={fontSize}
+      handleImgModalOpen={handleImgModalOpen}
       initiallyScrollTo={
         typeof window !== 'undefined' ? window.location.hash : undefined
       }

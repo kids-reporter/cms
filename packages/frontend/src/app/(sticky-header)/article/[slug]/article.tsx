@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArticleContext } from './article-context'
 import Title from './title'
 import HeroImage from './hero-image'
+import ImageModal from './image-modal'
 import { NewsReading } from './news-reading'
 import PublishedDate from './published-date'
 import SubSubcategory from './subSubcategory'
@@ -150,42 +151,72 @@ export const Article = ({ post }: { post: any }) => {
     )
   }
 
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false)
+  const [imgProps, setImgProps] = useState<
+    React.ImgHTMLAttributes<HTMLImageElement>
+  >({})
+  const handleImgModalOpen = (
+    imgProps: React.ImgHTMLAttributes<HTMLImageElement>
+  ) => {
+    setIsImgModalOpen(true)
+    setImgProps(imgProps)
+    document.body.classList.add('no-scroll')
+  }
+  const handleImgModalClose = () => {
+    setIsImgModalOpen(false)
+    setImgProps({})
+    document.body.classList.remove('no-scroll')
+  }
+
+  const topicBreadCrumb = topicURL && (
+    <div className="topic-breadcrumb">
+      <Link className="text-sm md:text-base lg:text-lg" href={topicURL}>
+        <img src="/assets/images/topic-breadcrumb-icon.svg" loading="lazy" />
+        {mainTopic?.title}
+      </Link>
+    </div>
+  )
+
+  const postHeader = post && (
+    <div className="hero-section">
+      <header className="entry-header">
+        <Title text={post.title} subtitle={post.subtitle} fontSize={fontSize} />
+        <div className="post-date-category">
+          <PublishedDate date={post.publishedDate} />
+          <SubSubcategory
+            text={subSubcategory?.name}
+            link={subSubcategoryURL}
+          />
+        </div>
+      </header>
+    </div>
+  )
+
   return (
     <>
       <div className={`post${theme ? ` theme-${theme}` : ''}`}>
-        <ArticleContext.Provider value={{ fontSize, onFontSizeChange }}>
+        <ArticleContext.Provider
+          value={{
+            fontSize,
+            onFontSizeChange,
+            handleImgModalOpen,
+            handleImgModalClose,
+          }}
+        >
           <Sidebar topicURL={topicURL} />
           <MobileSidebar topicURL={topicURL} />
-          {topicURL && (
-            <div className="topic-breadcrumb">
-              <Link className="text-sm md:text-base lg:text-lg" href={topicURL}>
-                <img
-                  src="/assets/images/topic-breadcrumb-icon.svg"
-                  loading="lazy"
-                />
-                {mainTopic?.title}
-              </Link>
-            </div>
-          )}
-          <HeroImage image={post?.heroImage} caption={post?.heroCaption} />
-          {post && (
-            <div className="hero-section">
-              <header className="entry-header">
-                <Title
-                  text={post.title}
-                  subtitle={post.subtitle}
-                  fontSize={fontSize}
-                />
-                <div className="post-date-category">
-                  <PublishedDate date={post.publishedDate} />
-                  <SubSubcategory
-                    text={subSubcategory?.name}
-                    link={subSubcategoryURL}
-                  />
-                </div>
-              </header>
-            </div>
-          )}
+          {topicBreadCrumb}
+          <ImageModal
+            isOpen={isImgModalOpen}
+            imgProps={imgProps}
+            handleImgModalClose={handleImgModalClose}
+          />
+          <HeroImage
+            image={post?.heroImage}
+            caption={post?.heroCaption}
+            handleImgModalOpen={handleImgModalOpen}
+          />
+          {postHeader}
           {post?.newsReadingGroup && (
             <NewsReading data={post.newsReadingGroup} />
           )}
