@@ -93,7 +93,10 @@ export const ImageModal = (props: {
   const closeBtn = (
     <button
       className="absolute white bg-transparent w-6 h-6 cursor-pointer border-none flex flex-col items-center justify-center"
-      style={CrossIconPosCss(crossIconPos)}
+      style={{
+        ...CrossIconPosCss(crossIconPos),
+        filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.8))',
+      }}
       onClick={handleImgModalClose}
     >
       <svg
