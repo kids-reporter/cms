@@ -4,12 +4,14 @@ import { KeystoneContext } from '@keystone-6/core/types'
 
 export function createPreviewMiniApp({
   previewServer,
+  previewSecret,
   keystoneContext,
 }: {
   previewServer: {
     origin: string
     path: string
   }
+  previewSecret: string
   keystoneContext: KeystoneContext
 }) {
   const router = express.Router()
@@ -29,17 +31,6 @@ export function createPreviewMiniApp({
     res.redirect(`/signin?from=${encodeURIComponent(originUrl)}`)
   }
 
-  const previewProxyMiddleware = createProxyMiddleware({
-    target: previewServer.origin,
-    changeOrigin: true,
-    onProxyRes: (proxyRes) => {
-      // The response from preview nuxt server might be with Cache-Control header.
-      // However, we don't want to get cached responses for `draft` posts.
-      // Therefore, we do not cache html response intentionlly by overwritting the Cache-Control header.
-      proxyRes.headers['cache-control'] = 'no-store'
-    },
-  })
-
   // proxy preview server traffic to subdirectory to prevent path collision between CMS and preview server
   router.get(
     '/assets/images/*',
@@ -52,11 +43,19 @@ export function createPreviewMiniApp({
     })
   )
 
-  router.get(
-    `${previewServer.path}/*`,
-    authenticationMw,
-    previewProxyMiddleware
-  )
+  router.get(`${previewServer.path}/*`, authenticationMw, (req, res) => {
+    // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
+    const paths = req.originalUrl?.split('/')
+    const type = paths?.[2]
+    const slug = paths?.[3]
+    const isValidPath = (type === 'article' || type === 'topic') && slug
+    const previewDestination = `${previewServer.origin}${
+      isValidPath
+        ? `/api/draft?secret=${previewSecret}&type=${type}&slug=${slug}`
+        : 'not-found'
+    }`
+    res.redirect(301, previewDestination)
+  })
 
   router.use(
     `${previewServer.path}/_next/*`,

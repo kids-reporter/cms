@@ -81,7 +81,7 @@ const environmentVariables = {
     origin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
     path: PREVIEW_SERVER_PATH || '/preview-server',
   },
-  previewSecret: PREVIEW_SECRET,
+  previewSecret: PREVIEW_SECRET || 'preview-secret',
   frontend: {
     origin: FRONTEND_ORIGIN || 'http://localhost:3001',
   },
