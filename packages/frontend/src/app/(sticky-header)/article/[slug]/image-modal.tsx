@@ -120,6 +120,7 @@ export const ImageModal = (props: {
       <div
         className="w-screen h-screen fixed top-0 left-0 hidden lg:flex lg:flex-col items-center justify-center bg-black/50"
         style={{ zIndex: Z_INDEX_TOP + 1 }}
+        onClick={handleImgModalClose}
       >
         <div className="relative">
           <img
