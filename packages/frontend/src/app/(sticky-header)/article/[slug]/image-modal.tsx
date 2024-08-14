@@ -40,7 +40,7 @@ export const ImageModal = (props: {
   handleImgModalClose: () => void
 }) => {
   const { isOpen, imgProps, handleImgModalClose } = props
-  const imgRef = useRef(null)
+  const imgRef = useRef<HTMLImageElement>(null)
   const [crossIconPos, setCrossIconPos] = useState(CrossIconPos.INSIDE)
 
   const checkFullScreenImageSize = () => {
@@ -93,7 +93,10 @@ export const ImageModal = (props: {
   const closeBtn = (
     <button
       className="absolute white bg-transparent w-6 h-6 cursor-pointer border-none flex flex-col items-center justify-center"
-      style={CrossIconPosCss(crossIconPos)}
+      style={{
+        ...CrossIconPosCss(crossIconPos),
+        filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.8))',
+      }}
       onClick={handleImgModalClose}
     >
       <svg
@@ -117,6 +120,7 @@ export const ImageModal = (props: {
       <div
         className="w-screen h-screen fixed top-0 left-0 hidden lg:flex lg:flex-col items-center justify-center bg-black/50"
         style={{ zIndex: Z_INDEX_TOP + 1 }}
+        onClick={handleImgModalClose}
       >
         <div className="relative">
           <img
