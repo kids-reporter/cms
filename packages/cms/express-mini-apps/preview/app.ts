@@ -33,6 +33,20 @@ export function createPreviewMiniApp({
     res.redirect(`/signin?from=${encodeURIComponent(originUrl)}`)
   }
 
+  const previewMw: express.RequestHandler = (req, res) => {
+    // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
+    const paths = req.originalUrl?.split('/')
+    const type = paths?.[2]
+    const slug = paths?.[3]
+    const isValidPath = (type === 'article' || type === 'topic') && slug
+    const previewDestination = `${frontendOrigin}${
+      isValidPath
+        ? `/api/draft?secret=${previewSecret}&type=${type}&slug=${slug}`
+        : 'not-found'
+    }`
+    res.redirect(301, previewDestination)
+  }
+
   // proxy preview server traffic to subdirectory to prevent path collision between CMS and preview server
   router.get(
     '/assets/images/*',
@@ -45,19 +59,7 @@ export function createPreviewMiniApp({
     })
   )
 
-  router.get(`${previewServer.path}/*`, authenticationMw, (req, res) => {
-    // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
-    const paths = req.originalUrl?.split('/')
-    const type = paths?.[2]
-    const slug = paths?.[3]
-    const isValidPath = (type === 'article' || type === 'topic') && slug
-    const previewDestination = `${frontendOrigin}${
-      isValidPath
-        ? `/api/draft?secret=${previewSecret}&type=${type}&slug=${slug}`
-        : 'not-found'
-    }`
-    res.redirect(301, previewDestination)
-  })
+  router.get(`${previewServer.path}/*`, authenticationMw, previewMw)
 
   router.use(
     `${previewServer.path}/_next/*`,
