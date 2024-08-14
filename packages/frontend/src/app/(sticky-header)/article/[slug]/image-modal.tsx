@@ -40,7 +40,7 @@ export const ImageModal = (props: {
   handleImgModalClose: () => void
 }) => {
   const { isOpen, imgProps, handleImgModalClose } = props
-  const imgRef = useRef<HTMLImageElement>(null)
+  const imgRef = useRef(null)
   const [crossIconPos, setCrossIconPos] = useState(CrossIconPos.INSIDE)
 
   const checkFullScreenImageSize = () => {
