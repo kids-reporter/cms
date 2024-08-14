@@ -5,6 +5,7 @@ import { KeystoneContext } from '@keystone-6/core/types'
 export function createPreviewMiniApp({
   previewServer,
   previewSecret,
+  frontendOrigin,
   keystoneContext,
 }: {
   previewServer: {
@@ -12,6 +13,7 @@ export function createPreviewMiniApp({
     path: string
   }
   previewSecret: string
+  frontendOrigin: string
   keystoneContext: KeystoneContext
 }) {
   const router = express.Router()
@@ -49,7 +51,7 @@ export function createPreviewMiniApp({
     const type = paths?.[2]
     const slug = paths?.[3]
     const isValidPath = (type === 'article' || type === 'topic') && slug
-    const previewDestination = `${previewServer.origin}${
+    const previewDestination = `${frontendOrigin}${
       isValidPath
         ? `/api/draft?secret=${previewSecret}&type=${type}&slug=${slug}`
         : 'not-found'

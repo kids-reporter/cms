@@ -82,9 +82,7 @@ const environmentVariables = {
     path: PREVIEW_SERVER_PATH || '/preview-server',
   },
   previewSecret: PREVIEW_SECRET || 'preview-secret',
-  frontend: {
-    origin: FRONTEND_ORIGIN || 'http://localhost:3001',
-  },
+  frontendOrigin: FRONTEND_ORIGIN || 'http://localhost:3001',
   twoFactorAuth: {
     enable: TWO_FACTOR_AUTH_ENABLE === 'true', // feature toggle
     secret:
