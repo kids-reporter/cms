@@ -43,8 +43,8 @@ export const HeroImage = (props: HeroImageProp) => {
 
   const commonImgProps = {
     sizes: '(min-width: 1100px) 1000px, 90vw',
-    srcSet: `${image.resized?.small} 320w, ${image.resized?.medium} 500w, ${image.resized?.large} 1000w`,
-    src: image.resized?.medium ?? FALLBACK_IMG,
+    srcSet: `${image?.resized?.small} 320w, ${image?.resized?.medium} 500w, ${image?.resized?.large} 1000w`,
+    src: image?.resized?.medium ?? FALLBACK_IMG,
   }
 
   return (
