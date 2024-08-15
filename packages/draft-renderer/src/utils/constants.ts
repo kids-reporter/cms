@@ -3,3 +3,5 @@ export const colorHex = {
   red: '#F76977',
   yellow: '#F8C341',
 }
+
+export const DEBOUNCE_THRESHOLD = 100

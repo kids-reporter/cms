@@ -1,6 +1,6 @@
 {
   "name": "@kids-reporter/frontend",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@googleapis/customsearch": "^1.0.4",
-    "@kids-reporter/draft-renderer": "1.0.11",
+    "@kids-reporter/draft-renderer": "1.0.12",
     "@twreporter/errors": "^1.1.2",
     "@types/draft-js": "^0.11.10",
     "@types/node": "20.4.1",
@@ -24,6 +24,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
+    "lodash": "^4.17.21",
     "next": "13.4.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^13.4.13",
+    "@types/lodash": "^4.17.7",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3"
