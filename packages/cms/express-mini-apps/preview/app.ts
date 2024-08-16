@@ -2,6 +2,9 @@ import { default as express } from 'express'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { KeystoneContext } from '@keystone-6/core/types'
 
+// TODO: remove previewProxyMiddleware-related when substitution service is steady
+const previewFeatureFlag = true
+
 export function createPreviewMiniApp({
   previewServer,
   previewSecret,
@@ -33,6 +36,17 @@ export function createPreviewMiniApp({
     res.redirect(`/signin?from=${encodeURIComponent(originUrl)}`)
   }
 
+  const previewProxyMiddleware = createProxyMiddleware({
+    target: previewServer.origin,
+    changeOrigin: true,
+    onProxyRes: (proxyRes) => {
+      // The response from preview nuxt server might be with Cache-Control header.
+      // However, we don't want to get cached responses for `draft` posts.
+      // Therefore, we do not cache html response intentionlly by overwritting the Cache-Control header.
+      proxyRes.headers['cache-control'] = 'no-store'
+    },
+  })
+
   const previewMw: express.RequestHandler = (req, res) => {
     // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
     const paths = req.originalUrl?.split('/')
@@ -59,7 +73,11 @@ export function createPreviewMiniApp({
     })
   )
 
-  router.get(`${previewServer.path}/*`, authenticationMw, previewMw)
+  router.get(
+    `${previewServer.path}/*`,
+    authenticationMw,
+    previewFeatureFlag ? previewMw : previewProxyMiddleware
+  )
 
   router.use(
     `${previewServer.path}/_next/*`,
