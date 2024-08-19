@@ -1,3 +1,4 @@
+import Path from 'node:path'
 import cors from 'cors'
 import { config } from '@keystone-6/core'
 import { listDefinition as lists } from './lists'
@@ -6,6 +7,7 @@ import envVar from './environment-variables'
 import { Request, Response, NextFunction } from 'express'
 import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
+// import { KeystoneConfig } from '@keystone-6/core/types'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { createPreviewMiniApp } from './express-mini-apps/preview/app'
 import { twoFactorAuth } from './express-mini-apps/two-factor-auth'
@@ -38,6 +40,15 @@ export default withAuth(
       isDisabled: envVar.isUIDisabled,
       // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data,
+      getAdditionalFiles: [
+        async (/* config: KeystoneConfig */) => [
+          {
+            mode: 'copy',
+            inputPath: Path.join('test', 'public', 'favicon.ico'),
+            outputPath: 'public/favicon.ico',
+          },
+        ],
+      ],
     },
     lists,
     session,
