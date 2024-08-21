@@ -4,7 +4,7 @@ import consts from './constants.js'
 import cors from 'cors'
 import express from 'express'
 import middlewareCreator from './middlewares/index.js'
-import { createGraphQLProxy } from './gql-proxy-mini-app.js'
+import { createGraphQLProxy, Account } from './gql-proxy-mini-app.js'
 
 // @twreporter/errors is a cjs module, therefore, we need to use its default property
 const errors = _errors.default
@@ -25,10 +25,9 @@ export function createApp({
   gcpProjectId?: string
   corsAllowOrigin: string[] | string
   gql: {
-    headlessAccount: {
-      email: string
-      password: string
-    }
+    headlessAccount: Account
+    previewAccount: Account
+    previewSecret: string
     apiOrigin: string
   }
 }) {

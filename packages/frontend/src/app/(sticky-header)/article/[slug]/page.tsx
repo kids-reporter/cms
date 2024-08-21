@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
@@ -8,6 +9,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
   ContentType,
+  PREVIEW_SECRET,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
 
@@ -164,18 +166,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const slug = params.slug
-  if (!slug) {
-    log(LogLevel.WARNING, 'Invalid post slug!')
-    notFound()
-  }
-
-  const postRes = await sendGQLRequest({
+const getPost = async (slug: string) => {
+  const data = {
     query: postGQL,
     variables: {
       where: {
@@ -189,7 +181,33 @@ export default async function PostPage({
       orderBy: [{ order: 'asc' }],
       take: topicRelatedPostsNum,
     },
-  })
+  }
+  const { isEnabled } = draftMode()
+
+  if (isEnabled && PREVIEW_SECRET) {
+    draftMode().disable()
+    return await sendGQLRequest(data, {
+      headers: {
+        Authorization: `Basic preview_${PREVIEW_SECRET}`,
+      },
+    })
+  } else {
+    return await sendGQLRequest(data)
+  }
+}
+
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const slug = params.slug
+  if (!slug) {
+    log(LogLevel.WARNING, 'Invalid post slug!')
+    notFound()
+  }
+
+  const postRes = await getPost(slug)
   const post = postRes?.data?.data?.post
   if (!post) {
     log(LogLevel.WARNING, `Post not found! ${slug}`)
