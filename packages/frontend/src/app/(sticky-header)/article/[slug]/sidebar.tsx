@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useArticleContext } from './article-context'
 
@@ -49,6 +49,35 @@ const shareIcons = [
 
 type SidebarProp = {
   topicURL?: string
+}
+
+enum ScrollDirection {
+  UP = 'up',
+  DOWN = 'down',
+}
+
+const useScrollDirection = () => {
+  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(
+    ScrollDirection.DOWN
+  )
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+    const updateScrollDirection = () => {
+      const direction =
+        window.scrollY > lastScrollY ? ScrollDirection.DOWN : ScrollDirection.UP
+      if (direction !== scrollDirection) {
+        setScrollDirection(direction)
+      }
+      lastScrollY = scrollY > 0 ? scrollY : 0
+    }
+    window.addEventListener('scroll', updateScrollDirection)
+    return () => {
+      window.removeEventListener('scroll', updateScrollDirection)
+    }
+  }, [scrollDirection])
+
+  return scrollDirection
 }
 
 export const Sidebar = ({ topicURL }: SidebarProp) => {
@@ -119,6 +148,7 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
 
 export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   const [isShareClicked, setIsShareClicked] = useState(false)
+  const scrollDirection = useScrollDirection()
   const { onFontSizeChange } = useArticleContext()
 
   const onShareClick = () => {
@@ -154,12 +184,14 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
           loading="lazy"
         />
       </Link>
-      <span
-        style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
-        className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
-      >
-        前往專題
-      </span>
+      {scrollDirection === ScrollDirection.UP && (
+        <span
+          style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
+          className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
+        >
+          前往專題
+        </span>
+      )}
     </div>
   )
 
@@ -167,17 +199,19 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
     <div className="h-full flex flex-col items-center justify-between">
       <button
         style={{ aspectRatio: '1/1' }}
-        className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
         onClick={onShareClick}
       >
         <img src="/assets/images/mobile-sidebar-share.svg" loading="lazy" />
       </button>
-      <span
-        style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
-        className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
-      >
-        分享文章
-      </span>
+      {scrollDirection === ScrollDirection.UP && (
+        <span
+          style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
+          className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
+        >
+          分享文章
+        </span>
+      )}
     </div>
   )
 
@@ -185,7 +219,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
     <div className="h-full flex flex-col items-center justify-between">
       <button
         style={{ aspectRatio: '1/1' }}
-        className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
         onClick={onFontSizeChange}
       >
         <img
@@ -193,12 +227,14 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
           loading="lazy"
         />
       </button>
-      <span
-        style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
-        className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
-      >
-        文字大小
-      </span>
+      {scrollDirection === ScrollDirection.UP && (
+        <span
+          style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
+          className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
+        >
+          文字大小
+        </span>
+      )}
     </div>
   )
 
@@ -211,7 +247,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
         {shareBtnList}
         <div
           style={{ boxShadow: 'rgba(35, 35, 35, 0.2) 0px 1px 8px 0px' }}
-          className="h-20 flex flex-row justify-around items-center text-center bg-white px-7 pb-2 gap-10 rounded-3xl"
+          className="max-h-20 flex flex-row justify-around items-center text-center bg-white px-7 pb-2 gap-10 rounded-3xl"
         >
           {topicBtn}
           {shareBtn}
