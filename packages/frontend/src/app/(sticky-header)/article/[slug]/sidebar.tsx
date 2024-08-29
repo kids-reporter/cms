@@ -149,7 +149,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
     <div className="h-full flex flex-col items-center justify-between">
       <Link
         style={{ aspectRatio: '1/1' }}
-        className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-10 cursor-pointer border-none"
         href={topicURL}
       >
         <img
@@ -172,7 +172,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
     <div className="h-full flex flex-col items-center justify-between">
       <button
         style={{ aspectRatio: '1/1' }}
-        className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-10 cursor-pointer border-none"
         onClick={onShareClick}
       >
         <img src="/assets/images/mobile-sidebar-share.svg" loading="lazy" />
@@ -192,7 +192,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
     <div className="h-full flex flex-col items-center justify-between">
       <button
         style={{ aspectRatio: '1/1' }}
-        className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-10 cursor-pointer border-none"
         onClick={onFontSizeChange}
       >
         <img
@@ -222,7 +222,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
         {shareBtnList}
         <div
           style={{ boxShadow: 'rgba(35, 35, 35, 0.2) 0px 1px 8px 0px' }}
-          className="max-h-20 flex flex-row justify-around items-center text-center bg-white px-7 pb-2 gap-10 rounded-3xl"
+          className="max-h-16 flex flex-row justify-around items-center text-center bg-white px-7 pb-2 gap-10 rounded-full"
         >
           {topicBtn}
           {shareBtn}
