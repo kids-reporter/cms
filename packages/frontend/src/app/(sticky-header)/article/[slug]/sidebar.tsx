@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useArticleContext } from './article-context'
 import { useScrollLevel, ScrollLevel } from '@/app/utils/custom-hook'
+import styles from './sidebar.module.css'
 
 const shareIcons = [
   {
@@ -213,7 +214,9 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   return (
     <div
       style={{ zIndex: '900', width: 'inherit' }}
-      className="sm:block md:block lg:hidden flex flex-col items-center fixed bottom-2.5"
+      className={`${
+        scrollLevel === ScrollLevel.DOWN_HIDDEN ? styles.hidden : styles.sidebar
+      } flex-col items-center fixed bottom-2.5`}
     >
       <div className="relative flex justify-center flex-col items-center">
         {shareBtnList}
