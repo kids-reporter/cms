@@ -1,12 +1,10 @@
 import { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import {
   KIDS_URL_ORIGIN,
   ContentType,
   Theme,
   GENERAL_DESCRIPTION,
   OG_SUFFIX,
-  PREVIEW_SECRET,
 } from '@/app/constants'
 import { PublishedDate } from './styled'
 import { Content } from './content'
@@ -127,43 +125,26 @@ export async function generateMetadata({
   }
 }
 
-// TODO: maybe we could try apollo-client pkg
-const getTopic = async (slug: string) => {
-  const data = {
-    query,
-    variables: {
-      where: {
-        slug: slug,
-      },
-    },
-  }
-  const { isEnabled } = draftMode()
-
-  if (isEnabled && PREVIEW_SECRET) {
-    draftMode().disable()
-    return await sendGQLRequest(data, {
-      headers: {
-        Authorization: `Basic preview_${PREVIEW_SECRET}`,
-      },
-    })
-  } else {
-    return await sendGQLRequest(data)
-  }
-}
-
 export default async function TopicPage({
   params,
 }: {
   params: { slug: string }
 }) {
-  const slug = params.slug
-  if (!slug) {
+  if (!params?.slug) {
     log(LogLevel.WARNING, 'Incorrect topic slug!')
     notFound()
   }
 
-  const projectRes = await getTopic(slug)
-  const project = projectRes?.data?.data?.project
+  // TODO: maybe we could try apollo-client pkg
+  const axiosRes = await sendGQLRequest({
+    query,
+    variables: {
+      where: {
+        slug: params.slug,
+      },
+    },
+  })
+  const project = axiosRes?.data?.data?.project
   if (!project) {
     log(LogLevel.WARNING, 'Empty topic!')
     notFound()
