@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useArticleContext } from './article-context'
-import { useScrollDirection, ScrollDirection } from '@/app/utils/custom-hook'
+import { useScrollLevel, ScrollLevel } from '@/app/utils/custom-hook'
 
 const shareIcons = [
   {
@@ -120,7 +120,7 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
 
 export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   const [isShareClicked, setIsShareClicked] = useState(false)
-  const scrollDirection = useScrollDirection()
+  const scrollLevel = useScrollLevel()
   const { onFontSizeChange } = useArticleContext()
 
   const onShareClick = () => {
@@ -156,7 +156,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
           loading="lazy"
         />
       </Link>
-      {scrollDirection === ScrollDirection.UP && (
+      {scrollLevel === ScrollLevel.UP && (
         <span
           style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
           className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
@@ -176,7 +176,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
       >
         <img src="/assets/images/mobile-sidebar-share.svg" loading="lazy" />
       </button>
-      {scrollDirection === ScrollDirection.UP && (
+      {scrollLevel === ScrollLevel.UP && (
         <span
           style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
           className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
@@ -199,7 +199,7 @@ export const MobileSidebar = ({ topicURL }: SidebarProp) => {
           loading="lazy"
         />
       </button>
-      {scrollDirection === ScrollDirection.UP && (
+      {scrollLevel === ScrollLevel.UP && (
         <span
           style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
           className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"

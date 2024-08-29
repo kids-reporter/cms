@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Navigation } from '@/app/components/navigation'
-import { useScrollDirection, ScrollDirection } from '@/app/utils/custom-hook'
+import { useScrollLevel, ScrollLevel } from '@/app/utils/custom-hook'
 import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
 import { SUBSCRIBE_URL, SEARCH_PLACEHOLDER } from '@/app/constants'
 import styles from './header.module.css'
@@ -48,7 +48,7 @@ const AboutUsBtn = (
 export const StickyHeader = () => {
   const [isHamburgerClicked, setIsHamburgerClicked] = useState(false)
   const [isSearchClicked, setIsSearchClicked] = useState(false)
-  const scrollDirection = useScrollDirection()
+  const scrollLevel = useScrollLevel()
 
   const onHamburgerOverlayOpen = () => {
     setIsHamburgerClicked(true)
@@ -193,7 +193,7 @@ export const StickyHeader = () => {
     <div
       style={{
         zIndex: '999',
-        display: scrollDirection === ScrollDirection.UP ? 'flex' : 'none',
+        display: scrollLevel === ScrollLevel.DOWN_HIDDEN ? 'none' : 'flex',
       }}
       className="w-screen flex justify-between fixed top-0 bg-white"
       id="sticky-header"

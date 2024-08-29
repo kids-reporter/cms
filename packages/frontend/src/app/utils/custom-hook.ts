@@ -1,31 +1,29 @@
 import { useState, useEffect } from 'react'
 
-export enum ScrollDirection {
+export enum ScrollLevel {
   UP = 'up',
-  DOWN = 'down',
+  DOWN_MINI = 'down-mini',
   DOWN_HIDDEN = 'down-hidden',
 }
 
-export const useScrollDirection = () => {
-  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(
-    ScrollDirection.DOWN
-  )
+export const useScrollLevel = () => {
+  const [scrollLevel, setScrollLevel] = useState<ScrollLevel>(ScrollLevel.UP)
 
   useEffect(() => {
     let lastScrollY = window.scrollY
-    const updateScrollDirection = () => {
+    const updateScrollLevel = () => {
       const direction =
-        window.scrollY > lastScrollY ? ScrollDirection.DOWN : ScrollDirection.UP
-      if (direction !== scrollDirection) {
-        setScrollDirection(direction)
+        window.scrollY > lastScrollY ? ScrollLevel.DOWN_HIDDEN : ScrollLevel.UP
+      if (direction !== scrollLevel) {
+        setScrollLevel(direction)
       }
       lastScrollY = scrollY > 0 ? scrollY : 0
     }
-    window.addEventListener('scroll', updateScrollDirection)
+    window.addEventListener('scroll', updateScrollLevel)
     return () => {
-      window.removeEventListener('scroll', updateScrollDirection)
+      window.removeEventListener('scroll', updateScrollLevel)
     }
-  }, [scrollDirection])
+  }, [scrollLevel])
 
-  return scrollDirection
+  return scrollLevel
 }
