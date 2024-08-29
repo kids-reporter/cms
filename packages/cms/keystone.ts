@@ -1,3 +1,4 @@
+import Path from 'node:path'
 import cors from 'cors'
 import { config } from '@keystone-6/core'
 import { listDefinition as lists } from './lists'
@@ -38,6 +39,16 @@ export default withAuth(
       isDisabled: envVar.isUIDisabled,
       // For our starter, we check that someone has session data before letting them see the Admin UI.
       isAccessAllowed: (context) => !!context.session?.data,
+      // Replace default favicon, ref: https://github.com/keystonejs/keystone/discussions/7506
+      getAdditionalFiles: [
+        async () => [
+          {
+            mode: 'copy',
+            inputPath: Path.resolve('public/favicon.ico'),
+            outputPath: 'public/favicon.ico',
+          },
+        ],
+      ],
     },
     lists,
     session,
