@@ -1,7 +1,8 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useArticleContext } from './article-context'
+import { useScrollDirection, ScrollDirection } from '@/app/utils/custom-hook'
 
 const shareIcons = [
   {
@@ -49,35 +50,6 @@ const shareIcons = [
 
 type SidebarProp = {
   topicURL?: string
-}
-
-enum ScrollDirection {
-  UP = 'up',
-  DOWN = 'down',
-}
-
-const useScrollDirection = () => {
-  const [scrollDirection, setScrollDirection] = useState<ScrollDirection>(
-    ScrollDirection.DOWN
-  )
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY
-    const updateScrollDirection = () => {
-      const direction =
-        window.scrollY > lastScrollY ? ScrollDirection.DOWN : ScrollDirection.UP
-      if (direction !== scrollDirection) {
-        setScrollDirection(direction)
-      }
-      lastScrollY = scrollY > 0 ? scrollY : 0
-    }
-    window.addEventListener('scroll', updateScrollDirection)
-    return () => {
-      window.removeEventListener('scroll', updateScrollDirection)
-    }
-  }, [scrollDirection])
-
-  return scrollDirection
 }
 
 export const Sidebar = ({ topicURL }: SidebarProp) => {
