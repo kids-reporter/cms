@@ -12,7 +12,7 @@ enum ScrollDirection {
   DOWN = 'down',
 }
 
-const scrollDownDistance = 600
+const scrollDownDistance = 100
 const throttleThreshold = 500
 
 export const useScrollLevel = () => {
