@@ -191,9 +191,7 @@ export const StickyHeader = () => {
 
   return (
     <div
-      style={{
-        zIndex: '999',
-      }}
+      style={{ zIndex: '999' }}
       className={`${
         scrollLevel === ScrollLevel.DOWN_HIDDEN ? styles.hidden : styles.header
       } w-screen flex justify-between fixed top-0 bg-white`}
