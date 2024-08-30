@@ -32,15 +32,10 @@ const listConfigurations = list({
           if (typeof filename !== 'string' || filename === '') {
             return ''
           }
-          const downloadLink = `${config.googleCloudStorage.origin}/files/${filename}`
+          const pdfLink = `${config.googleCloudStorage.origin}/files/${filename}`
+          const downloadLink = `${pdfLink}?download=true`
           const title = item.name
-          let code = item.googleDrivePreviewLink
-            ? `<iframe src="${item.googleDrivePreviewLink}" width="100%" height="480" allow="autoplay" style="margin-bottom: 27px;"></iframe>`
-            : ``
-
-          code =
-            code +
-            `
+          const code = `<iframe src="${pdfLink}#toolbar=0" width="100%" height="480" allow="autoplay" style="margin-bottom: 27px;"></iframe>
           <div style="display: flex; align-items: center; justify-content: center; gap:11px;">
             <span style="font-size: 16px; color: #27B5F7;">▶ ${title}</span>
             <a href=${downloadLink} download style="text-decoration: none;">
