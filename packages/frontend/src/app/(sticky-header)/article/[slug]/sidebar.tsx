@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useArticleContext } from './article-context'
+import { useScrollLevel, ScrollLevel } from '@/app/utils/custom-hook'
+import styles from './sidebar.module.css'
 
 const shareIcons = [
   {
@@ -119,94 +121,112 @@ export const Sidebar = ({ topicURL }: SidebarProp) => {
 
 export const MobileSidebar = ({ topicURL }: SidebarProp) => {
   const [isShareClicked, setIsShareClicked] = useState(false)
+  const scrollLevel = useScrollLevel()
   const { onFontSizeChange } = useArticleContext()
 
   const onShareClick = () => {
     setIsShareClicked(!isShareClicked)
   }
 
+  const shareBtnList = isShareClicked && (
+    <div className="flex flex-row items-center pt-2.5 pb-4 gap-2">
+      {shareIcons.map((icon, index) => {
+        return (
+          <button
+            style={{ aspectRatio: '1/1' }}
+            className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
+            key={`share-icon-${index}`}
+            onClick={icon.onClick}
+          >
+            <img src={`/assets/images/${icon.image}`} loading="lazy" />
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  const topicBtn = topicURL && (
+    <div className="h-full flex flex-col items-center justify-between">
+      <Link
+        style={{ aspectRatio: '1/1' }}
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-10 cursor-pointer border-none"
+        href={topicURL}
+      >
+        <img
+          src="/assets/images/topic-breadcrumb-sidebar-mobile-icon.svg"
+          loading="lazy"
+        />
+      </Link>
+      {scrollLevel === ScrollLevel.UP && (
+        <span
+          style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
+          className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
+        >
+          前往專題
+        </span>
+      )}
+    </div>
+  )
+
+  const shareBtn = (
+    <div className="h-full flex flex-col items-center justify-between">
+      <button
+        style={{ aspectRatio: '1/1' }}
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-10 cursor-pointer border-none"
+        onClick={onShareClick}
+      >
+        <img src="/assets/images/mobile-sidebar-share.svg" loading="lazy" />
+      </button>
+      {scrollLevel === ScrollLevel.UP && (
+        <span
+          style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
+          className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
+        >
+          分享文章
+        </span>
+      )}
+    </div>
+  )
+
+  const fontBtn = (
+    <div className="h-full flex flex-col items-center justify-between">
+      <button
+        style={{ aspectRatio: '1/1' }}
+        className="flex flex-col justify-center items-center appearance-none bg-transparent w-10 cursor-pointer border-none"
+        onClick={onFontSizeChange}
+      >
+        <img
+          src="/assets/images/mobile-sidebar-change-font.svg"
+          loading="lazy"
+        />
+      </button>
+      {scrollLevel === ScrollLevel.UP && (
+        <span
+          style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
+          className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
+        >
+          文字大小
+        </span>
+      )}
+    </div>
+  )
+
   return (
     <div
       style={{ zIndex: '900', width: 'inherit' }}
-      className="sm:block md:block lg:hidden flex flex-col items-center fixed bottom-2.5"
+      className={`${
+        scrollLevel === ScrollLevel.DOWN_HIDDEN ? styles.hidden : styles.sidebar
+      } flex-col items-center fixed bottom-2.5`}
     >
       <div className="relative flex justify-center flex-col items-center">
-        {isShareClicked && (
-          <div className="flex flex-row items-center pt-2.5 pb-4 gap-2">
-            {shareIcons.map((icon, index) => {
-              return (
-                <button
-                  style={{ aspectRatio: '1/1' }}
-                  className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
-                  key={`share-icon-${index}`}
-                  onClick={icon.onClick}
-                >
-                  <img src={`/assets/images/${icon.image}`} loading="lazy" />
-                </button>
-              )
-            })}
-          </div>
-        )}
+        {shareBtnList}
         <div
           style={{ boxShadow: 'rgba(35, 35, 35, 0.2) 0px 1px 8px 0px' }}
-          className="h-20 flex flex-row justify-around items-center text-center bg-white px-7 pb-2 gap-10 rounded-3xl"
+          className="max-h-16 flex flex-row justify-around items-center text-center bg-white px-7 pb-2 gap-10 rounded-full"
         >
-          {topicURL && (
-            <div className="h-full flex flex-col items-center justify-between">
-              <Link
-                style={{ aspectRatio: '1/1' }}
-                className="flex flex-col justify-center items-center appearance-none bg-transparent w-12 cursor-pointer border-none"
-                href={topicURL}
-              >
-                <img
-                  src="/assets/images/topic-breadcrumb-sidebar-mobile-icon.svg"
-                  loading="lazy"
-                />
-              </Link>
-              <span
-                style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
-                className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
-              >
-                前往專題
-              </span>
-            </div>
-          )}
-          <div className="h-full flex flex-col items-center justify-between">
-            <button
-              style={{ aspectRatio: '1/1' }}
-              className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
-              onClick={onShareClick}
-            >
-              <img
-                src="/assets/images/mobile-sidebar-share.svg"
-                loading="lazy"
-              />
-            </button>
-            <span
-              style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
-              className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
-            >
-              分享文章
-            </span>
-          </div>
-          <div className="h-full flex flex-col items-center justify-between">
-            <button
-              style={{ aspectRatio: '1/1' }}
-              className="block appearance-none bg-transparent w-12 cursor-pointer border-none"
-              onClick={onFontSizeChange}
-            >
-              <img
-                src="/assets/images/mobile-sidebar-change-font.svg"
-                loading="lazy"
-              />
-            </button>
-            <span
-              style={{ lineHeight: '160%', letterSpacing: '0.08em' }}
-              className="font-medium whitespace-no-wrap text-center text-gray-900 opacity-100 text-xs"
-            >
-              文字大小
-            </span>
-          </div>
+          {topicBtn}
+          {shareBtn}
+          {fontBtn}
         </div>
       </div>
     </div>
