@@ -1,3 +1,23 @@
+.header {
+  animation: slideIn 400ms;
+  display: flex;
+}
+
+.hidden {
+  animation: slideAway 400ms;
+  display: none;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-40px); opacity: 0;}
+  to { display: block; }
+}
+
+@keyframes slideAway {
+  from { display: block; }
+  to { transform: translateY(-40px); opacity: 0;}
+}
+
 .menu ul {
   display: flex;
 }
