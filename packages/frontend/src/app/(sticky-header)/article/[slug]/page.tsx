@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs'
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -9,7 +10,7 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
   ContentType,
-  PREVIEW_SECRET,
+  PREVIEW_SECRET_PATH,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
 
@@ -184,11 +185,14 @@ const getPost = async (slug: string) => {
   }
   const { isEnabled } = draftMode()
 
-  if (isEnabled && PREVIEW_SECRET) {
+  if (isEnabled) {
     draftMode().disable()
+    const secretValue = await fs.readFile(PREVIEW_SECRET_PATH, {
+      encoding: 'utf8',
+    })
     return await sendGQLRequest(data, {
       headers: {
-        Authorization: `Basic preview_${PREVIEW_SECRET}`,
+        Authorization: `Basic preview_${secretValue}`,
       },
     })
   } else {

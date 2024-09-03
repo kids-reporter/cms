@@ -27,7 +27,7 @@ export function createApp({
   gql: {
     headlessAccount: Account
     previewAccount: Account
-    previewSecret: string
+    previewSecretPath: string
     apiOrigin: string
   }
 }) {

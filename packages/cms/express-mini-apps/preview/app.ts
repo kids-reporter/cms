@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs'
 import { default as express } from 'express'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { KeystoneContext } from '@keystone-6/core/types'
@@ -7,7 +8,7 @@ const previewFeatureFlag = true
 
 export function createPreviewMiniApp({
   previewServer,
-  previewSecret,
+  previewSecretPath,
   frontendOrigin,
   keystoneContext,
 }: {
@@ -15,7 +16,7 @@ export function createPreviewMiniApp({
     origin: string
     path: string
   }
-  previewSecret: string
+  previewSecretPath: string
   frontendOrigin: string
   keystoneContext: KeystoneContext
 }) {
@@ -47,17 +48,19 @@ export function createPreviewMiniApp({
     },
   })
 
-  const previewMw: express.RequestHandler = (req, res) => {
+  const previewMw: express.RequestHandler = async (req, res) => {
     // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
     const paths = req.originalUrl?.split('/')
     const type = paths?.[2]
     const slug = paths?.[3]
     const isValidPath = (type === 'article' || type === 'topic') && slug
     const previewDestination = `${frontendOrigin}${
-      isValidPath
-        ? `/api/draft?secret=${previewSecret}&type=${type}&slug=${slug}`
-        : 'not-found'
+      isValidPath ? `/api/draft?type=${type}&slug=${slug}` : 'not-found'
     }`
+    const secretValue = await fs.readFile(previewSecretPath, {
+      encoding: 'utf8',
+    })
+    res.cookie('previewToken', secretValue)
     res.redirect(301, previewDestination)
   }
 

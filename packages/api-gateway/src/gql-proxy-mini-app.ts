@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs'
 import axios from 'axios'
 import consts from './constants.js'
 // @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
@@ -175,16 +176,14 @@ class PreviewTokenManager extends TokenManager {
 export function createGraphQLProxy({
   headlessAccount,
   previewAccount,
-  previewSecret,
+  previewSecretPath,
   apiOrigin,
 }: {
   headlessAccount: Account
   previewAccount: Account
-  previewSecret: string
+  previewSecretPath: string
   apiOrigin: string
 }) {
-  const previewAuthToken = `Basic preview_${previewSecret}`
-
   // create express mini app
   const router = express.Router()
 
@@ -204,7 +203,14 @@ export function createGraphQLProxy({
       )
 
       try {
-        const isPreview = req?.headers?.['authorization'] === previewAuthToken
+        let isPreview = false
+        const authValue = req?.headers?.['authorization']
+        if (authValue) {
+          const secretValue = await fs.readFile(previewSecretPath, {
+            encoding: 'utf8',
+          })
+          isPreview = authValue === `Basic preview_${secretValue}`
+        }
         const tokenManager = isPreview
           ? new PreviewTokenManager(
               previewAccount.email,
@@ -266,7 +272,7 @@ export function createGraphQLProxy({
         proxyReq.setHeader('x-apollo-operation-name', '')
 
         // Appended authorization header for preview needs to be removed when proxied to cms
-        req?.headers?.['authorization'] === previewAuthToken &&
+        req?.headers?.['authorization'] &&
           proxyReq.removeHeader('authorization')
       },
 
@@ -283,8 +289,14 @@ export function createGraphQLProxy({
             })
           )
           try {
-            const isPreview =
-              req?.headers?.['authorization'] === previewAuthToken
+            let isPreview = false
+            const authValue = req?.headers?.['authorization']
+            if (authValue) {
+              const secretValue = await fs.readFile(previewSecretPath, {
+                encoding: 'utf8',
+              })
+              isPreview = authValue === `Basic preview_${secretValue}`
+            }
             const tokenManager = isPreview
               ? new PreviewTokenManager(
                   previewAccount.email,

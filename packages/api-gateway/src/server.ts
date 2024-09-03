@@ -13,7 +13,7 @@ async function start() {
       gql: {
         headlessAccount: envVar.apis.gql.headlessAccount,
         previewAccount: envVar.apis.gql.previewAccount,
-        previewSecret: envVar.apis.gql.previewSecret,
+        previewSecretPath: envVar.apis.gql.previewSecretPath,
         apiOrigin: envVar.apis.gql.origin,
       },
     })

@@ -4,7 +4,7 @@ const {
   FRONTEND_ORIGIN,
   PREVIEW_SERVER_ORIGIN,
   PREVIEW_SERVER_PATH,
-  PREVIEW_SECRET,
+  PREVIEW_SECRET_PATH,
   DATABASE_PROVIDER,
   DATABASE_URL,
   SESSION_SECRET,
@@ -81,7 +81,7 @@ const environmentVariables = {
     origin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
     path: PREVIEW_SERVER_PATH || '/preview-server',
   },
-  previewSecret: PREVIEW_SECRET || 'preview-secret',
+  previewSecretPath: PREVIEW_SECRET_PATH || '',
   frontendOrigin: FRONTEND_ORIGIN || 'http://localhost:3001',
   twoFactorAuth: {
     enable: TWO_FACTOR_AUTH_ENABLE === 'true', // feature toggle
