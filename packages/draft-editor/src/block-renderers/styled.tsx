@@ -22,11 +22,12 @@ const _EditableBlock = styled.div`
 `
 
 export const EditableBlock = (props: {
+  className?: string
   component: ReactNode
   onClick: () => void
 }) => {
   return (
-    <_EditableBlock>
+    <_EditableBlock className={props.className}>
       {props.component}
       <EditButton onClick={props.onClick}>
         <i className="fa-solid fa-pen"></i>
