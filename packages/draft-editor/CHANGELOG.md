@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.15
+
+### Patch Changes
+
+- fix: make EditableBlock styled components
+- chore: set up dev env
+
 ## 1.0.14
 
 ### Patch Changes

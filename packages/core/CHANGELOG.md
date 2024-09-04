@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.15
+
+### Patch Changes
+
+- @kids-reporter/draft-editor@1.0.15
+
 ## 1.0.14
 
 ### Patch Changes
