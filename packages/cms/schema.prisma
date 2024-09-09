@@ -29,8 +29,8 @@ model User {
 
 model Post {
   id                                         Int                  @id @default(autoincrement())
-  title                                      String               @default("")
   slug                                       String               @unique @default("")
+  title                                      String               @default("")
   subtitle                                   String               @default("")
   status                                     String?              @default("draft")
   publishedDate                              DateTime?
