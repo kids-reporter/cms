@@ -59,15 +59,21 @@ const relatedPosts: OrderedRelationshipConfig = {
 
 const listConfigurations = list({
   fields: {
+    slug: text({
+      validation: {
+        isRequired: true,
+        match: {
+          regex: /^[a-z0-9-]+$/,
+          explanation: '請輸入正確格式，僅能使用小寫英文、數字和符號(-)',
+        },
+      },
+      label: 'Slug',
+      isIndexed: 'unique',
+    }),
     title: text({
       label: '標題',
       validation: { isRequired: true },
       isIndexed: true,
-    }),
-    slug: text({
-      validation: { isRequired: true },
-      label: '網址名稱（英文）',
-      isIndexed: 'unique',
     }),
     subtitle: text({
       label: '副標',
@@ -195,14 +201,14 @@ const listConfigurations = list({
     }),
     ogTitle: text({
       validation: { isRequired: false },
-      label: 'FB分享標題',
+      label: 'og:title',
     }),
     ogDescription: text({
-      label: 'FB分享說明',
+      label: 'og:description',
       validation: { isRequired: false },
     }),
     ogImage: relationship({
-      label: 'FB分享縮圖',
+      label: 'og:image',
       ref: 'Photo',
     }),
     createdAt: timestamp({
