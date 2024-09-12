@@ -48,21 +48,35 @@ export function createPreviewMiniApp({
     },
   })
 
-  const previewMw: express.RequestHandler = async (req, res) => {
-    // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
-    const paths = req.originalUrl?.split('/')
-    const type = paths?.[2]
-    const slug = paths?.[3]
-    const isValidPath = (type === 'article' || type === 'topic') && slug
-    const previewDestination = `${frontendOrigin}${
-      isValidPath ? `/api/draft?type=${type}&slug=${slug}` : 'not-found'
-    }`
-    const secretValue = await fs.readFile(previewSecretPath, {
-      encoding: 'utf8',
-    })
-    res.cookie('previewToken', secretValue)
-    res.redirect(301, previewDestination)
-  }
+  const previewProxyMw = createProxyMiddleware({
+    target: frontendOrigin,
+    changeOrigin: true,
+    followRedirects: true,
+    pathRewrite: async (path) => {
+      // '/preview-server/article/slug' => [ '', 'preview-server', 'article', 'slug' ]
+      const paths = path?.split('/')
+      const type = paths?.[2]
+      const slug = paths?.[3]
+
+      let secretValue
+      try {
+        secretValue = await fs.readFile(previewSecretPath, {
+          encoding: 'utf8',
+        })
+      } catch (err) {
+        console.error('Failed to read secret!', err)
+      }
+
+      const isRequestValid =
+        (type === 'article' || type === 'topic') && slug && secretValue
+      const previewDestination = `${frontendOrigin}${
+        isRequestValid
+          ? `/api/draft?secret=${secretValue}&type=${type}&slug=${slug}`
+          : 'not-found'
+      }`
+      return previewDestination
+    },
+  })
 
   // proxy preview server traffic to subdirectory to prevent path collision between CMS and preview server
   router.get(
@@ -71,7 +85,7 @@ export function createPreviewMiniApp({
       target: previewServer.origin,
       changeOrigin: true,
       pathRewrite: {
-        '/assets/images/': `${previewServer.path}/assets/images/`,
+        '/assets/images/': `${frontendOrigin}/assets/images/`,
       },
     })
   )
@@ -79,7 +93,7 @@ export function createPreviewMiniApp({
   router.get(
     `${previewServer.path}/*`,
     authenticationMw,
-    previewFeatureFlag ? previewMw : previewProxyMiddleware
+    previewFeatureFlag ? previewProxyMw : previewProxyMiddleware
   )
 
   router.use(
