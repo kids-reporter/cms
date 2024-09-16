@@ -69,11 +69,9 @@ export function createPreviewMiniApp({
 
       const isRequestValid =
         (type === 'article' || type === 'topic') && slug && secretValue
-      const previewDestination = `${frontendOrigin}${
-        isRequestValid
-          ? `/api/draft?secret=${secretValue}&type=${type}&slug=${slug}`
-          : '/not-found'
-      }`
+      const previewDestination = isRequestValid
+        ? `/api/draft?secret=${secretValue}&type=${type}&slug=${slug}`
+        : '/not-found'
       return previewDestination
     },
   })

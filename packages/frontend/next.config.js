@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const isPreviewMode = process.env.NEXT_PUBLIC_IS_PREVIEW_MODE === 'true'
-const origin = process.env.ORIGIN || 'http://localhost:3000'
+const origin = process.env.NEXT_PUBLIC_ORIGIN || 'http://localhost:3000'
 
 const nextConfig = {
   basePath: isPreviewMode ? '/preview-server' : '',
