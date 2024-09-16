@@ -72,7 +72,7 @@ export function createPreviewMiniApp({
       const previewDestination = isRequestValid
         ? `/api/draft?secret=${secretValue}&type=${type}&slug=${slug}`
         : '/not-found'
-      console.log('Preview proxy to ', previewDestination)
+      console.log('Preview proxy to ', frontendOrigin, previewDestination)
       return previewDestination
     },
   })

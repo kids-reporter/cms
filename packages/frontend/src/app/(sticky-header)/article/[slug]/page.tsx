@@ -186,7 +186,6 @@ const getPost = async (slug: string) => {
   const { isEnabled } = draftMode()
 
   if (isEnabled) {
-    draftMode().disable()
     const secretValue = await fs.readFile(PREVIEW_SECRET_PATH, {
       encoding: 'utf8',
     })
