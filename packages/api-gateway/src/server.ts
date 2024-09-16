@@ -12,6 +12,8 @@ async function start() {
       corsAllowOrigin: envVar.cors.allowOrigins,
       gql: {
         headlessAccount: envVar.apis.gql.headlessAccount,
+        previewAccount: envVar.apis.gql.previewAccount,
+        previewSecretPath: envVar.apis.gql.previewSecretPath,
         apiOrigin: envVar.apis.gql.origin,
       },
     })
