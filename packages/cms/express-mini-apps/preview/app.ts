@@ -72,6 +72,7 @@ export function createPreviewMiniApp({
       const previewDestination = isRequestValid
         ? `/api/draft?secret=${secretValue}&type=${type}&slug=${slug}`
         : '/not-found'
+      console.log('Preview proxy to ', previewDestination)
       return previewDestination
     },
   })
@@ -80,11 +81,8 @@ export function createPreviewMiniApp({
   router.get(
     '/assets/images/*',
     createProxyMiddleware({
-      target: previewServer.origin,
+      target: frontendOrigin,
       changeOrigin: true,
-      pathRewrite: {
-        '/assets/images/': `${frontendOrigin}/assets/images/`,
-      },
     })
   )
 

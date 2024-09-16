@@ -20,6 +20,7 @@ export async function GET(request: Request) {
   }
 
   if (requestSecret !== secretValue || !isValidType || !slug) {
+    console.log('Get preview failed!', requestSecret, type, slug)
     redirect('/not-found')
   }
 
