@@ -13,6 +13,9 @@ const TOCContainer = styled.div`
   left: 0;
   transform: translateY(-50%);
   z-index: ${zIndex};
+  @media print {
+    display: none !important;
+  }
 `
 
 const TOCTab = styled.div<{ isExpanded: boolean }>`
