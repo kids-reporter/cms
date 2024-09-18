@@ -19,12 +19,15 @@ export async function GET(request: Request) {
     console.error('Failed to read secret!', err)
   }
 
-  if (requestSecret !== secretValue || !isValidType || !slug) {
-    console.log('Get preview failed!', requestSecret, type, slug)
+  const isValidSecret =
+    requestSecret && secretValue && requestSecret === secretValue
+  if (!isValidSecret || !isValidType || !slug) {
+    console.log('Get preview failed!', type, slug)
     redirect('/not-found')
   }
 
   draftMode().enable()
   const path = `/${type}/${slug}`
+  console.log('Redirect for preview to', path)
   redirect(path)
 }
