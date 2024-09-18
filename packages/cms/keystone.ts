@@ -9,6 +9,7 @@ import { createAuth } from '@keystone-6/auth'
 import { statelessSessions } from '@keystone-6/core/session'
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache'
 import { createPreviewMiniApp } from './express-mini-apps/preview/app'
+import { createProxyMiniApp } from './express-mini-apps/test-bypass/app'
 import { twoFactorAuth } from './express-mini-apps/two-factor-auth'
 
 const { withAuth } = createAuth({
@@ -144,6 +145,8 @@ export default withAuth(
             keystoneContext: commonContext,
           })
         )
+
+        app.use(createProxyMiniApp({ frontendOrigin: envVar.frontendOrigin }))
       },
     },
   })
