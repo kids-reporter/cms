@@ -186,6 +186,7 @@ const getPost = async (slug: string) => {
   const { isEnabled } = draftMode()
 
   if (isEnabled) {
+    console.log('Get preview post', slug)
     let secretValue
     try {
       secretValue = await fs.readFile(PREVIEW_SECRET_PATH, {
@@ -194,7 +195,6 @@ const getPost = async (slug: string) => {
     } catch (err) {
       console.error('Failed to read secret!', err)
     }
-    console.log('Get preview post', slug)
     return await sendGQLRequest(data, {
       headers: {
         Authorization: `Basic preview_${secretValue}`,
