@@ -8,16 +8,17 @@ export function createProxyMiniApp({
 }) {
   const router = express.Router()
 
-  const proxyMw = createProxyMiddleware({
-    target: frontendOrigin,
-    changeOrigin: true,
-    followRedirects: true,
-    pathRewrite: {
-      '^/test-bypass': '/api/test-bypass',
-    },
-  })
-
-  router.get(`/test-bypass/*`, proxyMw)
+  router.get(
+    `/test-bypass`,
+    createProxyMiddleware({
+      target: frontendOrigin,
+      changeOrigin: true,
+      followRedirects: true,
+      pathRewrite: {
+        '^/test-bypass': '/api/test-bypass',
+      },
+    })
+  )
 
   return router
 }
