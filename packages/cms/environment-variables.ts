@@ -1,6 +1,7 @@
 const {
   IS_UI_DISABLED,
   ACCESS_CONTROL_STRATEGY,
+  FRONTEND_ORIGIN,
   PREVIEW_SERVER_ORIGIN,
   PREVIEW_SERVER_PATH,
   DATABASE_PROVIDER,
@@ -75,6 +76,7 @@ const environmentVariables = {
   cors: {
     allowOrigins: getAllowOrigins(CORS_ALLOW_ORIGINS || ''),
   },
+  frontendOrigin: FRONTEND_ORIGIN || 'http://localhost:3001',
   previewServer: {
     origin: PREVIEW_SERVER_ORIGIN || 'http://localhost:3001',
     path: PREVIEW_SERVER_PATH || '/preview-server',
