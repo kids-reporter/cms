@@ -1,6 +1,4 @@
-import { promises as fs } from 'fs'
 import { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { TOC, TOCIndex } from './table-of-content'
 import Article from './article'
@@ -10,10 +8,8 @@ import {
   POST_CONTENT_GQL,
   OG_SUFFIX,
   ContentType,
-  PREVIEW_SECRET_PATH,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
-import { isProduction } from '@/environment-variables'
 
 const topicRelatedPostsNum = 5
 
@@ -168,8 +164,18 @@ export async function generateMetadata({
   }
 }
 
-const getPost = async (slug: string) => {
-  const data = {
+export default async function PostPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const slug = params.slug
+  if (!slug) {
+    log(LogLevel.WARNING, 'Invalid post slug!')
+    notFound()
+  }
+
+  const postRes = await sendGQLRequest({
     query: postGQL,
     variables: {
       where: {
@@ -183,44 +189,7 @@ const getPost = async (slug: string) => {
       orderBy: [{ order: 'asc' }],
       take: topicRelatedPostsNum,
     },
-  }
-  const { isEnabled } = draftMode()
-
-  // Note: createProxyMiddleware will remove all cookies when the request is cross origin & different sub domain
-  // during redirect, so in non-prod mode we need workaround to bypass draft mode as below.
-  // ref: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
-  if ((isProduction && isEnabled) || !isProduction) {
-    console.log('Get preview post', slug)
-    let secretValue
-    try {
-      secretValue = await fs.readFile(PREVIEW_SECRET_PATH, {
-        encoding: 'utf8',
-      })
-    } catch (err) {
-      console.error('Failed to read secret!', err)
-    }
-    return await sendGQLRequest(data, {
-      headers: {
-        Authorization: `Basic preview_${secretValue}`,
-      },
-    })
-  } else {
-    return await sendGQLRequest(data)
-  }
-}
-
-export default async function PostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const slug = params.slug
-  if (!slug) {
-    log(LogLevel.WARNING, 'Invalid post slug!')
-    notFound()
-  }
-
-  const postRes = await getPost(slug)
+  })
   const post = postRes?.data?.data?.post
   if (!post) {
     log(LogLevel.WARNING, `Post not found! ${slug}`)
