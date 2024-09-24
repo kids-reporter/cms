@@ -1,3 +1,4 @@
+import { promises as fs } from 'fs'
 import axios from 'axios'
 import consts from './constants.js'
 // @ts-ignore `@twreporter/errors` does not have tyepscript definition file yet
@@ -10,9 +11,12 @@ const errors = _errors.default
 
 const statusCodes = consts.statusCodes
 
+export type Account = {
+  email: string
+  password: string
+}
+
 class TokenManager {
-  // Singleton
-  static instance?: TokenManager
   private email: string
   private password: string
   private apiEndpoint: string
@@ -28,12 +32,6 @@ class TokenManager {
     this.password = password
     this.apiEndpoint = apiEndpoint
     this.token = ''
-
-    if (TokenManager.instance) {
-      return TokenManager.instance
-    }
-
-    TokenManager.instance = this
   }
 
   /**
@@ -138,6 +136,38 @@ class TokenManager {
   }
 }
 
+class HeadlessTokenManger extends TokenManager {
+  // Singleton
+  static instance?: HeadlessTokenManger
+  constructor(
+    email: string,
+    password: string,
+    apiEndpoint = 'http://localhost:3000/api/graphql'
+  ) {
+    super(email, password, apiEndpoint)
+    if (HeadlessTokenManger.instance) {
+      return HeadlessTokenManger.instance
+    }
+    HeadlessTokenManger.instance = this
+  }
+}
+
+class PreviewTokenManager extends TokenManager {
+  // Singleton
+  static instance?: PreviewTokenManager
+  constructor(
+    email: string,
+    password: string,
+    apiEndpoint = 'http://localhost:3000/api/graphql'
+  ) {
+    super(email, password, apiEndpoint)
+    if (PreviewTokenManager.instance) {
+      return PreviewTokenManager.instance
+    }
+    PreviewTokenManager.instance = this
+  }
+}
+
 /**
  *  This function creates a `GraphQLProxy` mini app.
  *  This mini app aims to add 'keystonejs-session' cookie on incoming requests' header
@@ -145,12 +175,13 @@ class TokenManager {
  */
 export function createGraphQLProxy({
   headlessAccount,
+  previewAccount,
+  previewSecretPath,
   apiOrigin,
 }: {
-  headlessAccount: {
-    email: string
-    password: string
-  }
+  headlessAccount: Account
+  previewAccount: Account
+  previewSecretPath: string
   apiOrigin: string
 }) {
   // create express mini app
@@ -172,11 +203,25 @@ export function createGraphQLProxy({
       )
 
       try {
-        const tokenManager = new TokenManager(
-          headlessAccount.email,
-          headlessAccount.password,
-          apiOrigin + '/api/graphql'
-        )
+        let isPreview = false
+        const authValue = req?.headers?.['authorization']
+        if (authValue) {
+          const secretValue = await fs.readFile(previewSecretPath, {
+            encoding: 'utf8',
+          })
+          isPreview = authValue === `Basic preview_${secretValue}`
+        }
+        const tokenManager = isPreview
+          ? new PreviewTokenManager(
+              previewAccount.email,
+              previewAccount.password,
+              apiOrigin + '/api/graphql'
+            )
+          : new HeadlessTokenManger(
+              headlessAccount.email,
+              headlessAccount.password,
+              apiOrigin + '/api/graphql'
+            )
         const token = await tokenManager.getToken()
         res.locals.sessionToken = token
       } catch (err) {
@@ -225,6 +270,10 @@ export function createGraphQLProxy({
         proxyReq.setHeader('Cookie', cookie)
         proxyReq.setHeader('Content-Type', 'application/json')
         proxyReq.setHeader('x-apollo-operation-name', '')
+
+        // Appended authorization header for preview needs to be removed when proxied to cms
+        req?.headers?.['authorization'] &&
+          proxyReq.removeHeader('authorization')
       },
 
       onProxyRes: async (proxyRes, req, res) => {
@@ -240,11 +289,25 @@ export function createGraphQLProxy({
             })
           )
           try {
-            const tokenManager = new TokenManager(
-              headlessAccount.email,
-              headlessAccount.password,
-              apiOrigin + '/api/graphql'
-            )
+            let isPreview = false
+            const authValue = req?.headers?.['authorization']
+            if (authValue) {
+              const secretValue = await fs.readFile(previewSecretPath, {
+                encoding: 'utf8',
+              })
+              isPreview = authValue === `Basic preview_${secretValue}`
+            }
+            const tokenManager = isPreview
+              ? new PreviewTokenManager(
+                  previewAccount.email,
+                  previewAccount.password,
+                  apiOrigin + '/api/graphql'
+                )
+              : new HeadlessTokenManger(
+                  headlessAccount.email,
+                  headlessAccount.password,
+                  apiOrigin + '/api/graphql'
+                )
             await tokenManager.renewToken()
           } catch (err) {
             const annotatedErr = errors.helpers.wrap(

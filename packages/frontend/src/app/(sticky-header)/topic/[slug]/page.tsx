@@ -1,10 +1,13 @@
+import { promises as fs } from 'fs'
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import {
   KIDS_URL_ORIGIN,
   ContentType,
   Theme,
   GENERAL_DESCRIPTION,
   OG_SUFFIX,
+  PREVIEW_SECRET_PATH,
 } from '@/app/constants'
 import { PublishedDate } from './styled'
 import { Content } from './content'
@@ -19,6 +22,7 @@ import {
 import { Leading } from './leading'
 import { RelatedPosts } from './related-posts'
 import { notFound } from 'next/navigation'
+import { isProduction } from '@/environment-variables'
 
 const query = `
   fragment ImageEntity on Photo {
@@ -125,26 +129,54 @@ export async function generateMetadata({
   }
 }
 
+// TODO: maybe we could try apollo-client pkg
+const getTopic = async (slug: string) => {
+  const data = {
+    query,
+    variables: {
+      where: {
+        slug: slug,
+      },
+    },
+  }
+  const { isEnabled } = draftMode()
+
+  // Note: createProxyMiddleware will remove all cookies when the request is cross origin & different sub domain
+  // during redirect, so in non-prod mode we need workaround to bypass draft mode as below.
+  // ref: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
+  if ((isProduction && isEnabled) || !isProduction) {
+    console.log('Get preview topic', slug)
+    let secretValue
+    try {
+      secretValue = await fs.readFile(PREVIEW_SECRET_PATH, {
+        encoding: 'utf8',
+      })
+    } catch (err) {
+      console.error('Failed to read secret!', err)
+    }
+    return await sendGQLRequest(data, {
+      headers: {
+        Authorization: `Basic preview_${secretValue}`,
+      },
+    })
+  } else {
+    return await sendGQLRequest(data)
+  }
+}
+
 export default async function TopicPage({
   params,
 }: {
   params: { slug: string }
 }) {
-  if (!params?.slug) {
+  const slug = params.slug
+  if (!slug) {
     log(LogLevel.WARNING, 'Incorrect topic slug!')
     notFound()
   }
 
-  // TODO: maybe we could try apollo-client pkg
-  const axiosRes = await sendGQLRequest({
-    query,
-    variables: {
-      where: {
-        slug: params.slug,
-      },
-    },
-  })
-  const project = axiosRes?.data?.data?.project
+  const projectRes = await getTopic(slug)
+  const project = projectRes?.data?.data?.project
   if (!project) {
     log(LogLevel.WARNING, 'Empty topic!')
     notFound()

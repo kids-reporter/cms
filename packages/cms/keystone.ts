@@ -139,6 +139,8 @@ export default withAuth(
         app.use(
           createPreviewMiniApp({
             previewServer: envVar.previewServer,
+            previewSecretPath: envVar.previewSecretPath,
+            frontendOrigin: envVar.frontendOrigin,
             keystoneContext: commonContext,
           })
         )
