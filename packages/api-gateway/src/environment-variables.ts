@@ -4,9 +4,6 @@ const {
   GQL_ORIGIN,
   GQL_HEADLESS_ACCOUNT_EMAIL,
   GQL_HEADLESS_ACCOUNT_PASSWORD,
-  GQL_PREVIEW_ACCOUNT_EMAIL,
-  GQL_PREVIEW_ACCOUNT_PASSWORD,
-  GQL_PREVIEW_SECRET_PATH,
 } = process.env
 
 /**
@@ -38,11 +35,6 @@ const envVar = {
         email: GQL_HEADLESS_ACCOUNT_EMAIL || '',
         password: GQL_HEADLESS_ACCOUNT_PASSWORD || '',
       },
-      previewAccount: {
-        email: GQL_PREVIEW_ACCOUNT_EMAIL || '',
-        password: GQL_PREVIEW_ACCOUNT_PASSWORD || '',
-      },
-      previewSecretPath: GQL_PREVIEW_SECRET_PATH || '',
     },
   },
   cors: {
