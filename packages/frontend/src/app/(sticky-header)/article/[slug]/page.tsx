@@ -13,7 +13,6 @@ import {
   PREVIEW_SECRET_PATH,
 } from '@/app/constants'
 import { sendGQLRequest, log, LogLevel } from '@/app/utils'
-import { isProduction } from '@/environment-variables'
 
 const topicRelatedPostsNum = 5
 
@@ -186,10 +185,7 @@ const getPost = async (slug: string) => {
   }
   const { isEnabled } = draftMode()
 
-  // Note: createProxyMiddleware will remove all cookies when the request is cross origin & different sub domain
-  // during redirect, so in non-prod mode we need workaround to bypass draft mode as below.
-  // ref: https://nextjs.org/docs/app/building-your-application/configuring/draft-mode
-  if ((isProduction && isEnabled) || !isProduction) {
+  if (isEnabled) {
     console.log('Get preview post', slug)
     let secretValue
     try {

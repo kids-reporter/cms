@@ -1,6 +1,7 @@
 import {
   internalGqlEndpoint,
   gqlEndpoint,
+  origin,
   previewSecretPath,
 } from '@/environment-variables'
 
@@ -8,6 +9,7 @@ export const INTERNAL_API_URL = internalGqlEndpoint
 export const API_URL = gqlEndpoint
 export const PREVIEW_SECRET_PATH = previewSecretPath
 
+export const ORIGIN = origin
 export const KIDS_URL_ORIGIN = 'https://kids.twreporter.org'
 export const SUBSCRIBE_URL = 'http://eepurl.com/idk8VH'
 export const CONTRIBUTE_FORM = 'https://forms.gle/7Yh4iPjfq92NDaSm9'
