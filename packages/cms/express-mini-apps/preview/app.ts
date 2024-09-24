@@ -80,10 +80,20 @@ export function createPreviewMiniApp({
   // proxy preview server traffic to subdirectory to prevent path collision between CMS and preview server
   router.get(
     '/assets/images/*',
-    createProxyMiddleware({
-      target: frontendOrigin,
-      changeOrigin: true,
-    })
+    createProxyMiddleware(
+      previewFeatureFlag
+        ? {
+            target: frontendOrigin,
+            changeOrigin: true,
+          }
+        : {
+            target: previewServer.origin,
+            changeOrigin: true,
+            pathRewrite: {
+              '/assets/images/': `${previewServer.path}/assets/images/`,
+            },
+          }
+    )
   )
 
   router.get(
