@@ -160,14 +160,14 @@ const listConfigurations = list({
         resolve(item: Record<string, unknown>): Record<string, string> {
           return {
             href: `${envVars.previewServer.path}/topic/${item.slug}`,
-            label: '專題預覽',
+            label: '專題預覽(請複製此連結給外部人員)',
             buttonLabel: 'Preview',
           }
         },
       }),
       ui: {
         // A module path that is resolved from where `keystone start` is run
-        views: './lists/views/link-button',
+        views: './lists/views/link-button-with-copy',
         createView: {
           fieldMode: 'hidden',
         },
