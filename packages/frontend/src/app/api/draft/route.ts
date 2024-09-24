@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import { draftMode, cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { ContentType, ORIGIN, PREVIEW_SECRET_PATH } from '@/app/constants'
+import { ContentType, PREVIEW_SECRET_PATH } from '@/app/constants'
 
 const notFoundPath = '/not-found'
 
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
 
   draftMode().enable()
   try {
-    const url = `${ORIGIN}/${type}/${slug}`
+    const url = `${process.env.ORIGIN}/${type}/${slug}`
 
     // Note: createProxyMiddleware will remove all cookies when the request is cross origin & different sub domain
     // during redirect, so fetch is a workaround to forward draft mode cookie instead of using redirect().
