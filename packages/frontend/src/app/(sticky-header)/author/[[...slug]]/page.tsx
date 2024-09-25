@@ -68,14 +68,14 @@ export async function generateMetadata({
   }
 
   return {
-    title: authorMeta?.name,
+    title: authorMeta.name,
     alternates: {
       canonical: `${KIDS_URL_ORIGIN}/author/${slug}`,
     },
     openGraph: {
-      title: authorMeta?.name,
-      description: authorMeta?.bio ?? GENERAL_DESCRIPTION,
-      images: authorMeta?.image?.resized?.small
+      title: authorMeta.name,
+      description: authorMeta.bio ?? GENERAL_DESCRIPTION,
+      images: authorMeta.image?.resized?.small
         ? [authorMeta.image.resized.small]
         : [],
     },
