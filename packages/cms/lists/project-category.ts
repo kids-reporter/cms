@@ -13,6 +13,7 @@ const listConfigurations = list({
     name: text({
       isIndexed: 'unique',
       label: '類別中文名稱',
+      validation: { isRequired: true },
     }),
     projects: relationship({
       label: '專題',
