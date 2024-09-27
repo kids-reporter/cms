@@ -73,7 +73,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
               id: value['id'],
             },
             data: {
-              twoFactorAuthBypass: !currentUser?.twoFactorAuth.bypass,
+              twoFactorAuthBypass: !value['bypass'],
             },
           },
         })
