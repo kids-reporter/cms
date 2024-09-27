@@ -10,7 +10,7 @@ const listConfigurations = list({
   fields: {
     slug: text({
       isIndexed: 'unique',
-      label: '作者英文姓名（用於網址）',
+      label: 'Slug',
       validation: { isRequired: true },
     }),
     name: text({
@@ -28,13 +28,13 @@ const listConfigurations = list({
       label: '大頭照',
     }),
     image: relationship({
-      label: '圖片',
+      label: 'og:image',
       ref: 'Photo',
     }),
     posts: relationship({
       ref: 'Post.authors',
       many: true,
-      label: '文章',
+      label: '相關文章',
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
@@ -59,7 +59,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Authors（作者）',
+    label: 'Authors',
   },
 })
 export default listConfigurations

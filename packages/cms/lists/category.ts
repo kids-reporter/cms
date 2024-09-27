@@ -16,7 +16,7 @@ const listConfigurations = list({
   fields: {
     slug: text({
       isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
+      label: 'Slug',
       validation: { isRequired: true },
     }),
     name: text({
@@ -45,15 +45,15 @@ const listConfigurations = list({
       ref: 'Photo',
     }),
     ogTitle: text({
-      label: 'FB分享標題',
+      label: 'og:title',
       validation: { isRequired: false },
     }),
     ogDescription: text({
-      label: 'FB分享說明',
+      label: 'og:description',
       validation: { isRequired: false },
     }),
     ogImage: relationship({
-      label: 'FB分享縮圖',
+      label: 'og:image',
       ref: 'Photo',
     }),
     relatedPosts: virtual({
@@ -198,7 +198,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Categories（文章分類）',
+    label: 'Categories',
     listView: {
       initialColumns: ['slug', 'name'],
     },

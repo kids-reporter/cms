@@ -10,12 +10,12 @@ const listConfigurations = list({
   fields: {
     slug: text({
       isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
+      label: 'Slug',
       validation: { isRequired: true },
     }),
     name: text({
       isIndexed: 'unique',
-      label: '標籤中文名稱',
+      label: '標籤名稱',
       validation: { isRequired: true },
     }),
     projects: relationship({
@@ -28,15 +28,15 @@ const listConfigurations = list({
     }),
     ogTitle: text({
       validation: { isRequired: false },
-      label: 'FB分享標題',
+      label: 'og:title',
     }),
     ogDescription: text({
       validation: { isRequired: false },
-      label: 'FB分享說明',
+      label: 'og:description',
     }),
     ogImage: relationship({
       ref: 'Photo',
-      label: 'FB分享縮圖',
+      label: 'og:image',
     }),
     posts: relationship({
       ref: 'Post.tags',
@@ -69,7 +69,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Tags（標籤）',
+    label: 'Tags',
   },
 })
 export default listConfigurations

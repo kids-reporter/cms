@@ -10,7 +10,7 @@ const listConfigurations = list({
   fields: {
     slug: text({
       isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
+      label: 'Slug',
       validation: { isRequired: true },
     }),
     name: text({
@@ -178,7 +178,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Subcategories（次分類）',
+    label: 'Subcategories',
     listView: {
       initialColumns: ['slug', 'name'],
     },

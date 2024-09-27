@@ -378,7 +378,7 @@ const listConfigurations = list({
     }),
   },
   ui: {
-    label: 'Posts（文章）',
+    label: 'Posts',
     labelField: 'title',
     listView: {
       initialColumns: ['title', 'slug', 'status', 'listPreview'],

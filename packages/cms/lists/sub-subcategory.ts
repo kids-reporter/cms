@@ -10,7 +10,7 @@ const listConfigurations = list({
   fields: {
     slug: text({
       isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
+      label: 'Slug',
       validation: { isRequired: true },
     }),
     name: text({
@@ -53,7 +53,7 @@ const listConfigurations = list({
     }),
   },
   ui: {
-    label: 'Sub Subcategories（次次分類）',
+    label: 'Sub Subcategories',
     labelField: 'nameForCMS',
     singular: 'Sub Subcategory',
     plural: 'Sub Subcategories',
