@@ -11,20 +11,11 @@ import {
   timestamp,
   select,
 } from '@keystone-6/core/fields'
+import { slugConfig } from './config'
 
 const listConfigurations = list({
   fields: {
-    slug: text({
-      isIndexed: 'unique',
-      label: 'Slug',
-      validation: {
-        isRequired: true,
-        match: {
-          regex: /^[a-z0-9-]+$/,
-          explanation: '請輸入正確格式，僅能使用小寫英文、數字和符號(-)',
-        },
-      },
-    }),
+    slug: slugConfig,
     name: text({
       isIndexed: 'unique',
       label: '類別中文名稱',

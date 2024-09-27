@@ -19,6 +19,7 @@ import {
 import relationshipUtil, {
   OrderedRelationshipConfig,
 } from './utils/manual-order-relationship'
+import { slugConfig } from './config'
 
 const relatedPosts: OrderedRelationshipConfig = {
   fieldName: 'relatedPosts',
@@ -35,17 +36,7 @@ const relatedPosts: OrderedRelationshipConfig = {
 
 const listConfigurations = list({
   fields: {
-    slug: text({
-      isIndexed: 'unique',
-      label: 'Slug',
-      validation: {
-        isRequired: true,
-        match: {
-          regex: /^[a-z0-9-]+$/,
-          explanation: '請輸入正確格式，僅能使用小寫英文、數字和符號(-)',
-        },
-      },
-    }),
+    slug: slugConfig,
     title: text({
       validation: { isRequired: true },
       label: '專題標題',
