@@ -33,12 +33,19 @@ export default function TwoFactorAuthVerify() {
   const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
 
   useEffect(() => {
+    console.log(
+      '==========',
+      queryLoading,
+      queryData,
+      queryData?.authenticatedItem?.twoFactorAuth?.bypass
+    )
     if (!queryLoading && queryData) {
       const currentUser = queryData?.authenticatedItem
       if (currentUser && currentUser.twoFactorAuth.bypass) {
         // if 2FA has bypass flag, hide verify form and handle redirect from backend
         setIsVerified(true)
-        window.location.reload()
+        console.log('==========bypass, call window.location.reload()')
+        //window.location.reload()
       } else if (currentUser && !currentUser.twoFactorAuth.set) {
         // if 2FA is not set, hide verify form and redirect to 2fa-setup page
         setIsVerified(true)
