@@ -9,6 +9,7 @@ import {
 } from '@keystone-6/core/fields'
 import {
   allowAllRoles,
+  allowAllRolesPlusPreview,
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
@@ -148,17 +149,7 @@ const listConfigurations = list({
   },
   access: {
     operation: {
-      query: allowRoles([
-        RoleEnum.Owner,
-        RoleEnum.Admin,
-        RoleEnum.Developer,
-        RoleEnum.Editor,
-        RoleEnum.Contributor,
-        RoleEnum.Preview,
-        RoleEnum.FrontendHeadlessAccount,
-        RoleEnum.PreviewHeadlessAccount,
-        RoleEnum.CronjobHeadlessAccount,
-      ]),
+      query: allowAllRolesPlusPreview(),
       create: allowRoles([RoleEnum.Owner, RoleEnum.Admin]),
       update: allowAllRoles(),
       delete: allowRoles([RoleEnum.Owner, RoleEnum.Admin]),

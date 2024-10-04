@@ -49,6 +49,12 @@ export const allowAllRoles = () => {
   return allowRoles(roles)
 }
 
+// Preview is included to access 'user' list, because for every account
+// authenticatedItem is needed during verification in 2fa-verify step.
+export const allowAllRolesPlusPreview = () => {
+  return allowRoles(Object.values(RoleEnum))
+}
+
 export const denyRoles = (roles: string[]) => {
   return ({ session }: { session: Session }) => {
     if (!Array.isArray(roles)) {
