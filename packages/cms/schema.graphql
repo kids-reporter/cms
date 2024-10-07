@@ -650,8 +650,8 @@ input AuthorCreateInput {
 
 type Project {
   id: ID!
-  title: String
   slug: String
+  title: String
   subtitle: String
   titlePosition: String
   status: String
@@ -686,8 +686,8 @@ input ProjectWhereInput {
   OR: [ProjectWhereInput!]
   NOT: [ProjectWhereInput!]
   id: IDFilter
-  title: StringFilter
   slug: StringFilter
+  title: StringFilter
   subtitle: StringFilter
   titlePosition: StringNullableFilter
   status: StringNullableFilter
@@ -712,8 +712,8 @@ input ProjectCategoryManyRelationFilter {
 
 input ProjectOrderByInput {
   id: OrderDirection
-  title: OrderDirection
   slug: OrderDirection
+  title: OrderDirection
   subtitle: OrderDirection
   titlePosition: OrderDirection
   status: OrderDirection
@@ -725,8 +725,8 @@ input ProjectOrderByInput {
 }
 
 input ProjectUpdateInput {
-  title: String
   slug: String
+  title: String
   subtitle: String
   titlePosition: String
   status: String
@@ -759,8 +759,8 @@ input ProjectUpdateArgs {
 }
 
 input ProjectCreateInput {
-  title: String
   slug: String
+  title: String
   subtitle: String
   titlePosition: String
   status: String
