@@ -5,14 +5,11 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
+import { slugConfig } from './config'
 
 const listConfigurations = list({
   fields: {
-    slug: text({
-      isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
-      validation: { isRequired: true },
-    }),
+    slug: slugConfig,
     name: text({
       isIndexed: 'unique',
       label: '類別中文名稱',
@@ -37,15 +34,15 @@ const listConfigurations = list({
       ref: 'Photo',
     }),
     ogTitle: text({
-      label: 'FB分享標題',
+      label: 'og:title',
       validation: { isRequired: false },
     }),
     ogDescription: text({
-      label: 'FB分享說明',
+      label: 'og:description',
       validation: { isRequired: false },
     }),
     ogImage: relationship({
-      label: 'FB分享縮圖',
+      label: 'og:image',
       ref: 'Photo',
     }),
     createdAt: timestamp({
@@ -71,7 +68,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Project Categories（專題分類）',
+    label: 'Topics Categories',
     listView: {
       initialColumns: ['slug', 'name'],
     },

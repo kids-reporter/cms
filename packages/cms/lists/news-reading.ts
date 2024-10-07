@@ -105,7 +105,7 @@ const NewsReadingGroup = list({
     }),
   },
   ui: {
-    label: 'News Readings Groups（讀報）',
+    label: 'News Readings Groups',
     singular: 'News Readings Group',
     plural: 'News Readings Groups',
   },

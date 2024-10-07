@@ -68,7 +68,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Editor Picks（精選設定）',
+    label: 'Editor Picks',
     singular: 'Editor Pick',
     plural: 'Editor Picks',
     listView: {

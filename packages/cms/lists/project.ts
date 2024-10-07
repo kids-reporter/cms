@@ -19,6 +19,7 @@ import {
 import relationshipUtil, {
   OrderedRelationshipConfig,
 } from './utils/manual-order-relationship'
+import { slugConfig } from './config'
 
 const relatedPosts: OrderedRelationshipConfig = {
   fieldName: 'relatedPosts',
@@ -35,15 +36,11 @@ const relatedPosts: OrderedRelationshipConfig = {
 
 const listConfigurations = list({
   fields: {
+    slug: slugConfig,
     title: text({
       validation: { isRequired: true },
       label: '專題標題',
       isIndexed: true,
-    }),
-    slug: text({
-      isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
-      validation: { isRequired: true },
     }),
     subtitle: text({
       label: '副標',
@@ -135,16 +132,16 @@ const listConfigurations = list({
       },
     }),
     ogTitle: text({
-      label: 'FB分享標題',
+      label: 'og:title',
       validation: { isRequired: false },
     }),
     ogDescription: text({
-      label: 'FB分享說明',
+      label: 'og:description',
       validation: { isRequired: false },
     }),
     ogImage: relationship({
       ref: 'Photo',
-      label: 'FB分享縮圖',
+      label: 'og:image',
     }),
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
@@ -206,7 +203,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Projects（專題）',
+    label: 'Topics',
     labelField: 'title',
     listView: {
       initialSort: { field: 'publishedDate', direction: 'DESC' },
