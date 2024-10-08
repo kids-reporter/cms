@@ -24,6 +24,7 @@ export default function TwoFactorAuthVerify() {
       if (response.status === 200 && response.data.status === 'success') {
         const twoFactorAuth = response.data?.data?.twoFactorAuth
         if (twoFactorAuth?.bypass) {
+          // if 2FA has bypass flag, hide verify form and handle redirect from backend
           setIsVerified(true)
           window.location.reload()
         } else if (twoFactorAuth && !twoFactorAuth.set) {
