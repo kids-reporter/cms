@@ -19,6 +19,8 @@ export default function TwoFactorAuthVerify() {
   const [isVerified, setIsVerified] = useState(false)
 
   useEffect(() => {
+    // Note: Role 'Preview' is excluded from 'user' list, so we can't access authenticatedItem via
+    // Graphql, fetching /api/2fa/isBypassed instead.
     const fetchUserInfo = async () => {
       const response = await axios.get('/api/2fa/isBypassed')
       if (response.status === 200 && response.data.status === 'success') {

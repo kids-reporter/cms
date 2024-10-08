@@ -341,9 +341,7 @@ export function twoFactorAuthRoute(
       }
     })
 
-    // get user bypass info
-    // Note: Role 'Preview' is excluded from 'user' list, so we can't access authenticatedItem via
-    // Graphql. This route is for getting bypass info in 2fa-verify step of every account.
+    // get user bypass info for 2fa-verify step.
     app.get('/api/2fa/isBypassed', async (req, res) => {
       const context = await commonContext.withRequest(req, res)
       const currentSession = context?.session
