@@ -91,8 +91,8 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
 </div>
 
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.mjs";
-  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/web/pdf_viewer.mjs";
+  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.mjs";
+  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/web/pdf_viewer.mjs";
 
   function getSafariVersion() {
       const ua = navigator.userAgent;
@@ -108,7 +108,7 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   const supportVersion = 15.4;
   const safariVersion = getSafariVersion();
 
-  if (safariVersion > 0 && safariVersion < supportVersion) {
+  if (safariVersion > 0 && safariVersion <= supportVersion) {
     // For older Safari browser
     const container = document.querySelector("#${htmlId} > iframe[data-google-drive]");
     container.style.display = "block";
@@ -117,7 +117,7 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
 
     // The workerSrc property shall be specified.
     pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.worker.mjs";
+      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.worker.mjs";
 
     const container = document.getElementById("${htmlId}");
 
