@@ -82,8 +82,11 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   const attrName = 'data-' + htmlId
   const tmpl = `
 <div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
-  <div id="${htmlId}" style="position: absolute; width: 100%;">
-    <div class="pdfViewer"></div>
+  <div id="${htmlId}" style="position: absolute; width: 100%; height: 100%;">
+    <div data-pdfjs class="pdfViewer"></div>
+    
+    <!-- fallback for older Safari below version 15.4 -->
+    <iframe data-google-drive src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: none;"></iframe>
   </div>
 </div>
 
@@ -91,51 +94,73 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.mjs";
   import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/web/pdf_viewer.mjs";
 
-  // The workerSrc property shall be specified.
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.worker.mjs";
+  function getSafariVersion() {
+      const ua = navigator.userAgent;
+      const safariMatch = ua.match(/Version\\/(\\d+\\.\\d+)/);
 
-  const container = document.getElementById("${htmlId}");
-
-  const eventBus = new pdfjsViewer.EventBus();
-
-  const pdfViewer = new pdfjsViewer.PDFViewer({
-    container,
-    eventBus,
-  });
-
-  eventBus.on("pagesinit", function () {
-    // We can use pdfViewer now, e.g. let's change default scale.
-    pdfViewer.currentScaleValue = "page-fit";
-  });
-
-  // Loading document.
-  const loadingTask = pdfjsLib.getDocument({
-    url: "${pdfURL}"
-  });
-
-  try {
-    const pdfDocument = await loadingTask.promise;
-    // Document loaded, specifying document for the viewer
-    pdfViewer.setDocument(pdfDocument);
-  } catch(error) {
-    console.error("${pdfURL} can not be fetched.", error)
+      if (safariMatch && ua.includes("Safari") && !ua.includes("Chrome")) {
+          return parseFloat(safariMatch[1]);
+      } else {
+          return -1;
+      }
   }
 
-  // add pdf custom styles
-  const head = document.head;
-  const fragment = document.createDocumentFragment();
-  const styleEle = document.querySelector("head > style[${attrName}]");
+  const supportVersion = 15.4;
+  const safariVersion = getSafariVersion();
 
-  if (styleEle) {
-    head.removeChild(styleEle);
+  if (safariVersion > 0 && safariVersion < supportVersion) {
+    // For older Safari browser
+    const container = document.querySelector("#${htmlId} > iframe[data-google-drive]");
+    container.style.display = "block";
+  } else {
+    // For modern browsers, use pdfjs library to present pdf.
+
+    // The workerSrc property shall be specified.
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.worker.mjs";
+
+    const container = document.getElementById("${htmlId}");
+
+    const eventBus = new pdfjsViewer.EventBus();
+
+    const pdfViewer = new pdfjsViewer.PDFViewer({
+      container,
+      eventBus,
+    });
+
+    eventBus.on("pagesinit", function () {
+      // We can use pdfViewer now, e.g. let's change default scale.
+      pdfViewer.currentScaleValue = "page-fit";
+    });
+
+    // Loading document.
+    const loadingTask = pdfjsLib.getDocument({
+      url: "${pdfURL}"
+    });
+
+    try {
+      const pdfDocument = await loadingTask.promise;
+      // Document loaded, specifying document for the viewer
+      pdfViewer.setDocument(pdfDocument);
+    } catch(error) {
+      console.error("${pdfURL} can not be fetched.", error)
+    }
+
+    // add pdf custom styles
+    const head = document.head;
+    const fragment = document.createDocumentFragment();
+    const styleEle = document.querySelector("head > style[${attrName}]");
+
+    if (styleEle) {
+      head.removeChild(styleEle);
+    }
+
+    const newStyleEle = document.createElement("style");
+    newStyleEle.setAttribute("${attrName}", "");
+    newStyleEle.innerText = "#${htmlId} .pdfViewer{ .page { margin-left: auto; margin-right: auto; }}";
+    fragment.appendChild(newStyleEle);
+    head.appendChild(fragment);
   }
-
-  const newStyleEle = document.createElement("style");
-  newStyleEle.setAttribute("${attrName}", "");
-  newStyleEle.innerText = "#${htmlId} .pdfViewer{ .page { margin-left: auto; margin-right: auto; }}";
-  fragment.appendChild(newStyleEle);
-  head.appendChild(fragment);
 </script>
   `
   return tmpl
