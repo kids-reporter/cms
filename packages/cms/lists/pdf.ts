@@ -88,12 +88,12 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
 </div>
 
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.mjs";
-  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/web/pdf_viewer.mjs";
+  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.mjs";
+  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/web/pdf_viewer.mjs";
 
   // The workerSrc property shall be specified.
   pdfjsLib.GlobalWorkerOptions.workerSrc =
-    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.mjs";
+    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/build/pdf.worker.mjs";
 
   const container = document.getElementById("${htmlId}");
 
