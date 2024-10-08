@@ -82,7 +82,7 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   const attrName = 'data-' + htmlId
   const tmpl = `
 <div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
-  <div id="${htmlId}" style="position: absolute; width: 100%; height: 100%;">
+  <div id="${htmlId}" style="position: absolute; width: 100%;">
     <div data-pdfjs class="pdfViewer"></div>
     
     <!-- fallback for older Safari below version 15.4 -->
