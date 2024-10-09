@@ -125,8 +125,8 @@ model Author {
 
 model Project {
   id                                            Int                  @id @default(autoincrement())
-  title                                         String               @default("")
   slug                                          String               @unique @default("")
+  title                                         String               @default("")
   subtitle                                      String               @default("")
   titlePosition                                 String?              @default("center")
   status                                        String?              @default("draft")

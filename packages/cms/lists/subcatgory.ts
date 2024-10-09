@@ -5,14 +5,11 @@ import {
   allowRoles,
   RoleEnum,
 } from './utils/access-control-list'
+import { slugConfig } from './config'
 
 const listConfigurations = list({
   fields: {
-    slug: text({
-      isIndexed: 'unique',
-      label: '英文名稱（用於網址）',
-      validation: { isRequired: true },
-    }),
+    slug: slugConfig,
     name: text({
       label: '次類別中文名稱',
       validation: { isRequired: true },
@@ -178,7 +175,7 @@ const listConfigurations = list({
     },
   },
   ui: {
-    label: 'Subcategories（次分類）',
+    label: 'Subcategories',
     listView: {
       initialColumns: ['slug', 'name'],
     },
