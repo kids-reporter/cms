@@ -12,43 +12,32 @@ import { ChangeUserButton } from '../components/change-user-button'
 import { SinglePageContainer } from '../components/single-page-container'
 
 import axios from 'axios'
-import { useQuery, gql } from '@keystone-6/core/admin-ui/apollo'
-
-const GET_USER = gql`
-  query GetCurrentUser {
-    authenticatedItem {
-      ... on User {
-        id
-        twoFactorAuth
-      }
-    }
-  }
-`
 
 export default function TwoFactorAuthVerify() {
   const [token, setToken] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isVerified, setIsVerified] = useState(false)
 
-  const { data: queryData, loading: queryLoading, error } = useQuery(GET_USER)
-
   useEffect(() => {
-    if (!queryLoading && queryData) {
-      const currentUser = queryData?.authenticatedItem
-      if (currentUser && currentUser.twoFactorAuth.bypass) {
-        // if 2FA has bypass flag, hide verify form and handle redirect from backend
-        setIsVerified(true)
-        window.location.reload()
-      } else if (currentUser && !currentUser.twoFactorAuth.set) {
-        // if 2FA is not set, hide verify form and redirect to 2fa-setup page
-        setIsVerified(true)
-        window.location.href = '/2fa-setup'
+    // Note: Role 'Preview' is excluded from 'user' list, so we can't access authenticatedItem via
+    // Graphql, fetching /api/2fa/isBypassed instead.
+    const fetchUserInfo = async () => {
+      const response = await axios.get('/api/2fa/isBypassed')
+      if (response.status === 200 && response.data.status === 'success') {
+        const twoFactorAuth = response.data?.data?.twoFactorAuth
+        if (twoFactorAuth?.bypass) {
+          // if 2FA has bypass flag, hide verify form and handle redirect from backend
+          setIsVerified(true)
+          window.location.reload()
+        } else if (twoFactorAuth && !twoFactorAuth.set) {
+          // if 2FA is not set, hide verify form and redirect to 2fa-setup page
+          setIsVerified(true)
+          window.location.href = '/2fa-setup'
+        }
       }
     }
-  }, [queryLoading, queryData])
-
-  if (queryLoading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
+    fetchUserInfo()
+  }, [])
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
