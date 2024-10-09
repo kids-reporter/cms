@@ -84,7 +84,7 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
 <div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
   <div id="${htmlId}" style="position: absolute; width: 100%;">
     <div data-pdfjs class="pdfViewer"></div>
-    <!-- fallback for older Safari below version 15.4 -->
+    <!-- fallback for older Safari below version 16 -->
   </div>
   <iframe data-google-drive src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: none; position: absolute;"></iframe>
 </div>
@@ -104,10 +104,10 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
       }
   }
 
-  const supportVersion = 15.4;
+  const supportVersion = 16;
   const safariVersion = getSafariVersion();
 
-  if (safariVersion > 0 && safariVersion <= supportVersion) {
+  if (safariVersion > 0 && safariVersion < supportVersion) {
     // For older Safari browser
     const container = document.querySelector("#${htmlId} + iframe[data-google-drive]");
     container.style.display = "block";
