@@ -156,7 +156,7 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
 
     const newStyleEle = document.createElement("style");
     newStyleEle.setAttribute("${attrName}", "");
-    newStyleEle.innerText = "#${htmlId} .pdfViewer{ .page { margin-left: auto; margin-right: auto; }}";
+    newStyleEle.innerText = "#${htmlId} .pdfViewer .page { margin-left: auto; margin-right: auto; }";
     fragment.appendChild(newStyleEle);
     head.appendChild(fragment);
   }
