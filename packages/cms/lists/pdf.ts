@@ -82,36 +82,17 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   const attrName = 'data-' + htmlId
   const tmpl = `
 <div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
-  <div id="${htmlId}" style="position: absolute; width: 100%;">
+  <div id="${htmlId}" style="position: absolute; width: 100%; visibility: hidden;">
     <div data-pdfjs class="pdfViewer"></div>
     <!-- fallback for older Safari below version 16 -->
   </div>
-  <iframe data-google-drive src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: none; position: absolute;"></iframe>
+  <iframe data-google-drive src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: block; position: absolute;"></iframe>
 </div>
 
 <script type="module">
   import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.mjs";
   import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/web/pdf_viewer.mjs";
 
-  function getSafariVersion() {
-      const ua = navigator.userAgent;
-      const safariMatch = ua.match(/Version\\/(\\d+\\.\\d+)/);
-
-      if (safariMatch && ua.includes("Safari") && !ua.includes("Chrome")) {
-          return parseFloat(safariMatch[1]);
-      } else {
-          return -1;
-      }
-  }
-
-  const supportVersion = 16;
-  const safariVersion = getSafariVersion();
-
-  if (safariVersion > 0 && safariVersion < supportVersion) {
-    // For older Safari browser
-    const container = document.querySelector("#${htmlId} + iframe[data-google-drive]");
-    container.style.display = "block";
-  } else {
     // For modern browsers, use pdfjs library to present pdf.
 
     // The workerSrc property shall be specified.
@@ -130,6 +111,15 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
     eventBus.on("pagesinit", function () {
       // We can use pdfViewer now, e.g. let's change default scale.
       pdfViewer.currentScaleValue = "page-fit";
+
+      // show pdfjs container
+      container.style.visibility = 'visible';
+
+      // hide iframe
+      const iframeNode = document.querySelector("#${htmlId} + iframe[data-google-drive]");
+      if (iframeNode) {
+        iframeNode.style.display = 'none';
+      }
     });
 
     // Loading document.
@@ -159,7 +149,6 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
     newStyleEle.innerText = "#${htmlId} .pdfViewer .page { margin-left: auto; margin-right: auto; }";
     fragment.appendChild(newStyleEle);
     head.appendChild(fragment);
-  }
 </script>
   `
   return tmpl
