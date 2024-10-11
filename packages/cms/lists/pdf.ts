@@ -93,62 +93,61 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.mjs";
   import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/web/pdf_viewer.mjs";
 
-    // For modern browsers, use pdfjs library to present pdf.
+  // For modern browsers, use pdfjs library to present pdf.
+  // The workerSrc property shall be specified.
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.worker.mjs";
 
-    // The workerSrc property shall be specified.
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.worker.mjs";
+  const container = document.getElementById("${htmlId}");
 
-    const container = document.getElementById("${htmlId}");
+  const eventBus = new pdfjsViewer.EventBus();
 
-    const eventBus = new pdfjsViewer.EventBus();
+  const pdfViewer = new pdfjsViewer.PDFViewer({
+    container,
+    eventBus,
+  });
 
-    const pdfViewer = new pdfjsViewer.PDFViewer({
-      container,
-      eventBus,
-    });
+  eventBus.on("pagesinit", function () {
+    // We can use pdfViewer now, e.g. let's change default scale.
+    pdfViewer.currentScaleValue = "page-fit";
 
-    eventBus.on("pagesinit", function () {
-      // We can use pdfViewer now, e.g. let's change default scale.
-      pdfViewer.currentScaleValue = "page-fit";
+    // show pdfjs container
+    container.style.visibility = 'visible';
 
-      // show pdfjs container
-      container.style.visibility = 'visible';
-
-      // hide iframe
-      const iframeNode = document.querySelector("#${htmlId} + iframe[data-google-drive]");
-      if (iframeNode) {
-        iframeNode.style.display = 'none';
-      }
-    });
-
-    // Loading document.
-    const loadingTask = pdfjsLib.getDocument({
-      url: "${pdfURL}"
-    });
-
-    try {
-      const pdfDocument = await loadingTask.promise;
-      // Document loaded, specifying document for the viewer
-      pdfViewer.setDocument(pdfDocument);
-    } catch(error) {
-      console.error("${pdfURL} can not be fetched.", error)
+    // hide iframe
+    const iframeNode = document.querySelector("#${htmlId} + iframe[data-google-drive]");
+    if (iframeNode) {
+      iframeNode.style.display = 'none';
     }
+  });
 
-    // add pdf custom styles
-    const head = document.head;
-    const fragment = document.createDocumentFragment();
-    const styleEle = document.querySelector("head > style[${attrName}]");
+  // Loading document.
+  const loadingTask = pdfjsLib.getDocument({
+    url: "${pdfURL}"
+  });
 
-    if (styleEle) {
-      head.removeChild(styleEle);
-    }
+  try {
+    const pdfDocument = await loadingTask.promise;
+    // Document loaded, specifying document for the viewer
+    pdfViewer.setDocument(pdfDocument);
+  } catch(error) {
+    console.error("${pdfURL} can not be fetched.", error)
+  }
 
-    const newStyleEle = document.createElement("style");
-    newStyleEle.setAttribute("${attrName}", "");
-    newStyleEle.innerText = "#${htmlId} .pdfViewer .page { margin-left: auto; margin-right: auto; }";
-    fragment.appendChild(newStyleEle);
-    head.appendChild(fragment);
+  // add pdf custom styles
+  const head = document.head;
+  const fragment = document.createDocumentFragment();
+  const styleEle = document.querySelector("head > style[${attrName}]");
+
+  if (styleEle) {
+    head.removeChild(styleEle);
+  }
+
+  const newStyleEle = document.createElement("style");
+  newStyleEle.setAttribute("${attrName}", "");
+  newStyleEle.innerText = "#${htmlId} .pdfViewer .page { margin-left: auto; margin-right: auto; }";
+  fragment.appendChild(newStyleEle);
+  head.appendChild(fragment);
 </script>
   `
   return tmpl
