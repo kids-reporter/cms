@@ -84,7 +84,6 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
 <div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
   <div id="${htmlId}" style="position: absolute; width: 100%; visibility: hidden;">
     <div data-pdfjs class="pdfViewer"></div>
-    <!-- fallback for older Safari below version 16 -->
   </div>
   <iframe data-google-drive src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: block; position: absolute;"></iframe>
 </div>
