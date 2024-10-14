@@ -85,7 +85,9 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
   <div id="${htmlId}" style="position: absolute; width: 100%; visibility: hidden;">
     <div data-pdfjs class="pdfViewer"></div>
   </div>
-  <iframe data-google-drive src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: block; position: absolute;"></iframe>
+  <iframe data-google-docs-viewer src="https://docs.google.com/viewer?url=${encodeURIComponent(
+    pdfURL
+  )}&embedded=true" width="100%" height="100%" allow="autoplay" style="display: block; position: absolute;"></iframe>
 </div>
 
 <script type="module">
@@ -114,7 +116,7 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
     container.style.visibility = 'visible';
 
     // hide iframe
-    const iframeNode = document.querySelector("#${htmlId} + iframe[data-google-drive]");
+    const iframeNode = document.querySelector("#${htmlId} + iframe[data-google-docs-viewer]");
     if (iframeNode) {
       iframeNode.style.display = 'none';
     }
