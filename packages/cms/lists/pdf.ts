@@ -32,8 +32,14 @@ const listConfigurations = list({
           if (typeof filename !== 'string' || filename === '') {
             return ''
           }
+
+          const title = item.name as string
           const pdfURL = `${config.googleCloudStorage.origin}/files/${filename}`
-          return createEmbedCode(pdfURL, `kids-reporter-embed-pdf-${item.id}`)
+          return createEmbedCode(
+            pdfURL,
+            `kids-reporter-embed-pdf-${item.id}`,
+            title
+          )
         },
       }),
       ui: {
@@ -78,7 +84,11 @@ const listConfigurations = list({
   hooks: {},
 })
 
-function createEmbedCode(pdfURL: string, htmlId: string): string {
+function createEmbedCode(
+  pdfURL: string,
+  htmlId: string,
+  title: string
+): string {
   const attrName = 'data-' + htmlId
   const tmpl = `
 <div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
@@ -86,6 +96,12 @@ function createEmbedCode(pdfURL: string, htmlId: string): string {
     <div data-pdfjs class="pdfViewer"></div>
   </div>
   <iframe src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: block; position: absolute;"></iframe>
+</div>
+<div style="display: flex; align-items: center; justify-content: center; gap:11px; margin-top: 27px;">
+  <span style="font-size: 16px; color: #27B5F7;">▶ ${title}</span>
+  <a href="${pdfURL}?download=true" download style="text-decoration: none;">
+    <div style="color: white; background-color:#27B5F7; padding: 5px 20px; line-height: 30px; font-size: 15px; border-radius: 3px;">下載</div>
+  </a>
 </div>
 
 <script type="module">
