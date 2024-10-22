@@ -22,6 +22,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [result, setResult] = useState<string>('')
 
   const handleClick = () => {
+    // TODO: prompt check
     console.log('prompt', prompt)
     setResult('bullshit from ChatGPT')
   }

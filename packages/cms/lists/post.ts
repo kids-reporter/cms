@@ -175,7 +175,7 @@ const listConfigurations = list({
         type: graphql.JSON,
         resolve(): Record<string, string> {
           return {
-            label: '生成摘要',
+            label: '生成內文摘要',
           }
         },
       }),
