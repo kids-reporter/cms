@@ -170,6 +170,28 @@ const listConfigurations = list({
         },
       },
     }),
+    summary: virtual({
+      field: graphql.field({
+        type: graphql.JSON,
+        resolve(): Record<string, string> {
+          return {
+            label: '生成摘要',
+          }
+        },
+      }),
+      ui: {
+        views: './lists/views/ai-dialog',
+        createView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
     projects: relationship({
       label: '專題',
       ref: 'Project.relatedPosts',
