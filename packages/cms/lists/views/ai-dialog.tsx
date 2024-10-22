@@ -7,6 +7,7 @@ import { Button } from '@keystone-ui/button'
 import { Tooltip } from '@keystone-ui/tooltip'
 import { ClipboardIcon } from '@keystone-ui/icons/icons/ClipboardIcon'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
+import envVar from '../../environment-variables'
 
 const Row = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   const handleClick = () => {
     // TODO: prompt check
-    console.log('prompt', prompt)
+    console.log('prompt', prompt, envVar.openAIKey)
     setResult('bullshit from ChatGPT')
   }
 
