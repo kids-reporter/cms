@@ -340,5 +340,22 @@ export function twoFactorAuthRoute(
         res.send({ status: 'error' })
       }
     })
+
+    // get user bypass info for 2fa-verify step.
+    app.get('/api/2fa/isBypassed', async (req, res) => {
+      const context = await commonContext.withRequest(req, res)
+      const currentSession = context?.session
+      if (!currentSession) {
+        res
+          .status(403)
+          .send({ status: 'fail', data: { session: 'no session' } })
+        return
+      }
+      res.status(200).send({
+        status: 'success',
+        data: { twoFactorAuth: currentSession?.data?.twoFactorAuth },
+      })
+      return
+    })
   }
 }

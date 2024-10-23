@@ -32,18 +32,14 @@ const listConfigurations = list({
           if (typeof filename !== 'string' || filename === '') {
             return ''
           }
-          const pdfLink = `${config.googleCloudStorage.origin}/files/${filename}`
-          const downloadLink = `${pdfLink}?download=true`
-          const title = item.name
-          const code = `<iframe src="${pdfLink}#toolbar=0" width="100%" height="480" allow="autoplay" style="margin-bottom: 27px;"></iframe>
-          <div style="display: flex; align-items: center; justify-content: center; gap:11px;">
-            <span style="font-size: 16px; color: #27B5F7;">▶ ${title}</span>
-            <a href=${downloadLink} download style="text-decoration: none;">
-              <div style="color: white; background-color:#27B5F7; padding: 5px 20px; line-height: 30px; font-size: 15px; border-radius: 3px;">下載</div>
-            </a>
-          </div>
-          `
-          return code
+
+          const title = item.name as string
+          const pdfURL = `${config.googleCloudStorage.origin}/files/${filename}`
+          return createEmbedCode(
+            pdfURL,
+            `kids-reporter-embed-pdf-${item.id}`,
+            title
+          )
         },
       }),
       ui: {
@@ -87,5 +83,89 @@ const listConfigurations = list({
 
   hooks: {},
 })
+
+function createEmbedCode(
+  pdfURL: string,
+  htmlId: string,
+  title: string
+): string {
+  const attrName = 'data-' + htmlId
+  const tmpl = `
+<div style="padding-bottom: 60%; position: relative; overflow: scroll; width: 100%;">
+  <div id="${htmlId}" style="position: absolute; width: 100%; visibility: hidden;">
+    <div data-pdfjs class="pdfViewer"></div>
+  </div>
+  <iframe src="${pdfURL}" width="100%" height="100%" allow="autoplay" style="display: block; position: absolute;"></iframe>
+</div>
+<div style="display: flex; align-items: center; justify-content: center; gap:11px; margin-top: 27px;">
+  <span style="font-size: 16px; color: #27B5F7;">▶ ${title}</span>
+  <a href="${pdfURL}?download=true" download style="text-decoration: none;">
+    <div style="color: white; background-color:#27B5F7; padding: 5px 20px; line-height: 30px; font-size: 15px; border-radius: 3px;">下載</div>
+  </a>
+</div>
+
+<script type="module">
+  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.mjs";
+  import "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/web/pdf_viewer.mjs";
+
+  // For modern browsers, use pdfjs library to present pdf.
+  // The workerSrc property shall be specified.
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.1.392/legacy/build/pdf.worker.mjs";
+
+  const container = document.getElementById("${htmlId}");
+
+  const eventBus = new pdfjsViewer.EventBus();
+
+  const pdfViewer = new pdfjsViewer.PDFViewer({
+    container,
+    eventBus,
+  });
+
+  eventBus.on("pagesinit", function () {
+    // We can use pdfViewer now, e.g. let's change default scale.
+    pdfViewer.currentScaleValue = "page-fit";
+
+    // show pdfjs container
+    container.style.visibility = 'visible';
+
+    // hide iframe
+    const iframeNode = document.querySelector("#${htmlId} + iframe");
+    if (iframeNode) {
+      iframeNode.style.display = 'none';
+    }
+  });
+
+  // Loading document.
+  const loadingTask = pdfjsLib.getDocument({
+    url: "${pdfURL}"
+  });
+
+  try {
+    const pdfDocument = await loadingTask.promise;
+    // Document loaded, specifying document for the viewer
+    pdfViewer.setDocument(pdfDocument);
+  } catch(error) {
+    console.error("${pdfURL} can not be fetched.", error)
+  }
+
+  // add pdf custom styles
+  const head = document.head;
+  const fragment = document.createDocumentFragment();
+  const styleEle = document.querySelector("head > style[${attrName}]");
+
+  if (styleEle) {
+    head.removeChild(styleEle);
+  }
+
+  const newStyleEle = document.createElement("style");
+  newStyleEle.setAttribute("${attrName}", "");
+  newStyleEle.innerText = "#${htmlId} .pdfViewer .page { margin-left: auto; margin-right: auto; }";
+  fragment.appendChild(newStyleEle);
+  head.appendChild(fragment);
+</script>
+  `
+  return tmpl
+}
 
 export default listConfigurations
