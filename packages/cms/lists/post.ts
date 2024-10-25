@@ -171,14 +171,21 @@ const listConfigurations = list({
       },
     }),
     summary: virtual({
-      field: graphql.field({
-        type: graphql.JSON,
-        resolve(): Record<string, string> {
-          return {
-            label: '生成內文摘要',
-          }
-        },
-      }),
+      field: () =>
+        graphql.field({
+          type: graphql.JSON,
+          async resolve(item: Record<string, any>, args, context) {
+            const postID = item?.id
+            const post = await context.query.Post.findOne({
+              where: { id: postID },
+              query: 'id, content',
+            })
+            return {
+              label: '生成內容',
+              content: post.content,
+            }
+          },
+        }),
       ui: {
         views: './lists/views/ai-dialog',
         createView: {

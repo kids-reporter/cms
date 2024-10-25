@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import copyToClipboard from 'clipboard-copy'
+import { convertFromRaw } from 'draft-js'
 import { FieldProps } from '@keystone-6/core/types'
 import {
   FieldLabel,
@@ -28,6 +29,10 @@ const vendor = 'ChatGPT'
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [prompt, setPrompt] = useState<string>('')
   const [result, setResult] = useState<string>('')
+
+  // TODO: useRef
+  const contentState = convertFromRaw(value.content)
+  const content = contentState?.getPlainText(',')
 
   // TODO: add waiting status for reponse text area
   const handleClick = async () => {
@@ -73,6 +78,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         {value.label}
       </FieldLabel>
       <span>ChatGPT有可能回覆簡體中文，請在指令中提醒它用繁體中文回覆。</span>
+      <TextArea readOnly placeholder="生成內容" value={content} />
       <Row>
         <TextInput placeholder="指令" onChange={handlePrompt} value={prompt} />
         <Tooltip content="Send">
