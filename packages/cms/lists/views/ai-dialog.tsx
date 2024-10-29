@@ -135,7 +135,11 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         )
       })}
       <Row>
-        <TextInput placeholder="指令" onChange={handlePrompt} value={prompt} />
+        <TextInput
+          placeholder="傳指令給ChatGPT"
+          onChange={handlePrompt}
+          value={prompt}
+        />
         <Tooltip content="Send">
           {(props) => (
             <Button {...props} aria-label="Send" onClick={handleClick}>
