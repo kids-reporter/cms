@@ -54,7 +54,16 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [prompt, setPrompt] = useState<string>('')
   const [messages, setMessages] = useState<any[]>([
     { role: 'user', content: content },
-  ]) // ([{ role: 'user', content: content }, { role: 'user', content: '請依據此文章，提供100字以下，能引發10歲孩子閱讀此文章的動機' }, { role: 'assistant', content: '作家楊索年少時期因家境貧困，難有升學機會，但他到處打工並苦讀自學，一次次向命運發動挑戰，找到自己在世界的立足之地。（攝影／王崴漢）' }, ])
+    {
+      role: 'user',
+      content: '請依據此文章，提供100字以下，能引發10歲孩子閱讀此文章的動機',
+    },
+    {
+      role: 'assistant',
+      content:
+        '作家楊索年少時期因家境貧困，難有升學機會，但他到處打工並苦讀自學，一次次向命運發動挑戰，找到自己在世界的立足之地。（攝影／王崴漢）',
+    },
+  ])
 
   // TODO: add waiting status for reponse text area
   const handleClick = async () => {
@@ -106,6 +115,20 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         {value.label}
       </FieldLabel>
       <span>ChatGPT有可能回覆簡體中文，請在指令中提醒它用繁體中文回覆。</span>
+      <Row>
+        <TextInput
+          placeholder="傳指令給ChatGPT"
+          onChange={handlePrompt}
+          value={prompt}
+        />
+        <Tooltip content="Send">
+          {(props) => (
+            <Button {...props} aria-label="Send" onClick={handleClick}>
+              <ArrowRightIcon size="small" />
+            </Button>
+          )}
+        </Tooltip>
+      </Row>
       {messages?.map((msg, index) => {
         return index === 0 ? null : (
           <Row>
@@ -134,20 +157,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           </Row>
         )
       })}
-      <Row>
-        <TextInput
-          placeholder="傳指令給ChatGPT"
-          onChange={handlePrompt}
-          value={prompt}
-        />
-        <Tooltip content="Send">
-          {(props) => (
-            <Button {...props} aria-label="Send" onClick={handleClick}>
-              <ArrowRightIcon size="small" />
-            </Button>
-          )}
-        </Tooltip>
-      </Row>
     </FieldContainer>
   )
 }
