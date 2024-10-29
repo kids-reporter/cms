@@ -4,12 +4,7 @@ import styled from 'styled-components'
 import copyToClipboard from 'clipboard-copy'
 import { convertFromRaw } from 'draft-js'
 import { FieldProps } from '@keystone-6/core/types'
-import {
-  FieldLabel,
-  FieldContainer,
-  TextInput,
-  TextArea,
-} from '@keystone-ui/fields'
+import { FieldLabel, FieldContainer, TextInput } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
 import { Tooltip } from '@keystone-ui/tooltip'
 import { ClipboardIcon } from '@keystone-ui/icons/icons/ClipboardIcon'
@@ -18,21 +13,48 @@ import { controller } from '@keystone-6/core/fields/types/virtual/views'
 import envVar from '../../environment-variables'
 
 const Row = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  align-items: stretch;
+  gap: 5px;
   margin-bottom: 5px;
+`
+
+const Cmd = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`
+
+const Reply = styled.div`
+  display: flex;
+  flex-direction: row;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  background: rgb(241 245 249);
+`
+
+const Msg = styled.div`
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  background: rgb(240 253 244);
 `
 
 const vendor = 'ChatGPT'
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [prompt, setPrompt] = useState<string>('')
-  const [result, setResult] = useState<string>('')
 
   // TODO: useRef
   const contentState = convertFromRaw(value.content)
   const content = contentState?.getPlainText(',')
+  const [messages, setMessages] = useState<any[]>([
+    { role: 'user', content: content },
+  ]) // ([{ role: 'user', content: content }, { role: 'user', content: '請依據此文章，提供100字以下，能引發10歲孩子閱讀此文章的動機' }, { role: 'assistant', content: '作家楊索年少時期因家境貧困，難有升學機會，但他到處打工並苦讀自學，一次次向命運發動挑戰，找到自己在世界的立足之地。（攝影／王崴漢）' }, ])
 
   // TODO: add waiting status for reponse text area
   const handleClick = async () => {
@@ -53,12 +75,17 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     try {
       const response = await openai.post('/completions', {
         model: 'gpt-4o-mini',
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 10000,
+        messages: [...messages, { role: 'user', content: prompt }],
+        max_tokens: 15000,
       })
 
       if (response.status === 200) {
-        setResult(response.data?.choices?.[0]?.message?.content)
+        const reply = response.data?.choices?.[0]?.message?.content
+        setMessages([
+          ...messages,
+          { role: 'user', content: prompt },
+          { role: 'assistant', content: reply },
+        ])
       } else {
         console.error(`Axios response failed! Status: ${response.status}`)
       }
@@ -71,6 +98,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     setPrompt(event.target.value)
   }
 
+  // TODO: adjust UI
   return (
     <FieldContainer>
       <FieldLabel>
@@ -78,29 +106,40 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         {value.label}
       </FieldLabel>
       <span>ChatGPT有可能回覆簡體中文，請在指令中提醒它用繁體中文回覆。</span>
-      <TextArea readOnly placeholder="生成內容" value={content} />
+      {messages?.map((msg, index) => {
+        return index === 0 ? null : (
+          <Row>
+            {msg.role === 'user' ? (
+              <Cmd>
+                <Msg>{msg.content}</Msg>
+              </Cmd>
+            ) : (
+              <>
+                <Reply>{msg.content}</Reply>
+                <Tooltip content="Copy">
+                  {(props) => (
+                    <Button
+                      {...props}
+                      aria-label="Copy"
+                      onClick={() => {
+                        copyToClipboard(msg.content)
+                      }}
+                    >
+                      <ClipboardIcon size="small" />
+                    </Button>
+                  )}
+                </Tooltip>
+              </>
+            )}
+          </Row>
+        )
+      })}
       <Row>
         <TextInput placeholder="指令" onChange={handlePrompt} value={prompt} />
         <Tooltip content="Send">
           {(props) => (
             <Button {...props} aria-label="Send" onClick={handleClick}>
               <ArrowRightIcon size="small" />
-            </Button>
-          )}
-        </Tooltip>
-      </Row>
-      <Row>
-        <TextArea readOnly placeholder="生成內容" value={result} />
-        <Tooltip content="Copy">
-          {(props) => (
-            <Button
-              {...props}
-              aria-label="Copy"
-              onClick={() => {
-                copyToClipboard(result)
-              }}
-            >
-              <ClipboardIcon size="small" />
             </Button>
           )}
         </Tooltip>
