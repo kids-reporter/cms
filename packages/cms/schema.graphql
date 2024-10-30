@@ -197,7 +197,6 @@ type Post {
   newsReadingGroup: NewsReadingGroup
   brief: JSON
   content: JSON
-  summary: JSON
   projects(where: ProjectWhereInput! = {}, orderBy: [ProjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ProjectWhereUniqueInput): [Project!]
   projectsCount(where: ProjectWhereInput! = {}): Int
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -219,6 +218,7 @@ type Post {
   updatedLog: JSON
   preview: JSON
   listPreview: String
+  summary: JSON
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   onlineUsersCount(where: UserWhereInput! = {}): Int
 }
