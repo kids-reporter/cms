@@ -218,9 +218,9 @@ type Post {
   updatedLog: JSON
   preview: JSON
   listPreview: String
-  summary: JSON
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   onlineUsersCount(where: UserWhereInput! = {}): Int
+  summary: JSON
 }
 
 input PostWhereUniqueInput {

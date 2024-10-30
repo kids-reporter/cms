@@ -389,7 +389,6 @@ const listConfigurations = list({
         },
       },
     }),
-    ...summaryFieldConfig,
     onlineUsers: relationship({
       label: 'online user',
       ref: 'User',
@@ -403,6 +402,7 @@ const listConfigurations = list({
         listView: { fieldMode: 'hidden' },
       },
     }),
+    ...summaryFieldConfig,
   },
   ui: {
     label: 'Posts',

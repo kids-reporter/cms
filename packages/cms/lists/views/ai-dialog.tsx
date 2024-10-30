@@ -37,13 +37,13 @@ const MsgRow = styled.div<{
   }};
   align-items: flex-end;
   gap: 5px;
+  margin-bottom: 5px;
 `
 
 const Cmd = styled.div`
   max-width: 90%;
   border-radius: 10px;
   padding: 5px 10px;
-  margin-bottom: 5px;
   background: rgb(240 253 244);
 `
 
@@ -63,16 +63,13 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const content = contentState?.getPlainText(',')
 
   const [prompt, setPrompt] = useState<string>('')
+  const [isResponding, setIsResponding] = useState<boolean>(false)
   const [messages, setMessages] = useState<any[]>([
     { role: 'user', content: content },
   ])
 
-  // TODO: add waiting status for reponse text area
-  const handleClick = async () => {
-    if (!prompt) {
-      return
-    }
-
+  // TODO: error handling,
+  const askChatGPT = async (request: string) => {
     const openai = axios.create({
       baseURL: 'https://api.openai.com/v1/chat',
       headers: {
@@ -92,9 +89,10 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
       if (response.status === 200) {
         const reply = response.data?.choices?.[0]?.message?.content
+        setIsResponding(false)
         setMessages([
           ...messages,
-          { role: 'user', content: prompt },
+          { role: 'user', content: request },
           { role: 'assistant', content: reply },
         ])
       } else {
@@ -103,6 +101,18 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     } catch (err) {
       console.error(err)
     }
+  }
+
+  // TODO: setMessages
+  const handleClick = async () => {
+    if (!prompt) {
+      return
+    }
+
+    setMessages([...messages, { role: 'user', content: prompt }])
+    setIsResponding(true)
+    setPrompt('')
+    await askChatGPT(prompt)
   }
 
   const handlePrompt = (event) => {
@@ -148,10 +158,16 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         placeholder="傳指令給ChatGPT"
         onChange={handlePrompt}
         value={prompt}
+        disabled={isResponding}
       />
       <Tooltip content="Send">
         {(props) => (
-          <Button {...props} aria-label="Send" onClick={handleClick}>
+          <Button
+            {...props}
+            aria-label="Send"
+            onClick={handleClick}
+            disabled={isResponding}
+          >
             <ArrowRightIcon size="small" />
           </Button>
         )}
@@ -166,7 +182,15 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         {value.label}
         {'(依據內文欄位)'}
       </FieldLabel>
-      <MsgContainer>{msgsJSX}</MsgContainer>
+      <MsgContainer>
+        {msgsJSX}
+        {isResponding && (
+          <img
+            style={{ width: '60px', height: '40px' }}
+            src="/typing-texting.gif"
+          />
+        )}
+      </MsgContainer>
       {cmdInput}
     </FieldContainer>
   )
