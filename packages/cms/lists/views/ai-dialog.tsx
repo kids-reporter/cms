@@ -16,16 +16,35 @@ const Row = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: stretch;
   gap: 5px;
   margin-bottom: 5px;
 `
 
-const Cmd = styled.div`
+const MsgContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+`
+
+const MsgRow = styled.div<{
+  $isRightAlignment?: boolean
+}>`
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: ${({ $isRightAlignment }) => {
+    return $isRightAlignment ? 'flex-end' : 'flex-start'
+  }};
+  align-items: flex-end;
+  gap: 5px;
+`
+
+const Cmd = styled.div`
+  max-width: 90%;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  background: rgb(240 253 244);
 `
 
 const Reply = styled.div`
@@ -33,15 +52,7 @@ const Reply = styled.div`
   flex-direction: row;
   border-radius: 10px;
   padding: 5px 10px;
-  margin-bottom: 5px;
   background: rgb(241 245 249);
-`
-
-const Msg = styled.div`
-  border-radius: 10px;
-  padding: 5px 10px;
-  margin-bottom: 5px;
-  background: rgb(240 253 244);
 `
 
 const vendor = 'ChatGPT'
@@ -54,6 +65,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [prompt, setPrompt] = useState<string>('')
   const [messages, setMessages] = useState<any[]>([
     { role: 'user', content: content },
+    /*
     {
       role: 'user',
       content: '請依據此文章，提供100字以下，能引發10歲孩子閱讀此文章的動機',
@@ -63,6 +75,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       content:
         '作家楊索年少時期因家境貧困，難有升學機會，但他到處打工並苦讀自學，一次次向命運發動挑戰，找到自己在世界的立足之地。（攝影／王崴漢）',
     },
+    */
   ])
 
   // TODO: add waiting status for reponse text area
@@ -107,56 +120,65 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     setPrompt(event.target.value)
   }
 
-  // TODO: adjust UI
+  const msgsJSX = messages?.map((msg, index) => {
+    if (index === 0) {
+      return null
+    }
+
+    const isUser = msg.role === 'user'
+
+    return (
+      <MsgRow key={`msg-${index}`} $isRightAlignment={isUser}>
+        {isUser ? (
+          <Cmd>{msg.content}</Cmd>
+        ) : (
+          <>
+            <Reply>{msg.content}</Reply>
+            <Tooltip content="Copy">
+              {(props) => (
+                <Button
+                  {...props}
+                  aria-label="Copy"
+                  onClick={() => {
+                    copyToClipboard(msg.content)
+                  }}
+                >
+                  <ClipboardIcon size="small" />
+                </Button>
+              )}
+            </Tooltip>
+          </>
+        )}
+      </MsgRow>
+    )
+  })
+
+  const cmdInput = (
+    <Row>
+      <TextInput
+        placeholder="傳指令給ChatGPT"
+        onChange={handlePrompt}
+        value={prompt}
+      />
+      <Tooltip content="Send">
+        {(props) => (
+          <Button {...props} aria-label="Send" onClick={handleClick}>
+            <ArrowRightIcon size="small" />
+          </Button>
+        )}
+      </Tooltip>
+    </Row>
+  )
+
   return (
     <FieldContainer>
       <FieldLabel>
         {vendor}
         {value.label}
+        {'(依據內文欄位)'}
       </FieldLabel>
-      <span>ChatGPT有可能回覆簡體中文，請在指令中提醒它用繁體中文回覆。</span>
-      <Row>
-        <TextInput
-          placeholder="傳指令給ChatGPT"
-          onChange={handlePrompt}
-          value={prompt}
-        />
-        <Tooltip content="Send">
-          {(props) => (
-            <Button {...props} aria-label="Send" onClick={handleClick}>
-              <ArrowRightIcon size="small" />
-            </Button>
-          )}
-        </Tooltip>
-      </Row>
-      {messages?.map((msg, index) => {
-        return index === 0 ? null : (
-          <Row>
-            {msg.role === 'user' ? (
-              <Cmd>
-                <Msg>{msg.content}</Msg>
-              </Cmd>
-            ) : (
-              <>
-                <Reply>{msg.content}</Reply>
-                <Tooltip content="Copy">
-                  {(props) => (
-                    <Button
-                      {...props}
-                      aria-label="Copy"
-                      onClick={() => {
-                        copyToClipboard(msg.content)
-                      }}
-                    >
-                      <ClipboardIcon size="small" />
-                    </Button>
-                  )}
-                </Tooltip>
-              </>
-            )}
-          </Row>
-        )
-      })}
+      <MsgContainer>{msgsJSX}</MsgContainer>
+      {cmdInput}
     </FieldContainer>
   )
 }
