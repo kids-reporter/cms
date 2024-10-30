@@ -65,17 +65,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [prompt, setPrompt] = useState<string>('')
   const [messages, setMessages] = useState<any[]>([
     { role: 'user', content: content },
-    /*
-    {
-      role: 'user',
-      content: '請依據此文章，提供100字以下，能引發10歲孩子閱讀此文章的動機',
-    },
-    {
-      role: 'assistant',
-      content:
-        '作家楊索年少時期因家境貧困，難有升學機會，但他到處打工並苦讀自學，一次次向命運發動挑戰，找到自己在世界的立足之地。（攝影／王崴漢）',
-    },
-    */
   ])
 
   // TODO: add waiting status for reponse text area
@@ -121,12 +110,12 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   }
 
   const msgsJSX = messages?.map((msg, index) => {
+    // Ignore content msg
     if (index === 0) {
       return null
     }
 
     const isUser = msg.role === 'user'
-
     return (
       <MsgRow key={`msg-${index}`} $isRightAlignment={isUser}>
         {isUser ? (
