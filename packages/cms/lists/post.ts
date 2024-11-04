@@ -58,6 +58,41 @@ const relatedPosts: OrderedRelationshipConfig = {
   refLabelField: 'title',
 }
 
+const isChatGPTSummaryEnabled = true
+const summaryFieldConfig = isChatGPTSummaryEnabled
+  ? {
+      summary: virtual({
+        field: () =>
+          graphql.field({
+            type: graphql.JSON,
+            async resolve(item: Record<string, any>, args, context) {
+              const postID = item?.id
+              const post = await context.query.Post.findOne({
+                where: { id: postID },
+                query: 'id, content',
+              })
+              return {
+                label: '生成內容',
+                content: post.content,
+              }
+            },
+          }),
+        ui: {
+          views: './lists/views/ai-dialog',
+          createView: {
+            fieldMode: 'hidden',
+          },
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          listView: {
+            fieldMode: 'hidden',
+          },
+        },
+      }),
+    }
+  : {}
+
 const listConfigurations = list({
   fields: {
     slug: slugConfig,
@@ -367,6 +402,7 @@ const listConfigurations = list({
         listView: { fieldMode: 'hidden' },
       },
     }),
+    ...summaryFieldConfig,
   },
   ui: {
     label: 'Posts',
