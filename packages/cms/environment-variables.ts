@@ -20,6 +20,7 @@ const {
   TWO_FACTOR_AUTH_SERVICE_NAME,
   TWO_FACTOR_AUTH_SECRET,
   TWO_FACTOR_AUTH_COOKIE_NAME,
+  OPEN_AI_KEY,
 } = process.env
 
 enum DatabaseProvider {
@@ -88,6 +89,7 @@ const environmentVariables = {
     serviceName: TWO_FACTOR_AUTH_SERVICE_NAME || 'KidsReporter Keystone', // the service name show in 2FA app
   },
   nodeEnv: NODE_ENV || 'development', // value could be 'development', 'production' or 'test'
+  openAIKey: OPEN_AI_KEY || 'open-ai-key',
 }
 
 export default environmentVariables
