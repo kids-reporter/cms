@@ -57,7 +57,6 @@ const Reply = styled.div`
 
 const vendor = 'ChatGPT'
 
-// TODO: add feature flag
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const contentState = convertFromRaw(value.content)
   const content = contentState?.getPlainText(',')
@@ -68,8 +67,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     { role: 'user', content: content },
   ])
 
-  // TODO: error handling,
-  const askChatGPT = async (request: string) => {
+  const askChatGPT = async () => {
     const openai = axios.create({
       baseURL: 'https://api.openai.com/v1/chat',
       headers: {
@@ -90,11 +88,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       if (response.status === 200) {
         const reply = response.data?.choices?.[0]?.message?.content
         setIsResponding(false)
-        setMessages([
-          ...messages,
-          { role: 'user', content: request },
-          { role: 'assistant', content: reply },
-        ])
+        setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
       } else {
         console.error(`Axios response failed! Status: ${response.status}`)
       }
@@ -103,16 +97,15 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     }
   }
 
-  // TODO: setMessages
   const handleClick = async () => {
     if (!prompt) {
       return
     }
 
-    setMessages([...messages, { role: 'user', content: prompt }])
+    setMessages((prev) => [...prev, { role: 'user', content: prompt }])
     setIsResponding(true)
     setPrompt('')
-    await askChatGPT(prompt)
+    await askChatGPT()
   }
 
   const handlePrompt = (event) => {
