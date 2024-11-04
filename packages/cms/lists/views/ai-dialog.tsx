@@ -10,7 +10,6 @@ import { Tooltip } from '@keystone-ui/tooltip'
 import { ClipboardIcon } from '@keystone-ui/icons/icons/ClipboardIcon'
 import { ArrowRightIcon } from '@keystone-ui/icons/icons/ArrowRightIcon'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
-import envVar from '../../environment-variables'
 
 const Row = styled.div`
   width: 100%;
@@ -68,12 +67,11 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   ])
 
   const askChatGPT = async () => {
-    console.log('key', envVar, envVar.openAIKey)
     const openai = axios.create({
       baseURL: 'https://api.openai.com/v1/chat',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${envVar.openAIKey}`,
+        Authorization: `Bearer ${value.openAIKey}`,
         'OpenAI-Organization': 'org-AFIRbr9PIQpDnVRPSuxABZJO',
         'OpenAI-Project': 'proj_8OZHy9Z26Vr3p8mDUcXE7Oby',
       },

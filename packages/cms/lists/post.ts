@@ -74,6 +74,7 @@ const summaryFieldConfig = isChatGPTSummaryEnabled
               return {
                 label: '生成內容',
                 content: post.content,
+                openAIKey: envVars.openAIKey,
               }
             },
           }),
