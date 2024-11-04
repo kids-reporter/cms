@@ -47,11 +47,6 @@ export default withAuth(
             inputPath: Path.resolve('public/favicon.ico'),
             outputPath: 'public/favicon.ico',
           },
-          {
-            mode: 'copy',
-            inputPath: Path.resolve('public/typing-texting.gif'),
-            outputPath: 'public/typing-texting.gif',
-          },
         ],
       ],
     },
