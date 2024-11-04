@@ -68,6 +68,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   ])
 
   const askChatGPT = async () => {
+    console.log('key', envVar.openAIKey)
     const openai = axios.create({
       baseURL: 'https://api.openai.com/v1/chat',
       headers: {
