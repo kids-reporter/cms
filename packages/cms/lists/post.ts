@@ -58,7 +58,7 @@ const relatedPosts: OrderedRelationshipConfig = {
   refLabelField: 'title',
 }
 
-const isChatGPTSummaryEnabled = true
+const isChatGPTSummaryEnabled = false
 const summaryFieldConfig = isChatGPTSummaryEnabled
   ? {
       summary: virtual({
