@@ -4,7 +4,12 @@ import styled from 'styled-components'
 import copyToClipboard from 'clipboard-copy'
 import { convertFromRaw } from 'draft-js'
 import { FieldProps } from '@keystone-6/core/types'
-import { FieldLabel, FieldContainer, TextInput } from '@keystone-ui/fields'
+import {
+  FieldLabel,
+  FieldContainer,
+  TextInput,
+  Select,
+} from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
 import { Tooltip } from '@keystone-ui/tooltip'
 import { ClipboardIcon } from '@keystone-ui/icons/icons/ClipboardIcon'
@@ -55,6 +60,14 @@ const Reply = styled.div`
 `
 
 const vendor = 'ChatGPT'
+const presetQuestions = [
+  '請依據此文章，提供三個依據文章內容事實的選擇題。',
+  '請依據此文章，提供三個開放性的思考題，並包含回答提示。',
+  '請用100字內懸疑且包含部分提問的方式產生文章摘要。',
+]
+const presetCmds = presetQuestions.map((q) => {
+  return { label: q, value: q }
+})
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const contentState = convertFromRaw(value.content)
@@ -145,26 +158,36 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   })
 
   const cmdInput = (
-    <Row>
-      <TextInput
-        placeholder="傳指令給ChatGPT"
-        onChange={handlePrompt}
-        value={prompt}
-        disabled={isResponding}
+    <>
+      <Select
+        value={null}
+        options={presetCmds}
+        isClearable
+        onChange={(newVal) => {
+          newVal && setPrompt(newVal.value)
+        }}
       />
-      <Tooltip content="Send">
-        {(props) => (
-          <Button
-            {...props}
-            aria-label="Send"
-            onClick={handleClick}
-            disabled={isResponding}
-          >
-            <ArrowRightIcon size="small" />
-          </Button>
-        )}
-      </Tooltip>
-    </Row>
+      <Row>
+        <TextInput
+          placeholder="傳指令給ChatGPT"
+          onChange={handlePrompt}
+          value={prompt}
+          disabled={isResponding}
+        />
+        <Tooltip content="Send">
+          {(props) => (
+            <Button
+              {...props}
+              aria-label="Send"
+              onClick={handleClick}
+              disabled={isResponding}
+            >
+              <ArrowRightIcon size="small" />
+            </Button>
+          )}
+        </Tooltip>
+      </Row>
+    </>
   )
 
   return (
