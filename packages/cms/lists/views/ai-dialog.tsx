@@ -7,7 +7,7 @@ import { FieldProps } from '@keystone-6/core/types'
 import {
   FieldLabel,
   FieldContainer,
-  TextInput,
+  TextArea,
   Select,
 } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
@@ -21,6 +21,7 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   gap: 5px;
+  margin-top: 5px;
   margin-bottom: 5px;
 `
 
@@ -163,12 +164,13 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         value={null}
         options={presetCmds}
         isClearable
+        placeholder="預設指令"
         onChange={(newVal) => {
           newVal && setPrompt(newVal.value)
         }}
       />
       <Row>
-        <TextInput
+        <TextArea
           placeholder="傳指令給ChatGPT"
           onChange={handlePrompt}
           value={prompt}
