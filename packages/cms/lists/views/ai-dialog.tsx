@@ -163,7 +163,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       <Select
         value={null}
         options={presetCmds}
-        isClearable
         placeholder="預設指令"
         onChange={(newVal) => {
           newVal && setPrompt(newVal.value)
