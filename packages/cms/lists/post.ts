@@ -226,6 +226,16 @@ const listConfigurations = list({
         ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
       },
     }),
+    postsJSON: json({
+      label: '報導者相關文章',
+      defaultValue: [],
+      ui: {
+        views: './lists/views/twreporter-post',
+        createView: { fieldMode: 'edit' },
+        listView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'edit' },
+      },
+    }),
     ogTitle: text({
       validation: { isRequired: false },
       label: 'og:title',
