@@ -5,7 +5,11 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import { FieldContainer, FieldLabel } from '@keystone-ui/fields'
-import { PlusCircleIcon, TrashIcon } from '@keystone-ui/icons'
+import {
+  PlusCircleIcon,
+  TrashIcon,
+  CornerUpRightIcon,
+} from '@keystone-ui/icons'
 import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
@@ -89,6 +93,9 @@ const AuthorComponent = (props: {
         {`${props.index}.`}
         <img width="100px" src={post.ogImgSrc} />
         <div>{post.ogTitle}</div>
+        <a href={post.src} target="_blank">
+          <CornerUpRightIcon size="small" />
+        </a>
         {props.actionElement}
       </AuthorContainer>
     )
@@ -114,6 +121,15 @@ const posts_mock = [
     ogDescription:
       '農曆年前的一則情資，意外揭開在偏鄉長期投注教育與照顧弱勢學童的國小棒球隊教練黃偉傑的真面目，案情如滾雪球不斷湧現，22位被害人多數已成年，反映出棒球校隊的封閉環境、地方人脈緊密難以穿透、男性受害者難以啟齒等多重困境，使獵童者能長期遂行兒少性犯罪的問題⋯⋯',
   },
+  {
+    src: 'https://www.twreporter.org/a/nantou-elemetory-baseball-coach-sexual-assault-first-instance-judgment',
+    ogImgSrc:
+      'https://www.twreporter.org/images/20241113185153-d2659be3c243d2cec2fe83b3f712ae12-tablet.jpg',
+    ogTitle:
+      '「本來沒預期這麼多被害人出現」：南投新豐國小前棒球隊教練黃偉傑性侵球員近20年，一審判決13年 - 報導者 The Reporter',
+    ogDescription:
+      '農曆年前的一則情資，意外揭開在偏鄉長期投注教育與照顧弱勢學童的國小棒球隊教練黃偉傑的真面目，案情如滾雪球不斷湧現，22位被害人多數已成年，反映出棒球校隊的封閉環境、地方人脈緊密難以穿透、男性受害者難以啟齒等多重困境，使獵童者能長期遂行兒少性犯罪的問題⋯⋯',
+  },
 ]
 
 const savedPosts = posts_mock
@@ -128,7 +144,6 @@ export const Field = ({
     value ? JSON.parse(value) : []
   )
   const [newAuthor, setNewAuthor] = useState<Author>({ ...authorTemplate })
-
   const [prevValue, setPrevValue] = useState(value)
 
   // TODO: get tags via gql query
@@ -187,8 +202,8 @@ export const Field = ({
     }
   }
 
-  // Apply react-beautiful-dnd to re-order(drag & drop) existing authors
-  const authorsDndComponent = (
+  // Apply react-beautiful-dnd to re-order(drag & drop) existing posts
+  const postsDndComponent = (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable">
         {(provided) => (
@@ -255,25 +270,29 @@ export const Field = ({
     </KeywordPostsContainer>
   )
 
+  const searchComponent = (
+    <SearchPostContainer>
+      <AsyncSelect
+        placeholder="搜尋文章..."
+        cacheOptions
+        defaultOptions
+        loadOptions={() => {
+          console.log('load')
+        }}
+      />
+      <IconButton size="small" onClick={onAddNewPost}>
+        <PlusCircleIcon size="small" color="green" />
+      </IconButton>
+    </SearchPostContainer>
+  )
+
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
-      {authorsDndComponent}
+      {postsDndComponent}
       <GapDivider />
       {keywordPostsComponent}
-      <SearchPostContainer>
-        <AsyncSelect
-          placeholder="搜尋文章..."
-          cacheOptions
-          defaultOptions
-          loadOptions={() => {
-            console.log('load')
-          }}
-        />
-        <IconButton size="small" onClick={onAddNewPost}>
-          <PlusCircleIcon size="small" color="green" />
-        </IconButton>
-      </SearchPostContainer>
+      {searchComponent}
     </FieldContainer>
   )
 }
