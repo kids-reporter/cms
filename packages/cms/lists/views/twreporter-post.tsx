@@ -50,6 +50,20 @@ const SearchPostContainer = styled.div`
   align-items: center;
 `
 
+const KeywordPostsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+`
+
+const KeywordPost = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+`
+
 const authorTemplate = {
   id: undefined,
   name: '',
@@ -72,7 +86,7 @@ const AuthorComponent = (props: {
   return (
     post && (
       <AuthorContainer>
-        {props.index}
+        {`${props.index}.`}
         <img width="100px" src={post.ogImgSrc} />
         <div>{post.ogTitle}</div>
         {props.actionElement}
@@ -81,7 +95,7 @@ const AuthorComponent = (props: {
   )
 }
 
-const posts = [
+const posts_mock = [
   {
     src: 'https://www.twreporter.org/a/uncertain-future-of-chifeng-and-nanxi-shopping-district',
     ogImgSrc:
@@ -101,6 +115,9 @@ const posts = [
       '農曆年前的一則情資，意外揭開在偏鄉長期投注教育與照顧弱勢學童的國小棒球隊教練黃偉傑的真面目，案情如滾雪球不斷湧現，22位被害人多數已成年，反映出棒球校隊的封閉環境、地方人脈緊密難以穿透、男性受害者難以啟齒等多重困境，使獵童者能長期遂行兒少性犯罪的問題⋯⋯',
   },
 ]
+
+const savedPosts = posts_mock
+const keywordPosts = posts_mock
 
 export const Field = ({
   field,
@@ -176,7 +193,7 @@ export const Field = ({
       <Droppable droppableId="droppable">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {posts.map((post: any, index: number) => {
+            {savedPosts.map((post: any, index: number) => {
               const id = `author-component-${index}`
               return (
                 <Draggable key={id} draggableId={id} index={index}>
@@ -210,11 +227,40 @@ export const Field = ({
     </DragDropContext>
   )
 
+  const keywordPostsComponent = (
+    <KeywordPostsContainer>
+      {'依據關鍵字搜尋：'}
+      {keywordPosts.map((post, index) => {
+        return (
+          <KeywordPost key={`keyword-post-${index}`}>
+            <a
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '10px',
+              }}
+              href={post.src}
+              target="_blank"
+            >
+              <img width="100px" src={post.ogImgSrc} />
+              {post.ogTitle}
+            </a>
+            <IconButton size="small" onClick={() => onAddNewPost()}>
+              <PlusCircleIcon size="small" />
+            </IconButton>
+          </KeywordPost>
+        )
+      })}
+    </KeywordPostsContainer>
+  )
+
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
       {authorsDndComponent}
       <GapDivider />
+      {keywordPostsComponent}
       <SearchPostContainer>
         <AsyncSelect
           placeholder="搜尋文章..."
