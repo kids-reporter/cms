@@ -64,6 +64,7 @@ type Post = {
 }
 
 const AuthorComponent = (props: {
+  index: number
   post: Post
   actionElement: React.ReactNode
 }) => {
@@ -71,6 +72,7 @@ const AuthorComponent = (props: {
   return (
     post && (
       <AuthorContainer>
+        {props.index}
         <img width="100px" src={post.ogImgSrc} />
         <div>{post.ogTitle}</div>
         {props.actionElement}
@@ -114,6 +116,8 @@ export const Field = ({
 
   // TODO: get tags via gql query
   // TODO: query posts with tags, useEffect
+  // https://www.twreporter.org/search?q=%E4%BD%8F%E5%AE%85%20%E6%96%B0%E5%8C%97
+  // q=key1%skey2
   // TODO: query posts with query string
 
   if (value !== prevValue) {
@@ -121,7 +125,7 @@ export const Field = ({
     setAuthors(value ? JSON.parse(value) : [])
   }
 
-  const onAddNewAuthor = () => {
+  const onAddNewPost = () => {
     if (onChange) {
       const newAuthors = [...authors, newAuthor]
       setAuthors(newAuthors)
@@ -130,38 +134,10 @@ export const Field = ({
     }
   }
 
-  const onDeleteAuthor = (index: number) => {
+  const onDeletePost = (index: number) => {
     if (onChange && index >= 0 && index < authors.length) {
       const newAuthors = [...authors]
       newAuthors.splice(index, 1)
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
-    }
-  }
-
-  const onUpdateAuthorName = (index: number, name: string) => {
-    if (onChange && index >= 0 && index < authors.length) {
-      const before = authors.slice(0, index)
-      const modifiedAuthor = {
-        ...authors[index],
-      }
-      modifiedAuthor.name = name
-      const after = authors.slice(index + 1)
-      const newAuthors = [...before, modifiedAuthor, ...after]
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
-    }
-  }
-
-  const onUpdateAuthorRole = (index: number, role: string) => {
-    if (onChange && index >= 0 && index < authors.length) {
-      const before = authors.slice(0, index)
-      const modifiedAuthor = {
-        ...authors[index],
-      }
-      modifiedAuthor.role = role
-      const after = authors.slice(index + 1)
-      const newAuthors = [...before, modifiedAuthor, ...after]
       setAuthors(newAuthors)
       onChange(JSON.stringify(newAuthors))
     }
@@ -211,17 +187,12 @@ export const Field = ({
                       {...provided.dragHandleProps}
                     >
                       <AuthorComponent
+                        index={index + 1}
                         post={post}
-                        onNameChange={(e) =>
-                          onUpdateAuthorName(index, e.target.value)
-                        }
-                        onRoleChange={(e) =>
-                          onUpdateAuthorRole(index, e.target.value)
-                        }
                         actionElement={
                           <IconButton
                             size="small"
-                            onClick={() => onDeleteAuthor(index)}
+                            onClick={() => onDeletePost(index)}
                           >
                             <TrashIcon size="small" />
                           </IconButton>
@@ -253,7 +224,7 @@ export const Field = ({
             console.log('load')
           }}
         />
-        <IconButton size="small" onClick={onAddNewAuthor}>
+        <IconButton size="small" onClick={onAddNewPost}>
           <PlusCircleIcon size="small" color="green" />
         </IconButton>
       </SearchPostContainer>
