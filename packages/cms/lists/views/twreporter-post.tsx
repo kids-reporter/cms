@@ -81,7 +81,7 @@ type Post = {
   ogTitle: string
 }
 
-const AuthorComponent = (props: {
+const PostComponent = (props: {
   index: number
   post: Post
   actionElement: React.ReactNode
@@ -175,7 +175,7 @@ export const Field = ({
     }
   }
 
-  const reorderAuthor = (
+  const reorderPost = (
     authors: Author[],
     startIndex: number,
     endIndex: number
@@ -192,7 +192,7 @@ export const Field = ({
     }
 
     if (onChange) {
-      const newAuthors = reorderAuthor(
+      const newAuthors = reorderPost(
         authors,
         result.source.index,
         result.destination.index
@@ -209,7 +209,7 @@ export const Field = ({
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {savedPosts.map((post: any, index: number) => {
-              const id = `author-component-${index}`
+              const id = `post-component-${index}`
               return (
                 <Draggable key={id} draggableId={id} index={index}>
                   {(provided) => (
@@ -218,7 +218,7 @@ export const Field = ({
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <AuthorComponent
+                      <PostComponent
                         index={index + 1}
                         post={post}
                         actionElement={
