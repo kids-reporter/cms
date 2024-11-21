@@ -13,11 +13,11 @@ import {
 import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
-type Author = {
-  id: string | undefined
-  name: string
-  role: string
-  type: string
+type Post = {
+  src: string
+  ogImgSrc: string
+  ogTitle: string
+  ogDescription: string
 }
 
 const AuthorContainer = styled.div`
@@ -67,19 +67,6 @@ const KeywordPost = styled.div`
   align-items: center;
   gap: 10px;
 `
-
-const authorTemplate = {
-  id: undefined,
-  name: '',
-  role: '文字',
-  type: 'string',
-}
-
-type Post = {
-  src: string
-  ogImgSrc: string
-  ogTitle: string
-}
 
 const PostComponent = (props: {
   index: number
@@ -132,7 +119,6 @@ const posts_mock = [
   },
 ]
 
-const savedPosts = posts_mock
 const keywordPosts = posts_mock
 
 export const Field = ({
@@ -140,10 +126,10 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
-  const [authors, setAuthors] = useState<Author[]>(
-    value ? JSON.parse(value) : []
+  const [savedPosts, setSavedPosts] = useState<Post[]>(
+    posts_mock
+    //value ? JSON.parse(value) : []
   )
-  const [newAuthor, setNewAuthor] = useState<Author>({ ...authorTemplate })
   const [prevValue, setPrevValue] = useState(value)
 
   // TODO: get tags via gql query
@@ -154,29 +140,27 @@ export const Field = ({
 
   if (value !== prevValue) {
     setPrevValue(value)
-    setAuthors(value ? JSON.parse(value) : [])
+    setSavedPosts(value ? JSON.parse(value) : [])
   }
 
   const onAddNewPost = () => {
     if (onChange) {
-      const newAuthors = [...authors, newAuthor]
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
-      setNewAuthor({ ...authorTemplate })
+      //setSavedPosts([...authors])
+      //onChange(JSON.stringify(authors))
     }
   }
 
   const onDeletePost = (index: number) => {
-    if (onChange && index >= 0 && index < authors.length) {
-      const newAuthors = [...authors]
-      newAuthors.splice(index, 1)
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
+    if (onChange && index >= 0 && index < savedPosts.length) {
+      const newSavedPosts = [...savedPosts]
+      newSavedPosts.splice(index, 1)
+      setSavedPosts(newSavedPosts)
+      onChange(JSON.stringify(newSavedPosts))
     }
   }
 
   const reorderPost = (
-    authors: Author[],
+    authors: Post[],
     startIndex: number,
     endIndex: number
   ) => {
@@ -192,13 +176,13 @@ export const Field = ({
     }
 
     if (onChange) {
-      const newAuthors = reorderPost(
-        authors,
+      const newSavedPosts = reorderPost(
+        savedPosts,
         result.source.index,
         result.destination.index
       )
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
+      setSavedPosts(newSavedPosts)
+      onChange(JSON.stringify(newSavedPosts))
     }
   }
 
