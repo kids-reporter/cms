@@ -143,9 +143,9 @@ export const Field = ({
     setSavedPosts(value ? JSON.parse(value) : [])
   }
 
-  const onAddNewPost = () => {
+  const onAddNewPost = (post: Post) => {
     if (onChange) {
-      //setSavedPosts([...authors])
+      setSavedPosts([...savedPosts, post])
       //onChange(JSON.stringify(authors))
     }
   }
@@ -159,12 +159,8 @@ export const Field = ({
     }
   }
 
-  const reorderPost = (
-    authors: Post[],
-    startIndex: number,
-    endIndex: number
-  ) => {
-    const result = Array.from(authors)
+  const reorderPost = (posts: Post[], startIndex: number, endIndex: number) => {
+    const result = Array.from(posts)
     const [removed] = result.splice(startIndex, 1)
     result.splice(endIndex, 0, removed)
     return result
@@ -226,9 +222,23 @@ export const Field = ({
     </DragDropContext>
   )
 
+  const searchComponent = (
+    <SearchPostContainer>
+      {'依據關鍵字搜尋：'}
+      <AsyncSelect
+        placeholder="搜尋文章..."
+        cacheOptions
+        defaultOptions
+        loadOptions={() => {
+          console.log('load')
+        }}
+      />
+    </SearchPostContainer>
+  )
+
   const keywordPostsComponent = (
     <KeywordPostsContainer>
-      {'依據關鍵字搜尋：'}
+      {searchComponent}
       {keywordPosts.map((post, index) => {
         return (
           <KeywordPost key={`keyword-post-${index}`}>
@@ -245,7 +255,7 @@ export const Field = ({
               <img width="100px" src={post.ogImgSrc} />
               {post.ogTitle}
             </a>
-            <IconButton size="small" onClick={() => onAddNewPost()}>
+            <IconButton size="small" onClick={() => onAddNewPost(post)}>
               <PlusCircleIcon size="small" />
             </IconButton>
           </KeywordPost>
@@ -254,29 +264,12 @@ export const Field = ({
     </KeywordPostsContainer>
   )
 
-  const searchComponent = (
-    <SearchPostContainer>
-      <AsyncSelect
-        placeholder="搜尋文章..."
-        cacheOptions
-        defaultOptions
-        loadOptions={() => {
-          console.log('load')
-        }}
-      />
-      <IconButton size="small" onClick={onAddNewPost}>
-        <PlusCircleIcon size="small" color="green" />
-      </IconButton>
-    </SearchPostContainer>
-  )
-
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
       {postsDndComponent}
       <GapDivider />
       {keywordPostsComponent}
-      {searchComponent}
     </FieldContainer>
   )
 }
