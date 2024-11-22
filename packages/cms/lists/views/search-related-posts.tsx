@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer, TextInput } from '@keystone-ui/fields'
@@ -33,15 +34,27 @@ const IconButton = styled(Button)`
 `
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
+  const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
   const tagsStr = value.tags.map((tag) => tag.label).join(',')
-  const twreporterID = value.twreporterID
-  const searchAPIKey = value.searchAPIKey
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    console.log('init', twreporterID, searchAPIKey)
+    const searchPostsByTags = async () => {
+      const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
+      const posts = response.data.items.map((item) => {
+        const metaTag = item?.pagemap?.metatags?.[0]
+        return {
+          src: item.link,
+          ogImgSrc: metaTag['og:image'],
+          ogTitle: metaTag['og:title'],
+          ogDescription: metaTag['og:description'],
+        }
+      })
+      setPosts(posts)
+    }
+    searchPostsByTags()
   }, [])
 
   const handleInputChange = (e) => {
@@ -49,8 +62,17 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   }
 
   const handleSearch = async () => {
-    console.log(twreporterID, searchAPIKey)
-    setPosts([])
+    const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
+    const posts = response.data.items.map((item) => {
+      const metaTag = item?.pagemap?.metatags?.[0]
+      return {
+        src: item.link,
+        ogImgSrc: metaTag['og:image'],
+        ogTitle: metaTag['og:title'],
+        ogDescription: metaTag['og:description'],
+      }
+    })
+    setPosts(posts)
   }
 
   const handleAddPost = () => {
