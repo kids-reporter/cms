@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import AsyncSelect from 'react-select/async'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import { FieldContainer, FieldLabel } from '@keystone-ui/fields'
-import {
-  PlusCircleIcon,
-  TrashIcon,
-  CornerUpRightIcon,
-} from '@keystone-ui/icons'
-import { Divider } from '@keystone-ui/core'
+import { TrashIcon, CornerUpRightIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Post = {
@@ -40,32 +34,6 @@ const DndItem = styled.div`
   margin: 0 0 5px 0;
   border: 1px solid lightgrey;
   border-radius: 5px;
-`
-
-const GapDivider = styled(Divider)`
-  margin-top: 10px;
-  margin-bottom: 15px;
-`
-
-const SearchPostContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-
-const KeywordPostsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin-bottom: 10px;
-`
-
-const KeywordPost = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
 `
 
 const PostComponent = (props: {
@@ -119,8 +87,6 @@ const posts_mock = [
   },
 ]
 
-const keywordPosts = posts_mock
-
 export const Field = ({
   field,
   value,
@@ -136,20 +102,6 @@ export const Field = ({
   if (value !== prevValue) {
     setPrevValue(value)
     setRelatedPosts(value ? JSON.parse(value) : [])
-  }
-
-  // TODO: get tags via gql query
-  // TODO: query posts with tags, useEffect
-  // https://www.twreporter.org/search?q=%E4%BD%8F%E5%AE%85%20%E6%96%B0%E5%8C%97
-  // q=key1%skey2
-  // TODO: query posts with query string
-
-  const onAddNewPost = (post: Post) => {
-    if (onChange) {
-      const newRelatedPosts = [...relatedPosts, post]
-      setRelatedPosts(newRelatedPosts)
-      onChange(JSON.stringify(newRelatedPosts))
-    }
   }
 
   const onDeletePost = (index: number) => {
@@ -224,54 +176,10 @@ export const Field = ({
     </DragDropContext>
   )
 
-  const searchComponent = (
-    <SearchPostContainer>
-      {'依據關鍵字搜尋：'}
-      <AsyncSelect
-        placeholder="搜尋文章..."
-        cacheOptions
-        defaultOptions
-        loadOptions={() => {
-          console.log('load')
-        }}
-      />
-    </SearchPostContainer>
-  )
-
-  const keywordPostsComponent = (
-    <KeywordPostsContainer>
-      {searchComponent}
-      {keywordPosts.map((post, index) => {
-        return (
-          <KeywordPost key={`keyword-post-${index}`}>
-            <a
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-              href={post.src}
-              target="_blank"
-            >
-              <img width="100px" src={post.ogImgSrc} />
-              {post.ogTitle}
-            </a>
-            <IconButton size="small" onClick={() => onAddNewPost(post)}>
-              <PlusCircleIcon size="small" />
-            </IconButton>
-          </KeywordPost>
-        )
-      })}
-    </KeywordPostsContainer>
-  )
-
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
       {postsDndComponent}
-      <GapDivider />
-      {keywordPostsComponent}
     </FieldContainer>
   )
 }

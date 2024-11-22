@@ -207,8 +207,8 @@ type Post {
   relatedPostsCount(where: PostWhereInput! = {}): Int
   relatedPostsOrderJson: JSON
   relatedPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
-  relatedPostsJSON: JSON
   searchRelatedPosts: JSON
+  relatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: Photo

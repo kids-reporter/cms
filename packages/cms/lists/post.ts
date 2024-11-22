@@ -226,45 +226,51 @@ const listConfigurations = list({
         ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
       },
     }),
-    relatedPostsJSON: json({
+    ...group({
       label: '報導者相關文章',
-      defaultValue: [],
-      ui: {
-        views: './lists/views/twreporter-related-posts',
-        createView: { fieldMode: 'edit' },
-        listView: { fieldMode: 'hidden' },
-        itemView: { fieldMode: 'edit' },
-      },
-    }),
-    searchRelatedPosts: virtual({
-      field: () =>
-        graphql.field({
-          type: graphql.JSON,
-          async resolve(item: Record<string, any>, args, context) {
-            const postID = item?.id
-            const post = await context.query.Post.findOne({
-              where: { id: postID },
-              query: 'id, tagsOrderJson',
-            })
-            return {
-              label: '搜尋',
-              tags: post.tagsOrderJson,
-              twreporterID: envVars.twreporterID,
-              searchAPIKey: envVars.searchAPIKey,
-            }
+      fields: {
+        searchRelatedPosts: virtual({
+          label: '搜尋',
+          field: () =>
+            graphql.field({
+              type: graphql.JSON,
+              async resolve(item: Record<string, any>, args, context) {
+                const postID = item?.id
+                const post = await context.query.Post.findOne({
+                  where: { id: postID },
+                  query: 'id, tagsOrderJson',
+                })
+                return {
+                  label: '搜尋',
+                  tags: post.tagsOrderJson,
+                  twreporterID: envVars.twreporterID,
+                  searchAPIKey: envVars.searchAPIKey,
+                }
+              },
+            }),
+          ui: {
+            views: './lists/views/search-related-posts',
+            createView: {
+              fieldMode: 'edit',
+            },
+            itemView: {
+              fieldMode: 'edit',
+            },
+            listView: {
+              fieldMode: 'hidden',
+            },
           },
         }),
-      ui: {
-        views: './lists/views/search-related-posts',
-        createView: {
-          fieldMode: 'edit',
-        },
-        itemView: {
-          fieldMode: 'edit',
-        },
-        listView: {
-          fieldMode: 'hidden',
-        },
+        relatedPostsJSON: json({
+          label: '排序',
+          defaultValue: [],
+          ui: {
+            views: './lists/views/twreporter-related-posts',
+            createView: { fieldMode: 'edit' },
+            listView: { fieldMode: 'hidden' },
+            itemView: { fieldMode: 'edit' },
+          },
+        }),
       },
     }),
     ogTitle: text({

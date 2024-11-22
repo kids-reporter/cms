@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { FieldProps } from '@keystone-6/core/types'
-import { FieldContainer, TextInput } from '@keystone-ui/fields'
+import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
 import { ArrowRightIcon, PlusCircleIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
@@ -43,7 +43,7 @@ const IconButton = styled(Button)`
 
 const suggestionNum = 3
 
-export const Field = ({ value }: FieldProps<typeof controller>) => {
+export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
   const tagsStr = value.tags.map((tag) => tag.label).join(',')
 
@@ -93,6 +93,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   return (
     <FieldContainer>
+      <FieldLabel>{field.label}</FieldLabel>
       <SearchContainer>
         <TextInput
           value={searchInput}
