@@ -53,9 +53,9 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   useEffect(() => {
     const searchPostsByTags = async () => {
       const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
-      const posts = response.data.items
-        .filter((item, index) => index < suggestionNum)
-        .map((item) => {
+      const posts = response?.data?.items
+        ?.filter((item, index) => index < suggestionNum)
+        ?.map((item) => {
           const metaTag = item?.pagemap?.metatags?.[0]
           return {
             src: item.link,
@@ -64,7 +64,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
             ogDescription: metaTag['og:description'],
           }
         })
-      setPosts(posts)
+      setPosts(posts ?? [])
     }
     searchPostsByTags()
   }, [])
@@ -75,7 +75,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   const handleSearch = async () => {
     const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
-    const posts = response.data.items.map((item) => {
+    const posts = response?.data?.items?.map((item) => {
       const metaTag = item?.pagemap?.metatags?.[0]
       return {
         src: item.link,
@@ -84,7 +84,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         ogDescription: metaTag['og:description'],
       }
     })
-    setPosts(posts)
+    setPosts(posts ?? [])
   }
 
   const handleAddPost = () => {
@@ -104,7 +104,8 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         </Button>
       </SearchContainer>
       <KeywordPostsContainer>
-        {posts.map((post, index) => {
+        {`搜尋到 ${posts?.length} 個結果`}
+        {posts?.map((post, index) => {
           return (
             <KeywordPost key={`keyword-post-${index}`}>
               <a
