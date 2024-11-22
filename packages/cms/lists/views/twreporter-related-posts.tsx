@@ -126,11 +126,17 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
+  console.log(value)
   const [savedPosts, setSavedPosts] = useState<Post[]>(
     posts_mock
     //value ? JSON.parse(value) : []
   )
   const [prevValue, setPrevValue] = useState(value)
+
+  if (value !== prevValue) {
+    setPrevValue(value)
+    setSavedPosts(value ? JSON.parse(value) : [])
+  }
 
   // TODO: get tags via gql query
   // TODO: query posts with tags, useEffect
@@ -138,15 +144,11 @@ export const Field = ({
   // q=key1%skey2
   // TODO: query posts with query string
 
-  if (value !== prevValue) {
-    setPrevValue(value)
-    setSavedPosts(value ? JSON.parse(value) : [])
-  }
-
   const onAddNewPost = (post: Post) => {
     if (onChange) {
-      setSavedPosts([...savedPosts, post])
-      //onChange(JSON.stringify(authors))
+      const newSavedPosts = [...savedPosts, post]
+      setSavedPosts(newSavedPosts)
+      onChange(JSON.stringify(newSavedPosts))
     }
   }
 
