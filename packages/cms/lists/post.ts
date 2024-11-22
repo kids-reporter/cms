@@ -226,11 +226,11 @@ const listConfigurations = list({
         ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
       },
     }),
-    postsJSON: json({
+    relatedPostsJSON: json({
       label: '報導者相關文章',
       defaultValue: [],
       ui: {
-        views: './lists/views/twreporter-post',
+        views: './lists/views/twreporter-related-posts',
         createView: { fieldMode: 'edit' },
         listView: { fieldMode: 'hidden' },
         itemView: { fieldMode: 'edit' },
