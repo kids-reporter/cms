@@ -21,6 +21,14 @@ const SearchContainer = styled.div`
   gap: 10px;
 `
 
+const KeywordPostsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`
+
 const KeywordPost = styled.div`
   display: flex;
   flex-direction: row;
@@ -33,6 +41,8 @@ const IconButton = styled(Button)`
   margin: 0 0 0 0.5rem;
 `
 
+const suggestionNum = 3
+
 export const Field = ({ value }: FieldProps<typeof controller>) => {
   const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
   const tagsStr = value.tags.map((tag) => tag.label).join(',')
@@ -43,15 +53,17 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   useEffect(() => {
     const searchPostsByTags = async () => {
       const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
-      const posts = response.data.items.map((item) => {
-        const metaTag = item?.pagemap?.metatags?.[0]
-        return {
-          src: item.link,
-          ogImgSrc: metaTag['og:image'],
-          ogTitle: metaTag['og:title'],
-          ogDescription: metaTag['og:description'],
-        }
-      })
+      const posts = response.data.items
+        .filter((item, index) => index < suggestionNum)
+        .map((item) => {
+          const metaTag = item?.pagemap?.metatags?.[0]
+          return {
+            src: item.link,
+            ogImgSrc: metaTag['og:image'],
+            ogTitle: metaTag['og:title'],
+            ogDescription: metaTag['og:description'],
+          }
+        })
       setPosts(posts)
     }
     searchPostsByTags()
@@ -91,28 +103,31 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           <ArrowRightIcon size="small" />
         </Button>
       </SearchContainer>
-      {posts.map((post, index) => {
-        return (
-          <KeywordPost key={`keyword-post-${index}`}>
-            <a
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '10px',
-              }}
-              href={post.src}
-              target="_blank"
-            >
-              <img width="100px" src={post.ogImgSrc} />
-              {post.ogTitle}
-            </a>
-            <IconButton size="small" onClick={handleAddPost}>
-              <PlusCircleIcon size="small" />
-            </IconButton>
-          </KeywordPost>
-        )
-      })}
+      <KeywordPostsContainer>
+        {posts.map((post, index) => {
+          return (
+            <KeywordPost key={`keyword-post-${index}`}>
+              <a
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: '10px',
+                  flex: '2',
+                }}
+                href={post.src}
+                target="_blank"
+              >
+                <img width="100px" src={post.ogImgSrc} />
+                {post.ogTitle}
+              </a>
+              <IconButton size="small" onClick={handleAddPost}>
+                <PlusCircleIcon size="small" />
+              </IconButton>
+            </KeywordPost>
+          )
+        })}
+      </KeywordPostsContainer>
     </FieldContainer>
   )
 }
