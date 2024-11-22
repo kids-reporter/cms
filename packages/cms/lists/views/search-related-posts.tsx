@@ -45,7 +45,10 @@ const suggestionNum = 3
 
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
-  const tagsStr = value.tags.map((tag) => tag.label).join(',')
+  const tagsStr = value.tags
+    .filter((tag, index) => index < suggestionNum)
+    .map((tag) => tag.label)
+    .join(' ')
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
@@ -54,7 +57,11 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
     const searchPostsByTags = async () => {
       const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
       const posts = response?.data?.items
-        ?.filter((item, index) => index < suggestionNum)
+        ?.filter(
+          (item, index) =>
+            index <
+            suggestionNum /*&& item?.pagemap?.metatags?.[0]['og:type'] === 'article'*/
+        )
         ?.map((item) => {
           const metaTag = item?.pagemap?.metatags?.[0]
           return {
@@ -97,7 +104,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
       <SearchContainer>
         <TextInput
           value={searchInput}
-          placeholder="搜尋主網站文章..."
+          placeholder="搜尋報導者文章..."
           onChange={handleInputChange}
         />
         <Button onClick={handleSearch}>
