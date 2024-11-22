@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FieldProps } from '@keystone-6/core/types'
-import { FieldLabel, FieldContainer, TextInput } from '@keystone-ui/fields'
+import { FieldContainer, TextInput } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
 import { ArrowRightIcon, PlusCircleIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
@@ -12,6 +12,13 @@ type Post = {
   ogTitle: string
   ogDescription: string
 }
+
+const SearchContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+`
 
 const KeywordPost = styled.div`
   display: flex;
@@ -34,7 +41,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
-    console.log('init')
+    console.log('init', twreporterID, searchAPIKey)
   }, [])
 
   const handleInputChange = (e) => {
@@ -52,17 +59,16 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
 
   return (
     <FieldContainer>
-      <FieldLabel>
+      <SearchContainer>
         <TextInput
           value={searchInput}
           placeholder="搜尋主網站文章..."
           onChange={handleInputChange}
         />
         <Button onClick={handleSearch}>
-          {' '}
           <ArrowRightIcon size="small" />
         </Button>
-      </FieldLabel>
+      </SearchContainer>
       {posts.map((post, index) => {
         return (
           <KeywordPost key={`keyword-post-${index}`}>
