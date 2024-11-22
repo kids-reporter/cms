@@ -208,6 +208,7 @@ type Post {
   relatedPostsOrderJson: JSON
   relatedPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
   relatedPostsJSON: JSON
+  searchRelatedPosts: JSON
   ogTitle: String
   ogDescription: String
   ogImage: Photo
