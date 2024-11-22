@@ -229,7 +229,7 @@ const listConfigurations = list({
     ...group({
       label: '報導者相關文章',
       fields: {
-        searchRelatedPosts: virtual({
+        searchTWReporterRelatedPosts: virtual({
           label: '搜尋',
           field: () =>
             graphql.field({
@@ -261,7 +261,7 @@ const listConfigurations = list({
             },
           },
         }),
-        relatedPostsJSON: json({
+        TWReporterRelatedPostsJSON: json({
           label: '排序',
           defaultValue: [],
           ui: {

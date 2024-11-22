@@ -52,7 +52,7 @@ model Post {
   tagsOrderJson                              Json?                @default("[]")
   relatedPosts                               Post[]               @relation("Post_relatedPosts")
   relatedPostsOrderJson                      Json?                @default("[]")
-  relatedPostsJSON                           Json?                @default("[]")
+  TWReporterRelatedPostsJSON                 Json?                @default("[]")
   ogTitle                                    String               @default("")
   ogDescription                              String               @default("")
   ogImage                                    Photo?               @relation("Post_ogImage", fields: [ogImageId], references: [id])
