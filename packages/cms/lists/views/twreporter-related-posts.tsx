@@ -127,7 +127,7 @@ export const Field = ({
   onChange,
 }: FieldProps<typeof controller>) => {
   console.log(value)
-  const [savedPosts, setSavedPosts] = useState<Post[]>(
+  const [relatedPosts, setRelatedPosts] = useState<Post[]>(
     posts_mock
     //value ? JSON.parse(value) : []
   )
@@ -135,7 +135,7 @@ export const Field = ({
 
   if (value !== prevValue) {
     setPrevValue(value)
-    setSavedPosts(value ? JSON.parse(value) : [])
+    setRelatedPosts(value ? JSON.parse(value) : [])
   }
 
   // TODO: get tags via gql query
@@ -146,18 +146,18 @@ export const Field = ({
 
   const onAddNewPost = (post: Post) => {
     if (onChange) {
-      const newSavedPosts = [...savedPosts, post]
-      setSavedPosts(newSavedPosts)
-      onChange(JSON.stringify(newSavedPosts))
+      const newRelatedPosts = [...relatedPosts, post]
+      setRelatedPosts(newRelatedPosts)
+      onChange(JSON.stringify(newRelatedPosts))
     }
   }
 
   const onDeletePost = (index: number) => {
-    if (onChange && index >= 0 && index < savedPosts.length) {
-      const newSavedPosts = [...savedPosts]
-      newSavedPosts.splice(index, 1)
-      setSavedPosts(newSavedPosts)
-      onChange(JSON.stringify(newSavedPosts))
+    if (onChange && index >= 0 && index < relatedPosts.length) {
+      const newRelatedPosts = [...relatedPosts]
+      newRelatedPosts.splice(index, 1)
+      setRelatedPosts(newRelatedPosts)
+      onChange(JSON.stringify(newRelatedPosts))
     }
   }
 
@@ -174,13 +174,13 @@ export const Field = ({
     }
 
     if (onChange) {
-      const newSavedPosts = reorderPost(
-        savedPosts,
+      const newRelatedPosts = reorderPost(
+        relatedPosts,
         result.source.index,
         result.destination.index
       )
-      setSavedPosts(newSavedPosts)
-      onChange(JSON.stringify(newSavedPosts))
+      setRelatedPosts(newRelatedPosts)
+      onChange(JSON.stringify(newRelatedPosts))
     }
   }
 
@@ -190,7 +190,7 @@ export const Field = ({
       <Droppable droppableId="droppable">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
-            {savedPosts.map((post: any, index: number) => {
+            {relatedPosts.map((post: any, index: number) => {
               const id = `post-component-${index}`
               return (
                 <Draggable key={id} draggableId={id} index={index}>
