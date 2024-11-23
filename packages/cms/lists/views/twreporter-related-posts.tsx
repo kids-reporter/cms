@@ -79,13 +79,19 @@ export const Field = ({
   }
 
   const onAddPost = () => {
-    // TODO: json validation
     if (onChange) {
-      const postJSON = JSON.parse(newPost)
+      let postJSON
+      try {
+        postJSON = JSON.parse(newPost)
+        // TODO: json fields validation
+      } catch (e) {
+        console.error('Failed to parse post to json!', newPost)
+        return
+      }
       const newRelatedPosts = [...relatedPosts, postJSON]
       setRelatedPosts(newRelatedPosts)
-      onChange(JSON.stringify(newRelatedPosts))
       setNewPost('')
+      onChange(JSON.stringify(newRelatedPosts))
     }
   }
 

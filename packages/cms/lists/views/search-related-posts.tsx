@@ -55,6 +55,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
 
+  // Initially fetch top 'suggestionNum' posts by searching top 'suggestionNum' tags
   useEffect(() => {
     const searchPostsByTags = async () => {
       const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
