@@ -6,7 +6,7 @@ import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
 import { Tooltip } from '@keystone-ui/tooltip'
-import { ArrowRightIcon, ClipboardIcon } from '@keystone-ui/icons'
+import { ClipboardIcon, SearchIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Post = {
@@ -84,6 +84,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   }
 
   const handleSearch = async () => {
+    // TODO: loading state
     const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
     const posts = response?.data?.items?.map((item) => {
       const metaTag = item?.pagemap?.metatags?.[0]
@@ -113,7 +114,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         <Tooltip content="搜尋">
           {(props) => (
             <Button {...props} onClick={handleSearch}>
-              <ArrowRightIcon size="small" />
+              <SearchIcon size="small" />
             </Button>
           )}
         </Tooltip>
