@@ -83,6 +83,12 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
     setSearchInput(e.target.value)
   }
 
+  const handlenKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      await handleSearch()
+    }
+  }
+
   const handleSearch = async () => {
     // TODO: loading state
     const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
@@ -108,8 +114,9 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
       <SearchContainer>
         <TextInput
           value={searchInput}
-          placeholder="搜尋報導者文章..."
+          placeholder="輸入關鍵字搜尋報導者文章..."
           onChange={handleInputChange}
+          onKeyDown={handlenKeyDown}
         />
         <Tooltip content="搜尋">
           {(props) => (
@@ -120,7 +127,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         </Tooltip>
       </SearchContainer>
       <KeywordPostsContainer>
-        {`搜尋到 ${posts?.length} 個結果`}
+        {`搜尋到 ${posts?.length} 個結果：`}
         {posts?.map((post, index) => {
           return (
             <KeywordPost key={`keyword-post-${index}`}>
