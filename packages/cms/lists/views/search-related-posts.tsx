@@ -5,6 +5,7 @@ import copyToClipboard from 'clipboard-copy'
 import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
+import { Tooltip } from '@keystone-ui/tooltip'
 import { ArrowRightIcon, ClipboardIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
@@ -108,9 +109,13 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
           placeholder="搜尋報導者文章..."
           onChange={handleInputChange}
         />
-        <Button onClick={handleSearch}>
-          <ArrowRightIcon size="small" />
-        </Button>
+        <Tooltip content="搜尋">
+          {(props) => (
+            <Button {...props} onClick={handleSearch}>
+              <ArrowRightIcon size="small" />
+            </Button>
+          )}
+        </Tooltip>
       </SearchContainer>
       <KeywordPostsContainer>
         {`搜尋到 ${posts?.length} 個結果`}
@@ -131,9 +136,17 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
                 <img width="100px" src={post.ogImgSrc} />
                 {post.ogTitle}
               </a>
-              <IconButton size="small" onClick={() => handleCopyPost(index)}>
-                <ClipboardIcon size="small" />
-              </IconButton>
+              <Tooltip content="複製">
+                {(props) => (
+                  <IconButton
+                    {...props}
+                    size="small"
+                    onClick={() => handleCopyPost(index)}
+                  >
+                    <ClipboardIcon size="small" />
+                  </IconButton>
+                )}
+              </Tooltip>
             </KeywordPost>
           )
         })}

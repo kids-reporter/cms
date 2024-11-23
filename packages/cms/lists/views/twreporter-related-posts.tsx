@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields'
+import { Tooltip } from '@keystone-ui/tooltip'
 import {
   TrashIcon,
   CornerUpRightIcon,
@@ -191,10 +192,18 @@ export const Field = ({
 
   const addPostComponent = (
     <>
-      <TextArea value={newPost} onChange={handleNewPostChange}></TextArea>
-      <IconButton size="small" onClick={handleAddPost}>
-        <PlusCircleIcon size="small" />
-      </IconButton>
+      <TextArea
+        value={newPost}
+        onChange={handleNewPostChange}
+        placeholder="貼上上方複製之文字"
+      ></TextArea>
+      <Tooltip content="新增">
+        {(props) => (
+          <IconButton {...props} size="small" onClick={handleAddPost}>
+            <PlusCircleIcon size="small" />
+          </IconButton>
+        )}
+      </Tooltip>
     </>
   )
 

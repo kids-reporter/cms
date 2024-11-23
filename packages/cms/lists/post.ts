@@ -230,7 +230,7 @@ const listConfigurations = list({
       label: '報導者相關文章',
       fields: {
         searchTWReporterRelatedPosts: virtual({
-          label: '搜尋 - 複製後貼入下方文字欄',
+          label: '搜尋 - 複製後貼入下方[新增與排序]之文字欄',
           field: () =>
             graphql.field({
               type: graphql.JSON,
