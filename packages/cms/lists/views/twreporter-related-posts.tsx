@@ -3,8 +3,12 @@ import styled from 'styled-components'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
-import { FieldContainer, FieldLabel } from '@keystone-ui/fields'
-import { TrashIcon, CornerUpRightIcon } from '@keystone-ui/icons'
+import { FieldContainer, FieldLabel, TextArea } from '@keystone-ui/fields'
+import {
+  TrashIcon,
+  CornerUpRightIcon,
+  PlusCircleIcon,
+} from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Post = {
@@ -94,7 +98,7 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
-  console.log(value)
+  const [newPost, setNewPost] = useState('')
   const [relatedPosts, setRelatedPosts] = useState<Post[]>(
     value ? JSON.parse(value) : []
   )
@@ -177,10 +181,28 @@ export const Field = ({
     </DragDropContext>
   )
 
+  const handleAddPost = () => {
+    console.log()
+  }
+
+  const handleNewPostChange = (e) => {
+    setNewPost(e.target.value)
+  }
+
+  const addPostComponent = (
+    <>
+      <TextArea value={newPost} onChange={handleNewPostChange}></TextArea>
+      <IconButton size="small" onClick={handleAddPost}>
+        <PlusCircleIcon size="small" />
+      </IconButton>
+    </>
+  )
+
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
       {postsDndComponent}
+      {addPostComponent}
     </FieldContainer>
   )
 }

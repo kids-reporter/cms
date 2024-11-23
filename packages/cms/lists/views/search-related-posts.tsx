@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import copyToClipboard from 'clipboard-copy'
 import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields'
 import { Button } from '@keystone-ui/button'
-import { ArrowRightIcon, PlusCircleIcon } from '@keystone-ui/icons'
+import { ArrowRightIcon, ClipboardIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Post = {
@@ -94,8 +95,8 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
     setPosts(posts ?? [])
   }
 
-  const handleAddPost = () => {
-    console.log('add')
+  const handleCopyPost = (index: number) => {
+    copyToClipboard(JSON.stringify(posts[index]))
   }
 
   return (
@@ -130,8 +131,8 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
                 <img width="100px" src={post.ogImgSrc} />
                 {post.ogTitle}
               </a>
-              <IconButton size="small" onClick={handleAddPost}>
-                <PlusCircleIcon size="small" />
+              <IconButton size="small" onClick={() => handleCopyPost(index)}>
+                <ClipboardIcon size="small" />
               </IconButton>
             </KeywordPost>
           )

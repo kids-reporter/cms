@@ -230,7 +230,7 @@ const listConfigurations = list({
       label: '報導者相關文章',
       fields: {
         searchTWReporterRelatedPosts: virtual({
-          label: '搜尋',
+          label: '搜尋 - 複製後貼入下方文字欄',
           field: () =>
             graphql.field({
               type: graphql.JSON,
@@ -241,7 +241,6 @@ const listConfigurations = list({
                   query: 'id, tagsOrderJson',
                 })
                 return {
-                  label: '搜尋',
                   tags: post.tagsOrderJson,
                   twreporterID: envVars.twreporterID,
                   searchAPIKey: envVars.searchAPIKey,
@@ -262,7 +261,7 @@ const listConfigurations = list({
           },
         }),
         TWReporterRelatedPostsJSON: json({
-          label: '排序',
+          label: '新增與排序',
           defaultValue: [],
           ui: {
             views: './lists/views/twreporter-related-posts',
