@@ -122,6 +122,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         {posts?.map((post, index) => {
           return (
             <KeywordPost key={`keyword-post-${index}`}>
+              {index + 1}
               <a
                 style={{
                   display: 'flex',

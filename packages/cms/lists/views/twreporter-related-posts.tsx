@@ -52,7 +52,7 @@ const PostComponent = (props: {
       <AuthorContainer>
         {`${props.index}.`}
         <img width="100px" src={post.ogImgSrc} />
-        <div>{post.ogTitle}</div>
+        <div style={{ flex: '2' }}>{post.ogTitle}</div>
         <a href={post.src} target="_blank">
           <CornerUpRightIcon size="small" />
         </a>
@@ -61,38 +61,6 @@ const PostComponent = (props: {
     )
   )
 }
-
-/*
-const posts_mock = [
-  {
-    src: 'https://www.twreporter.org/a/uncertain-future-of-chifeng-and-nanxi-shopping-district',
-    ogImgSrc:
-      'https://www.twreporter.org/images/20241112130105-624a07f6e5e3ba6384a7dba5790487cd-tablet.jpg',
-    ogTitle:
-      '赤峰、南西商圈求生記──北市府放寬納管，街區能保留風貌、與居民共贏？ - 報導者 The Reporter',
-    ogDescription:
-      '台北市赤峰、南西商圈自4月起有超過70間店遭檢舉不符住宅區用地規定，規模之大史無前例。面臨歇業危機的商家在11月等到市府公文，放寬商家可依新規定申請「納管評點」。赤峰、南西有望成為以社區共識促成都市計畫調整的新案例嗎？',
-  },
-  {
-    src: 'https://www.twreporter.org/a/nantou-elemetory-baseball-coach-sexual-assault-first-instance-judgment',
-    ogImgSrc:
-      'https://www.twreporter.org/images/20241113185153-d2659be3c243d2cec2fe83b3f712ae12-tablet.jpg',
-    ogTitle:
-      '「本來沒預期這麼多被害人出現」：南投新豐國小前棒球隊教練黃偉傑性侵球員近20年，一審判決13年 - 報導者 The Reporter',
-    ogDescription:
-      '農曆年前的一則情資，意外揭開在偏鄉長期投注教育與照顧弱勢學童的國小棒球隊教練黃偉傑的真面目，案情如滾雪球不斷湧現，22位被害人多數已成年，反映出棒球校隊的封閉環境、地方人脈緊密難以穿透、男性受害者難以啟齒等多重困境，使獵童者能長期遂行兒少性犯罪的問題⋯⋯',
-  },
-  {
-    src: 'https://www.twreporter.org/a/nantou-elemetory-baseball-coach-sexual-assault-first-instance-judgment',
-    ogImgSrc:
-      'https://www.twreporter.org/images/20241113185153-d2659be3c243d2cec2fe83b3f712ae12-tablet.jpg',
-    ogTitle:
-      '「本來沒預期這麼多被害人出現」：南投新豐國小前棒球隊教練黃偉傑性侵球員近20年，一審判決13年 - 報導者 The Reporter',
-    ogDescription:
-      '農曆年前的一則情資，意外揭開在偏鄉長期投注教育與照顧弱勢學童的國小棒球隊教練黃偉傑的真面目，案情如滾雪球不斷湧現，22位被害人多數已成年，反映出棒球校隊的封閉環境、地方人脈緊密難以穿透、男性受害者難以啟齒等多重困境，使獵童者能長期遂行兒少性犯罪的問題⋯⋯',
-  },
-]
-  */
 
 export const Field = ({
   field,
@@ -108,6 +76,17 @@ export const Field = ({
   if (value !== prevValue) {
     setPrevValue(value)
     setRelatedPosts(value ? JSON.parse(value) : [])
+  }
+
+  const onAddPost = () => {
+    // TODO: json validation
+    if (onChange) {
+      const postJSON = JSON.parse(newPost)
+      const newRelatedPosts = [...relatedPosts, postJSON]
+      setRelatedPosts(newRelatedPosts)
+      onChange(JSON.stringify(newRelatedPosts))
+      setNewPost('')
+    }
   }
 
   const onDeletePost = (index: number) => {
@@ -182,29 +161,27 @@ export const Field = ({
     </DragDropContext>
   )
 
-  const handleAddPost = () => {
-    console.log()
-  }
-
   const handleNewPostChange = (e) => {
     setNewPost(e.target.value)
   }
 
   const addPostComponent = (
-    <>
+    <div
+      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+    >
       <TextArea
         value={newPost}
         onChange={handleNewPostChange}
-        placeholder="貼上上方複製之文字"
+        placeholder="新增 - 貼上上方複製之內容"
       ></TextArea>
       <Tooltip content="新增">
         {(props) => (
-          <IconButton {...props} size="small" onClick={handleAddPost}>
+          <IconButton {...props} size="small" onClick={onAddPost}>
             <PlusCircleIcon size="small" />
           </IconButton>
         )}
       </Tooltip>
-    </>
+    </div>
   )
 
   return (
