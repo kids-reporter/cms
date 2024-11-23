@@ -30,8 +30,7 @@
     "otplib": "^12.0.1",
     "patch-package": "^6.4.7",
     "qrcode": "^1.5.3",
-    "react-beautiful-dnd": "^13.1.1",
-    "react-select": "^5.8.3"
+    "react-beautiful-dnd": "^13.1.1"
   },
   "resolutions": {
     "**/next": "13.3.4",
