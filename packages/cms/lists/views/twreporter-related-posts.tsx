@@ -12,7 +12,7 @@ import {
 } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
-type Post = {
+export type Post = {
   src: string
   ogImgSrc: string
   ogTitle: string

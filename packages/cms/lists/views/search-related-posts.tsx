@@ -8,13 +8,7 @@ import { Button } from '@keystone-ui/button'
 import { Tooltip } from '@keystone-ui/tooltip'
 import { ClipboardIcon, SearchIcon } from '@keystone-ui/icons'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
-
-type Post = {
-  src: string
-  ogImgSrc: string
-  ogTitle: string
-  ogDescription: string
-}
+import { Post } from './twreporter-related-posts'
 
 const SearchContainer = styled.div`
   display: flex;
@@ -43,19 +37,20 @@ const IconButton = styled(Button)`
   margin: 0 0 0 0.5rem;
 `
 
-const suggestionNum = 3
+const selectedTagsNum = 3
+const selectedPostsNum = 6
 
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
   const tagsStr = value.tags
-    .filter((tag, index) => index < suggestionNum)
+    .filter((tag, index) => index < selectedTagsNum)
     .map((tag) => tag.label)
     .join(' ')
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
 
-  // Initially fetch top 'suggestionNum' posts by searching top 'suggestionNum' tags
+  // Initially fetch top 'selectedPostsNum' posts by searching top 'selectedTagsNum' tags
   useEffect(() => {
     const searchPostsByTags = async () => {
       const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
@@ -63,7 +58,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         ?.filter(
           (item, index) =>
             index <
-            suggestionNum /*&& item?.pagemap?.metatags?.[0]['og:type'] === 'article'*/
+            selectedPostsNum /*&& item?.pagemap?.metatags?.[0]['og:type'] === 'article'*/
         )
         ?.map((item) => {
           const metaTag = item?.pagemap?.metatags?.[0]
