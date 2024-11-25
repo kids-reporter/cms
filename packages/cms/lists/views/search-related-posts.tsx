@@ -49,7 +49,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
-  const [isResponding, setIsResponding] = useState<boolean>(true)
+  const [isResponding, setIsResponding] = useState<boolean>(false)
 
   // Initially fetch top 'selectedPostsNum' posts by searching top 'selectedTagsNum' tags
   useEffect(() => {
