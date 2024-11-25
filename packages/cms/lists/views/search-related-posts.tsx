@@ -49,7 +49,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
-  const [isResponding, setIsResponding] = useState<boolean>(false)
+  const [isResponding, setIsResponding] = useState<boolean>(true)
 
   // Initially fetch top 'selectedPostsNum' posts by searching top 'selectedTagsNum' tags
   useEffect(() => {
@@ -104,6 +104,24 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const handleCopyPost = (index: number) => {
     copyToClipboard(JSON.stringify(posts[index]))
   }
+
+  const isLoadingComponent = (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {'搜尋中...'}
+      <img
+        style={{ width: '60px', height: '40px' }}
+        src="/typing-texting.gif"
+      />
+    </div>
+  )
 
   const relatedPostsComponent = (
     <>
@@ -162,15 +180,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         </Tooltip>
       </SearchContainer>
       <KeywordPostsContainer>
-        {isResponding && (
-          <>
-            {'搜尋中...'}
-            <img
-              style={{ width: '60px', height: '40px' }}
-              src="/typing-texting.gif"
-            />
-          </>
-        )}
+        {isResponding && isLoadingComponent}
         {!isResponding && relatedPostsComponent}
       </KeywordPostsContainer>
     </FieldContainer>
