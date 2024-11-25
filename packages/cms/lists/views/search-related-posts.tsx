@@ -38,14 +38,14 @@ const IconButton = styled(Button)`
 `
 
 const selectedTagsNum = 3
-// const selectedPostsNum = 6
+const selectedPostsNum = 6
 
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
   const tagsStr = value.tags
     .filter((tag, index) => index < selectedTagsNum)
     .map((tag) => tag.label)
-    .join(' ')
+    .join('|')
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
@@ -76,7 +76,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   useEffect(() => {
     const searchPostsByTags = async () => {
       const posts = await searchRelatedPosts(tagsStr ?? '')
-      setPosts(posts ?? [])
+      setPosts(posts?.slice(0, selectedPostsNum) ?? [])
     }
     searchPostsByTags()
   }, [])
