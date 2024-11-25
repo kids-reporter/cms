@@ -38,7 +38,7 @@ const IconButton = styled(Button)`
 `
 
 const selectedTagsNum = 3
-const selectedPostsNum = 6
+// const selectedPostsNum = 6
 
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
@@ -57,9 +57,10 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
       const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
       const posts = response?.data?.items
         ?.filter(
-          (item, index) =>
-            index <
-            selectedPostsNum /*&& item?.pagemap?.metatags?.[0]['og:type'] === 'article'*/
+          (item) =>
+            item?.link?.match('^https://www.twreporter.org/') &&
+            (item?.pagemap?.metatags?.[0]['og:type'] === 'article' ||
+              item?.link?.includes('/topics/'))
         )
         ?.map((item) => {
           const metaTag = item?.pagemap?.metatags?.[0]
