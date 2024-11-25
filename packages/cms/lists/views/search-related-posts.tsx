@@ -51,26 +51,31 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   const [posts, setPosts] = useState<Post[]>([])
   const [isResponding, setIsResponding] = useState<boolean>(false)
 
+  const searchRelatedPosts = async (keywords: string): Promise<Post[]> => {
+    const response = await axios.get(`${customSearchURL}&q=${keywords}`)
+    const posts = response?.data?.items
+      ?.filter(
+        (item) =>
+          item?.link?.match('^https://www.twreporter.org/') &&
+          (item?.pagemap?.metatags?.[0]['og:type'] === 'article' ||
+            item?.link?.includes('/topics/'))
+      )
+      ?.map((item) => {
+        const metaTag = item?.pagemap?.metatags?.[0]
+        return {
+          src: item.link,
+          ogImgSrc: metaTag['og:image'],
+          ogTitle: metaTag['og:title'],
+          ogDescription: metaTag['og:description'],
+        }
+      })
+    return posts
+  }
+
   // Initially fetch top 'selectedPostsNum' posts by searching top 'selectedTagsNum' tags
   useEffect(() => {
     const searchPostsByTags = async () => {
-      const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
-      const posts = response?.data?.items
-        ?.filter(
-          (item) =>
-            item?.link?.match('^https://www.twreporter.org/') &&
-            (item?.pagemap?.metatags?.[0]['og:type'] === 'article' ||
-              item?.link?.includes('/topics/'))
-        )
-        ?.map((item) => {
-          const metaTag = item?.pagemap?.metatags?.[0]
-          return {
-            src: item.link,
-            ogImgSrc: metaTag['og:image'],
-            ogTitle: metaTag['og:title'],
-            ogDescription: metaTag['og:description'],
-          }
-        })
+      const posts = await searchRelatedPosts(tagsStr ?? '')
       setPosts(posts ?? [])
     }
     searchPostsByTags()
@@ -88,16 +93,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
 
   const handleSearch = async () => {
     setIsResponding(true)
-    const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
-    const posts = response?.data?.items?.map((item) => {
-      const metaTag = item?.pagemap?.metatags?.[0]
-      return {
-        src: item.link,
-        ogImgSrc: metaTag['og:image'],
-        ogTitle: metaTag['og:title'],
-        ogDescription: metaTag['og:description'],
-      }
-    })
+    const posts = await searchRelatedPosts(searchInput)
     setPosts(posts ?? [])
     setIsResponding(false)
   }
