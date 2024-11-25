@@ -49,6 +49,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
 
   const [searchInput, setSearchInput] = useState<string>(tagsStr)
   const [posts, setPosts] = useState<Post[]>([])
+  const [isResponding, setIsResponding] = useState<boolean>(false)
 
   // Initially fetch top 'selectedPostsNum' posts by searching top 'selectedTagsNum' tags
   useEffect(() => {
@@ -85,7 +86,7 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   }
 
   const handleSearch = async () => {
-    // TODO: loading state
+    setIsResponding(true)
     const response = await axios.get(`${customSearchURL}&q=${searchInput}`)
     const posts = response?.data?.items?.map((item) => {
       const metaTag = item?.pagemap?.metatags?.[0]
@@ -97,11 +98,50 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
       }
     })
     setPosts(posts ?? [])
+    setIsResponding(false)
   }
 
   const handleCopyPost = (index: number) => {
     copyToClipboard(JSON.stringify(posts[index]))
   }
+
+  const relatedPostsComponent = (
+    <>
+      {`搜尋到 ${posts?.length} 個結果：`}
+      {posts?.map((post, index) => {
+        return (
+          <KeywordPost key={`keyword-post-${index}`}>
+            {index + 1}
+            <a
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '10px',
+                flex: '2',
+              }}
+              href={post.src}
+              target="_blank"
+            >
+              <img width="100px" src={post.ogImgSrc} />
+              {post.ogTitle}
+            </a>
+            <Tooltip content="複製">
+              {(props) => (
+                <IconButton
+                  {...props}
+                  size="small"
+                  onClick={() => handleCopyPost(index)}
+                >
+                  <ClipboardIcon size="small" />
+                </IconButton>
+              )}
+            </Tooltip>
+          </KeywordPost>
+        )
+      })}
+    </>
+  )
 
   return (
     <FieldContainer>
@@ -122,39 +162,16 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         </Tooltip>
       </SearchContainer>
       <KeywordPostsContainer>
-        {`搜尋到 ${posts?.length} 個結果：`}
-        {posts?.map((post, index) => {
-          return (
-            <KeywordPost key={`keyword-post-${index}`}>
-              {index + 1}
-              <a
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: '10px',
-                  flex: '2',
-                }}
-                href={post.src}
-                target="_blank"
-              >
-                <img width="100px" src={post.ogImgSrc} />
-                {post.ogTitle}
-              </a>
-              <Tooltip content="複製">
-                {(props) => (
-                  <IconButton
-                    {...props}
-                    size="small"
-                    onClick={() => handleCopyPost(index)}
-                  >
-                    <ClipboardIcon size="small" />
-                  </IconButton>
-                )}
-              </Tooltip>
-            </KeywordPost>
-          )
-        })}
+        {isResponding && (
+          <>
+            {'搜尋中...'}
+            <img
+              style={{ width: '60px', height: '40px' }}
+              src="/typing-texting.gif"
+            />
+          </>
+        )}
+        {!isResponding && relatedPostsComponent}
       </KeywordPostsContainer>
     </FieldContainer>
   )
