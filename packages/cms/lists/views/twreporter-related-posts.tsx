@@ -83,15 +83,32 @@ export const Field = ({
       let postJSON
       try {
         postJSON = JSON.parse(newPost)
-        // TODO: json fields validation
       } catch (e) {
         console.error('Failed to parse post to json!', newPost)
+        window.alert('資料格式錯誤!Failed to parse post to json!')
         return
       }
-      const newRelatedPosts = [...relatedPosts, postJSON]
-      setRelatedPosts(newRelatedPosts)
-      setNewPost('')
-      onChange(JSON.stringify(newRelatedPosts))
+
+      if (
+        postJSON &&
+        postJSON.src &&
+        postJSON.ogImgSrc &&
+        postJSON.ogTitle &&
+        postJSON.ogDescription
+      ) {
+        const post = {
+          src: postJSON.src,
+          ogImgSrc: postJSON.ogImgSrc,
+          ogTitle: postJSON.ogTitle,
+          ogDescription: postJSON.ogDescription,
+        }
+        const newRelatedPosts = [...relatedPosts, post]
+        setRelatedPosts(newRelatedPosts)
+        setNewPost('')
+        onChange(JSON.stringify(newRelatedPosts))
+      } else {
+        window.alert('資料格式錯誤!Failed to parse post to json!')
+      }
     }
   }
 
