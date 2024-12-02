@@ -71,13 +71,16 @@ const presetCmds = presetQuestions.map((q) => {
 })
 
 export const Field = ({ value }: FieldProps<typeof controller>) => {
-  const contentState = convertFromRaw(value.content)
-  const content = contentState?.getPlainText(',')
+  let content
+  if (value?.content) {
+    const contentState = convertFromRaw(value.content)
+    content = contentState?.getPlainText(',')
+  }
 
   const [prompt, setPrompt] = useState<string>('')
   const [isResponding, setIsResponding] = useState<boolean>(false)
   const [messages, setMessages] = useState<any[]>([
-    { role: 'user', content: content },
+    { role: 'user', content: content ?? '' },
   ])
 
   const askChatGPT = async () => {

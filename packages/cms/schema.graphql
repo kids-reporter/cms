@@ -207,6 +207,8 @@ type Post {
   relatedPostsCount(where: PostWhereInput! = {}): Int
   relatedPostsOrderJson: JSON
   relatedPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
+  searchTWReporterRelatedPosts: JSON
+  TWReporterRelatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: Photo
@@ -220,7 +222,6 @@ type Post {
   listPreview: String
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   onlineUsersCount(where: UserWhereInput! = {}): Int
-  summary: JSON
 }
 
 input PostWhereUniqueInput {
@@ -328,6 +329,7 @@ input PostUpdateInput {
   tagsOrderJson: JSON
   relatedPosts: PostRelateToManyForUpdateInput
   relatedPostsOrderJson: JSON
+  TWReporterRelatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
@@ -430,6 +432,7 @@ input PostCreateInput {
   tagsOrderJson: JSON
   relatedPosts: PostRelateToManyForCreateInput
   relatedPostsOrderJson: JSON
+  TWReporterRelatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
