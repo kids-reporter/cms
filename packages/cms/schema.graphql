@@ -207,8 +207,6 @@ type Post {
   relatedPostsCount(where: PostWhereInput! = {}): Int
   relatedPostsOrderJson: JSON
   relatedPostsOrdered(take: Int! = 12, skip: Int! = 0): [Post!]
-  searchTWReporterRelatedPosts: JSON
-  TWReporterRelatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: Photo
@@ -330,7 +328,6 @@ input PostUpdateInput {
   tagsOrderJson: JSON
   relatedPosts: PostRelateToManyForUpdateInput
   relatedPostsOrderJson: JSON
-  TWReporterRelatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
@@ -433,7 +430,6 @@ input PostCreateInput {
   tagsOrderJson: JSON
   relatedPosts: PostRelateToManyForCreateInput
   relatedPostsOrderJson: JSON
-  TWReporterRelatedPostsJSON: JSON
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput

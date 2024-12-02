@@ -21,8 +21,6 @@ const {
   TWO_FACTOR_AUTH_SECRET,
   TWO_FACTOR_AUTH_COOKIE_NAME,
   OPEN_AI_KEY,
-  TWREPORTER_ID,
-  SEARCH_API_KEY,
 } = process.env
 
 enum DatabaseProvider {
@@ -90,8 +88,6 @@ const environmentVariables = {
     cookieName: TWO_FACTOR_AUTH_COOKIE_NAME || 'keystonejs-2fa',
     serviceName: TWO_FACTOR_AUTH_SERVICE_NAME || 'KidsReporter Keystone', // the service name show in 2FA app
   },
-  twreporterID: TWREPORTER_ID || 'twreporter-id',
-  searchAPIKey: SEARCH_API_KEY || 'search-api-key',
   nodeEnv: NODE_ENV || 'development', // value could be 'development', 'production' or 'test'
   openAIKey: OPEN_AI_KEY || 'open-ai-key',
 }
