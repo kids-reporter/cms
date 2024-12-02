@@ -108,7 +108,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
     })
   : {}
 
-const isChatGPTSummaryEnabled = true
+const isChatGPTSummaryEnabled = false
 const summaryFieldConfig = isChatGPTSummaryEnabled
   ? {
       summary: virtual({

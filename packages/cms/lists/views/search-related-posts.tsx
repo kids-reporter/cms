@@ -41,17 +41,24 @@ const selectedTagsNum = 3
 const selectedPostsNum = 6
 
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
-  const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${value.searchAPIKey}&cx=${value.twreporterID}`
-  const tagsStr = value.tags
-    .filter((tag, index) => index < selectedTagsNum)
-    .map((tag) => tag.label)
-    .join('|')
+  const searchAPIKey = value?.searchAPIKey
+  const twreporterID = value?.twreporterID
 
-  const [searchInput, setSearchInput] = useState<string>(tagsStr)
+  const tagsStr = value.tags
+    ?.filter((tag, index) => index < selectedTagsNum)
+    ?.map((tag) => tag.label)
+    ?.join('|')
+
+  const [searchInput, setSearchInput] = useState<string>(tagsStr ?? '')
   const [posts, setPosts] = useState<Post[]>([])
   const [isResponding, setIsResponding] = useState<boolean>(false)
 
   const searchRelatedPosts = async (keywords: string): Promise<Post[]> => {
+    if (!keywords || !searchAPIKey || !twreporterID) {
+      return []
+    }
+
+    const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${searchAPIKey}&cx=${twreporterID}`
     const response = await axios.get(`${customSearchURL}&q=${keywords}`)
     const posts = response?.data?.items
       ?.filter(
@@ -165,12 +172,17 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
         <TextInput
           value={searchInput}
           placeholder="輸入關鍵字搜尋報導者文章..."
+          disabled={!searchAPIKey || !twreporterID}
           onChange={handleInputChange}
           onKeyDown={handlenKeyDown}
         />
         <Tooltip content="搜尋">
           {(props) => (
-            <Button {...props} onClick={handleSearch}>
+            <Button
+              {...props}
+              disabled={!searchAPIKey || !twreporterID}
+              onClick={handleSearch}
+            >
               <SearchIcon size="small" />
             </Button>
           )}
