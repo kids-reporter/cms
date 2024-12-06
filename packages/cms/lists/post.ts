@@ -108,7 +108,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
     })
   : {}
 
-const isChatGPTSummaryEnabled = false
+const isChatGPTSummaryEnabled = true
 const summaryFieldConfig = isChatGPTSummaryEnabled
   ? {
       summary: virtual({
@@ -142,6 +142,53 @@ const summaryFieldConfig = isChatGPTSummaryEnabled
         },
       }),
     }
+  : {}
+const multipleChoiceQuestionsFieldConfig = isChatGPTSummaryEnabled
+  ? group({
+      label: '選擇題組',
+      fields: {
+        aiSuggestion: virtual({
+          field: () =>
+            graphql.field({
+              type: graphql.JSON,
+              async resolve(item: Record<string, any>, args, context) {
+                const postID = item?.id
+                const post = await context.query.Post.findOne({
+                  where: { id: postID },
+                  query: 'id, content',
+                })
+                return {
+                  label: 'AI助理生成',
+                  content: post.content,
+                  openAIKey: envVars.openAIKey,
+                }
+              },
+            }),
+          ui: {
+            views: './lists/views/ai-suggestion',
+            createView: {
+              fieldMode: 'edit',
+            },
+            itemView: {
+              fieldMode: 'edit',
+            },
+            listView: {
+              fieldMode: 'hidden',
+            },
+          },
+        }),
+        multipleChoiceQuestionsJSON: json({
+          label: '選擇題',
+          defaultValue: [],
+          ui: {
+            views: './lists/views/multiple-choice-questions',
+            createView: { fieldMode: 'edit' },
+            itemView: { fieldMode: 'edit' },
+            listView: { fieldMode: 'hidden' },
+          },
+        }),
+      },
+    })
   : {}
 
 const listConfigurations = list({
@@ -289,6 +336,7 @@ const listConfigurations = list({
       label: 'og:image',
       ref: 'Photo',
     }),
+    ...multipleChoiceQuestionsFieldConfig,
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
       ui: {
