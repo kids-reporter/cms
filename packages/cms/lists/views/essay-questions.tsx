@@ -94,7 +94,11 @@ export const Field = ({
           return (
             <div
               key={`question-set-${index}`}
-              style={{ display: 'flex', flexDirection: 'row' }}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
             >
               <div
                 style={{
@@ -125,16 +129,24 @@ export const Field = ({
           )
         })}
       <GapDivider />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-          {'題目'}
-          <TextInput value={''} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: '5px',
+        }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+            {'題目'}
+            <TextInput value={''} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+            {'提示'}
+            <TextInput value={''} />
+          </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-          {'提示'}
-          <TextInput value={''} />
-        </div>
-
         <IconButton size="small" onClick={onAddNewAuthor}>
           <PlusCircleIcon size="small" color="green" />
         </IconButton>
