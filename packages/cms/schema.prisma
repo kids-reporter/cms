@@ -58,6 +58,7 @@ model Post {
   ogImage                                    Photo?               @relation("Post_ogImage", fields: [ogImageId], references: [id])
   ogImageId                                  Int?                 @map("ogImage")
   multipleChoiceQuestionsJSON                Json?                @default("[]")
+  essayQuestionsJSON                         Json?                @default("[]")
   createdAt                                  DateTime?            @default(now())
   updatedAt                                  DateTime?            @updatedAt
   createdBy                                  User?                @relation("Post_createdBy", fields: [createdById], references: [id])

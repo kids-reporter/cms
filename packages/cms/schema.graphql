@@ -214,6 +214,8 @@ type Post {
   ogImage: Photo
   aiSuggestion: JSON
   multipleChoiceQuestionsJSON: JSON
+  aiEssaySuggestion: JSON
+  essayQuestionsJSON: JSON
   createdAt: DateTime
   updatedAt: DateTime
   createdBy: User
@@ -337,6 +339,7 @@ input PostUpdateInput {
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
   multipleChoiceQuestionsJSON: JSON
+  essayQuestionsJSON: JSON
   createdAt: DateTime
   updatedAt: DateTime
   createdBy: UserRelateToOneForUpdateInput
@@ -441,6 +444,7 @@ input PostCreateInput {
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
   multipleChoiceQuestionsJSON: JSON
+  essayQuestionsJSON: JSON
   createdAt: DateTime
   updatedAt: DateTime
   createdBy: UserRelateToOneForCreateInput
