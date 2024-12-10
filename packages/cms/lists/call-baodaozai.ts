@@ -30,6 +30,11 @@ const genRichTextEditorConfig = (label: string) => {
       richTextEditorButtonNames.divider,
       richTextEditorButtonNames.tocAnchor,
       richTextEditorButtonNames.anchor,
+      richTextEditorButtonNames.annotation,
+      richTextEditorButtonNames.backgroundColor,
+      richTextEditorButtonNames.fontColor,
+      richTextEditorButtonNames.ul,
+      richTextEditorButtonNames.ol,
     ],
     ui: {
       listView: {
