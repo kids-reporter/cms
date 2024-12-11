@@ -59,6 +59,73 @@ const mockup = [
   },
 ]
 
+const QuestionTipComponent = (props: {
+  label: string
+  question: string
+  tip: string
+  actionElement: any
+}) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        gap: '5px',
+        marginBottom: '15px',
+      }}
+    >
+      {props.label}
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '5px',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '5px',
+            alignItems: 'center',
+            flex: '2',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ textWrap: 'nowrap' }}>題目</span>
+            <TextInput value={props.question} />
+          </div>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ textWrap: 'nowrap' }}>提示</span>
+            <TextInput value={props.tip} />
+          </div>
+        </div>
+        {props.actionElement}
+      </div>
+    </div>
+  )
+}
+
 export const Field = ({
   field,
   value,
@@ -92,61 +159,12 @@ export const Field = ({
       {onChange &&
         mockup?.map((qa, index) => {
           return (
-            <div
+            <QuestionTipComponent
               key={`question-set-${index}`}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-                gap: '5px',
-                marginBottom: '15px',
-              }}
-            >
-              {`思辨題${index + 1}`}
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: '5px',
-                  alignItems: 'center',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '5px',
-                    alignItems: 'center',
-                    flex: '2',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: '5px',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span style={{ textWrap: 'nowrap' }}>題目</span>
-                    <TextInput value={qa.question} />
-                  </div>
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: '5px',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span style={{ textWrap: 'nowrap' }}>提示</span>
-                    <TextInput value={qa.question} />
-                  </div>
-                </div>
+              label={`思辨題${index + 1}：`}
+              question={qa.question}
+              tip={qa.question}
+              actionElement={
                 <Tooltip content="刪除">
                   {(props) => (
                     <IconButton
@@ -158,52 +176,25 @@ export const Field = ({
                     </IconButton>
                   )}
                 </Tooltip>
-              </div>
-            </div>
+              }
+            />
           )
         })}
       <GapDivider />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: '5px',
-        }}
-      >
-        {'新增思辨題'}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ textWrap: 'nowrap' }}>題目</span>
-            <TextInput value={''} />
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <span style={{ textWrap: 'nowrap' }}>提示</span>
-            <TextInput value={''} />
-          </div>
-        </div>
-        <Tooltip content="新增">
-          {(props) => (
-            <IconButton {...props} size="small" onClick={onAddNewAuthor}>
-              <PlusCircleIcon size="small" color="green" />
-            </IconButton>
-          )}
-        </Tooltip>
-      </div>
+      <QuestionTipComponent
+        label={'新增思辨題：'}
+        question={''}
+        tip={''}
+        actionElement={
+          <Tooltip content="新增">
+            {(props) => (
+              <IconButton {...props} size="small" onClick={onAddNewAuthor}>
+                <PlusCircleIcon size="small" color="green" />
+              </IconButton>
+            )}
+          </Tooltip>
+        }
+      />
     </FieldContainer>
   )
 }
