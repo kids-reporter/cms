@@ -10,7 +10,7 @@ import { ArrowRightIcon } from '@keystone-ui/icons/icons/ArrowRightIcon'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 const Row = styled.div`
-  width: 100%;
+  flex: auto;
   display: flex;
   flex-direction: row;
   gap: 5px;
@@ -97,11 +97,11 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         value={prompt}
         disabled={isResponding}
       />
-      <Tooltip content="Send">
+      <Tooltip content="送出">
         {(props) => (
           <Button
             {...props}
-            aria-label="Send"
+            aria-label="送出"
             onClick={handleClick}
             disabled={isResponding}
           >

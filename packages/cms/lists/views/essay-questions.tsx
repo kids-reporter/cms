@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields'
 import { PlusCircleIcon, TrashIcon } from '@keystone-ui/icons'
+import { Tooltip } from '@keystone-ui/tooltip'
 import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
@@ -96,35 +96,69 @@ export const Field = ({
               key={`question-set-${index}`}
               style={{
                 display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                gap: '5px',
+                marginBottom: '15px',
               }}
             >
+              {`思辨題${index + 1}`}
               <div
                 style={{
+                  width: '100%',
                   display: 'flex',
-                  flexDirection: 'column',
-                  padding: '10px',
+                  flexDirection: 'row',
                   gap: '5px',
+                  alignItems: 'center',
                 }}
               >
-                {`思辨題${index + 1}`}
                 <div
-                  style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '5px',
+                    alignItems: 'center',
+                    flex: '2',
+                  }}
                 >
-                  {'題目'}
-                  <TextInput value={qa.question} />
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: '5px',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <span style={{ textWrap: 'nowrap' }}>題目</span>
+                    <TextInput value={qa.question} />
+                  </div>
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: '5px',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <span style={{ textWrap: 'nowrap' }}>提示</span>
+                    <TextInput value={qa.question} />
+                  </div>
                 </div>
-                <div
-                  style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}
-                >
-                  {'提示'}
-                  <TextInput value={qa.question} />
-                </div>
+                <Tooltip content="刪除">
+                  {(props) => (
+                    <IconButton
+                      {...props}
+                      size="small"
+                      onClick={onAddNewAuthor}
+                    >
+                      <TrashIcon size="small" color="green" />
+                    </IconButton>
+                  )}
+                </Tooltip>
               </div>
-              <IconButton size="small" onClick={onAddNewAuthor}>
-                <TrashIcon size="small" color="green" />
-              </IconButton>
             </div>
           )
         })}
@@ -137,19 +171,38 @@ export const Field = ({
           gap: '5px',
         }}
       >
+        {'新增思辨題'}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-            {'題目'}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ textWrap: 'nowrap' }}>題目</span>
             <TextInput value={''} />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
-            {'提示'}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ textWrap: 'nowrap' }}>提示</span>
             <TextInput value={''} />
           </div>
         </div>
-        <IconButton size="small" onClick={onAddNewAuthor}>
-          <PlusCircleIcon size="small" color="green" />
-        </IconButton>
+        <Tooltip content="新增">
+          {(props) => (
+            <IconButton {...props} size="small" onClick={onAddNewAuthor}>
+              <PlusCircleIcon size="small" color="green" />
+            </IconButton>
+          )}
+        </Tooltip>
       </div>
     </FieldContainer>
   )
