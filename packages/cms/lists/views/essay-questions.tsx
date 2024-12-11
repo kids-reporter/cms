@@ -9,10 +9,8 @@ import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Author = {
-  id: string | undefined
-  name: string
-  role: string
-  type: string
+  question: string
+  tip: string
 }
 
 const IconButton = styled(Button)`
@@ -25,11 +23,9 @@ const GapDivider = styled(Divider)`
   margin-bottom: 15px;
 `
 
-const authorTemplate = {
-  id: undefined,
-  name: '',
-  role: '文字',
-  type: 'string',
+const questionTemplate = {
+  question: '文字',
+  tip: 'string',
 }
 
 const mockup = [
@@ -134,7 +130,7 @@ export const Field = ({
   const [authors, setAuthors] = useState<Author[]>(
     value ? JSON.parse(value) : []
   )
-  const [newAuthor, setNewAuthor] = useState<Author>({ ...authorTemplate })
+  const [newAuthor, setNewAuthor] = useState<Author>({ ...questionTemplate })
 
   const [prevValue, setPrevValue] = useState(value)
 
@@ -148,7 +144,7 @@ export const Field = ({
       const newAuthors = [...authors, newAuthor]
       setAuthors(newAuthors)
       onChange(JSON.stringify(newAuthors))
-      setNewAuthor({ ...authorTemplate })
+      setNewAuthor({ ...questionTemplate })
     }
   }
 

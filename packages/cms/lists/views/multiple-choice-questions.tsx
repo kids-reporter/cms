@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FieldProps } from '@keystone-6/core/types'
 import { Button } from '@keystone-ui/button'
 import {
@@ -10,6 +9,7 @@ import {
   Checkbox,
 } from '@keystone-ui/fields'
 import { PlusCircleIcon, TrashIcon } from '@keystone-ui/icons'
+import { Tooltip } from '@keystone-ui/tooltip'
 import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
@@ -64,6 +64,121 @@ const mockup = [
   },
 ]
 
+const QAComponent = (props: {
+  label: string
+  question: string
+  answers: { value: string; isAnswer?: boolean }[]
+  actionElement: any
+}) => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        gap: '5px',
+        marginBottom: '15px',
+      }}
+    >
+      {props.label}
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '5px',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '5px',
+            alignItems: 'center',
+            flex: '2',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ textWrap: 'nowrap' }}>題目：</span>
+            <TextInput value={props.question} />
+          </div>
+          {props.answers?.map((answer, index) => {
+            return (
+              <div
+                key={`anwser-option-${index}`}
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: '5px',
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ textWrap: 'nowrap' }}>{`答案${
+                  index + 1
+                }：`}</span>
+                <TextInput value={answer.value} />
+                <Checkbox checked={answer.isAnswer}>{''}</Checkbox>
+                <Tooltip content="刪除答案">
+                  {(props) => (
+                    <IconButton
+                      {...props}
+                      size="small"
+                      onClick={() => {
+                        console.log('add')
+                      }}
+                    >
+                      <TrashIcon size="small" color="green" />
+                    </IconButton>
+                  )}
+                </Tooltip>
+              </div>
+            )
+          })}
+          <Divider />
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              gap: '5px',
+              alignItems: 'center',
+            }}
+          >
+            <span style={{ textWrap: 'nowrap' }}>{`新增答案：`}</span>
+            <TextInput value={''} />
+            <Checkbox checked={false}>{''}</Checkbox>
+            <Tooltip content="新增答案">
+              {(props) => (
+                <IconButton
+                  {...props}
+                  size="small"
+                  onClick={() => {
+                    console.log('add')
+                  }}
+                >
+                  <PlusCircleIcon size="small" color="green" />
+                </IconButton>
+              )}
+            </Tooltip>
+          </div>
+        </div>
+        {props.actionElement}
+      </div>
+    </div>
+  )
+}
+
 export const Field = ({
   field,
   value,
@@ -97,56 +212,42 @@ export const Field = ({
       {onChange &&
         mockup?.map((qa, index) => {
           return (
-            <div
-              key={`question-set-${index}`}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '10px',
-                gap: '5px',
-              }}
-            >
-              {`選擇題${index + 1} - 題目`}
-              <TextInput value={qa.question} />
-              {qa.options.map((option, optionIndex) => {
-                return (
-                  <div
-                    key={`option-${optionIndex}`}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '5px',
-                    }}
-                  >
-                    {`選擇題 - 答案${optionIndex + 1}`}
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        gap: '5px',
-                      }}
+            <QAComponent
+              key={`multiple-question-set-${index}`}
+              label={`選擇題${index + 1}(請勾選正確答案)：`}
+              question={qa.question}
+              answers={qa.options}
+              actionElement={
+                <Tooltip content="刪除題組">
+                  {(props) => (
+                    <IconButton
+                      {...props}
+                      size="small"
+                      onClick={onAddNewAuthor}
                     >
-                      <TextInput value={option.value} />
-                      <Checkbox checked={option.isAnswer}>正確答案</Checkbox>
-                      <IconButton size="small" onClick={onAddNewAuthor}>
-                        <TrashIcon size="small" color="green" />
-                      </IconButton>
-                    </div>
-                  </div>
-                )
-              })}
-              <div
-                style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}
-              >
-                <TextInput value={''} />
-                <Checkbox checked={false}>正確答案</Checkbox>
-                <IconButton size="small" onClick={onAddNewAuthor}>
-                  <PlusCircleIcon size="small" color="green" />
-                </IconButton>
-              </div>
-            </div>
+                      <TrashIcon size="small" color="green" />
+                    </IconButton>
+                  )}
+                </Tooltip>
+              }
+            />
           )
         })}
+      <GapDivider />
+      <QAComponent
+        label={`新增選擇題(請勾選正確答案)：`}
+        question={''}
+        answers={[]}
+        actionElement={
+          <Tooltip content="新增題組">
+            {(props) => (
+              <IconButton {...props} size="small" onClick={onAddNewAuthor}>
+                <PlusCircleIcon size="small" color="green" />
+              </IconButton>
+            )}
+          </Tooltip>
+        }
+      />
     </FieldContainer>
   )
 }
