@@ -28,106 +28,113 @@ const MsgContainer = styled.div`
   background-color: rgb(248, 248, 248);
 `
 
-export const Field = ({ value }: FieldProps<typeof controller>) => {
-  let content
-  if (value?.content) {
-    const contentState = convertFromRaw(value.content)
-    content = contentState?.getPlainText(',')
-  }
+export const FieldTemplate = (initPrompt: string) => {
+  const FieldComponent = ({ value }: FieldProps<typeof controller>) => {
+    let content
+    if (value?.content) {
+      const contentState = convertFromRaw(value.content)
+      content = contentState?.getPlainText(',')
+    }
 
-  const [prompt, setPrompt] = useState<string>(
-    '請依據此文章，提供三個依據文章內容事實的選擇題，每題四個選項。'
-  )
-  const [isResponding, setIsResponding] = useState<boolean>(false)
-  const [messages, setMessages] = useState<any[]>([
-    { role: 'user', content: content ?? '' },
-  ])
+    const [prompt, setPrompt] = useState<string>(initPrompt)
+    const [isResponding, setIsResponding] = useState<boolean>(false)
+    const [messages, setMessages] = useState<any[]>([
+      { role: 'user', content: content ?? '' },
+    ])
 
-  const askChatGPT = async () => {
-    const openai = axios.create({
-      baseURL: 'https://api.openai.com/v1/chat',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${value.openAIKey}`,
-        'OpenAI-Organization': 'org-AFIRbr9PIQpDnVRPSuxABZJO',
-        'OpenAI-Project': 'proj_8OZHy9Z26Vr3p8mDUcXE7Oby',
-      },
-    })
+    const isAIAvailable = value && value.openAIKey
 
-    try {
-      const response = await openai.post('/completions', {
-        model: 'gpt-4o-mini',
-        messages: [...messages, { role: 'user', content: prompt }],
-        max_tokens: 15000,
+    const askChatGPT = async () => {
+      const openai = axios.create({
+        baseURL: 'https://api.openai.com/v1/chat',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${value.openAIKey}`,
+          'OpenAI-Organization': 'org-AFIRbr9PIQpDnVRPSuxABZJO',
+          'OpenAI-Project': 'proj_8OZHy9Z26Vr3p8mDUcXE7Oby',
+        },
       })
 
-      if (response.status === 200) {
-        const reply = response.data?.choices?.[0]?.message?.content
-        setIsResponding(false)
-        setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
-      } else {
-        console.error(`Axios response failed! Status: ${response.status}`)
+      try {
+        const response = await openai.post('/completions', {
+          model: 'gpt-4o-mini',
+          messages: [...messages, { role: 'user', content: prompt }],
+          max_tokens: 15000,
+        })
+
+        if (response.status === 200) {
+          const reply = response.data?.choices?.[0]?.message?.content
+          setIsResponding(false)
+          setMessages((prev) => [
+            ...prev,
+            { role: 'assistant', content: reply },
+          ])
+        } else {
+          console.error(`Axios response failed! Status: ${response.status}`)
+        }
+      } catch (err) {
+        console.error(err)
       }
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const handleClick = async () => {
-    if (!prompt) {
-      return
     }
 
-    setMessages((prev) => [...prev, { role: 'user', content: prompt }])
-    setIsResponding(true)
-    await askChatGPT()
+    const handleClick = async () => {
+      if (!prompt) {
+        return
+      }
+
+      setMessages((prev) => [...prev, { role: 'user', content: prompt }])
+      setIsResponding(true)
+      await askChatGPT()
+    }
+
+    const handlePrompt = (event) => {
+      setPrompt(event.target.value)
+    }
+
+    const msgsJSX = <>{'test'}</>
+
+    const cmdInput = (
+      <Row>
+        <TextInput
+          placeholder="傳指令給ChatGPT"
+          onChange={handlePrompt}
+          value={prompt}
+          disabled={isResponding || !isAIAvailable}
+        />
+        <Tooltip content="送出">
+          {(props) => (
+            <Button
+              {...props}
+              aria-label="送出"
+              onClick={handleClick}
+              disabled={isResponding || !isAIAvailable}
+            >
+              <ArrowRightIcon size="small" />
+            </Button>
+          )}
+        </Tooltip>
+      </Row>
+    )
+
+    return (
+      <FieldContainer>
+        <FieldLabel>
+          {value.label}
+          {'(依據內文欄位)'}
+        </FieldLabel>
+        {cmdInput}
+        <MsgContainer>
+          {msgsJSX}
+          {isResponding && (
+            <img
+              style={{ width: '60px', height: '40px' }}
+              src="/typing-texting.gif"
+            />
+          )}
+        </MsgContainer>
+      </FieldContainer>
+    )
   }
 
-  const handlePrompt = (event) => {
-    setPrompt(event.target.value)
-  }
-
-  const msgsJSX = <>{'test'}</>
-
-  const cmdInput = (
-    <Row>
-      <TextInput
-        placeholder="傳指令給ChatGPT"
-        onChange={handlePrompt}
-        value={prompt}
-        disabled={isResponding}
-      />
-      <Tooltip content="送出">
-        {(props) => (
-          <Button
-            {...props}
-            aria-label="送出"
-            onClick={handleClick}
-            disabled={isResponding}
-          >
-            <ArrowRightIcon size="small" />
-          </Button>
-        )}
-      </Tooltip>
-    </Row>
-  )
-
-  return (
-    <FieldContainer>
-      <FieldLabel>
-        {value.label}
-        {'(依據內文欄位)'}
-      </FieldLabel>
-      {cmdInput}
-      <MsgContainer>
-        {msgsJSX}
-        {isResponding && (
-          <img
-            style={{ width: '60px', height: '40px' }}
-            src="/typing-texting.gif"
-          />
-        )}
-      </MsgContainer>
-    </FieldContainer>
-  )
+  return FieldComponent
 }

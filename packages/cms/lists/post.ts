@@ -165,7 +165,7 @@ const multipleChoiceQuestionsFieldConfig = isChatGPTSummaryEnabled
               },
             }),
           ui: {
-            views: './lists/views/ai-suggestion',
+            views: './lists/views/ai-suggestion-multiple-choice',
             createView: {
               fieldMode: 'edit',
             },
@@ -212,7 +212,7 @@ const essayQuestionsFieldConfig = isChatGPTSummaryEnabled
               },
             }),
           ui: {
-            views: './lists/views/ai-suggestion',
+            views: './lists/views/ai-suggestion-essay',
             createView: {
               fieldMode: 'edit',
             },
