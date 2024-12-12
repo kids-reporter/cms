@@ -8,7 +8,7 @@ import { Tooltip } from '@keystone-ui/tooltip'
 import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
-type Author = {
+type EssayQuestion = {
   question: string
   tip: string
 }
@@ -23,44 +23,27 @@ const GapDivider = styled(Divider)`
   margin-bottom: 15px;
 `
 
-const questionTemplate = {
-  question: '文字',
-  tip: 'string',
-}
-
-const mockup = [
-  {
-    question: 'q1',
-    options: [
-      { value: 'a11', isAnswer: true },
-      { value: 'a12', isAnswer: true },
-      { value: 'a13' },
-    ],
-  },
-  {
-    question: 'q2',
-    options: [
-      { value: 'a21', isAnswer: true },
-      { value: 'a22' },
-      { value: 'a23' },
-    ],
-  },
-  {
-    question: 'q3',
-    options: [
-      { value: 'a31' },
-      { value: 'a32', isAnswer: true },
-      { value: 'a33' },
-    ],
-  },
-]
-
 const QuestionTipComponent = (props: {
   label: string
   question: string
   tip: string
-  actionElement: any
+  actionElement?: React.ReactNode
+  onHandleQuestionTip?: (question: string, tip: string) => void
 }) => {
+  const [question, setQuestion] = useState(props.question)
+  const [tip, setTip] = useState(props.tip)
+
+  const onHandleQuestionTip = props.onHandleQuestionTip
+  const actionElement = props.actionElement
+
+  const onQuestionChange = (e) => {
+    setQuestion(e.target.value)
+  }
+
+  const onTipChange = (e) => {
+    setTip(e.target.value)
+  }
+
   return (
     <div
       style={{
@@ -101,7 +84,11 @@ const QuestionTipComponent = (props: {
             }}
           >
             <span style={{ textWrap: 'nowrap' }}>題目</span>
-            <TextInput value={props.question} />
+            <TextInput
+              placeholder="請填入題目"
+              value={question}
+              onChange={onQuestionChange}
+            />
           </div>
           <div
             style={{
@@ -113,10 +100,26 @@ const QuestionTipComponent = (props: {
             }}
           >
             <span style={{ textWrap: 'nowrap' }}>提示</span>
-            <TextInput value={props.tip} />
+            <TextInput
+              placeholder="請填入提示"
+              value={tip}
+              onChange={onTipChange}
+            />
           </div>
         </div>
-        {props.actionElement}
+        {actionElement && (
+          <Tooltip content="新增">
+            {(props) => (
+              <IconButton
+                {...props}
+                size="small"
+                onClick={() => onHandleQuestionTip?.(question, tip)}
+              >
+                {actionElement}
+              </IconButton>
+            )}
+          </Tooltip>
+        )}
       </div>
     </div>
   )
@@ -127,24 +130,30 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
-  const [authors, setAuthors] = useState<Author[]>(
+  const [questions, setQuestions] = useState<EssayQuestion[]>(
     value ? JSON.parse(value) : []
   )
-  const [newAuthor, setNewAuthor] = useState<Author>({ ...questionTemplate })
-
   const [prevValue, setPrevValue] = useState(value)
 
   if (value !== prevValue) {
     setPrevValue(value)
-    setAuthors(value ? JSON.parse(value) : [])
+    setQuestions(value ? JSON.parse(value) : [])
   }
 
-  const onAddNewAuthor = () => {
+  const onAddNewQuestion = (question: string, tip: string) => {
     if (onChange) {
-      const newAuthors = [...authors, newAuthor]
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
-      setNewAuthor({ ...questionTemplate })
+      const newQuestion = [...questions, { question, tip }]
+      setQuestions(newQuestion)
+      onChange(JSON.stringify(newQuestion))
+    }
+  }
+
+  const onRemoveQuestion = (index: number) => {
+    if (onChange) {
+      const newQuestions = [...questions]
+      newQuestions.splice(index, 1)
+      setQuestions(newQuestions)
+      onChange(JSON.stringify(newQuestions))
     }
   }
 
@@ -153,43 +162,45 @@ export const Field = ({
       <FieldLabel>{field.label}</FieldLabel>
       <GapDivider />
       {onChange &&
-        mockup?.map((qa, index) => {
+        questions?.map((qa, index) => {
           return (
-            <QuestionTipComponent
+            <div
               key={`question-set-${index}`}
-              label={`思辨題${index + 1}：`}
-              question={qa.question}
-              tip={qa.question}
-              actionElement={
-                <Tooltip content="刪除">
-                  {(props) => (
-                    <IconButton
-                      {...props}
-                      size="small"
-                      onClick={onAddNewAuthor}
-                    >
-                      <TrashIcon size="small" color="green" />
-                    </IconButton>
-                  )}
-                </Tooltip>
-              }
-            />
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <QuestionTipComponent
+                label={`思辨題${index + 1}：`}
+                question={qa.question}
+                tip={qa.question}
+              />
+              <Tooltip content="刪除">
+                {(props) => (
+                  <IconButton
+                    {...props}
+                    size="small"
+                    onClick={() => onRemoveQuestion(index)}
+                  >
+                    <TrashIcon size="small" color="green" />
+                  </IconButton>
+                )}
+              </Tooltip>
+            </div>
           )
         })}
+      {questions?.length <= 0 && (
+        <span style={{ color: 'rgb(140, 150, 160)' }}>請新增思辯題</span>
+      )}
       <GapDivider />
       <QuestionTipComponent
         label={'新增思辨題：'}
         question={''}
         tip={''}
-        actionElement={
-          <Tooltip content="新增">
-            {(props) => (
-              <IconButton {...props} size="small" onClick={onAddNewAuthor}>
-                <PlusCircleIcon size="small" color="green" />
-              </IconButton>
-            )}
-          </Tooltip>
-        }
+        onHandleQuestionTip={onAddNewQuestion}
+        actionElement={<PlusCircleIcon size="small" color="green" />}
       />
     </FieldContainer>
   )
