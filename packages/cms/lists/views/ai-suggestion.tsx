@@ -30,7 +30,7 @@ const MsgContainer = styled.div`
 
 export const FieldTemplate = (initPrompt: string) => {
   const FieldComponent = ({ value }: FieldProps<typeof controller>) => {
-    let content
+    let content = ''
     if (value?.content) {
       const contentState = convertFromRaw(value.content)
       content = contentState?.getPlainText(',')
@@ -38,9 +38,7 @@ export const FieldTemplate = (initPrompt: string) => {
 
     const [prompt, setPrompt] = useState<string>(initPrompt)
     const [isResponding, setIsResponding] = useState<boolean>(false)
-    const [messages, setMessages] = useState<any[]>([
-      { role: 'user', content: content ?? '' },
-    ])
+    const [reply, setReply] = useState<string>('　')
 
     const isAIAvailable = value && value.openAIKey
 
@@ -58,17 +56,17 @@ export const FieldTemplate = (initPrompt: string) => {
       try {
         const response = await openai.post('/completions', {
           model: 'gpt-4o-mini',
-          messages: [...messages, { role: 'user', content: prompt }],
+          messages: [
+            { role: 'user', content: content ?? '' },
+            { role: 'user', content: prompt },
+          ],
           max_tokens: 15000,
         })
 
         if (response.status === 200) {
           const reply = response.data?.choices?.[0]?.message?.content
           setIsResponding(false)
-          setMessages((prev) => [
-            ...prev,
-            { role: 'assistant', content: reply },
-          ])
+          setReply(reply)
         } else {
           console.error(`Axios response failed! Status: ${response.status}`)
         }
@@ -81,8 +79,6 @@ export const FieldTemplate = (initPrompt: string) => {
       if (!prompt) {
         return
       }
-
-      setMessages((prev) => [...prev, { role: 'user', content: prompt }])
       setIsResponding(true)
       await askChatGPT()
     }
@@ -90,8 +86,6 @@ export const FieldTemplate = (initPrompt: string) => {
     const handlePrompt = (event) => {
       setPrompt(event.target.value)
     }
-
-    const msgsJSX = <>{'test'}</>
 
     const cmdInput = (
       <Row>
@@ -124,7 +118,7 @@ export const FieldTemplate = (initPrompt: string) => {
         </FieldLabel>
         {cmdInput}
         <MsgContainer>
-          {msgsJSX}
+          {reply}
           {isResponding && (
             <img
               style={{ width: '60px', height: '40px' }}
