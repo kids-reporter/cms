@@ -12,6 +12,7 @@ import SVG from './svg'
 import Tag from './tag'
 import User from './user'
 import { NewsReadingGroup, NewsReadingGroupItem } from './news-reading'
+import CallBaodaozai from './call-baodaozai'
 
 export const listDefinition = {
   User,
@@ -29,4 +30,5 @@ export const listDefinition = {
   EditorPicksSetting,
   PDF,
   SVG,
+  CallBaodaozai,
 }
