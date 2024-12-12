@@ -157,11 +157,11 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           value={prompt}
           disabled={isResponding}
         />
-        <Tooltip content="Send">
+        <Tooltip content="發送">
           {(props) => (
             <Button
               {...props}
-              aria-label="Send"
+              aria-label="發送"
               onClick={handleClick}
               disabled={isResponding}
             >
