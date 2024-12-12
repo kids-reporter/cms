@@ -98,6 +98,8 @@ const QAComponent = (props: {
             gap: '5px',
             alignItems: 'center',
             flex: '2',
+            paddingRight: '5px',
+            borderRight: 'solid',
           }}
         >
           <div
