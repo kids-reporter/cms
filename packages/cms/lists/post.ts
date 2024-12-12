@@ -58,6 +58,56 @@ const relatedPosts: OrderedRelationshipConfig = {
   refLabelField: 'title',
 }
 
+const isTWReporterRelatedPostsEnabled = true
+const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
+  ? group({
+      label: '報導者相關文章',
+      fields: {
+        searchTWReporterRelatedPosts: virtual({
+          label: '搜尋 - 複製後貼入下方[新增與排序]之文字欄',
+          field: () =>
+            graphql.field({
+              type: graphql.JSON,
+              async resolve(item: Record<string, any>, args, context) {
+                const postID = item?.id
+                const post = await context.query.Post.findOne({
+                  where: { id: postID },
+                  query: 'id, tagsOrderJson',
+                })
+                return {
+                  tags: post.tagsOrderJson,
+                  twreporterID: envVars.twreporterID,
+                  searchAPIKey: envVars.searchAPIKey,
+                }
+              },
+            }),
+          ui: {
+            views: './lists/views/search-related-posts',
+            createView: {
+              fieldMode: 'edit',
+            },
+            itemView: {
+              fieldMode: 'edit',
+            },
+            listView: {
+              fieldMode: 'hidden',
+            },
+          },
+        }),
+        TWReporterRelatedPostsJSON: json({
+          label: '新增與排序',
+          defaultValue: [],
+          ui: {
+            views: './lists/views/twreporter-related-posts',
+            createView: { fieldMode: 'edit' },
+            listView: { fieldMode: 'hidden' },
+            itemView: { fieldMode: 'edit' },
+          },
+        }),
+      },
+    })
+  : {}
+
 const isChatGPTSummaryEnabled = false
 const summaryFieldConfig = isChatGPTSummaryEnabled
   ? {
@@ -226,6 +276,7 @@ const listConfigurations = list({
         ...relationshipUtil.relationshipAndExtendedFields(relatedPosts),
       },
     }),
+    ...TWReporterRelatedPostsConfig,
     ogTitle: text({
       validation: { isRequired: false },
       label: 'og:title',
