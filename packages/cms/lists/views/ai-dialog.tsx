@@ -149,28 +149,26 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
   })
 
   const cmdInput = (
-    <>
-      <Row>
-        <TextArea
-          placeholder="傳指令給ChatGPT"
-          onChange={handlePrompt}
-          value={prompt}
-          disabled={isResponding}
-        />
-        <Tooltip content="發送">
-          {(props) => (
-            <Button
-              {...props}
-              aria-label="發送"
-              onClick={handleClick}
-              disabled={isResponding}
-            >
-              <ArrowRightIcon size="small" />
-            </Button>
-          )}
-        </Tooltip>
-      </Row>
-    </>
+    <Row>
+      <TextArea
+        placeholder="傳指令給ChatGPT"
+        onChange={handlePrompt}
+        value={prompt}
+        disabled={isResponding}
+      />
+      <Tooltip content="送出">
+        {(props) => (
+          <Button
+            {...props}
+            aria-label="送出"
+            onClick={handleClick}
+            disabled={isResponding}
+          >
+            <ArrowRightIcon size="small" />
+          </Button>
+        )}
+      </Tooltip>
+    </Row>
   )
 
   return (
