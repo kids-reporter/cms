@@ -59,23 +59,28 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
     }
 
     const customSearchURL = `https://www.googleapis.com/customsearch/v1?key=${searchAPIKey}&cx=${twreporterID}`
-    const response = await axios.get(`${customSearchURL}&q=${keywords}`)
-    const posts = response?.data?.items
-      ?.filter(
-        (item) =>
-          item?.link?.match('^https://www.twreporter.org/') &&
-          (item?.pagemap?.metatags?.[0]['og:type'] === 'article' ||
-            item?.link?.includes('/topics/'))
-      )
-      ?.map((item) => {
-        const metaTag = item?.pagemap?.metatags?.[0]
-        return {
-          src: item.link,
-          ogImgSrc: metaTag['og:image'],
-          ogTitle: metaTag['og:title'],
-          ogDescription: metaTag['og:description'],
-        }
-      })
+    let posts = []
+    try {
+      const response = await axios.get(`${customSearchURL}&q=${keywords}`)
+      posts = response?.data?.items
+        ?.filter(
+          (item) =>
+            item?.link?.match('^https://www.twreporter.org/') &&
+            (item?.pagemap?.metatags?.[0]['og:type'] === 'article' ||
+              item?.link?.includes('/topics/'))
+        )
+        ?.map((item) => {
+          const metaTag = item?.pagemap?.metatags?.[0]
+          return {
+            src: item.link,
+            ogImgSrc: metaTag['og:image'],
+            ogTitle: metaTag['og:title'],
+            ogDescription: metaTag['og:description'],
+          }
+        })
+    } catch (e) {
+      console.log('Fetch posts failed!', e)
+    }
     return posts
   }
 
