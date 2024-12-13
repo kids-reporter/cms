@@ -57,14 +57,13 @@ const AddQuestionTipComponent = (props: {
   label: string
   question: string
   tip: string
-  actionElement?: React.ReactNode
-  onAddQuestionTip?: (question: string, tip: string) => void
+  actionElement: React.ReactNode
+  onAddQuestionTip: (question: string, tip: string) => void
 }) => {
-  const [question, setQuestion] = useState(props.question)
-  const [tip, setTip] = useState(props.tip)
-
   const onAddQuestionTip = props.onAddQuestionTip
   const actionElement = props.actionElement
+  const [question, setQuestion] = useState(props.question)
+  const [tip, setTip] = useState(props.tip)
 
   const onQuestionChange = (e) => {
     setQuestion(e.target.value)
