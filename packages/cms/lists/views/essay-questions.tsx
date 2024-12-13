@@ -54,16 +54,11 @@ const GapDivider = styled(Divider)`
 `
 
 const AddQuestionTipComponent = (props: {
-  label: string
-  question: string
-  tip: string
-  actionElement: React.ReactNode
   onAddQuestionTip: (question: string, tip: string) => void
 }) => {
   const onAddQuestionTip = props.onAddQuestionTip
-  const actionElement = props.actionElement
-  const [question, setQuestion] = useState(props.question)
-  const [tip, setTip] = useState(props.tip)
+  const [question, setQuestion] = useState('')
+  const [tip, setTip] = useState('')
 
   const onQuestionChange = (e) => {
     setQuestion(e.target.value)
@@ -75,7 +70,7 @@ const AddQuestionTipComponent = (props: {
 
   return (
     <QAContainer>
-      {props.label}
+      {'新增思辨題：'}
       <QAACtion>
         <QASet>
           <QARow>
@@ -95,23 +90,21 @@ const AddQuestionTipComponent = (props: {
             />
           </QARow>
         </QASet>
-        {actionElement && (
-          <Tooltip content="新增">
-            {(props) => (
-              <IconButton
-                {...props}
-                size="small"
-                onClick={() => {
-                  onAddQuestionTip?.(question, tip)
-                  setQuestion('')
-                  setTip('')
-                }}
-              >
-                {actionElement}
-              </IconButton>
-            )}
-          </Tooltip>
-        )}
+        <Tooltip content="新增">
+          {(props) => (
+            <IconButton
+              {...props}
+              size="small"
+              onClick={() => {
+                onAddQuestionTip?.(question, tip)
+                setQuestion('')
+                setTip('')
+              }}
+            >
+              <PlusCircleIcon size="small" color="green" />
+            </IconButton>
+          )}
+        </Tooltip>
       </QAACtion>
     </QAContainer>
   )
@@ -212,13 +205,7 @@ export const Field = ({
       <GapDivider />
       {onChange && savedQuestionsJSX}
       <GapDivider />
-      <AddQuestionTipComponent
-        label={'新增思辨題：'}
-        question={''}
-        tip={''}
-        onAddQuestionTip={onAddNewQuestion}
-        actionElement={<PlusCircleIcon size="small" color="green" />}
-      />
+      <AddQuestionTipComponent onAddQuestionTip={onAddNewQuestion} />
     </FieldContainer>
   )
 }
