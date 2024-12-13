@@ -22,6 +22,12 @@ const QAContainer = styled.div`
   margin-bottom: 15px;
 `
 
+const QAACtion = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
 const QASet = styled.div`
   display: flex;
   flex-direction: column;
@@ -71,15 +77,7 @@ const AddQuestionTipComponent = (props: {
   return (
     <QAContainer>
       {props.label}
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '5px',
-          alignItems: 'center',
-        }}
-      >
+      <QAACtion>
         <QASet>
           <QARow>
             <span style={{ textWrap: 'nowrap' }}>題目</span>
@@ -115,7 +113,7 @@ const AddQuestionTipComponent = (props: {
             )}
           </Tooltip>
         )}
-      </div>
+      </QAACtion>
     </QAContainer>
   )
 }
@@ -167,13 +165,7 @@ export const Field = ({
         return (
           <QAContainer key={`question-set-${index}`}>
             {`思辨題${index + 1}：`}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
+            <QAACtion>
               <QASet>
                 <QARow>
                   <span style={{ textWrap: 'nowrap' }}>題目</span>
@@ -207,7 +199,7 @@ export const Field = ({
                   </IconButton>
                 )}
               </Tooltip>
-            </div>
+            </QAACtion>
           </QAContainer>
         )
       })
