@@ -13,6 +13,30 @@ type EssayQuestion = {
   tip: string
 }
 
+const QAContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 15px;
+`
+
+const QASet = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+`
+
+const QARow = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+`
+
 const IconButton = styled(Button)`
   background-color: transparent;
   margin: 0 0 0 0.5rem;
@@ -45,16 +69,7 @@ const AddQuestionTipComponent = (props: {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        gap: '5px',
-        marginBottom: '15px',
-      }}
-    >
+    <QAContainer>
       {props.label}
       <div
         style={{
@@ -65,48 +80,24 @@ const AddQuestionTipComponent = (props: {
           alignItems: 'center',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '5px',
-            alignItems: 'center',
-            flex: '2',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
+        <QASet>
+          <QARow>
             <span style={{ textWrap: 'nowrap' }}>題目</span>
             <TextInput
               placeholder="請填入題目"
               value={question}
               onChange={onQuestionChange}
             />
-          </div>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
+          </QARow>
+          <QARow>
             <span style={{ textWrap: 'nowrap' }}>提示</span>
             <TextInput
               placeholder="請填入提示"
               value={tip}
               onChange={onTipChange}
             />
-          </div>
-        </div>
+          </QARow>
+        </QASet>
         {actionElement && (
           <Tooltip content="新增">
             {(props) => (
@@ -125,7 +116,7 @@ const AddQuestionTipComponent = (props: {
           </Tooltip>
         )}
       </div>
-    </div>
+    </QAContainer>
   )
 }
 
@@ -174,17 +165,7 @@ export const Field = ({
     questions?.length > 0 ? (
       questions.map((qa, index) => {
         return (
-          <div
-            key={`question-set-${index}`}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-              gap: '5px',
-              marginBottom: '15px',
-            }}
-          >
+          <QAContainer key={`question-set-${index}`}>
             {`思辨題${index + 1}：`}
             <div
               style={{
@@ -193,24 +174,8 @@ export const Field = ({
                 alignItems: 'center',
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '5px',
-                  alignItems: 'center',
-                  flex: '2',
-                }}
-              >
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: '5px',
-                    alignItems: 'center',
-                  }}
-                >
+              <QASet>
+                <QARow>
                   <span style={{ textWrap: 'nowrap' }}>題目</span>
                   <TextInput
                     placeholder="請填入題目"
@@ -219,16 +184,8 @@ export const Field = ({
                       onEditQuestion(index, e.target.value, qa.tip)
                     }
                   />
-                </div>
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: '5px',
-                    alignItems: 'center',
-                  }}
-                >
+                </QARow>
+                <QARow>
                   <span style={{ textWrap: 'nowrap' }}>提示</span>
                   <TextInput
                     placeholder="請填入提示"
@@ -237,8 +194,8 @@ export const Field = ({
                       onEditQuestion(index, qa.question, e.target.value)
                     }
                   />
-                </div>
-              </div>
+                </QARow>
+              </QASet>
               <Tooltip content="刪除">
                 {(props) => (
                   <IconButton
@@ -251,7 +208,7 @@ export const Field = ({
                 )}
               </Tooltip>
             </div>
-          </div>
+          </QAContainer>
         )
       })
     ) : (
