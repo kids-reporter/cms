@@ -13,11 +13,14 @@ import { Tooltip } from '@keystone-ui/tooltip'
 import { Divider } from '@keystone-ui/core'
 import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
-type Author = {
-  id: string | undefined
-  name: string
-  role: string
-  type: string
+type Answer = {
+  value: string
+  isAnswer?: boolean
+}
+
+type MultipleChoiceQuestion = {
+  question: string
+  answers: Answer[]
 }
 
 const IconButton = styled(Button)`
@@ -30,46 +33,57 @@ const GapDivider = styled(Divider)`
   margin-bottom: 15px;
 `
 
-const authorTemplate = {
-  id: undefined,
-  name: '',
-  role: '文字',
-  type: 'string',
-}
-
-const mockup = [
-  {
-    question: 'q1',
-    options: [
-      { value: 'a11', isAnswer: true },
-      { value: 'a12', isAnswer: true },
-      { value: 'a13' },
-    ],
-  },
-  {
-    question: 'q2',
-    options: [
-      { value: 'a21', isAnswer: true },
-      { value: 'a22' },
-      { value: 'a23' },
-    ],
-  },
-  {
-    question: 'q3',
-    options: [
-      { value: 'a31' },
-      { value: 'a32', isAnswer: true },
-      { value: 'a33' },
-    ],
-  },
-]
-
-const QAComponent = (props: {
-  label: string
-  question: string
-  answers: { value: string; isAnswer?: boolean }[]
-  actionElement: any
+const AddQAComponent = (props: {
+  onAddNewQuestion: (question: MultipleChoiceQuestion) => void
 }) => {
+  const onAddNewQuestion = props.onAddNewQuestion
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
+  const [isCorrect, setIsCorrect] = useState(false)
+  const [answers, setAnswers] = useState<
+    { value: string; isCorrect: boolean }[]
+  >([])
+
+  const onQuestionChange = (e) => {
+    setQuestion(e.target.value)
+  }
+
+  const onAnswersChange = (e) => {
+    setAnswer(e.target.value)
+  }
+
+  const onIsCorrectChange = (e) => {
+    setIsCorrect(e.target.checked)
+  }
+
+  const onAddNewAnswer = () => {
+    const newAnswers = [...answers, { value: answer, isCorrect: isCorrect }]
+    setAnswers(newAnswers)
+    setAnswer('')
+    setIsCorrect(false)
+  }
+
+  const onRemoveAnswer = (index: number) => {
+    const newAnswers = answers.filter((a, i) => index !== i)
+    setAnswers(newAnswers)
+  }
+
+  const onEditAnswer = (index: number, value: string) => {
+    if (index >= 0 && index < answers.length) {
+      const newAnswers = [...answers]
+      newAnswers[index].value = value
+      setAnswers(newAnswers)
+    }
+  }
+
+  const onEditIsCorrect = (index: number, isCorrect: boolean) => {
+    if (index >= 0 && index < answers.length) {
+      const newAnswers = [...answers]
+      newAnswers[index].isCorrect = isCorrect
+      setAnswers(newAnswers)
+    }
+  }
+
   return (
     <div
       style={{
@@ -81,7 +95,7 @@ const QAComponent = (props: {
         marginBottom: '15px',
       }}
     >
-      {props.label}
+      {'新增選擇題(請勾選正確答案)：'}
       <div
         style={{
           width: '100%',
@@ -112,9 +126,13 @@ const QAComponent = (props: {
             }}
           >
             <span style={{ textWrap: 'nowrap' }}>題目：</span>
-            <TextInput value={props.question} />
+            <TextInput
+              placeholder="請填入題目"
+              value={question}
+              onChange={onQuestionChange}
+            />
           </div>
-          {props.answers?.map((answer, index) => {
+          {answers?.map((answer, index) => {
             return (
               <div
                 key={`anwser-option-${index}`}
@@ -129,16 +147,23 @@ const QAComponent = (props: {
                 <span style={{ textWrap: 'nowrap' }}>{`答案${
                   index + 1
                 }：`}</span>
-                <TextInput value={answer.value} />
-                <Checkbox checked={answer.isAnswer}>{''}</Checkbox>
+                <TextInput
+                  value={answer.value}
+                  placeholder="請填入答案"
+                  onChange={(e) => onEditAnswer(index, e.target.value)}
+                />
+                <Checkbox
+                  checked={answer.isCorrect}
+                  onChange={(e) => onEditIsCorrect(index, e.target.checked)}
+                >
+                  {''}
+                </Checkbox>
                 <Tooltip content="刪除答案">
                   {(props) => (
                     <IconButton
                       {...props}
                       size="small"
-                      onClick={() => {
-                        console.log('add')
-                      }}
+                      onClick={() => onRemoveAnswer(index)}
                     >
                       <TrashIcon size="small" color="green" />
                     </IconButton>
@@ -158,24 +183,30 @@ const QAComponent = (props: {
             }}
           >
             <span style={{ textWrap: 'nowrap' }}>{`新增答案：`}</span>
-            <TextInput value={''} />
-            <Checkbox checked={false}>{''}</Checkbox>
+            <TextInput
+              placeholder="請填入答案"
+              value={answer}
+              onChange={onAnswersChange}
+            />
+            <Checkbox checked={isCorrect} onChange={onIsCorrectChange}>
+              {''}
+            </Checkbox>
             <Tooltip content="新增答案">
               {(props) => (
-                <IconButton
-                  {...props}
-                  size="small"
-                  onClick={() => {
-                    console.log('add')
-                  }}
-                >
+                <IconButton {...props} size="small" onClick={onAddNewAnswer}>
                   <PlusCircleIcon size="small" color="green" />
                 </IconButton>
               )}
             </Tooltip>
           </div>
         </div>
-        {props.actionElement}
+        <Tooltip content="新增題組">
+          {(props) => (
+            <IconButton {...props} size="small" onClick={onAddNewQuestion}>
+              <PlusCircleIcon size="small" color="green" />
+            </IconButton>
+          )}
+        </Tooltip>
       </div>
     </div>
   )
@@ -186,35 +217,42 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
-  const [authors, setAuthors] = useState<Author[]>(
+  const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>(
     value ? JSON.parse(value) : []
   )
-  const [newAuthor, setNewAuthor] = useState<Author>({ ...authorTemplate })
-
   const [prevValue, setPrevValue] = useState(value)
 
   if (value !== prevValue) {
     setPrevValue(value)
-    setAuthors(value ? JSON.parse(value) : [])
+    setQuestions(value ? JSON.parse(value) : [])
   }
 
-  const onAddNewAuthor = () => {
+  const onAddNewQuestion = (newQuestion: MultipleChoiceQuestion) => {
     if (onChange) {
-      const newAuthors = [...authors, newAuthor]
-      setAuthors(newAuthors)
-      onChange(JSON.stringify(newAuthors))
-      setNewAuthor({ ...authorTemplate })
+      const newQuestions = [...questions, newQuestion]
+      setQuestions(newQuestions)
+      onChange(JSON.stringify(newQuestions))
     }
   }
+
+  const questionsJSX =
+    questions?.length > 0 ? (
+      questions.map((q) => {
+        return <>{q.question}</>
+      })
+    ) : (
+      <span style={{ color: 'rgb(140, 150, 160)' }}>請新增選擇題</span>
+    )
 
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
       <GapDivider />
-      {onChange &&
+      {onChange && questionsJSX}
+      {/*onChange &&
         mockup?.map((qa, index) => {
           return (
-            <QAComponent
+            <AddQAComponent
               key={`multiple-question-set-${index}`}
               label={`選擇題${index + 1}(請勾選正確答案)：`}
               question={qa.question}
@@ -234,22 +272,9 @@ export const Field = ({
               }
             />
           )
-        })}
+        })*/}
       <GapDivider />
-      <QAComponent
-        label={`新增選擇題(請勾選正確答案)：`}
-        question={''}
-        answers={[]}
-        actionElement={
-          <Tooltip content="新增題組">
-            {(props) => (
-              <IconButton {...props} size="small" onClick={onAddNewAuthor}>
-                <PlusCircleIcon size="small" color="green" />
-              </IconButton>
-            )}
-          </Tooltip>
-        }
-      />
+      <AddQAComponent onAddNewQuestion={onAddNewQuestion} />
     </FieldContainer>
   )
 }
