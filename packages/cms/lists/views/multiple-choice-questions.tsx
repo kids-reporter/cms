@@ -15,7 +15,7 @@ import { controller } from '@keystone-6/core/fields/types/virtual/views'
 
 type Answer = {
   value: string
-  isAnswer?: boolean
+  isCorrect?: boolean
 }
 
 type MultipleChoiceQuestion = {
@@ -40,9 +40,7 @@ const AddQAComponent = (props: {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [isCorrect, setIsCorrect] = useState(false)
-  const [answers, setAnswers] = useState<
-    { value: string; isCorrect: boolean }[]
-  >([])
+  const [answers, setAnswers] = useState<Answer[]>([])
 
   const onQuestionChange = (e) => {
     setQuestion(e.target.value)
@@ -172,7 +170,6 @@ const AddQAComponent = (props: {
               </div>
             )
           })}
-          <Divider />
           <div
             style={{
               width: '100%',
@@ -202,7 +199,19 @@ const AddQAComponent = (props: {
         </div>
         <Tooltip content="新增題組">
           {(props) => (
-            <IconButton {...props} size="small" onClick={onAddNewQuestion}>
+            <IconButton
+              {...props}
+              disabled={answers.length <= 0}
+              size="small"
+              onClick={() => {
+                onAddNewQuestion({
+                  question: question,
+                  answers: answer
+                    ? [...answers, { value: answer, isCorrect }]
+                    : answers,
+                })
+              }}
+            >
               <PlusCircleIcon size="small" color="green" />
             </IconButton>
           )}
