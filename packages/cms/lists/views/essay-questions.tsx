@@ -23,17 +23,17 @@ const GapDivider = styled(Divider)`
   margin-bottom: 15px;
 `
 
-const QuestionTipComponent = (props: {
+const AddQuestionTipComponent = (props: {
   label: string
   question: string
   tip: string
   actionElement?: React.ReactNode
-  onHandleQuestionTip?: (question: string, tip: string) => void
+  onAddQuestionTip?: (question: string, tip: string) => void
 }) => {
   const [question, setQuestion] = useState(props.question)
   const [tip, setTip] = useState(props.tip)
 
-  const onHandleQuestionTip = props.onHandleQuestionTip
+  const onAddQuestionTip = props.onAddQuestionTip
   const actionElement = props.actionElement
 
   const onQuestionChange = (e) => {
@@ -113,7 +113,11 @@ const QuestionTipComponent = (props: {
               <IconButton
                 {...props}
                 size="small"
-                onClick={() => onHandleQuestionTip?.(question, tip)}
+                onClick={() => {
+                  onAddQuestionTip?.(question, tip)
+                  setQuestion('')
+                  setTip('')
+                }}
               >
                 {actionElement}
               </IconButton>
@@ -142,41 +146,99 @@ export const Field = ({
 
   const onAddNewQuestion = (question: string, tip: string) => {
     if (onChange) {
-      const newQuestion = [...questions, { question, tip }]
-      setQuestions(newQuestion)
-      onChange(JSON.stringify(newQuestion))
-    }
-  }
-
-  const onRemoveQuestion = (index: number) => {
-    if (onChange) {
-      const newQuestions = [...questions]
-      newQuestions.splice(index, 1)
+      const newQuestions = [...questions, { question, tip }]
       setQuestions(newQuestions)
       onChange(JSON.stringify(newQuestions))
     }
   }
 
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <GapDivider />
-      {onChange &&
-        questions?.map((qa, index) => {
-          return (
+  const onEditQuestion = (index: number, question: string, tip: string) => {
+    if (onChange && index >= 0 && index < questions.length) {
+      const newQuestions = [...questions]
+      newQuestions[index].question = question
+      newQuestions[index].tip = tip
+      setQuestions(newQuestions)
+      onChange(JSON.stringify(newQuestions))
+    }
+  }
+
+  const onRemoveQuestion = (index: number) => {
+    if (onChange && index >= 0 && index < questions.length) {
+      const newQuestions = questions.filter((q, i) => i !== index)
+      setQuestions(newQuestions)
+      onChange(JSON.stringify(newQuestions))
+    }
+  }
+
+  const savedQuestionsJSX =
+    questions?.length > 0 ? (
+      questions.map((qa, index) => {
+        return (
+          <div
+            key={`question-set-${index}`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              justifyContent: 'center',
+              gap: '5px',
+              marginBottom: '15px',
+            }}
+          >
+            {`思辨題${index + 1}：`}
             <div
-              key={`question-set-${index}`}
               style={{
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
               }}
             >
-              <QuestionTipComponent
-                label={`思辨題${index + 1}：`}
-                question={qa.question}
-                tip={qa.question}
-              />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '5px',
+                  alignItems: 'center',
+                  flex: '2',
+                }}
+              >
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '5px',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span style={{ textWrap: 'nowrap' }}>題目</span>
+                  <TextInput
+                    placeholder="請填入題目"
+                    value={qa.question}
+                    onChange={(e) =>
+                      onEditQuestion(index, e.target.value, qa.tip)
+                    }
+                  />
+                </div>
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '5px',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span style={{ textWrap: 'nowrap' }}>提示</span>
+                  <TextInput
+                    placeholder="請填入提示"
+                    value={qa.tip}
+                    onChange={(e) =>
+                      onEditQuestion(index, qa.question, e.target.value)
+                    }
+                  />
+                </div>
+              </div>
               <Tooltip content="刪除">
                 {(props) => (
                   <IconButton
@@ -189,17 +251,24 @@ export const Field = ({
                 )}
               </Tooltip>
             </div>
-          )
-        })}
-      {questions?.length <= 0 && (
-        <span style={{ color: 'rgb(140, 150, 160)' }}>請新增思辯題</span>
-      )}
+          </div>
+        )
+      })
+    ) : (
+      <span style={{ color: 'rgb(140, 150, 160)' }}>請新增思辯題</span>
+    )
+
+  return (
+    <FieldContainer>
+      <FieldLabel>{field.label}</FieldLabel>
       <GapDivider />
-      <QuestionTipComponent
+      {onChange && savedQuestionsJSX}
+      <GapDivider />
+      <AddQuestionTipComponent
         label={'新增思辨題：'}
         question={''}
         tip={''}
-        onHandleQuestionTip={onAddNewQuestion}
+        onAddQuestionTip={onAddNewQuestion}
         actionElement={<PlusCircleIcon size="small" color="green" />}
       />
     </FieldContainer>
