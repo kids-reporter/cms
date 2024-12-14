@@ -18,7 +18,7 @@ type Answer = {
   isCorrect?: boolean
 }
 
-type MultipleChoiceQuestion = {
+type MultipleChoiceQA = {
   question: string
   answers: Answer[]
 }
@@ -61,7 +61,7 @@ const GapDivider = styled(Divider)`
 `
 
 const AddQAComponent = (props: {
-  onAddNewQA: (question: MultipleChoiceQuestion) => void
+  onAddNewQA: (question: MultipleChoiceQA) => void
 }) => {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
@@ -115,6 +115,10 @@ const AddQAComponent = (props: {
         ? [...answers, { value: answer, isCorrect: isCorrect }]
         : answers,
     })
+    setQuestion('')
+    setAnswers([])
+    setAnswer('')
+    setIsCorrect(false)
   }
 
   return (
@@ -202,28 +206,169 @@ export const Field = ({
   value,
   onChange,
 }: FieldProps<typeof controller>) => {
-  const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>(
+  const [qas, setQAs] = useState<MultipleChoiceQA[]>(
     value ? JSON.parse(value) : []
   )
   const [prevValue, setPrevValue] = useState(value)
 
   if (value !== prevValue) {
     setPrevValue(value)
-    setQuestions(value ? JSON.parse(value) : [])
+    setQAs(value ? JSON.parse(value) : [])
   }
 
-  const onAddNewQuestion = (newQuestion: MultipleChoiceQuestion) => {
+  const onAddNewQA = (newQA: MultipleChoiceQA) => {
     if (onChange) {
-      const newQuestions = [...questions, newQuestion]
-      setQuestions(newQuestions)
-      onChange(JSON.stringify(newQuestions))
+      const newQAs = [...qas, newQA]
+      setQAs(newQAs)
+      onChange(JSON.stringify(newQAs))
+    }
+  }
+
+  const onRemoveQA = (index: number) => {
+    if (onChange && index >= 0 && index < qas?.length) {
+      const newQAs = qas.filter((qa, i) => i !== index)
+      setQAs(newQAs)
+      onChange(JSON.stringify(newQAs))
+    }
+  }
+
+  const onEditQuestion = (index: number, question: string) => {
+    if (onChange && index >= 0 && index < qas?.length) {
+      const newQAs = [...qas]
+      qas[index].question = question
+      setQAs(newQAs)
+      onChange(JSON.stringify(newQAs))
+    }
+  }
+
+  const onEditAnswerValue = (
+    qaIndex: number,
+    answerIndex: number,
+    value: string
+  ) => {
+    if (
+      onChange &&
+      qaIndex >= 0 &&
+      qaIndex < qas?.length &&
+      answerIndex >= 0 &&
+      answerIndex < qas[qaIndex]?.answers?.length
+    ) {
+      const newQAs = [...qas]
+      qas[qaIndex].answers[answerIndex].value = value
+      setQAs(newQAs)
+      onChange(JSON.stringify(newQAs))
+    }
+  }
+
+  const onEditAnswerIsCorrect = (
+    qaIndex: number,
+    answerIndex: number,
+    isCorrect: boolean
+  ) => {
+    if (
+      onChange &&
+      qaIndex >= 0 &&
+      qaIndex < qas?.length &&
+      answerIndex >= 0 &&
+      answerIndex < qas[qaIndex]?.answers?.length
+    ) {
+      const newQAs = [...qas]
+      qas[qaIndex].answers[answerIndex]['isCorrect'] = isCorrect
+      setQAs(newQAs)
+      onChange(JSON.stringify(newQAs))
     }
   }
 
   const questionsJSX =
-    questions?.length > 0 ? (
-      questions.map((q) => {
-        return <>{q.question}</>
+    qas?.length > 0 ? (
+      qas.map((qa, index) => {
+        return (
+          <>
+            {`選擇題${index + 1}(請勾選正確答案)：`}
+            <QARow>
+              <QASet>
+                <QARow>
+                  <span style={{ textWrap: 'nowrap' }}>題目：</span>
+                  <TextInput
+                    placeholder="請填入題目"
+                    value={qa?.question}
+                    onChange={(e) => onEditQuestion(index, e.target.value)}
+                  />
+                </QARow>
+                {qa?.answers?.map((answer, answerIndex) => {
+                  return (
+                    <QARow key={`anwser-option-${answerIndex}`}>
+                      <span style={{ textWrap: 'nowrap' }}>{`答案${
+                        answerIndex + 1
+                      }：`}</span>
+                      <TextInput
+                        value={answer.value}
+                        placeholder="請填入答案"
+                        onChange={(e) =>
+                          onEditAnswerValue(index, answerIndex, e.target.value)
+                        }
+                      />
+                      <Checkbox
+                        checked={answer.isCorrect}
+                        onChange={(e) =>
+                          onEditAnswerIsCorrect(
+                            index,
+                            answerIndex,
+                            e.target.checked
+                          )
+                        }
+                      >
+                        {''}
+                      </Checkbox>
+                      <Tooltip content="刪除答案">
+                        {(props) => (
+                          <IconButton
+                            {...props}
+                            size="small"
+                            onClick={() => {
+                              console.log('delete')
+                            }}
+                          >
+                            <TrashIcon size="small" color="green" />
+                          </IconButton>
+                        )}
+                      </Tooltip>
+                    </QARow>
+                  )
+                })}
+                {/*<QARow>
+            <span style={{ textWrap: 'nowrap' }}>{`新增答案：`}</span>
+            <TextInput
+              placeholder="請填入答案"
+              value={''}
+              onChange={() => {}}
+            />
+            <Checkbox checked={isCorrect} onChange={onIsCorrectChange}>
+              {''}
+            </Checkbox>
+            <Tooltip content="新增答案">
+              {(props) => (
+                <IconButton {...props} size="small" onClick={onAddNewAnswer}>
+                  <PlusCircleIcon size="small" color="green" />
+                </IconButton>
+              )}
+            </Tooltip>
+          </QARow>*/}
+              </QASet>
+              <Tooltip content="刪除題組">
+                {(props) => (
+                  <IconButton
+                    {...props}
+                    size="small"
+                    onClick={() => onRemoveQA(index)}
+                  >
+                    <TrashIcon size="small" color="green" />
+                  </IconButton>
+                )}
+              </Tooltip>
+            </QARow>
+          </>
+        )
       })
     ) : (
       <span style={{ color: 'rgb(140, 150, 160)' }}>請新增選擇題</span>
@@ -233,33 +378,9 @@ export const Field = ({
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
       <GapDivider />
-      {onChange && questionsJSX}
-      {/*onChange &&
-        mockup?.map((qa, index) => {
-          return (
-            <AddQAComponent
-              key={`multiple-question-set-${index}`}
-              label={`選擇題${index + 1}(請勾選正確答案)：`}
-              question={qa.question}
-              answers={qa.options}
-              actionElement={
-                <Tooltip content="刪除題組">
-                  {(props) => (
-                    <IconButton
-                      {...props}
-                      size="small"
-                      onClick={onAddNewAuthor}
-                    >
-                      <TrashIcon size="small" color="green" />
-                    </IconButton>
-                  )}
-                </Tooltip>
-              }
-            />
-          )
-        })*/}
+      {onChange && <QAContainer>{questionsJSX}</QAContainer>}
       <GapDivider />
-      <AddQAComponent onAddNewQA={onAddNewQuestion} />
+      <AddQAComponent onAddNewQA={onAddNewQA} />
     </FieldContainer>
   )
 }
