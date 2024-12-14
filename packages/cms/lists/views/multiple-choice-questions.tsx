@@ -23,6 +23,33 @@ type MultipleChoiceQuestion = {
   answers: Answer[]
 }
 
+const QAContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 15px;
+`
+
+const QARow = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+`
+
+const QASet = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  flex: 2;
+  padding-right: 5px;
+  border-right: solid;
+`
+
 const IconButton = styled(Button)`
   background-color: transparent;
   margin: 0 0 0 0.5rem;
@@ -34,9 +61,8 @@ const GapDivider = styled(Divider)`
 `
 
 const AddQAComponent = (props: {
-  onAddNewQuestion: (question: MultipleChoiceQuestion) => void
+  onAddNewQA: (question: MultipleChoiceQuestion) => void
 }) => {
-  const onAddNewQuestion = props.onAddNewQuestion
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [isCorrect, setIsCorrect] = useState(false)
@@ -82,66 +108,31 @@ const AddQAComponent = (props: {
     }
   }
 
+  const onAddNewQA = () => {
+    props?.onAddNewQA?.({
+      question: question,
+      answers: answer
+        ? [...answers, { value: answer, isCorrect: isCorrect }]
+        : answers,
+    })
+  }
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        gap: '5px',
-        marginBottom: '15px',
-      }}
-    >
+    <QAContainer>
       {'新增選擇題(請勾選正確答案)：'}
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '5px',
-          alignItems: 'center',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '5px',
-            alignItems: 'center',
-            flex: '2',
-            paddingRight: '5px',
-            borderRight: 'solid',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
+      <QARow>
+        <QASet>
+          <QARow>
             <span style={{ textWrap: 'nowrap' }}>題目：</span>
             <TextInput
               placeholder="請填入題目"
               value={question}
               onChange={onQuestionChange}
             />
-          </div>
+          </QARow>
           {answers?.map((answer, index) => {
             return (
-              <div
-                key={`anwser-option-${index}`}
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  flexDirection: 'row',
-                  gap: '5px',
-                  alignItems: 'center',
-                }}
-              >
+              <QARow key={`anwser-option-${index}`}>
                 <span style={{ textWrap: 'nowrap' }}>{`答案${
                   index + 1
                 }：`}</span>
@@ -167,18 +158,10 @@ const AddQAComponent = (props: {
                     </IconButton>
                   )}
                 </Tooltip>
-              </div>
+              </QARow>
             )
           })}
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
+          <QARow>
             <span style={{ textWrap: 'nowrap' }}>{`新增答案：`}</span>
             <TextInput
               placeholder="請填入答案"
@@ -195,29 +178,22 @@ const AddQAComponent = (props: {
                 </IconButton>
               )}
             </Tooltip>
-          </div>
-        </div>
+          </QARow>
+        </QASet>
         <Tooltip content="新增題組">
           {(props) => (
             <IconButton
               {...props}
               disabled={answers.length <= 0}
               size="small"
-              onClick={() => {
-                onAddNewQuestion({
-                  question: question,
-                  answers: answer
-                    ? [...answers, { value: answer, isCorrect }]
-                    : answers,
-                })
-              }}
+              onClick={onAddNewQA}
             >
               <PlusCircleIcon size="small" color="green" />
             </IconButton>
           )}
         </Tooltip>
-      </div>
-    </div>
+      </QARow>
+    </QAContainer>
   )
 }
 
@@ -283,7 +259,7 @@ export const Field = ({
           )
         })*/}
       <GapDivider />
-      <AddQAComponent onAddNewQuestion={onAddNewQuestion} />
+      <AddQAComponent onAddNewQA={onAddNewQuestion} />
     </FieldContainer>
   )
 }
