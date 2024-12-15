@@ -66,7 +66,11 @@ const AddQAComponent = (props: {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [isCorrect, setIsCorrect] = useState(false)
-  const [answers, setAnswers] = useState<Answer[]>([])
+  const [answers, setAnswers] = useState<Answer[]>([
+    { value: '' },
+    { value: '' },
+    { value: '' },
+  ])
 
   const onQuestionChange = (e) => {
     setQuestion(e.target.value)
@@ -116,7 +120,7 @@ const AddQAComponent = (props: {
         : answers,
     })
     setQuestion('')
-    setAnswers([])
+    setAnswers([{ value: '' }, { value: '' }, { value: '' }])
     setAnswer('')
     setIsCorrect(false)
   }
