@@ -284,7 +284,7 @@ export const Field = ({
       qas.map((qa, index) => {
         return (
           <>
-            {`選擇題${index + 1}(請勾選正確答案)：`}
+            {`選擇題 - ${index + 1}(請勾選正確答案)：`}
             <QARow>
               <QASet>
                 <QARow>

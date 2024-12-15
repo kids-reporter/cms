@@ -156,7 +156,7 @@ export const Field = ({
       questions.map((qa, index) => {
         return (
           <QAContainer key={`question-set-${index}`}>
-            {`思辨題${index + 1}：`}
+            {`思辨題 - ${index + 1}：`}
             <QAACtion>
               <QASet>
                 <QARow>
