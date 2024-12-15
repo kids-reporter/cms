@@ -287,7 +287,7 @@ export const Field = ({
     qas?.length > 0 ? (
       qas.map((qa, index) => {
         return (
-          <>
+          <div key={`qa-set-${index}`} style={{ marginBottom: '15px' }}>
             {`選擇題 - ${index + 1}(請勾選正確答案)：`}
             <QARow>
               <QASet>
@@ -324,40 +324,9 @@ export const Field = ({
                       >
                         {''}
                       </Checkbox>
-                      <Tooltip content="刪除答案">
-                        {(props) => (
-                          <IconButton
-                            {...props}
-                            size="small"
-                            onClick={() => {
-                              console.log('delete')
-                            }}
-                          >
-                            <TrashIcon size="small" color="green" />
-                          </IconButton>
-                        )}
-                      </Tooltip>
                     </QARow>
                   )
                 })}
-                {/*<QARow>
-            <span style={{ textWrap: 'nowrap' }}>{`新增答案：`}</span>
-            <TextInput
-              placeholder="請填入答案"
-              value={''}
-              onChange={() => {}}
-            />
-            <Checkbox checked={isCorrect} onChange={onIsCorrectChange}>
-              {''}
-            </Checkbox>
-            <Tooltip content="新增答案">
-              {(props) => (
-                <IconButton {...props} size="small" onClick={onAddNewAnswer}>
-                  <PlusCircleIcon size="small" color="green" />
-                </IconButton>
-              )}
-            </Tooltip>
-          </QARow>*/}
               </QASet>
               <Tooltip content="刪除題組">
                 {(props) => (
@@ -371,7 +340,7 @@ export const Field = ({
                 )}
               </Tooltip>
             </QARow>
-          </>
+          </div>
         )
       })
     ) : (
