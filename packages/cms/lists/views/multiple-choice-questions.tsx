@@ -188,7 +188,7 @@ const AddQAComponent = (props: {
           {(props) => (
             <IconButton
               {...props}
-              disabled={answers.length <= 0}
+              disabled={!question}
               size="small"
               onClick={onAddNewQA}
             >
