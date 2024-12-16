@@ -122,10 +122,20 @@ export const FieldTemplate = (initPrompt: string) => {
         <MsgContainer>
           {reply}
           {isResponding && (
-            <img
-              style={{ width: '60px', height: '40px' }}
-              src="/typing-texting.gif"
-            />
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                style={{ width: '25px', height: '25px' }}
+                src="/loading.gif"
+              />
+            </div>
           )}
         </MsgContainer>
       </FieldContainer>

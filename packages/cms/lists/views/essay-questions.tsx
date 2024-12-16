@@ -23,6 +23,7 @@ const QAContainer = styled.div`
 `
 
 const QAACtion = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,6 +34,7 @@ const QASet = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 5px;
+  flex: 2;
 `
 
 const QARow = styled.div`
