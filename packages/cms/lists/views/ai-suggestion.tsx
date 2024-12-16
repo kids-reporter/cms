@@ -38,7 +38,9 @@ export const FieldTemplate = (initPrompt: string) => {
 
     const [prompt, setPrompt] = useState<string>(initPrompt)
     const [isResponding, setIsResponding] = useState<boolean>(false)
-    const [reply, setReply] = useState<string>('　')
+    const [reply, setReply] = useState<string>(
+      '　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　'
+    )
 
     const isAIAvailable = value && value.openAIKey
 
