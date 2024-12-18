@@ -52,6 +52,11 @@ export default withAuth(
             inputPath: Path.resolve('public/typing-texting.gif'),
             outputPath: 'public/typing-texting.gif',
           },
+          {
+            mode: 'copy',
+            inputPath: Path.resolve('public/loading.gif'),
+            outputPath: 'public/loading.gif',
+          },
         ],
       ],
     },
