@@ -1523,6 +1523,70 @@ input SVGCreateInput {
   updatedAt: DateTime
 }
 
+type CallBaodaozai {
+  id: ID!
+  home: JSON
+  topics: JSON
+  topic: JSON
+  news: JSON
+  comics: JSON
+  lessons: JSON
+  podcasts: JSON
+  aboutUs: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CallBaodaozaiWhereUniqueInput {
+  id: ID
+}
+
+input CallBaodaozaiWhereInput {
+  AND: [CallBaodaozaiWhereInput!]
+  OR: [CallBaodaozaiWhereInput!]
+  NOT: [CallBaodaozaiWhereInput!]
+  id: IDFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input CallBaodaozaiOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input CallBaodaozaiUpdateInput {
+  home: JSON
+  topics: JSON
+  topic: JSON
+  news: JSON
+  comics: JSON
+  lessons: JSON
+  podcasts: JSON
+  aboutUs: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input CallBaodaozaiUpdateArgs {
+  where: CallBaodaozaiWhereUniqueInput!
+  data: CallBaodaozaiUpdateInput!
+}
+
+input CallBaodaozaiCreateInput {
+  home: JSON
+  topics: JSON
+  topic: JSON
+  news: JSON
+  comics: JSON
+  lessons: JSON
+  podcasts: JSON
+  aboutUs: JSON
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1619,6 +1683,12 @@ type Mutation {
   updateSVGS(data: [SVGUpdateArgs!]!): [SVG]
   deleteSVG(where: SVGWhereUniqueInput!): SVG
   deleteSVGS(where: [SVGWhereUniqueInput!]!): [SVG]
+  createCallBaodaozai(data: CallBaodaozaiCreateInput!): CallBaodaozai
+  createCallBaodaozais(data: [CallBaodaozaiCreateInput!]!): [CallBaodaozai]
+  updateCallBaodaozai(where: CallBaodaozaiWhereUniqueInput!, data: CallBaodaozaiUpdateInput!): CallBaodaozai
+  updateCallBaodaozais(data: [CallBaodaozaiUpdateArgs!]!): [CallBaodaozai]
+  deleteCallBaodaozai(where: CallBaodaozaiWhereUniqueInput!): CallBaodaozai
+  deleteCallBaodaozais(where: [CallBaodaozaiWhereUniqueInput!]!): [CallBaodaozai]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1688,6 +1758,9 @@ type Query {
   sVGS(where: SVGWhereInput! = {}, orderBy: [SVGOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SVGWhereUniqueInput): [SVG!]
   sVG(where: SVGWhereUniqueInput!): SVG
   sVGSCount(where: SVGWhereInput! = {}): Int
+  callBaodaozais(where: CallBaodaozaiWhereInput! = {}, orderBy: [CallBaodaozaiOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CallBaodaozaiWhereUniqueInput): [CallBaodaozai!]
+  callBaodaozai(where: CallBaodaozaiWhereUniqueInput!): CallBaodaozai
+  callBaodaozaisCount(where: CallBaodaozaiWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

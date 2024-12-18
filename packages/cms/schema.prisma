@@ -296,3 +296,17 @@ model SVG {
   createdAt        DateTime? @default(now())
   updatedAt        DateTime? @updatedAt
 }
+
+model CallBaodaozai {
+  id        Int       @id @default(autoincrement())
+  home      Json?
+  topics    Json?
+  topic     Json?
+  news      Json?
+  comics    Json?
+  lessons   Json?
+  podcasts  Json?
+  aboutUs   Json?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+}
