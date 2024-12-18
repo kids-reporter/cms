@@ -4,7 +4,7 @@ import {
   RoleEnum,
 } from './utils/access-control-list'
 import { list } from '@keystone-6/core'
-import { text, timestamp } from '@keystone-6/core/fields'
+import { timestamp } from '@keystone-6/core/fields'
 import {
   customFields,
   richTextEditorButtonNames,
@@ -46,18 +46,6 @@ const genRichTextEditorConfig = (label: string) => {
 
 const listConfigurations = list({
   fields: {
-    name: text({
-      isIndexed: 'unique',
-      label: '設定適用範圍（英文）',
-      validation: { isRequired: true },
-      access: {
-        update: () => false,
-      },
-    }),
-    nameTC: text({
-      label: '設定適用範圍（中文）',
-      validation: { isRequired: true },
-    }),
     home: genRichTextEditorConfig('首頁'),
     topics: genRichTextEditorConfig('專題集合頁'),
     topic: genRichTextEditorConfig('專題頁'),

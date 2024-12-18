@@ -1534,8 +1534,6 @@ input SVGCreateInput {
 
 type CallBaodaozai {
   id: ID!
-  name: String
-  nameTC: String
   home: JSON
   topics: JSON
   topic: JSON
@@ -1550,7 +1548,6 @@ type CallBaodaozai {
 
 input CallBaodaozaiWhereUniqueInput {
   id: ID
-  name: String
 }
 
 input CallBaodaozaiWhereInput {
@@ -1558,23 +1555,17 @@ input CallBaodaozaiWhereInput {
   OR: [CallBaodaozaiWhereInput!]
   NOT: [CallBaodaozaiWhereInput!]
   id: IDFilter
-  name: StringFilter
-  nameTC: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
 
 input CallBaodaozaiOrderByInput {
   id: OrderDirection
-  name: OrderDirection
-  nameTC: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
 
 input CallBaodaozaiUpdateInput {
-  name: String
-  nameTC: String
   home: JSON
   topics: JSON
   topic: JSON
@@ -1593,8 +1584,6 @@ input CallBaodaozaiUpdateArgs {
 }
 
 input CallBaodaozaiCreateInput {
-  name: String
-  nameTC: String
   home: JSON
   topics: JSON
   topic: JSON
