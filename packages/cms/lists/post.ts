@@ -84,7 +84,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
           ui: {
             views: './lists/views/search-related-posts',
             createView: {
-              fieldMode: 'edit',
+              fieldMode: 'hidden',
             },
             itemView: {
               fieldMode: 'edit',
@@ -99,7 +99,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
           defaultValue: [],
           ui: {
             views: './lists/views/twreporter-related-posts',
-            createView: { fieldMode: 'edit' },
+            createView: { fieldMode: 'hidden' },
             listView: { fieldMode: 'hidden' },
             itemView: { fieldMode: 'edit' },
           },
@@ -108,7 +108,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
     })
   : {}
 
-const isChatGPTSummaryEnabled = false
+const isChatGPTSummaryEnabled = true
 const summaryFieldConfig = isChatGPTSummaryEnabled
   ? {
       summary: virtual({
@@ -142,6 +142,100 @@ const summaryFieldConfig = isChatGPTSummaryEnabled
         },
       }),
     }
+  : {}
+const multipleChoiceQuestionsFieldConfig = isChatGPTSummaryEnabled
+  ? group({
+      label: '選擇題組',
+      fields: {
+        aiSuggestion: virtual({
+          field: () =>
+            graphql.field({
+              type: graphql.JSON,
+              async resolve(item: Record<string, any>, args, context) {
+                const postID = item?.id
+                const post = await context.query.Post.findOne({
+                  where: { id: postID },
+                  query: 'id, content',
+                })
+                return {
+                  label: 'AI助理生成',
+                  content: post.content,
+                  openAIKey: envVars.openAIKey,
+                }
+              },
+            }),
+          ui: {
+            views: './lists/views/ai-suggestion-multiple-choice',
+            createView: {
+              fieldMode: 'hidden',
+            },
+            itemView: {
+              fieldMode: 'edit',
+            },
+            listView: {
+              fieldMode: 'hidden',
+            },
+          },
+        }),
+        multipleChoiceQuestionsJSON: json({
+          label: '選擇題',
+          defaultValue: [],
+          ui: {
+            views: './lists/views/multiple-choice-questions',
+            createView: { fieldMode: 'hidden' },
+            itemView: { fieldMode: 'edit' },
+            listView: { fieldMode: 'hidden' },
+          },
+        }),
+      },
+    })
+  : {}
+const essayQuestionsFieldConfig = isChatGPTSummaryEnabled
+  ? group({
+      label: '思辨題組',
+      fields: {
+        aiEssaySuggestion: virtual({
+          field: () =>
+            graphql.field({
+              type: graphql.JSON,
+              async resolve(item: Record<string, any>, args, context) {
+                const postID = item?.id
+                const post = await context.query.Post.findOne({
+                  where: { id: postID },
+                  query: 'id, content',
+                })
+                return {
+                  label: 'AI助理生成',
+                  content: post.content,
+                  openAIKey: envVars.openAIKey,
+                }
+              },
+            }),
+          ui: {
+            views: './lists/views/ai-suggestion-essay',
+            createView: {
+              fieldMode: 'hidden',
+            },
+            itemView: {
+              fieldMode: 'edit',
+            },
+            listView: {
+              fieldMode: 'hidden',
+            },
+          },
+        }),
+        essayQuestionsJSON: json({
+          label: '思辨題',
+          defaultValue: [],
+          ui: {
+            views: './lists/views/essay-questions',
+            createView: { fieldMode: 'hidden' },
+            itemView: { fieldMode: 'edit' },
+            listView: { fieldMode: 'hidden' },
+          },
+        }),
+      },
+    })
   : {}
 
 const listConfigurations = list({
@@ -289,6 +383,8 @@ const listConfigurations = list({
       label: 'og:image',
       ref: 'Photo',
     }),
+    ...multipleChoiceQuestionsFieldConfig,
+    ...essayQuestionsFieldConfig,
     createdAt: timestamp({
       defaultValue: { kind: 'now' },
       ui: {
