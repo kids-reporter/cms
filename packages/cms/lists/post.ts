@@ -84,7 +84,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
           ui: {
             views: './lists/views/search-related-posts',
             createView: {
-              fieldMode: 'edit',
+              fieldMode: 'hidden',
             },
             itemView: {
               fieldMode: 'edit',
@@ -99,7 +99,7 @@ const TWReporterRelatedPostsConfig = isTWReporterRelatedPostsEnabled
           defaultValue: [],
           ui: {
             views: './lists/views/twreporter-related-posts',
-            createView: { fieldMode: 'edit' },
+            createView: { fieldMode: 'hidden' },
             listView: { fieldMode: 'hidden' },
             itemView: { fieldMode: 'edit' },
           },
@@ -167,7 +167,7 @@ const multipleChoiceQuestionsFieldConfig = isChatGPTSummaryEnabled
           ui: {
             views: './lists/views/ai-suggestion-multiple-choice',
             createView: {
-              fieldMode: 'edit',
+              fieldMode: 'hidden',
             },
             itemView: {
               fieldMode: 'edit',
@@ -182,7 +182,7 @@ const multipleChoiceQuestionsFieldConfig = isChatGPTSummaryEnabled
           defaultValue: [],
           ui: {
             views: './lists/views/multiple-choice-questions',
-            createView: { fieldMode: 'edit' },
+            createView: { fieldMode: 'hidden' },
             itemView: { fieldMode: 'edit' },
             listView: { fieldMode: 'hidden' },
           },
@@ -214,7 +214,7 @@ const essayQuestionsFieldConfig = isChatGPTSummaryEnabled
           ui: {
             views: './lists/views/ai-suggestion-essay',
             createView: {
-              fieldMode: 'edit',
+              fieldMode: 'hidden',
             },
             itemView: {
               fieldMode: 'edit',
@@ -229,7 +229,7 @@ const essayQuestionsFieldConfig = isChatGPTSummaryEnabled
           defaultValue: [],
           ui: {
             views: './lists/views/essay-questions',
-            createView: { fieldMode: 'edit' },
+            createView: { fieldMode: 'hidden' },
             itemView: { fieldMode: 'edit' },
             listView: { fieldMode: 'hidden' },
           },
