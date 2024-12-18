@@ -299,8 +299,6 @@ model SVG {
 
 model CallBaodaozai {
   id        Int       @id @default(autoincrement())
-  name      String    @unique @default("")
-  nameTC    String    @default("")
   home      Json?
   topics    Json?
   topic     Json?
