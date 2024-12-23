@@ -212,6 +212,10 @@ type Post {
   ogTitle: String
   ogDescription: String
   ogImage: Photo
+  aiSuggestion: JSON
+  multipleChoiceQuestionsJSON: JSON
+  aiEssaySuggestion: JSON
+  essayQuestionsJSON: JSON
   createdAt: DateTime
   updatedAt: DateTime
   createdBy: User
@@ -222,6 +226,7 @@ type Post {
   listPreview: String
   onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   onlineUsersCount(where: UserWhereInput! = {}): Int
+  summary: JSON
 }
 
 input PostWhereUniqueInput {
@@ -333,6 +338,8 @@ input PostUpdateInput {
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForUpdateInput
+  multipleChoiceQuestionsJSON: JSON
+  essayQuestionsJSON: JSON
   createdAt: DateTime
   updatedAt: DateTime
   createdBy: UserRelateToOneForUpdateInput
@@ -436,6 +443,8 @@ input PostCreateInput {
   ogTitle: String
   ogDescription: String
   ogImage: PhotoRelateToOneForCreateInput
+  multipleChoiceQuestionsJSON: JSON
+  essayQuestionsJSON: JSON
   createdAt: DateTime
   updatedAt: DateTime
   createdBy: UserRelateToOneForCreateInput
