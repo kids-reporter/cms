@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function Login() {
   return (
     <main className="flex flex-col justify-center items-center gap-10 bg-gray-100">
-      <span>{'登入'}</span>
+      <span>註冊</span>
       <span>{'免費獲得電子報儲存喜愛的深度報導'}</span>
       <div id="team" style={{ width: '95vw', scrollMarginTop: '62px' }}></div>
       <div
@@ -23,7 +23,7 @@ export default async function Login() {
       <div className="border p-3">{'使用Google帳號'}</div>
       <div className="border p-3">{'使用Facebook帳號'}</div>
       <div className="border p-3">{'使用電子信箱'}</div>
-      <span>{'我還沒有帳號，現在去註冊'}</span>
+      <span>{'已經有帳號了，我要登入'}</span>
       <span>{'完成帳號登入代表你同意我們的隱私權政策'}</span>
     </main>
   )
