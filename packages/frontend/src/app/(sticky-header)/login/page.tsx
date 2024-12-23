@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-// import Link from 'next/link'
+import Link from 'next/link'
 import { GENERAL_DESCRIPTION } from '@/app/constants'
 // import { isProduction } from '@/environment-variables'
 
@@ -19,10 +19,23 @@ export default async function Login() {
         id="consultants"
         style={{ width: '95vw', scrollMarginTop: '62px' }}
       ></div>
-      <div className="border p-3">{'使用Google帳號'}</div>
-      <div className="border p-3">{'使用Facebook帳號'}</div>
-      <div className="border p-3">{'使用電子信箱'}</div>
-      <span>{'我還沒有帳號，現在去註冊'}</span>
+      <div className="border p-3">
+        <img alt="google" src="/assets/images/google.svg" />
+        {'使用Google帳號'}
+      </div>
+      <div className="border p-3">
+        <img
+          alt="facebook"
+          style={{ backgroundColor: 'rgb(66, 103, 178)' }}
+          src="/assets/images/facebook.svg"
+        />
+        {'使用Facebook帳號'}
+      </div>
+      <div className="border p-3">
+        <img alt="facebook" src="/assets/images/letter.svg" />
+        {'使用電子信箱'}
+      </div>
+      <Link href={'/register'}>{'我還沒有帳號，現在去註冊'}</Link>
       <span>{'完成帳號登入代表你同意我們的隱私權政策'}</span>
     </main>
   )
