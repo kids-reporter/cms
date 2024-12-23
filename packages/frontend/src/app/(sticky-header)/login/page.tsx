@@ -14,7 +14,6 @@ export default async function Login() {
   return (
     <main className="flex flex-col justify-center items-center gap-10 bg-gray-100">
       <span>{'登入'}</span>
-      <span>{'免費獲得電子報儲存喜愛的深度報導'}</span>
       <div id="team" style={{ width: '95vw', scrollMarginTop: '62px' }}></div>
       <div
         id="consultants"
