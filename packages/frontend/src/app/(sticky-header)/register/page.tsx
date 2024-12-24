@@ -14,10 +14,10 @@ export default async function Register() {
   return (
     <main className="flex flex-col justify-center items-center gap-10">
       <span>註冊</span>
-      <span>{'免費獲得電子報儲存喜愛的深度報導'}</span>
+      <span>免費獲得電子報儲存喜愛的深度報導</span>
       <LoginBtns />
-      <Link href={'/login'}>{'已經有帳號了，我要登入'}</Link>
-      <span>{'完成帳號登入代表你同意我們的隱私權政策'}</span>
+      <Link href={'/login'}>已經有帳號了，我要登入</Link>
+      <span>完成帳號登入代表你同意我們的隱私權政策</span>
     </main>
   )
 }
