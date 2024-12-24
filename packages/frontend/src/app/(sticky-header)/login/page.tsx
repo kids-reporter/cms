@@ -10,30 +10,41 @@ export const metadata: Metadata = {
 
 // export const revalidate = isProduction ? 86400 : 0 // 1 day
 
+const LoginBtn = (component: React.ReactNode) => {
+  return (
+    <div className="flex flex-row items-center justify-center rounded-full border p-3 bg-white hover:bg-gray-100 hover:cursor-pointer gap-1">
+      {component}
+    </div>
+  )
+}
+
 export default async function Login() {
   return (
-    <main className="flex flex-col justify-center items-center gap-10 bg-gray-100">
+    <main className="flex flex-col justify-center items-center gap-10">
       <span>{'登入'}</span>
-      <div id="team" style={{ width: '95vw', scrollMarginTop: '62px' }}></div>
-      <div
-        id="consultants"
-        style={{ width: '95vw', scrollMarginTop: '62px' }}
-      ></div>
-      <div className="border p-3">
-        <img alt="google" src="/assets/images/google.svg" />
-        {'使用Google帳號'}
-      </div>
-      <div className="border p-3">
-        <img
-          alt="facebook"
-          style={{ backgroundColor: 'rgb(66, 103, 178)' }}
-          src="/assets/images/facebook.svg"
-        />
-        {'使用Facebook帳號'}
-      </div>
-      <div className="border p-3">
-        <img alt="facebook" src="/assets/images/letter.svg" />
-        {'使用電子信箱'}
+      <div className="flex flex-col gap-4">
+        {LoginBtn(
+          <>
+            <img alt="google" src="/assets/images/google.svg" />
+            {'使用Google帳號'}
+          </>
+        )}
+        {LoginBtn(
+          <>
+            <img
+              alt="facebook"
+              style={{ backgroundColor: 'rgb(66, 103, 178)' }}
+              src="/assets/images/facebook.svg"
+            />
+            {'使用Facebook帳號'}
+          </>
+        )}
+        {LoginBtn(
+          <>
+            <img alt="facebook" src="/assets/images/letter.svg" />
+            {'使用電子信箱'}
+          </>
+        )}
       </div>
       <Link href={'/register'}>{'我還沒有帳號，現在去註冊'}</Link>
       <span>{'完成帳號登入代表你同意我們的隱私權政策'}</span>
