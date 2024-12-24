@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { GENERAL_DESCRIPTION } from '@/app/constants'
-import { LoginBtns } from '@/app/components/login'
+import { LoginComponent } from '@/app/components/login'
 // import { isProduction } from '@/environment-variables'
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export default async function Login() {
   return (
     <main className="flex flex-col justify-center items-center gap-10">
       <span>登入</span>
-      <LoginBtns />
+      <LoginComponent />
       <Link href={'/register'}>我還沒有帳號，現在去註冊</Link>
       <span>完成帳號登入代表你同意我們的隱私權政策</span>
     </main>
