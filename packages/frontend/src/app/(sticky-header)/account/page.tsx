@@ -27,8 +27,9 @@ export default async function Login() {
     <main className="flex flex-row justify-center items-center gap-10">
       <div className="flex flex-col justify-center items-center">
         <span>個人資料</span>
-        <span>訂閱電子報</span>
+        <span>我的閱讀</span>
         <span>閱讀設定</span>
+        <span>訂閱電子報</span>
         <Link href={'/logout'}>登出</Link>
       </div>
       <div className="flex flex-col justify-center items-center">
