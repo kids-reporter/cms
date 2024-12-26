@@ -4,7 +4,11 @@ import Link from 'next/link'
 import { Navigation } from '@/app/components/navigation'
 import { useScrollLevel, ScrollLevel } from '@/app/utils/custom-hook'
 import { CrossIcon, HamburgerIcon, SearchIcon, LoginIcon } from '@/app/icons'
-import { SUBSCRIBE_URL, SEARCH_PLACEHOLDER } from '@/app/constants'
+import {
+  SUBSCRIBE_URL,
+  SEARCH_PLACEHOLDER,
+  IS_LOGIN_ENABLED,
+} from '@/app/constants'
 import styles from './header.module.css'
 
 const slogan = (
@@ -226,7 +230,7 @@ export const StickyHeader = () => {
               <Navigation />
             </div>
             {search}
-            {login}
+            {IS_LOGIN_ENABLED && login}
             {about}
           </div>
         </div>
