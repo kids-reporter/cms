@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { GENERAL_DESCRIPTION } from '@/app/constants'
+import { notFound } from 'next/navigation'
+import { GENERAL_DESCRIPTION, IS_LOGIN_ENABLED } from '@/app/constants'
 import { LoginComponent } from '@/app/components/login'
 // import { isProduction } from '@/environment-variables'
 
@@ -11,6 +12,10 @@ export const metadata: Metadata = {
 
 // export const revalidate = isProduction ? 86400 : 0 // 1 day
 export default async function Login() {
+  if (!IS_LOGIN_ENABLED) {
+    notFound()
+  }
+
   return (
     <main className="flex flex-col justify-center items-center gap-10">
       <span>登入</span>
