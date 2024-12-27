@@ -20,6 +20,8 @@ const Divider = styled.div`
   width: 100%;
   border: 1px solid #eaeaea;
   margin-bottom: 20px;
+  margin-top: 16px;
+  maring-bottom: 16px;
 `
 
 // export const revalidate = isProduction ? 86400 : 0 // 1 day
@@ -28,7 +30,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const [tab, setTab] = useState(Tab.INFO)
 
   const infoTab = (
-    <div className="flex flex-row justify-center items-center">
+    <div className="flex flex-row justify-center items-start gap-8">
       <div className="flex flex-col justify-center items-start">
         <span>個人資料</span>
         {accountSettings?.info?.map((info, index) => {
@@ -107,10 +109,13 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   )
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-row gap-8">
+      <div className="flex flex-col justify-center items-start">
         <button
-          style={{ color: tab === Tab.INFO ? ThemeColor.BLUE : 'black' }}
+          style={{
+            padding: '8px 16px',
+            color: tab === Tab.INFO ? ThemeColor.BLUE : 'black',
+          }}
           onClick={() => {
             setTab(Tab.INFO)
           }}
@@ -118,7 +123,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           個人資料
         </button>
         <button
-          style={{ color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black' }}
+          style={{
+            padding: '8px 16px',
+            color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black',
+          }}
           onClick={() => {
             setTab(Tab.MY_READINGS)
           }}
@@ -126,7 +134,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           我的閱讀
         </button>
         <button
-          style={{ color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black' }}
+          style={{
+            padding: '8px 16px',
+            color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black',
+          }}
           onClick={() => {
             setTab(Tab.SETTINGS)
           }}
@@ -135,6 +146,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         </button>
         <button
           style={{
+            padding: '8px 16px',
             color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : 'black',
           }}
           onClick={() => {
@@ -144,12 +156,14 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           訂閱電子報
         </button>
         <Divider />
-        <Link href={'/logout'}>登出</Link>
+        <Link style={{ padding: '8px 16px' }} href={'/logout'}>
+          登出
+        </Link>
       </div>
       {tab === Tab.INFO && infoTab}
       {tab === Tab.MY_READINGS && myReadingsTab}
       {tab === Tab.SETTINGS && settingsTab}
       {tab === Tab.SUBSCRIBE_NEWSLETTER && subscribeNewsletterTab}
-    </>
+    </div>
   )
 }
