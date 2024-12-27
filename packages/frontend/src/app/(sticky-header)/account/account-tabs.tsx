@@ -30,31 +30,42 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const [tab, setTab] = useState(Tab.INFO)
 
   const infoTab = (
-    <div className="flex flex-row justify-center items-start gap-8">
-      <div className="flex flex-col justify-center items-start">
-        <span>個人資料</span>
-        {accountSettings?.info?.map((info, index) => {
-          return (
-            <>
-              <div
-                key={`account-field-${index}`}
-                className="flex flex-row justify-center items-center"
-              >
-                <span style={{ width: '120px' }}>{info?.label}</span>
-                <span>{info?.value}</span>
-              </div>
-              {index < accountSettings?.info?.length - 1 && <Divider />}
-            </>
-          )
-        })}
-      </div>
-      <div
-        className="cursor-pointer"
-        onClick={() => {
-          console.log('edit icon')
+    <div className="grow flex flex-col justify-center items-start">
+      <span
+        style={{
+          fontSize: '28px',
+          fontWeight: '700',
+          color: '#232323',
+          marginBottom: '32px',
         }}
       >
-        {EditAvatarIcon}
+        個人資料
+      </span>
+      <div className="w-full flex flex-row justify-center items-start gap-8">
+        <div className="grow flex flex-col justify-center items-start">
+          {accountSettings?.info?.map((info, index) => {
+            return (
+              <>
+                <div
+                  key={`account-field-${index}`}
+                  className="flex flex-row justify-center items-center"
+                >
+                  <span style={{ width: '120px' }}>{info?.label}</span>
+                  <span>{info?.value}</span>
+                </div>
+                {index < accountSettings?.info?.length - 1 && <Divider />}
+              </>
+            )
+          })}
+        </div>
+        <div
+          className="h-full flex flex-col cursor-pointer"
+          onClick={() => {
+            console.log('edit icon')
+          }}
+        >
+          {EditAvatarIcon}
+        </div>
       </div>
     </div>
   )
@@ -109,8 +120,14 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   )
 
   return (
-    <div className="flex flex-row gap-8">
-      <div className="flex flex-col justify-center items-start">
+    <div
+      style={{
+        width: 'var(--container-width)',
+        maxWidth: 'var(--normal-container-max-width)',
+      }}
+      className="flex flex-row gap-8 justify-start mt-16"
+    >
+      <div className="w-48 flex flex-col items-start">
         <button
           style={{
             padding: '8px 16px',
@@ -160,10 +177,12 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           登出
         </Link>
       </div>
-      {tab === Tab.INFO && infoTab}
-      {tab === Tab.MY_READINGS && myReadingsTab}
-      {tab === Tab.SETTINGS && settingsTab}
-      {tab === Tab.SUBSCRIBE_NEWSLETTER && subscribeNewsletterTab}
+      <div className="grow">
+        {tab === Tab.INFO && infoTab}
+        {tab === Tab.MY_READINGS && myReadingsTab}
+        {tab === Tab.SETTINGS && settingsTab}
+        {tab === Tab.SUBSCRIBE_NEWSLETTER && subscribeNewsletterTab}
+      </div>
     </div>
   )
 }
