@@ -34,6 +34,59 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
     console.log('select avatar file')
   }
 
+  const panelBtns = (
+    <div className="w-48 flex flex-col items-start">
+      <button
+        style={{
+          padding: '8px 16px',
+          color: tab === Tab.INFO ? ThemeColor.BLUE : 'black',
+        }}
+        onClick={() => {
+          setTab(Tab.INFO)
+        }}
+      >
+        個人資料
+      </button>
+      <button
+        style={{
+          padding: '8px 16px',
+          color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black',
+        }}
+        onClick={() => {
+          setTab(Tab.MY_READINGS)
+        }}
+      >
+        我的閱讀
+      </button>
+      <button
+        style={{
+          padding: '8px 16px',
+          color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black',
+        }}
+        onClick={() => {
+          setTab(Tab.SETTINGS)
+        }}
+      >
+        閱讀設定
+      </button>
+      <button
+        style={{
+          padding: '8px 16px',
+          color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : 'black',
+        }}
+        onClick={() => {
+          setTab(Tab.SUBSCRIBE_NEWSLETTER)
+        }}
+      >
+        訂閱電子報
+      </button>
+      <Divider />
+      <Link style={{ padding: '8px 16px' }} href={'/logout'}>
+        登出
+      </Link>
+    </div>
+  )
+
   const infoTab = (
     <div className="grow flex flex-col justify-center items-start">
       <span
@@ -79,7 +132,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </div>
     </div>
   )
+
   const myReadingsTab = <div></div>
+
   const settingsTab = (
     <div className="flex flex-col justify-center items-center">
       <span>閱讀設定</span>
@@ -112,6 +167,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </div>
     </div>
   )
+
   const subscribeNewsletterTab = (
     <div className="flex flex-col justify-center items-center">
       <span>訂閱電子報</span>
@@ -137,56 +193,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       }}
       className="flex flex-row gap-8 justify-start mt-16"
     >
-      <div className="w-48 flex flex-col items-start">
-        <button
-          style={{
-            padding: '8px 16px',
-            color: tab === Tab.INFO ? ThemeColor.BLUE : 'black',
-          }}
-          onClick={() => {
-            setTab(Tab.INFO)
-          }}
-        >
-          個人資料
-        </button>
-        <button
-          style={{
-            padding: '8px 16px',
-            color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black',
-          }}
-          onClick={() => {
-            setTab(Tab.MY_READINGS)
-          }}
-        >
-          我的閱讀
-        </button>
-        <button
-          style={{
-            padding: '8px 16px',
-            color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black',
-          }}
-          onClick={() => {
-            setTab(Tab.SETTINGS)
-          }}
-        >
-          閱讀設定
-        </button>
-        <button
-          style={{
-            padding: '8px 16px',
-            color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : 'black',
-          }}
-          onClick={() => {
-            setTab(Tab.SUBSCRIBE_NEWSLETTER)
-          }}
-        >
-          訂閱電子報
-        </button>
-        <Divider />
-        <Link style={{ padding: '8px 16px' }} href={'/logout'}>
-          登出
-        </Link>
-      </div>
+      {panelBtns}
       <div className="grow">
         {tab === Tab.INFO && infoTab}
         {tab === Tab.MY_READINGS && myReadingsTab}
