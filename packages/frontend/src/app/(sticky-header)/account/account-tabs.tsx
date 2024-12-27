@@ -1,7 +1,9 @@
 'use client'
 import { useState } from 'react'
+import styled from 'styled-components'
 import Link from 'next/link'
 import { EditAvatarIcon } from '@/app/icons'
+import { ThemeColor } from '@/app/constants'
 
 enum Tab {
   INFO,
@@ -10,39 +12,48 @@ enum Tab {
   SUBSCRIBE_NEWSLETTER,
 }
 
-const fieldMockup = {
-  name: '姓名',
-  email: '電子信箱',
-  joinDate: '加入日期',
+export type AccountSettings = {
+  info: { label: string; value: string }[]
 }
 
-const valueMockup = {
-  name: '孫小美',
-  email: 'user@email.com',
-  joinDate: '2023/09/01',
-}
+const Divider = styled.div`
+  width: 100%;
+  border: 1px solid #eaeaea;
+  margin-bottom: 20px;
+`
 
 // export const revalidate = isProduction ? 86400 : 0 // 1 day
-export const AccountTabs = () => {
+export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
+  const accountSettings = props.accoutSettings
   const [tab, setTab] = useState(Tab.INFO)
 
   const infoTab = (
     <div className="flex flex-row justify-center items-center">
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-start">
         <span>個人資料</span>
-        {Object.keys(fieldMockup).map((key, index) => {
+        {accountSettings?.info?.map((info, index) => {
           return (
-            <div
-              key={`account-field-${index}`}
-              className="flex flex-row justify-center items-center"
-            >
-              <span>{fieldMockup[key]}</span>
-              <span>{valueMockup[key]}</span>
-            </div>
+            <>
+              <div
+                key={`account-field-${index}`}
+                className="flex flex-row justify-center items-center"
+              >
+                <span style={{ width: '120px' }}>{info?.label}</span>
+                <span>{info?.value}</span>
+              </div>
+              {index < accountSettings?.info?.length - 1 && <Divider />}
+            </>
           )
         })}
       </div>
-      <div>{EditAvatarIcon}</div>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          console.log('edit icon')
+        }}
+      >
+        {EditAvatarIcon}
+      </div>
     </div>
   )
   const myReadingsTab = <div></div>
@@ -99,6 +110,7 @@ export const AccountTabs = () => {
     <>
       <div className="flex flex-col justify-center items-center">
         <button
+          style={{ color: tab === Tab.INFO ? ThemeColor.BLUE : 'black' }}
           onClick={() => {
             setTab(Tab.INFO)
           }}
@@ -106,6 +118,7 @@ export const AccountTabs = () => {
           個人資料
         </button>
         <button
+          style={{ color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black' }}
           onClick={() => {
             setTab(Tab.MY_READINGS)
           }}
@@ -113,6 +126,7 @@ export const AccountTabs = () => {
           我的閱讀
         </button>
         <button
+          style={{ color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black' }}
           onClick={() => {
             setTab(Tab.SETTINGS)
           }}
@@ -120,12 +134,16 @@ export const AccountTabs = () => {
           閱讀設定
         </button>
         <button
+          style={{
+            color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : 'black',
+          }}
           onClick={() => {
             setTab(Tab.SUBSCRIBE_NEWSLETTER)
           }}
         >
           訂閱電子報
         </button>
+        <Divider />
         <Link href={'/logout'}>登出</Link>
       </div>
       {tab === Tab.INFO && infoTab}
