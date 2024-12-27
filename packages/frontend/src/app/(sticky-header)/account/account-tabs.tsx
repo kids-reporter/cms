@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { EditAvatarIcon } from '@/app/icons'
@@ -27,7 +27,12 @@ const Divider = styled.div`
 // export const revalidate = isProduction ? 86400 : 0 // 1 day
 export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const accountSettings = props.accoutSettings
+  const fileInputRef = useRef<HTMLInputElement>()
   const [tab, setTab] = useState(Tab.INFO)
+
+  const handleAvtarFileChange = () => {
+    console.log('select avatar file')
+  }
 
   const infoTab = (
     <div className="grow flex flex-col justify-center items-start">
@@ -60,12 +65,17 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         </div>
         <div
           className="h-full flex flex-col cursor-pointer"
-          onClick={() => {
-            console.log('edit icon')
-          }}
+          onClick={() => fileInputRef?.current?.click()}
         >
           {EditAvatarIcon}
         </div>
+        <input
+          onChange={handleAvtarFileChange}
+          multiple={false}
+          ref={fileInputRef}
+          type="file"
+          hidden
+        />
       </div>
     </div>
   )
