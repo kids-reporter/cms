@@ -78,6 +78,8 @@ const Divider = styled.div`
   maring-bottom: 16px;
 `
 
+const grayColor = '#F8F8F8'
+
 const newsletterPreview = ''
 const newsletterSubscription = ''
 
@@ -235,7 +237,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         </div>
         <div
           className="flex flex-col px-6 py-5 gap-2"
-          style={{ background: '#F8F8F8' }}
+          style={{ background: grayColor }}
         >
           <SubTitle>思辨題數量</SubTitle>
           <div className="flex flex-row">
@@ -278,22 +280,47 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const subscribeNewsletterTab = (
     <div className="flex flex-col justify-center items-start">
       <Title>訂閱電子報</Title>
-      <div className="flex flex-row justify-center items-start border">
+      <div className="flex flex-row justify-center items-start border rounded-xl p-8">
         <div className="flex flex-row justify-center items-center gap-4">
           <img src="/assets/images/kids_newsletter_subscription.png" />
           <div className="flex flex-col">
-            <div className="flex flex-row">
+            <div className="flex flex-row justify-start items-center gap-2">
               <SubTitle>報導仔新聞聯絡簿</SubTitle>
-              <span>每月</span>
+              <div
+                style={{
+                  color: ThemeColor.BLUE,
+                  background: '#F1F1F1',
+                  padding: '2px 4px',
+                }}
+              >
+                每月
+              </div>
             </div>
             <span>
               兒少新聞平台
-              <a href={KIDS_URL_ORIGIN}>《少年報導者》的最新專題和活動消息</a>
-              ，就讓可愛的報導仔來告訴你！
+              <a
+                style={{ textDecoration: 'underline', color: '#8E8E8E' }}
+                href={KIDS_URL_ORIGIN}
+              >
+                《少年報導者》
+              </a>
+              的最新專題和活動消息，就讓可愛的報導仔來告訴你！
             </span>
           </div>
-          <Link href={newsletterPreview}>預覽</Link>
-          <Link href={newsletterSubscription}>前往訂閱</Link>
+          <Link
+            style={{ color: ThemeColor.BLUE }}
+            className="border rounded-full"
+            href={newsletterPreview}
+          >
+            預覽
+          </Link>
+          <Link
+            style={{ color: 'white', background: ThemeColor.BLUE }}
+            className="border rounded-full"
+            href={newsletterSubscription}
+          >
+            前往訂閱
+          </Link>
         </div>
       </div>
     </div>
