@@ -162,7 +162,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <Description>
             在每篇文章的起始處，加入能引起小讀者興趣的元件，在開場就抓住他的注意力！
           </Description>
-          <span>開啟</span>
+          <span>
+            {accountSettings.settings.isGuideEnabled ? '開啟' : '關閉'}
+          </span>
         </div>
       </div>
       <Divider />
@@ -172,7 +174,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <Description>
             在每篇文章的結尾處，加入思辨題或選擇題，透過答題互動來強化小讀者的吸收。
           </Description>
-          <span>開啟</span>
+          <span>
+            {accountSettings.settings.qa.isQAEnabled ? '開啟' : '關閉'}
+          </span>
         </div>
         <div style={{ padding: '10px', background: '#F8F8F8' }}>
           <SubTitle>思辨題數量</SubTitle>
@@ -191,7 +195,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <Description>
             針對思辨能力較強的小讀者，推薦與文章主題相關的《報導者》文章。
           </Description>
-          <span>開啟</span>
+          <span>
+            {accountSettings.settings.isRecommendationEnabled ? '開啟' : '關閉'}
+          </span>
         </div>
       </div>
     </div>
