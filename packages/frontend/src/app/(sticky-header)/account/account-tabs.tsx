@@ -284,9 +284,11 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         <div className="flex flex-row justify-center items-center gap-4">
           <div className="flex flex-row justify-center items-center gap-4">
             <img src="/assets/images/kids_newsletter_subscription.png" />
-            <div className="flex flex-col justify-center items-start">
+            <div className="flex flex-col justify-center items-start gap-1">
               <div className="flex flex-row justify-start items-center gap-2">
-                <SubTitle>報導仔新聞聯絡簿</SubTitle>
+                <SubTitle style={{ fontSize: '18px' }}>
+                  報導仔新聞聯絡簿
+                </SubTitle>
                 <div
                   style={{
                     color: ThemeColor.BLUE,
