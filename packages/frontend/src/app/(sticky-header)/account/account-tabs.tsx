@@ -63,7 +63,7 @@ const Input = styled.input`
   position: absolute;
 
   &:checked + ${Switch} {
-    background: ${(props) => (props.disabled ? 'gray' : 'gray')};
+    background: ${(props) => (props.disabled ? 'gray' : ThemeColor.BLUE)};
     &:before {
       transform: translate(20px, -50%);
     }
@@ -280,7 +280,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const subscribeNewsletterTab = (
     <div className="flex flex-col justify-center items-start">
       <Title>訂閱電子報</Title>
-      <div className="flex flex-row justify-center items-start border rounded-xl p-8">
+      <div className="flex flex-row justify-center items-start border-2 rounded-3xl p-8">
         <div className="flex flex-row justify-center items-center gap-4">
           <img src="/assets/images/kids_newsletter_subscription.png" />
           <div className="flex flex-col">
@@ -308,15 +308,25 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             </span>
           </div>
           <Link
-            style={{ color: ThemeColor.BLUE }}
-            className="border rounded-full"
+            style={{
+              fontWeight: '700',
+              fontSize: '18px',
+              borderColor: ThemeColor.BLUE,
+              borderWidth: '2px',
+            }}
+            className="rounded-full py-3 px-10"
             href={newsletterPreview}
           >
             預覽
           </Link>
           <Link
-            style={{ color: 'white', background: ThemeColor.BLUE }}
-            className="border rounded-full"
+            style={{
+              fontWeight: '700',
+              fontSize: '18px',
+              color: 'white',
+              background: ThemeColor.BLUE,
+            }}
+            className="rounded-full py-3 px-10"
             href={newsletterSubscription}
           >
             前往訂閱
