@@ -282,55 +282,59 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       <Title>訂閱電子報</Title>
       <div className="flex flex-row justify-center items-start border-2 rounded-3xl p-8">
         <div className="flex flex-row justify-center items-center gap-4">
-          <img src="/assets/images/kids_newsletter_subscription.png" />
-          <div className="flex flex-col">
-            <div className="flex flex-row justify-start items-center gap-2">
-              <SubTitle>報導仔新聞聯絡簿</SubTitle>
-              <div
-                style={{
-                  color: ThemeColor.BLUE,
-                  background: '#F1F1F1',
-                  padding: '2px 4px',
-                }}
-              >
-                每月
+          <div className="flex flex-row justify-center items-center gap-4">
+            <img src="/assets/images/kids_newsletter_subscription.png" />
+            <div className="flex flex-col justify-center items-start">
+              <div className="flex flex-row justify-start items-center gap-2">
+                <SubTitle>報導仔新聞聯絡簿</SubTitle>
+                <div
+                  style={{
+                    color: ThemeColor.BLUE,
+                    background: '#F1F1F1',
+                    padding: '2px 4px',
+                  }}
+                >
+                  每月
+                </div>
               </div>
+              <span>
+                兒少新聞平台
+                <a
+                  style={{ textDecoration: 'underline', color: '#8E8E8E' }}
+                  href={KIDS_URL_ORIGIN}
+                >
+                  《少年報導者》
+                </a>
+                的最新專題和活動消息，就讓可愛的報導仔來告訴你！
+              </span>
             </div>
-            <span>
-              兒少新聞平台
-              <a
-                style={{ textDecoration: 'underline', color: '#8E8E8E' }}
-                href={KIDS_URL_ORIGIN}
-              >
-                《少年報導者》
-              </a>
-              的最新專題和活動消息，就讓可愛的報導仔來告訴你！
-            </span>
           </div>
-          <Link
-            style={{
-              fontWeight: '700',
-              fontSize: '18px',
-              borderColor: ThemeColor.BLUE,
-              borderWidth: '2px',
-            }}
-            className="rounded-full py-3 px-10"
-            href={newsletterPreview}
-          >
-            預覽
-          </Link>
-          <Link
-            style={{
-              fontWeight: '700',
-              fontSize: '18px',
-              color: 'white',
-              background: ThemeColor.BLUE,
-            }}
-            className="rounded-full py-3 px-10"
-            href={newsletterSubscription}
-          >
-            前往訂閱
-          </Link>
+          <div className="flex flex-row justify-center items-center gap-4">
+            <Link
+              style={{
+                fontWeight: '700',
+                fontSize: '18px',
+                borderColor: ThemeColor.BLUE,
+                borderWidth: '2px',
+              }}
+              className="rounded-full py-3 px-10"
+              href={newsletterPreview}
+            >
+              預覽
+            </Link>
+            <Link
+              style={{
+                fontWeight: '700',
+                fontSize: '18px',
+                color: 'white',
+                background: ThemeColor.BLUE,
+              }}
+              className="rounded-full py-3 px-10"
+              href={newsletterSubscription}
+            >
+              前往訂閱
+            </Link>
+          </div>
         </div>
       </div>
     </div>
