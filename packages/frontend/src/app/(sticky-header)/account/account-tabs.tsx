@@ -51,7 +51,6 @@ const isQAsEnabled = Array(3)
   .fill(0)
   .map((_, index) => index)
 
-// export const revalidate = isProduction ? 86400 : 0 // 1 day
 export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const accountSettings = props.accoutSettings
   const fileInputRef = useRef<HTMLInputElement>()
