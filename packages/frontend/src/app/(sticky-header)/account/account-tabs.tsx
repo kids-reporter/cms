@@ -82,9 +82,7 @@ const Divider = styled.div`
 const newsletterPreview = ''
 const newsletterSubscription = ''
 
-const isQAsEnabled = Array(3)
-  .fill(0)
-  .map((_, index) => index)
+const isQAsEnabled = Array(3).fill(false)
 
 export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const accountSettings = props.accoutSettings
@@ -194,12 +192,14 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const settingsTab = (
     <div className="flex flex-col justify-center items-start">
       <Title>閱讀設定</Title>
-      <div className="flex flex-col">
-        <SubTitle>文章前引導</SubTitle>
-        <div className="flex flex-row">
+      <div className="flex flex-row">
+        <div className="flex flex-col">
+          <SubTitle>文章前引導</SubTitle>
           <Description>
             在每篇文章的起始處，加入能引起小讀者興趣的元件，在開場就抓住他的注意力！
           </Description>
+        </div>
+        <div className="flex flex-col">
           <span>
             {accountSettings.settings.isGuideEnabled ? '開啟' : '關閉'}
           </span>
@@ -213,12 +213,14 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         </div>
       </div>
       <Divider />
-      <div className="flex flex-col">
-        <SubTitle>文章後QA</SubTitle>
-        <div className="flex flex-row">
+      <div className="flex flex-row">
+        <div className="flex flex-col">
+          <SubTitle>文章後QA</SubTitle>
           <Description>
             在每篇文章的結尾處，加入思辨題或選擇題，透過答題互動來強化小讀者的吸收。
           </Description>
+        </div>
+        <div className="flex flex-col items-center">
           <span>
             {accountSettings.settings.qa.isQAEnabled ? '開啟' : '關閉'}
           </span>
@@ -230,14 +232,17 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           />
           <Switch disabled={false} />
         </div>
-        <div style={{ padding: '10px', background: '#F8F8F8' }}>
+        <div
+          className="flex flex-col px-6 py-5 gap-2"
+          style={{ background: '#F8F8F8' }}
+        >
           <SubTitle>思辨題數量</SubTitle>
           <div className="flex flex-row">
             <span>無</span>
             {isQAsEnabled.map((isEnabled, index) => {
               return (
                 <>
-                  <Input type="checkbox" checked={true} />
+                  <Input type="checkbox" checked={isEnabled} />
                   <span key={`qa-set-${index}`}>{index + 1}題</span>
                 </>
               )
@@ -248,20 +253,24 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       <Divider />
       <div className="flex flex-col">
         <SubTitle>推薦《報導者》相關文章</SubTitle>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center">
           <Description>
             針對思辨能力較強的小讀者，推薦與文章主題相關的《報導者》文章。
           </Description>
-          <span>
-            {accountSettings.settings.isRecommendationEnabled ? '開啟' : '關閉'}
-          </span>
-          <Input
-            type="checkbox"
-            disabled={false}
-            checked={accountSettings.settings.isRecommendationEnabled}
-            onChange={handleQANumSelectChange}
-          />
-          <Switch disabled={false} />
+          <div className="flex flex-col">
+            <span>
+              {accountSettings.settings.isRecommendationEnabled
+                ? '開啟'
+                : '關閉'}
+            </span>
+            <Input
+              type="checkbox"
+              disabled={false}
+              checked={accountSettings.settings.isRecommendationEnabled}
+              onChange={handleQANumSelectChange}
+            />
+            <Switch disabled={false} />
+          </div>
         </div>
       </div>
     </div>
