@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { EditAvatarIcon } from '@/app/icons'
-import { ThemeColor } from '@/app/constants'
+import { ThemeColor, KIDS_URL_ORIGIN } from '@/app/constants'
 
 enum Tab {
   INFO,
@@ -215,7 +215,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
               <span>每月</span>
             </div>
             <span>
-              兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
+              兒少新聞平台
+              <a href={KIDS_URL_ORIGIN}>《少年報導者》的最新專題和活動消息</a>
+              ，就讓可愛的報導仔來告訴你！
             </span>
           </div>
           <Link href={newsletterPreview}>預覽</Link>

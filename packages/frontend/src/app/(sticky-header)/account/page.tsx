@@ -17,7 +17,7 @@ const mockup: AccountSettings = {
   ],
   settings: {
     isGuideEnabled: true,
-    qa: { isQAEnabled: true, qaNum: 1 },
+    qa: { isQAEnabled: true, selectedNum: 1 },
     isRecommendationEnabled: false,
   },
 }
