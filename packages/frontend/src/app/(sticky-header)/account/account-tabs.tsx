@@ -200,15 +200,18 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const subscribeNewsletterTab = (
     <div className="flex flex-col justify-center items-start">
       <Title>訂閱電子報</Title>
-      <div className="flex flex-col justify-center items-start border">
-        <div className="flex flex-row">
-          <SubTitle>報導仔新聞聯絡簿</SubTitle>
-          <span>每月</span>
-        </div>
-        <div className="flex flex-row">
-          <span>
-            兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
-          </span>
+      <div className="flex flex-row justify-center items-start border">
+        <div className="flex flex-row justify-center items-center gap-4">
+          <img src="/assets/images/kids_newsletter_subscription.png" />
+          <div className="flex flex-col">
+            <div className="flex flex-row">
+              <SubTitle>報導仔新聞聯絡簿</SubTitle>
+              <span>每月</span>
+            </div>
+            <span>
+              兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
+            </span>
+          </div>
           <Link href={newsletterPreview}>預覽</Link>
           <Link href={newsletterSubscription}>前往訂閱</Link>
         </div>
