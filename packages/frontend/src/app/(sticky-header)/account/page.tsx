@@ -15,6 +15,11 @@ const mockup: AccountSettings = {
     { label: '電子信箱', value: 'user@email.com' },
     { label: '加入日期', value: '2023/09/01' },
   ],
+  settings: {
+    isGuideEnabled: true,
+    qa: { isQAEnabled: true, qaNum: 1 },
+    isRecommendationEnabled: false,
+  },
 }
 
 // export const revalidate = isProduction ? 86400 : 0 // 1 day

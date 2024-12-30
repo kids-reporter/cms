@@ -14,7 +14,27 @@ enum Tab {
 
 export type AccountSettings = {
   info: { label: string; value: string }[]
+  settings: any
 }
+
+const Title = styled.span`
+  font-size: 28px;
+  font-weight: 700;
+  color: #232323;
+  margin-bottom: 32px;
+`
+
+const SubTitle = styled.span`
+  font-size: 16px;
+  font-weight: 700;
+  color: #232323;
+`
+
+const Description = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+  color: #232323;
+`
 
 const Divider = styled.div`
   width: 100%;
@@ -23,6 +43,10 @@ const Divider = styled.div`
   margin-top: 16px;
   maring-bottom: 16px;
 `
+
+const isQAsEnabled = Array(3)
+  .fill(0)
+  .map((_, index) => index)
 
 // export const revalidate = isProduction ? 86400 : 0 // 1 day
 export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
@@ -89,16 +113,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
 
   const infoTab = (
     <div className="grow flex flex-col justify-center items-start">
-      <span
-        style={{
-          fontSize: '28px',
-          fontWeight: '700',
-          color: '#232323',
-          marginBottom: '32px',
-        }}
-      >
-        個人資料
-      </span>
+      <Title>個人資料</Title>
       <div className="w-full flex flex-row justify-center items-start gap-8">
         <div className="grow flex flex-col justify-center items-start">
           {accountSettings?.info?.map((info, index) => {
@@ -136,41 +151,52 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const myReadingsTab = <div></div>
 
   const settingsTab = (
-    <div className="flex flex-col justify-center items-center">
-      <span>閱讀設定</span>
-      <div className="flex flex-row">
-        <div>
-          <span>文章前引導</span>
-          <span>
+    <div className="flex flex-col justify-center items-start">
+      <Title>閱讀設定</Title>
+      <div className="flex flex-col">
+        <SubTitle>文章前引導</SubTitle>
+        <div className="flex flex-row">
+          <Description>
             在每篇文章的起始處，加入能引起小讀者興趣的元件，在開場就抓住他的注意力！
-          </span>
+          </Description>
+          <span>開啟</span>
         </div>
-        <span>開啟</span>
       </div>
-      <div className="flex flex-row">
-        <div>
-          <span>文章後QA</span>
-          <span>
+      <Divider />
+      <div className="flex flex-col">
+        <SubTitle>文章後QA</SubTitle>
+        <div className="flex flex-row">
+          <Description>
             在每篇文章的結尾處，加入思辨題或選擇題，透過答題互動來強化小讀者的吸收。
-          </span>
+          </Description>
+          <span>開啟</span>
         </div>
-        <span>開啟</span>
+        <div style={{ padding: '10px', background: '#F8F8F8' }}>
+          <SubTitle>思辨題數量</SubTitle>
+          <div className="flex flex-row">
+            <span>無</span>
+            {isQAsEnabled.map((isEnabled, index) => {
+              return <span key={`qa-set-${index}`}>{index + 1}題</span>
+            })}
+          </div>
+        </div>
       </div>
-      <div className="flex flex-row">
-        <div>
-          <span>推薦《報導者》相關文章</span>
-          <span>
+      <Divider />
+      <div className="flex flex-col">
+        <SubTitle>推薦《報導者》相關文章</SubTitle>
+        <div className="flex flex-row">
+          <Description>
             針對思辨能力較強的小讀者，推薦與文章主題相關的《報導者》文章。
-          </span>
+          </Description>
+          <span>開啟</span>
         </div>
-        <span>開啟</span>
       </div>
     </div>
   )
 
   const subscribeNewsletterTab = (
     <div className="flex flex-col justify-center items-center">
-      <span>訂閱電子報</span>
+      <Title>訂閱電子報</Title>
       <div className="flex flex-row justify-center items-center">
         <div>
           <span>報導仔新聞聯絡簿</span>
