@@ -36,6 +36,41 @@ const Description = styled.span`
   color: #232323;
 `
 
+const Switch = styled.div`
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background: ${(props) => (props.disabled ? 'gray' : 'white')};
+  border-radius: 20px;
+  padding: 0px;
+  transition: 100ms ease-in-out;
+
+  &:before {
+    transition: 100ms ease-in-out;
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 20px;
+    top: 50%;
+    left: 2px;
+    background: white;
+    transform: translate(0, -50%);
+  }
+`
+
+const Input = styled.input`
+  opacity: 0;
+  position: absolute;
+
+  &:checked + ${Switch} {
+    background: ${(props) => (props.disabled ? 'gray' : 'white')};
+    &:before {
+      transform: translate(20px, -50%);
+    }
+  }
+`
+
 const Divider = styled.div`
   width: 100%;
   border: 1px solid #eaeaea;
@@ -58,6 +93,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
 
   const handleAvtarFileChange = () => {
     console.log('select avatar file')
+  }
+
+  const handleQANumSelectChange = () => {
+    console.log('select')
   }
 
   const panelBtns = (
@@ -182,7 +221,18 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <div className="flex flex-row">
             <span>無</span>
             {isQAsEnabled.map((isEnabled, index) => {
-              return <span key={`qa-set-${index}`}>{index + 1}題</span>
+              return (
+                <>
+                  <Input
+                    type="checkbox"
+                    disabled={true}
+                    checked={true}
+                    onChange={handleQANumSelectChange}
+                  />
+                  <Switch disabled={false} />
+                  <span key={`qa-set-${index}`}>{index + 1}題</span>
+                </>
+              )
             })}
           </div>
         </div>
