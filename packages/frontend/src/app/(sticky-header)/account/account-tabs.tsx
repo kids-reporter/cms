@@ -40,7 +40,7 @@ const Switch = styled.div`
   position: relative;
   width: 40px;
   height: 20px;
-  background: ${(props) => (props.disabled ? 'gray' : 'white')};
+  background: ${(props) => (props.disabled ? 'gray' : 'gray')};
   border-radius: 20px;
   padding: 0px;
   transition: 100ms ease-in-out;
@@ -64,7 +64,7 @@ const Input = styled.input`
   position: absolute;
 
   &:checked + ${Switch} {
-    background: ${(props) => (props.disabled ? 'gray' : 'white')};
+    background: ${(props) => (props.disabled ? 'gray' : 'gray')};
     &:before {
       transform: translate(20px, -50%);
     }
@@ -203,6 +203,13 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <span>
             {accountSettings.settings.isGuideEnabled ? '開啟' : '關閉'}
           </span>
+          <Input
+            type="checkbox"
+            disabled={false}
+            checked={accountSettings.settings.isGuideEnabled}
+            onChange={handleQANumSelectChange}
+          />
+          <Switch disabled={false} />
         </div>
       </div>
       <Divider />
@@ -215,6 +222,13 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <span>
             {accountSettings.settings.qa.isQAEnabled ? '開啟' : '關閉'}
           </span>
+          <Input
+            type="checkbox"
+            disabled={false}
+            checked={accountSettings.settings.qa.isQAEnabled}
+            onChange={handleQANumSelectChange}
+          />
+          <Switch disabled={false} />
         </div>
         <div style={{ padding: '10px', background: '#F8F8F8' }}>
           <SubTitle>思辨題數量</SubTitle>
@@ -223,13 +237,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             {isQAsEnabled.map((isEnabled, index) => {
               return (
                 <>
-                  <Input
-                    type="checkbox"
-                    disabled={true}
-                    checked={true}
-                    onChange={handleQANumSelectChange}
-                  />
-                  <Switch disabled={false} />
+                  <Input type="checkbox" checked={true} />
                   <span key={`qa-set-${index}`}>{index + 1}題</span>
                 </>
               )
@@ -247,6 +255,13 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <span>
             {accountSettings.settings.isRecommendationEnabled ? '開啟' : '關閉'}
           </span>
+          <Input
+            type="checkbox"
+            disabled={false}
+            checked={accountSettings.settings.isRecommendationEnabled}
+            onChange={handleQANumSelectChange}
+          />
+          <Switch disabled={false} />
         </div>
       </div>
     </div>
