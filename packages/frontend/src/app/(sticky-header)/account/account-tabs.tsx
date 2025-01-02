@@ -287,8 +287,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
     <div className="flex flex-col justify-center items-start">
       <Title>訂閱電子報</Title>
       <div className="max-w-4xl flex flex-row justify-center items-start border-2 rounded-3xl p-8">
-        <div className="flex flex-row justify-center items-center gap-4">
-          <div className="flex flex-row justify-center items-center gap-4">
+        <div className="flex lg:flex-row flex-col justify-center items-center gap-4">
+          <div className="flex md:flex-row flex-col justify-center items-center gap-4">
             <img src="/assets/images/kids_newsletter_subscription.png" />
             <div className="flex flex-col justify-center items-start gap-1">
               <div className="flex flex-row justify-start items-center gap-2">
@@ -354,7 +354,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         width: 'var(--container-width)',
         maxWidth: 'var(--normal-container-max-width)',
       }}
-      className="flex md:flex-row flex-col-reverse md:gap-8 gap-16 justify-start items-center mt-16"
+      className="flex md:flex-row flex-col-reverse md:gap-8 gap-16 justify-start items-start mt-16"
     >
       {panelBtns}
       <div className="grow w-full">
