@@ -201,7 +201,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const myReadingsTab = <div></div>
 
   const settingsTab = (
-    <div className="flex flex-col justify-center items-start">
+    <div className="w-full lg:max-w-4xl flex flex-col justify-center items-start">
       <Title>閱讀設定</Title>
       <div className="w-full flex flex-row gap-6">
         <div className="grow flex flex-col">
