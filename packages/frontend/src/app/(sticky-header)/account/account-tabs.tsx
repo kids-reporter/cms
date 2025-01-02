@@ -154,8 +154,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const infoTab = (
     <div className="grow flex flex-col justify-center items-start">
       <Title>個人資料</Title>
-      <div className="w-full flex flex-row justify-center items-start gap-8">
-        <div className="grow flex flex-col justify-center items-start">
+      <div className="w-full flex flex-row justify-start items-start gap-8">
+        <div className="max-w-full lg:max-w-3xl grow flex flex-col justify-center items-start">
           {accountSettings?.info?.map((info, index) => {
             return (
               <>
@@ -176,14 +176,14 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           onClick={() => fileInputRef?.current?.click()}
         >
           {EditAvatarIcon}
+          <input
+            onChange={handleAvtarFileChange}
+            multiple={false}
+            ref={fileInputRef}
+            type="file"
+            hidden
+          />
         </div>
-        <input
-          onChange={handleAvtarFileChange}
-          multiple={false}
-          ref={fileInputRef}
-          type="file"
-          hidden
-        />
       </div>
     </div>
   )
@@ -348,7 +348,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         width: 'var(--container-width)',
         maxWidth: 'var(--normal-container-max-width)',
       }}
-      className="flex flex-row gap-8 justify-start mt-16"
+      className="flex md:flex-row flex-col-reverse gap-8 justify-start mt-16"
     >
       {panelBtns}
       <div className="grow">
