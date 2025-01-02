@@ -99,10 +99,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   }
 
   const panelBtns = (
-    <div className="w-48 flex flex-col items-start">
+    <div className="w-full md:w-48 flex flex-col items-start">
       <button
         style={{
-          padding: '8px 16px',
+          padding: '8px 0px',
           color: tab === Tab.INFO ? ThemeColor.BLUE : 'black',
         }}
         onClick={() => {
@@ -113,7 +113,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </button>
       <button
         style={{
-          padding: '8px 16px',
+          padding: '8px 0px',
           color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black',
         }}
         onClick={() => {
@@ -124,7 +124,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </button>
       <button
         style={{
-          padding: '8px 16px',
+          padding: '8px 0px',
           color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black',
         }}
         onClick={() => {
@@ -135,7 +135,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </button>
       <button
         style={{
-          padding: '8px 16px',
+          padding: '8px 0px',
           color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : 'black',
         }}
         onClick={() => {
@@ -145,7 +145,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         訂閱電子報
       </button>
       <Divider />
-      <Link style={{ padding: '8px 16px' }} href={'/logout'}>
+      <Link style={{ padding: '8px 0px' }} href={'/logout'}>
         登出
       </Link>
     </div>
@@ -154,7 +154,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const infoTab = (
     <div className="grow flex flex-col justify-center items-start">
       <div className="w-full flex md:flex-row flex-col-reverse md:justify-start justify-center md:items-stretch items-center gap-8">
-        <div className="max-w-full lg:max-w-3xl grow flex flex-col justify-center items-start">
+        <div className="w-full lg:max-w-3xl grow flex flex-col justify-center items-start">
           <Title>個人資料</Title>
           {accountSettings?.info?.map((info, index) => {
             return (
@@ -348,10 +348,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         width: 'var(--container-width)',
         maxWidth: 'var(--normal-container-max-width)',
       }}
-      className="flex md:flex-row flex-col-reverse gap-8 justify-start mt-16"
+      className="flex md:flex-row flex-col-reverse gap-8 justify-start items-center mt-16"
     >
       {panelBtns}
-      <div className="grow">
+      <div className="grow w-full">
         {tab === Tab.INFO && infoTab}
         {tab === Tab.MY_READINGS && myReadingsTab}
         {tab === Tab.SETTINGS && settingsTab}
