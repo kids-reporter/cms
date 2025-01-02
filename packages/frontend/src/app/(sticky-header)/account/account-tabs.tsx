@@ -102,8 +102,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
     <div className="w-full md:w-48 flex flex-col items-start">
       <button
         style={{
+          fontSize: '16px',
           padding: '8px 0px',
-          color: tab === Tab.INFO ? ThemeColor.BLUE : 'black',
+          color: tab === Tab.INFO ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
           setTab(Tab.INFO)
@@ -113,8 +114,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </button>
       <button
         style={{
+          fontSize: '16px',
           padding: '8px 0px',
-          color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : 'black',
+          color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
           setTab(Tab.MY_READINGS)
@@ -124,8 +126,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </button>
       <button
         style={{
+          fontSize: '16px',
           padding: '8px 0px',
-          color: tab === Tab.SETTINGS ? ThemeColor.BLUE : 'black',
+          color: tab === Tab.SETTINGS ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
           setTab(Tab.SETTINGS)
@@ -135,8 +138,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </button>
       <button
         style={{
+          fontSize: '16px',
           padding: '8px 0px',
-          color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : 'black',
+          color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
           setTab(Tab.SUBSCRIBE_NEWSLETTER)
@@ -145,7 +149,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         訂閱電子報
       </button>
       <Divider />
-      <Link style={{ padding: '8px 0px' }} href={'/logout'}>
+      <Link style={{ fontSize: '16px', padding: '8px 0px' }} href={'/logout'}>
         登出
       </Link>
     </div>
@@ -163,7 +167,9 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
                   key={`account-field-${index}`}
                   className="flex flex-row justify-center items-center"
                 >
-                  <span style={{ width: '120px' }}>{info?.label}</span>
+                  <span style={{ width: '120px', color: '#575757' }}>
+                    {info?.label}
+                  </span>
                   <span>{info?.value}</span>
                 </div>
                 {index < accountSettings?.info?.length - 1 && <Divider />}
@@ -348,7 +354,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         width: 'var(--container-width)',
         maxWidth: 'var(--normal-container-max-width)',
       }}
-      className="flex md:flex-row flex-col-reverse gap-8 justify-start items-center mt-16"
+      className="flex md:flex-row flex-col-reverse md:gap-8 gap-16 justify-start items-center mt-16"
     >
       {panelBtns}
       <div className="grow w-full">
