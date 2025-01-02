@@ -251,13 +251,31 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         >
           <SubTitle>思辨題數量</SubTitle>
           <div className="flex flex-row">
-            <span>無</span>
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                value=""
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                無
+              </label>
+            </div>
             {isQAsEnabled.map((isEnabled, index) => {
               return (
-                <>
-                  <Input type="checkbox" checked={isEnabled} />
-                  <span key={`qa-set-${index}`}>{index + 1}題</span>
-                </>
+                <div
+                  key={`qa-checkbox-${index}`}
+                  className="flex items-center mb-4"
+                >
+                  <input
+                    type="checkbox"
+                    value={isEnabled}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    {index + 1}題
+                  </label>
+                </div>
               )
             })}
           </div>
