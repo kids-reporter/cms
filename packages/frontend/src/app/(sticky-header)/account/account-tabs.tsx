@@ -28,11 +28,15 @@ const SubTitle = styled.span`
   font-size: 16px;
   font-weight: 700;
   color: #232323;
+  letter-spacing: 0.05em;
+  line-height: 25.6px;
 `
 
 const Description = styled.span`
   font-size: 16px;
-  color: #232323;
+  color: #575757;
+  letter-spacing: 0.05em;
+  line-height: 25.6px;
 `
 
 const Switch = styled.div`
@@ -74,8 +78,8 @@ const Divider = styled.div`
   width: 100%;
   border: 1px solid #eaeaea;
   margin-bottom: 20px;
-  margin-top: 16px;
-  maring-bottom: 16px;
+  margin-top: 24px;
+  maring-bottom: 24px;
 `
 
 const grayColor = '#F8F8F8'
@@ -199,7 +203,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const settingsTab = (
     <div className="flex flex-col justify-center items-start">
       <Title>閱讀設定</Title>
-      <div className="w-full flex flex-row">
+      <div className="w-full flex flex-row gap-6">
         <div className="grow flex flex-col">
           <SubTitle>文章前引導</SubTitle>
           <Description>
@@ -221,7 +225,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       </div>
       <Divider />
       <div className="w-full flex flex-col">
-        <div className="w-full flex flex-row">
+        <div className="w-full flex flex-row gap-6">
           <div className="grow flex flex-col">
             <SubTitle>文章後QA</SubTitle>
             <Description>
@@ -242,7 +246,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           </div>
         </div>
         <div
-          className="flex flex-col px-6 py-5 gap-2"
+          className="flex flex-col px-6 py-5 gap-2 mt-4 rounded-2xl"
           style={{ background: grayColor }}
         >
           <SubTitle>思辨題數量</SubTitle>
@@ -260,7 +264,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         </div>
       </div>
       <Divider />
-      <div className="w-full flex flex-row">
+      <div className="w-full flex flex-row gap-6">
         <div className="grow flex flex-col items-start">
           <SubTitle>推薦《報導者》相關文章</SubTitle>
           <Description>
