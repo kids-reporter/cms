@@ -286,7 +286,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const subscribeNewsletterTab = (
     <div className="flex flex-col justify-center items-start">
       <Title>訂閱電子報</Title>
-      <div className="flex flex-row justify-center items-start border-2 rounded-3xl p-8">
+      <div className="max-w-4xl flex flex-row justify-center items-start border-2 rounded-3xl p-8">
         <div className="flex flex-row justify-center items-center gap-4">
           <div className="flex flex-row justify-center items-center gap-4">
             <img src="/assets/images/kids_newsletter_subscription.png" />
@@ -305,7 +305,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
                   每月
                 </div>
               </div>
-              <span>
+              <span style={{ color: '#4A4A4A' }}>
                 兒少新聞平台
                 <a
                   style={{ textDecoration: 'underline', color: '#8E8E8E' }}
@@ -325,7 +325,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
                 borderColor: ThemeColor.BLUE,
                 borderWidth: '2px',
               }}
-              className="rounded-full py-3 px-10"
+              className="rounded-full py-3 px-10 text-nowrap"
               href={newsletterPreview}
             >
               預覽
@@ -337,7 +337,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
                 color: 'white',
                 background: ThemeColor.BLUE,
               }}
-              className="rounded-full py-3 px-10"
+              className="rounded-full py-3 px-10 text-nowrap"
               href={newsletterSubscription}
             >
               前往訂閱
