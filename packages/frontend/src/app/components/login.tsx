@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { KIDS_URL_ORIGIN } from '@/app/constants'
 import { Arrow, Mailbox, MailboxWithArrow } from '@/app/icons/miscellaneous'
 
 const SVGIcon = styled.svg`
@@ -208,27 +209,47 @@ const LoginTemplateComponent = (
     )
 
     const subscribeNewsletter = (
-      <div className="flex flex-col items-center justify-center">
-        <span>註冊成功 現在訂閱電子報</span>
-        <span>報導仔新聞聯絡簿</span>
-        <span>每月</span>
-        <span>
+      <div className="flex flex-col items-center justify-center border border-2 border-gray-200 rounded-lg">
+        <span
+          style={{ fontSize: '22px' }}
+          className="block text-center font-bold mx-4 my-6"
+        >
+          註冊成功
+          <br />
+          現在訂閱電子報
+        </span>
+        <div className="flex flex-row justify-start items-center gap-2 mb-1">
+          <span style={{ fontSize: '16px' }} className="font-bold">
+            報導仔新聞聯絡簿
+          </span>
+          <div
+            style={{
+              color: '#F76977',
+              background: '#F1F1F1',
+              padding: '2px 4px',
+              fontSize: '14px',
+            }}
+          >
+            每月
+          </div>
+        </div>
+        <span style={{ color: '#808080', fontSize: '14px' }} className="mb-14">
           兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
         </span>
-        <button
-          onClick={() => {
-            setStep(LoginStep.SUBSCRIBE_NEWSLETTER)
-          }}
+        <Link
+          className="w-44 py-2 rounded-full mb-6 text-center font-bold"
+          style={{ color: 'white', backgroundColor: '#404040' }}
+          href={''}
         >
           前往訂閱
-        </button>
-        <button
-          onClick={() => {
-            setStep(LoginStep.SUBSCRIBE_NEWSLETTER)
-          }}
+        </Link>
+        <Link
+          style={{ color: '#808080', fontSize: '14px' }}
+          className="underline"
+          href={KIDS_URL_ORIGIN}
         >
           不訂閱，回首頁
-        </button>
+        </Link>
       </div>
     )
 
