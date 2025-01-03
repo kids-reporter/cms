@@ -43,6 +43,8 @@ const LoginTemplateComponent = (
     const [email, setEmail] = useState('')
     const [otp, setOTP] = useState('')
 
+    const isInvalidOTP = otp !== ''
+
     const handleEmailChange = (e) => {
       setEmail(e.target.value)
     }
@@ -169,13 +171,20 @@ const LoginTemplateComponent = (
             fontWeight: '400',
             lineHeight: '36px',
             letterSpacing: '0.25em',
+            borderColor: isInvalidOTP ? '#F56977' : 'rgb(156 163 175)',
           }}
-          className="w-full text-2xl mx-1 mb-2 py-2 border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
+          className="w-full text-2xl mx-1 mb-2 py-2 border-b-2 focus:outline-none placeholder-gray-300 text-center"
           value={otp}
           onChange={handleOTPChange}
         />
-        <span style={{ color: '#404040', fontSize: '12px' }} className="mb-10">
-          請在15分鐘內輸入
+        <span
+          style={{
+            color: isInvalidOTP ? '#F56977' : '#404040',
+            fontSize: '12px',
+          }}
+          className="mb-10"
+        >
+          {isInvalidOTP ? '驗證碼錯誤，請重新輸入' : '請在15分鐘內輸入'}
         </span>
         <button
           className="w-full py-2 rounded-full mb-6"
