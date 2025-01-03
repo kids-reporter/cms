@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { Arrow, Mailbox } from '@/app/icons/miscellaneous'
+import { Arrow, Mailbox, MailboxWithArrow } from '@/app/icons/miscellaneous'
 
 const SVGIcon = styled.svg`
   height: 24px;
@@ -41,9 +41,14 @@ const LoginTemplateComponent = (
   const TemplateComponent = () => {
     const [step, setStep] = useState(LoginStep.INITIAL)
     const [email, setEmail] = useState('')
+    const [otp, setOTP] = useState('')
 
     const handleEmailChange = (e) => {
       setEmail(e.target.value)
+    }
+
+    const handleOTPChange = (e) => {
+      setOTP(e.target.value)
     }
 
     const loginBtns = (
@@ -115,7 +120,7 @@ const LoginTemplateComponent = (
           我們會將驗證碼寄送給您
         </span>
         <input
-          className="w-full mx-1 mb-10 py-2 border-b-2 border-black focus:outline-none placeholder-gray-300 text-center"
+          className="w-full mx-1 mb-10 py-2 border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
           placeholder="example@mail.com"
           value={email}
           onChange={handleEmailChange}
@@ -143,13 +148,38 @@ const LoginTemplateComponent = (
     )
 
     const enterOTP = (
-      <div className="flex flex-col items-center justify-center">
-        <img alt="email" src="/assets/images/letter.svg" />
-        <span>輸入驗證碼 </span>
-        <span>我們會將驗證碼寄送給您</span>
-        <input placeholder="123456" value=""></input>
-        <span>請在15分鐘內輸入</span>
+      <div className="w-72 flex flex-col items-center justify-center">
+        <div
+          style={{ backgroundColor: '#f1f1f1' }}
+          className="w-16 h-16 flex flex-col justify-center items-center rounded-full mb-6"
+        >
+          {MailboxWithArrow}
+        </div>
+        <span style={{ fontSize: '28px' }} className="font-bold mb-2">
+          輸入驗證碼
+        </span>
+        <span style={{ color: '#808080', fontSize: '16px' }} className="mb-10">
+          已將驗證碼寄到
+          <br />
+          user@mail.com
+        </span>
+        <input
+          style={{
+            fontFamily: 'Roboto Slab',
+            fontWeight: '400',
+            lineHeight: '36px',
+            letterSpacing: '0.25em',
+          }}
+          className="w-full text-2xl mx-1 mb-2 py-2 border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
+          value={otp}
+          onChange={handleOTPChange}
+        />
+        <span style={{ color: '#404040', fontSize: '12px' }} className="mb-10">
+          請在15分鐘內輸入
+        </span>
         <button
+          className="w-full py-2 rounded-full mb-6"
+          style={{ color: 'white', backgroundColor: '#404040' }}
           onClick={() => {
             setStep(LoginStep.SUBSCRIBE_NEWSLETTER)
           }}
@@ -157,8 +187,10 @@ const LoginTemplateComponent = (
           確認
         </button>
         <button
+          className="flex flex-row justify-center items-center gap-2"
+          style={{ color: '#1A7AEB' }}
           onClick={() => {
-            setStep(LoginStep.INITIAL)
+            console.log('resend')
           }}
         >
           再寄一次驗證碼
