@@ -17,12 +17,37 @@ export default async function Register() {
   }
 
   return (
-    <main className="flex flex-col justify-center items-center gap-10">
-      <span>註冊</span>
-      <span>免費獲得電子報儲存喜愛的深度報導</span>
-      <LoginComponent />
-      <Link href={'/login'}>已經有帳號了，我要登入</Link>
-      <span>完成帳號登入代表你同意我們的隱私權政策</span>
+    <main className="flex flex-col justify-center items-center my-24">
+      <span style={{ fontSize: '28px' }} className="font-bold mb-2">
+        註冊
+      </span>
+      <span
+        style={{ color: '#404040' }}
+        className="block text-base text-center mb-16"
+      >
+        免費獲得電子報
+        <br />
+        儲存喜愛的深度報導
+      </span>
+      <div className="w-72">
+        <LoginComponent />
+      </div>
+      <Link
+        style={{ color: '#1A7AEB' }}
+        className="mt-12 mb-16 text-sm"
+        href={'/login'}
+      >
+        已經有帳號了，我要登入
+      </Link>
+      <span style={{ color: '#808080' }} className="text-sm">
+        完成帳號登入代表你同意我們的
+        <a
+          className="underline"
+          href="https://www.twreporter.org/a/privacy-footer"
+        >
+          隱私權政策
+        </a>
+      </span>
     </main>
   )
 }
