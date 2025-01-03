@@ -12,6 +12,12 @@ const SVGIcon = styled.svg`
   mask-size: cover;
 `
 
+const Divider = styled.div`
+  border: 1px solid #eaeaea;
+  margin-left: 16px;
+  margin-right: 16px;
+`
+
 enum LoginStep {
   INITIAL,
   ENTER_EMAIL,
@@ -209,33 +215,41 @@ const LoginTemplateComponent = (
     )
 
     const subscribeNewsletter = (
-      <div className="flex flex-col items-center justify-center border border-2 border-gray-200 rounded-lg">
-        <span
-          style={{ fontSize: '22px' }}
-          className="block text-center font-bold mx-4 my-6"
-        >
-          註冊成功
-          <br />
-          現在訂閱電子報
-        </span>
-        <div className="flex flex-row justify-start items-center gap-2 mb-1">
-          <span style={{ fontSize: '16px' }} className="font-bold">
-            報導仔新聞聯絡簿
-          </span>
-          <div
-            style={{
-              color: '#F76977',
-              background: '#F1F1F1',
-              padding: '2px 4px',
-              fontSize: '14px',
-            }}
+      <div className="flex flex-col items-center justify-center ">
+        <div className="max-w-96 flex flex-col border border border-gray-200 rounded-lg mb-8">
+          <span
+            style={{ fontSize: '22px' }}
+            className="block text-center font-bold mx-4 my-6"
           >
-            每月
+            註冊成功
+            <br />
+            現在訂閱電子報
+          </span>
+          <Divider />
+          <div className="flex flex-col mt-10 md:mx-11 mx-4">
+            <div className="flex flex-row justify-start items-center gap-2 mb-1">
+              <span style={{ fontSize: '16px' }} className="font-bold">
+                報導仔新聞聯絡簿
+              </span>
+              <div
+                style={{
+                  color: '#F76977',
+                  background: '#F1F1F1',
+                  padding: '2px 4px',
+                  fontSize: '14px',
+                }}
+              >
+                每月
+              </div>
+            </div>
+            <span
+              style={{ color: '#808080', fontSize: '14px' }}
+              className="mb-14"
+            >
+              兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
+            </span>
           </div>
         </div>
-        <span style={{ color: '#808080', fontSize: '14px' }} className="mb-14">
-          兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
-        </span>
         <Link
           className="w-44 py-2 rounded-full mb-6 text-center font-bold"
           style={{ color: 'white', backgroundColor: '#404040' }}
@@ -245,7 +259,7 @@ const LoginTemplateComponent = (
         </Link>
         <Link
           style={{ color: '#808080', fontSize: '14px' }}
-          className="underline"
+          className="underline underline-offset-2"
           href={KIDS_URL_ORIGIN}
         >
           不訂閱，回首頁
