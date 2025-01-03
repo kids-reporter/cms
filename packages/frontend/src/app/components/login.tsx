@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { Arrow, Mailbox } from '@/app/icons/miscellaneous'
 
 const SVGIcon = styled.svg`
   height: 24px;
@@ -95,12 +96,27 @@ const LoginTemplateComponent = (
     )
 
     const enterEmail = (
-      <div className="flex flex-col items-center justify-center">
-        <img alt="email" src="/assets/images/letter.svg" />
-        <span>輸入電子信箱</span>
-        <span>我們會將驗證碼寄送給您</span>
-        <input placeholder="example@mail.com" value=""></input>
+      <div className="w-72 flex flex-col items-center justify-center">
+        <div
+          style={{ backgroundColor: '#f1f1f1' }}
+          className="w-16 h-16 flex flex-col justify-center items-center rounded-full mb-6"
+        >
+          {Mailbox}
+        </div>
+        <span style={{ fontSize: '28px' }} className="font-bold mb-2">
+          輸入電子信箱
+        </span>
+        <span style={{ color: '#808080', fontSize: '16px' }} className="mb-10">
+          我們會將驗證碼寄送給您
+        </span>
+        <input
+          className="w-full mx-1 mb-10 py-2 border-b-2 border-black focus:outline-none"
+          placeholder="example@mail.com"
+          value=""
+        ></input>
         <button
+          className="w-full py-2 rounded-full mb-6"
+          style={{ color: 'white', backgroundColor: '#404040' }}
           onClick={() => {
             setStep(LoginStep.ENTER_OTP)
           }}
@@ -108,11 +124,14 @@ const LoginTemplateComponent = (
           確認
         </button>
         <button
+          className="flex flex-row justify-center items-center gap-2"
+          style={{ color: '#808080' }}
           onClick={() => {
             setStep(LoginStep.INITIAL)
           }}
         >
-          其他註冊方式
+          {Arrow}
+          其他登入方式
         </button>
       </div>
     )
