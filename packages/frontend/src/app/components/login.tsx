@@ -1,5 +1,13 @@
 'use client'
 import { useState } from 'react'
+import styled from 'styled-components'
+
+const SVGIcon = styled.svg`
+  height: 24px;
+  width: 24px;
+  mask-image: url(${(props) => props.src});
+  mask-size: cover;
+`
 
 enum LoginStep {
   INITIAL,
@@ -15,7 +23,7 @@ const LoginBtn = (props: {
 }) => {
   return (
     <div
-      className="flex flex-row items-center justify-center rounded-full border p-3 bg-white hover:bg-gray-100 hover:cursor-pointer gap-1"
+      className="flex flex-row items-center justify-center rounded-full border border-2 p-3 bg-white hover:bg-gray-100 hover:cursor-pointer gap-1"
       onClick={props.onClick}
     >
       {props.children}
@@ -27,34 +35,36 @@ export const LoginComponent = () => {
   const [step, setStep] = useState(LoginStep.INITIAL)
 
   const loginBtns = (
-    <div className="flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       <LoginBtn
         onClick={() => {
           console.log('google')
         }}
       >
         <img alt="google" src="/assets/images/google.svg" />
-        {'使用Google帳號'}
+        <span className="font-bold text-base">使用Google帳號</span>
       </LoginBtn>
       <LoginBtn
         onClick={() => {
           console.log('fb')
         }}
       >
-        <img
-          alt="facebook"
+        <SVGIcon
           style={{ backgroundColor: 'rgb(66, 103, 178)' }}
-          src="/assets/images/facebook.svg"
+          src={'/assets/images/facebook.svg'}
         />
-        {'使用Facebook帳號'}
+        <span className="font-bold text-base">使用Facebook帳號</span>
       </LoginBtn>
       <LoginBtn
         onClick={() => {
           setStep(LoginStep.ENTER_EMAIL)
         }}
       >
-        <img alt="email" src="/assets/images/letter.svg" />
-        {'使用電子信箱'}
+        <SVGIcon
+          style={{ backgroundColor: 'rgb(64, 64, 64)' }}
+          src={'/assets/images/letter.svg'}
+        />
+        <span className="font-bold text-base">使用電子信箱</span>
       </LoginBtn>
     </div>
   )
@@ -138,7 +148,7 @@ export const LoginComponent = () => {
   )
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center">
       {step === LoginStep.INITIAL && loginBtns}
       {step === LoginStep.ENTER_EMAIL && enterEmail}
       {step === LoginStep.ENTER_OTP && enterOTP}

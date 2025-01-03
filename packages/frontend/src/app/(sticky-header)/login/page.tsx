@@ -17,11 +17,29 @@ export default async function Login() {
   }
 
   return (
-    <main className="flex flex-col justify-center items-center gap-10">
-      <span>登入</span>
-      <LoginComponent />
-      <Link href={'/register'}>我還沒有帳號，現在去註冊</Link>
-      <span>完成帳號登入代表你同意我們的隱私權政策</span>
+    <main className="flex flex-col justify-center items-center my-24">
+      <span style={{ fontSize: '28px' }} className="font-bold mb-16">
+        登入
+      </span>
+      <div className="w-72">
+        <LoginComponent />
+      </div>
+      <Link
+        style={{ color: '#1A7AEB' }}
+        className="mt-12 mb-16 text-sm"
+        href={'/register'}
+      >
+        我還沒有帳號，現在去註冊
+      </Link>
+      <span style={{ color: '#808080' }} className="text-sm">
+        完成帳號登入代表你同意我們的
+        <a
+          className="underline"
+          href="https://www.twreporter.org/a/privacy-footer"
+        >
+          隱私權政策
+        </a>
+      </span>
     </main>
   )
 }
