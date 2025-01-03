@@ -40,6 +40,11 @@ const LoginTemplateComponent = (
 ) => {
   const TemplateComponent = () => {
     const [step, setStep] = useState(LoginStep.INITIAL)
+    const [email, setEmail] = useState('')
+
+    const handleEmailChange = (e) => {
+      setEmail(e.target.value)
+    }
 
     const loginBtns = (
       <>
@@ -110,9 +115,10 @@ const LoginTemplateComponent = (
           我們會將驗證碼寄送給您
         </span>
         <input
-          className="w-full mx-1 mb-10 py-2 border-b-2 border-black focus:outline-none"
+          className="w-full mx-1 mb-10 py-2 border-b-2 border-black focus:outline-none placeholder-gray-300 text-center"
           placeholder="example@mail.com"
-          value=""
+          value={email}
+          onChange={handleEmailChange}
         ></input>
         <button
           className="w-full py-2 rounded-full mb-6"
