@@ -41,6 +41,10 @@ export enum ThemeColor {
   RED = '#F76977',
 }
 
+export enum Color {
+  DARK_GRAY = '#404040',
+}
+
 export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
 
 export enum ContentType {

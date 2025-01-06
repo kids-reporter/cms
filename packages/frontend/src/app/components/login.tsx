@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { KIDS_URL_ORIGIN } from '@/app/constants'
+import { KIDS_URL_ORIGIN, Color } from '@/app/constants'
 import { Arrow, Mailbox, MailboxWithArrow } from '@/app/icons/miscellaneous'
 
 const SVGIcon = styled.svg`
@@ -136,7 +136,7 @@ const LoginTemplateComponent = (
         ></input>
         <button
           className="w-full py-2 rounded-full mb-6"
-          style={{ color: 'white', backgroundColor: '#404040' }}
+          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
           onClick={() => {
             setStep(LoginStep.ENTER_OTP)
           }}
@@ -186,7 +186,7 @@ const LoginTemplateComponent = (
         />
         <span
           style={{
-            color: isInvalidOTP ? '#F56977' : '#404040',
+            color: isInvalidOTP ? '#F56977' : Color.DARK_GRAY,
             fontSize: '12px',
           }}
           className="mb-10"
@@ -195,7 +195,7 @@ const LoginTemplateComponent = (
         </span>
         <button
           className="w-full py-2 rounded-full mb-6"
-          style={{ color: 'white', backgroundColor: '#404040' }}
+          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
           onClick={() => {
             setStep(LoginStep.SUBSCRIBE_NEWSLETTER)
           }}
@@ -252,7 +252,7 @@ const LoginTemplateComponent = (
         </div>
         <Link
           className="w-44 py-2 rounded-full mb-6 text-center font-bold"
-          style={{ color: 'white', backgroundColor: '#404040' }}
+          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
           href={''}
         >
           前往訂閱
@@ -300,7 +300,7 @@ export const RegisterComponent = LoginTemplateComponent(
       註冊
     </span>
     <span
-      style={{ color: '#404040' }}
+      style={{ color: Color.DARK_GRAY }}
       className="block text-base text-center mb-16"
     >
       免費獲得電子報
