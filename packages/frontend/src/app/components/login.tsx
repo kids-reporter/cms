@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { KIDS_URL_ORIGIN, Color } from '@/app/constants'
+import { KIDS_URL_ORIGIN, PRIVACY_POLICY, Color } from '@/app/constants'
 import { Arrow, Mailbox, MailboxWithArrow } from '@/app/icons/miscellaneous'
 
 const SVGIcon = styled.svg`
@@ -104,10 +104,7 @@ const LoginTemplateComponent = (
         </Link>
         <span style={{ color: Color.FONT_GRAY }} className="text-sm">
           完成帳號登入代表你同意我們的
-          <a
-            className="underline"
-            href="https://www.twreporter.org/a/privacy-footer"
-          >
+          <a className="underline" href={PRIVACY_POLICY}>
             隱私權政策
           </a>
         </span>
