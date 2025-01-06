@@ -76,7 +76,7 @@ const Input = styled.input`
 
 const Divider = styled.div`
   width: 100%;
-  border: 1px solid #eaeaea;
+  border: 1px solid ${Color.LIGHT_GRAY};
   margin-bottom: 20px;
   margin-top: 24px;
   maring-bottom: 24px;
@@ -89,7 +89,7 @@ const Checkbox = (props: { checked: boolean; label: string }) => {
         <input
           type="checkbox"
           checked={props.checked}
-          className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-[#27B5F7] checked:border-[#27B5F7]"
+          className={`peer h-5 w-5 cursor-pointer transition-all appearance-none rounded border-2 border-[#575757] checked:bg-[${ThemeColor.BLUE}] checked:border-[${ThemeColor.BLUE}]`}
           id="check1"
         />
         <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
