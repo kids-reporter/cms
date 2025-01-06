@@ -43,6 +43,8 @@ export enum ThemeColor {
 
 export enum Color {
   DARK_GRAY = '#404040',
+  LIGHT_GRAY = '#eaeaea',
+  FONT_GRAY = '#808080',
 }
 
 export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW

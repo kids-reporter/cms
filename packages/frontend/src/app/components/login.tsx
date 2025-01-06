@@ -13,7 +13,7 @@ const SVGIcon = styled.svg`
 `
 
 const Divider = styled.div`
-  border: 1px solid #eaeaea;
+  border: 1px solid ${Color.LIGHT_GRAY};
   margin-left: 16px;
   margin-right: 16px;
 `
@@ -102,7 +102,7 @@ const LoginTemplateComponent = (
         >
           {hint}
         </Link>
-        <span style={{ color: '#808080' }} className="text-sm">
+        <span style={{ color: Color.FONT_GRAY }} className="text-sm">
           完成帳號登入代表你同意我們的
           <a
             className="underline"
@@ -125,7 +125,10 @@ const LoginTemplateComponent = (
         <span style={{ fontSize: '28px' }} className="font-bold mb-2">
           輸入電子信箱
         </span>
-        <span style={{ color: '#808080', fontSize: '16px' }} className="mb-10">
+        <span
+          style={{ color: Color.FONT_GRAY, fontSize: '16px' }}
+          className="mb-10"
+        >
           我們會將驗證碼寄送給您
         </span>
         <input
@@ -145,7 +148,7 @@ const LoginTemplateComponent = (
         </button>
         <button
           className="flex flex-row justify-center items-center gap-2"
-          style={{ color: '#808080' }}
+          style={{ color: Color.FONT_GRAY }}
           onClick={() => {
             setStep(LoginStep.INITIAL)
           }}
@@ -167,7 +170,10 @@ const LoginTemplateComponent = (
         <span style={{ fontSize: '28px' }} className="font-bold mb-2">
           輸入驗證碼
         </span>
-        <span style={{ color: '#808080', fontSize: '16px' }} className="mb-10">
+        <span
+          style={{ color: Color.FONT_GRAY, fontSize: '16px' }}
+          className="mb-10"
+        >
           已將驗證碼寄到
           <br />
           user@mail.com
@@ -243,7 +249,7 @@ const LoginTemplateComponent = (
               </div>
             </div>
             <span
-              style={{ color: '#808080', fontSize: '14px' }}
+              style={{ color: Color.FONT_GRAY, fontSize: '14px' }}
               className="mb-14"
             >
               兒少新聞平台《少年報導者》的最新專題和活動消息，就讓可愛的報導仔來告訴你！
@@ -258,7 +264,7 @@ const LoginTemplateComponent = (
           前往訂閱
         </Link>
         <Link
-          style={{ color: '#808080', fontSize: '14px' }}
+          style={{ color: Color.FONT_GRAY, fontSize: '14px' }}
           className="underline underline-offset-2"
           href={KIDS_URL_ORIGIN}
         >
