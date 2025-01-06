@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
 import { EditAvatarIcon } from '@/app/icons'
-import { ThemeColor, KIDS_URL_ORIGIN } from '@/app/constants'
+import { ThemeColor, Color, KIDS_URL_ORIGIN } from '@/app/constants'
 
 enum Tab {
   INFO,
@@ -118,8 +118,6 @@ const Checkbox = (props: { checked: boolean; label: string }) => {
     </div>
   )
 }
-
-const grayColor = '#F8F8F8'
 
 const newsletterPreview = ''
 const newsletterSubscription = ''
@@ -284,7 +282,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         </div>
         <div
           className="flex flex-col px-6 py-5 gap-2 mt-4 rounded-2xl"
-          style={{ background: grayColor }}
+          style={{ background: Color.BORDER_GRAY }}
         >
           <SubTitle>思辨題數量</SubTitle>
           <div className="flex flex-row gap-6">
