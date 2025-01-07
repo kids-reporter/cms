@@ -88,7 +88,6 @@ const Checkbox = (props: { checked: boolean; label: string }) => {
       <label className="flex items-center cursor-pointer relative">
         <input
           type="checkbox"
-          checked={props.checked}
           className={`peer h-5 w-5 cursor-pointer transition-all appearance-none rounded border-2 border-[#575757] checked:bg-[${ThemeColor.BLUE}] checked:border-[${ThemeColor.BLUE}]`}
           id="check1"
         />
