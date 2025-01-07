@@ -21,7 +21,6 @@ const mockup: AccountSettings = {
   },
 }
 
-// export const revalidate = isProduction ? 86400 : 0 // 1 day
 export default async function Account() {
   if (!IS_LOGIN_ENABLED) {
     notFound()
