@@ -39,11 +39,34 @@ const Description = styled.span`
   line-height: 25.6px;
 `
 
+const Divider = styled.div`
+  width: 100%;
+  border: 1px solid ${Color.LIGHT_GRAY};
+  margin-bottom: 20px;
+  margin-top: 24px;
+  maring-bottom: 24px;
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 42px;
+`
+
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+`
+
 const Switch = styled.div`
   position: relative;
   width: 40px;
   height: 20px;
-  background: ${(props) => (props.disabled ? 'gray' : 'gray')};
+  background: gray;
   border-radius: 20px;
   padding: 0px;
   transition: 100ms ease-in-out;
@@ -74,13 +97,30 @@ const Input = styled.input`
   }
 `
 
-const Divider = styled.div`
-  width: 100%;
-  border: 1px solid ${Color.LIGHT_GRAY};
-  margin-bottom: 20px;
-  margin-top: 24px;
-  maring-bottom: 24px;
-`
+const ToggleButton = ({
+  value = false,
+  disabled = false,
+  onChange,
+  ...props
+}) => {
+  const handleChange = () => {
+    onChange && onChange()
+  }
+
+  return (
+    <Container>
+      <Label disabled={disabled} {...props}>
+        <Input
+          type="checkbox"
+          disabled={disabled}
+          checked={value}
+          onChange={handleChange}
+        />
+        <Switch disabled={disabled} />
+      </Label>
+    </Container>
+  )
+}
 
 const Checkbox = (props: { checked: boolean; label: string }) => {
   return (
@@ -127,13 +167,18 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const accountSettings = props.accoutSettings
   const fileInputRef = useRef<HTMLInputElement>()
   const [tab, setTab] = useState(Tab.INFO)
+  const [isGuideEnabled, setIsGuideEnabled] = useState(
+    accountSettings.settings.isGuideEnabled
+  )
+  const [isQAEnabled, setIsQAEnabled] = useState(
+    accountSettings.settings.qa.isQAEnabled
+  )
+  const [isRecommendationEnabled, setIsRecommendationEnabled] = useState(
+    accountSettings.settings.isRecommendationEnabled
+  )
 
   const handleAvtarFileChange = () => {
     console.log('select avatar file')
-  }
-
-  const handleQANumSelectChange = () => {
-    console.log('select')
   }
 
   const panelBtns = (
@@ -248,13 +293,12 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <span>
             {accountSettings.settings.isGuideEnabled ? '開啟' : '關閉'}
           </span>
-          <Input
-            type="checkbox"
-            disabled={false}
-            checked={accountSettings.settings.isGuideEnabled}
-            onChange={handleQANumSelectChange}
+          <ToggleButton
+            value={isGuideEnabled}
+            onChange={() => {
+              setIsGuideEnabled(!isGuideEnabled)
+            }}
           />
-          <Switch disabled={false} />
         </div>
       </div>
       <Divider />
@@ -270,13 +314,12 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             <span>
               {accountSettings.settings.qa.isQAEnabled ? '開啟' : '關閉'}
             </span>
-            <Input
-              type="checkbox"
-              disabled={false}
-              checked={accountSettings.settings.qa.isQAEnabled}
-              onChange={handleQANumSelectChange}
+            <ToggleButton
+              value={isQAEnabled}
+              onChange={() => {
+                setIsQAEnabled(!isQAEnabled)
+              }}
             />
-            <Switch disabled={false} />
           </div>
         </div>
         <div
@@ -310,13 +353,12 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <span>
             {accountSettings.settings.isRecommendationEnabled ? '開啟' : '關閉'}
           </span>
-          <Input
-            type="checkbox"
-            disabled={false}
-            checked={accountSettings.settings.isRecommendationEnabled}
-            onChange={handleQANumSelectChange}
+          <ToggleButton
+            value={isRecommendationEnabled}
+            onChange={() => {
+              setIsRecommendationEnabled(!isRecommendationEnabled)
+            }}
           />
-          <Switch disabled={false} />
         </div>
       </div>
     </div>
