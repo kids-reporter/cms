@@ -9,14 +9,14 @@ const Container = styled.div`
   width: 42px;
 `
 
-const Label = styled.label`
+const Label = styled.label<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `
 
-const Switch = styled.div`
+const Switch = styled.div<{ disabled: boolean }>`
   position: relative;
   width: 40px;
   height: 20px;
@@ -56,6 +56,10 @@ export const ToggleButton = ({
   disabled = false,
   onChange,
   ...props
+}: {
+  value: boolean
+  disabled?: boolean
+  onChange: () => void
 }) => {
   const handleChange = () => {
     onChange && onChange()

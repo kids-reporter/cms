@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { KIDS_URL_ORIGIN, PRIVACY_POLICY, Color } from '@/app/constants'
 import { Arrow, Mailbox, MailboxWithArrow } from '@/app/icons/miscellaneous'
 
-const SVGIcon = styled.svg`
+const SVGIcon = styled.svg<{ src: string }>`
   height: 24px;
   width: 24px;
   mask-image: url(${(props) => props.src});
@@ -52,11 +52,11 @@ const LoginTemplateComponent = (
 
     const isInvalidOTP = otp !== ''
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value)
     }
 
-    const handleOTPChange = (e) => {
+    const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setOTP(e.target.value)
     }
 

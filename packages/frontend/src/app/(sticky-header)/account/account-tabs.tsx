@@ -55,7 +55,7 @@ const isQAsEnabled = Array(3).fill(false)
 
 export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const accountSettings = props.accoutSettings
-  const fileInputRef = useRef<HTMLInputElement>()
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [tab, setTab] = useState(Tab.INFO)
   const [isGuideEnabled, setIsGuideEnabled] = useState(
     accountSettings.settings.isGuideEnabled
