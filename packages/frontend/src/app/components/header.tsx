@@ -3,12 +3,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Navigation } from '@/app/components/navigation'
 import { useScrollLevel, ScrollLevel } from '@/app/utils/custom-hook'
-import { CrossIcon, HamburgerIcon, SearchIcon, LoginIcon } from '@/app/icons'
-import {
-  SUBSCRIBE_URL,
-  SEARCH_PLACEHOLDER,
-  IS_LOGIN_ENABLED,
-} from '@/app/constants'
+import { CrossIcon, HamburgerIcon, SearchIcon } from '@/app/icons'
+import { SUBSCRIBE_URL, SEARCH_PLACEHOLDER } from '@/app/constants'
 import styles from './header.module.css'
 
 const slogan = (
@@ -96,12 +92,6 @@ export const StickyHeader = () => {
     >
       {SearchIcon}
     </button>
-  )
-
-  const login = (
-    <Link href="/login" className="max-h-full" rel="login">
-      {LoginIcon}
-    </Link>
   )
 
   const about = (
@@ -230,7 +220,6 @@ export const StickyHeader = () => {
               <Navigation />
             </div>
             {search}
-            {IS_LOGIN_ENABLED && login}
             {about}
           </div>
         </div>

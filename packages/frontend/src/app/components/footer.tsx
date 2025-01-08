@@ -7,11 +7,7 @@ import {
   RSSIcon,
   TwitterIcon,
 } from '@/app/icons'
-import {
-  GENERAL_DESCRIPTION,
-  SUBSCRIBE_URL,
-  PRIVACY_POLICY,
-} from '@/app/constants'
+import { GENERAL_DESCRIPTION, SUBSCRIBE_URL } from '@/app/constants'
 import styles from './footer.module.css'
 
 const socialIcons = [
@@ -188,7 +184,7 @@ export const Footer = () => {
               className={`${styles['footer-policy']} flex flex-row justify-center flex-no-wrap gap-5`}
             >
               <Link
-                href={PRIVACY_POLICY}
+                href="https://www.twreporter.org/a/privacy-footer"
                 target="_blank"
                 className="text-gray-900 font-medium text-base"
               >
