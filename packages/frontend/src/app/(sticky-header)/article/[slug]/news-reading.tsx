@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { mediaQuery } from '@/app/utils/media-query'
+import { Color } from '@/app/constants'
 
 const Title = styled.h3`
   color: #232323;
@@ -36,7 +37,7 @@ const Button = styled.div<{ isActive: boolean }>`
     return isActive
       ? `
       border-color: #27B5F7;
-      color: #404040;
+      color: ${Color.DARK_GRAY};
     `
       : `
       border-color: #EAEAEA;
@@ -45,7 +46,7 @@ const Button = styled.div<{ isActive: boolean }>`
   }}
 
   &:hover {
-    color: #404040;
+    color: ${Color.DARK_GRAY};
   }
 
   border-width: 2.5px;
