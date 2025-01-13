@@ -262,7 +262,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <div className="flex md:flex-row flex-col justify-center items-center gap-4">
             <img src="/assets/images/kids_newsletter_subscription.png" />
             <div className="flex flex-col justify-center items-start gap-1">
-              <div className="flex flex-row justify-start items-center gap-2">
+              <div className="flex flex-row justify-start items-center md:gap-2 gap-0.5">
                 <SubTitle style={{ fontSize: '18px' }}>
                   報導仔新聞聯絡簿
                 </SubTitle>
@@ -292,11 +292,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             <Link
               style={{
                 fontWeight: '700',
-                fontSize: '18px',
                 borderColor: ThemeColor.BLUE,
                 borderWidth: '2px',
               }}
-              className="rounded-full py-3 px-10 text-nowrap"
+              className="rounded-full md:text-lg text-base py-3 md:px-10 px-5 text-nowrap"
               href={newsletterPreview}
             >
               預覽
@@ -304,11 +303,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             <Link
               style={{
                 fontWeight: '700',
-                fontSize: '18px',
                 color: 'white',
                 background: ThemeColor.BLUE,
               }}
-              className="rounded-full py-3 px-10 text-nowrap"
+              className="rounded-full md:text-lg text-base py-3 md:px-10 px-5 text-nowrap"
               href={newsletterSubscription}
             >
               前往訂閱
