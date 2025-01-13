@@ -74,9 +74,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
   const panelBtns = (
     <div className="w-full md:w-48 flex flex-col items-start">
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.INFO ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -86,9 +85,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         個人資料
       </button>
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -98,9 +96,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         我的閱讀
       </button>
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.SETTINGS ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -110,9 +107,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         閱讀設定
       </button>
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -122,7 +118,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         訂閱電子報
       </button>
       <Divider />
-      <Link style={{ fontSize: '16px', padding: '8px 0px' }} href={'/logout'}>
+      <Link
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
+        href={'/logout'}
+      >
         登出
       </Link>
     </div>
