@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { EditAvatarIcon } from '@/app/icons'
+import { EditPen } from '@/app/icons'
 import { ThemeColor, Color, KIDS_URL_ORIGIN } from '@/app/constants'
 import { ToggleButton, Checkbox } from './basic-component'
 
@@ -45,7 +45,6 @@ const Divider = styled.div`
   border: 1px solid ${Color.LIGHT_GRAY};
   margin-bottom: 20px;
   margin-top: 24px;
-  maring-bottom: 24px;
 `
 
 const newsletterPreview = ''
@@ -149,11 +148,14 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             )
           })}
         </div>
-        <div
-          className="flex flex-col justify-end cursor-pointer"
-          onClick={() => fileInputRef?.current?.click()}
-        >
-          {EditAvatarIcon}
+        <div className="relative lg:w-44 w-36 min-w-36 flex flex-col justify-end">
+          <img src={'/assets/images/avatar_bg.png'} />
+          <div
+            className="w-11 h-11 flex flex-row justify-center items-center absolute right-0 bg-white border rounded-full cursor-pointer"
+            onClick={() => fileInputRef?.current?.click()}
+          >
+            {EditPen}
+          </div>
           <input
             onChange={handleAvatarFileChange}
             multiple={false}
