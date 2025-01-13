@@ -67,7 +67,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
     accountSettings.settings.isRecommendationEnabled
   )
 
-  const handleAvtarFileChange = () => {
+  const handleAvatarFileChange = () => {
     console.log('select avatar file')
   }
 
@@ -155,7 +155,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         >
           {EditAvatarIcon}
           <input
-            onChange={handleAvtarFileChange}
+            onChange={handleAvatarFileChange}
             multiple={false}
             ref={fileInputRef}
             type="file"
