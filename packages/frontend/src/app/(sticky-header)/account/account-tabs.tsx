@@ -2,7 +2,6 @@
 import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { EditAvatarIcon } from '@/app/icons'
 import { ThemeColor, Color, KIDS_URL_ORIGIN } from '@/app/constants'
 import { ToggleButton, Checkbox } from './basic-component'
 
@@ -17,6 +16,13 @@ export type AccountSettings = {
   info: { label: string; value: string }[]
   settings: any
 }
+
+const SVGIcon = styled.svg<{ src: string }>`
+  height: 24px;
+  width: 24px;
+  mask-image: url(${(props) => props.src});
+  mask-size: cover;
+`
 
 const Title = styled.span`
   font-size: 28px;
@@ -45,7 +51,6 @@ const Divider = styled.div`
   border: 1px solid ${Color.LIGHT_GRAY};
   margin-bottom: 20px;
   margin-top: 24px;
-  maring-bottom: 24px;
 `
 
 const newsletterPreview = ''
@@ -67,16 +72,15 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
     accountSettings.settings.isRecommendationEnabled
   )
 
-  const handleAvtarFileChange = () => {
+  const handleAvatarFileChange = () => {
     console.log('select avatar file')
   }
 
   const panelBtns = (
     <div className="w-full md:w-48 flex flex-col items-start">
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.INFO ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -86,9 +90,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         個人資料
       </button>
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -98,9 +101,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         我的閱讀
       </button>
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.SETTINGS ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -110,9 +112,8 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         閱讀設定
       </button>
       <button
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
-          fontSize: '16px',
-          padding: '8px 0px',
           color: tab === Tab.SUBSCRIBE_NEWSLETTER ? ThemeColor.BLUE : '#232323',
         }}
         onClick={() => {
@@ -122,7 +123,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
         訂閱電子報
       </button>
       <Divider />
-      <Link style={{ fontSize: '16px', padding: '8px 0px' }} href={'/logout'}>
+      <Link
+        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
+        href={'/logout'}
+      >
         登出
       </Link>
     </div>
@@ -150,13 +154,20 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             )
           })}
         </div>
-        <div
-          className="flex flex-col justify-end cursor-pointer"
-          onClick={() => fileInputRef?.current?.click()}
-        >
-          {EditAvatarIcon}
+        <div className="relative lg:w-40 w-36 lg:min-w-40 min-w-36 flex flex-col justify-end">
+          <img src={'/assets/images/avatar_bg.png'} />
+          <div
+            className="lg:w-11 lg:h-11 w-9 h-9 flex flex-row justify-center items-center absolute right-0 bg-white rounded-full cursor-pointer"
+            style={{ boxShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.2)' }}
+            onClick={() => fileInputRef?.current?.click()}
+          >
+            <SVGIcon
+              className={'bg-[#A3A3A3] hover:bg-[#27B5F7]'}
+              src={'/assets/images/editpen.svg'}
+            />
+          </div>
           <input
-            onChange={handleAvtarFileChange}
+            onChange={handleAvatarFileChange}
             multiple={false}
             ref={fileInputRef}
             type="file"
@@ -262,7 +273,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
           <div className="flex md:flex-row flex-col justify-center items-center gap-4">
             <img src="/assets/images/kids_newsletter_subscription.png" />
             <div className="flex flex-col justify-center items-start gap-1">
-              <div className="flex flex-row justify-start items-center gap-2">
+              <div className="flex flex-row justify-start items-center md:gap-2 gap-0.5">
                 <SubTitle style={{ fontSize: '18px' }}>
                   報導仔新聞聯絡簿
                 </SubTitle>
@@ -292,11 +303,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             <Link
               style={{
                 fontWeight: '700',
-                fontSize: '18px',
                 borderColor: ThemeColor.BLUE,
                 borderWidth: '2px',
               }}
-              className="rounded-full py-3 px-10 text-nowrap"
+              className="rounded-full md:text-lg text-base py-3 md:px-10 px-5 text-nowrap"
               href={newsletterPreview}
             >
               預覽
@@ -304,11 +314,10 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             <Link
               style={{
                 fontWeight: '700',
-                fontSize: '18px',
                 color: 'white',
                 background: ThemeColor.BLUE,
               }}
-              className="rounded-full py-3 px-10 text-nowrap"
+              className="rounded-full md:text-lg text-base py-3 md:px-10 px-5 text-nowrap"
               href={newsletterSubscription}
             >
               前往訂閱

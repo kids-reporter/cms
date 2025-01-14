@@ -97,7 +97,7 @@ const LoginTemplateComponent = (
         </div>
         <Link
           style={{ color: '#1A7AEB' }}
-          className="mt-12 mb-16 text-sm"
+          className="mt-12 mb-16 text-sm hover:underline underline-offset-2"
           href={hintHref}
         >
           {hint}
@@ -129,14 +129,14 @@ const LoginTemplateComponent = (
           我們會將驗證碼寄送給您
         </span>
         <input
-          className="w-full mx-1 mb-10 py-2 border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
+          className="w-full mx-1 mb-10 py-2 bg-white border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
           placeholder="example@mail.com"
           value={email}
           onChange={handleEmailChange}
         ></input>
         <button
-          className="w-full py-2 rounded-full mb-6"
-          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
+          className="w-full py-2 rounded-full mb-6 bg-[#404040] hover:bg-black"
+          style={{ color: 'white' }}
           onClick={() => {
             setStep(LoginStep.ENTER_OTP)
           }}
@@ -144,8 +144,7 @@ const LoginTemplateComponent = (
           確認
         </button>
         <button
-          className="flex flex-row justify-center items-center gap-2"
-          style={{ color: Color.FONT_GRAY }}
+          className="flex flex-row justify-center items-center gap-2 text-[#808080] hover:text-[#404040]"
           onClick={() => {
             setStep(LoginStep.INITIAL)
           }}
@@ -183,7 +182,7 @@ const LoginTemplateComponent = (
             letterSpacing: '0.25em',
             borderColor: isInvalidOTP ? '#F56977' : 'rgb(156 163 175)',
           }}
-          className="w-full text-2xl mx-1 mb-2 py-2 border-b-2 focus:outline-none placeholder-gray-300 text-center"
+          className="w-full text-2xl mx-1 mb-2 py-2 bg-white border-b-2 focus:outline-none placeholder-gray-300 text-center"
           value={otp}
           onChange={handleOTPChange}
         />
@@ -197,8 +196,8 @@ const LoginTemplateComponent = (
           {isInvalidOTP ? '驗證碼錯誤，請重新輸入' : '請在15分鐘內輸入'}
         </span>
         <button
-          className="w-full py-2 rounded-full mb-6"
-          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
+          className="w-full py-2 rounded-full mb-6 bg-[#404040] hover:bg-black"
+          style={{ color: 'white' }}
           onClick={() => {
             setStep(LoginStep.SUBSCRIBE_NEWSLETTER)
           }}
@@ -218,7 +217,7 @@ const LoginTemplateComponent = (
     )
 
     const subscribeNewsletter = (
-      <div className="flex flex-col items-center justify-center ">
+      <div className="flex flex-col items-center justify-center mx-6">
         <div className="max-w-96 flex flex-col border border border-gray-200 rounded-lg mb-8">
           <span
             style={{ fontSize: '22px' }}
@@ -254,8 +253,8 @@ const LoginTemplateComponent = (
           </div>
         </div>
         <Link
-          className="w-44 py-2 rounded-full mb-6 text-center font-bold"
-          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
+          className="w-44 py-2 rounded-full mb-6 text-center font-bold bg-[#404040] hover:bg-black"
+          style={{ color: 'white' }}
           href={''}
         >
           前往訂閱
