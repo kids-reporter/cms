@@ -97,7 +97,7 @@ const LoginTemplateComponent = (
         </div>
         <Link
           style={{ color: '#1A7AEB' }}
-          className="mt-12 mb-16 text-sm"
+          className="mt-12 mb-16 text-sm hover:underline underline-offset-2"
           href={hintHref}
         >
           {hint}
