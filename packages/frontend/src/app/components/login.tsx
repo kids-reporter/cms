@@ -135,8 +135,8 @@ const LoginTemplateComponent = (
           onChange={handleEmailChange}
         ></input>
         <button
-          className="w-full py-2 rounded-full mb-6"
-          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
+          className="w-full py-2 rounded-full mb-6 bg-[#404040] hover:bg-black"
+          style={{ color: 'white' }}
           onClick={() => {
             setStep(LoginStep.ENTER_OTP)
           }}
@@ -144,8 +144,7 @@ const LoginTemplateComponent = (
           確認
         </button>
         <button
-          className="flex flex-row justify-center items-center gap-2"
-          style={{ color: Color.FONT_GRAY }}
+          className="flex flex-row justify-center items-center gap-2 text-[#808080] hover:text-[#404040]"
           onClick={() => {
             setStep(LoginStep.INITIAL)
           }}
@@ -197,8 +196,8 @@ const LoginTemplateComponent = (
           {isInvalidOTP ? '驗證碼錯誤，請重新輸入' : '請在15分鐘內輸入'}
         </span>
         <button
-          className="w-full py-2 rounded-full mb-6"
-          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
+          className="w-full py-2 rounded-full mb-6 bg-[#404040] hover:bg-black"
+          style={{ color: 'white' }}
           onClick={() => {
             setStep(LoginStep.SUBSCRIBE_NEWSLETTER)
           }}
@@ -254,8 +253,8 @@ const LoginTemplateComponent = (
           </div>
         </div>
         <Link
-          className="w-44 py-2 rounded-full mb-6 text-center font-bold"
-          style={{ color: 'white', backgroundColor: Color.DARK_GRAY }}
+          className="w-44 py-2 rounded-full mb-6 text-center font-bold bg-[#404040] hover:bg-black"
+          style={{ color: 'white' }}
           href={''}
         >
           前往訂閱
