@@ -129,7 +129,7 @@ const LoginTemplateComponent = (
           我們會將驗證碼寄送給您
         </span>
         <input
-          className="w-full mx-1 mb-10 py-2 border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
+          className="w-full mx-1 mb-10 py-2 bg-white border-b-2 border-gray-400 focus:outline-none placeholder-gray-300 text-center"
           placeholder="example@mail.com"
           value={email}
           onChange={handleEmailChange}
@@ -183,7 +183,7 @@ const LoginTemplateComponent = (
             letterSpacing: '0.25em',
             borderColor: isInvalidOTP ? '#F56977' : 'rgb(156 163 175)',
           }}
-          className="w-full text-2xl mx-1 mb-2 py-2 border-b-2 focus:outline-none placeholder-gray-300 text-center"
+          className="w-full text-2xl mx-1 mb-2 py-2 bg-white border-b-2 focus:outline-none placeholder-gray-300 text-center"
           value={otp}
           onChange={handleOTPChange}
         />
@@ -218,7 +218,7 @@ const LoginTemplateComponent = (
     )
 
     const subscribeNewsletter = (
-      <div className="flex flex-col items-center justify-center ">
+      <div className="flex flex-col items-center justify-center mx-6">
         <div className="max-w-96 flex flex-col border border border-gray-200 rounded-lg mb-8">
           <span
             style={{ fontSize: '22px' }}
