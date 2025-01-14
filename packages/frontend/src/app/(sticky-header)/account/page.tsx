@@ -29,7 +29,7 @@ export default async function Account() {
   return (
     <main
       style={{ width: '95vw' }}
-      className="flex flex-row justify-center gap-10"
+      className="flex flex-row justify-center gap-10 md:mb-40 mb-32"
     >
       <AccountTabs accoutSettings={mockup} />
     </main>
