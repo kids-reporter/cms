@@ -2,7 +2,6 @@
 import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { EditPen } from '@/app/icons'
 import { ThemeColor, Color, KIDS_URL_ORIGIN } from '@/app/constants'
 import { ToggleButton, Checkbox } from './basic-component'
 
@@ -17,6 +16,13 @@ export type AccountSettings = {
   info: { label: string; value: string }[]
   settings: any
 }
+
+const SVGIcon = styled.svg<{ src: string }>`
+  height: 24px;
+  width: 24px;
+  mask-image: url(${(props) => props.src});
+  mask-size: cover;
+`
 
 const Title = styled.span`
   font-size: 28px;
@@ -148,13 +154,17 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
             )
           })}
         </div>
-        <div className="relative lg:w-44 w-36 min-w-36 flex flex-col justify-end">
+        <div className="relative lg:w-40 w-36 lg:min-w-40 min-w-36 flex flex-col justify-end">
           <img src={'/assets/images/avatar_bg.png'} />
           <div
-            className="w-11 h-11 flex flex-row justify-center items-center absolute right-0 bg-white border rounded-full cursor-pointer"
+            className="lg:w-11 lg:h-11 w-9 h-9 flex flex-row justify-center items-center absolute right-0 bg-white rounded-full cursor-pointer"
+            style={{ boxShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.2)' }}
             onClick={() => fileInputRef?.current?.click()}
           >
-            {EditPen}
+            <SVGIcon
+              className={'bg-[#A3A3A3] hover:bg-[#27B5F7]'}
+              src={'/assets/images/editpen.svg'}
+            />
           </div>
           <input
             onChange={handleAvatarFileChange}
