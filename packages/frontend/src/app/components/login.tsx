@@ -2,7 +2,12 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { KIDS_URL_ORIGIN, PRIVACY_POLICY, Color } from '@/app/constants'
+import {
+  KIDS_URL_ORIGIN,
+  PRIVACY_POLICY,
+  Color,
+  NEWSLETTER_SUBSCRIPTION,
+} from '@/app/constants'
 import { Arrow, Mailbox, MailboxWithArrow } from '@/app/icons/miscellaneous'
 
 const SVGIcon = styled.svg<{ src: string }>`
@@ -255,7 +260,7 @@ const LoginTemplateComponent = (
         <Link
           className="w-44 py-2 rounded-full mb-6 text-center font-bold bg-[#404040] hover:bg-black"
           style={{ color: 'white' }}
-          href={''}
+          href={NEWSLETTER_SUBSCRIPTION}
         >
           前往訂閱
         </Link>

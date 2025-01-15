@@ -11,6 +11,10 @@ export const DONATE_URL = 'https://support.twreporter.org/'
 export const CREDIT_DONATE_URL = 'https://www.twreporter.org/a/credit-donate'
 export const PRIVACY_POLICY = 'https://www.twreporter.org/a/privacy-footer'
 export const EMAIL = 'kidsnews@twreporter.org'
+export const NEWSLETTER_SUBSCRIPTION =
+  'https://twreporter.us14.list-manage.com/subscribe?u=4da5a7d3b98dbc9fdad009e7e&id=2154ac40c3'
+export const NEWSLETTER_PREVIEW =
+  'https://us14.campaign-archive.com/?u=4da5a7d3b98dbc9fdad009e7e&id=83fc470a1b'
 
 export const TOPIC_PAGE_ROUTE = '/topic/page'
 
