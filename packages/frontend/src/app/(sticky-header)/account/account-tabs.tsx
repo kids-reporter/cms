@@ -2,7 +2,13 @@
 import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
-import { ThemeColor, Color, KIDS_URL_ORIGIN } from '@/app/constants'
+import {
+  ThemeColor,
+  Color,
+  KIDS_URL_ORIGIN,
+  NEWSLETTER_SUBSCRIPTION,
+  NEWSLETTER_PREVIEW,
+} from '@/app/constants'
 import { ToggleButton, Checkbox } from './basic-component'
 
 enum Tab {
@@ -52,9 +58,6 @@ const Divider = styled.div`
   margin-bottom: 20px;
   margin-top: 24px;
 `
-
-const newsletterPreview = ''
-const newsletterSubscription = ''
 
 const isQAsEnabled = Array(3).fill(false)
 
@@ -307,7 +310,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
                 borderWidth: '2px',
               }}
               className="rounded-full md:text-lg text-base py-3 md:px-10 px-5 text-nowrap"
-              href={newsletterPreview}
+              href={NEWSLETTER_PREVIEW}
             >
               預覽
             </Link>
@@ -318,7 +321,7 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
                 background: ThemeColor.BLUE,
               }}
               className="rounded-full md:text-lg text-base py-3 md:px-10 px-5 text-nowrap"
-              href={newsletterSubscription}
+              href={NEWSLETTER_SUBSCRIPTION}
             >
               前往訂閱
             </Link>
