@@ -141,4 +141,4 @@ export const FALLBACK_IMG = '/assets/images/image_placeholder.png'
 
 export const DEBOUNCE_THRESHOLD = 100
 
-export const IS_LOGIN_ENABLED = true
+export const IS_LOGIN_ENABLED = false

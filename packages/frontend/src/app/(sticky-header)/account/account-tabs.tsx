@@ -92,28 +92,32 @@ export const AccountTabs = (props: { accoutSettings: AccountSettings }) => {
       >
         個人資料
       </button>
-      <button
-        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
-        style={{
-          color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : '#232323',
-        }}
-        onClick={() => {
-          setTab(Tab.MY_READINGS)
-        }}
-      >
-        我的閱讀
-      </button>
-      <button
-        className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
-        style={{
-          color: tab === Tab.SETTINGS ? ThemeColor.BLUE : '#232323',
-        }}
-        onClick={() => {
-          setTab(Tab.SETTINGS)
-        }}
-      >
-        閱讀設定
-      </button>
+      {false && (
+        <button
+          className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
+          style={{
+            color: tab === Tab.MY_READINGS ? ThemeColor.BLUE : '#232323',
+          }}
+          onClick={() => {
+            setTab(Tab.MY_READINGS)
+          }}
+        >
+          我的閱讀
+        </button>
+      )}
+      {false && (
+        <button
+          className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
+          style={{
+            color: tab === Tab.SETTINGS ? ThemeColor.BLUE : '#232323',
+          }}
+          onClick={() => {
+            setTab(Tab.SETTINGS)
+          }}
+        >
+          閱讀設定
+        </button>
+      )}
       <button
         className="w-full text-left text-base hover:bg-gray-200 active:bg-gray-300 px-4 py-1.5"
         style={{
