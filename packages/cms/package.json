@@ -18,7 +18,7 @@
   "dependencies": {
     "@keystone-6/auth": "7.0.0",
     "@keystone-6/core": "5.2.0",
-    "@kids-reporter/cms-core": "1.0.15",
+    "@kids-reporter/cms-core": "1.0.16",
     "@types/react-beautiful-dnd": "^13.1.4",
     "axios": "^1.6.2",
     "cookie-parser": "^1.4.6",
