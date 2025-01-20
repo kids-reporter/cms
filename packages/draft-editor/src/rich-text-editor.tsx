@@ -50,8 +50,6 @@ import { customStylePrefix as fontColorPrefix } from './buttons/font-color'
 
 const styleSource = [
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
-  'https://storage.googleapis.com/static-readr-tw-dev/cdn/draft-js/rich-editor.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
 ].map((src, index) => (
   <link
     key={`style-src-${index}`}
