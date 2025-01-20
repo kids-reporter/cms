@@ -9,7 +9,12 @@ export const CONTRIBUTE_FORM = 'https://forms.gle/7Yh4iPjfq92NDaSm9'
 export const MAIN_SITE_URL = 'https://www.twreporter.org/'
 export const DONATE_URL = 'https://support.twreporter.org/'
 export const CREDIT_DONATE_URL = 'https://www.twreporter.org/a/credit-donate'
+export const PRIVACY_POLICY = 'https://www.twreporter.org/a/privacy-footer'
 export const EMAIL = 'kidsnews@twreporter.org'
+export const NEWSLETTER_SUBSCRIPTION =
+  'https://twreporter.us14.list-manage.com/subscribe?u=4da5a7d3b98dbc9fdad009e7e&id=2154ac40c3'
+export const NEWSLETTER_PREVIEW =
+  'https://us14.campaign-archive.com/?u=4da5a7d3b98dbc9fdad009e7e&id=83fc470a1b'
 
 export const TOPIC_PAGE_ROUTE = '/topic/page'
 
@@ -39,6 +44,13 @@ export enum ThemeColor {
   YELLOW = '#F8C341',
   BLUE = '#27B5F7',
   RED = '#F76977',
+}
+
+export enum Color {
+  DARK_GRAY = '#404040',
+  LIGHT_GRAY = '#eaeaea',
+  FONT_GRAY = '#808080',
+  BORDER_GRAY = '#F8F8F8',
 }
 
 export const DEFAULT_THEME_COLOR = ThemeColor.YELLOW
@@ -128,3 +140,5 @@ export const ERROR_PAGE = '/error'
 export const FALLBACK_IMG = '/assets/images/image_placeholder.png'
 
 export const DEBOUNCE_THRESHOLD = 100
+
+export const IS_LOGIN_ENABLED = false

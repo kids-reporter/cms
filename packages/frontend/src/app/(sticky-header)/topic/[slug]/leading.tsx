@@ -50,6 +50,14 @@ const PositionedTitle = styled(TitleContainer)`
       transform: translate(-50%, 0);
     }
   }
+
+  &.left-center,
+  &.left {
+    h1,
+    h2 {
+      text-align: left;
+    }
+  }
 `
 
 export const Leading = ({
