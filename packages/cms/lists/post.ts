@@ -1,4 +1,5 @@
 import envVars from '../environment-variables'
+import { KeystoneContext } from '@keystone-6/core/types'
 import {
   customFields,
   richTextEditorButtonNames,
@@ -537,10 +538,27 @@ const listConfigurations = list({
         },
       },
     }),
-    onlineUsers: relationship({
+    onlineUsers: virtual({
       label: 'online user',
-      ref: 'User',
-      many: true,
+      field: graphql.field({
+        type: graphql.JSON,
+        async resolve(
+          item: Record<string, unknown>,
+          args,
+          context: KeystoneContext
+        ) {
+          const authenticatedUser = context.session.data
+          const userData = {
+            id: authenticatedUser.id,
+            email: authenticatedUser.email,
+            name: authenticatedUser.name,
+          }
+          return {
+            canonicalPath: `/posts/${item.id}`,
+            userData: userData,
+          }
+        },
+      }),
       ui: {
         views: './lists/views/online-users',
         createView: { fieldMode: 'hidden' },
