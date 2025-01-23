@@ -116,25 +116,27 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     new Date(Date.now() - validCheckTimeWindow)
   )
   const [errorMessage, setErrorMessage] = useState('')
+  const [currentUsers, setCurrentUsers] = useState<User[]>([])
   const canonicalPath = value?.canonicalPath
   const userData: User = value?.userData
 
   // Get current online users for a certain webpage
-  const { error: getOnlineUsersError, data: getOnlineUsersData } = useQuery(
-    GET_ONLINE_USERS,
-    {
-      variables: {
-        where: {
-          canonicalPath: {
-            equals: canonicalPath,
-          },
-          lastOnlineAt: {
-            gte: validCheckTime.toISOString(),
-          },
+  const {
+    loading: getOnlineUsersLoading,
+    error: getOnlineUsersError,
+    data: getOnlineUsersData,
+  } = useQuery(GET_ONLINE_USERS, {
+    variables: {
+      where: {
+        canonicalPath: {
+          equals: canonicalPath,
+        },
+        lastOnlineAt: {
+          gte: validCheckTime.toISOString(),
         },
       },
-    }
-  )
+    },
+  })
 
   const [
     createOnlineUser,
@@ -163,9 +165,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           },
         },
       })
-
-      // Set `validCheckTime` state to trigger re-render.
-      setValidCheckTime(new Date(Date.now() - validCheckTimeWindow))
     }
   }, [userData, canonicalPath, createOnlineUser])
 
@@ -203,8 +202,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       return
     }
 
-    // Polling to tell the server the user is still online
-    const polling = setInterval(() => {
+    const task = () => {
       const id = onlineUser.id
       updateOnlineUser({
         variables: {
@@ -217,12 +215,35 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         },
       })
       setValidCheckTime(new Date(Date.now() - validCheckTimeWindow))
-    }, pollInterval)
+    }
+
+    // execute immediately
+    task()
+
+    // Polling to tell the server the user is still online
+    const polling = setInterval(task, pollInterval)
 
     return () => {
       clearInterval(polling)
     }
   }, [createOnlineUserData, updateOnlineUser])
+
+  useEffect(() => {
+    if (getOnlineUsersLoading === true) {
+      return
+    }
+
+    const users: User[] =
+      getOnlineUsersData?.onlineUsers?.map((onlineUser: OnlineUser) => {
+        return onlineUser?.user
+      }) ?? []
+
+    const deduplcatedUsers = Array.from(
+      new Map(users?.map((user) => [user.id, user])).values()
+    )
+
+    setCurrentUsers(deduplcatedUsers)
+  }, [getOnlineUsersData, getOnlineUsersLoading, setCurrentUsers])
 
   useEffect(() => {
     if (
@@ -247,17 +268,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
     return <span style={{ color: 'red' }}>{errorMessage}</span>
   }
 
-  const users: User[] = getOnlineUsersData?.onlineUsers?.map(
-    (onlineUser: OnlineUser) => {
-      return onlineUser?.user
-    }
-  )
-
-  const deduplcatedUsers = Array.from(
-    new Map(users?.map((user) => [user.id, user])).values()
-  )
-
-  const usersJsx = deduplcatedUsers.map((user) => {
+  const usersJsx = currentUsers.map((user) => {
     return (
       <Avatar key={user.id} color={colors[Number(user.id) % colors.length]}>
         <span>{user.name?.[0]}</span>
