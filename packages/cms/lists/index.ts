@@ -1,6 +1,8 @@
 import Author from './author'
+import CallBaodaozai from './call-baodaozai'
 import Category from './category'
 import EditorPicksSetting from './editor-picks-setting'
+import OnlineUser from './online-user'
 import PDF from './pdf'
 import Photo from './photo'
 import Post from './post'
@@ -12,7 +14,6 @@ import SVG from './svg'
 import Tag from './tag'
 import User from './user'
 import { NewsReadingGroup, NewsReadingGroupItem } from './news-reading'
-import CallBaodaozai from './call-baodaozai'
 
 export const listDefinition = {
   User,
@@ -31,4 +32,5 @@ export const listDefinition = {
   PDF,
   SVG,
   CallBaodaozai,
+  OnlineUser,
 }

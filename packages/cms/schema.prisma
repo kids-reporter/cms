@@ -12,19 +12,19 @@ generator client {
 }
 
 model User {
-  id                    Int       @id @default(autoincrement())
-  name                  String    @default("")
-  email                 String    @unique @default("")
-  password              String
-  role                  String
-  createdAt             DateTime? @default(now())
-  updatedAt             DateTime? @updatedAt
-  twoFactorAuthBypass   Boolean   @default(false)
-  twoFactorAuthSecret   String?
-  twoFactorAuthTemp     String?
-  from_Post_createdBy   Post[]    @relation("Post_createdBy")
-  from_Post_updatedBy   Post[]    @relation("Post_updatedBy")
-  from_Post_onlineUsers Post[]    @relation("Post_onlineUsers")
+  id                   Int          @id @default(autoincrement())
+  name                 String       @default("")
+  email                String       @unique @default("")
+  password             String
+  role                 String
+  createdAt            DateTime?    @default(now())
+  updatedAt            DateTime?    @updatedAt
+  twoFactorAuthBypass  Boolean      @default(false)
+  twoFactorAuthSecret  String?
+  twoFactorAuthTemp    String?
+  from_Post_createdBy  Post[]       @relation("Post_createdBy")
+  from_Post_updatedBy  Post[]       @relation("Post_updatedBy")
+  from_OnlineUser_user OnlineUser[] @relation("OnlineUser_user")
 }
 
 model Post {
@@ -65,7 +65,6 @@ model Post {
   createdById                                Int?                 @map("createdBy")
   updatedBy                                  User?                @relation("Post_updatedBy", fields: [updatedById], references: [id])
   updatedById                                Int?                 @map("updatedBy")
-  onlineUsers                                User[]               @relation("Post_onlineUsers")
   from_Post_relatedPosts                     Post[]               @relation("Post_relatedPosts")
   from_EditorPicksSetting_editorPicksOfPosts EditorPicksSetting[] @relation("EditorPicksSetting_editorPicksOfPosts")
 
@@ -311,4 +310,18 @@ model CallBaodaozai {
   aboutUs   Json?
   createdAt DateTime? @default(now())
   updatedAt DateTime? @updatedAt
+}
+
+model OnlineUser {
+  id            String    @id @default(cuid())
+  user          User?     @relation("OnlineUser_user", fields: [userId], references: [id])
+  userId        Int?      @map("user")
+  canonicalPath String    @default("")
+  lastOnlineAt  DateTime?
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+
+  @@index([userId])
+  @@index([canonicalPath])
+  @@index([lastOnlineAt])
 }

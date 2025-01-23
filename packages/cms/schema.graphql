@@ -224,8 +224,7 @@ type Post {
   updatedLog: JSON
   preview: JSON
   listPreview: String
-  onlineUsers(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
-  onlineUsersCount(where: UserWhereInput! = {}): Int
+  onlineUsers: JSON
   summary: JSON
 }
 
@@ -260,7 +259,6 @@ input PostWhereInput {
   updatedAt: DateTimeNullableFilter
   createdBy: UserWhereInput
   updatedBy: UserWhereInput
-  onlineUsers: UserManyRelationFilter
 }
 
 input SubSubcategoryManyRelationFilter {
@@ -291,12 +289,6 @@ input PostManyRelationFilter {
   every: PostWhereInput
   some: PostWhereInput
   none: PostWhereInput
-}
-
-input UserManyRelationFilter {
-  every: UserWhereInput
-  some: UserWhereInput
-  none: UserWhereInput
 }
 
 input PostOrderByInput {
@@ -344,7 +336,6 @@ input PostUpdateInput {
   updatedAt: DateTime
   createdBy: UserRelateToOneForUpdateInput
   updatedBy: UserRelateToOneForUpdateInput
-  onlineUsers: UserRelateToManyForUpdateInput
 }
 
 input ProjectRelateToOneForUpdateInput {
@@ -406,13 +397,6 @@ input UserRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input UserRelateToManyForUpdateInput {
-  disconnect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
 input PostUpdateArgs {
   where: PostWhereUniqueInput!
   data: PostUpdateInput!
@@ -449,7 +433,6 @@ input PostCreateInput {
   updatedAt: DateTime
   createdBy: UserRelateToOneForCreateInput
   updatedBy: UserRelateToOneForCreateInput
-  onlineUsers: UserRelateToManyForCreateInput
 }
 
 input ProjectRelateToOneForCreateInput {
@@ -495,11 +478,6 @@ input PostRelateToManyForCreateInput {
 input UserRelateToOneForCreateInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-}
-
-input UserRelateToManyForCreateInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
 }
 
 type Photo {
@@ -687,6 +665,7 @@ type Project {
   createdAt: DateTime
   updatedAt: DateTime
   preview: JSON
+  onlineUsers: JSON
 }
 
 input ProjectWhereUniqueInput {
@@ -1596,6 +1575,60 @@ input CallBaodaozaiCreateInput {
   updatedAt: DateTime
 }
 
+type OnlineUser {
+  id: ID!
+  user: User
+  canonicalPath: String
+  lastOnlineAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input OnlineUserWhereUniqueInput {
+  id: ID
+}
+
+input OnlineUserWhereInput {
+  AND: [OnlineUserWhereInput!]
+  OR: [OnlineUserWhereInput!]
+  NOT: [OnlineUserWhereInput!]
+  id: IDFilter
+  user: UserWhereInput
+  canonicalPath: StringFilter
+  lastOnlineAt: DateTimeNullableFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input OnlineUserOrderByInput {
+  id: OrderDirection
+  canonicalPath: OrderDirection
+  lastOnlineAt: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input OnlineUserUpdateInput {
+  user: UserRelateToOneForUpdateInput
+  canonicalPath: String
+  lastOnlineAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input OnlineUserUpdateArgs {
+  where: OnlineUserWhereUniqueInput!
+  data: OnlineUserUpdateInput!
+}
+
+input OnlineUserCreateInput {
+  user: UserRelateToOneForCreateInput
+  canonicalPath: String
+  lastOnlineAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1698,6 +1731,12 @@ type Mutation {
   updateCallBaodaozais(data: [CallBaodaozaiUpdateArgs!]!): [CallBaodaozai]
   deleteCallBaodaozai(where: CallBaodaozaiWhereUniqueInput!): CallBaodaozai
   deleteCallBaodaozais(where: [CallBaodaozaiWhereUniqueInput!]!): [CallBaodaozai]
+  createOnlineUser(data: OnlineUserCreateInput!): OnlineUser
+  createOnlineUsers(data: [OnlineUserCreateInput!]!): [OnlineUser]
+  updateOnlineUser(where: OnlineUserWhereUniqueInput!, data: OnlineUserUpdateInput!): OnlineUser
+  updateOnlineUsers(data: [OnlineUserUpdateArgs!]!): [OnlineUser]
+  deleteOnlineUser(where: OnlineUserWhereUniqueInput!): OnlineUser
+  deleteOnlineUsers(where: [OnlineUserWhereUniqueInput!]!): [OnlineUser]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -1770,6 +1809,9 @@ type Query {
   callBaodaozais(where: CallBaodaozaiWhereInput! = {}, orderBy: [CallBaodaozaiOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CallBaodaozaiWhereUniqueInput): [CallBaodaozai!]
   callBaodaozai(where: CallBaodaozaiWhereUniqueInput!): CallBaodaozai
   callBaodaozaisCount(where: CallBaodaozaiWhereInput! = {}): Int
+  onlineUsers(where: OnlineUserWhereInput! = {}, orderBy: [OnlineUserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OnlineUserWhereUniqueInput): [OnlineUser!]
+  onlineUser(where: OnlineUserWhereUniqueInput!): OnlineUser
+  onlineUsersCount(where: OnlineUserWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
