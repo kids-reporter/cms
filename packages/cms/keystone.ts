@@ -14,7 +14,7 @@ import { twoFactorAuth } from './express-mini-apps/two-factor-auth'
 const { withAuth } = createAuth({
   listKey: 'User',
   identityField: 'email',
-  sessionData: 'name role email twoFactorAuth',
+  sessionData: 'id name role email twoFactorAuth',
   secretField: 'password',
   initFirstItem: {
     // If there are no items in the database, keystone will ask you to create
