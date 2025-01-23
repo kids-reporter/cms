@@ -16,7 +16,7 @@ const sendSlackNotification = async (message) => {
           text: {
             type: 'plain_text',
             emoji: true,
-            text: ':information_source:  RSS Cronjob',
+            text: ':information_source:  Image Resizer',
           },
         },
         {
