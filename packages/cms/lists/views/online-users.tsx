@@ -163,9 +163,6 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
           },
         },
       })
-
-      // Set `validCheckTime` state to trigger re-render.
-      setValidCheckTime(new Date(Date.now() - validCheckTimeWindow))
     }
   }, [userData, canonicalPath, createOnlineUser])
 
@@ -203,8 +200,7 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
       return
     }
 
-    // Polling to tell the server the user is still online
-    const polling = setInterval(() => {
+    const task = () => {
       const id = onlineUser.id
       updateOnlineUser({
         variables: {
@@ -217,7 +213,13 @@ export const Field = ({ value }: FieldProps<typeof controller>) => {
         },
       })
       setValidCheckTime(new Date(Date.now() - validCheckTimeWindow))
-    }, pollInterval)
+    }
+
+    // execute immediately
+    task()
+
+    // Polling to tell the server the user is still online
+    const polling = setInterval(task, pollInterval)
 
     return () => {
       clearInterval(polling)
