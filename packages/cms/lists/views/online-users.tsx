@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FieldProps } from '@keystone-6/core/types'
 import { FieldContainer } from '@keystone-ui/fields'
-import { controller } from '@keystone-6/core/fields/types/json/views'
+import { controller } from '@keystone-6/core/fields/types/virtual/views'
+import { useMutation, useQuery, gql } from '@keystone-6/core/admin-ui/apollo'
 
 const colors = [
   '#EEE8AA',
@@ -18,42 +18,51 @@ const colors = [
   '#FFE4B5',
 ]
 
-const upateUserGql = `
-mutation Mutation($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
-  updatePost(where: $where, data: $data) {
-    onlineUsers {
-      email
+const DELETE_ONLINE_USER = gql`
+  mutation DeleteOnlineUser($where: OnlineUserWhereUniqueInput!) {
+    deleteOnlineUser(where: $where) {
+      id
     }
   }
-}
 `
 
-const currentUserGql = `
-query User {
-  authenticatedItem {
-    ... on User {
+const CREATE_ONLINE_USER = gql`
+  mutation CreateOnlineUser($data: OnlineUserCreateInput!) {
+    createOnlineUser(data: $data) {
       id
-      name
-      email
+      canonicalPath
+      lastOnlineAt
     }
   }
-}`
+`
 
-const onlineUsersGql = `
-query($where: PostWhereUniqueInput!) {
-  post(where: $where) {
-    onlineUsers {
-      id
-      name
-      email
+const UPDATE_ONLINE_USER = gql`
+  mutation UpdateOnlineUser(
+    $where: OnlineUserWhereUniqueInput!
+    $data: OnlineUserUpdateInput!
+  ) {
+    updateOnlineUser(where: $where, data: $data) {
+      lastOnlineAt
     }
   }
-}
+`
+
+const GET_ONLINE_USERS = gql`
+  query GetOnlineUsers($where: OnlineUserWhereInput!) {
+    onlineUsers(where: $where) {
+      user {
+        id
+        name
+        email
+      }
+    }
+  }
 `
 
 const Container = styled(FieldContainer)`
   display: flex;
   flex-direction: row;
+  min-height: 40px;
 `
 
 const Tooltip = styled.span`
@@ -75,7 +84,6 @@ const Avatar = styled.div`
   width: 40px;
   height: 40px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
@@ -88,151 +96,188 @@ const Avatar = styled.div`
   }
 `
 
+type OnlineUser = {
+  user: User
+  canonicalPath: string
+  lastOnlineAt: Date
+}
+
 type User = {
   id: string
   name: string
   email: string
 }
 
-export const Field = ({ value }: FieldProps<typeof controller>) => {
-  const postID = value?.id
-  const isCurrentUserWritable = useRef(true)
-  const currentUserEmail = useRef('')
-  const [users, setUsers] = useState<User[]>([])
+const pollInterval = 5000 // 5 seconds
+const validCheckTimeWindow = 60000 // 60 seconds
 
-  const handleQueryUsers = async (): Promise<User[]> => {
-    const users: User[] = []
-    try {
-      const usersRes = await axios.post('/api/graphql', {
-        query: onlineUsersGql,
+export const Field = ({ value }: FieldProps<typeof controller>) => {
+  const [validCheckTime, setValidCheckTime] = useState(
+    new Date(Date.now() - validCheckTimeWindow)
+  )
+  const [errorMessage, setErrorMessage] = useState('')
+  const [currentUsers, setCurrentUsers] = useState<User[]>([])
+  const canonicalPath = value?.canonicalPath
+  const userData: User = value?.userData
+
+  // Get current online users for a certain webpage
+  const {
+    loading: getOnlineUsersLoading,
+    error: getOnlineUsersError,
+    data: getOnlineUsersData,
+  } = useQuery(GET_ONLINE_USERS, {
+    variables: {
+      where: {
+        canonicalPath: {
+          equals: canonicalPath,
+        },
+        lastOnlineAt: {
+          gte: validCheckTime.toISOString(),
+        },
+      },
+    },
+  })
+
+  const [
+    createOnlineUser,
+    { data: createOnlineUserData, error: createOnlineUserError },
+  ] = useMutation(CREATE_ONLINE_USER)
+  const [deleteOnlineUser, { error: deleteOnlineUserError }] =
+    useMutation(DELETE_ONLINE_USER)
+  const [updateOnlineUser, { error: updateOnlineUserError }] =
+    useMutation(UPDATE_ONLINE_USER)
+
+  useEffect(() => {
+    if (userData) {
+      const userId = userData.id
+
+      // tell the server that the user is online for a certain webpage
+      createOnlineUser({
         variables: {
-          where: {
-            id: postID,
+          data: {
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+            canonicalPath,
+            lastOnlineAt: new Date().toISOString(),
           },
         },
       })
-      return usersRes?.data?.data?.post?.onlineUsers
-    } catch (err) {
-      console.log(err)
     }
-    return users
-  }
+  }, [userData, canonicalPath, createOnlineUser])
 
-  const handleRemoveUser = async () => {
-    if (isCurrentUserWritable.current && currentUserEmail.current) {
-      try {
-        await axios.post('/api/graphql', {
-          query: upateUserGql,
-          variables: {
-            where: {
-              id: postID,
-            },
-            data: {
-              onlineUsers: {
-                disconnect: [
-                  {
-                    email: currentUserEmail.current,
-                  },
-                ],
-              },
-            },
+  useEffect(() => {
+    const onlineUser = createOnlineUserData?.createOnlineUser
+
+    if (!onlineUser) {
+      return
+    }
+
+    // tell the server the user is offline right now
+    const handleBeforeUnload = () => {
+      const id = onlineUser.id
+      deleteOnlineUser({
+        variables: {
+          where: {
+            id,
           },
-        })
-      } catch (err) {
-        console.log(err)
-      }
+        },
+      })
     }
-  }
 
-  // Update onlineUsers after join
-  useEffect(() => {
-    const updateUser = async () => {
-      try {
-        const users = await handleQueryUsers()
-        const currentUserRes = await axios.post('/api/graphql', {
-          query: currentUserGql,
-        })
-        const authenticatedItem = currentUserRes?.data?.data?.authenticatedItem
-        if (authenticatedItem?.email && authenticatedItem?.name) {
-          currentUserEmail.current = authenticatedItem.email
-          const isCurrentUserExisting = users?.find(
-            (user) => user?.email === currentUserEmail.current
-          )
-          if (!isCurrentUserExisting) {
-            const updateResults = await axios.post('/api/graphql', {
-              query: upateUserGql,
-              variables: {
-                where: {
-                  id: postID,
-                },
-                data: {
-                  onlineUsers: {
-                    connect: [
-                      {
-                        email: currentUserEmail.current,
-                      },
-                    ],
-                  },
-                },
-              },
-            })
-            if (updateResults?.data?.errors) {
-              isCurrentUserWritable.current = false
-            }
-          }
+    window.addEventListener('beforeunload', handleBeforeUnload)
 
-          setUsers(
-            isCurrentUserWritable.current && !isCurrentUserExisting
-              ? [
-                  ...users,
-                  {
-                    email: currentUserEmail.current,
-                    name: authenticatedItem.name,
-                    id: authenticatedItem.id,
-                  },
-                ]
-              : [...users]
-          )
-        }
-      } catch (err) {
-        console.log(err)
-      }
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+      handleBeforeUnload()
     }
-    updateUser()
-    window.addEventListener('beforeunload', handleRemoveUser)
-  }, [])
+  }, [createOnlineUserData, deleteOnlineUser])
 
-  // Polling & clear polling/current user field when leaving
   useEffect(() => {
-    const polling = setInterval(async () => {
-      const users = await handleQueryUsers()
-      setUsers(users ?? [])
-    }, 5000)
+    const onlineUser = createOnlineUserData?.createOnlineUser
+
+    if (!onlineUser) {
+      return
+    }
+
+    const task = () => {
+      const id = onlineUser.id
+      updateOnlineUser({
+        variables: {
+          where: {
+            id,
+          },
+          data: {
+            lastOnlineAt: new Date().toISOString(),
+          },
+        },
+      })
+      setValidCheckTime(new Date(Date.now() - validCheckTimeWindow))
+    }
+
+    // execute immediately
+    task()
+
+    // Polling to tell the server the user is still online
+    const polling = setInterval(task, pollInterval)
 
     return () => {
       clearInterval(polling)
-      handleRemoveUser()
-      window.removeEventListener('beforeunload', handleRemoveUser)
     }
-  }, [])
+  }, [createOnlineUserData, updateOnlineUser])
 
-  return (
-    <Container>
-      {users?.map((user, index) => {
-        return (
-          user && (
-            <Avatar
-              key={`online-user-${index}`}
-              color={colors[Number(user.id) % colors.length]}
-            >
-              <span>{user.name?.[0]}</span>
-              <Tooltip>
-                {user.name}: {user.email}
-              </Tooltip>
-            </Avatar>
-          )
-        )
-      })}
-    </Container>
-  )
+  useEffect(() => {
+    if (getOnlineUsersLoading === true) {
+      return
+    }
+
+    const users: User[] =
+      getOnlineUsersData?.onlineUsers?.map((onlineUser: OnlineUser) => {
+        return onlineUser?.user
+      }) ?? []
+
+    const deduplcatedUsers = Array.from(
+      new Map(users?.map((user) => [user.id, user])).values()
+    )
+
+    setCurrentUsers(deduplcatedUsers)
+  }, [getOnlineUsersData, getOnlineUsersLoading, setCurrentUsers])
+
+  useEffect(() => {
+    if (
+      getOnlineUsersError ||
+      createOnlineUserError ||
+      updateOnlineUserError ||
+      deleteOnlineUserError
+    ) {
+      setErrorMessage('線上人數功能異常，請回報技術人員')
+      return
+    }
+
+    setErrorMessage('')
+  }, [
+    getOnlineUsersError,
+    createOnlineUserError,
+    updateOnlineUserError,
+    deleteOnlineUserError,
+  ])
+
+  if (errorMessage) {
+    return <span style={{ color: 'red' }}>{errorMessage}</span>
+  }
+
+  const usersJsx = currentUsers.map((user) => {
+    return (
+      <Avatar key={user.id} color={colors[Number(user.id) % colors.length]}>
+        <span>{user.name?.[0]}</span>
+        <Tooltip>
+          {user.name}: {user.email}
+        </Tooltip>
+      </Avatar>
+    )
+  })
+
+  return <Container>{usersJsx}</Container>
 }
